@@ -65,7 +65,7 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
 .balloons { position: fixed; inset: 0; z-index: 40; pointer-events: none; overflow: hidden; }
 .bl { position: absolute; bottom: 0; left: var(--x); pointer-events: auto; cursor: pointer; animation: bl-rise var(--dur) linear forwards; }
 .bl-in { display: flex; flex-direction: column; align-items: center; transform-origin: 50% 100%; animation: bl-sway var(--sway) ease-in-out infinite alternate; }
-.bb { position: relative; width: 128px; height: 152px; padding: 22px 16px 26px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 4px; text-align: center; color: #fff;
+.bb { position: relative; width: var(--w, 128px); height: calc(var(--w, 128px) * 1.19); padding: 22px 16px 26px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 4px; text-align: center; color: #fff;
   border-radius: 50% 50% 47% 47% / 56% 56% 44% 44%; background: radial-gradient(circle at 32% 26%, rgba(255,255,255,.5), transparent 20%), radial-gradient(circle at 50% 45%, #ff6a55, #b3170b 72%);
   box-shadow: inset -10px -16px 26px rgba(0,0,0,.28), 0 12px 26px rgba(0,0,0,.35); }
 .bb::after { content: ""; position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%); border: 6px solid transparent; border-top: 0; border-bottom-color: #b3170b; }
@@ -74,7 +74,7 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
 .bb small { font-size: 10px; color: rgba(255,255,255,.72); max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .bb span { font-size: 12px; line-height: 1.4; word-break: keep-all; overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
 .bl-in svg { display: block; margin-top: 6px; overflow: visible; }
-@media (max-width: 640px) { .bb { width: 108px; height: 128px; padding: 18px 12px 22px; } .bb span { font-size: 11px; } }
+@media (max-width: 640px) { .bb { width: calc(var(--w, 128px) * .85); height: calc(var(--w, 128px) * 1.01); padding: 18px 12px 22px; } .bb span { font-size: 11px; } }
 .bl.pop { animation-play-state: paused; }
 .bl.pop .bl-in { animation: bl-pop .25s ease-out forwards; }
 @keyframes bl-rise { from { transform: translateY(100%); } to { transform: translateY(calc(-100vh - 140%)); } }
@@ -982,6 +982,7 @@ details.log summary { border-radius: 16px; }
     const n = document.createElement('small'); n.textContent = r.nickname || '익명 개미';
     const t = document.createElement('span'); t.textContent = r.body.length > 40 ? r.body.slice(0, 40) + '…' : r.body;
     const bb = document.createElement('div'); bb.className = 'bb'; bb.append(n, t);
+    bb.style.setProperty('--w', Math.round(84 + Math.min(40, r.body.length) * 2.2) + 'px');   // 글자 수에 비례 (84~172px)
     const wave = (1 + Math.random() * .8).toFixed(2) + 's';
     inn.appendChild(bb);
     inn.insertAdjacentHTML('beforeend', `<svg width="24" height="90" viewBox="0 0 24 90"><path fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.2" stroke-linecap="round" d="M12 0 Q4 22 12 45 T12 90"><animate attributeName="d" dur="${wave}" repeatCount="indefinite" values="M12 0 Q4 22 12 45 T12 90;M12 0 Q20 22 12 45 T12 90;M12 0 Q4 22 12 45 T12 90"/></path></svg>`);
