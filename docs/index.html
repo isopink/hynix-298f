@@ -266,7 +266,7 @@ details.log summary { border-radius: 16px; }
 
     <section class="card c12">
       <div class="hd"><span class="eyebrow">실시간 KOSPI</span><span class="sub" id="kx-asof"></span></div>
-      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><span class="val" id="kx-val">—</span><span id="kx-chg" style="font-size:14px"></span><span id="kx-rsi" style="font-size:13px;margin-left:auto"></span></div>
+      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><span class="val" id="kx-val">—</span><span id="kx-chg" style="font-size:14px"></span><span id="kx-rsi" style="font-size:13px;margin-left:auto"></span><span id="kx-ewy" style="font-size:13px" title="EWY: 미국에 상장된 한국 주식 ETF. 한국 장 마감 뒤 밤사이 흐름을 보여 줘요."></span></div>
       <div class="chart" id="ch-kx" style="min-height:300px"></div>
     </section>
 
@@ -568,10 +568,22 @@ details.log summary { border-radius: 16px; }
     };
     const timer = setInterval(tick, 1000); tick();
   }
+  // ---------- 밤사이 EWY: supabase/ewy.sql 이 미국장 시간에 5분마다 채우는 ewy_ticks 의 최신값 ----------
+  async function pollEwy() {
+    const url = (CFG.supabaseUrl || '').replace(/\/$/, ''), key = CFG.supabaseAnonKey || '', el = $('kx-ewy');
+    try {
+      const r = await fetch(`${url}/rest/v1/ewy_ticks?select=*&order=ts.desc&limit=1`, { headers: { apikey: key, Authorization: 'Bearer ' + key } });
+      const [e] = r.ok ? await r.json() : [];
+      if (!e || !e.prev_close || Date.now() - Date.parse(e.ts) > 4 * 864e5) { el.textContent = ''; return; }
+      const c = e.price / e.prev_close - 1;
+      el.textContent = '· 밤사이 EWY ' + (c >= 0 ? '▲' : '▼') + Math.abs(c * 100).toFixed(2) + '%'; tone(el, c);
+    } catch (err) { /* 다음 회차에 다시 시도 */ }
+  }
   function startKospi() {
     if (!CFG.supabaseUrl || !CFG.supabaseAnonKey) return none($('ch-kx'), 'KOSPI 데이터 저장소가 연결되지 않았어요.');
     pollKospi();
     setInterval(() => { if (!document.hidden && marketOpen()) pollKospi(); }, 60000);
+    pollEwy(); setInterval(() => { if (!document.hidden) pollEwy(); }, 300000);
   }
   // RSI(14), Wilder 평활
   function rsiOf(vals, n = 14) {
