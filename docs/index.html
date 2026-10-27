@@ -994,6 +994,7 @@ details.log summary { border-radius: 16px; }
   let pool = [];
   const sky = document.createElement('div'); sky.className = 'balloons'; sky.setAttribute('aria-hidden', 'true'); document.body.appendChild(sky);
   const LANES = 7, recent = [], tg = document.getElementById('bl-toggle');
+  let seq = 0;   // 응원 목록 순서대로 하나씩, 끝까지 가면 처음부터 다시
   let blOn = true; try { blOn = localStorage.getItem('bl-off') !== '1'; } catch (e) {}
   function setBl(on) {
     blOn = on; tg.classList.toggle('off', !on); tg.setAttribute('aria-pressed', on);
@@ -1013,8 +1014,9 @@ details.log summary { border-radius: 16px; }
     return lane;
   }
   function balloon() {
-    if (!blOn || !pool.length || document.hidden || sky.querySelectorAll('.bl').length >= 2) return;
-    const r = pool[Math.floor(Math.random() * pool.length)];
+    if (!blOn || !pool.length || document.hidden || sky.querySelectorAll('.bl').length >= 3) return;
+    if (seq >= pool.length) seq = 0;
+    const r = pool[seq++];
     const b = document.createElement('div'); b.className = 'bl';
     const lane = pickLane(), lw = 80 / LANES; b.dataset.lane = lane;
     b.style.setProperty('--x', (2 + lane * lw + Math.random() * lw * .5) + 'vw');
@@ -1045,7 +1047,7 @@ details.log summary { border-radius: 16px; }
       add('shard', { '--l': cx + 'px', '--t': cy + 'px', '--dx': Math.cos(a) * d + 'px', '--dy': Math.sin(a) * d + 'px', '--r': (Math.random() * 540 - 270) + 'deg', '--c': (b.querySelector('.grey') ? ['#8a8a90', '#3a3a3e', '#fff', '#5a5a60'] : ['#ff5a4a', '#da291c', '#fff', '#ff8a70'])[i % 4] });
     }
   }
-  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) { setTimeout(balloon, 3000); setInterval(balloon, 6000); }
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) { setTimeout(balloon, 1500); setInterval(balloon, 3500); }
 })();
 </script>
 </body>
