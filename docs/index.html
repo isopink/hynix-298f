@@ -983,9 +983,12 @@ details.log summary { border-radius: 16px; }
     const t = document.createElement('span'); t.textContent = r.body.length > 40 ? r.body.slice(0, 40) + '…' : r.body;
     const bb = document.createElement('div'); bb.className = 'bb'; bb.append(n, t);
     bb.style.setProperty('--w', Math.round(84 + Math.min(40, r.body.length) * 2.2) + 'px');   // 글자 수에 비례 (84~172px)
-    const wave = (1 + Math.random() * .8).toFixed(2) + 's';
+    // 줄: 위는 매듭에 고정, 아래로 갈수록 크게 흔들리는 물결이 천천히 흘러내림
+    const wave = (2.2 + Math.random() * 1.2).toFixed(2) + 's', dir = Math.random() < .5 ? 1 : -1;
+    const k = [[6, 18, 10], [16, 8, 17], [18, 5, 12], [8, 17, 6]].map(([a, b, c]) => `M14 0 C${14 + (a - 12) * dir} 34,${14 + (b - 12) * dir} 76,${14 + (c - 12) * dir} 116`);
+    k.push(k[0]);
     inn.appendChild(bb);
-    inn.insertAdjacentHTML('beforeend', `<svg width="24" height="90" viewBox="0 0 24 90"><path fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.2" stroke-linecap="round" d="M12 0 Q4 22 12 45 T12 90"><animate attributeName="d" dur="${wave}" repeatCount="indefinite" values="M12 0 Q4 22 12 45 T12 90;M12 0 Q20 22 12 45 T12 90;M12 0 Q4 22 12 45 T12 90"/></path></svg>`);
+    inn.insertAdjacentHTML('beforeend', `<svg width="28" height="116" viewBox="0 0 28 116"><path fill="none" stroke="rgba(255,255,255,.42)" stroke-width="1.1" stroke-linecap="round" d="${k[0]}"><animate attributeName="d" dur="${wave}" repeatCount="indefinite" calcMode="spline" keyTimes="0;.25;.5;.75;1" keySplines=".45 0 .55 1;.45 0 .55 1;.45 0 .55 1;.45 0 .55 1" values="${k.join(';')}"/></path></svg>`);
     b.appendChild(inn); sky.appendChild(b);
     b.addEventListener('animationend', e => { if (e.target === b) b.remove(); });
     b.addEventListener('click', () => { if (!b.classList.contains('pop')) burst(b); });
