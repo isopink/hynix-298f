@@ -61,6 +61,12 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
 .tip .r span:first-child { color: var(--body); }
 .tip .why { color: var(--body); margin-top: 6px; padding-top: 6px; border-top: 1px solid #262626; }
 .tip .why b { color: var(--ink); font-weight: 500; }
+.fab { position: fixed; z-index: 30; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; border-radius: 9999px; background: rgba(20,20,22,.72); border: 1px solid rgba(255,255,255,.14); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 8px 28px rgba(0,0,0,.45); color: var(--ink); font-size: 13px; text-decoration: none; transition: opacity .2s, transform .2s; }
+.fab:hover { border-color: rgba(218,41,28,.6); }
+.fab b { color: var(--red-hi); font-weight: 600; }
+.fab b:empty { display: none; }
+.fab.hide { opacity: 0; transform: translateY(10px); pointer-events: none; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 
 details.log { background: var(--card); border: 1px solid var(--line); }
 details.log summary { cursor: pointer; padding: 16px 20px; font-size: 13px; color: var(--body); list-style: none; display: flex; justify-content: space-between; }
@@ -276,6 +282,7 @@ details.log summary { border-radius: 16px; }
   <p class="foot">Designed by S.Lee &amp; M.Park ·<a href="https://github.com/isopink/hynix-298f" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a> · <a href="https://www.instagram.com/sl2eee/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r=".6" fill="currentColor" stroke="none"/></svg>@sl2eee</a></p>
 </div>
 
+<a class="fab" id="fab" href="#comments" aria-label="게시판으로 이동"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>게시판<b id="fab-n"></b></a>
 <div class="tip" id="tip" hidden></div>
 
 <script id="sample-data" type="application/json">{}</script>
@@ -783,6 +790,9 @@ details.log summary { border-radius: 16px; }
   const nick = document.getElementById('cm-nick'), body = document.getElementById('cm-body');
   const btn = document.getElementById('cm-submit'), msg = document.getElementById('cm-msg');
   const count = document.getElementById('cm-count'), total = document.getElementById('cm-total');
+  const fab = document.getElementById('fab'), fabN = document.getElementById('fab-n');
+  // 게시판이 화면에 보이면 떠 있는 버튼은 숨김
+  if ('IntersectionObserver' in window) new IntersectionObserver(([e]) => fab.classList.toggle('hide', e.isIntersecting), { threshold: 0.15 }).observe(document.getElementById('comments'));
   const COOLDOWN = 30000;
   const headers = { apikey: key, Authorization: 'Bearer ' + key, 'Content-Type': 'application/json' };
   const say = (t, err) => { msg.textContent = t; msg.classList.toggle('err', !!err); };
@@ -797,7 +807,7 @@ details.log summary { border-radius: 16px; }
   body.addEventListener('input', () => { count.textContent = body.value.length + ' / 300'; });
   if (!url || !key) { list.innerHTML = '<p class="f-empty">댓글 저장소가 아직 연결되지 않았어요. config.js에 Supabase 주소와 anon 키를 넣으면 켜집니다.</p>'; btn.disabled = true; return; }
   function render(rows) {
-    list.textContent = ''; total.textContent = rows.length ? rows.length + '개의 글' : '';
+    list.textContent = ''; total.textContent = rows.length ? rows.length + '개의 글' : ''; fabN.textContent = rows.length || '';
     if (!rows.length) { const p = document.createElement('p'); p.className = 'f-empty'; p.textContent = '첫 댓글을 남겨 주세요.'; list.appendChild(p); return; }
     for (const r of rows) {
       const it = document.createElement('div'); it.className = 'f-item';
