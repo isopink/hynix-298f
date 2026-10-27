@@ -6,7 +6,7 @@
 
 2026 나비스트 UOStock AI 자동매매 모의주식투자대회 · 팀 「하이닉스 298층 주민」
 
-[**Live Dashboard →**](https://isopink.github.io/hynix-298f/) · [English](README.md)
+[**Live Dashboard →**](https://isopink.github.io/hynix-298f/?v=3) · [English](README.md)
 
 ![Claude Code](https://img.shields.io/badge/Agent-Claude%20Code-d97757?style=flat-square)
 ![Kiwoom](https://img.shields.io/badge/Broker-Kiwoom%20REST%20API-1f4fa3?style=flat-square)

@@ -6,7 +6,7 @@
 
 Team *Hynix 298F* · 2026 Navist UOStock AI Auto-Trading Mock Investment Competition (University of Seoul)
 
-[**Live Dashboard →**](https://isopink.github.io/hynix-298f/) · [한국어](README.ko.md)
+[**Live Dashboard →**](https://isopink.github.io/hynix-298f/?v=3) · [한국어](README.ko.md)
 
 ![Claude Code](https://img.shields.io/badge/Agent-Claude%20Code-d97757?style=flat-square)
 ![Kiwoom](https://img.shields.io/badge/Broker-Kiwoom%20REST%20API-1f4fa3?style=flat-square)
