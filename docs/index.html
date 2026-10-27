@@ -103,7 +103,9 @@ details.log { background: var(--card); border: 1px solid var(--line); }
 details.log summary { cursor: pointer; padding: 16px 20px; font-size: 13px; color: var(--body); list-style: none; display: flex; justify-content: space-between; }
 details.log summary::-webkit-details-marker { display: none; }
 details.log summary::after { content: "+"; color: var(--muted); font-size: 16px; line-height: 1; }
-details.log[open] summary::after { content: "−"; }
+details.log[open] > summary::after { content: "−"; }
+.more-body { display: grid; gap: 16px; padding: 0 16px 16px; }
+.more-body details.log { border-radius: 16px; }
 details.log summary:focus-visible { outline: 2px solid #f6e500; outline-offset: -2px; }
 .tbl { overflow-x: auto; padding: 0 20px 20px; }
 table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 960px; }
@@ -280,33 +282,40 @@ details.log summary { border-radius: 16px; }
       <div class="chart" id="ch-scatter" style="min-height:240px"></div>
     </section>
 
-    <section class="card c8">
-      <div class="hd"><span class="eyebrow">매매 타임라인</span><span class="sub">점을 누르거나 마우스를 올리면 판단 근거</span></div>
-      <div class="chart" id="ch-timeline" style="min-height:200px"></div>
-      <div class="recent" id="recent"></div>
-    </section>
-    <section class="card c4">
-      <div class="hd"><span class="eyebrow">리스크 Hook 차단</span><span class="sub">규칙 위반 주문</span></div>
-      <div class="val" id="k-blocks">—</div>
-      <div class="chart" id="ch-blocks" style="min-height:110px"></div>
-    </section>
 
-    <section class="card c8">
-      <div class="hd"><span class="eyebrow">토큰 사용량</span><span class="sub">천 토큰 / 일 · 빨간 점 = 실행 실패</span></div>
-      <div class="chart" id="ch-tokens" style="min-height:160px"></div>
-    </section>
-    <section class="card c4">
+    <section class="card c12">
       <div class="hd"><span class="eyebrow">주간 회고 제안</span><span class="sub">회고 에이전트</span></div>
       <div id="ch-review"></div>
     </section>
   </div>
 
-  <details class="log">
-    <summary>전체 판단 로그 보기 (보고서용)</summary>
-    <div class="tbl"><table>
-      <thead><tr><th>시각</th><th>종목</th><th>구분</th><th>수량</th><th>체결가</th><th>확신도</th><th>매수 측 근거</th><th>매도 측 근거</th><th>총괄 결정</th></tr></thead>
-      <tbody id="log-body"></tbody>
-    </table></div>
+  <details class="log more" id="more">
+    <summary>AI 속마음 엿보기</summary>
+    <div class="more-body">
+      <div class="grid">
+        <section class="card c8">
+          <div class="hd"><span class="eyebrow">매매 타임라인</span><span class="sub">점을 누르거나 마우스를 올리면 판단 근거</span></div>
+          <div class="chart" id="ch-timeline" style="min-height:200px"></div>
+          <div class="recent" id="recent"></div>
+        </section>
+        <section class="card c4">
+          <div class="hd"><span class="eyebrow">리스크 Hook 차단</span><span class="sub">규칙 위반 주문</span></div>
+          <div class="val" id="k-blocks">—</div>
+          <div class="chart" id="ch-blocks" style="min-height:110px"></div>
+        </section>
+        <section class="card c12">
+          <div class="hd"><span class="eyebrow">토큰 사용량</span><span class="sub">천 토큰 / 일 · 빨간 점 = 실행 실패</span></div>
+          <div class="chart" id="ch-tokens" style="min-height:160px"></div>
+        </section>
+      </div>
+      <details class="log">
+        <summary>전체 판단 로그 보기 (보고서용)</summary>
+        <div class="tbl"><table>
+          <thead><tr><th>시각</th><th>종목</th><th>구분</th><th>수량</th><th>체결가</th><th>확신도</th><th>매수 측 근거</th><th>매도 측 근거</th><th>총괄 결정</th></tr></thead>
+          <tbody id="log-body"></tbody>
+        </table></div>
+      </details>
+    </div>
   </details>
 
   <p class="foot">Designed by S.Lee &amp; M.Park ·<a href="https://github.com/isopink/hynix-298f" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a> · <a href="https://www.instagram.com/sl2eee/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r=".6" fill="currentColor" stroke="none"/></svg>@sl2eee</a></p>
@@ -392,6 +401,7 @@ details.log summary { border-radius: 16px; }
     D = derive(BASE);
     fillText(); drawAll(); fillLog(); startKospi(); countdown();
     if (document.fonts) document.fonts.ready.then(drawAll);   // 웹폰트 적용 후 글자 폭 다시 계산
+    $('more').addEventListener('toggle', e => { if (e.target.open) drawAll(); });
     let w = window.innerWidth, t;
     window.addEventListener('resize', () => { if (window.innerWidth === w) return; w = window.innerWidth; clearTimeout(t); t = setTimeout(drawAll, 150); });
     startLive();
