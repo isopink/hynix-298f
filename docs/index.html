@@ -61,6 +61,15 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
 .tip .r span:first-child { color: var(--body); }
 .tip .why { color: var(--body); margin-top: 6px; padding-top: 6px; border-top: 1px solid #262626; }
 .tip .why b { color: var(--ink); font-weight: 500; }
+.countdown { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 16px; min-height: 300px; text-align: center; }
+.countdown[hidden] { display: none; }
+@media (max-width: 640px) { .countdown { min-height: 200px; } }
+.cd-time { display: flex; gap: clamp(14px, 3.4vw, 40px); }
+.cd-time span { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.cd-time b { font-size: clamp(40px, 6vw, 72px); font-weight: 500; line-height: 1; letter-spacing: -1px; font-variant-numeric: tabular-nums; color: var(--ink); }
+.cd-time span:last-child b { color: var(--red-hi); }
+.cd-time i { font-style: normal; font-size: 12px; color: var(--muted); }
+.cd-sub { font-size: 12px; color: var(--muted); }
 .fab { position: fixed; z-index: 30; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; border-radius: 9999px; background: rgba(20,20,22,.72); border: 1px solid rgba(255,255,255,.14); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 8px 28px rgba(0,0,0,.45); color: var(--ink); font-size: 13px; text-decoration: none; transition: opacity .2s, transform .2s; }
 .fab:hover { border-color: rgba(218,41,28,.6); }
 .fab b { color: var(--red-hi); font-weight: 600; }
@@ -193,8 +202,13 @@ details.log summary { border-radius: 16px; }
           <div class="kv"><span class="eyebrow">KOSPI 대비</span><span id="excess">—</span></div>
         </div>
         <div style="display:flex;flex-direction:column;gap:10px;min-width:0">
+          <div class="countdown" id="cd" hidden>
+            <span class="eyebrow">대회 개막까지</span>
+            <div class="cd-time"><span><b id="cd-d">0</b><i>일</i></span><span><b id="cd-h">00</b><i>시간</i></span><span><b id="cd-m">00</b><i>분</i></span><span><b id="cd-s">00</b><i>초</i></span></div>
+            <span class="cd-sub">2026. 11. 2 (월) 09:00 개장과 함께 시작 · 20거래일</span>
+          </div>
           <div class="chart" id="ch-hero" style="min-height:300px"></div>
-          <div class="legend">
+          <div class="legend" id="hero-legend">
             <span><i style="background:var(--red);height:3px"></i>DUO</span>
             <span><i style="background:#8a8a8a"></i>KOSPI</span>
             <span><i class="sq" style="background:var(--red)"></i>상승</span>
@@ -353,13 +367,13 @@ details.log summary { border-radius: 16px; }
   try { SAMPLE = JSON.parse(document.getElementById('sample-data').textContent); } catch (e) {}
   Promise.all(['equity', 'holdings', 'trades', 'risk', 'system', 'reviews'].map(n =>
     fetch('data/' + n + '.json', { cache: 'no-store' }).then(r => { if (!r.ok) throw 0; return r.json(); }).catch(() => SAMPLE[n] || [])
-  )).then(([equity, holdings, trades, risk, system, reviews]) => {
+  ).concat(Promise.resolve().then(loadKD))).then(([equity, holdings, trades, risk, system, reviews]) => {
     // 기록이 아직 없으면(대회 시작 전) 초기 자산 한 점으로 빈 화면을 그림
     PRE = !equity.length;
-    if (PRE) equity = [{ date: START, total: INIT, kospi: 1, regime: null, cap: null }];
+    if (PRE) equity = [{ date: START, total: INIT, kospi: null, regime: null, cap: null }];
     BASE = { equity, holdings, trades, risk, system, reviews };
     D = derive(BASE);
-    fillText(); drawAll(); fillLog(); startKospi();
+    fillText(); drawAll(); fillLog(); startKospi(); countdown();
     if (document.fonts) document.fonts.ready.then(drawAll);   // 웹폰트 적용 후 글자 폭 다시 계산
     let w = window.innerWidth, t;
     window.addEventListener('resize', () => { if (window.innerWidth === w) return; w = window.innerWidth; clearTimeout(t); t = setTimeout(drawAll, 150); });
@@ -370,6 +384,16 @@ details.log summary { border-radius: 16px; }
   let BASE = null, LIVE_AT = null, PRE = false;
   const CFG = window.DASH_CONFIG || {};
   const kstDate = iso => new Date(Date.parse(iso) + 9 * 3600e3).toISOString().slice(0, 10);
+  // 날짜별 KOSPI 종가 (supabase/kospi.sql 의 kospi_daily). 잔고 스냅샷·equity.json 에 KOSPI 가 없는 날의 예비값
+  let KD = new Map();
+  async function loadKD() {
+    const url = (CFG.supabaseUrl || '').replace(/\/$/, ''), key = CFG.supabaseAnonKey || '';
+    if (!url || !key) return;
+    try {
+      const r = await fetch(`${url}/rest/v1/kospi_daily?select=date,close`, { headers: { apikey: key, Authorization: 'Bearer ' + key } });
+      if (r.ok) KD = new Map((await r.json()).map(x => [x.date, +x.close]));
+    } catch (e) { /* 예비값 없이 진행 */ }
+  }
   function marketOpen() {
     const k = new Date(Date.now() + 9 * 3600e3), wd = k.getUTCDay(), hm = k.getUTCHours() * 100 + k.getUTCMinutes();
     return wd >= 1 && wd <= 5 && hm >= 900 && hm <= 1535;
@@ -377,11 +401,12 @@ details.log summary { border-radius: 16px; }
   function liveEquity(snaps) {
     const byDay = d3.groups(snaps, s => kstDate(s.ts)).sort((a, b) => a[0] < b[0] ? -1 : 1);
     const json = new Map((BASE.equity || []).map(r => [r.date, r]));
-    const acc = new Map(); let k = null, regime = null, cap = null;
+    const acc = new Map(); let regime = null, cap = null;
     return byDay.map(([date, rows]) => {
+      let k = null;
       for (const s of rows) { acc.set(s.account, +s.total); if (s.kospi != null) k = +s.kospi; }
-      const j = json.get(date); if (j) { regime = j.regime ?? regime; cap = j.cap ?? cap; if (k == null) k = +j.kospi; }
-      return { date, total: d3.sum([...acc.values()]) || INIT, kospi: k ?? 1, regime, cap };
+      const j = json.get(date); if (j) { regime = j.regime ?? regime; cap = j.cap ?? cap; k = k ?? j.kospi; }
+      return { date, total: d3.sum([...acc.values()]) || INIT, kospi: k, regime, cap };   // 빈 KOSPI 는 derive 에서 채움
     });
   }
   async function pollLive() {
@@ -389,7 +414,8 @@ details.log summary { border-radius: 16px; }
     const since = CFG.liveSince || START;
     const h = { apikey: key, Authorization: 'Bearer ' + key };
     try {
-      const [snaps, latest] = await Promise.all([
+      const [, snaps, latest] = await Promise.all([
+        loadKD(),
         fetch(`${url}/rest/v1/snapshots?select=ts,account,total,kospi&ts=gte.${since}T00:00:00%2B09:00&order=ts.asc&limit=10000`, { headers: h }).then(r => r.ok ? r.json() : []),
         fetch(`${url}/rest/v1/snapshots?select=ts,account,holdings&order=ts.desc&limit=20`, { headers: h }).then(r => r.ok ? r.json() : [])
       ]);
@@ -408,12 +434,14 @@ details.log summary { border-radius: 16px; }
   }
 
   function derive(d) {
-    const eq = d.equity.map(r => ({ ...r, d: toD(r.date), total: +r.total, kospi: +r.kospi }));
-    const k0 = eq[0].kospi;
+    // KOSPI: 기록값 → 없으면 kospi_daily 종가 → 그래도 없으면 전날 값
+    let kp = null;
+    const eq = d.equity.map(r => { const k = +(r.kospi ?? KD.get(r.date)) || kp; kp = k; return { ...r, d: toD(r.date), total: +r.total, kospi: k }; });
+    const k0 = (eq.find(r => r.kospi) || {}).kospi;
     let peak = 0;
     eq.forEach((r, i) => {
-      r.ret = r.total / INIT - 1; r.kret = r.kospi / k0 - 1;
-      r.day = i ? r.total / eq[i - 1].total - 1 : 0; r.kday = i ? r.kospi / eq[i - 1].kospi - 1 : 0;
+      r.ret = r.total / INIT - 1; r.kret = k0 && r.kospi ? r.kospi / k0 - 1 : 0;
+      r.day = i ? r.total / eq[i - 1].total - 1 : 0; r.kday = i && r.kospi && eq[i - 1].kospi ? r.kospi / eq[i - 1].kospi - 1 : 0;
       peak = Math.max(peak, r.total); r.dd = r.total / peak - 1;
     });
     const last = eq[eq.length - 1], prevFri = eq[Math.max(0, eq.length - 6)];
@@ -473,6 +501,19 @@ details.log summary { border-radius: 16px; }
       }
     } catch (e) { /* 다음 회차에 다시 시도 */ }
     drawKospi();
+  }
+  // ---------- 개막 카운트다운: 기록이 없고 개장 전일 때만 상단 그래프 자리에 표시 ----------
+  function countdown() {
+    const at = Date.parse(START + 'T09:00:00+09:00'), p2 = n => String(n).padStart(2, '0');
+    const tick = () => {
+      const left = at - Date.now(), on = PRE && left > 0;
+      $('cd').hidden = !on; $('ch-hero').style.display = $('hero-legend').style.display = on ? 'none' : '';
+      if (!on) { clearInterval(timer); drawAll(); return; }
+      const sec = Math.floor(left / 1000);
+      $('cd-d').textContent = Math.floor(sec / 86400); $('cd-h').textContent = p2(Math.floor(sec / 3600) % 24);
+      $('cd-m').textContent = p2(Math.floor(sec / 60) % 60); $('cd-s').textContent = p2(sec % 60);
+    };
+    const timer = setInterval(tick, 1000); tick();
   }
   function startKospi() {
     if (!CFG.supabaseUrl || !CFG.supabaseAnonKey) return none($('ch-kx'), 'KOSPI 데이터 저장소가 연결되지 않았어요.');
@@ -557,6 +598,7 @@ details.log summary { border-radius: 16px; }
   }
 
   function sparkLine(el, vals, color) {
+    vals = vals.filter(v => v != null); if (!vals.length) { el.innerHTML = ''; return; }
     const { svg, W, H } = svgIn(el, 56);
     const x = d3.scaleLinear([0, vals.length - 1], [2, W - 4]), y = d3.scaleLinear(d3.extent(vals), [H - 4, 4]);
     svg.append('path').datum(vals).attr('fill', gradient(svg, 'g' + el.id, color, .25)).attr('d', d3.area().x((v, i) => x(i)).y0(H).y1(y));
@@ -831,7 +873,7 @@ details.log summary { border-radius: 16px; }
     try {
       const r = await fetch(url + '/rest/v1/comments', { method: 'POST', headers: { ...headers, Prefer: 'return=minimal' }, body: JSON.stringify({ nickname: name.slice(0, 20), body: text.slice(0, 300) }) });
       if (!r.ok) throw new Error(await r.text());
-      markSent(); body.value = ''; count.textContent = '0 / 300'; say('댓글을 남겼어요.'); load();
+      markSent(); body.value = ''; count.textContent = '0 / 300'; say(''); load();
     } catch (e) { say(String(e.message).includes('too_many') ? '지금 댓글이 너무 많이 올라와요. 1분 뒤에 다시 시도해 주세요.' : '댓글을 올리지 못했어요. 잠시 뒤 다시 시도해 주세요.', true); }
     finally { btn.disabled = false; }
   });

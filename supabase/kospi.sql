@@ -38,13 +38,20 @@ begin
     delete from public.kospi_req where id = r.id;
   end loop;
   delete from public.kospi_req where at < now() - interval '10 minutes';
-  delete from public.kospi_ticks where ts < now() - interval '14 days';
+  delete from public.kospi_ticks where ts < now() - interval '40 days';   -- 대회 기간(약 4주) 전체 보관
   -- 2) 다음 회차 요청
   insert into public.kospi_req (id) select net.http_get(
     'https://query1.finance.yahoo.com/v8/finance/chart/%5EKS11?interval=1m&range=1d',
     headers := '{"User-Agent": "Mozilla/5.0"}'::jsonb);
 end $$;
 revoke all on function public.kospi_collect() from public, anon, authenticated;
+
+-- 날짜별 종가 (대시보드 수익률 그래프의 KOSPI 예비값)
+create or replace view public.kospi_daily with (security_invoker = true) as
+  select distinct on (d) d as date, price as close
+  from (select (ts at time zone 'Asia/Seoul')::date as d, ts, price from public.kospi_ticks) t
+  order by d, ts desc;
+grant select on public.kospi_daily to anon;
 
 -- 평일 09:00~15:59 KST (= UTC 0~6시) 매분 실행
 select cron.unschedule('kospi') where exists (select 1 from cron.job where jobname = 'kospi');
