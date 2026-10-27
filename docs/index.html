@@ -260,10 +260,6 @@ details.log summary { border-radius: 16px; }
         </div>
         <div style="display:flex;flex-direction:column;gap:10px;min-width:0">
           <div class="chart" id="ch-hero" style="min-height:300px"></div>
-          <div class="legend">
-            <span><i style="background:var(--red);height:3px"></i>The Duo</span>
-            <span><i style="background:#8a8a8a"></i>KOSPI</span>
-          </div>
         </div>
       </div>
     </section>
@@ -675,7 +671,7 @@ details.log summary { border-radius: 16px; }
     svg.append('text').attr('x', m.l - 8).attr('y', H - m.b + 20).attr('dy', '.32em').attr('text-anchor', 'end').attr('font-size', 10).attr('fill', C.muted).text('국면');
     const xt = rows.filter((r, i) => i % 5 === 0 || i === rows.length - 1);
     svg.append('g').selectAll('text').data(xt).join('text').attr('x', r => x(r.d)).attr('y', H - 8).attr('font-size', 11).attr('fill', C.muted)
-      .attr('text-anchor', (r, i) => i === 0 ? 'start' : i === xt.length - 1 ? 'end' : 'middle').text(r => md(r.d));
+      .attr('text-anchor', (r, i) => xt.length === 1 ? 'middle' : i === 0 ? 'start' : i === xt.length - 1 ? 'end' : 'middle').text(r => md(r.d));
     svg.append('path').datum(rows).attr('fill', gradient(svg, 'gHero', '#ff4a36', .42)).attr('d', d3.area().x(r => x(r.d)).y0(y(Math.max(lo, 0))).y1(r => y(r.ret)));
     svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', '#8a8a8a').attr('stroke-width', 1.5).attr('stroke-dasharray', '3 4').attr('d', d3.line().x(r => x(r.d)).y(r => y(r.kret)));
     const p = svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', C.red).attr('stroke-width', 2.5).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round').attr('d', d3.line().x(r => x(r.d)).y(r => y(r.ret)));
