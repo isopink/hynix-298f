@@ -569,7 +569,7 @@ details.log summary { border-radius: 16px; }
     svg.append('g').selectAll('text').data(y.ticks(4)).join('text').attr('x', m.l - 8).attr('y', y).attr('dy', '.32em').attr('text-anchor', 'end').attr('font-size', 11).attr('fill', C.muted).text(won);
     [9, 11, 13, 15].forEach(h => svg.append('text').attr('x', x(new Date(`${day}T${String(h).padStart(2, '0')}:00:00+09:00`))).attr('y', H - 6).attr('text-anchor', h === 9 ? 'start' : 'middle').attr('font-size', 11).attr('fill', C.muted).text(h + ':00'));
     svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(prev)).attr('y2', y(prev)).attr('stroke', '#8a8a8a').attr('stroke-dasharray', '3 4');
-    svg.append('text').attr('x', m.l + 6).attr('y', y(prev) + 14).attr('font-size', 11).attr('fill', C.muted).text('전일 종가 ' + f2(prev));
+    if (W >= 520) svg.append('text').attr('x', m.l + 6).attr('y', y(prev) + 14).attr('font-size', 11).attr('fill', C.muted).text('전일 종가 ' + f2(prev));   // 휴대폰에선 생략
     if (KY.length) {
       svg.append('path').datum(KY).attr('fill', 'none').attr('stroke', '#6a6a6a').attr('stroke-width', 1.5).attr('stroke-linejoin', 'round').attr('d', d3.line().x(d => x(d.t)).y(d => y(d.v)));
       const Y = KY[KY.length - 1];
