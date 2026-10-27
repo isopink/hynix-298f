@@ -73,7 +73,15 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
 @keyframes bl-rise { from { transform: translateY(100%); } to { transform: translateY(calc(-100vh - 140%)); } }
 @keyframes bl-sway { from { transform: translateX(-30px) rotate(-8deg); } to { transform: translateX(30px) rotate(8deg); } }
 @keyframes bl-pop { 50% { transform: scale(1.25); } to { transform: scale(0); opacity: 0; } }
-.fab { margin-left: auto; align-self: center; display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; border-radius: 9999px; background: linear-gradient(135deg, #ff6a55 0%, #da291c 55%, #a8160b 100%); color: #fff; font-size: 14px; font-weight: 600; text-decoration: none; box-shadow: 0 6px 24px rgba(218,41,28,.45), inset 0 1px 0 rgba(255,255,255,.25); transition: transform .15s, box-shadow .15s; }
+.cheer { position: relative; margin-left: auto; align-self: center; }
+.pop { position: absolute; right: 0; top: calc(100% + 10px); z-index: 50; width: min(380px, calc(100vw - 32px)); max-height: min(72vh, 600px); overflow-y: auto; box-shadow: 0 18px 48px rgba(0,0,0,.55); }
+.pop[hidden] { display: none !important; }
+.card.pop { background: rgba(22,22,24,.95); }
+.pop .cm { grid-template-columns: minmax(0, 1fr); }
+.pop .f-form .two { grid-template-columns: minmax(0, 1fr); }
+.pop .f-form textarea { min-height: 72px; }
+.pop .f-list { max-height: 260px; }
+.fab { border: 0; cursor: pointer; font-family: inherit; display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; border-radius: 9999px; background: linear-gradient(135deg, #ff6a55 0%, #da291c 55%, #a8160b 100%); color: #fff; font-size: 14px; font-weight: 600; text-decoration: none; box-shadow: 0 6px 24px rgba(218,41,28,.45), inset 0 1px 0 rgba(255,255,255,.25); transition: transform .15s, box-shadow .15s; }
 .fab:hover { transform: translateY(-1px); box-shadow: 0 10px 32px rgba(218,41,28,.6), inset 0 1px 0 rgba(255,255,255,.25); }
 .fab b { min-width: 20px; padding: 1px 7px; border-radius: 9999px; background: #fff; color: var(--red); font-size: 12px; font-weight: 700; text-align: center; }
 .fab b:empty { display: none; }
@@ -190,7 +198,24 @@ details.log summary { border-radius: 16px; }
         <h1>Trading Dashboard <span class="tagline">누적 손실합 4억의 궁극의 듀오</span><span class="cd-inline" id="cd" hidden></span></h1>
       </div>
     </div>
-    <a class="fab" id="fab" href="#comments" aria-label="응원하기로 이동"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>응원하기!<b id="fab-n"></b></a>
+    <div class="cheer">
+      <button class="fab" id="fab" type="button" aria-expanded="false" aria-controls="comments"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>응원하기!<b id="fab-n"></b></button>
+      <div class="card pop" id="comments" role="dialog" aria-label="응원하기" hidden>
+        <div class="hd"><span class="eyebrow">응원하기!</span></div>
+        <div class="cm">
+          <form class="f-form" id="cm-form" novalidate>
+            <div class="two">
+              <input id="cm-nick" name="nick" maxlength="20" placeholder="닉네임 (선택)" autocomplete="off" aria-label="닉네임">
+              <textarea id="cm-body" name="body" maxlength="300" placeholder="하이닉스 298층 가즈아" aria-label="내용"></textarea>
+            </div>
+            <div class="hp" aria-hidden="true"><input id="cm-web" name="website" tabindex="-1" autocomplete="off"></div>
+            <div class="row"><span class="count" id="cm-count">0 / 300</span><button class="btn" id="cm-submit" type="submit">남기기</button></div>
+            <p class="f-msg" id="cm-msg" role="status"></p>
+          </form>
+          <div><div class="sub" id="cm-total" style="margin-bottom:4px"></div><div class="f-list" id="cm-list"><p class="f-empty">댓글을 불러오는 중이에요.</p></div></div>
+        </div>
+      </div>
+    </div>
   </header>
 
   <div class="grid">
@@ -272,22 +297,6 @@ details.log summary { border-radius: 16px; }
       <tbody id="log-body"></tbody>
     </table></div>
   </details>
-
-  <section class="card" id="comments">
-    <div class="hd"><span class="eyebrow">응원하기!</span></div>
-    <div class="cm">
-      <form class="f-form" id="cm-form" novalidate>
-        <div class="two">
-          <input id="cm-nick" name="nick" maxlength="20" placeholder="닉네임 (선택)" autocomplete="off" aria-label="닉네임">
-          <textarea id="cm-body" name="body" maxlength="300" placeholder="하이닉스 298층 가즈아" aria-label="내용"></textarea>
-        </div>
-        <div class="hp" aria-hidden="true"><input id="cm-web" name="website" tabindex="-1" autocomplete="off"></div>
-        <div class="row"><span class="count" id="cm-count">0 / 300</span><button class="btn" id="cm-submit" type="submit">남기기</button></div>
-        <p class="f-msg" id="cm-msg" role="status"></p>
-      </form>
-      <div><div class="sub" id="cm-total" style="margin-bottom:4px"></div><div class="f-list" id="cm-list"><p class="f-empty">댓글을 불러오는 중이에요.</p></div></div>
-    </div>
-  </section>
 
   <p class="foot">Designed by S.Lee &amp; M.Park ·<a href="https://github.com/isopink/hynix-298f" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a> · <a href="https://www.instagram.com/sl2eee/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r=".6" fill="currentColor" stroke="none"/></svg>@sl2eee</a></p>
 </div>
@@ -837,6 +846,15 @@ details.log summary { border-radius: 16px; }
   const btn = document.getElementById('cm-submit'), msg = document.getElementById('cm-msg');
   const count = document.getElementById('cm-count'), total = document.getElementById('cm-total');
   const fabN = document.getElementById('fab-n');
+  const fab = document.getElementById('fab'), pop = document.getElementById('comments');
+  function openPop(on) {
+    pop.hidden = !on; fab.setAttribute('aria-expanded', on);
+    const sky = document.querySelector('.balloons'); if (sky) sky.style.display = on ? 'none' : '';
+    if (on) body.focus();
+  }
+  fab.addEventListener('click', () => openPop(pop.hidden));
+  document.addEventListener('pointerdown', e => { if (!pop.hidden && !e.target.closest('.cheer')) openPop(false); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !pop.hidden) { openPop(false); fab.focus(); } });
   const COOLDOWN = 30000;
   const headers = { apikey: key, Authorization: 'Bearer ' + key, 'Content-Type': 'application/json' };
   const say = (t, err) => { msg.textContent = t; msg.classList.toggle('err', !!err); };
