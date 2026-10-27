@@ -10,14 +10,14 @@
 <meta property="og:title" content="하이닉스 298층 관제실">
 <meta property="og:description" content="Claude Code 에이전트가 굴리는 우리 팀 계좌 현황과 응원 게시판">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap">
 <style>
 /* Bento grid on near-black. Rosso Corsa = gains & the one hero line; blue = losses; everything else greyscale. Sharp corners, hairline borders. */
 :root {
   --canvas: #141414; --card: #1c1c1c; --card-2: #232323; --line: #2a2a2a; --grid: #262626;
   --ink: #f5f5f5; --body: #a0a0a0; --muted: #8c8c8c;
   --red: #da291c; --red-hi: #ff5a4a; --blue: #4aa3d4; --grey: #585858;
-  --font: "Inter", "Pretendard", -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --font: "Noto Sans KR", -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
@@ -355,6 +355,7 @@ details.log summary { border-radius: 16px; }
     BASE = { equity, holdings, trades, risk, system, reviews };
     D = derive(BASE);
     fillText(); drawAll(); fillLog(); startKospi();
+    if (document.fonts) document.fonts.ready.then(drawAll);   // 웹폰트 적용 후 글자 폭 다시 계산
     let w = window.innerWidth, t;
     window.addEventListener('resize', () => { if (window.innerWidth === w) return; w = window.innerWidth; clearTimeout(t); t = setTimeout(drawAll, 150); });
     startLive();
