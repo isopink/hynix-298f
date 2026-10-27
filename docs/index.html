@@ -172,12 +172,6 @@ details.log summary { border-radius: 16px; }
         <h1>Trading Dashboard</h1>
       </div>
     </div>
-    <div class="chips">
-      <span class="chip" id="live-chip"><span id="asof">—</span></span>
-      <span class="chip">오늘 국면 <b id="regime">—</b></span>
-      <span class="chip"><b id="dday">—</b></span>
-      <span class="chip">Agent <b>Claude Code</b></span>
-    </div>
   </header>
 
   <div class="grid">
@@ -188,7 +182,7 @@ details.log summary { border-radius: 16px; }
             <span class="eyebrow">총 수익률</span>
             <div class="big" id="ret">—</div>
           </div>
-          <div class="kv"><span class="eyebrow">팀 총자산</span><span id="total">—</span></div>
+          <div class="kv"><span class="eyebrow" id="total-label">팀 총자산</span><span id="total">—</span></div>
           <div class="kv"><span class="eyebrow">KOSPI 대비</span><span id="excess">—</span></div>
         </div>
         <div style="display:flex;flex-direction:column;gap:10px;min-width:0">
@@ -204,13 +198,19 @@ details.log summary { border-radius: 16px; }
       </div>
     </section>
 
+    <section class="card c12">
+      <div class="hd"><span class="eyebrow">KOSPI 실시간</span><span class="sub" id="kx-asof"></span></div>
+      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><span class="val" id="kx-val">—</span><span id="kx-chg" style="font-size:14px"></span></div>
+      <div class="chart" id="ch-kx" style="min-height:220px"></div>
+    </section>
+
     <section class="card c3 glow-red"><div class="hd"><span class="eyebrow">이번 주</span><span class="sub">vs 지난 금요일</span></div><div class="val" id="k-week">—</div><div class="chart" id="sp-week"></div></section>
     <section class="card c3 glow-blue"><div class="hd"><span class="eyebrow">최대 낙폭</span><span class="sub">고점 대비</span></div><div class="val" id="k-mdd">—</div><div class="chart" id="sp-dd"></div></section>
     <section class="card c3"><div class="hd"><span class="eyebrow">KOSPI</span><span class="sub">대회 시작일 대비</span></div><div class="val" id="k-kospi">—</div><div class="chart" id="sp-kospi"></div></section>
     <section class="card c3"><div class="hd"><span class="eyebrow">승률</span><span class="sub" id="k-win-sub">—</span></div><div class="val" id="k-win">—</div><div class="chart" id="sp-win"></div></section>
 
     <section class="card c12">
-      <div class="hd"><span class="eyebrow">일별 수익률</span><span class="sub">막대 우리 팀 · 점 KOSPI</span></div>
+      <div class="hd"><span class="eyebrow">일별 수익률</span></div>
       <div class="chart" id="ch-daily" style="min-height:200px"></div>
     </section>
 
@@ -228,7 +228,7 @@ details.log summary { border-radius: 16px; }
     </section>
 
     <section class="card c8">
-      <div class="hd"><span class="eyebrow">AI 매매 타임라인</span><span class="sub">점을 누르거나 마우스를 올리면 판단 근거</span></div>
+      <div class="hd"><span class="eyebrow">매매 타임라인</span><span class="sub">점을 누르거나 마우스를 올리면 판단 근거</span></div>
       <div class="chart" id="ch-timeline" style="min-height:200px"></div>
       <div class="recent" id="recent"></div>
     </section>
@@ -257,7 +257,7 @@ details.log summary { border-radius: 16px; }
   </details>
 
   <section class="card" id="comments">
-    <div class="hd"><span class="eyebrow">응원 게시판</span><span class="sub">로그인 없이 익명</span></div>
+    <div class="hd"><span class="eyebrow">게시판</span></div>
     <div class="cm">
       <form class="f-form" id="cm-form" novalidate>
         <div class="two">
@@ -353,7 +353,7 @@ details.log summary { border-radius: 16px; }
     if (PRE) equity = [{ date: START, total: INIT, kospi: 1, regime: null, cap: null }];
     BASE = { equity, holdings, trades, risk, system, reviews };
     D = derive(BASE);
-    fillText(); drawAll(); fillLog();
+    fillText(); drawAll(); fillLog(); startKospi();
     let w = window.innerWidth, t;
     window.addEventListener('resize', () => { if (window.innerWidth === w) return; w = window.innerWidth; clearTimeout(t); t = setTimeout(drawAll, 150); });
     startLive();
@@ -432,11 +432,7 @@ details.log summary { border-radius: 16px; }
   }
 
   function fillText() {
-    const fresh = LIVE_AT && Date.now() - Date.parse(LIVE_AT) < 15 * 60e3 && marketOpen();
-    $('live-chip').classList.toggle('live', !!fresh);
-    $('asof').textContent = fresh ? 'LIVE · ' + new Date(LIVE_AT).toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Seoul' }) + ' 갱신' : PRE ? '대회 시작 전' : md(D.last.d) + ' 장 마감';
-    $('regime').textContent = D.last.regime || '—';
-    $('dday').textContent = PRE ? '개막 D-' + Math.max(0, Math.ceil((Date.parse(START + 'T09:00:00+09:00') - Date.now()) / 864e5)) : 'D-' + D.daysLeft;
+    $('total-label').textContent = PRE ? '시작 원금' : '팀 총자산';
     $('ret').textContent = pct(D.ret);
     $('total').textContent = won(D.last.total) + '원';
     const ex = D.ret - D.kret; $('excess').textContent = (ex >= 0 ? '+' : '−') + Math.abs(ex * 100).toFixed(2) + '%p'; tone($('excess'), ex);
@@ -453,8 +449,60 @@ details.log summary { border-radius: 16px; }
     if (!D) return;
     hero(); sparkLine($('sp-kospi'), D.eq.map(r => r.kospi), '#bdbdbd'); winDots($('sp-win'));
     sparkBars($('sp-week'), D.eq.slice(-5).map(r => r.day)); drawdown($('sp-dd'));
-    daily(); donut(); pnl(); scatter(); timeline(); recent(); blocks(); tokens(); review();
+    daily(); donut(); pnl(); scatter(); timeline(); recent(); blocks(); tokens(); review(); drawKospi();
     animated = true;
+  }
+
+  // ---------- KOSPI 실시간: supabase/kospi.sql 이 1분마다 채우는 kospi_ticks 를 읽음 ----------
+  let KX = null;
+  async function pollKospi() {
+    const url = (CFG.supabaseUrl || '').replace(/\/$/, ''), key = CFG.supabaseAnonKey || '';
+    try {
+      const r = await fetch(`${url}/rest/v1/kospi_ticks?select=ts,price,prev_close&order=ts.desc&limit=420`, { headers: { apikey: key, Authorization: 'Bearer ' + key } });
+      const rows = r.ok ? (await r.json()).reverse() : [];
+      if (rows.length) {
+        const day = kstDate(rows[rows.length - 1].ts);
+        KX = rows.filter(x => kstDate(x.ts) === day).map(x => ({ t: new Date(x.ts), v: +x.price, p: +x.prev_close }));
+      }
+    } catch (e) { /* 다음 회차에 다시 시도 */ }
+    drawKospi();
+  }
+  function startKospi() {
+    if (!CFG.supabaseUrl || !CFG.supabaseAnonKey) return none($('ch-kx'), 'KOSPI 데이터 저장소가 연결되지 않았어요.');
+    pollKospi();
+    setInterval(() => { if (!document.hidden && marketOpen()) pollKospi(); }, 60000);
+  }
+  function drawKospi() {
+    const el = $('ch-kx');
+    if (!KX || !KX.length) return none(el, 'KOSPI 데이터를 기다리는 중이에요.');
+    const L = KX[KX.length - 1], prev = L.p || KX[0].v, chg = L.v / prev - 1, col = chg >= 0 ? C.red : C.blue;
+    const hm = t => t.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Seoul' });
+    const f2 = v => v.toLocaleString('ko-KR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    $('kx-val').textContent = f2(L.v);
+    $('kx-chg').textContent = (chg >= 0 ? '▲ ' : '▼ ') + f2(Math.abs(L.v - prev)) + ' (' + pct(chg) + ')'; tone($('kx-chg'), chg);
+    $('kx-asof').textContent = md(toD(kstDate(L.t.toISOString()))) + ' ' + hm(L.t) + (marketOpen() ? ' 기준' : ' 장 마감');
+    const { svg, W, H } = svgIn(el, 220);
+    const y = d3.scaleLinear([Math.min(prev, d3.min(KX, d => d.v)), Math.max(prev, d3.max(KX, d => d.v))], [H - 26, 10]).nice(4);
+    const m = { l: d3.max(y.ticks(4), v => textW(svg, won(v))) + 10, r: 8 };
+    const day = kstDate(L.t.toISOString());
+    const x = d3.scaleUtc([new Date(day + 'T09:00:00+09:00'), new Date(day + 'T15:30:00+09:00')], [m.l, W - m.r]);
+    svg.append('g').selectAll('line').data(y.ticks(4)).join('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y).attr('y2', y).attr('stroke', C.grid);
+    svg.append('g').selectAll('text').data(y.ticks(4)).join('text').attr('x', m.l - 8).attr('y', y).attr('dy', '.32em').attr('text-anchor', 'end').attr('font-size', 11).attr('fill', C.muted).text(won);
+    [9, 11, 13, 15].forEach(h => svg.append('text').attr('x', x(new Date(`${day}T${String(h).padStart(2, '0')}:00:00+09:00`))).attr('y', H - 6).attr('text-anchor', h === 9 ? 'start' : 'middle').attr('font-size', 11).attr('fill', C.muted).text(h + ':00'));
+    svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(prev)).attr('y2', y(prev)).attr('stroke', '#8a8a8a').attr('stroke-dasharray', '3 4');
+    svg.append('text').attr('x', W - m.r).attr('y', y(prev) - 6).attr('text-anchor', 'end').attr('font-size', 11).attr('fill', C.muted).text('전일 종가 ' + f2(prev));
+    svg.append('path').datum(KX).attr('fill', gradient(svg, 'gKx', col, .3)).attr('d', d3.area().x(d => x(d.t)).y0(H - 26).y1(d => y(d.v)));
+    svg.append('path').datum(KX).attr('fill', 'none').attr('stroke', col).attr('stroke-width', 2).attr('stroke-linejoin', 'round').attr('d', d3.line().x(d => x(d.t)).y(d => y(d.v)));
+    svg.append('circle').attr('cx', x(L.t)).attr('cy', y(L.v)).attr('r', 4).attr('fill', col).attr('stroke', '#fff').attr('stroke-width', 1.5);
+    const rule = svg.append('line').attr('y1', 10).attr('y2', H - 26).attr('stroke', '#444').attr('opacity', 0);
+    const bis = d3.bisector(d => d.t).center;
+    svg.append('rect').attr('x', m.l).attr('y', 0).attr('width', W - m.l - m.r).attr('height', H - 26).attr('fill', 'transparent')
+      .on('pointermove pointerdown', ev => {
+        const d = KX[bis(KX, x.invert(d3.pointer(ev)[0]))], c = d.v / prev - 1;
+        rule.attr('x1', x(d.t)).attr('x2', x(d.t)).attr('opacity', 1);
+        showTip(ev, `<div class="t">${hm(d.t)}</div>${row('KOSPI', f2(d.v))}${row('전일 대비', pct(c), c >= 0 ? 'up' : 'down')}`);
+      })
+      .on('pointerleave', () => { hideTip(); rule.attr('opacity', 0); });
   }
 
   function hero() {
@@ -747,7 +795,7 @@ details.log summary { border-radius: 16px; }
   body.addEventListener('input', () => { count.textContent = body.value.length + ' / 300'; });
   if (!url || !key) { list.innerHTML = '<p class="f-empty">댓글 저장소가 아직 연결되지 않았어요. config.js에 Supabase 주소와 anon 키를 넣으면 켜집니다.</p>'; btn.disabled = true; return; }
   function render(rows) {
-    list.textContent = ''; total.textContent = rows.length ? rows.length + '개의 응원' : '';
+    list.textContent = ''; total.textContent = rows.length ? rows.length + '개의 글' : '';
     if (!rows.length) { const p = document.createElement('p'); p.className = 'f-empty'; p.textContent = '첫 댓글을 남겨 주세요.'; list.appendChild(p); return; }
     for (const r of rows) {
       const it = document.createElement('div'); it.className = 'f-item';
