@@ -255,8 +255,8 @@ details.log summary { border-radius: 16px; }
 
     <section class="card c12">
       <div class="hd"><span class="eyebrow">KOSPI 실시간</span><span class="sub" id="kx-asof"></span></div>
-      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><span class="val" id="kx-val">—</span><span id="kx-chg" style="font-size:14px"></span></div>
-      <div class="chart" id="ch-kx" style="min-height:220px"></div>
+      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><span class="val" id="kx-val">—</span><span id="kx-chg" style="font-size:14px"></span><span id="kx-rsi" style="font-size:13px;margin-left:auto"></span></div>
+      <div class="chart" id="ch-kx" style="min-height:300px"></div>
     </section>
 
     <section class="card c3 glow-red"><div class="hd"><span class="eyebrow">이번 주</span><span class="sub">vs 지난 금요일</span></div><div class="val" id="k-week">—</div><div class="chart" id="sp-week"></div></section>
@@ -520,11 +520,11 @@ details.log summary { border-radius: 16px; }
   async function pollKospi() {
     const url = (CFG.supabaseUrl || '').replace(/\/$/, ''), key = CFG.supabaseAnonKey || '';
     try {
-      const r = await fetch(`${url}/rest/v1/kospi_ticks?select=ts,price,prev_close&order=ts.desc&limit=900`, { headers: { apikey: key, Authorization: 'Bearer ' + key } });
+      const r = await fetch(`${url}/rest/v1/kospi_ticks?select=*&order=ts.desc&limit=900`, { headers: { apikey: key, Authorization: 'Bearer ' + key } });
       const rows = r.ok ? (await r.json()).reverse() : [];
       if (rows.length) {
         const days = [...new Set(rows.map(x => kstDate(x.ts)))], day = days[days.length - 1], yday = days[days.length - 2];
-        const pick = d => rows.filter(x => kstDate(x.ts) === d).map(x => ({ t: new Date(x.ts), v: +x.price, p: +x.prev_close }));
+        const pick = d => rows.filter(x => kstDate(x.ts) === d).map(x => ({ t: new Date(x.ts), v: +x.price, p: +x.prev_close, vol: x.volume == null ? null : +x.volume }));
         KX = pick(day);
         // 전일 선은 오늘 시간축에 겹쳐 그림
         const shift = yday ? Date.parse(day) - Date.parse(yday) : 0;
@@ -550,21 +550,41 @@ details.log summary { border-radius: 16px; }
     pollKospi();
     setInterval(() => { if (!document.hidden && marketOpen()) pollKospi(); }, 60000);
   }
+  // RSI(14), Wilder 평활
+  function rsiOf(vals, n = 14) {
+    const out = vals.map(() => null); let g = 0, l = 0;
+    for (let i = 1; i < vals.length; i++) {
+      const d = vals[i] - vals[i - 1], up = Math.max(d, 0), dn = Math.max(-d, 0);
+      if (i <= n) { g += up / n; l += dn / n; if (i < n) continue; }
+      else { g = (g * (n - 1) + up) / n; l = (l * (n - 1) + dn) / n; }
+      out[i] = l === 0 ? 100 : 100 - 100 / (1 + g / l);
+    }
+    return out;
+  }
   function drawKospi() {
     const el = $('ch-kx');
     if (!KX || !KX.length) return none(el, 'KOSPI 데이터를 기다리는 중이에요.');
     const L = KX[KX.length - 1], prev = L.p || (KY.length ? KY[KY.length - 1].v : KX[0].v), chg = L.v / prev - 1, col = chg >= 0 ? C.red : C.blue;
     const hm = t => t.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Seoul' });
     const f2 = v => v.toLocaleString('ko-KR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const R = rsiOf(KX.map(d => d.v)); KX.forEach((d, i) => { d.r = R[i]; d.up = i ? d.v >= KX[i - 1].v : true; });
+    const hasVol = KX.some(d => d.vol), lastR = R[R.length - 1];
     $('kx-val').textContent = f2(L.v);
     $('kx-chg').textContent = (chg >= 0 ? '▲ ' : '▼ ') + f2(Math.abs(L.v - prev)) + ' (' + pct(chg) + ')'; tone($('kx-chg'), chg);
+    $('kx-rsi').textContent = lastR == null ? '' : 'RSI ' + Math.round(lastR); tone($('kx-rsi'), lastR == null ? 0 : lastR >= 70 ? 1 : lastR <= 30 ? -1 : 0);
     $('kx-asof').textContent = md(toD(kstDate(L.t.toISOString()))) + ' ' + hm(L.t) + (marketOpen() ? ' 기준' : ' 장 마감');
-    const { svg, W, H } = svgIn(el, 220);
+    // 세 칸: 가격 · 거래량 · RSI (같은 시간축)
+    const narrow = el.clientWidth < 520, gap = 12;
+    const P = { t: 10, h: narrow ? 140 : 170 }, V = { h: hasVol ? (narrow ? 34 : 48) : 0 }, Q = { h: narrow ? 44 : 58 };
+    V.t = P.t + P.h + gap; Q.t = V.t + V.h + (V.h ? gap : 0);
+    const { svg, W, H } = svgIn(el, Q.t + Q.h + 22);
     const all = KX.concat(KY);
-    const y = d3.scaleLinear([Math.min(prev, d3.min(all, d => d.v)), Math.max(prev, d3.max(all, d => d.v))], [H - 26, 10]).nice(4);
+    const y = d3.scaleLinear([Math.min(prev, d3.min(all, d => d.v)), Math.max(prev, d3.max(all, d => d.v))], [P.t + P.h, P.t]).nice(4);
     const m = { l: d3.max(y.ticks(4), v => textW(svg, won(v))) + 10, r: 8 };
     const day = kstDate(L.t.toISOString());
     const x = d3.scaleUtc([new Date(day + 'T09:00:00+09:00'), new Date(day + 'T15:30:00+09:00')], [m.l, W - m.r]);
+    const lab = (t, yy) => svg.append('text').attr('x', W - m.r).attr('text-anchor', 'end').attr('y', yy + 10).attr('font-size', 10).attr('fill', C.muted).text(t);
+    // 가격
     svg.append('g').selectAll('line').data(y.ticks(4)).join('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y).attr('y2', y).attr('stroke', C.grid);
     svg.append('g').selectAll('text').data(y.ticks(4)).join('text').attr('x', m.l - 8).attr('y', y).attr('dy', '.32em').attr('text-anchor', 'end').attr('font-size', 11).attr('fill', C.muted).text(won);
     [9, 11, 13, 15].forEach(h => svg.append('text').attr('x', x(new Date(`${day}T${String(h).padStart(2, '0')}:00:00+09:00`))).attr('y', H - 6).attr('text-anchor', h === 9 ? 'start' : 'middle').attr('font-size', 11).attr('fill', C.muted).text(h + ':00'));
@@ -575,19 +595,39 @@ details.log summary { border-radius: 16px; }
       const Y = KY[KY.length - 1];
       svg.append('text').attr('x', x(Y.t) + 6).attr('y', y(Y.v)).attr('dy', '.32em').attr('font-size', 11).attr('fill', C.muted).text('전일');
     }
-    svg.append('path').datum(KX).attr('fill', gradient(svg, 'gKx', col, .3)).attr('d', d3.area().x(d => x(d.t)).y0(H - 26).y1(d => y(d.v)));
+    svg.append('path').datum(KX).attr('fill', gradient(svg, 'gKx', col, .3)).attr('d', d3.area().x(d => x(d.t)).y0(P.t + P.h).y1(d => y(d.v)));
     svg.append('path').datum(KX).attr('fill', 'none').attr('stroke', col).attr('stroke-width', 2).attr('stroke-linejoin', 'round').attr('d', d3.line().x(d => x(d.t)).y(d => y(d.v)));
     svg.append('circle').attr('cx', x(L.t)).attr('cy', y(L.v)).attr('r', 4).attr('fill', col).attr('stroke', '#fff').attr('stroke-width', 1.5);
-    const rule = svg.append('line').attr('y1', 10).attr('y2', H - 26).attr('stroke', '#444').attr('opacity', 0);
+    // 거래량 (전 분보다 오르면 빨강, 내리면 파랑)
+    if (V.h) {
+      const yv = d3.scaleLinear([0, (d3.quantile(KX.map(d => d.vol || 0).sort(d3.ascending), .98) || 1) * 1.1], [V.t + V.h, V.t]).clamp(true);   // 개장 직후 급증 막대에 눌리지 않게
+      const bw = Math.max(1, (W - m.l - m.r) / 390 - .4);
+      svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', V.t + V.h).attr('y2', V.t + V.h).attr('stroke', C.grid);
+      svg.append('g').selectAll('rect').data(KX.filter(d => d.vol)).join('rect').attr('x', d => x(d.t) - bw / 2).attr('width', bw)
+        .attr('y', d => yv(d.vol)).attr('height', d => V.t + V.h - yv(d.vol)).attr('fill', d => d.up ? C.red : C.blue).attr('opacity', .65);
+      lab('거래량', V.t);
+    }
+    // RSI(14): 70 이상 과매수, 30 이하 과매도
+    const yr = d3.scaleLinear([0, 100], [Q.t + Q.h, Q.t]);
+    svg.append('rect').attr('x', m.l).attr('y', yr(70)).attr('width', W - m.l - m.r).attr('height', yr(30) - yr(70)).attr('fill', 'rgba(255,255,255,.03)');
+    [70, 30].forEach(v => {
+      svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', yr(v)).attr('y2', yr(v)).attr('stroke', v === 70 ? 'rgba(255,90,74,.45)' : 'rgba(74,163,212,.45)').attr('stroke-dasharray', '3 4');
+      svg.append('text').attr('x', m.l - 8).attr('y', yr(v)).attr('dy', '.32em').attr('text-anchor', 'end').attr('font-size', 10).attr('fill', C.muted).text(v);
+    });
+    svg.append('path').datum(KX).attr('fill', 'none').attr('stroke', '#bdbdbd').attr('stroke-width', 1.25).attr('d', d3.line().defined(d => d.r != null).x(d => x(d.t)).y(d => yr(d.r)));
+    lab('RSI', Q.t - 2);
+    // 세 칸 공통 툴팁
+    const rule = svg.append('line').attr('y1', P.t).attr('y2', Q.t + Q.h).attr('stroke', '#444').attr('opacity', 0);
     const bis = d3.bisector(d => d.t).center;
-    svg.append('rect').attr('x', m.l).attr('y', 0).attr('width', W - m.l - m.r).attr('height', H - 26).attr('fill', 'transparent')
+    svg.append('rect').attr('x', m.l).attr('y', 0).attr('width', W - m.l - m.r).attr('height', Q.t + Q.h).attr('fill', 'transparent')
       .on('pointermove pointerdown', ev => {
         const d = KX[bis(KX, x.invert(d3.pointer(ev)[0]))], c = d.v / prev - 1;
         rule.attr('x1', x(d.t)).attr('x2', x(d.t)).attr('opacity', 1);
-        showTip(ev, `<div class="t">${hm(d.t)}</div>${row('KOSPI', f2(d.v))}${row('전일 대비', pct(c), c >= 0 ? 'up' : 'down')}`);
+        showTip(ev, `<div class="t">${hm(d.t)}</div>${row('KOSPI', f2(d.v))}${row('전일 대비', pct(c), c >= 0 ? 'up' : 'down')}${d.vol ? row('거래량', won(d.vol)) : ''}${d.r != null ? row('RSI', Math.round(d.r), d.r >= 70 ? 'up' : d.r <= 30 ? 'down' : '') : ''}`);
       })
       .on('pointerleave', () => { hideTip(); rule.attr('opacity', 0); });
   }
+
 
   function hero() {
     const el = $('ch-hero'), { svg, W, H } = svgIn(el, 300), rows = D.eq;

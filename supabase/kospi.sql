@@ -9,6 +9,7 @@ create table if not exists public.kospi_ticks (
   price      numeric not null,
   prev_close numeric                  -- 전일 종가 (등락 계산용)
 );
+alter table public.kospi_ticks add column if not exists volume bigint;   -- 1분 거래량
 alter table public.kospi_ticks enable row level security;
 revoke all on public.kospi_ticks from anon, authenticated;
 grant select on public.kospi_ticks to anon;            -- 사이트는 읽기만
@@ -29,15 +30,17 @@ begin
     if r.status_code = 200 then
       body := r.content::jsonb -> 'chart' -> 'result' -> 0;
       -- 전일 종가(previousClose)는 응답의 마지막 거래일 행에만 붙임 (이틀치 응답이라 그 전날 행엔 맞지 않음)
-      insert into public.kospi_ticks (ts, price, prev_close)
+      insert into public.kospi_ticks (ts, price, prev_close, volume)
       select x.ts, x.price,
              case when (x.ts at time zone 'Asia/Seoul')::date = max((x.ts at time zone 'Asia/Seoul')::date) over ()
-                  then coalesce(body -> 'meta' ->> 'previousClose', body -> 'meta' ->> 'chartPreviousClose')::numeric end
-      from (select to_timestamp(t.v::bigint) as ts, c.v::numeric as price
+                  then coalesce(body -> 'meta' ->> 'previousClose', body -> 'meta' ->> 'chartPreviousClose')::numeric end,
+             x.volume
+      from (select to_timestamp(t.v::bigint) as ts, c.v::numeric as price, v.v::bigint as volume
             from jsonb_array_elements_text(body -> 'timestamp') with ordinality t(v, i)
             join jsonb_array_elements_text(body -> 'indicators' -> 'quote' -> 0 -> 'close') with ordinality c(v, i) using (i)
+            left join jsonb_array_elements_text(body -> 'indicators' -> 'quote' -> 0 -> 'volume') with ordinality v(v, i) using (i)
             where c.v is not null) x
-      on conflict (ts) do update set price = excluded.price,
+      on conflict (ts) do update set price = excluded.price, volume = excluded.volume,
         prev_close = coalesce(public.kospi_ticks.prev_close, excluded.prev_close);
     end if;
     delete from public.kospi_req where id = r.id;
