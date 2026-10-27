@@ -8,7 +8,7 @@
 <meta name="author" content="S.Lee">
 <meta name="description" content="UOStock 2026 AI 자동매매 모의주식투자대회 · 하이닉스 298층 주민 팀 대시보드">
 <meta property="og:title" content="하이닉스 298층 관제실">
-<meta property="og:description" content="Claude Code 에이전트가 굴리는 우리 팀 계좌 현황과 응원 게시판">
+<meta property="og:description" content="Claude Code 에이전트가 굴리는 DUO 계좌 현황과 게시판">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap">
 <style>
@@ -189,7 +189,7 @@ details.log summary { border-radius: 16px; }
         <div style="display:flex;flex-direction:column;gap:10px;min-width:0">
           <div class="chart" id="ch-hero" style="min-height:300px"></div>
           <div class="legend">
-            <span><i style="background:var(--red);height:3px"></i>우리 팀</span>
+            <span><i style="background:var(--red);height:3px"></i>DUO</span>
             <span><i style="background:#8a8a8a"></i>KOSPI</span>
             <span><i class="sq" style="background:var(--red)"></i>상승</span>
             <span><i class="sq" style="background:var(--grey)"></i>횡보</span>
@@ -511,7 +511,7 @@ details.log summary { border-radius: 16px; }
     const el = $('ch-hero'), { svg, W, H } = svgIn(el, 300), rows = D.eq;
     const lo = Math.min(0, d3.min(rows, r => Math.min(r.ret, r.kret))), hi = Math.max(0, d3.max(rows, r => Math.max(r.ret, r.kret)));
     const y0 = d3.scaleLinear([lo, hi], [0, 1]).nice(4), ticks = y0.ticks(4), tstep = ticks.length > 1 ? ticks[1] - ticks[0] : .01, tf = v => (v > 0 ? '+' : '') + (v * 100).toFixed(tstep < .0099 ? 1 : 0) + '%';
-    const lw = Math.max(textW(svg, '우리 팀 ' + pct(D.ret), 12), textW(svg, 'KOSPI ' + pct(D.kret), 12));
+    const lw = Math.max(textW(svg, 'DUO ' + pct(D.ret), 12), textW(svg, 'KOSPI ' + pct(D.kret), 12));
     const narrow = W < 520;
     const m = { t: 10, r: narrow ? 8 : lw + 18, b: 50, l: d3.max(ticks, v => textW(svg, tf(v))) + 10 };
     const x = d3.scaleUtc(d3.extent(rows, r => r.d), [m.l, W - m.r]);
@@ -535,7 +535,7 @@ details.log summary { border-radius: 16px; }
     svg.append('circle').attr('cx', x(L.d)).attr('cy', y(L.ret)).attr('r', 10).attr('fill', C.red).attr('opacity', .2);
     svg.append('circle').attr('cx', x(L.d)).attr('cy', y(L.ret)).attr('r', 4.5).attr('fill', C.red).attr('stroke', '#fff').attr('stroke-width', 1.5);
     if (!narrow) {
-      const labs = [{ n: '우리 팀', v: L.ret, c: C.redHi, y: y(L.ret) }, { n: 'KOSPI', v: L.kret, c: '#9a9a9a', y: y(L.kret) }];
+      const labs = [{ n: 'DUO', v: L.ret, c: C.redHi, y: y(L.ret) }, { n: 'KOSPI', v: L.kret, c: '#9a9a9a', y: y(L.kret) }];
       if (Math.abs(labs[0].y - labs[1].y) < 18) { const mid = (labs[0].y + labs[1].y) / 2, s = labs[0].y <= labs[1].y ? 1 : -1; labs[0].y = mid - 9 * s; labs[1].y = mid + 9 * s; }
       labs.forEach(l => { const t = svg.append('text').attr('x', W - m.r + 12).attr('y', l.y).attr('dy', '.32em').attr('font-size', 12).attr('fill', l.c); t.append('tspan').attr('font-weight', 600).text(l.n); t.append('tspan').attr('dx', 6).text(pct(l.v)); });
     }
@@ -546,7 +546,7 @@ details.log summary { border-radius: 16px; }
       .on('pointermove pointerdown', ev => {
         const r = rows[bis(rows, x.invert(d3.pointer(ev)[0]))];
         rule.attr('x1', x(r.d)).attr('x2', x(r.d)).attr('opacity', 1); dot.attr('cx', x(r.d)).attr('cy', y(r.ret)).attr('opacity', 1);
-        showTip(ev, `<div class="t">${md(r.d)}${r.regime ? ' · ' + esc(r.regime) + ' 국면' : ''}</div>${row('우리 팀', pct(r.ret), r.ret >= 0 ? 'up' : 'down')}${row('KOSPI', pct(r.kret))}${row('총자산', won(r.total))}`);
+        showTip(ev, `<div class="t">${md(r.d)}${r.regime ? ' · ' + esc(r.regime) + ' 국면' : ''}</div>${row('DUO', pct(r.ret), r.ret >= 0 ? 'up' : 'down')}${row('KOSPI', pct(r.kret))}${row('총자산', won(r.total))}`);
       })
       .on('pointerleave', () => { hideTip(); rule.attr('opacity', 0); dot.attr('opacity', 0); });
   }
@@ -598,7 +598,7 @@ details.log summary { border-radius: 16px; }
     svg.append('g').selectAll('text').data(ticks).join('text').attr('x', m.l - 6).attr('y', y).attr('dy', '.32em').attr('text-anchor', 'end').attr('font-size', 11).attr('fill', C.muted).text(tf);
     svg.append('g').selectAll('rect').data(rows).join('rect').attr('x', r => x(r.date) + (x.bandwidth() - Math.min(32, x.bandwidth())) / 2).attr('width', Math.min(32, x.bandwidth())).attr('rx', 3)
       .attr('y', r => y(Math.max(0, r.day))).attr('height', r => Math.max(1, Math.abs(y(r.day) - y(0)))).attr('fill', r => r.day >= 0 ? GR.red : GR.blue)
-      .on('pointermove pointerdown', (ev, r) => showTip(ev, `<div class="t">${md(r.d)}${r.regime ? ' · ' + esc(r.regime) : ''}</div>${row('우리 팀', pct(r.day), r.day >= 0 ? 'up' : 'down')}${row('KOSPI', pct(r.kday))}`)).on('pointerleave', hideTip);
+      .on('pointermove pointerdown', (ev, r) => showTip(ev, `<div class="t">${md(r.d)}${r.regime ? ' · ' + esc(r.regime) : ''}</div>${row('DUO', pct(r.day), r.day >= 0 ? 'up' : 'down')}${row('KOSPI', pct(r.kday))}`)).on('pointerleave', hideTip);
     svg.append('g').selectAll('circle').data(rows).join('circle').attr('cx', r => x(r.date) + x.bandwidth() / 2).attr('cy', r => y(r.kday)).attr('r', 2.5).attr('fill', '#141414').attr('stroke', '#bdbdbd').attr('stroke-width', 1.25).attr('pointer-events', 'none');
     const every = Math.ceil(rows.length / Math.max(2, Math.floor(W / 60)));
     svg.append('g').selectAll('text').data(rows.filter((r, i) => i % every === 0)).join('text').attr('x', r => x(r.date) + x.bandwidth() / 2).attr('y', H - 6).attr('text-anchor', 'middle').attr('font-size', 11).attr('fill', C.muted).text(r => md(r.d));
