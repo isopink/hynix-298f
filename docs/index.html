@@ -120,7 +120,8 @@ details.log summary::-webkit-details-marker { display: none; }
 details.log summary::after { content: "+"; color: var(--muted); font-size: 16px; line-height: 1; }
 details.log[open] > summary::after { content: "−"; }
 .fb-body { padding: 4px 20px 18px; }
-.more-body { display: grid; gap: 16px; padding: 0 16px 16px; }
+.more-body { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 0 16px 16px; }
+.wrap > *, .more-body > * { min-width: 0; }   /* 넓은 표가 페이지 폭을 밀어내지 않게 */
 .more-body details.log { border-radius: 16px; }
 details.log summary:focus-visible { outline: 2px solid #f6e500; outline-offset: -2px; }
 .tbl { overflow-x: auto; padding: 0 20px 20px; }
