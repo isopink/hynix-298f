@@ -41,7 +41,7 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
 .card .hd { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
 .card .val { font-size: 28px; font-weight: 500; letter-spacing: -0.5px; line-height: 1; }
 .card .sub { font-size: 12px; color: var(--muted); }
-.c12 { grid-column: span 12; } .c8 { grid-column: span 8; } .c7 { grid-column: span 7; } .c5 { grid-column: span 5; } .c4 { grid-column: span 4; } .c3 { grid-column: span 3; }
+.c12 { grid-column: span 12; } .c6 { grid-column: span 6; } .c8 { grid-column: span 8; } .c7 { grid-column: span 7; } .c5 { grid-column: span 5; } .c4 { grid-column: span 4; } .c3 { grid-column: span 3; }
 .up { color: var(--red-hi); } .down { color: var(--blue); }
 .chart { width: 100%; flex: 1; min-height: 56px; }
 .chart svg { display: block; width: 100%; overflow: visible; }
@@ -139,7 +139,7 @@ td.k { color: var(--ink); white-space: nowrap; }
 .recent .rc p span { color: var(--ink); }
 .foot { color: var(--muted); font-size: 11px; text-align: center; padding-top: 8px; }
 
-@media (max-width: 1100px) { .c3 { grid-column: span 6; } .c4, .c5, .c7, .c8 { grid-column: span 12; } }
+@media (max-width: 1100px) { .c3 { grid-column: span 6; } .c4, .c5, .c6, .c7, .c8 { grid-column: span 12; } }
 @media (max-width: 640px) {
   .c3 { grid-column: span 6; padding: 16px; }
   .c3 .val { font-size: 20px; }
@@ -269,17 +269,13 @@ details.log summary { border-radius: 16px; }
       <div class="chart" id="ch-daily" style="min-height:200px"></div>
     </section>
 
-    <section class="card c4">
+    <section class="card c6">
       <div class="hd"><span class="eyebrow">포트폴리오</span><span class="sub">빨간 호 = 국면 상한</span></div>
       <div class="chart" id="ch-donut" style="min-height:240px"></div>
     </section>
-    <section class="card c4">
+    <section class="card c6">
       <div class="hd"><span class="eyebrow">보유 종목 손익</span><span class="sub">평단 대비</span></div>
       <div class="chart" id="ch-pnl" style="min-height:240px"></div>
-    </section>
-    <section class="card c4">
-      <div class="hd"><span class="eyebrow">확신도 vs 수익</span><span class="sub">원 크기 = 매수 금액 · 흐린 원 = 보유 중</span></div>
-      <div class="chart" id="ch-scatter" style="min-height:240px"></div>
     </section>
 
 
@@ -303,7 +299,11 @@ details.log summary { border-radius: 16px; }
           <div class="val" id="k-blocks">—</div>
           <div class="chart" id="ch-blocks" style="min-height:110px"></div>
         </section>
-        <section class="card c12">
+        <section class="card c6">
+          <div class="hd"><span class="eyebrow">확신도 vs 수익</span><span class="sub">원 크기 = 매수 금액 · 흐린 원 = 보유 중</span></div>
+          <div class="chart" id="ch-scatter" style="min-height:240px"></div>
+        </section>
+        <section class="card c6">
           <div class="hd"><span class="eyebrow">토큰 사용량</span><span class="sub">천 토큰 / 일 · 빨간 점 = 실행 실패</span></div>
           <div class="chart" id="ch-tokens" style="min-height:160px"></div>
         </section>
