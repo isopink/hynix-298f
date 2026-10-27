@@ -28,12 +28,17 @@ begin
   for r in select q.id, h.status_code, h.content from public.kospi_req q join net._http_response h on h.id = q.id loop
     if r.status_code = 200 then
       body := r.content::jsonb -> 'chart' -> 'result' -> 0;
+      -- 전일 종가(previousClose)는 응답의 마지막 거래일 행에만 붙임 (이틀치 응답이라 그 전날 행엔 맞지 않음)
       insert into public.kospi_ticks (ts, price, prev_close)
-      select to_timestamp(t.v::bigint), c.v::numeric, (body -> 'meta' ->> 'chartPreviousClose')::numeric
-      from jsonb_array_elements_text(body -> 'timestamp') with ordinality t(v, i)
-      join jsonb_array_elements_text(body -> 'indicators' -> 'quote' -> 0 -> 'close') with ordinality c(v, i) using (i)
-      where c.v is not null
-      on conflict (ts) do update set price = excluded.price, prev_close = excluded.prev_close;
+      select x.ts, x.price,
+             case when (x.ts at time zone 'Asia/Seoul')::date = max((x.ts at time zone 'Asia/Seoul')::date) over ()
+                  then coalesce(body -> 'meta' ->> 'previousClose', body -> 'meta' ->> 'chartPreviousClose')::numeric end
+      from (select to_timestamp(t.v::bigint) as ts, c.v::numeric as price
+            from jsonb_array_elements_text(body -> 'timestamp') with ordinality t(v, i)
+            join jsonb_array_elements_text(body -> 'indicators' -> 'quote' -> 0 -> 'close') with ordinality c(v, i) using (i)
+            where c.v is not null) x
+      on conflict (ts) do update set price = excluded.price,
+        prev_close = coalesce(public.kospi_ticks.prev_close, excluded.prev_close);
     end if;
     delete from public.kospi_req where id = r.id;
   end loop;
@@ -41,16 +46,20 @@ begin
   delete from public.kospi_ticks where ts < now() - interval '40 days';   -- 대회 기간(약 4주) 전체 보관
   -- 2) 다음 회차 요청
   insert into public.kospi_req (id) select net.http_get(
-    'https://query1.finance.yahoo.com/v8/finance/chart/%5EKS11?interval=1m&range=1d',
+    'https://query1.finance.yahoo.com/v8/finance/chart/%5EKS11?interval=1m&range=2d',
     headers := '{"User-Agent": "Mozilla/5.0"}'::jsonb);
 end $$;
 revoke all on function public.kospi_collect() from public, anon, authenticated;
 
 -- 날짜별 종가 (대시보드 수익률 그래프의 KOSPI 예비값)
+-- 1분봉 마지막 값엔 장 마감 동시호가가 빠져 있어서, 다음 거래일에 기록된 전일 종가를 우선 사용
 create or replace view public.kospi_daily with (security_invoker = true) as
-  select distinct on (d) d as date, price as close
-  from (select (ts at time zone 'Asia/Seoul')::date as d, ts, price from public.kospi_ticks) t
-  order by d, ts desc;
+  with t as (select (ts at time zone 'Asia/Seoul')::date as d, ts, price, prev_close from public.kospi_ticks),
+  last as (select distinct on (d) d, price from t order by d, ts desc),
+  pc as (select d, max(prev_close) as prev_close from t group by d)
+  select l.d as date,
+         coalesce((select pc.prev_close from pc where pc.d > l.d order by pc.d limit 1), l.price) as close
+  from last l;
 grant select on public.kospi_daily to anon;
 
 -- 평일 09:00~15:59 KST (= UTC 0~6시) 매분 실행

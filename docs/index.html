@@ -27,6 +27,7 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
 
 .top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; padding-bottom: 16px; }
 .top h1 { margin: 6px 0 0; font-size: clamp(26px, 3.4vw, 40px); font-weight: 500; letter-spacing: -0.8px; line-height: 1.1; }
+.top h1 .cd-inline { font-size: clamp(13px, 1.3vw, 16px); font-weight: 500; letter-spacing: 0; margin-left: 10px; color: var(--red-hi); -webkit-text-fill-color: var(--red-hi); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .top h1 .tagline { font-size: clamp(13px, 1.3vw, 16px); font-weight: 400; letter-spacing: 0; margin-left: 10px; color: var(--muted); -webkit-text-fill-color: var(--muted); white-space: nowrap; }
 .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 1.1px; text-transform: uppercase; color: var(--muted); }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -61,15 +62,6 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
 .tip .r span:first-child { color: var(--body); }
 .tip .why { color: var(--body); margin-top: 6px; padding-top: 6px; border-top: 1px solid #262626; }
 .tip .why b { color: var(--ink); font-weight: 500; }
-.countdown { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 16px; min-height: 300px; text-align: center; }
-.countdown[hidden] { display: none; }
-@media (max-width: 640px) { .countdown { min-height: 200px; } }
-.cd-time { display: flex; gap: clamp(14px, 3.4vw, 40px); }
-.cd-time span { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-.cd-time b { font-size: clamp(40px, 6vw, 72px); font-weight: 500; line-height: 1; letter-spacing: -1px; font-variant-numeric: tabular-nums; color: var(--ink); }
-.cd-time span:last-child b { color: var(--red-hi); }
-.cd-time i { font-style: normal; font-size: 12px; color: var(--muted); }
-.cd-sub { font-size: 12px; color: var(--muted); }
 .balloons { position: fixed; inset: 0; z-index: 40; pointer-events: none; overflow: hidden; }
 .bl { position: absolute; bottom: 0; left: var(--x); pointer-events: auto; cursor: pointer; animation: bl-rise var(--dur) linear forwards; }
 .bl-in { position: relative; max-width: min(280px, 70vw); padding: 10px 14px; border-radius: 18px; background: rgba(28,28,30,.74); border: 1px solid rgba(255,255,255,.14); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 8px 24px rgba(0,0,0,.4); font-size: 13px; line-height: 1.45; color: var(--ink); animation: bl-sway var(--sway) ease-in-out infinite alternate; }
@@ -195,7 +187,7 @@ details.log summary { border-radius: 16px; }
     <div class="brand">
       <div class="mark" aria-hidden="true"></div>
       <div>
-        <h1>Trading Dashboard <span class="tagline">누적 손실합 4억의 궁극의 듀오</span></h1>
+        <h1>Trading Dashboard <span class="tagline">누적 손실합 4억의 궁극의 듀오</span><span class="cd-inline" id="cd" hidden></span></h1>
       </div>
     </div>
     <a class="fab" id="fab" href="#comments" aria-label="응원하기로 이동"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>응원하기!<b id="fab-n"></b></a>
@@ -213,13 +205,8 @@ details.log summary { border-radius: 16px; }
           <div class="kv"><span class="eyebrow">KOSPI 대비</span><span id="excess">—</span></div>
         </div>
         <div style="display:flex;flex-direction:column;gap:10px;min-width:0">
-          <div class="countdown" id="cd" hidden>
-            <span class="eyebrow">시작까지</span>
-            <div class="cd-time"><span><b id="cd-d">0</b><i>일</i></span><span><b id="cd-h">00</b><i>시간</i></span><span><b id="cd-m">00</b><i>분</i></span><span><b id="cd-s">00</b><i>초</i></span></div>
-            <span class="cd-sub">2026. 11. 2 (월) 09:00 개장과 함께 시작 · 20거래일</span>
-          </div>
           <div class="chart" id="ch-hero" style="min-height:300px"></div>
-          <div class="legend" id="hero-legend">
+          <div class="legend">
             <span><i style="background:var(--red);height:3px"></i>DUO</span>
             <span><i style="background:#8a8a8a"></i>KOSPI</span>
             <span><i class="sq" style="background:var(--red)"></i>상승</span>
@@ -499,29 +486,32 @@ details.log summary { border-radius: 16px; }
   }
 
   // ---------- KOSPI 실시간: supabase/kospi.sql 이 1분마다 채우는 kospi_ticks 를 읽음 ----------
-  let KX = null;
+  let KX = null, KY = [];   // KX 오늘, KY 전일 (1분 단위)
   async function pollKospi() {
     const url = (CFG.supabaseUrl || '').replace(/\/$/, ''), key = CFG.supabaseAnonKey || '';
     try {
-      const r = await fetch(`${url}/rest/v1/kospi_ticks?select=ts,price,prev_close&order=ts.desc&limit=420`, { headers: { apikey: key, Authorization: 'Bearer ' + key } });
+      const r = await fetch(`${url}/rest/v1/kospi_ticks?select=ts,price,prev_close&order=ts.desc&limit=900`, { headers: { apikey: key, Authorization: 'Bearer ' + key } });
       const rows = r.ok ? (await r.json()).reverse() : [];
       if (rows.length) {
-        const day = kstDate(rows[rows.length - 1].ts);
-        KX = rows.filter(x => kstDate(x.ts) === day).map(x => ({ t: new Date(x.ts), v: +x.price, p: +x.prev_close }));
+        const days = [...new Set(rows.map(x => kstDate(x.ts)))], day = days[days.length - 1], yday = days[days.length - 2];
+        const pick = d => rows.filter(x => kstDate(x.ts) === d).map(x => ({ t: new Date(x.ts), v: +x.price, p: +x.prev_close }));
+        KX = pick(day);
+        // 전일 선은 오늘 시간축에 겹쳐 그림
+        const shift = yday ? Date.parse(day) - Date.parse(yday) : 0;
+        KY = yday ? pick(yday).map(d => ({ ...d, t: new Date(+d.t + shift) })) : [];
       }
     } catch (e) { /* 다음 회차에 다시 시도 */ }
     drawKospi();
   }
-  // ---------- 개막 카운트다운: 기록이 없고 개장 전일 때만 상단 그래프 자리에 표시 ----------
+  // ---------- 시작 카운트다운: 개장 전이면 제목 옆에 작게 표시 ----------
   function countdown() {
     const at = Date.parse(START + 'T09:00:00+09:00'), p2 = n => String(n).padStart(2, '0');
     const tick = () => {
-      const left = at - Date.now(), on = PRE && left > 0;
-      $('cd').hidden = !on; $('ch-hero').style.display = $('hero-legend').style.display = on ? 'none' : '';
-      if (!on) { clearInterval(timer); drawAll(); return; }
+      const left = at - Date.now();
+      if (left <= 0) { $('cd').hidden = true; clearInterval(timer); return; }
       const sec = Math.floor(left / 1000);
-      $('cd-d').textContent = Math.floor(sec / 86400); $('cd-h').textContent = p2(Math.floor(sec / 3600) % 24);
-      $('cd-m').textContent = p2(Math.floor(sec / 60) % 60); $('cd-s').textContent = p2(sec % 60);
+      $('cd').hidden = false;
+      $('cd').textContent = '시작까지 ' + Math.floor(sec / 86400) + '일 ' + p2(Math.floor(sec / 3600) % 24) + ':' + p2(Math.floor(sec / 60) % 60) + ':' + p2(sec % 60);
     };
     const timer = setInterval(tick, 1000); tick();
   }
@@ -533,14 +523,15 @@ details.log summary { border-radius: 16px; }
   function drawKospi() {
     const el = $('ch-kx');
     if (!KX || !KX.length) return none(el, 'KOSPI 데이터를 기다리는 중이에요.');
-    const L = KX[KX.length - 1], prev = L.p || KX[0].v, chg = L.v / prev - 1, col = chg >= 0 ? C.red : C.blue;
+    const L = KX[KX.length - 1], prev = L.p || (KY.length ? KY[KY.length - 1].v : KX[0].v), chg = L.v / prev - 1, col = chg >= 0 ? C.red : C.blue;
     const hm = t => t.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Seoul' });
     const f2 = v => v.toLocaleString('ko-KR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     $('kx-val').textContent = f2(L.v);
     $('kx-chg').textContent = (chg >= 0 ? '▲ ' : '▼ ') + f2(Math.abs(L.v - prev)) + ' (' + pct(chg) + ')'; tone($('kx-chg'), chg);
     $('kx-asof').textContent = md(toD(kstDate(L.t.toISOString()))) + ' ' + hm(L.t) + (marketOpen() ? ' 기준' : ' 장 마감');
     const { svg, W, H } = svgIn(el, 220);
-    const y = d3.scaleLinear([Math.min(prev, d3.min(KX, d => d.v)), Math.max(prev, d3.max(KX, d => d.v))], [H - 26, 10]).nice(4);
+    const all = KX.concat(KY);
+    const y = d3.scaleLinear([Math.min(prev, d3.min(all, d => d.v)), Math.max(prev, d3.max(all, d => d.v))], [H - 26, 10]).nice(4);
     const m = { l: d3.max(y.ticks(4), v => textW(svg, won(v))) + 10, r: 8 };
     const day = kstDate(L.t.toISOString());
     const x = d3.scaleUtc([new Date(day + 'T09:00:00+09:00'), new Date(day + 'T15:30:00+09:00')], [m.l, W - m.r]);
@@ -548,7 +539,12 @@ details.log summary { border-radius: 16px; }
     svg.append('g').selectAll('text').data(y.ticks(4)).join('text').attr('x', m.l - 8).attr('y', y).attr('dy', '.32em').attr('text-anchor', 'end').attr('font-size', 11).attr('fill', C.muted).text(won);
     [9, 11, 13, 15].forEach(h => svg.append('text').attr('x', x(new Date(`${day}T${String(h).padStart(2, '0')}:00:00+09:00`))).attr('y', H - 6).attr('text-anchor', h === 9 ? 'start' : 'middle').attr('font-size', 11).attr('fill', C.muted).text(h + ':00'));
     svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(prev)).attr('y2', y(prev)).attr('stroke', '#8a8a8a').attr('stroke-dasharray', '3 4');
-    svg.append('text').attr('x', W - m.r).attr('y', y(prev) - 6).attr('text-anchor', 'end').attr('font-size', 11).attr('fill', C.muted).text('전일 종가 ' + f2(prev));
+    svg.append('text').attr('x', m.l + 6).attr('y', y(prev) + 14).attr('font-size', 11).attr('fill', C.muted).text('전일 종가 ' + f2(prev));
+    if (KY.length) {
+      svg.append('path').datum(KY).attr('fill', 'none').attr('stroke', '#6a6a6a').attr('stroke-width', 1.5).attr('stroke-linejoin', 'round').attr('d', d3.line().x(d => x(d.t)).y(d => y(d.v)));
+      const Y = KY[KY.length - 1];
+      svg.append('text').attr('x', x(Y.t) + 6).attr('y', y(Y.v)).attr('dy', '.32em').attr('font-size', 11).attr('fill', C.muted).text('전일');
+    }
     svg.append('path').datum(KX).attr('fill', gradient(svg, 'gKx', col, .3)).attr('d', d3.area().x(d => x(d.t)).y0(H - 26).y1(d => y(d.v)));
     svg.append('path').datum(KX).attr('fill', 'none').attr('stroke', col).attr('stroke-width', 2).attr('stroke-linejoin', 'round').attr('d', d3.line().x(d => x(d.t)).y(d => y(d.v)));
     svg.append('circle').attr('cx', x(L.t)).attr('cy', y(L.v)).attr('r', 4).attr('fill', col).attr('stroke', '#fff').attr('stroke-width', 1.5);
@@ -892,7 +888,7 @@ details.log summary { border-radius: 16px; }
   let pool = [];
   const sky = document.createElement('div'); sky.className = 'balloons'; sky.setAttribute('aria-hidden', 'true'); document.body.appendChild(sky);
   function balloon() {
-    if (!pool.length || document.hidden || sky.childElementCount >= 4) return;
+    if (!pool.length || document.hidden || sky.childElementCount >= 2) return;
     const r = pool[Math.floor(Math.random() * pool.length)];
     const b = document.createElement('div'); b.className = 'bl';
     b.style.setProperty('--x', (3 + Math.random() * 74) + 'vw');
@@ -905,7 +901,7 @@ details.log summary { border-radius: 16px; }
     b.addEventListener('animationend', e => { if (e.target === b) b.remove(); });
     b.addEventListener('click', () => { b.classList.add('pop'); setTimeout(() => b.remove(), 260); });
   }
-  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) { setTimeout(balloon, 1500); setInterval(balloon, 3500); }
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) { setTimeout(balloon, 3000); setInterval(balloon, 12000); }
 })();
 </script>
 </body>
