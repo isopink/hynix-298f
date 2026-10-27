@@ -520,7 +520,7 @@ details.log summary { border-radius: 16px; }
       if (left <= 0) { $('cd').hidden = true; clearInterval(timer); return; }
       const sec = Math.floor(left / 1000);
       $('cd').hidden = false;
-      $('cd').textContent = '시작까지 ' + Math.floor(sec / 86400) + '일 ' + p2(Math.floor(sec / 3600) % 24) + ':' + p2(Math.floor(sec / 60) % 60) + ':' + p2(sec % 60);
+      $('cd').textContent = 'D-' + Math.floor(sec / 86400) + ' ' + p2(Math.floor(sec / 3600) % 24) + ':' + p2(Math.floor(sec / 60) % 60) + ':' + p2(sec % 60);
     };
     const timer = setInterval(tick, 1000); tick();
   }
