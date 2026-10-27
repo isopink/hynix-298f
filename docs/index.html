@@ -113,6 +113,7 @@ details.log summary { cursor: pointer; padding: 16px 20px; font-size: 13px; colo
 details.log summary::-webkit-details-marker { display: none; }
 details.log summary::after { content: "+"; color: var(--muted); font-size: 16px; line-height: 1; }
 details.log[open] > summary::after { content: "−"; }
+.fb-body { padding: 4px 20px 18px; }
 .more-body { display: grid; gap: 16px; padding: 0 16px 16px; }
 .more-body details.log { border-radius: 16px; }
 details.log summary:focus-visible { outline: 2px solid #f6e500; outline-offset: -2px; }
@@ -272,10 +273,6 @@ details.log summary { border-radius: 16px; }
     </section>
 
 
-    <section class="card c12">
-      <div class="hd"><span class="eyebrow">Feedback Loop</span></div>
-      <div id="ch-review"></div>
-    </section>
   </div>
 
   <details class="log more">
@@ -333,6 +330,10 @@ details.log summary { border-radius: 16px; }
           <div class="chart" id="ch-tokens" style="min-height:160px"></div>
         </section>
       </div>
+      <details class="log">
+        <summary>Feedback Loop</summary>
+        <div id="ch-review" class="fb-body"></div>
+      </details>
       <details class="log">
         <summary>전체 판단 로그 보기</summary>
         <div class="tbl"><table>
