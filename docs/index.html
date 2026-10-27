@@ -81,7 +81,14 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
 .pop { position: absolute; right: 0; top: calc(100% + 10px); z-index: 50; width: min(380px, calc(100vw - 32px)); max-height: min(72vh, 600px); overflow-y: auto; box-shadow: 0 18px 48px rgba(0,0,0,.55); }
 .pop[hidden] { display: none !important; }
 .card.pop { background: rgba(22,22,24,.95); }
-@media (max-width: 640px) { .cheer { margin: 0 auto; } .pop { right: auto; left: 50%; transform: translateX(-50%); } }
+@media (max-width: 640px) {
+  .cheer { margin: 0 auto; } .pop { right: auto; left: 50%; transform: translateX(-50%); }
+  /* 휴대폰: 로고 · 제목 · 부제 · 카운트다운 · 버튼을 한 줄씩 가운데로 */
+  .top { flex-direction: column; align-items: center; text-align: center; gap: 14px; }
+  .brand { flex-direction: column; gap: 10px; }
+  .top h1 .tagline, .top h1 .cd-inline { display: block; margin: 8px 0 0; }
+  .top h1 .cd-inline { margin-top: 4px; }
+}
 .pop .cm { grid-template-columns: minmax(0, 1fr); }
 .pop .f-form .two { grid-template-columns: minmax(0, 1fr); }
 .pop .f-form textarea { min-height: 72px; }
