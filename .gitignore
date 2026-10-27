@@ -1,0 +1,10 @@
+# 비밀 정보는 절대 저장소에 올리지 않기
+.env
+.env.*
+*.key
+secrets/
+kiwoom*.json
+__pycache__/
+.DS_Store
+.token_cache.json
+*.log
