@@ -28,7 +28,7 @@
 ### 2. GitHub Pages 켜기
 1. 저장소 **Settings → Pages**
 2. Source: **Deploy from a branch** / Branch: `main` / 폴더: **`/docs`** → Save
-3. 1~2분 뒤 `https://<아이디>.github.io/uostock-ai-trader/` 주소가 생김
+3. 1~2분 뒤 `https://<아이디>.github.io/hynix-298f/` 주소가 생김
 
 ### 3. 확인
 - 사이트에서 댓글 하나 남겨 보고, 새로고침해서 보이는지 확인

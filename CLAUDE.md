@@ -26,7 +26,7 @@
 ## 구조
 
 ```
-docs/       GitHub Pages 대시보드 (https://isopink.github.io/uostock-ai-trader/)
+docs/       GitHub Pages 대시보드 (https://isopink.github.io/hynix-298f/)
   index.html   단일 파일, D3 v7 (cdnjs), 빌드 없음. 샘플 데이터가 <script id="sample-data">에 내장
   config.js    Supabase URL / anon key / liveSince
   data/*.json  에이전트 로그 (equity, holdings, trades, risk, system, reviews)

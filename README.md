@@ -6,7 +6,7 @@
 
 Team *Hynix 298F* · 2026 Navist UOStock AI Auto-Trading Mock Investment Competition (University of Seoul)
 
-[**Live Dashboard →**](https://isopink.github.io/uostock-ai-trader/) · [한국어](README.ko.md)
+[**Live Dashboard →**](https://isopink.github.io/hynix-298f/) · [한국어](README.ko.md)
 
 ![Claude Code](https://img.shields.io/badge/Agent-Claude%20Code-d97757?style=flat-square)
 ![Kiwoom](https://img.shields.io/badge/Broker-Kiwoom%20REST%20API-1f4fa3?style=flat-square)
@@ -121,7 +121,7 @@ A single page that shows not just *what* the agent traded but *why*.
 ## Repository layout
 
 ```
-uostock-ai-trader/
+hynix-298f/
 ├── docs/                 # Dashboard, served by GitHub Pages
 │   ├── index.html
 │   ├── config.js         # Supabase public (anon) key

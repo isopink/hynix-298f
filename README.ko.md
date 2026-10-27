@@ -6,7 +6,7 @@
 
 2026 나비스트 UOStock AI 자동매매 모의주식투자대회 · 팀 「하이닉스 298층 주민」
 
-[**Live Dashboard →**](https://isopink.github.io/uostock-ai-trader/) · [English](README.md)
+[**Live Dashboard →**](https://isopink.github.io/hynix-298f/) · [English](README.md)
 
 ![Claude Code](https://img.shields.io/badge/Agent-Claude%20Code-d97757?style=flat-square)
 ![Kiwoom](https://img.shields.io/badge/Broker-Kiwoom%20REST%20API-1f4fa3?style=flat-square)
@@ -121,7 +121,7 @@ flowchart TD
 ## 폴더 구조
 
 ```
-uostock-ai-trader/
+hynix-298f/
 ├── docs/                 # GitHub Pages로 배포되는 대시보드
 │   ├── index.html
 │   ├── config.js         # Supabase 공개 키 (anon)
