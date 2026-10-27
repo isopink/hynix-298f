@@ -269,31 +269,44 @@ details.log summary { border-radius: 16px; }
       <div class="chart" id="ch-kx" style="min-height:300px"></div>
     </section>
 
-    <section class="card c3 glow-red"><div class="hd"><span class="eyebrow">이번 주</span><span class="sub">vs 지난 금요일</span></div><div class="val" id="k-week">—</div><div class="chart" id="sp-week"></div></section>
-    <section class="card c3 glow-blue"><div class="hd"><span class="eyebrow">최대 낙폭</span><span class="sub">고점 대비</span></div><div class="val" id="k-mdd">—</div><div class="chart" id="sp-dd"></div></section>
-    <section class="card c3"><div class="hd"><span class="eyebrow">KOSPI</span><span class="sub">대회 시작일 대비</span></div><div class="val" id="k-kospi">—</div><div class="chart" id="sp-kospi"></div></section>
-    <section class="card c3"><div class="hd"><span class="eyebrow">승률</span><span class="sub" id="k-win-sub">—</span></div><div class="val" id="k-win">—</div><div class="chart" id="sp-win"></div></section>
-
-    <section class="card c12">
-      <div class="hd"><span class="eyebrow">일별 수익률</span></div>
-      <div class="chart" id="ch-daily" style="min-height:200px"></div>
-    </section>
-
-    <section class="card c6">
-      <div class="hd"><span class="eyebrow">포트폴리오</span><span class="sub">빨간 호 = 국면 상한</span></div>
-      <div class="chart" id="ch-donut" style="min-height:240px"></div>
-    </section>
-    <section class="card c6">
-      <div class="hd"><span class="eyebrow">보유 종목 손익</span><span class="sub">평단 대비</span></div>
-      <div class="chart" id="ch-pnl" style="min-height:240px"></div>
-    </section>
-
 
     <section class="card c12">
       <div class="hd"><span class="eyebrow">주간 회고 제안</span></div>
       <div id="ch-review"></div>
     </section>
   </div>
+
+  <details class="log more">
+    <summary>Trading Detail</summary>
+    <div class="more-body">
+      <div class="grid">
+        <section class="card c3 glow-red"><div class="hd"><span class="eyebrow">이번 주</span><span class="sub">vs 지난 금요일</span></div><div class="val" id="k-week">—</div><div class="chart" id="sp-week"></div></section>
+        <section class="card c3 glow-blue"><div class="hd"><span class="eyebrow">최대 낙폭</span><span class="sub">고점 대비</span></div><div class="val" id="k-mdd">—</div><div class="chart" id="sp-dd"></div></section>
+        <section class="card c3"><div class="hd"><span class="eyebrow">KOSPI</span><span class="sub">대회 시작일 대비</span></div><div class="val" id="k-kospi">—</div><div class="chart" id="sp-kospi"></div></section>
+        <section class="card c3"><div class="hd"><span class="eyebrow">승률</span><span class="sub" id="k-win-sub">—</span></div><div class="val" id="k-win">—</div><div class="chart" id="sp-win"></div></section>
+        <section class="card c12">
+          <div class="hd"><span class="eyebrow">일별 수익률</span></div>
+          <div class="chart" id="ch-daily" style="min-height:200px"></div>
+        </section>
+      </div>
+    </div>
+  </details>
+
+  <details class="log more">
+    <summary>Portfolio</summary>
+    <div class="more-body">
+      <div class="grid">
+        <section class="card c6">
+          <div class="hd"><span class="eyebrow">포트폴리오</span><span class="sub">빨간 호 = 국면 상한</span></div>
+          <div class="chart" id="ch-donut" style="min-height:240px"></div>
+        </section>
+        <section class="card c6">
+          <div class="hd"><span class="eyebrow">보유 종목 손익</span><span class="sub">평단 대비</span></div>
+          <div class="chart" id="ch-pnl" style="min-height:240px"></div>
+        </section>
+      </div>
+    </div>
+  </details>
 
   <details class="log more" id="more">
     <summary>Agent Black Box</summary>
@@ -411,7 +424,7 @@ details.log summary { border-radius: 16px; }
     D = derive(BASE);
     fillText(); drawAll(); fillLog(); startKospi(); countdown();
     if (document.fonts) document.fonts.ready.then(drawAll);   // 웹폰트 적용 후 글자 폭 다시 계산
-    $('more').addEventListener('toggle', e => { if (e.target.open) drawAll(); });
+    document.querySelectorAll('details.more').forEach(d => d.addEventListener('toggle', () => { if (d.open) drawAll(); }));
     let w = window.innerWidth, t;
     window.addEventListener('resize', () => { if (window.innerWidth === w) return; w = window.innerWidth; clearTimeout(t); t = setTimeout(drawAll, 150); });
     startLive();
