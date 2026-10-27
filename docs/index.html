@@ -260,7 +260,8 @@ details.log summary { border-radius: 16px; }
             <span class="eyebrow">총 수익률</span>
             <div class="big" id="ret">—</div>
           </div>
-          <div class="kv"><span class="eyebrow" id="total-label">팀 총자산</span><span id="total">—</span></div>
+          <div class="kv"><span class="eyebrow">시작 원금</span><span>50,000,000원</span></div>
+          <div class="kv"><span class="eyebrow">현재 자산</span><span id="total">—</span></div>
           <div class="kv"><span class="eyebrow">KOSPI 대비</span><span id="excess">—</span></div>
         </div>
         <div style="display:flex;flex-direction:column;gap:10px;min-width:0">
@@ -527,7 +528,6 @@ details.log summary { border-radius: 16px; }
   }
 
   function fillText() {
-    $('total-label').textContent = PRE ? '시작 원금' : '팀 총자산';
     $('ret').textContent = pct(D.ret);
     $('total').textContent = won(D.last.total) + '원';
     const ex = D.ret - D.kret; $('excess').textContent = (ex >= 0 ? '+' : '−') + Math.abs(ex * 100).toFixed(2) + '%p'; tone($('excess'), ex);
