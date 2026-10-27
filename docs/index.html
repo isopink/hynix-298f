@@ -187,11 +187,6 @@ body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-i
   background-size: 48px 48px; mask-image: radial-gradient(ellipse at 50% 0%, #000 0%, transparent 70%); -webkit-mask-image: radial-gradient(ellipse at 50% 0%, #000 0%, transparent 70%); }
 .wrap { position: relative; z-index: 1; }
 .brand { display: flex; align-items: center; gap: 16px; }
-.mark { width: 44px; height: 44px; border-radius: 12px; flex: none; position: relative;
-  background: linear-gradient(140deg, #ff6a55 0%, #da291c 45%, #6e0b03 100%);
-  box-shadow: 0 8px 24px rgba(218,41,28,.45), inset 0 1px 0 rgba(255,255,255,.35); }
-.mark::after { content: ""; position: absolute; inset: 11px 12px; border-left: 3px solid #fff; border-right: 3px solid #fff; }
-.mark::before { content: ""; position: absolute; left: 12px; right: 12px; top: 20px; height: 3px; background: #fff; }
 .top h1 { background: linear-gradient(180deg, #ffffff 30%, #9a9a9a 120%); -webkit-background-clip: text; background-clip: text; color: transparent; letter-spacing: -1.2px; }
 .chip { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.09); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
 .chip.live::before { box-shadow: 0 0 0 0 rgba(218,41,28,.6); animation: pulse 2s infinite; }
@@ -226,7 +221,6 @@ details.log summary { border-radius: 16px; }
 
   <header class="top">
     <div class="brand">
-      <div class="mark" aria-hidden="true"></div>
       <div>
         <h1>Trading Dashboard <span class="tagline">합산 손실 4억, 이번엔 다르다.</span><span class="cd-inline" id="cd" hidden></span></h1>
       </div>
