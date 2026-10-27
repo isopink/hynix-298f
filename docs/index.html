@@ -104,6 +104,26 @@ details.log summary { cursor: pointer; padding: 16px 20px; font-size: 13px; colo
 details.log summary::-webkit-details-marker { display: none; }
 details.log summary::after { content: "+"; color: var(--muted); font-size: 16px; line-height: 1; }
 details.log[open] > summary::after { content: "−"; }
+.flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px 34px; padding: 6px 0; }
+.nd { position: relative; display: grid; gap: 4px; padding: 14px 14px 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.035); }
+.nd.llm { border-color: rgba(218,41,28,.45); background: linear-gradient(160deg, rgba(218,41,28,.16), rgba(218,41,28,.04)); }
+.nd .no { font-size: 11px; color: var(--muted); }
+.nd b { font-size: 14px; font-weight: 600; color: var(--ink); }
+.nd small { font-size: 12px; line-height: 1.5; color: var(--body); }
+.nd i { position: absolute; top: 12px; right: 12px; font-style: normal; font-size: 10px; letter-spacing: .6px; padding: 2px 7px; border-radius: 9999px; border: 1px solid rgba(255,255,255,.14); color: var(--muted); }
+.nd.llm i { border-color: rgba(255,90,74,.5); color: var(--red-hi); }
+.flow .nd:not(:nth-child(4n))::after { content: "→"; position: absolute; right: -26px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 16px; }
+.flow .nd:nth-child(4)::before { content: "↓ 5번으로"; position: absolute; left: 50%; bottom: -19px; transform: translateX(-50%); font-size: 11px; color: var(--muted); white-space: nowrap; }
+.loop { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; padding: 12px 14px; border: 1px dashed rgba(255,90,74,.5); border-radius: 12px; }
+.loop .nd { display: contents; }
+.loop .nd i { position: static; }
+.loop b { font-size: 14px; font-weight: 600; color: var(--ink); }
+.loop small { font-size: 12px; color: var(--body); }
+@media (max-width: 900px) {
+  .flow { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+  .flow .nd:not(:nth-child(4n))::after, .flow .nd:nth-child(4n)::after { content: "↓"; position: absolute; right: auto; top: auto; left: 50%; bottom: -24px; transform: translateX(-50%); color: var(--muted); font-size: 16px; }
+  .flow .nd:last-child::after, .flow .nd:nth-child(4)::before { content: none; }
+}
 .more-body { display: grid; gap: 16px; padding: 0 16px 16px; }
 .more-body details.log { border-radius: 16px; }
 details.log summary:focus-visible { outline: 2px solid #f6e500; outline-offset: -2px; }
@@ -315,6 +335,21 @@ details.log summary { border-radius: 16px; }
           <tbody id="log-body"></tbody>
         </table></div>
       </details>
+      <section class="card">
+        <div class="hd"><span class="eyebrow">에이전트 구조</span><span class="sub">에이전트는 제안하고, 규칙이 결정한다</span></div>
+        <div class="flow">
+            <div class="nd code"><span class="no">1</span><b>데이터 준비</b><small>pykrx · DART · 키움<br>지표 계산 · 후보 선별</small><i>Python</i></div>
+            <div class="nd llm"><span class="no">2</span><b>시장 국면</b><small>상승 · 횡보 · 하락<br>투자 비중 상한 90 · 60 · 30%</small><i>LLM</i></div>
+            <div class="nd llm"><span class="no">3</span><b>매수 ⇄ 매도 토론</b><small>두 서브에이전트가<br>근거를 주고받음</small><i>LLM</i></div>
+            <div class="nd llm"><span class="no">4</span><b>총괄 Agent</b><small>확신도 산출<br>매수 · 보유 · 매도 · 관망</small><i>LLM</i></div>
+            <div class="nd code"><span class="no">5</span><b>수량 계산</b><small>확신도 → 수량<br>손절 · 익절 · 최대 보유일</small><i>Python</i></div>
+            <div class="nd code"><span class="no">6</span><b>리스크 Hook</b><small>주문 직전 검사<br>현금 · 종목 한도 · 일일 손실</small><i>규칙</i></div>
+            <div class="nd code"><span class="no">7</span><b>주문 실행</b><small>키움 REST API<br>체결 결과 확인</small><i>API</i></div>
+            <div class="nd code"><span class="no">8</span><b>기록</b><small>판단 근거 · 체결<br>→ 이 대시보드</small><i>JSON</i></div>
+        </div>
+        <div class="loop"><span class="nd llm"><i>LLM</i></span><b>↺ 주간 회고</b><small>매주 일요일 기준값 조정 제안 → 2 · 4 · 5단계에 반영 · 리스크 한도는 수정 불가</small></div>
+        <div class="legend"><span><i class="sq" style="background:var(--red)"></i>LLM 판단</span><span><i class="sq" style="background:#6a6a6a"></i>코드 · 규칙</span></div>
+      </section>
     </div>
   </details>
 
