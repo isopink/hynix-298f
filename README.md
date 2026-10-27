@@ -173,8 +173,10 @@ cd live && python snapshot.py --dry
 
 **Hynix 298F** — Seokmin Lee · Munhwa Park
 
+[![Instagram](https://img.shields.io/badge/Instagram-@sl2eee-E4405F?style=flat-square&logo=instagram&logoColor=white)](https://www.instagram.com/sl2eee/)
+
 ---
 
 <div align="center">
-<sub>Designed by S.Lee · Built for a mock-trading competition. Not investment advice.</sub>
+<sub>Designed by <a href="https://www.instagram.com/sl2eee/">S.Lee</a> · Built for a mock-trading competition. Not investment advice.</sub>
 </div>

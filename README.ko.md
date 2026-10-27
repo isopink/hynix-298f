@@ -172,8 +172,10 @@ cd live && python snapshot.py --dry
 
 **하이닉스 298층 주민** — 이석민 · 박문화
 
+[![Instagram](https://img.shields.io/badge/Instagram-@sl2eee-E4405F?style=flat-square&logo=instagram&logoColor=white)](https://www.instagram.com/sl2eee/)
+
 ---
 
 <div align="center">
-<sub>Designed by S.Lee · 본 프로젝트는 모의투자 대회용이며 투자 권유가 아닙니다.</sub>
+<sub>Designed by <a href="https://www.instagram.com/sl2eee/">S.Lee</a> · 본 프로젝트는 모의투자 대회용이며 투자 권유가 아닙니다.</sub>
 </div>
