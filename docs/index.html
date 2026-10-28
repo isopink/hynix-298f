@@ -937,7 +937,7 @@ details.log summary { border-radius: 16px; }
     const m = { l: 8, r: 8 }, mid = H / 2 - 6;
     const x = d3.scaleUtc([toD(T0), toD(END)], [m.l + 48, W - m.r - 16]);
     const rr = d3.scaleSqrt([0, d3.max(D.trades, t => t.amount) || 1], [0, 14]);
-    [...(T0 < START ? [[T0, '예시']] : []), ['2026-11-02', '1주차'], ['2026-11-09', '2주차'], ['2026-11-16', '3주차'], ['2026-11-23', '4주차']].forEach(([d, l], i) => {
+    [...d3.utcMonday.range(toD(T0), toD(START)).map(d => [d.toISOString().slice(0, 10), '예시']), ['2026-11-02', '1주차'], ['2026-11-09', '2주차'], ['2026-11-16', '3주차'], ['2026-11-23', '4주차']].forEach(([d, l], i) => {
       const x0 = x(toD(d)) - 6, x1 = x(d3.utcDay.offset(toD(d), 4)) + 6;
       svg.append('rect').attr('x', x0).attr('y', 8).attr('width', x1 - x0).attr('height', H - 36).attr('rx', 8).attr('fill', 'rgba(255,255,255,.035)');
       svg.append('text').attr('x', x0 + 6).attr('y', 22).attr('font-size', 11).attr('fill', C.muted).text(l);
