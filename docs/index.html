@@ -82,8 +82,8 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
 .bb span { font-size: 12px; line-height: 1.4; word-break: keep-all; overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
 .bl-in svg { display: block; margin-top: 6px; overflow: visible; }
 @media (max-width: 640px) { .bb { width: calc(var(--w, 128px) * .85); height: calc(var(--w, 128px) * 1.01); padding: 18px 12px 22px; } .bb span { font-size: 11px; } }
-.bl.pop { animation-play-state: paused; }
-.bl.pop .bl-in { animation: bl-pop .25s ease-out forwards; }
+.bl.burst { animation-play-state: paused; }
+.bl.burst .bl-in { animation: bl-pop .25s ease-out forwards; }
 @keyframes bl-rise { from { transform: translateY(100%); } to { transform: translateY(calc(-100vh - 140%)); } }
 @keyframes bl-sway { from { transform: translateX(-26px) rotate(-6deg); } to { transform: translateX(26px) rotate(6deg); } }
 @keyframes bl-pop { 45% { transform: scale(1.35) rotate(-6deg); } to { transform: scale(0); opacity: 0; } }
@@ -1124,12 +1124,12 @@ details.log summary { border-radius: 16px; }
     inn.insertAdjacentHTML('beforeend', `<svg width="28" height="116" viewBox="0 0 28 116"><path fill="none" stroke="rgba(255,255,255,.42)" stroke-width="1.1" stroke-linecap="round" d="${k[0]}"><animate attributeName="d" dur="${wave}" repeatCount="indefinite" calcMode="spline" keyTimes="0;.25;.5;.75;1" keySplines=".45 0 .55 1;.45 0 .55 1;.45 0 .55 1;.45 0 .55 1" values="${k.join(';')}"/></path></svg>`);
     b.appendChild(inn); sky.appendChild(b);
     b.addEventListener('animationend', e => { if (e.target === b) b.remove(); });
-    b.addEventListener('click', () => { if (!b.classList.contains('pop')) burst(b); });
+    b.addEventListener('click', () => { if (!b.classList.contains('burst')) burst(b); });
   }
   // 터질 때: 풍선이 부풀었다 사라지고, 파편이 사방으로 튐
   function burst(b) {
     const r = (b.querySelector('.bb') || b).getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
-    b.classList.add('pop'); setTimeout(() => b.remove(), 260);
+    b.classList.add('burst'); setTimeout(() => b.remove(), 260);
     const add = (cls, vars, text) => { const e = document.createElement('div'); e.className = cls; for (const k in vars) e.style.setProperty(k, vars[k]); if (text) e.textContent = text; sky.appendChild(e); e.addEventListener('animationend', () => e.remove()); };
     for (let i = 0; i < 14; i++) {
       const a = Math.PI * 2 * i / 14 + Math.random() * .4, d = 50 + Math.random() * 60;
