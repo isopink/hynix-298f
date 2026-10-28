@@ -57,6 +57,7 @@ reports/    보고서 PDF
 - `risk.json`: `[{id, time, name, side, rule, detail}]`
 - `system.json`: `[{date, runs, failures, tokens_k}]`
 - `reviews.json`: `[{week, period, suggestion, status "반영"|"검토 중"}]`
+- `status.json`: `{last_run "YYYY-MM-DD HH:MM", last_ok, next_run "YYYY-MM-DD HH:MM", runs_today, failures_today, note}` — 에이전트가 실행할 때마다 덮어씀. next_run을 30분 넘기면 대시보드에 "지연" 표시
 
 ## 디자인 규칙 (대시보드)
 

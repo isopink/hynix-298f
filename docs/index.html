@@ -123,6 +123,24 @@ details.log[open] > summary::after { content: "−"; }
 .ewy[hidden] { display: none; }
 .ewy span { color: var(--muted); }
 .ewy b { font-weight: 600; }
+.status-card { padding-block: 16px; }
+.st-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px 20px; }
+.st-grid > div { display: grid; gap: 6px; }
+.st-grid b { font-size: 15px; font-weight: 500; color: var(--ink); display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
+.st-grid b small { font-size: 12px; font-weight: 400; color: var(--muted); }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); flex: none; }
+.dot.ok { background: #e6e6e6; box-shadow: 0 0 0 3px rgba(255,255,255,.08); }
+.dot.bad { background: var(--red-hi); box-shadow: 0 0 0 3px rgba(255,90,74,.18); }
+@media (max-width: 640px) { .st-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.cal { display: grid; grid-template-columns: 44px repeat(5, minmax(0, 1fr)); gap: 6px; }
+.cal .wd, .cal .wk { font-size: 11px; color: var(--muted); display: flex; align-items: center; }
+.cal .wd { justify-content: center; padding-bottom: 2px; }
+.cal .cell { position: relative; min-height: 58px; border-radius: 10px; border: 1px solid rgba(255,255,255,.07); background: rgba(255,255,255,.025); padding: 8px 10px; display: flex; flex-direction: column; justify-content: space-between; }
+.cal .cell .d { font-size: 11px; color: var(--muted); }
+.cal .cell .v { font-size: 14px; font-weight: 500; color: var(--ink); text-align: right; }
+.cal .cell.today { border-color: rgba(255,90,74,.7); }
+.cal .cell.has { cursor: default; }
+@media (max-width: 640px) { .cal { grid-template-columns: 30px repeat(5, minmax(0, 1fr)); gap: 4px; } .cal .cell { min-height: 48px; padding: 6px; } .cal .cell .v { font-size: 12px; } }
 .fb-body { padding: 4px 20px 18px; }
 .more-body { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 0 16px 16px; }
 .wrap > *, .more-body > * { min-width: 0; }   /* 넓은 표가 페이지 폭을 밀어내지 않게 */
@@ -268,6 +286,15 @@ details.log summary { border-radius: 16px; }
       </div>
     </section>
 
+    <section class="card c12 status-card">
+      <div class="st-grid">
+        <div><span class="eyebrow">에이전트</span><b id="st-state"><i class="dot"></i>—</b></div>
+        <div><span class="eyebrow">마지막 실행</span><b id="st-last">—</b></div>
+        <div><span class="eyebrow">다음 실행</span><b id="st-next">—</b></div>
+        <div><span class="eyebrow">오늘</span><b id="st-today">—</b></div>
+      </div>
+    </section>
+
     <section class="card c12">
       <div class="hd"><span class="eyebrow">실시간 KOSPI</span><span class="sub" id="kx-asof"></span></div>
       <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><span class="val" id="kx-val">—</span><span id="kx-chg" style="font-size:14px"></span><span class="ewy" id="kx-ewy" hidden title="EWY: 미국에 상장된 한국 주식 ETF. 한국 장 마감 뒤 밤사이 흐름을 보여 줘요."></span><span id="kx-rsi" style="font-size:13px;margin-left:auto"></span></div>
@@ -285,6 +312,10 @@ details.log summary { border-radius: 16px; }
         <section class="card c3 glow-blue"><div class="hd"><span class="eyebrow">최대 낙폭</span><span class="sub">고점 대비</span></div><div class="val" id="k-mdd">—</div><div class="chart" id="sp-dd"></div></section>
         <section class="card c3"><div class="hd"><span class="eyebrow">KOSPI</span><span class="sub">대회 시작일 대비</span></div><div class="val" id="k-kospi">—</div><div class="chart" id="sp-kospi"></div></section>
         <section class="card c3"><div class="hd"><span class="eyebrow">승률</span><span class="sub" id="k-win-sub">—</span></div><div class="val" id="k-win">—</div><div class="chart" id="sp-win"></div></section>
+        <section class="card c12">
+          <div class="hd"><span class="eyebrow">수익률 캘린더</span><span class="sub">빨강 수익 · 파랑 손실</span></div>
+          <div class="cal" id="ch-cal"></div>
+        </section>
         <section class="card c12">
           <div class="hd"><span class="eyebrow">일별 수익률</span></div>
           <div class="chart" id="ch-daily" style="min-height:200px"></div>
@@ -419,9 +450,10 @@ details.log summary { border-radius: 16px; }
   // data/*.json 이 있으면 그걸 쓰고, 없으면(파일을 더블클릭해 연 경우 등) HTML에 넣어 둔 샘플을 씀
   let SAMPLE = {};
   try { SAMPLE = JSON.parse(document.getElementById('sample-data').textContent); } catch (e) {}
-  Promise.all(['equity', 'holdings', 'trades', 'risk', 'system', 'reviews'].map(n =>
+  Promise.all(['equity', 'holdings', 'trades', 'risk', 'system', 'reviews', 'status'].map(n =>
     fetch('data/' + n + '.json', { cache: 'no-store' }).then(r => { if (!r.ok) throw 0; return r.json(); }).catch(() => SAMPLE[n] || [])
-  ).concat(Promise.resolve().then(loadKD))).then(([equity, holdings, trades, risk, system, reviews]) => {
+  ).concat(Promise.resolve().then(loadKD))).then(([equity, holdings, trades, risk, system, reviews, status]) => {
+    STATUS = Array.isArray(status) ? {} : status || {};
     // 기록이 아직 없으면(대회 시작 전) 초기 자산 한 점으로 빈 화면을 그림
     PRE = !equity.length;
     if (PRE) equity = [{ date: START, total: INIT, kospi: null, regime: null, cap: null }];
@@ -436,7 +468,7 @@ details.log summary { border-radius: 16px; }
   });
 
   // ---------- 실시간: live/snapshot.py 가 Supabase 에 올린 잔고 스냅샷을 30초마다 확인 ----------
-  let BASE = null, LIVE_AT = null, PRE = false;
+  let BASE = null, LIVE_AT = null, PRE = false, STATUS = {};
   const CFG = window.DASH_CONFIG || {};
   const kstDate = iso => new Date(Date.parse(iso) + 9 * 3600e3).toISOString().slice(0, 10);
   // 날짜별 KOSPI 종가 (supabase/kospi.sql 의 kospi_daily). 잔고 스냅샷·equity.json 에 KOSPI 가 없는 날의 예비값
@@ -538,7 +570,7 @@ details.log summary { border-radius: 16px; }
     if (!D) return;
     hero(); sparkLine($('sp-kospi'), D.eq.map(r => r.kospi), '#bdbdbd'); winDots($('sp-win'));
     sparkBars($('sp-week'), D.eq.slice(-5).map(r => r.day)); drawdown($('sp-dd'));
-    daily(); donut(); pnl(); scatter(); timeline(); recent(); blocks(); tokens(); review(); drawKospi();
+    agentStatus(); calendar(); daily(); donut(); pnl(); scatter(); timeline(); recent(); blocks(); tokens(); review(); drawKospi();
     animated = true;
   }
 
@@ -748,6 +780,48 @@ details.log summary { border-radius: 16px; }
     svg.append('line').attr('x1', 0).attr('x2', W).attr('y1', y(0)).attr('y2', y(0)).attr('stroke', '#333');
     svg.append('path').datum(vals).attr('fill', C.blue).attr('fill-opacity', .28).attr('d', d3.area().x((v, i) => x(i)).y0(y(0)).y1(y));
     svg.append('path').datum(vals).attr('fill', 'none').attr('stroke', C.blue).attr('stroke-width', 1.5).attr('d', d3.line().x((v, i) => x(i)).y(y));
+  }
+
+  // ---------- 에이전트 상태: docs/data/status.json (에이전트가 실행할 때마다 덮어씀) ----------
+  function agentStatus() {
+    const st = STATUS, hm = t => t ? md(toD(t)) + ' ' + String(t).slice(11, 16) : '—';
+    const set = (id, html) => { $(id).innerHTML = html; };
+    let state = 'idle', label = '대기 중';
+    if (st.last_run) {
+      const late = st.next_run && Date.now() - Date.parse(st.next_run.replace(' ', 'T') + ':00+09:00') > 30 * 60e3;   // 예정 시각을 30분 넘기면 지연
+      state = st.last_ok === false ? 'bad' : late ? 'bad' : 'ok';
+      label = st.last_ok === false ? '실패' : late ? '지연' : '정상';
+    }
+    set('st-state', `<i class="dot ${state === 'idle' ? '' : state}"></i>${label}`);
+    set('st-last', st.last_run ? esc(hm(st.last_run)) + (st.last_ok === false ? ' <small>✕</small>' : ' <small>✓</small>') : (PRE ? '<small>11/2 개장 전 첫 실행</small>' : '—'));
+    set('st-next', st.next_run ? esc(hm(st.next_run)) : '—');
+    set('st-today', st.last_run ? `${+st.runs_today || 0}회 <small>실패 ${+st.failures_today || 0}</small>` : '—');
+    if (st.note) $('st-state').title = st.note;
+  }
+
+  // ---------- 수익률 캘린더: 대회 20거래일을 주(행) × 요일(열)로 ----------
+  function calendar() {
+    const el = $('ch-cal'); el.innerHTML = '';
+    const byDate = new Map(PRE ? [] : D.eq.map((r, i) => [r.date, { day: i ? r.day : r.total / INIT - 1, kday: r.kday }]));
+    const vals = [...byDate.values()].map(v => Math.abs(v.day)), mx = d3.max(vals) || .01;
+    const today = kstDate(new Date().toISOString());
+    const add = (cls, text) => { const e = document.createElement('div'); e.className = cls; if (text) e.textContent = text; el.appendChild(e); return e; };
+    add('wd'); ['월', '화', '수', '목', '금'].forEach(d => add('wd', d));
+    for (let w = 0; w < 4; w++) {
+      add('wk', (w + 1) + '주');
+      for (let k = 0; k < 5; k++) {
+        const dt = d3.utcDay.offset(toD(START), w * 7 + k), key = dt.toISOString().slice(0, 10), v = byDate.get(key);
+        const c = add('cell' + (key === today ? ' today' : '') + (v ? ' has' : ''));
+        const dl = document.createElement('span'); dl.className = 'd'; dl.textContent = md(dt); c.appendChild(dl);
+        if (!v) continue;
+        const a = .14 + .62 * Math.min(1, Math.abs(v.day) / mx);
+        c.style.background = v.day >= 0 ? `rgba(218,41,28,${a})` : `rgba(74,163,212,${a})`;
+        const vl = document.createElement('span'); vl.className = 'v'; vl.textContent = pct(v.day); c.appendChild(vl);
+        c.addEventListener('pointermove', ev => showTip(ev, `<div class="t">${md(dt)}</div>${row('The Duo', pct(v.day), v.day >= 0 ? 'up' : 'down')}${row('KOSPI', pct(v.kday))}${row('초과', pct(v.day - v.kday), v.day - v.kday >= 0 ? 'up' : 'down')}`));
+        c.addEventListener('pointerdown', ev => showTip(ev, `<div class="t">${md(dt)}</div>${row('The Duo', pct(v.day), v.day >= 0 ? 'up' : 'down')}${row('KOSPI', pct(v.kday))}`));
+        c.addEventListener('pointerleave', hideTip);
+      }
+    }
   }
 
   function daily() {
