@@ -135,11 +135,12 @@ details.log[open] > summary::after { content: "−"; }
 .cal .wd, .cal .wk { font-size: 11px; color: var(--muted); display: flex; align-items: center; }
 .cal .wd { justify-content: center; padding-bottom: 2px; }
 .cal .cell { position: relative; min-height: 58px; border-radius: 10px; border: 1px solid rgba(255,255,255,.07); background: rgba(255,255,255,.025); padding: 8px 10px; display: flex; flex-direction: column; justify-content: space-between; }
-.cal .cell .d { font-size: 11px; color: var(--muted); }
+.cal .cell .top { display: flex; justify-content: space-between; gap: 6px; font-size: 11px; color: var(--muted); }
+.cal .cell .k { color: rgba(255,255,255,.62); font-variant-numeric: tabular-nums; }
 .cal .cell .v { font-size: 14px; font-weight: 500; color: var(--ink); text-align: right; }
 .cal .cell.today { border-color: rgba(255,90,74,.7); }
 .cal .cell.has { cursor: default; }
-@media (max-width: 640px) { .cal { grid-template-columns: 30px repeat(5, minmax(0, 1fr)); gap: 4px; } .cal .cell { min-height: 48px; padding: 6px; } .cal .cell .v { font-size: 12px; } }
+@media (max-width: 640px) { .cal { grid-template-columns: 30px repeat(5, minmax(0, 1fr)); gap: 4px; } .cal .cell { min-height: 48px; padding: 6px; } .cal .cell .v { font-size: 12px; } .cal .cell .k, .cal-sub { display: none; } }
 .fb-body { padding: 4px 20px 18px; }
 .more-body { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 0 16px 16px; }
 .wrap > *, .more-body > * { min-width: 0; }   /* 넓은 표가 페이지 폭을 밀어내지 않게 */
@@ -304,12 +305,8 @@ details.log summary { border-radius: 16px; }
         <section class="card c3"><div class="hd"><span class="eyebrow">KOSPI</span><span class="sub">대회 시작일 대비</span></div><div class="val" id="k-kospi">—</div><div class="chart" id="sp-kospi"></div></section>
         <section class="card c3"><div class="hd"><span class="eyebrow">승률</span><span class="sub" id="k-win-sub">—</span></div><div class="val" id="k-win">—</div><div class="chart" id="sp-win"></div></section>
         <section class="card c12">
-          <div class="hd"><span class="eyebrow">수익률 캘린더</span><span class="sub">빨강 수익 · 파랑 손실</span></div>
+          <div class="hd"><span class="eyebrow">수익률 캘린더</span><span class="sub cal-sub">큰 숫자 The Duo · 작은 숫자 KOSPI</span></div>
           <div class="cal" id="ch-cal"></div>
-        </section>
-        <section class="card c12">
-          <div class="hd"><span class="eyebrow">일별 수익률</span></div>
-          <div class="chart" id="ch-daily" style="min-height:200px"></div>
         </section>
       </div>
     </div>
@@ -561,7 +558,7 @@ details.log summary { border-radius: 16px; }
     if (!D) return;
     hero(); sparkLine($('sp-kospi'), D.eq.map(r => r.kospi), '#bdbdbd'); winDots($('sp-win'));
     sparkBars($('sp-week'), D.eq.slice(-5).map(r => r.day)); drawdown($('sp-dd'));
-    agentStatus(); calendar(); daily(); donut(); pnl(); scatter(); timeline(); recent(); blocks(); tokens(); review(); drawKospi();
+    agentStatus(); calendar(); donut(); pnl(); scatter(); timeline(); recent(); blocks(); tokens(); review(); drawKospi();
     animated = true;
   }
 
@@ -778,7 +775,7 @@ details.log summary { border-radius: 16px; }
     const st = STATUS, hm = t => md(toD(t)) + ' ' + String(t).slice(11, 16), el = $('st-line');
     const sp = html => `<span>${html}</span>`;
     if (!st.last_run) {
-      el.innerHTML = sp(`<span class="who"><i class="dot"></i>에이전트 <b>대기 중</b></span>`) + sp(PRE ? '11/2 개장 전 첫 실행' : '실행 기록 없음');
+      el.innerHTML = sp(`<span class="who"><i class="dot"></i>에이전트 <b>대기 중</b></span>`) ;
       return;
     }
     const late = st.next_run && Date.now() - Date.parse(st.next_run.replace(' ', 'T') + ':00+09:00') > 30 * 60e3;   // 예정 시각을 30분 넘기면 지연
@@ -804,8 +801,10 @@ details.log summary { border-radius: 16px; }
       for (let k = 0; k < 5; k++) {
         const dt = d3.utcDay.offset(toD(START), w * 7 + k), key = dt.toISOString().slice(0, 10), v = byDate.get(key);
         const c = add('cell' + (key === today ? ' today' : '') + (v ? ' has' : ''));
-        const dl = document.createElement('span'); dl.className = 'd'; dl.textContent = md(dt); c.appendChild(dl);
+        const top = document.createElement('div'); top.className = 'top'; c.appendChild(top);
+        const dl = document.createElement('span'); dl.textContent = md(dt); top.appendChild(dl);
         if (!v) continue;
+        const kl = document.createElement('span'); kl.className = 'k'; kl.textContent = 'K ' + pct(v.kday); top.appendChild(kl);
         const a = .14 + .62 * Math.min(1, Math.abs(v.day) / mx);
         c.style.background = v.day >= 0 ? `rgba(218,41,28,${a})` : `rgba(74,163,212,${a})`;
         const vl = document.createElement('span'); vl.className = 'v'; vl.textContent = pct(v.day); c.appendChild(vl);
@@ -816,22 +815,7 @@ details.log summary { border-radius: 16px; }
     }
   }
 
-  function daily() {
-    if (D.eq.length < 2) return none($('ch-daily'), '거래일이 쌓이면 일별 수익률이 표시돼요.');
-    const el = $('ch-daily'), { svg, W, H } = svgIn(el, 200), rows = D.eq.slice(1);
-    const m0 = d3.max(rows, r => Math.max(Math.abs(r.day), Math.abs(r.kday))) || .01;
-    const y = d3.scaleLinear([-m0, m0], [H - 26, 8]).nice(4), ticks = y.ticks(4), tf = v => (v > 0 ? '+' : '') + (v * 100).toFixed(1) + '%';
-    const m = { l: d3.max(ticks, v => textW(svg, tf(v), 10)) + 8, r: 4 };
-    const x = d3.scaleBand(rows.map(r => r.date), [m.l, W - m.r]).padding(.3);
-    svg.append('g').selectAll('line').data(ticks).join('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y).attr('y2', y).attr('stroke', d => d === 0 ? 'rgba(255,255,255,.16)' : C.grid);
-    svg.append('g').selectAll('text').data(ticks).join('text').attr('x', m.l - 6).attr('y', y).attr('dy', '.32em').attr('text-anchor', 'end').attr('font-size', 11).attr('fill', C.muted).text(tf);
-    svg.append('g').selectAll('rect').data(rows).join('rect').attr('x', r => x(r.date) + (x.bandwidth() - Math.min(32, x.bandwidth())) / 2).attr('width', Math.min(32, x.bandwidth())).attr('rx', 3)
-      .attr('y', r => y(Math.max(0, r.day))).attr('height', r => Math.max(1, Math.abs(y(r.day) - y(0)))).attr('fill', r => r.day >= 0 ? GR.red : GR.blue)
-      .on('pointermove pointerdown', (ev, r) => showTip(ev, `<div class="t">${md(r.d)}${r.regime ? ' · ' + esc(r.regime) : ''}</div>${row('The Duo', pct(r.day), r.day >= 0 ? 'up' : 'down')}${row('KOSPI', pct(r.kday))}`)).on('pointerleave', hideTip);
-    svg.append('g').selectAll('circle').data(rows).join('circle').attr('cx', r => x(r.date) + x.bandwidth() / 2).attr('cy', r => y(r.kday)).attr('r', 2.5).attr('fill', '#141414').attr('stroke', '#bdbdbd').attr('stroke-width', 1.25).attr('pointer-events', 'none');
-    const every = Math.ceil(rows.length / Math.max(2, Math.floor(W / 60)));
-    svg.append('g').selectAll('text').data(rows.filter((r, i) => i % every === 0)).join('text').attr('x', r => x(r.date) + x.bandwidth() / 2).attr('y', H - 6).attr('text-anchor', 'middle').attr('font-size', 11).attr('fill', C.muted).text(r => md(r.d));
-  }
+
 
   function donut() {
     const el = $('ch-donut'), { svg, W, H } = svgIn(el, 240);
