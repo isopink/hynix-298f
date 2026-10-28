@@ -126,7 +126,7 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
   .brand { flex-direction: column; gap: 10px; }
   .top h1 .tagline, .top h1 .cd-inline { display: block; margin: 8px 0 0; }
   .top h1 { font-size: 28px; }
-  .top h1 .cd-inline { margin-top: 4px; font-size: 18px; font-weight: 600; letter-spacing: .5px; }
+  .top h1 .cd-inline { margin-top: 4px; font-size: 17px; font-weight: 600; letter-spacing: .3px; white-space: normal; word-break: keep-all; }   /* 좁은 폰에선 줄바꿈 */
   .top { gap: 12px; padding-bottom: 4px; }
   .wrap { padding-block: 20px 40px; gap: 12px; }
   .fab { padding: 9px 18px; }
@@ -638,7 +638,7 @@ details.log summary { border-radius: 16px; }
       if (left <= 0) { $('cd').hidden = true; clearInterval(timer); return; }
       const sec = Math.floor(left / 1000);
       $('cd').hidden = false;
-      $('cd').textContent = '본격적인 시작까지 D-' + Math.floor(sec / 86400) + ' ' + p2(Math.floor(sec / 3600) % 24) + ':' + p2(Math.floor(sec / 60) % 60) + ':' + p2(sec % 60);
+      $('cd').textContent = '본격적인 시작까지 D-' + Math.floor(sec / 86400) + ' ' + p2(Math.floor(sec / 3600) % 24) + '시간 ' + p2(Math.floor(sec / 60) % 60) + '분 ' + p2(sec % 60) + '초';
     };
     const timer = setInterval(tick, 1000); tick();
   }
