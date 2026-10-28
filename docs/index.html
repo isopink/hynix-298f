@@ -50,8 +50,6 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
 .chip b { color: var(--ink); font-weight: 500; }
 .chip.live::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--red); }
 .chip.sample { border-color: var(--red); color: var(--red-hi); }
-.chip.demo { margin-left: 10px; padding: 3px 10px; font-size: 11px; vertical-align: 1px; }
-.chip.demo[hidden] { display: none; }
 
 .grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 16px; }
 .card { background: var(--card); border: 1px solid var(--line); padding: 20px; display: flex; flex-direction: column; gap: 12px; min-width: 0; position: relative; }
@@ -320,7 +318,7 @@ details.log summary { border-radius: 16px; }
       <div class="hero">
         <div class="side">
           <div>
-            <span class="eyebrow">총 수익률</span><span class="chip sample demo" id="demo" hidden>예시 데이터 · 실제 기록은 11/2부터</span>
+            <span class="eyebrow">총 수익률</span>
             <div class="big" id="ret">—</div>
           </div>
           <div class="kv"><span class="eyebrow">시작 원금</span><span>50,000,000원</span></div>
@@ -494,7 +492,7 @@ details.log summary { border-radius: 16px; }
   ).concat(Promise.resolve().then(loadKD))).then(([equity, holdings, trades, risk, system, reviews, status]) => {
     STATUS = Array.isArray(status) ? {} : status || {};
     // 기록이 아직 없으면(대회 시작 전) 초기 자산 한 점으로 빈 화면을 그림
-    if (DEMO && equity.length) { T0 = equity[0].date; $('demo').hidden = false; }
+    if (DEMO && equity.length) T0 = equity[0].date;
     PRE = !equity.length;
     if (PRE) equity = [{ date: START, total: INIT, kospi: null, regime: null, cap: null }];
     BASE = { equity, holdings, trades, risk, system, reviews };
@@ -640,7 +638,7 @@ details.log summary { border-radius: 16px; }
       if (left <= 0) { $('cd').hidden = true; clearInterval(timer); return; }
       const sec = Math.floor(left / 1000);
       $('cd').hidden = false;
-      $('cd').textContent = 'D-' + Math.floor(sec / 86400) + ' ' + p2(Math.floor(sec / 3600) % 24) + ':' + p2(Math.floor(sec / 60) % 60) + ':' + p2(sec % 60);
+      $('cd').textContent = '본격적인 시작까지 D-' + Math.floor(sec / 86400) + ' ' + p2(Math.floor(sec / 3600) % 24) + ':' + p2(Math.floor(sec / 60) % 60) + ':' + p2(sec % 60);
     };
     const timer = setInterval(tick, 1000); tick();
   }
