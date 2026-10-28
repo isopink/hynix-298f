@@ -110,10 +110,6 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
 @media (prefers-reduced-motion: reduce) { .tk-track { animation: none; } }
 @keyframes shard { to { transform: translate(var(--dx), var(--dy)) rotate(var(--r)) scale(.3); opacity: 0; } }
 .cheer { position: relative; margin-left: auto; align-self: center; display: flex; align-items: center; gap: 8px; }
-.bl-toggle { position: relative; width: 42px; height: 42px; border-radius: 50%; border: 1px solid rgba(255,255,255,.14); background: rgba(20,20,22,.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: var(--red-hi); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: color .15s, border-color .15s; }
-.bl-toggle:hover { border-color: rgba(218,41,28,.6); }
-.bl-toggle.off { color: var(--muted); }
-.bl-toggle.off::after { content: ""; position: absolute; width: 24px; height: 1.5px; background: currentColor; transform: rotate(-45deg); }
 .pop { position: absolute; right: 0; top: calc(100% + 10px); z-index: 50; width: min(380px, calc(100vw - 32px)); max-height: min(72vh, 600px); overflow-y: auto; box-shadow: 0 18px 48px rgba(0,0,0,.55); }
 .pop[hidden] { display: none !important; }
 .card.pop { background: rgba(22,22,24,.95); }
@@ -133,7 +129,7 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
   .top h1 .cd-inline { margin-top: 4px; font-size: 18px; font-weight: 600; letter-spacing: .5px; }
   .top { gap: 12px; padding-bottom: 4px; }
   .wrap { padding-block: 20px 40px; gap: 12px; }
-  .fab { padding: 9px 18px; } .bl-toggle { width: 38px; height: 38px; }
+  .fab { padding: 9px 18px; }
 }
 .pop .cm { grid-template-columns: minmax(0, 1fr); }
 .pop-x { margin-left: auto; width: 32px; height: 32px; border: 0; border-radius: 50%; background: rgba(255,255,255,.06); color: var(--body); font-size: 14px; cursor: pointer; }
@@ -295,7 +291,6 @@ details.log summary { border-radius: 16px; }
       </div>
     </div>
     <div class="cheer">
-      <button class="bl-toggle" id="bl-toggle" type="button" aria-pressed="true" aria-label="풍선 끄기" title="풍선 끄기"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5c3.6 0 6.2 2.8 6.2 6.4 0 4-3.1 7.6-6.2 7.6s-6.2-3.6-6.2-7.6c0-3.6 2.6-6.4 6.2-6.4z"/><path d="M11 16.5l1-.8 1 .8M12 16.5c0 2 -1.5 2.8 -1.5 5"/></svg></button>
       <button class="fab" id="fab" type="button" aria-expanded="false" aria-controls="comments"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>응원하기!<b id="fab-n"></b></button>
       <div class="scrim" id="scrim" hidden></div>
       <div class="card pop" id="comments" role="dialog" aria-label="응원하기" hidden>
@@ -1104,22 +1099,13 @@ details.log summary { border-radius: 16px; }
   // ---------- 응원 풍선 (휴대폰은 아래 응원 띠): 모든 응원 중 무작위로 하나씩 화면 아래에서 흔들리며 떠오름 (누르면 터짐) ----------
   let pool = [];
   const sky = document.createElement('div'); sky.className = 'balloons'; sky.setAttribute('aria-hidden', 'true'); document.body.appendChild(sky);
-  const LANES = 7, recent = [], tg = document.getElementById('bl-toggle');
+  const LANES = 7, recent = [];
   let seq = 0;   // 응원 목록 순서대로 하나씩, 끝까지 가면 처음부터 다시
-  let blOn = true; try { blOn = localStorage.getItem('bl-off') !== '1'; } catch (e) {}
   const phone = matchMedia('(max-width: 640px)'), tk = document.getElementById('ticker'), tkTrack = document.getElementById('tk-track');
-  function setBl(on) {
-    blOn = on; tg.classList.toggle('off', !on); tg.setAttribute('aria-pressed', on);
-    tg.title = on ? '풍선 끄기' : '풍선 켜기'; tg.setAttribute('aria-label', tg.title);
-    if (!on) sky.querySelectorAll('.bl').forEach(e => e.remove());
-    tk.hidden = !on || !pool.length;
-    try { localStorage.setItem('bl-off', on ? '0' : '1'); } catch (e) {}
-  }
-  setBl(blOn); tg.addEventListener('click', () => setBl(!blOn));
   // 휴대폰: 최근 응원 20개를 한 줄 띠로 (두 벌 이어 붙여 끊김 없이 반복, 누르면 응원하기 열림)
   let tkKey = '';
   function ticker() {
-    tk.hidden = !blOn || !pool.length;
+    tk.hidden = !pool.length;
     const rows = pool.slice(0, 20), key = rows.map(r => r.id).join();
     if (!rows.length || key === tkKey) return;
     tkKey = key; tkTrack.textContent = '';
@@ -1142,7 +1128,7 @@ details.log summary { border-radius: 16px; }
     return lane;
   }
   function balloon() {
-    if (!blOn || phone.matches || !pool.length || document.hidden || sky.querySelectorAll('.bl').length >= 3) return;
+    if (phone.matches || !pool.length || document.hidden || sky.querySelectorAll('.bl').length >= 3) return;
     if (seq >= pool.length) seq = 0;
     const r = pool[seq++];
     const b = document.createElement('div'); b.className = 'bl';
