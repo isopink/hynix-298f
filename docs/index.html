@@ -186,7 +186,14 @@ td.k { color: var(--ink); white-space: nowrap; }
   .c3 .hd { flex-direction: column; gap: 4px; }
   .recent { display: grid; }
   .grid { gap: 12px; }
-  .hero { grid-template-columns: minmax(0, 1fr); }
+  .hero { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .hero .side { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px 10px; }
+  .hero .side > div:first-child { grid-column: 1 / -1; }
+  .hero .big { font-size: 52px; margin: 8px 0 0; }
+  .hero .kv { padding-top: 12px; border-top: 1px solid rgba(255,255,255,.08); }
+  .hero .kv span:last-child { font-size: 14px; white-space: nowrap; }
+  .eyebrow { letter-spacing: .2px; font-size: 12px; }
+  #ch-hero { min-height: 0 !important; }
   .cm { grid-template-columns: minmax(0, 1fr); }
   .f-form .two { grid-template-columns: minmax(0, 1fr); }
 }
@@ -690,7 +697,7 @@ details.log summary { border-radius: 16px; }
 
 
   function hero() {
-    const el = $('ch-hero'), { svg, W, H } = svgIn(el, el.clientWidth < 520 ? 210 : 280), rows = D.eq;   // 휴대폰에선 낮게
+    const el = $('ch-hero'), { svg, W, H } = svgIn(el, el.clientWidth < 520 ? (D.eq.length > 1 ? 160 : 90) : 280), rows = D.eq;   // 휴대폰에선 낮게, 대회 전(점 하나)엔 더 낮게
     const lo = Math.min(0, d3.min(rows, r => Math.min(r.ret, r.kret))), hi = Math.max(0, d3.max(rows, r => Math.max(r.ret, r.kret)));
     const y0 = d3.scaleLinear([lo, hi], [0, 1]).nice(4), ticks = y0.ticks(4), tstep = ticks.length > 1 ? ticks[1] - ticks[0] : .01, tf = v => (v > 0 ? '+' : '') + (v * 100).toFixed(tstep < .0099 ? 1 : 0) + '%';
     const lw = Math.max(textW(svg, 'The Duo ' + pct(D.ret), 12), textW(svg, 'KOSPI ' + pct(D.kret), 12));
