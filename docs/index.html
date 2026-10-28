@@ -16,14 +16,15 @@
 <meta name="twitter:title" content="Duo's Trading Dashboard">
 <meta name="twitter:description" content="Agentic Quant Trading">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@500;600&display=swap">
 <style>
 /* Bento grid on near-black. Rosso Corsa = gains & the one hero line; blue = losses; everything else greyscale. Sharp corners, hairline borders. */
 :root {
   --canvas: #141414; --card: #1c1c1c; --card-2: #232323; --line: #2a2a2a; --grid: #262626;
   --ink: #f5f5f5; --body: #a0a0a0; --muted: #8c8c8c;
   --red: #da291c; --red-hi: #ff5a4a; --blue: #4aa3d4; --grey: #585858;
-  --font: "Noto Serif KR", "AppleMyungjo", "Batang", serif;
+  --font: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --serif: "Noto Serif KR", "AppleMyungjo", "Batang", serif;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
@@ -32,6 +33,7 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
 .wrap { max-width: 1360px; margin: 0 auto; padding-block: 32px 64px; padding-left: max(16px, 3vw, env(safe-area-inset-left, 0px)); padding-right: max(16px, 3vw, env(safe-area-inset-right, 0px)); display: grid; gap: 16px; }
 
 .top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; padding-bottom: 16px; }
+.top h1, .hero .big { font-family: var(--serif); }
 .top h1 { margin: 6px 0 0; font-size: clamp(26px, 3.4vw, 40px); font-weight: 500; letter-spacing: -0.8px; line-height: 1.1; }
 .top h1 .cd-inline { font-size: clamp(13px, 1.3vw, 16px); font-weight: 500; letter-spacing: 0; margin-left: 10px; color: var(--red-hi); -webkit-text-fill-color: var(--red-hi); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .top h1 .tagline { font-size: clamp(13px, 1.3vw, 16px); font-weight: 400; letter-spacing: 0; margin-left: 10px; color: var(--muted); -webkit-text-fill-color: var(--muted); white-space: nowrap; }
@@ -50,6 +52,7 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
 .c12 { grid-column: span 12; } .c6 { grid-column: span 6; } .c8 { grid-column: span 8; } .c7 { grid-column: span 7; } .c5 { grid-column: span 5; } .c4 { grid-column: span 4; } .c3 { grid-column: span 3; }
 .up { color: var(--red-hi); } .down { color: var(--blue); }
 .chart { width: 100%; flex: 1; min-height: 56px; }
+.chart.empty { min-height: 0 !important; flex: 0 0 auto; }
 .chart svg { display: block; width: 100%; overflow: visible; }
 
 .hero { display: grid; grid-template-columns: minmax(0, 290px) minmax(0, 1fr); gap: 32px; }
@@ -97,14 +100,28 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
 .pop[hidden] { display: none !important; }
 .card.pop { background: rgba(22,22,24,.95); }
 @media (max-width: 640px) {
-  .cheer { margin: 0 auto; } .pop { right: auto; left: 50%; transform: translateX(-50%); }
+  .cheer { margin: 0 auto; }
+  /* 휴대폰: 응원하기는 화면 아래에서 올라오는 시트 */
+  .pop { position: fixed; left: 0; right: 0; top: auto; bottom: 0; width: 100%; max-height: 85dvh; border-radius: 16px 16px 0 0 !important; padding: 16px 16px calc(16px + env(safe-area-inset-bottom, 0px)); }
+  .card.pop { background: rgba(22,22,24,.98); }
+  .pop .f-form input, .pop .f-form textarea { font-size: 16px; }   /* 16px 미만이면 iOS가 확대함 */
+  .pop .f-list { max-height: none; }
+  body.sheet-open { overflow: hidden; }
   /* 휴대폰: 로고 · 제목 · 부제 · 카운트다운 · 버튼을 한 줄씩 가운데로 */
   .top { flex-direction: column; align-items: center; text-align: center; gap: 14px; }
   .brand { flex-direction: column; gap: 10px; }
   .top h1 .tagline, .top h1 .cd-inline { display: block; margin: 8px 0 0; }
-  .top h1 .cd-inline { margin-top: 6px; font-size: 22px; font-weight: 600; letter-spacing: .5px; }
+  .top h1 { font-size: 28px; }
+  .top h1 .cd-inline { margin-top: 4px; font-size: 18px; font-weight: 600; letter-spacing: .5px; }
+  .top { gap: 12px; padding-bottom: 4px; }
+  .wrap { padding-block: 20px 40px; gap: 12px; }
+  .fab { padding: 9px 18px; } .bl-toggle { width: 38px; height: 38px; }
 }
 .pop .cm { grid-template-columns: minmax(0, 1fr); }
+.pop-x { margin-left: auto; width: 32px; height: 32px; border: 0; border-radius: 50%; background: rgba(255,255,255,.06); color: var(--body); font-size: 14px; cursor: pointer; }
+.scrim { position: fixed; inset: 0; z-index: 45; background: rgba(0,0,0,.55); }
+.scrim[hidden] { display: none; }
+@media (min-width: 641px) { .scrim { display: none; } }
 .pop .f-form .two { grid-template-columns: minmax(0, 1fr); }
 .pop .f-form textarea { min-height: 72px; }
 .pop .f-list { max-height: 260px; }
@@ -186,6 +203,11 @@ td.k { color: var(--ink); white-space: nowrap; }
   .c3 .hd { flex-direction: column; gap: 4px; }
   .recent { display: grid; }
   .grid { gap: 12px; }
+  .card { padding: 16px; }
+  .more-body { padding: 0 10px 10px; gap: 10px; }
+  details.log summary { padding: 14px 16px; }
+  .fb-body { padding: 4px 16px 16px; } .tbl { padding: 0 16px 16px; }
+  #ch-kx { min-height: 240px !important; }
   .hero { grid-template-columns: minmax(0, 1fr); gap: 16px; }
   .hero .side { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px 10px; }
   .hero .side > div:first-child { grid-column: 1 / -1; }
@@ -257,8 +279,9 @@ details.log summary { border-radius: 16px; }
     <div class="cheer">
       <button class="bl-toggle" id="bl-toggle" type="button" aria-pressed="true" aria-label="풍선 끄기" title="풍선 끄기"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5c3.6 0 6.2 2.8 6.2 6.4 0 4-3.1 7.6-6.2 7.6s-6.2-3.6-6.2-7.6c0-3.6 2.6-6.4 6.2-6.4z"/><path d="M11 16.5l1-.8 1 .8M12 16.5c0 2 -1.5 2.8 -1.5 5"/></svg></button>
       <button class="fab" id="fab" type="button" aria-expanded="false" aria-controls="comments"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>응원하기!<b id="fab-n"></b></button>
+      <div class="scrim" id="scrim" hidden></div>
       <div class="card pop" id="comments" role="dialog" aria-label="응원하기" hidden>
-        <div class="hd"><span class="eyebrow">응원하기!</span></div>
+        <div class="hd"><span class="eyebrow">응원하기!</span><button class="pop-x" id="pop-x" type="button" aria-label="닫기">✕</button></div>
         <div class="cm">
           <form class="f-form" id="cm-form" novalidate>
             <div class="two">
@@ -407,13 +430,14 @@ details.log summary { border-radius: 16px; }
     lastPointer = e.pointerType;
     if (e.pointerType !== 'mouse' && !e.target.closest('svg')) tip.hidden = true;  // 그래프 밖을 탭하면 닫힘
   }, true);
+  window.addEventListener('scroll', () => { if (lastPointer !== 'mouse') tip.hidden = true; }, { passive: true });
   const hideTip = () => { if (lastPointer === 'mouse') tip.hidden = true; };      // 터치는 탭한 말풍선을 고정
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const row = (a, b, cls) => `<div class="r"><span>${esc(a)}</span><span class="${cls || ''}">${esc(b)}</span></div>`;
 
-  const none = (el, msg) => { el.innerHTML = ''; const p = document.createElement('p'); p.className = 'f-empty'; p.textContent = msg; el.appendChild(p); };
+  const none = (el, msg) => { el.innerHTML = ''; el.classList.add('empty'); const p = document.createElement('p'); p.className = 'f-empty'; p.textContent = msg; el.appendChild(p); };
   function svgIn(el, H) {
-    el.innerHTML = '';
+    el.innerHTML = ''; el.classList.remove('empty');
     const W = Math.max(200, el.clientWidth);
     const svg = d3.select(el).append('svg').attr('viewBox', `0 0 ${W} ${H}`).attr('height', H);
     addGrads(svg);
@@ -819,7 +843,7 @@ details.log summary { border-radius: 16px; }
 
 
   function donut() {
-    const el = $('ch-donut'), { svg, W, H } = svgIn(el, 240);
+    const el = $('ch-donut'), { svg, W, H } = svgIn(el, el.clientWidth < 520 ? 200 : 240);
     const parts = D.hold.map(h => ({ name: h.name, v: h.value, pnl: h.pnl })).sort((a, b) => b.v - a.v).concat([{ name: '현금', v: D.cash }]);
     const tot = d3.sum(parts, p => p.v);
     const shades = ['#da291c', '#ff7a6e', '#bdbdbd', '#7a7a7a', '#4a4a4a', '#3a3a3a'];
@@ -1000,10 +1024,13 @@ details.log summary { border-radius: 16px; }
   const fabN = document.getElementById('fab-n');
   const fab = document.getElementById('fab'), pop = document.getElementById('comments');
   function openPop(on) {
-    pop.hidden = !on; fab.setAttribute('aria-expanded', on);
+    pop.hidden = !on; scrim.hidden = !on; fab.setAttribute('aria-expanded', on);
+    document.body.classList.toggle('sheet-open', on && sheet.matches);
     const sky = document.querySelector('.balloons'); if (sky) sky.style.display = on ? 'none' : '';
-    if (on) body.focus();
+    if (on && !sheet.matches) body.focus();   // 휴대폰에선 키보드가 바로 올라오지 않게
   }
+  const scrim = document.getElementById('scrim'), sheet = matchMedia('(max-width: 640px)');
+  document.getElementById('pop-x').addEventListener('click', () => openPop(false));
   fab.addEventListener('click', () => openPop(pop.hidden));
   document.addEventListener('pointerdown', e => { if (!pop.hidden && !e.target.closest('.cheer')) openPop(false); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !pop.hidden) { openPop(false); fab.focus(); } });
