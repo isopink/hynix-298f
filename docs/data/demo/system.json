@@ -1,0 +1,5 @@
+[
+  {"date": "2026-10-26", "runs": 8, "failures": 0, "tokens_k": 182},
+  {"date": "2026-10-27", "runs": 8, "failures": 1, "tokens_k": 205},
+  {"date": "2026-10-28", "runs": 9, "failures": 0, "tokens_k": 241}
+]

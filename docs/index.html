@@ -50,6 +50,8 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
 .chip b { color: var(--ink); font-weight: 500; }
 .chip.live::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--red); }
 .chip.sample { border-color: var(--red); color: var(--red-hi); }
+.chip.demo { margin-left: 10px; padding: 3px 10px; font-size: 11px; vertical-align: 1px; }
+.chip.demo[hidden] { display: none; }
 
 .grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 16px; }
 .card { background: var(--card); border: 1px solid var(--line); padding: 20px; display: flex; flex-direction: column; gap: 12px; min-width: 0; position: relative; }
@@ -318,7 +320,7 @@ details.log summary { border-radius: 16px; }
       <div class="hero">
         <div class="side">
           <div>
-            <span class="eyebrow">총 수익률</span>
+            <span class="eyebrow">총 수익률</span><span class="chip sample demo" id="demo" hidden>예시 데이터 · 실제 기록은 11/2부터</span>
             <div class="big" id="ret">—</div>
           </div>
           <div class="kv"><span class="eyebrow">시작 원금</span><span>50,000,000원</span></div>
@@ -423,6 +425,9 @@ details.log summary { border-radius: 16px; }
   const GR = { red: 'url(#gradRed)', blue: 'url(#gradBlue)', grey: 'url(#gradGrey)', redH: 'url(#gradRedH)', blueH: 'url(#gradBlueH)', ring: 'url(#gradRing)' };
   const C = { red: '#da291c', redHi: '#ff5a4a', blue: '#4aa3d4', grey: '#585858', muted: '#8c8c8c', grid: 'rgba(255,255,255,.06)', ink: '#f5f5f5', body: '#a0a0a0' };
   const INIT = 50000000, END = '2026-11-27', START = '2026-11-02';
+  // 대회 전 예시 모드: config.js 의 demoUntil 전까지 data/demo/*.json 을 보여 주고, 그래프 기간도 예시 첫날부터
+  const DEMO_UNTIL = (window.DASH_CONFIG || {}).demoUntil, DEMO = !!DEMO_UNTIL && Date.now() < Date.parse(DEMO_UNTIL + 'T09:00:00+09:00');
+  let T0 = START;
   const won = d3.format(',');
   const pct = (v, d = 2) => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v * 100).toFixed(d) + '%';
   const md = d3.utcFormat('%-m/%-d');
@@ -485,10 +490,11 @@ details.log summary { border-radius: 16px; }
   let SAMPLE = {};
   try { SAMPLE = JSON.parse(document.getElementById('sample-data').textContent); } catch (e) {}
   Promise.all(['equity', 'holdings', 'trades', 'risk', 'system', 'reviews', 'status'].map(n =>
-    fetch('data/' + n + '.json', { cache: 'no-store' }).then(r => { if (!r.ok) throw 0; return r.json(); }).catch(() => SAMPLE[n] || [])
+    fetch((DEMO ? 'data/demo/' : 'data/') + n + '.json', { cache: 'no-store' }).then(r => { if (!r.ok) throw 0; return r.json(); }).catch(() => SAMPLE[n] || [])
   ).concat(Promise.resolve().then(loadKD))).then(([equity, holdings, trades, risk, system, reviews, status]) => {
     STATUS = Array.isArray(status) ? {} : status || {};
     // 기록이 아직 없으면(대회 시작 전) 초기 자산 한 점으로 빈 화면을 그림
+    if (DEMO && equity.length) { T0 = equity[0].date; $('demo').hidden = false; }
     PRE = !equity.length;
     if (PRE) equity = [{ date: START, total: INIT, kospi: null, regime: null, cap: null }];
     BASE = { equity, holdings, trades, risk, system, reviews };
@@ -583,7 +589,7 @@ details.log summary { border-radius: 16px; }
       turnover: trades.reduce((s, t) => s + t.amount, 0) / (INIT * 2),
       tradeDays: new Set(trades.map(t => String(t.time).slice(0, 10))).size,
       daysLeft: Math.round((Date.parse(END) - Date.parse(last.date)) / 864e5),
-      totalDays: Math.round((Date.parse(END) - Date.parse(START)) / 864e5)
+      totalDays: Math.round((Date.parse(END) - Date.parse(T0)) / 864e5)
     };
   }
 
@@ -836,10 +842,10 @@ details.log summary { border-radius: 16px; }
     const today = kstDate(new Date().toISOString());
     const add = (cls, text) => { const e = document.createElement('div'); e.className = cls; if (text) e.textContent = text; el.appendChild(e); return e; };
     add('wd'); ['월', '화', '수', '목', '금'].forEach(d => add('wd', d));
-    for (let w = 0; w < 4; w++) {
+    for (let w = 0, n = Math.ceil((toD(END) - toD(T0)) / 6048e5); w < n; w++) {
       add('wk', (w + 1) + '주');
       for (let k = 0; k < 5; k++) {
-        const dt = d3.utcDay.offset(toD(START), w * 7 + k), key = dt.toISOString().slice(0, 10), v = byDate.get(key);
+        const dt = d3.utcDay.offset(toD(T0), w * 7 + k), key = dt.toISOString().slice(0, 10), v = byDate.get(key);
         const c = add('cell' + (key === today ? ' today' : '') + (v ? ' has' : ''));
         const top = document.createElement('div'); top.className = 'top'; c.appendChild(top);
         const dl = document.createElement('span'); dl.textContent = md(dt); top.appendChild(dl);
@@ -929,9 +935,9 @@ details.log summary { border-radius: 16px; }
   function timeline() {
     const el = $('ch-timeline'), { svg, W, H } = svgIn(el, 200);
     const m = { l: 8, r: 8 }, mid = H / 2 - 6;
-    const x = d3.scaleUtc([toD(START), toD(END)], [m.l + 48, W - m.r - 16]);
+    const x = d3.scaleUtc([toD(T0), toD(END)], [m.l + 48, W - m.r - 16]);
     const rr = d3.scaleSqrt([0, d3.max(D.trades, t => t.amount) || 1], [0, 14]);
-    [['2026-11-02', '1주차'], ['2026-11-09', '2주차'], ['2026-11-16', '3주차'], ['2026-11-23', '4주차']].forEach(([d, l], i) => {
+    [...(T0 < START ? [[T0, '예시']] : []), ['2026-11-02', '1주차'], ['2026-11-09', '2주차'], ['2026-11-16', '3주차'], ['2026-11-23', '4주차']].forEach(([d, l], i) => {
       const x0 = x(toD(d)) - 6, x1 = x(d3.utcDay.offset(toD(d), 4)) + 6;
       svg.append('rect').attr('x', x0).attr('y', 8).attr('width', x1 - x0).attr('height', H - 36).attr('rx', 8).attr('fill', 'rgba(255,255,255,.035)');
       svg.append('text').attr('x', x0 + 6).attr('y', 22).attr('font-size', 11).attr('fill', C.muted).text(l);
@@ -956,7 +962,7 @@ details.log summary { border-radius: 16px; }
   function recent() {
     const el = $('recent'); el.textContent = '';
     if (!D.trades.length) return;
-    const head = document.createElement('div'); head.className = 'eyebrow'; head.textContent = '최근 거래 3건'; el.appendChild(head);
+    const head = document.createElement('div'); head.className = 'eyebrow'; head.textContent = '최근 거래 ' + Math.min(3, D.trades.length) + '건'; el.appendChild(head);
     [...D.trades].sort((a, b) => a.time < b.time ? 1 : -1).slice(0, 3).forEach(t => {
       const c = document.createElement('div'); c.className = 'rc';
       const h = document.createElement('div'); h.className = 'h';
