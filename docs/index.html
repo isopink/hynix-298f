@@ -88,6 +88,17 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
 @keyframes bl-sway { from { transform: translateX(-26px) rotate(-6deg); } to { transform: translateX(26px) rotate(6deg); } }
 @keyframes bl-pop { 45% { transform: scale(1.35) rotate(-6deg); } to { transform: scale(0); opacity: 0; } }
 .shard { position: absolute; left: var(--l); top: var(--t); width: 9px; height: 9px; border-radius: 2px; background: var(--c); pointer-events: none; animation: shard .65s cubic-bezier(.2,.7,.3,1) forwards; }
+/* 휴대폰: 풍선 대신 상단에 응원 글이 한 줄로 흘러감 */
+.ticker { display: none; }
+@media (max-width: 640px) {
+  .ticker:not([hidden]) { display: block; width: 100%; overflow: hidden; padding: 9px 0; border: 1px solid rgba(255,255,255,.09); border-radius: 9999px; background: rgba(255,255,255,.04); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); font: inherit; text-align: left; cursor: pointer;
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+}
+.tk-track { display: inline-flex; white-space: nowrap; animation: tk var(--dur, 30s) linear infinite; }
+.tk-item { font-size: 13px; color: var(--body); padding-right: 32px; }
+.tk-item b { color: var(--red-hi); font-weight: 600; margin-right: 6px; }
+@keyframes tk { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .tk-track { animation: none; } }
 @keyframes shard { to { transform: translate(var(--dx), var(--dy)) rotate(var(--r)) scale(.3); opacity: 0; } }
 .cheer { position: relative; margin-left: auto; align-self: center; display: flex; align-items: center; gap: 8px; }
 .bl-toggle { position: relative; width: 42px; height: 42px; border-radius: 50%; border: 1px solid rgba(255,255,255,.14); background: rgba(20,20,22,.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: var(--red-hi); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: color .15s, border-color .15s; }
@@ -295,6 +306,8 @@ details.log summary { border-radius: 16px; }
       </div>
     </div>
   </header>
+
+  <button class="ticker" id="ticker" type="button" aria-label="응원 글 보기" hidden><span class="tk-track" id="tk-track"></span></button>
 
   <div class="grid">
     <section class="card c12 hero-card">
@@ -1046,7 +1059,7 @@ details.log summary { border-radius: 16px; }
   body.addEventListener('input', () => { count.textContent = body.value.length + ' / 300'; });
   if (!url || !key) { list.innerHTML = '<p class="f-empty">댓글 저장소가 아직 연결되지 않았어요. config.js에 Supabase 주소와 anon 키를 넣으면 켜집니다.</p>'; btn.disabled = true; return; }
   function render(rows) {
-    pool = rows; rows = rows.slice(0, 100);   // 풍선은 최근 300개 중에서, 목록은 100개만
+    pool = rows; ticker(); rows = rows.slice(0, 100);   // 풍선은 최근 300개 중에서, 목록은 100개만
     list.textContent = ''; total.textContent = rows.length ? rows.length + '개의 글' : ''; fabN.textContent = rows.length || '';
     if (!rows.length) { const p = document.createElement('p'); p.className = 'f-empty'; p.textContent = '첫 댓글을 남겨 주세요.'; list.appendChild(p); return; }
     for (const r of rows) {
@@ -1079,19 +1092,36 @@ details.log summary { border-radius: 16px; }
   });
   load(); setInterval(() => { if (!document.hidden) load(); }, 60000);
 
-  // ---------- 응원 풍선: 모든 응원 중 무작위로 하나씩 화면 아래에서 흔들리며 떠오름 (누르면 터짐) ----------
+  // ---------- 응원 풍선 (휴대폰은 아래 응원 띠): 모든 응원 중 무작위로 하나씩 화면 아래에서 흔들리며 떠오름 (누르면 터짐) ----------
   let pool = [];
   const sky = document.createElement('div'); sky.className = 'balloons'; sky.setAttribute('aria-hidden', 'true'); document.body.appendChild(sky);
   const LANES = 7, recent = [], tg = document.getElementById('bl-toggle');
   let seq = 0;   // 응원 목록 순서대로 하나씩, 끝까지 가면 처음부터 다시
   let blOn = true; try { blOn = localStorage.getItem('bl-off') !== '1'; } catch (e) {}
+  const phone = matchMedia('(max-width: 640px)'), tk = document.getElementById('ticker'), tkTrack = document.getElementById('tk-track');
   function setBl(on) {
     blOn = on; tg.classList.toggle('off', !on); tg.setAttribute('aria-pressed', on);
     tg.title = on ? '풍선 끄기' : '풍선 켜기'; tg.setAttribute('aria-label', tg.title);
     if (!on) sky.querySelectorAll('.bl').forEach(e => e.remove());
+    tk.hidden = !on || !pool.length;
     try { localStorage.setItem('bl-off', on ? '0' : '1'); } catch (e) {}
   }
   setBl(blOn); tg.addEventListener('click', () => setBl(!blOn));
+  // 휴대폰: 최근 응원 20개를 한 줄 띠로 (두 벌 이어 붙여 끊김 없이 반복, 누르면 응원하기 열림)
+  let tkKey = '';
+  function ticker() {
+    tk.hidden = !blOn || !pool.length;
+    const rows = pool.slice(0, 20), key = rows.map(r => r.id).join();
+    if (!rows.length || key === tkKey) return;
+    tkKey = key; tkTrack.textContent = '';
+    for (let k = 0; k < 2; k++) for (const r of rows) {
+      const it = document.createElement('span'); it.className = 'tk-item';
+      const n = document.createElement('b'); n.textContent = r.nickname || '익명 개미';
+      it.append(n, r.body.length > 40 ? r.body.slice(0, 40) + '…' : r.body); tkTrack.appendChild(it);
+    }
+    requestAnimationFrame(() => tkTrack.style.setProperty('--dur', Math.max(15, tkTrack.scrollWidth / 2 / 45) + 's'));   // 초당 45px
+  }
+  tk.addEventListener('click', () => fab.click());
   function pickLane() {
     const busy = [...sky.querySelectorAll('.bl')].map(e => +e.dataset.lane);
     const all = [...Array(LANES).keys()], near = i => busy.some(b => Math.abs(b - i) <= 1);
@@ -1103,7 +1133,7 @@ details.log summary { border-radius: 16px; }
     return lane;
   }
   function balloon() {
-    if (!blOn || !pool.length || document.hidden || sky.querySelectorAll('.bl').length >= 3) return;
+    if (!blOn || phone.matches || !pool.length || document.hidden || sky.querySelectorAll('.bl').length >= 3) return;
     if (seq >= pool.length) seq = 0;
     const r = pool[seq++];
     const b = document.createElement('div'); b.className = 'bl';
