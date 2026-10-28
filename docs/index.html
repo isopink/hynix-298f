@@ -282,7 +282,7 @@ details.log summary { border-radius: 16px; }
         </div>
         <div style="display:flex;flex-direction:column;gap:10px;min-width:0">
           <div class="st-line" id="st-line"></div>
-          <div class="chart" id="ch-hero" style="min-height:300px"></div>
+          <div class="chart" id="ch-hero" style="min-height:210px"></div>
         </div>
       </div>
     </section>
@@ -690,22 +690,16 @@ details.log summary { border-radius: 16px; }
 
 
   function hero() {
-    const el = $('ch-hero'), { svg, W, H } = svgIn(el, 300), rows = D.eq;
+    const el = $('ch-hero'), { svg, W, H } = svgIn(el, el.clientWidth < 520 ? 210 : 280), rows = D.eq;   // 휴대폰에선 낮게
     const lo = Math.min(0, d3.min(rows, r => Math.min(r.ret, r.kret))), hi = Math.max(0, d3.max(rows, r => Math.max(r.ret, r.kret)));
     const y0 = d3.scaleLinear([lo, hi], [0, 1]).nice(4), ticks = y0.ticks(4), tstep = ticks.length > 1 ? ticks[1] - ticks[0] : .01, tf = v => (v > 0 ? '+' : '') + (v * 100).toFixed(tstep < .0099 ? 1 : 0) + '%';
     const lw = Math.max(textW(svg, 'The Duo ' + pct(D.ret), 12), textW(svg, 'KOSPI ' + pct(D.kret), 12));
     const narrow = W < 520;
-    const m = { t: 10, r: narrow ? 8 : lw + 18, b: 50, l: d3.max(ticks, v => textW(svg, tf(v))) + 10 };
+    const m = { t: 10, r: narrow ? 8 : lw + 18, b: 28, l: d3.max(ticks, v => textW(svg, tf(v))) + 10 };
     const x = d3.scaleUtc(d3.extent(rows, r => r.d), [m.l, W - m.r]);
     const y = d3.scaleLinear(y0.domain(), [H - m.b, m.t]);
     svg.append('g').selectAll('line').data(ticks).join('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y).attr('y2', y).attr('stroke', d => d === 0 ? 'rgba(255,255,255,.16)' : C.grid);
     svg.append('g').selectAll('text').data(ticks).join('text').attr('x', m.l - 8).attr('y', y).attr('dy', '.32em').attr('text-anchor', 'end').attr('font-size', 11).attr('fill', C.muted).text(tf);
-    const step = rows.length > 1 ? (x(rows[1].d) - x(rows[0].d)) : 20;
-    svg.append('g').selectAll('rect').data(rows).join('rect')
-      .attr('x', (r, i) => i ? x(r.d) - step / 2 : m.l).attr('y', H - m.b + 18).attr('height', 4)
-      .attr('width', (r, i) => Math.max(1, (i === rows.length - 1 ? W - m.r : x(r.d) + step / 2) - (i ? x(r.d) - step / 2 : m.l) - 1))
-      .attr('fill', r => regC(r.regime));
-    svg.append('text').attr('x', m.l - 8).attr('y', H - m.b + 20).attr('dy', '.32em').attr('text-anchor', 'end').attr('font-size', 10).attr('fill', C.muted).text('국면');
     const xt = rows.filter((r, i) => i % 5 === 0 || i === rows.length - 1);
     svg.append('g').selectAll('text').data(xt).join('text').attr('x', r => x(r.d)).attr('y', H - 8).attr('font-size', 11).attr('fill', C.muted)
       .attr('text-anchor', (r, i) => xt.length === 1 ? 'middle' : i === 0 ? 'start' : i === xt.length - 1 ? 'end' : 'middle').text(r => md(r.d));
