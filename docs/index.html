@@ -123,15 +123,14 @@ details.log[open] > summary::after { content: "−"; }
 .ewy[hidden] { display: none; }
 .ewy span { color: var(--muted); }
 .ewy b { font-weight: 600; }
-.status-card { padding-block: 16px; }
-.st-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px 20px; }
-.st-grid > div { display: grid; gap: 6px; }
-.st-grid b { font-size: 15px; font-weight: 500; color: var(--ink); display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
-.st-grid b small { font-size: 12px; font-weight: 400; color: var(--muted); }
-.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); flex: none; }
+.st-line { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 4px 0; font-size: 12px; color: var(--muted); }
+.st-line > span + span::before { content: "·"; margin: 0 8px; color: rgba(255,255,255,.25); }
+.st-line b { color: var(--ink); font-weight: 500; }
+.st-line .who { display: inline-flex; align-items: center; gap: 6px; }
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); flex: none; }
 .dot.ok { background: #e6e6e6; box-shadow: 0 0 0 3px rgba(255,255,255,.08); }
 .dot.bad { background: var(--red-hi); box-shadow: 0 0 0 3px rgba(255,90,74,.18); }
-@media (max-width: 640px) { .st-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .st-line { justify-content: flex-start; } }
 .cal { display: grid; grid-template-columns: 44px repeat(5, minmax(0, 1fr)); gap: 6px; }
 .cal .wd, .cal .wk { font-size: 11px; color: var(--muted); display: flex; align-items: center; }
 .cal .wd { justify-content: center; padding-bottom: 2px; }
@@ -281,17 +280,9 @@ details.log summary { border-radius: 16px; }
           <div class="kv"><span class="eyebrow">KOSPI 대비</span><span id="excess">—</span></div>
         </div>
         <div style="display:flex;flex-direction:column;gap:10px;min-width:0">
+          <div class="st-line" id="st-line"></div>
           <div class="chart" id="ch-hero" style="min-height:300px"></div>
         </div>
-      </div>
-    </section>
-
-    <section class="card c12 status-card">
-      <div class="st-grid">
-        <div><span class="eyebrow">에이전트</span><b id="st-state"><i class="dot"></i>—</b></div>
-        <div><span class="eyebrow">마지막 실행</span><b id="st-last">—</b></div>
-        <div><span class="eyebrow">다음 실행</span><b id="st-next">—</b></div>
-        <div><span class="eyebrow">오늘</span><b id="st-today">—</b></div>
       </div>
     </section>
 
@@ -784,20 +775,21 @@ details.log summary { border-radius: 16px; }
 
   // ---------- 에이전트 상태: docs/data/status.json (에이전트가 실행할 때마다 덮어씀) ----------
   function agentStatus() {
-    const st = STATUS, hm = t => t ? md(toD(t)) + ' ' + String(t).slice(11, 16) : '—';
-    const set = (id, html) => { $(id).innerHTML = html; };
-    let state = 'idle', label = '대기 중';
-    if (st.last_run) {
-      const late = st.next_run && Date.now() - Date.parse(st.next_run.replace(' ', 'T') + ':00+09:00') > 30 * 60e3;   // 예정 시각을 30분 넘기면 지연
-      state = st.last_ok === false ? 'bad' : late ? 'bad' : 'ok';
-      label = st.last_ok === false ? '실패' : late ? '지연' : '정상';
+    const st = STATUS, hm = t => md(toD(t)) + ' ' + String(t).slice(11, 16), el = $('st-line');
+    const sp = html => `<span>${html}</span>`;
+    if (!st.last_run) {
+      el.innerHTML = sp(`<span class="who"><i class="dot"></i>에이전트 <b>대기 중</b></span>`) + sp(PRE ? '11/2 개장 전 첫 실행' : '실행 기록 없음');
+      return;
     }
-    set('st-state', `<i class="dot ${state === 'idle' ? '' : state}"></i>${label}`);
-    set('st-last', st.last_run ? esc(hm(st.last_run)) + (st.last_ok === false ? ' <small>✕</small>' : ' <small>✓</small>') : (PRE ? '<small>11/2 개장 전 첫 실행</small>' : '—'));
-    set('st-next', st.next_run ? esc(hm(st.next_run)) : '—');
-    set('st-today', st.last_run ? `${+st.runs_today || 0}회 <small>실패 ${+st.failures_today || 0}</small>` : '—');
-    if (st.note) $('st-state').title = st.note;
+    const late = st.next_run && Date.now() - Date.parse(st.next_run.replace(' ', 'T') + ':00+09:00') > 30 * 60e3;   // 예정 시각을 30분 넘기면 지연
+    const bad = st.last_ok === false || late, label = st.last_ok === false ? '실패' : late ? '지연' : '정상';
+    el.innerHTML = sp(`<span class="who"><i class="dot ${bad ? 'bad' : 'ok'}"></i>에이전트 <b>${label}</b></span>`)
+      + sp(`마지막 <b>${esc(hm(st.last_run))}</b> ${st.last_ok === false ? '✕' : '✓'}`)
+      + (st.next_run ? sp(`다음 <b>${esc(hm(st.next_run))}</b>`) : '')
+      + sp(`오늘 <b>${+st.runs_today || 0}회</b>${+st.failures_today ? ` · 실패 ${+st.failures_today}` : ''}`);
+    if (st.note) el.title = st.note;
   }
+
 
   // ---------- 수익률 캘린더: 대회 20거래일을 주(행) × 요일(열)로 ----------
   function calendar() {
