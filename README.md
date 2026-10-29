@@ -44,22 +44,29 @@ Indicators are computed in Python and handed to the model as short summaries, an
 ## Architecture
 
 ```mermaid
-flowchart TD
-    A["Data prep (Python)<br/>prices · investor flows · filings → indicators → candidates"] --> B["Market-regime agent<br/>bull / sideways / bear → exposure cap"]
-    B --> C["Bull agent"]
-    B --> D["Bear agent"]
-    C <-->|rebuttal| D
-    C --> E["Lead agent<br/>conviction score → buy / hold / sell"]
-    D --> E
-    E --> F["Sizing (Python)<br/>conviction → quantity, stop · target · max holding days"]
-    F --> G{"Risk Hook<br/>cash · per-stock limit · daily loss"}
-    G -->|pass| H["Order<br/>Kiwoom REST API"]
-    G -->|violation| X["Blocked + logged"]
-    H --> I[("Decision & fill log")]
-    X --> I
-    I -->|weekly| J["Review agent<br/>suggests threshold changes · drafts the weekly report"]
-    I --> K["Trading Dashboard"]
-    L["Balance snapshot (every 5 min)"] --> K
+flowchart TB
+    subgraph P1["① Decide — before the open, every trading day"]
+        direction LR
+        A["Data prep (Python)<br/>prices · flows · filings → indicators → candidates"] --> B["Market-regime agent<br/>bull / sideways / bear → exposure cap"]
+        B --> C["Bull agent"]
+        B --> D["Bear agent"]
+        C <-->|rebuttal| D
+        C --> E["Lead agent<br/>conviction → buy / hold / sell"]
+        D --> E
+    end
+    subgraph P2["② Execute"]
+        direction LR
+        F["Sizing (Python)<br/>quantity · stop · target · max holding days"] --> G{{"Risk Hook<br/>cash · per-stock limit · daily loss"}}
+        G -->|pass| H["Order<br/>Kiwoom REST API"]
+        G -->|violation| X["Blocked + logged"]
+    end
+    subgraph P3["③ Log · improve"]
+        direction LR
+        I[("Decision & fill log")] -->|weekly| J["Review agent<br/>threshold changes · weekly report draft"]
+        I --> K["Trading Dashboard"]
+        L["Balance snapshot (every 5 min)"] --> K
+    end
+    P1 --> P2 --> P3
 ```
 
 | Role | Runs as | Responsibility |
