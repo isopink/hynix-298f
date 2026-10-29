@@ -42,7 +42,6 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
 
 .top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; padding-bottom: 16px; }
 .top h1 { margin: 6px 0 0; font-size: clamp(26px, 3.4vw, 40px); font-weight: 500; letter-spacing: -0.8px; line-height: 1.1; }
-.top h1 .cd-inline { font-size: clamp(13px, 1.3vw, 16px); font-weight: 500; letter-spacing: 0; margin-left: 10px; color: var(--red-hi); -webkit-text-fill-color: var(--red-hi); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .top h1 .tagline { font-size: clamp(13px, 1.3vw, 16px); font-weight: 400; letter-spacing: 0; margin-left: 10px; color: var(--muted); -webkit-text-fill-color: var(--muted); white-space: nowrap; }
 .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 1.1px; text-transform: uppercase; color: var(--muted); }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -121,12 +120,11 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
   .pop .f-form input, .pop .f-form textarea { font-size: 16px; }   /* 16px 미만이면 iOS가 확대함 */
   .pop .f-list { max-height: none; }
   body.sheet-open { overflow: hidden; }
-  /* 휴대폰: 로고 · 제목 · 부제 · 카운트다운 · 버튼을 한 줄씩 가운데로 */
+  /* 휴대폰: 로고 · 제목 · 부제 · 버튼을 한 줄씩 가운데로 */
   .top { flex-direction: column; align-items: center; text-align: center; gap: 14px; }
   .brand { flex-direction: column; gap: 10px; }
-  .top h1 .tagline, .top h1 .cd-inline { display: block; margin: 8px 0 0; }
+  .top h1 .tagline { display: block; margin: 8px 0 0; }
   .top h1 { font-size: 28px; }
-  .top h1 .cd-inline { margin-top: 4px; font-size: 17px; font-weight: 600; letter-spacing: .3px; white-space: normal; word-break: keep-all; }   /* 좁은 폰에선 줄바꿈 */
   .top { gap: 12px; padding-bottom: 4px; }
   .wrap { padding-block: 20px 40px; gap: 12px; }
   .fab { padding: 9px 18px; }
@@ -283,7 +281,7 @@ details.log summary { border-radius: 16px; }
   <header class="top">
     <div class="brand">
       <div>
-        <h1>Agentic Trading <span class="tagline">합산 손실 4억, 이번엔 다르다.</span><span class="cd-inline" id="cd" hidden></span></h1>
+        <h1>Agentic Trading <span class="tagline">합산 손실 4억, 이번엔 다르다.</span></h1>
       </div>
     </div>
     <div class="cheer">
@@ -493,7 +491,7 @@ details.log summary { border-radius: 16px; }
     if (PRE) equity = [{ date: START, total: INIT, kospi: null, regime: null, cap: null }];
     BASE = { equity, holdings, trades, risk, system, reviews };
     D = derive(BASE);
-    fillText(); drawAll(); fillLog(); startKospi(); countdown();
+    fillText(); drawAll(); fillLog(); startKospi();
     if (document.fonts) document.fonts.ready.then(drawAll);   // 웹폰트 적용 후 글자 폭 다시 계산
     document.querySelectorAll('details.more').forEach(d => d.addEventListener('toggle', () => { if (d.open) drawAll(); }));
     let w = window.innerWidth, t;
@@ -625,18 +623,6 @@ details.log summary { border-radius: 16px; }
       }
     } catch (e) { /* 다음 회차에 다시 시도 */ }
     drawKospi();
-  }
-  // ---------- 시작 카운트다운: 개장 전이면 제목 옆에 작게 표시 ----------
-  function countdown() {
-    const at = Date.parse(START + 'T09:00:00+09:00'), p2 = n => String(n).padStart(2, '0');
-    const tick = () => {
-      const left = at - Date.now();
-      if (left <= 0) { $('cd').hidden = true; clearInterval(timer); return; }
-      const sec = Math.floor(left / 1000);
-      $('cd').hidden = false;
-      $('cd').textContent = '본격적인 시작까지 D-' + Math.floor(sec / 86400) + ' ' + p2(Math.floor(sec / 3600) % 24) + '시간 ' + p2(Math.floor(sec / 60) % 60) + '분 ' + p2(sec % 60) + '초';
-    };
-    const timer = setInterval(tick, 1000); tick();
   }
   function startKospi() {
     if (!CFG.supabaseUrl || !CFG.supabaseAnonKey) return none($('ch-kx'), 'KOSPI 데이터 저장소가 연결되지 않았어요.');
