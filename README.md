@@ -43,6 +43,11 @@ Indicators are computed in Python and handed to the model as short summaries, an
 
 ## Architecture
 
+<p align="center"><img src="assets/architecture.png" alt="Architecture" width="520"></p>
+
+<details>
+<summary>Mermaid source</summary>
+
 ```mermaid
 flowchart TB
     subgraph S1["① Data prep · Python"]
@@ -70,9 +75,9 @@ flowchart TB
         I[("Decision & fill log")] --> K["Trading Dashboard"]
         L["Balance snapshot · 5 min"] --> K
     end
-    subgraph S5["⑤ Weekly review · risk limits are fixed"]
+    subgraph S5["⑤ Weekly review"]
         direction LR
-        J1["Analyse the log"] --> J2["Review agent"]
+        J1["Analyse the log"] --> J2["Review agent<br/>(risk limits are fixed)"]
         J2 --> J3["Tune thresholds · prompts"]
         J2 --> J4["Weekly report draft"]
     end
@@ -80,6 +85,8 @@ flowchart TB
     S4 -->|weekly| S5
     S5 == "updated criteria" ==> S2
 ```
+
+</details>
 
 | Role | Runs as | Responsibility |
 |---|---|---|

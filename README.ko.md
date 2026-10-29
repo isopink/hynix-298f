@@ -43,6 +43,11 @@ LLM에게 매매를 통째로 맡기면 두 가지 문제가 생깁니다.
 
 ## 시스템 구조
 
+<p align="center"><img src="assets/architecture.ko.png" alt="시스템 구조" width="520"></p>
+
+<details>
+<summary>Mermaid 원본</summary>
+
 ```mermaid
 flowchart TB
     subgraph S1["① 데이터 준비 · Python"]
@@ -70,9 +75,9 @@ flowchart TB
         I[("판단 · 체결 로그")] --> K["Trading Dashboard"]
         L["잔고 스냅샷 · 5분"] --> K
     end
-    subgraph S5["⑤ 주간 회고 · 리스크 한도는 수정 불가"]
+    subgraph S5["⑤ 주간 회고"]
         direction LR
-        J1["기록 분석"] --> J2["주간 회고 에이전트"]
+        J1["기록 분석"] --> J2["주간 회고 에이전트<br/>(리스크 한도는 수정 불가)"]
         J2 --> J3["판단 기준 · 프롬프트 조정"]
         J2 --> J4["주간 보고서 초안"]
     end
@@ -80,6 +85,8 @@ flowchart TB
     S4 -->|주 1회| S5
     S5 == "판단 기준 업데이트" ==> S2
 ```
+
+</details>
 
 | 역할 | 담당 | 하는 일 |
 |---|---|---|
