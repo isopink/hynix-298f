@@ -45,28 +45,40 @@ Indicators are computed in Python and handed to the model as short summaries, an
 
 ```mermaid
 flowchart TB
-    subgraph P1["① Decide — before the open, every trading day"]
+    subgraph S1["① Data prep · Python"]
         direction LR
-        A["Data prep (Python)<br/>prices · flows · filings → indicators → candidates"] --> B["Market-regime agent<br/>bull / sideways / bear → exposure cap"]
-        B --> C["Bull agent"]
-        B --> D["Bear agent"]
-        C <-->|rebuttal| D
-        C --> E["Lead agent<br/>conviction → buy / hold / sell"]
-        D --> E
+        A1["Collect prices · flows · filings"] --> A2["Compute indicators<br/>GS Quant"] --> A3["Select candidates"]
     end
-    subgraph P2["② Execute"]
+    subgraph S2["② Decide · agents"]
         direction LR
-        F["Sizing (Python)<br/>quantity · stop · target · max holding days"] --> G{{"Risk Hook<br/>cash · per-stock limit · daily loss"}}
+        B1["Market-regime agent"] -->|bull · sideways · bear| B2["Exposure cap"]
+        B2 --> C1["Bull agent"]
+        B2 --> C2["Bear agent"]
+        C1 <-->|rebuttal| C2
+        C1 --> E1["Lead agent"]
+        C2 --> E1
+        E1 -->|conviction| E2{{"buy · hold · sell<br/>(wait if below bar)"}}
+    end
+    subgraph S3["③ Execute"]
+        direction LR
+        F1["Sizing · Python"] --> F2["quantity · stop · target<br/>max holding days"] --> G{{"Risk Hook<br/>cash · per-stock limit · daily loss"}}
         G -->|pass| H["Order<br/>Kiwoom REST API"]
-        G -->|violation| X["Blocked + logged"]
+        G -->|violation| X["Blocked"]
     end
-    subgraph P3["③ Log · improve"]
+    subgraph S4["④ Log"]
         direction LR
-        I[("Decision & fill log")] -->|weekly| J["Review agent<br/>threshold changes · weekly report draft"]
-        I --> K["Trading Dashboard"]
-        L["Balance snapshot (every 5 min)"] --> K
+        I[("Decision & fill log")] --> K["Trading Dashboard"]
+        L["Balance snapshot · 5 min"] --> K
     end
-    P1 --> P2 --> P3
+    subgraph S5["⑤ Weekly review · risk limits are fixed"]
+        direction LR
+        J1["Analyse the log"] --> J2["Review agent"]
+        J2 --> J3["Tune thresholds · prompts"]
+        J2 --> J4["Weekly report draft"]
+    end
+    S1 --> S2 --> S3 --> S4
+    S4 -->|weekly| S5
+    S5 == "updated criteria" ==> S2
 ```
 
 | Role | Runs as | Responsibility |
