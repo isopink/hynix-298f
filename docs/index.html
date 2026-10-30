@@ -76,37 +76,15 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
 .tip .r span:first-child { color: var(--body); }
 .tip .why { color: var(--body); margin-top: 6px; padding-top: 6px; border-top: 1px solid #262626; }
 .tip .why b { color: var(--ink); font-weight: 500; }
-.balloons { position: fixed; inset: 0; z-index: 40; pointer-events: none; overflow: hidden; }
-.bl { position: absolute; bottom: 0; left: var(--x); pointer-events: auto; cursor: pointer; animation: bl-rise var(--dur) linear forwards; }
-.bl-in { display: flex; flex-direction: column; align-items: center; transform-origin: 50% 100%; animation: bl-sway var(--sway) ease-in-out infinite alternate; }
-.bb { position: relative; width: var(--w, 128px); height: calc(var(--w, 128px) * 1.19); padding: 22px 16px 26px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 4px; text-align: center; color: #fff;
-  border-radius: 50% 50% 47% 47% / 56% 56% 44% 44%; background: radial-gradient(circle at 32% 26%, rgba(255,255,255,.5), transparent 20%), radial-gradient(circle at 50% 45%, #ff6a55, #b3170b 72%);
-  box-shadow: inset -10px -16px 26px rgba(0,0,0,.28), 0 12px 26px rgba(0,0,0,.35); }
-.bb::after { content: ""; position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%); border: 6px solid transparent; border-top: 0; border-bottom-color: #b3170b; }
-.bl-in.grey .bb { background: radial-gradient(circle at 32% 26%, rgba(255,255,255,.45), transparent 20%), radial-gradient(circle at 50% 45%, #6a6a70, #2a2a2e 72%); }
-.bl-in.grey .bb::after { border-bottom-color: #2a2a2e; }
-.bb small { font-size: 10px; color: rgba(255,255,255,.72); max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.bb span { font-size: 12px; line-height: 1.4; word-break: keep-all; overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
-.bl-in svg { display: block; margin-top: 6px; overflow: visible; }
-@media (max-width: 640px) { .bb { width: calc(var(--w, 128px) * .85); height: calc(var(--w, 128px) * 1.01); padding: 18px 12px 22px; } .bb span { font-size: 11px; } }
-.bl.burst { animation-play-state: paused; }
-.bl.burst .bl-in { animation: bl-pop .25s ease-out forwards; }
-@keyframes bl-rise { from { transform: translateY(100%); } to { transform: translateY(calc(-100vh - 140%)); } }
-@keyframes bl-sway { from { transform: translateX(-26px) rotate(-6deg); } to { transform: translateX(26px) rotate(6deg); } }
-@keyframes bl-pop { 45% { transform: scale(1.35) rotate(-6deg); } to { transform: scale(0); opacity: 0; } }
-.shard { position: absolute; left: var(--l); top: var(--t); width: 9px; height: 9px; border-radius: 2px; background: var(--c); pointer-events: none; animation: shard .65s cubic-bezier(.2,.7,.3,1) forwards; }
-/* 휴대폰: 풍선 대신 상단에 응원 글이 한 줄로 흘러감 */
-.ticker { display: none; }
-@media (max-width: 640px) {
-  .ticker:not([hidden]) { display: block; width: 100%; overflow: hidden; padding: 9px 0; border: 1px solid rgba(255,255,255,.09); border-radius: 9999px; background: rgba(255,255,255,.04); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); font: inherit; text-align: left; cursor: pointer;
-    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
-}
+/* 상단에 응원 글이 한 줄로 흘러감 (누르면 응원하기 열림) */
+.ticker[hidden] { display: none; }
+.ticker { display: block; width: 100%; overflow: hidden; padding: 9px 0; border: 1px solid rgba(255,255,255,.09); border-radius: 9999px; background: rgba(255,255,255,.04); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); font: inherit; text-align: left; cursor: pointer;
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
 .tk-track { display: inline-flex; white-space: nowrap; animation: tk var(--dur, 30s) linear infinite; }
 .tk-item { font-size: 13px; color: var(--body); padding-right: 32px; }
 .tk-item b { color: var(--red-hi); font-weight: 600; margin-right: 6px; }
 @keyframes tk { to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) { .tk-track { animation: none; } }
-@keyframes shard { to { transform: translate(var(--dx), var(--dy)) rotate(var(--r)) scale(.3); opacity: 0; } }
 .cheer { position: relative; margin-left: auto; align-self: center; display: flex; align-items: center; gap: 8px; }
 .pop { position: absolute; right: 0; top: calc(100% + 10px); z-index: 50; width: min(380px, calc(100vw - 32px)); max-height: min(72vh, 600px); overflow-y: auto; box-shadow: 0 18px 48px rgba(0,0,0,.55); }
 .pop[hidden] { display: none !important; }
@@ -1010,7 +988,6 @@ details.log summary { border-radius: 16px; }
   function openPop(on) {
     pop.hidden = !on; scrim.hidden = !on; fab.setAttribute('aria-expanded', on);
     document.body.classList.toggle('sheet-open', on && sheet.matches);
-    const sky = document.querySelector('.balloons'); if (sky) sky.style.display = on ? 'none' : '';
     if (on && !sheet.matches) body.focus();   // 휴대폰에선 키보드가 바로 올라오지 않게
   }
   const scrim = document.getElementById('scrim'), sheet = matchMedia('(max-width: 640px)');
@@ -1032,7 +1009,7 @@ details.log summary { border-radius: 16px; }
   body.addEventListener('input', () => { count.textContent = body.value.length + ' / 300'; });
   if (!url || !key) { list.innerHTML = '<p class="f-empty">댓글 저장소가 아직 연결되지 않았어요. config.js에 Supabase 주소와 anon 키를 넣으면 켜집니다.</p>'; btn.disabled = true; return; }
   function render(rows) {
-    pool = rows; ticker(); rows = rows.slice(0, 100);   // 풍선은 최근 300개 중에서, 목록은 100개만
+    pool = rows; ticker(); rows = rows.slice(0, 100);   // 목록은 100개만
     list.textContent = ''; total.textContent = rows.length ? rows.length + '개의 글' : ''; fabN.textContent = rows.length || '';
     if (!rows.length) { const p = document.createElement('p'); p.className = 'f-empty'; p.textContent = '첫 댓글을 남겨 주세요.'; list.appendChild(p); return; }
     for (const r of rows) {
@@ -1065,13 +1042,9 @@ details.log summary { border-radius: 16px; }
   });
   load(); setInterval(() => { if (!document.hidden) load(); }, 60000);
 
-  // ---------- 응원 풍선 (휴대폰은 아래 응원 띠): 모든 응원 중 무작위로 하나씩 화면 아래에서 흔들리며 떠오름 (누르면 터짐) ----------
+  // ---------- 응원 띠: 최근 응원 20개를 한 줄로 (두 벌 이어 붙여 끊김 없이 반복, 누르면 응원하기 열림) ----------
   let pool = [];
-  const sky = document.createElement('div'); sky.className = 'balloons'; sky.setAttribute('aria-hidden', 'true'); document.body.appendChild(sky);
-  const LANES = 7, recent = [];
-  let seq = 0;   // 응원 목록 순서대로 하나씩, 끝까지 가면 처음부터 다시
-  const phone = matchMedia('(max-width: 640px)'), tk = document.getElementById('ticker'), tkTrack = document.getElementById('tk-track');
-  // 휴대폰: 최근 응원 20개를 한 줄 띠로 (두 벌 이어 붙여 끊김 없이 반복, 누르면 응원하기 열림)
+  const tk = document.getElementById('ticker'), tkTrack = document.getElementById('tk-track');
   let tkKey = '';
   function ticker() {
     tk.hidden = !pool.length;
@@ -1086,51 +1059,6 @@ details.log summary { border-radius: 16px; }
     requestAnimationFrame(() => tkTrack.style.setProperty('--dur', Math.max(15, tkTrack.scrollWidth / 2 / 45) + 's'));   // 초당 45px
   }
   tk.addEventListener('click', () => fab.click());
-  function pickLane() {
-    const busy = [...sky.querySelectorAll('.bl')].map(e => +e.dataset.lane);
-    const all = [...Array(LANES).keys()], near = i => busy.some(b => Math.abs(b - i) <= 1);
-    let c = all.filter(i => !near(i) && !recent.includes(i));
-    if (!c.length) c = all.filter(i => !near(i));
-    if (!c.length) c = all;
-    const lane = c[Math.floor(Math.random() * c.length)];
-    recent.push(lane); if (recent.length > 3) recent.shift();
-    return lane;
-  }
-  function balloon() {
-    if (phone.matches || !pool.length || document.hidden || sky.querySelectorAll('.bl').length >= 3) return;
-    if (seq >= pool.length) seq = 0;
-    const r = pool[seq++];
-    const b = document.createElement('div'); b.className = 'bl';
-    const lane = pickLane(), lw = 80 / LANES; b.dataset.lane = lane;
-    b.style.setProperty('--x', (2 + lane * lw + Math.random() * lw * .5) + 'vw');
-    b.style.setProperty('--dur', (11 + Math.random() * 7) + 's');
-    const inn = document.createElement('div'); inn.className = 'bl-in' + (Math.random() < .3 ? ' grey' : '');
-    inn.style.setProperty('--sway', (1.3 + Math.random() * 1.5) + 's');
-    const n = document.createElement('small'); n.textContent = r.nickname || '익명 개미';
-    const t = document.createElement('span'); t.textContent = r.body.length > 40 ? r.body.slice(0, 40) + '…' : r.body;
-    const bb = document.createElement('div'); bb.className = 'bb'; bb.append(n, t);
-    bb.style.setProperty('--w', Math.round(84 + Math.min(40, r.body.length) * 2.2) + 'px');   // 글자 수에 비례 (84~172px)
-    // 줄: 위는 매듭에 고정, 아래로 갈수록 크게 흔들리는 물결이 천천히 흘러내림
-    const wave = (2.2 + Math.random() * 1.2).toFixed(2) + 's', dir = Math.random() < .5 ? 1 : -1;
-    const k = [[6, 18, 10], [16, 8, 17], [18, 5, 12], [8, 17, 6]].map(([a, b, c]) => `M14 0 C${14 + (a - 12) * dir} 34,${14 + (b - 12) * dir} 76,${14 + (c - 12) * dir} 116`);
-    k.push(k[0]);
-    inn.appendChild(bb);
-    inn.insertAdjacentHTML('beforeend', `<svg width="28" height="116" viewBox="0 0 28 116"><path fill="none" stroke="rgba(255,255,255,.42)" stroke-width="1.1" stroke-linecap="round" d="${k[0]}"><animate attributeName="d" dur="${wave}" repeatCount="indefinite" calcMode="spline" keyTimes="0;.25;.5;.75;1" keySplines=".45 0 .55 1;.45 0 .55 1;.45 0 .55 1;.45 0 .55 1" values="${k.join(';')}"/></path></svg>`);
-    b.appendChild(inn); sky.appendChild(b);
-    b.addEventListener('animationend', e => { if (e.target === b) b.remove(); });
-    b.addEventListener('click', () => { if (!b.classList.contains('burst')) burst(b); });
-  }
-  // 터질 때: 풍선이 부풀었다 사라지고, 파편이 사방으로 튐
-  function burst(b) {
-    const r = (b.querySelector('.bb') || b).getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
-    b.classList.add('burst'); setTimeout(() => b.remove(), 260);
-    const add = (cls, vars, text) => { const e = document.createElement('div'); e.className = cls; for (const k in vars) e.style.setProperty(k, vars[k]); if (text) e.textContent = text; sky.appendChild(e); e.addEventListener('animationend', () => e.remove()); };
-    for (let i = 0; i < 14; i++) {
-      const a = Math.PI * 2 * i / 14 + Math.random() * .4, d = 50 + Math.random() * 60;
-      add('shard', { '--l': cx + 'px', '--t': cy + 'px', '--dx': Math.cos(a) * d + 'px', '--dy': Math.sin(a) * d + 'px', '--r': (Math.random() * 540 - 270) + 'deg', '--c': (b.querySelector('.grey') ? ['#8a8a90', '#3a3a3e', '#fff', '#5a5a60'] : ['#ff5a4a', '#da291c', '#fff', '#ff8a70'])[i % 4] });
-    }
-  }
-  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) { setTimeout(balloon, 1500); setInterval(balloon, 3500); }
 })();
 </script>
 </body>
