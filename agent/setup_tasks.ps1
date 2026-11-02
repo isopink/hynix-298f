@@ -22,6 +22,9 @@ foreach ($t in $tasks) {
   schtasks /Delete /TN $t.Name /F 2>$null | Out-Null
   if (-not $Remove) {
     schtasks /Create /TN $t.Name /TR $t.Cmd /SC WEEKLY /D $t.Days /ST $t.Time /F | Out-Null
+    # 기본값은 "AC 전원일 때만 시작"이라 노트북이 배터리면 대기에 멈춤 → 배터리에서도 실행, 놓친 회차는 켜지면 바로 실행
+    $s = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable -ExecutionTimeLimit (New-TimeSpan -Hours 8)
+    Set-ScheduledTask -TaskName $t.Name -Settings $s | Out-Null
     Write-Output ("등록: {0}  {1} {2}" -f $t.Name, $t.Days, $t.Time)
   }
 }
