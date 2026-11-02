@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "code": "028050",
+    "name": "삼성E&A",
+    "qty": 45,
+    "avg_price": 63733,
+    "price": 63700,
+    "value": 2866500,
+    "pnl_pct": -0.0095,
+    "weight": 0.0574,
+    "stop": null,
+    "take": null,
+    "held_days": null,
+    "max_days": null
+  }
+]
