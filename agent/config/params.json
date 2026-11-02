@@ -1,0 +1,60 @@
+{
+  "_note": "판단 기준값. 주간 회고 에이전트가 조정안을 내고, 사람이 검토해 이 파일에 반영. 기획팀 확정 전까지 제안값.",
+
+  "competition": {
+    "start": "2026-11-02",
+    "end": "2026-11-27",
+    "min_trades": 8
+  },
+
+  "decision": {
+    "buy_min_confidence": 0.60,
+    "sell_min_confidence": 0.60,
+    "full_size_confidence": 0.80,
+    "min_weight": 0.10,
+    "stop_loss_pct": -0.07,
+    "take_profit_pct": 0.15,
+    "max_hold_days": 10
+  },
+
+  "regime_cap": { "상승": 0.90, "횡보": 0.60, "하락": 0.30 },
+
+  "week_factor": { "1": 0.5, "2": 1.0, "3": 1.0, "4": 0.5 },
+
+  "min_trade_guard": {
+    "_note": "이 주차가 시작될 때 누적 거래가 min_count 미만이면 매수 확신도 기준을 relax 만큼 낮춤",
+    "week": 3,
+    "min_count": 5,
+    "relax": 0.05
+  },
+
+  "costs": {
+    "_note": "대회 공지 확인 전 임시값",
+    "fee_rate": 0.00015,
+    "sell_tax_rate": 0.0015
+  },
+
+  "screen": {
+    "markets": ["KOSPI", "KOSDAQ"],
+    "min_trading_value": 10000000000,
+    "prefilter_top": 60,
+    "max_candidates": 10,
+    "flow_days": 5,
+    "limit_up_lookback": 5,
+    "exclude_name_keywords": ["스팩", "리츠"],
+    "fallback_universe": [
+      "005930", "000660", "373220", "207940", "005380", "000270", "068270", "105560",
+      "035420", "055550", "012330", "005490", "028260", "051910", "006400", "035720",
+      "032830", "086790", "003670", "015760", "034020", "012450", "042660", "009540",
+      "329180", "010130", "011200", "066570", "096770", "017670",
+      "247540", "086520", "196170", "028300", "058470", "277810"
+    ]
+  },
+
+  "schedule": {
+    "decide_times": ["09:30", "14:30"],
+    "monitor_start": "09:05",
+    "monitor_end": "15:20",
+    "monitor_interval_sec": 300
+  }
+}

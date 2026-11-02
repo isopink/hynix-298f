@@ -1,0 +1,4 @@
+pandas>=2.2
+pykrx>=1.2.9
+gs-quant>=2.2
+mcp>=1.2,<2
