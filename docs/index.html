@@ -495,9 +495,10 @@ details.log summary { border-radius: 16px; }
   // data/*.json 이 있으면 그걸 쓰고, 없으면(파일을 더블클릭해 연 경우 등) HTML에 넣어 둔 샘플을 씀
   let SAMPLE = {};
   try { SAMPLE = JSON.parse(document.getElementById('sample-data').textContent); } catch (e) {}
-  Promise.all(['equity', 'holdings', 'trades', 'risk', 'system', 'reviews', 'status', 'decision', 'briefing'].map(n =>
+  Promise.all(['equity', 'holdings', 'trades', 'risk', 'system', 'reviews', 'status', 'decision', 'briefing', 'tuning'].map(n =>
     fetch('data/' + n + '.json', { cache: 'no-store' }).then(r => { if (!r.ok) throw 0; return r.json(); }).catch(() => SAMPLE[n] || [])
-  ).concat(Promise.resolve().then(loadKD))).then(([equity, holdings, trades, risk, system, reviews, status, decision, briefing]) => {
+  ).concat(Promise.resolve().then(loadKD))).then(([equity, holdings, trades, risk, system, reviews, status, decision, briefing, tuning]) => {
+    TUNING = Array.isArray(tuning) ? tuning : [];
     STATUS = Array.isArray(status) ? {} : status || {};
     DECISION = Array.isArray(decision) ? {} : decision || {};
     BRIEF = Array.isArray(briefing) ? {} : briefing || {};
@@ -515,7 +516,7 @@ details.log summary { border-radius: 16px; }
   });
 
   // ---------- 실시간: live/snapshot.py 가 Supabase 에 올린 잔고 스냅샷을 30초마다 확인 ----------
-  let BASE = null, LIVE_AT = null, PRE = false, STATUS = {}, DECISION = {}, BRIEF = {};
+  let BASE = null, LIVE_AT = null, PRE = false, STATUS = {}, DECISION = {}, BRIEF = {}, TUNING = [];
   const CFG = window.DASH_CONFIG || {};
   const kstDate = iso => new Date(Date.parse(iso) + 9 * 3600e3).toISOString().slice(0, 10);
   // 날짜별 KOSPI 종가 (supabase/kospi.sql 의 kospi_daily). 잔고 스냅샷·equity.json 에 KOSPI 가 없는 날의 예비값
@@ -1142,10 +1143,38 @@ details.log summary { border-radius: 16px; }
     svg.append('g').selectAll('text.x').data(rows.filter((r, i) => i % every === 0)).join('text').attr('x', r => x(r.date) + x.bandwidth() / 2).attr('y', H - 6).attr('text-anchor', 'middle').attr('font-size', 11).attr('fill', C.muted).text(r => md(r.d));
   }
 
+  // 기준값 자동 조정 (화·수·목 장 마감 뒤, agent/src/tuning.py). 최근 것이 위
+  function tuningLog(el) {
+    // 확신도는 0.60 처럼, 비율은 %, 보유일은 정수 그대로
+    const fmt = (v, key) => key.includes('confidence') ? (+v).toFixed(2) : Number.isInteger(v) && Math.abs(v) >= 1 ? String(v) : (v * 100).toFixed(1).replace(/\.0$/, '') + '%';
+    const box = document.createElement('div'); box.style.cssText = 'display:grid;gap:12px';
+    const h = document.createElement('div'); h.className = 'eyebrow'; h.textContent = '기준값 자동 조정 · 화·수·목'; box.appendChild(h);
+    if (!TUNING.length) {
+      const p = document.createElement('p'); p.className = 'f-empty'; p.style.margin = '0'; p.textContent = '화·수·목 장 마감 뒤 성과를 보고 기준값을 스스로 조정해요. 아직 조정 기록이 없어요.'; box.appendChild(p);
+    }
+    [...TUNING].reverse().forEach(t => {
+      const it = document.createElement('div'); it.style.cssText = 'display:grid;grid-template-columns:44px 1fr;gap:10px;align-items:start;font-size:12px;line-height:1.55';
+      const a = document.createElement('span'); a.style.color = C.muted; a.textContent = md(toD(t.time));
+      const b = document.createElement('div'); b.style.cssText = 'display:grid;gap:4px;color:' + C.body;
+      if (!t.applied.length) { const s = document.createElement('span'); s.style.color = C.muted; s.textContent = '유지'; b.appendChild(s); }
+      t.applied.forEach(x => {
+        const s = document.createElement('span');
+        const k = document.createElement('b'); k.style.cssText = 'font-weight:500;color:' + C.ink; k.textContent = `${x.label} ${fmt(x.from, x.key)} → ${fmt(x.to, x.key)}`;
+        s.append(k, document.createTextNode(' · ' + x.reason)); b.appendChild(s);
+      });
+      if (t.summary) { const s = document.createElement('span'); s.style.color = C.muted; s.textContent = t.summary; b.appendChild(s); }
+      if (t.rejected.length) { const s = document.createElement('span'); s.style.color = C.muted; s.textContent = '규칙에 막힘 ' + t.rejected.length + '건: ' + t.rejected.map(x => x.rejected).join(' / '); b.appendChild(s); }
+      it.append(a, b); box.appendChild(it);
+    });
+    el.appendChild(box);
+  }
+
   function review() {
-    if (!D.reviews.length) return none($('ch-review'), '첫 주간 회고는 11/8(일)에 올라와요.');
-    const el = $('ch-review'); el.innerHTML = '';
-    const wrap = document.createElement('div'); wrap.style.cssText = 'display:grid;gap:14px';
+    const el = $('ch-review'); el.innerHTML = ''; el.classList.remove('empty');
+    tuningLog(el);
+    const h = document.createElement('div'); h.className = 'eyebrow'; h.style.marginTop = '18px'; h.textContent = '주간 회고 · 토'; el.appendChild(h);
+    if (!D.reviews.length) { const p = document.createElement('p'); p.className = 'f-empty'; p.style.margin = '8px 0 0'; p.textContent = '첫 주간 회고는 11/7(토)에 올라와요.'; el.appendChild(p); return; }
+    const wrap = document.createElement('div'); wrap.style.cssText = 'display:grid;gap:14px;margin-top:12px';
     D.reviews.forEach(r => {
       const it = document.createElement('div'); it.style.cssText = 'display:grid;grid-template-columns:44px 1fr auto;gap:10px;align-items:start;font-size:12px;line-height:1.5';
       const a = document.createElement('span'); a.style.color = C.muted; a.textContent = r.week;

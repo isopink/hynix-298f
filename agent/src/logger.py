@@ -84,10 +84,21 @@ def reviews(rows):
             res[r["week"]] = {"week": r["week"], "period": r["period"], "suggestion": r["suggestion"],
                               "status": r.get("status", "검토 중")}
     old = {x["week"]: x for x in (C.read_json(os.path.join(C.DOCS_DATA, "reviews.json"), []) or [])}
-    for w, x in res.items():   # 사람이 "반영"으로 바꿔 둔 상태는 유지
-        if w in old and old[w].get("status") == "반영":
+    times = {r["week"]: r["time"] for r in rows if r["kind"] == "review"}
+    for w, x in res.items():
+        # 회고 뒤 조정 실행에서 값이 하나라도 바뀌었으면 반영. 사람이 "반영"으로 바꿔 둔 상태도 유지
+        if any(r["kind"] == "tune" and r["time"] > times[w] and r.get("applied") for r in rows) or \
+                (w in old and old[w].get("status") == "반영"):
             x["status"] = "반영"
     return [res[w] for w in sorted(res)]
+
+
+def tuning(rows):
+    """기준값 자동 조정 이력 (화·수·목). 대시보드 Feedback Loop 카드용."""
+    return [{"time": r["time"], "summary": r.get("summary", ""),
+             "applied": [{k: a[k] for k in ("key", "label", "from", "to", "reason")} for a in r.get("applied", [])],
+             "rejected": [{"key": b["key"], "to": b.get("to"), "rejected": b["rejected"]} for b in r.get("rejected", [])]}
+            for r in rows if r["kind"] == "tune"]
 
 
 def next_run(now=None):
@@ -173,6 +184,7 @@ def write_all(note=""):
     out("holdings", holdings())
     out("system", system())
     out("reviews", reviews(rows))
+    out("tuning", tuning(rows))
     out("decision", decision(rows, nm))
     out("briefing", briefing())
     out("status", status(note))
