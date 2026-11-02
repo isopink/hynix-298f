@@ -112,8 +112,9 @@ reports/    보고서 PDF, drafts/ = 주간 회고 에이전트가 쓴 초안
 - [x] 10-29 decide 실행이 25분 시간 초과로 실패 → 11-02 bull/bear의 종목별 WebSearch를 실행당 2번으로 줄임. 11-02 mock 실행 145초·34k 토큰
 - [x] 리스크 Hook이 헤드리스 실행에서 PowerShell로 돌아 문법 오류 → 모든 주문 차단되던 문제 수정 (11-02, mock으로 통과·차단 모두 확인)
 - [x] 실시간 KOSPI를 Yahoo(20분 지연) → 네이버 증권 1분봉으로 교체 (11-02, `supabase/kospi.sql` 재실행 완료)
-- [ ] `setup_tasks.ps1`로 작업 스케줄러 등록, `GIT_PUSH=1`
-- [ ] 에이전트를 데스크톱으로 옮기기 (`agent/MOVE_PC.md`). 11-02 sync 는 임시 저장소로 반영·검사 실패·충돌·자기 갱신·재시작 확인. 장중 실제 재시작은 첫 장중 push 때 확인
+- [x] `setup_tasks.ps1`로 작업 스케줄러 등록, `GIT_PUSH=1` (11-02 데스크톱, 작업 10개)
+- [x] 에이전트를 데스크톱으로 옮기기 (`agent/MOVE_PC.md`). 11-02 밤 이전, 노트북 작업은 해제. 노트북 push → 데스크톱 반영 확인
+- [ ] 장중 push 때 sync 가 monitor 를 실제로 재시작하는지 확인 (임시 저장소로는 확인함). 하루 이상 문제없으면 노트북 `C:\dev\uostock-ai-trader` 삭제
 - [ ] 대회 후 README 결과·회고 섹션 채우기
 
 ## 커밋
