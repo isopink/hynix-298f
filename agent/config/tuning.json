@@ -1,0 +1,24 @@
+{
+  "_note": "기준값 자동 조정 규칙 (고정). 화·수·목 장 마감 뒤 조정 실행(run.py tune)에서 에이전트가 apply_tuning 으로 제안하면, 서버가 이 규칙으로 검사해 통과한 것만 params.json 에 씀. 에이전트는 이 파일과 risk_limits.json 을 바꿀 수 없음.",
+
+  "weekdays": [1, 2, 3],
+  "max_changes_per_run": 2,
+  "cooldown_runs": 1,
+
+  "_keys_note": "min~max = 허용 범위, step = 한 번에 바꿀 수 있는 최대 폭",
+  "keys": {
+    "decision.buy_min_confidence":  { "label": "매수 확신도 기준",   "min": 0.50, "max": 0.75, "step": 0.05 },
+    "decision.sell_min_confidence": { "label": "매도 확신도 기준",   "min": 0.50, "max": 0.75, "step": 0.05 },
+    "decision.full_size_confidence": { "label": "최대 비중 확신도",  "min": 0.70, "max": 0.90, "step": 0.05 },
+    "decision.min_weight":          { "label": "최소 종목 비중",     "min": 0.05, "max": 0.15, "step": 0.025 },
+    "decision.stop_loss_pct":       { "label": "손절선",             "min": -0.10, "max": -0.04, "step": 0.01 },
+    "decision.take_profit_pct":     { "label": "익절선",             "min": 0.06, "max": 0.25, "step": 0.03 },
+    "decision.max_hold_days":       { "label": "최대 보유일",        "min": 3, "max": 15, "step": 2, "int": true },
+    "regime_cap.상승":              { "label": "상승 국면 비중 상한", "min": 0.50, "max": 0.90, "step": 0.10 },
+    "regime_cap.횡보":              { "label": "횡보 국면 비중 상한", "min": 0.30, "max": 0.80, "step": 0.10 },
+    "regime_cap.하락":              { "label": "하락 국면 비중 상한", "min": 0.10, "max": 0.60, "step": 0.10 },
+    "screen.max_vol20":             { "label": "후보 변동성 상한",   "min": 0.60, "max": 1.50, "step": 0.20 },
+    "screen.spike_ret5":            { "label": "5일 급등 감점 기준", "min": 0.10, "max": 0.30, "step": 0.05 },
+    "screen.spike_penalty":         { "label": "5일 급등 감점 폭",   "min": 0.20, "max": 1.00, "step": 0.20 }
+  }
+}

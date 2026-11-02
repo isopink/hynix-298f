@@ -1,5 +1,5 @@
 {
-  "_note": "판단 기준값. 주간 회고 에이전트가 조정안을 내고, 사람이 검토해 이 파일에 반영. 기획팀 확정 전까지 제안값.",
+  "_note": "판단 기준값. 화·수·목 장 마감 뒤 조정 실행(run.py tune)이 config/tuning.json 규칙 안에서 자동으로 바꾸고 커밋함. 변경 이력은 docs/data/tuning.json.",
 
   "competition": {
     "start": "2026-11-02",

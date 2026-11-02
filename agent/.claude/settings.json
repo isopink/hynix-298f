@@ -8,6 +8,8 @@
       "mcp__kiwoom__place_order",
       "mcp__kiwoom__record_decision",
       "mcp__kiwoom__submit_review",
+      "mcp__kiwoom__get_tuning_context",
+      "mcp__kiwoom__apply_tuning",
       "WebSearch",
       "Read(./work/**)",
       "Read(./config/**)"

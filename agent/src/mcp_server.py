@@ -8,6 +8,8 @@
   place_order     주문. 실행 직전에 Hook 이 리스크 검사, 서버도 한 번 더 검사
   record_decision 보유·관망 판단 기록
   submit_review   주간 회고 결과 (조정 제안 + 보고서 초안)
+  get_tuning_context  기준값 조정용 성과 요약 + 조정 가능한 값·범위 (화·수·목 조정 실행)
+  apply_tuning    기준값 조정 제안 → 서버가 규칙(config/tuning.json)으로 검사해 통과분만 params.json 에 반영
 
 stdout 은 MCP 통신용이라, pykrx 등이 찍는 메시지는 전부 stderr 로 돌립니다.
 """
@@ -25,6 +27,7 @@ with contextlib.redirect_stdout(sys.stderr):
     import data_prep
     import risk
     import sizing
+    import tuning
     from mcp.server.fastmcp import FastMCP
 
 mcp = FastMCP("kiwoom")
@@ -216,6 +219,23 @@ def submit_review(week: int, period: str, suggestion: str, report_markdown: str)
         f.write(report_markdown)
     C.journal("review", week=week, period=period, suggestion=suggestion, draft=os.path.relpath(path, C.ROOT))
     return {"ok": True, "draft": path}
+
+
+@mcp.tool()
+@quiet
+def get_tuning_context() -> dict:
+    """기준값 조정용 자료: 대회 진행·계좌 수익률·종목별 매매 결과(확신도 대비)·관망/차단 통계·최근 주간 회고 제안·
+    지난 조정 이력, 그리고 조정 가능한 값(tunable: 현재값·허용 범위 min~max·1회 최대 변경폭 step·쿨다운 여부)."""
+    return tuning.context()
+
+
+@mcp.tool()
+@quiet
+def apply_tuning(changes: list[dict], summary: str) -> dict:
+    """기준값 조정 제출 (조정 실행에서 한 번만). changes = [{"key": "decision.buy_min_confidence", "to": 0.55, "reason": "숫자 근거 1~2문장"}],
+    바꿀 게 없으면 changes=[] 로 '유지' 를 제출. summary = 이번 판단 요약 1~2문장 (대시보드에 공개).
+    서버가 허용 키·범위·변경폭·개수·쿨다운·기준값 일관성을 검사해 통과한 것만 반영하고, 거절 사유를 돌려줍니다."""
+    return tuning.apply(changes, summary)
 
 
 if __name__ == "__main__":

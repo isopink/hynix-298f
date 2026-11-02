@@ -5,7 +5,8 @@
   python run.py decide                09:30 · 11:00 · 14:30  정기 판단 (Claude Code 헤드리스)
   python run.py exit --codes A,B      장중 감시가 손절·익절 조건을 보면 호출 (매도만)
   python run.py close                 15:45  계좌 조회 + 오늘 자산을 equity 에 기록
-  python run.py review                토 10:00  주간 회고
+  python run.py review                토 10:00  주간 회고 (보고서 초안 + 조정 제안)
+  python run.py tune                  화·수·목 16:00  기준값 자동 조정 (src/tuning.py 가 검사 후 params.json 반영)
   python run.py monitor               09:05~15:20  장중 감시 루프 (src/monitor.py)
 
   --dry   Claude 를 부르지 않고 명령만 출력
@@ -28,13 +29,15 @@ LOCK = os.path.join(C.WORK, "run.lock")
 
 TOOLS_ALLOW = ["mcp__kiwoom__get_briefing", "mcp__kiwoom__get_account", "mcp__kiwoom__set_regime",
                "mcp__kiwoom__plan_order", "mcp__kiwoom__place_order", "mcp__kiwoom__record_decision",
-               "mcp__kiwoom__submit_review", "Agent", "Task", "WebSearch", "Read"]
+               "mcp__kiwoom__submit_review", "mcp__kiwoom__get_tuning_context", "mcp__kiwoom__apply_tuning",
+               "Agent", "Task", "WebSearch", "Read"]
 TOOLS_DENY = ["Bash", "PowerShell", "Edit", "Write", "NotebookEdit", "WebFetch"]
 
 PROMPTS = {
     "decide": "정기 판단 실행입니다 ({time}). CLAUDE.md 의 'A. 정기 판단' 순서대로 진행하세요.",
     "exit": "손절·익절 실행입니다 ({time}). 대상 종목: {codes}. 감시 사유: {why}. CLAUDE.md 의 'B. 손절·익절 실행' 순서대로 진행하세요.",
     "review": "주간 회고 실행입니다 ({time}). 대회 {week}주차, 기간 {period}. CLAUDE.md 의 'C. 주간 회고' 순서대로 진행하세요.",
+    "tune": "기준값 조정 실행입니다 ({time}). 대회 {week}주차. CLAUDE.md 의 'D. 기준값 조정' 순서대로 진행하세요.",
 }
 
 
@@ -83,14 +86,15 @@ def mcp_config():
 
 
 # 실행이 정말 일을 했는지: 에이전트가 끝까지 갔다면 이 종류의 기록이 하나 이상 남아 있어야 함
-EXPECT = {"decide": {"regime"}, "exit": {"fill", "decision", "block"}, "review": {"review"}}
+EXPECT = {"decide": {"regime"}, "exit": {"fill", "decision", "block"}, "review": {"review"}, "tune": {"tune"}}
 
 
 def did_work(kind, run_id):
     return any(r.get("run") == run_id and r["kind"] in EXPECT[kind] for r in C.read_jsonl(C.JOURNAL))
 
 
-SUMMARY = re.compile(r"(상승|횡보|하락)\s*/\s*매수\s*\d+건\s*/\s*매도\s*\d+건\s*/\s*관망\s*\d+건")
+SUMMARY = re.compile(r"(상승|횡보|하락)\s*/\s*매수\s*\d+건\s*/\s*매도\s*\d+건\s*/\s*관망\s*\d+건"
+                     r"|기준값 조정\s*/\s*반영\s*\d+건\s*/\s*거절\s*\d+건")
 
 
 def summary_line(text):
@@ -151,7 +155,7 @@ def publish(msg):
     py("logger.py")
     if os.environ.get("GIT_PUSH") != "1":
         return
-    paths = ["docs/data", "reports/drafts"]
+    paths = ["docs/data", "reports/drafts", "agent/config/params.json"]   # params.json = 조정 실행이 바꾼 기준값
     subprocess.run(["git", "add", "--", *[p for p in paths if os.path.exists(os.path.join(C.ROOT, p))]], cwd=C.ROOT)
     if subprocess.run(["git", "diff", "--cached", "--quiet"], cwd=C.ROOT).returncode == 0:
         return
@@ -191,6 +195,11 @@ def main():
         return
     if kind not in PROMPTS:
         sys.exit(f"알 수 없는 실행: {kind}\n{__doc__}")
+    if kind == "tune":
+        import tuning
+        if not tuning.allowed_today():
+            log("기준값 조정은 화·수·목에만 실행함")
+            return
 
     if not acquire():
         log("다른 실행이 진행 중이라 건너뜀")
