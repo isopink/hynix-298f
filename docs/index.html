@@ -729,12 +729,12 @@ details.log summary { border-radius: 16px; }
 
 
   function hero() {
-    const el = $('ch-hero'), { svg, W, H } = svgIn(el, el.clientWidth < 520 ? (D.eq.length > 1 ? 160 : 90) : 280), rows = D.eq;   // 휴대폰에선 낮게, 대회 전(점 하나)엔 더 낮게
-    const lo = Math.min(0, d3.min(rows, r => Math.min(r.ret, r.kret))), hi = Math.max(0, d3.max(rows, r => Math.max(r.ret, r.kret)));
-    const y0 = d3.scaleLinear([lo, hi], [0, 1]).nice(4), ticks = y0.ticks(4), tstep = ticks.length > 1 ? ticks[1] - ticks[0] : .01, tf = v => (v > 0 ? '+' : '') + (v * 100).toFixed(tstep < .0099 ? 1 : 0) + '%';
-    const lw = Math.max(textW(svg, 'The Duo ' + pct(D.ret), 12), textW(svg, 'KOSPI ' + pct(D.kret), 12));
+    const el = $('ch-hero'), { svg, W, H } = svgIn(el, el.clientWidth < 520 ? (D.eq.length > 1 ? 190 : 150) : 280), rows = D.eq;   // 휴대폰에선 낮게, 하루치(점 하나)면 조금 더 낮게
     const narrow = W < 520;
-    const m = { t: 10, r: narrow ? 8 : lw + 18, b: 28, l: d3.max(ticks, v => textW(svg, tf(v))) + 10 };
+    const lo = Math.min(0, d3.min(rows, r => Math.min(r.ret, r.kret))), hi = Math.max(0, d3.max(rows, r => Math.max(r.ret, r.kret)));
+    const y0 = d3.scaleLinear([lo, hi], [0, 1]).nice(narrow ? 3 : 4), ticks = y0.ticks(narrow ? 3 : 4), tstep = ticks.length > 1 ? ticks[1] - ticks[0] : .01, tf = v => (v > 0 ? '+' : '') + (v * 100).toFixed(tstep < .0099 ? 1 : 0) + '%';
+    const lw = Math.max(textW(svg, 'The Duo ' + pct(D.ret), 12), textW(svg, 'KOSPI ' + pct(D.kret), 12));
+    const m = { t: narrow ? 30 : 10, r: narrow ? 8 : lw + 18, b: 28, l: d3.max(ticks, v => textW(svg, tf(v))) + 10 };   // 휴대폰은 위쪽에 범례 자리
     const x = d3.scaleUtc(d3.extent(rows, r => r.d), [m.l, W - m.r]);
     const y = d3.scaleLinear(y0.domain(), [H - m.b, m.t]);
     svg.append('g').selectAll('line').data(ticks).join('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y).attr('y2', y).attr('stroke', d => d === 0 ? 'rgba(255,255,255,.16)' : C.grid);
@@ -747,12 +747,22 @@ details.log summary { border-radius: 16px; }
     const p = svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', C.red).attr('stroke-width', 2.5).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round').attr('d', d3.line().x(r => x(r.d)).y(r => y(r.ret)));
     if (!animated) animate(p);
     const L = rows[rows.length - 1];
+    svg.append('circle').attr('cx', x(L.d)).attr('cy', y(L.kret)).attr('r', 3.5).attr('fill', '#8a8a8a');   // KOSPI 끝점 (하루치일 땐 선 대신 이 점만 보임)
     svg.append('circle').attr('cx', x(L.d)).attr('cy', y(L.ret)).attr('r', 10).attr('fill', C.red).attr('opacity', .2);
     svg.append('circle').attr('cx', x(L.d)).attr('cy', y(L.ret)).attr('r', 4.5).attr('fill', C.red).attr('stroke', '#fff').attr('stroke-width', 1.5);
     if (!narrow) {
       const labs = [{ n: 'The Duo', v: L.ret, c: C.redHi, y: y(L.ret) }, { n: 'KOSPI', v: L.kret, c: '#9a9a9a', y: y(L.kret) }];
       if (Math.abs(labs[0].y - labs[1].y) < 18) { const mid = (labs[0].y + labs[1].y) / 2, s = labs[0].y <= labs[1].y ? 1 : -1; labs[0].y = mid - 9 * s; labs[1].y = mid + 9 * s; }
       labs.forEach(l => { const t = svg.append('text').attr('x', W - m.r + 12).attr('y', l.y).attr('dy', '.32em').attr('font-size', 12).attr('fill', l.c); t.append('tspan').attr('font-weight', 600).text(l.n); t.append('tspan').attr('dx', 6).text(pct(l.v)); });
+    } else {   // 휴대폰: 오른쪽 이름표 대신 위쪽 한 줄 범례
+      const g = svg.append('g').attr('transform', `translate(${m.l},12)`);
+      g.append('line').attr('x1', 0).attr('x2', 14).attr('y1', 0).attr('y2', 0).attr('stroke', C.red).attr('stroke-width', 2.5);
+      const t1 = g.append('text').attr('x', 20).attr('dy', '.32em').attr('font-size', 12).attr('fill', C.redHi);
+      t1.append('tspan').attr('font-weight', 600).text('The Duo'); t1.append('tspan').attr('dx', 5).text(pct(L.ret));
+      const x2 = 20 + t1.node().getComputedTextLength() + 18;
+      g.append('line').attr('x1', x2).attr('x2', x2 + 14).attr('y1', 0).attr('y2', 0).attr('stroke', '#8a8a8a').attr('stroke-width', 1.5).attr('stroke-dasharray', '3 3');
+      const t2 = g.append('text').attr('x', x2 + 20).attr('dy', '.32em').attr('font-size', 12).attr('fill', '#9a9a9a');
+      t2.append('tspan').attr('font-weight', 600).text('KOSPI'); t2.append('tspan').attr('dx', 5).text(pct(L.kret));
     }
     const rule = svg.append('line').attr('y1', m.t).attr('y2', H - m.b).attr('stroke', '#444').attr('opacity', 0);
     const dot = svg.append('circle').attr('r', 4).attr('fill', '#141414').attr('stroke', C.redHi).attr('stroke-width', 2).attr('opacity', 0);
