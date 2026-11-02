@@ -186,7 +186,7 @@ td.k { color: var(--ink); white-space: nowrap; }
 .fl-kv .k { display: inline-flex; align-items: center; gap: 8px; color: #a0a0a0; font-size: 13px; }
 .fl-kv .k svg { flex: none; }
 .fl-kv .v { font-size: 20px; margin-left: 8px; font-variant-numeric: tabular-nums; }
-.fl-kv .dim .v { font-size: 14px; }
+.fl-kv .fl-sw { display: inline-block; width: 10px; height: 10px; border-radius: 2px; }
 .kx-flow { margin-top: 14px; padding-top: 14px; border-top: 1px dashed rgba(255,255,255,.08); }   /* 카드 안 아래칸 (누적 수익률 → 실시간 판단, 실시간 KOSPI → 순매수) */
 .kx-flow .hd { margin-bottom: 8px; }
 .kx-flow .fl-kv .v { font-size: 17px; }
@@ -690,58 +690,55 @@ details.log summary { border-radius: 16px; }
     drawFlow();
   }
   const flowEok = v => (v > 0 ? '+' : v < 0 ? '−' : '') + won(Math.abs(Math.round(v))) + '억';
-  const FLS = [{ k: 'f', n: '외국인' }, { k: 'i', n: '기관' }];
+  // 주체별 색 (막대 방향이 순매수↑·순매도↓를 나타내므로 색은 주체 구분에만 씀)
+  const FLS = [{ k: 'f', n: '외국인', c: '#f0f0f0' }, { k: 'i', n: '기관', c: '#8f8f8f' }, { k: 'p', n: '개인', c: '#e0b84a' }];
   function drawFlow(nested) {
     const el = $('ch-fl'), kv = $('fl-kv');
     if (!FL || !FL.length) { kv.innerHTML = ''; $('fl-asof').textContent = ''; return none(el, '수급 데이터를 기다리는 중이에요.'); }
     const L = FL[FL.length - 1], day = kstDate(L.t.toISOString());
     const hm = t => t.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Seoul' });
-    $('fl-asof').textContent = md(toD(day)) + ' ' + hm(L.t) + (marketOpen() ? ' 기준 · 5분 막대 · 억 원' : ' 장 마감 · 5분 막대 · 억 원');
-    // 머리줄: 장 시작부터 누적 순매수 (빨강 순매수 · 파랑 순매도)
+    const narrow = el.clientWidth < 520, MIN = narrow ? 10 : 5, STEP = MIN * 60000, N = 390 / MIN;   // 휴대폰은 막대가 너무 가늘어서 10분
+    $('fl-asof').textContent = md(toD(day)) + ' ' + hm(L.t) + (marketOpen() ? ' 기준' : ' 장 마감') + ` · ${MIN}분 막대 · 억 원`;
+    // 머리줄 = 범례 + 장 시작부터 누적 순매수 (빨강 순매수 · 파랑 순매도)
     const cls = v => v > 0 ? 'up' : v < 0 ? 'down' : '';
-    kv.innerHTML = FLS.map(s => `<span><span class="k">${s.n}</span><span class="v ${cls(L[s.k])}">${flowEok(L[s.k])}</span></span>`).join('')
-      + `<span class="dim"><span class="k">개인</span><span class="v ${cls(L.p)}">${flowEok(L.p)}</span></span>`;
-    // 5분 구간별 순매수 = 구간 끝 누적 − 직전 구간 끝 누적 (첫 구간은 0부터)
-    const open = Date.parse(day + 'T09:00:00+09:00'), STEP = 5 * 60000, bk = new Map();
-    FL.forEach(d => { const k = Math.min(77, Math.max(0, Math.floor((+d.t - open - 1) / STEP))); bk.set(k, d); });   // 09:00~15:30 = 78칸, 칸마다 마지막 값
+    kv.innerHTML = FLS.map(s => `<span><span class="k"><i class="fl-sw" style="background:${s.c}"></i>${s.n}</span><span class="v ${cls(L[s.k])}">${flowEok(L[s.k])}</span></span>`).join('');
+    // 구간별 순매수 = 구간 끝 누적 − 직전 구간 끝 누적 (첫 구간은 0부터)
+    const open = Date.parse(day + 'T09:00:00+09:00'), bk = new Map();
+    FL.forEach(d => { const k = Math.min(N - 1, Math.max(0, Math.floor((+d.t - open - 1) / STEP))); bk.set(k, d); });   // 09:00~15:30, 칸마다 마지막 값
     let pf = { f: 0, i: 0, p: 0 };
     const B = [...bk.keys()].sort((u, v) => u - v).map(k => { const d = bk.get(k), r = { k, t0: new Date(open + k * STEP), t1: new Date(open + (k + 1) * STEP), f: d.f - pf.f, i: d.i - pf.i, p: d.p - pf.p, cf: d.f, ci: d.i, cp: d.p }; pf = d; return r; });
-    // 두 줄 (외국인 · 기관), 같은 세로 눈금이라 크기 비교 가능
-    const narrow = el.clientWidth < 520, LH = narrow ? 62 : 78, gap = 24, top = 10;
-    const { svg, W, H } = svgIn(el, top + LH * 2 + gap + 22);
+    // 한 줄에 세 주체를 나란히 (칸마다 외국인 · 기관 · 개인 막대 3개)
+    const top = 8, PH = narrow ? 150 : 190, bot = top + PH;
+    const { svg, W, H } = svgIn(el, bot + 22);
     // 눈금은 상위 5%를 뺀 크기에 맞춤 (장 마감 확정값 같은 튀는 막대 하나에 나머지가 눌리지 않게). 넘치는 막대는 끝을 잘라 흰 선으로 표시
-    const A = B.flatMap(r => [Math.abs(r.f), Math.abs(r.i)]).sort(d3.ascending), M = Math.min(d3.max(A), (d3.quantile(A, .95) || 0) * 1.3) || d3.max(A) || 1, nm = d3.scaleLinear([0, M], [0, 1]).nice(2).domain()[1];
+    const A = B.flatMap(r => FLS.map(s => Math.abs(r[s.k]))).sort(d3.ascending), M = Math.min(d3.max(A), (d3.quantile(A, .95) || 0) * 1.3) || d3.max(A) || 1;
+    const y = d3.scaleLinear([-M, M], [bot, top]).nice(4).clamp(true), [lo, hi] = y.domain();
     const tick = v => (v > 0 ? '+' : v < 0 ? '−' : '') + won(Math.abs(v));
-    AXL.fl = textW(svg, tick(-nm)) + 10; AXL.flUsed = Math.max(AXL.kx, AXL.fl);
+    AXL.fl = d3.max(y.ticks(4), v => textW(svg, tick(v))) + 10; AXL.flUsed = Math.max(AXL.kx, AXL.fl);
     const m = { l: AXL.flUsed, r: 8 };
     if (!nested && KX && KX.length && AXL.kxUsed !== AXL.flUsed) drawKospi(true);
-    const x = d3.scaleUtc([new Date(open), new Date(open + 78 * STEP)], [m.l, W - m.r]);
-    const bw = Math.max(1, x(new Date(open + STEP)) - x(new Date(open)) - (narrow ? 1 : 2));
-    FLS.forEach((s, li) => {
-      const t0 = top + li * (LH + gap), y = d3.scaleLinear([-nm, nm], [t0 + LH, t0]).clamp(true);
-      svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(0)).attr('y2', y(0)).attr('stroke', '#5a5a5a');
-      [nm, -nm].forEach(v => {
-        svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(v)).attr('y2', y(v)).attr('stroke', C.grid);
-        svg.append('text').attr('x', m.l - 8).attr('y', y(v)).attr('dy', '.32em').attr('text-anchor', 'end').attr('font-size', 10).attr('fill', C.muted).text(tick(v));
-      });
-      svg.append('g').selectAll('rect').data(B).join('rect').attr('x', r => x(r.t0) + (narrow ? .5 : 1)).attr('width', bw)
-        .attr('y', r => y(Math.max(0, r[s.k]))).attr('height', r => Math.abs(y(r[s.k]) - y(0)))
-        .attr('fill', r => r[s.k] >= 0 ? C.red : C.blue).attr('opacity', .85);
-      svg.append('g').selectAll('line').data(B.filter(r => Math.abs(r[s.k]) > nm)).join('line').attr('x1', r => x(r.t0) + (narrow ? .5 : 1)).attr('x2', r => x(r.t0) + (narrow ? .5 : 1) + bw)
-        .attr('y1', r => r[s.k] > 0 ? t0 + 1 : t0 + LH - 1).attr('y2', r => r[s.k] > 0 ? t0 + 1 : t0 + LH - 1).attr('stroke', '#fff').attr('stroke-width', 2);
-      svg.append('text').attr('x', m.l + 4).attr('y', t0 + 9).attr('font-size', 11).attr('fill', C.body)
-        .attr('stroke', '#141414').attr('stroke-width', 3).attr('paint-order', 'stroke').text(s.n);   // 막대 위에 겹쳐도 읽히게 테두리
+    const x = d3.scaleUtc([new Date(open), new Date(open + N * STEP)], [m.l, W - m.r]);
+    const slot = x(new Date(open + STEP)) - x(new Date(open)), pad = Math.max(1, slot * .18), bw = Math.max(1, (slot - pad) / 3);
+    svg.append('g').selectAll('line').data(y.ticks(4)).join('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y).attr('y2', y).attr('stroke', d => d === 0 ? '#5a5a5a' : C.grid);
+    svg.append('g').selectAll('text').data(y.ticks(4)).join('text').attr('x', m.l - 8).attr('y', y).attr('dy', '.32em').attr('text-anchor', 'end').attr('font-size', 10).attr('fill', C.muted).text(tick);
+    FLS.forEach((s, j) => {
+      const bx = r => x(r.t0) + pad / 2 + j * bw;
+      svg.append('g').selectAll('rect').data(B).join('rect').attr('x', bx).attr('width', Math.max(1, bw - (bw > 3 ? .5 : 0)))
+        .attr('y', r => y(Math.max(0, r[s.k]))).attr('height', r => Math.abs(y(r[s.k]) - y(0))).attr('fill', s.c).attr('opacity', .9);
+      svg.append('g').selectAll('line').data(B.filter(r => r[s.k] > hi || r[s.k] < lo)).join('line').attr('x1', bx).attr('x2', r => bx(r) + bw)
+        .attr('y1', r => r[s.k] > 0 ? top + 1 : bot - 1).attr('y2', r => r[s.k] > 0 ? top + 1 : bot - 1).attr('stroke', '#fff').attr('stroke-width', 2);
     });
+    [[hi, '순매수 ↑'], [lo, '순매도 ↓']].forEach(([v, t]) => svg.append('text').attr('x', W - m.r).attr('y', y(v) + (v > 0 ? 10 : -4)).attr('text-anchor', 'end').attr('font-size', 10).attr('fill', C.muted)
+      .attr('stroke', '#141414').attr('stroke-width', 3).attr('paint-order', 'stroke').text(t));
     [9, 11, 13, 15].forEach(h => svg.append('text').attr('x', x(new Date(`${day}T${String(h).padStart(2, '0')}:00:00+09:00`))).attr('y', H - 6).attr('text-anchor', h === 9 ? 'start' : 'middle').attr('font-size', 11).attr('fill', C.muted).text(h + ':00'));
-    const bot = top + LH * 2 + gap;
-    const hl = svg.append('rect').attr('y', top).attr('height', bot - top).attr('width', bw + 2).attr('fill', 'rgba(255,255,255,.06)').attr('opacity', 0);
+    const hl = svg.append('rect').attr('y', top).attr('height', PH).attr('width', slot).attr('fill', 'rgba(255,255,255,.06)').attr('opacity', 0);
     const byK = new Map(B.map(r => [r.k, r]));
     svg.append('rect').attr('x', m.l).attr('y', 0).attr('width', W - m.l - m.r).attr('height', bot).attr('fill', 'transparent')
       .on('pointermove pointerdown', ev => {
         const k = Math.floor((+x.invert(d3.pointer(ev)[0]) - open) / STEP), r = byK.get(k);
         if (!r) { hideTip(); hl.attr('opacity', 0); return; }
         hl.attr('x', x(r.t0)).attr('opacity', 1);
-        showTip(ev, `<div class="t">${hm(r.t0)}~${hm(r.t1)} 순매수</div>${row('외국인', flowEok(r.f), cls(r.f))}${row('기관', flowEok(r.i), cls(r.i))}${row('개인', flowEok(r.p), cls(r.p))}<div class="t" style="margin-top:6px">${hm(r.t1)}까지 누적</div>${row('외국인', flowEok(r.cf), cls(r.cf))}${row('기관', flowEok(r.ci), cls(r.ci))}`);
+        showTip(ev, `<div class="t">${hm(r.t0)}~${hm(r.t1)} 순매수</div>${FLS.map(s => row(s.n, flowEok(r[s.k]), cls(r[s.k]))).join('')}<div class="t" style="margin-top:6px">${hm(r.t1)}까지 누적</div>${row('외국인', flowEok(r.cf), cls(r.cf))}${row('기관', flowEok(r.ci), cls(r.ci))}${row('개인', flowEok(r.cp), cls(r.cp))}`);
       })
       .on('pointerleave', () => { hideTip(); hl.attr('opacity', 0); });
   }
