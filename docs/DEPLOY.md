@@ -9,7 +9,7 @@
 | `docs/data/*.json` | 화면에 나오는 숫자 (지금은 샘플) |
 | `docs/config.js` | 댓글 저장소(Supabase) 연결 정보 |
 | `supabase/schema.sql` | 댓글 + 실시간 잔고 테이블 만드는 SQL |
-| `live/snapshot.py` | 키움 잔고를 5분마다 조회해 Supabase에 올리는 스크립트 (팀 계좌 키를 가진 PC 1대에서 실행) |
+| `live/snapshot.py` | 키움 잔고를 1분마다 조회해 Supabase에 올리는 스크립트 (팀 계좌 키를 가진 PC 1대에서 실행) |
 | `live/.env.example` | 스크립트 설정 견본 → `.env`로 복사해서 사용 |
 | `live/run_snapshot.bat` | 작업 스케줄러용 실행 파일 |
 
@@ -51,7 +51,7 @@
    - 작업 스케줄러 → 기본 작업 만들기 → 이름 `대시보드 잔고`
    - 트리거: 매주 · 월~금 · 오전 8:55
    - 동작: 프로그램 시작 → `live\run_snapshot.bat` 선택
-   - 장중 5분마다 조회하고 15:35에 스스로 종료. 기록은 `live\snapshot.log`
+   - 장중 1분마다 조회하고 15:35에 스스로 종료. 기록은 `live\snapshot.log`
 - PC가 꺼져 있으면 그 시간 동안은 갱신이 멈추고, 마지막 값이 그대로 보임
 - 조회만 하고 주문은 하지 않음. 간격은 `.env`의 `INTERVAL_SEC` (최소 60초, 기본 300초)
 - `docs/config.js`의 `liveSince`(기본 11/2) 이전 기록은 그래프에 쓰지 않음. 대회 전에 시험할 땐 오늘 날짜로 잠깐 바꿔서 확인

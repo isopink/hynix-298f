@@ -31,7 +31,7 @@ docs/       GitHub Pages 대시보드 (https://isopink.github.io/hynix-298f/)
   config.js    Supabase URL / anon key / liveSince
   data/*.json  에이전트 로그 (equity, holdings, trades, risk, system, reviews)
   DEPLOY.md    배포 가이드 (한국어)
-live/       snapshot.py — 키움 kt00018 잔고 + ka20001 KOSPI를 5분마다 조회 → Supabase RPC push_snapshot
+live/       snapshot.py — 키움 kt00018 잔고 + ka20001 KOSPI를 1분마다 조회 (11-02부터, `live/.env` INTERVAL_SEC=60) → Supabase RPC push_snapshot
 supabase/   schema.sql — comments(익명 게시판), snapshots, app_secret, push_snapshot()
 agent/      트레이딩 에이전트 (구조·실행법은 agent/README.md)
   config/      risk_limits.json(고정, Hook이 강제) · params.json(판단 기준값)

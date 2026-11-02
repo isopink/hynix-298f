@@ -16,7 +16,7 @@ Team *Hynix 298F* · 2026 Navist UOStock AI Auto-Trading Mock Investment Competi
 
 <img src="assets/dashboard.jpg" alt="Trading Dashboard" width="100%">
 
-<sub>Screenshot shows sample data. During the competition (Nov 2 – 27, 2026) the live account balance refreshes every 5 minutes.</sub>
+<sub>Screenshot shows sample data. During the competition (Nov 2 – 27, 2026) the live account balance refreshes every minute.</sub>
 
 </div>
 
@@ -74,7 +74,7 @@ flowchart TB
     subgraph S4["④ Log"]
         direction TB
         I[("Decision & fill log")] --> K["Trading Dashboard"]
-        L["Balance snapshot · 5 min<br/>Kiwoom"] --> SB[("Supabase")]
+        L["Balance snapshot · 1 min<br/>Kiwoom"] --> SB[("Supabase")]
         N["KOSPI 1-min bars<br/>Naver Finance"] --> SB
         SB --> K
     end
@@ -138,7 +138,7 @@ A single page that shows not just *what* the agent traded but *why*.
 
 | Feature | Description |
 |---|---|
-| Live return | Kiwoom balance polled every 5 minutes during market hours, pushed to Supabase; the page refreshes every 30 s |
+| Live return | Kiwoom balance polled every minute during market hours, pushed to Supabase; the page refreshes every 30 s |
 | Live KOSPI | Naver Finance 1-minute bars collected by Supabase every minute (no delay), drawn over the previous day with volume and RSI |
 | Cumulative return vs. KOSPI | Overlaid with a market-regime strip (bull · sideways · bear) |
 | Conviction vs. return | Checks whether the agent's confidence actually predicted outcomes |
