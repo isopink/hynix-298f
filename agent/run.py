@@ -8,6 +8,7 @@
   python run.py review                토 10:00  주간 회고 (보고서 초안 + 조정 제안)
   python run.py tune                  화·수·목 16:00  기준값 자동 조정 (src/tuning.py 가 검사 후 params.json 반영)
   python run.py monitor               09:05~15:20  장중 감시 루프 (src/monitor.py)
+  python run.py sync                  로그온부터 계속  push 된 코드를 1분 안에 받아 반영 (src/sync.py)
 
   --dry   Claude 를 부르지 않고 명령만 출력
 """
@@ -182,6 +183,10 @@ def main():
     if kind == "monitor":
         import monitor
         monitor.loop()
+        return
+    if kind == "sync":   # sync.py 자신이 바뀌면 10 으로 끝나므로 새 코드로 다시 띄움
+        while subprocess.run([PY, os.path.join(HERE, "src", "sync.py")], cwd=HERE).returncode == 10:
+            pass
         return
     if kind == "prep":
         refresh_account()

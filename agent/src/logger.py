@@ -123,7 +123,8 @@ def status(note=""):
     last = runs[-1] if runs else None
     return {"last_run": last["time"] if last else None, "last_ok": bool(last and last.get("ok")),
             "next_run": next_run(), "runs_today": len(todays),
-            "failures_today": sum(1 for r in todays if not r.get("ok")), "note": note or (last or {}).get("note", "")}
+            "failures_today": sum(1 for r in todays if not r.get("ok")), "note": note or (last or {}).get("note", ""),
+            "sync": C.read_json(os.path.join(C.WORK, "sync_state.json"))}   # 코드 자동 동기화 상태 (src/sync.py)
 
 
 def briefing():

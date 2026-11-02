@@ -1,0 +1,256 @@
+"""
+코드 자동 동기화 (LLM 없음). 노트북에서 push 한 수정을 이 PC가 1분 안에 받아 반영합니다.
+
+  1분마다 git fetch → 새 커밋이 있으면
+    1) 받은 코드를 임시 폴더에 풀어 문법·JSON·import 검사 (실패하면 그 커밋은 반영하지 않음)
+    2) 판단·손절 실행이 도는 중(run.lock)이면 끝날 때까지 기다림
+    3) rebase 로 반영 (에이전트가 아직 못 올린 docs/data 커밋은 위에 다시 얹고 push)
+    4) 장중이면 바뀐 코드에 맞춰 장중 감시(monitor)·잔고 루프(snapshot)를 재시작
+  장중에 monitor·snapshot 이 꺼져 있으면 다시 켬 (5분에 한 번까지)
+
+상태는 work/sync_state.json → logger 가 status.json 의 sync 로 내보내 대시보드에 표시.
+sync.py 자신이 바뀌면 종료 코드 10 으로 끝나고, run.py 가 새 코드로 다시 띄움.
+"""
+import json
+import os
+import shutil
+import subprocess
+import sys
+import tempfile
+import time
+
+import common as C
+
+STATE = os.path.join(C.WORK, "sync_state.json")
+LOCK = os.path.join(C.WORK, "run.lock")
+PIDLOCK = os.path.join(C.WORK, "sync.pid")
+INTERVAL = 60
+SELF = "agent/src/sync.py"
+
+# (이름, 작업 스케줄러 작업, 명령줄에서 찾을 문자열, 이 경로가 바뀌면 재시작, 동작 시간)
+LOOPS = [
+    ("monitor", "Hynix298-monitor", "run.py monitor", ("agent/src/", "agent/run.py", "agent/config/"), None),
+    ("snapshot", "Hynix298-snapshot", "snapshot.py --loop", ("live/snapshot.py",), ("08:55", "15:35")),
+]
+CHECK_IMPORTS = ["common", "monitor", "broker", "risk", "sizing", "logger", "tuning", "sync"]
+
+
+def log(msg):
+    print(f"[{C.now().strftime('%m-%d %H:%M:%S')}] {msg}", flush=True)
+
+
+def git(*args, check=False):
+    r = subprocess.run(["git", *args], cwd=C.ROOT, capture_output=True, text=True, encoding="utf-8", errors="replace")
+    if check and r.returncode != 0:
+        raise RuntimeError(f"git {args[0]}: {(r.stderr or r.stdout).strip()[:300]}")
+    return r
+
+
+def rev(ref):
+    r = git("rev-parse", "--verify", "-q", ref)
+    return r.stdout.strip() if r.returncode == 0 else None
+
+
+def state():
+    return C.read_json(STATE, {}) or {}
+
+
+def save(**kw):
+    st = {**state(), **kw, "checked_at": C.stamp()}
+    C.write_json(STATE, st)
+    return st
+
+
+# ---------------- 반영 전 검사 ----------------
+def precheck(sha):
+    """받은 커밋의 agent/·live/ 를 임시 폴더에 풀어 검사. 실패하면 이유 문자열, 통과하면 None."""
+    tmp = tempfile.mkdtemp(prefix="sync-")
+    try:
+        files = git("ls-tree", "-r", "--name-only", sha, "--", "agent", "live", check=True).stdout.split()
+        for path in files:
+            if not path.endswith((".py", ".json")):
+                continue
+            data = subprocess.run(["git", "show", f"{sha}:{path}"], cwd=C.ROOT, capture_output=True).stdout
+            dst = os.path.join(tmp, *path.split("/"))
+            os.makedirs(os.path.dirname(dst), exist_ok=True)
+            with open(dst, "wb") as f:
+                f.write(data)
+            try:
+                text = data.decode("utf-8-sig")
+                if path.endswith(".py"):
+                    compile(text, path, "exec")
+                else:
+                    json.loads(text)
+            except (SyntaxError, ValueError) as e:
+                return f"{path}: {type(e).__name__} {e}"[:300]
+        code = f"import sys; sys.path.insert(0, {os.path.join(tmp, 'agent', 'src')!r}); " + \
+               "; ".join(f"import {m}" for m in CHECK_IMPORTS)
+        r = subprocess.run([sys.executable, "-c", code], cwd=tmp, capture_output=True, text=True,
+                           encoding="utf-8", errors="replace", timeout=120)
+        if r.returncode != 0:
+            return "import 실패: " + (r.stderr.strip().splitlines() or ["?"])[-1][:300]
+        return None
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def run_busy():
+    """판단·손절 실행이 진행 중이면 True (run.py 와 같은 기준: 30분 안에 만든 잠금)."""
+    try:
+        return time.time() - os.path.getmtime(LOCK) < 30 * 60
+    except OSError:
+        return False
+
+
+# ---------------- 장중 루프 관리 ----------------
+def processes(pattern):
+    ps = ("Get-CimInstance Win32_Process -Filter \"Name='python.exe'\" | "
+          "Select-Object ProcessId,CommandLine | ConvertTo-Json -Compress")
+    r = subprocess.run(["powershell", "-NoProfile", "-Command", ps], capture_output=True, text=True,
+                       encoding="utf-8", errors="replace")
+    try:
+        rows = json.loads(r.stdout or "[]")
+    except ValueError:
+        return []
+    rows = rows if isinstance(rows, list) else [rows]
+    return [p["ProcessId"] for p in rows if pattern in (p.get("CommandLine") or "")]
+
+
+def in_window(win):
+    n = C.now()
+    if n.weekday() >= 5:
+        return False
+    if win is None:
+        s = C.params()["schedule"]
+        win = (s["monitor_start"], s["monitor_end"])
+    hm = n.hour * 100 + n.minute
+    start, end = (int(t.replace(":", "")) for t in win)
+    return start <= hm < end
+
+
+def start_task(task):
+    for _ in range(5):   # 방금 끈 작업이 '실행 중'에서 빠지기까지 몇 초 걸림
+        r = subprocess.run(["schtasks", "/Run", "/TN", task], capture_output=True, text=True,
+                           encoding="mbcs", errors="replace")
+        if r.returncode == 0:
+            return True
+        time.sleep(3)
+    log(f"  ! {task} 시작 실패: {(r.stderr or r.stdout).strip()[:200]}")
+    return False
+
+
+def restart(name, task, pattern):
+    for pid in processes(pattern):
+        subprocess.run(["taskkill", "/PID", str(pid), "/T", "/F"], capture_output=True)
+    time.sleep(2)
+    if start_task(task):
+        log(f"  {name} 재시작")
+
+
+_last_heal = {}
+
+
+def heal():
+    """장중에 루프가 꺼져 있으면 다시 켬. 바로 죽는 코드면 재시작이 반복되지 않도록 5분에 한 번까지."""
+    for name, task, pattern, _, win in LOOPS:
+        if not in_window(win) or processes(pattern) or time.time() - _last_heal.get(name, 0) < 5 * 60:
+            continue
+        if name == "monitor" and run_busy():
+            continue
+        _last_heal[name] = time.time()
+        log(f"{name} 가 꺼져 있어 다시 켬")
+        start_task(task)
+
+
+# ---------------- 한 회차 ----------------
+def once():
+    if git("fetch", "-q", "origin").returncode != 0:
+        log("  fetch 실패 (네트워크?) · 다음 회차에 다시")
+        return False
+    branch = git("rev-parse", "--abbrev-ref", "HEAD").stdout.strip()
+    remote = rev(f"origin/{branch}")
+    if not remote:
+        return False
+    base = git("merge-base", "HEAD", remote).stdout.strip()
+    if base == remote:   # 받을 것 없음. 에이전트 커밋이 못 올라갔으면 올림
+        if rev("HEAD") != remote:
+            r = git("push", "-q")
+            if r.returncode == 0:
+                log("밀린 에이전트 커밋 push")
+        save(ok=True, error=None, head=rev("HEAD")[:7])
+        return False
+
+    st = state()
+    if st.get("rejected") == remote:
+        return False     # 이미 검사에서 떨어진 커밋. 새 커밋이 올라올 때까지 대기
+    err = precheck(remote)
+    if err:
+        log(f"반영 안 함 ({remote[:7]}): {err}")
+        save(ok=False, error=f"{remote[:7]} 검사 실패 · {err}", rejected=remote)
+        return False
+    while run_busy():
+        log("  판단·손절 실행 중이라 끝나길 기다림")
+        time.sleep(20)
+
+    changed = git("diff", "--name-only", base, remote).stdout.split()
+    # PC가 커밋하는 건 에이전트 기록(docs/data·params.json)뿐이라, 같은 줄이 겹치면 PC 쪽(방금 만든 기록)을 씀
+    r = git("rebase", "--autostash", "-X", "theirs", "-q", remote)
+    if r.returncode != 0:
+        git("rebase", "--abort")
+        msg = (r.stderr or r.stdout).strip().splitlines()
+        if "index.lock" in r.stderr:   # 에이전트가 같은 순간 커밋하는 중. 다음 회차에 다시
+            log("  에이전트 커밋과 겹쳐 다음 회차에 다시")
+            return False
+        log("rebase 실패 (충돌 등) · 반영 안 함: " + " / ".join(msg[-3:]))
+        save(ok=False, error=f"{remote[:7]} rebase 실패 · " + (msg[-1] if msg else "?")[:200], rejected=remote)
+        return False
+    if rev("HEAD") != remote:
+        git("push", "-q")
+    log(f"반영 {base[:7]} → {remote[:7]} · {len(changed)}개 파일")
+    save(ok=True, error=None, rejected=None, head=rev("HEAD")[:7], applied_at=C.stamp())
+
+    for name, task, pattern, paths, win in LOOPS:
+        if any(f.startswith(paths) for f in changed) and in_window(win):
+            if name == "monitor":
+                while run_busy():   # 감시가 띄운 손절 실행이 끝난 뒤에 끔
+                    time.sleep(20)
+            restart(name, task, pattern)
+    return SELF in changed
+
+
+def single_instance():
+    """sync 가 두 개 뜨지 않도록 잠금 파일을 프로세스가 살아 있는 동안 잡아 둠."""
+    import msvcrt
+    os.makedirs(C.WORK, exist_ok=True)
+    f = open(PIDLOCK, "a+")
+    try:
+        msvcrt.locking(f.fileno(), msvcrt.LK_NBLCK, 1)
+    except OSError:
+        return None
+    return f
+
+
+def loop():
+    keep = single_instance()
+    if not keep:
+        log("이미 다른 sync 가 실행 중이라 종료")
+        return 0
+    log(f"코드 동기화 시작 · {INTERVAL}초 간격 · {C.ROOT}")
+    while True:
+        try:
+            if once():
+                log("sync.py 가 바뀌어 새 코드로 다시 시작")
+                return 10
+            heal()
+        except Exception as e:  # noqa: BLE001
+            log(f"  ! 동기화 실패: {type(e).__name__}: {e}")
+        time.sleep(INTERVAL)
+
+
+if __name__ == "__main__":
+    if "--once" in sys.argv:
+        once()
+    elif "--check" in sys.argv:
+        print(precheck(sys.argv[-1]) or "통과")
+    else:
+        sys.exit(loop())
