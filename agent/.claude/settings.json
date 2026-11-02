@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__kiwoom__get_briefing",
+      "mcp__kiwoom__get_account",
+      "mcp__kiwoom__set_regime",
+      "mcp__kiwoom__plan_order",
+      "mcp__kiwoom__place_order",
+      "mcp__kiwoom__record_decision",
+      "mcp__kiwoom__submit_review",
+      "WebSearch",
+      "Read(./work/**)",
+      "Read(./config/**)"
+    ],
+    "deny": [
+      "Bash",
+      "PowerShell",
+      "Edit",
+      "Write",
+      "NotebookEdit",
+      "Read(./.env)",
+      "Read(../live/.env)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "mcp__kiwoom__place_order",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR/.venv/Scripts/python.exe\" \"$CLAUDE_PROJECT_DIR/.claude/hooks/risk_check.py\"",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}
