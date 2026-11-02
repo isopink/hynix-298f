@@ -530,11 +530,14 @@ details.log summary { border-radius: 16px; }
     // KOSPI: 기록값 → 없으면 kospi_daily 종가 → 그래도 없으면 전날 값
     let kp = null;
     const eq = d.equity.map(r => { const k = +(r.kospi ?? KD.get(r.date)) || kp; kp = k; return { ...r, d: toD(r.date), total: +r.total, kospi: k }; });
-    const k0 = (eq.find(r => r.kospi) || {}).kospi;
+    // KOSPI 기준 = 대회 시작 직전 거래일 종가 (첫날 값을 기준으로 하면 첫날 등락이 빠짐). 없으면 첫 기록값
+    const pre = [...KD.keys()].filter(dt => dt < START).sort().pop();
+    const k0 = (pre && KD.get(pre)) || (eq.find(r => r.kospi) || {}).kospi;
     let peak = 0;
     eq.forEach((r, i) => {
       r.ret = r.total / INIT - 1; r.kret = k0 && r.kospi ? r.kospi / k0 - 1 : 0;
-      r.day = i ? r.total / eq[i - 1].total - 1 : 0; r.kday = i && r.kospi && eq[i - 1].kospi ? r.kospi / eq[i - 1].kospi - 1 : 0;
+      const kPrev = i ? eq[i - 1].kospi : k0;
+      r.day = i ? r.total / eq[i - 1].total - 1 : 0; r.kday = r.kospi && kPrev ? r.kospi / kPrev - 1 : 0;
       peak = Math.max(peak, r.total); r.dd = r.total / peak - 1;
     });
     const last = eq[eq.length - 1], prevFri = eq[Math.max(0, eq.length - 6)];
