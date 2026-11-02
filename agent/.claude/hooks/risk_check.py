@@ -32,7 +32,8 @@ def main():
 
     o = event.get("tool_input") or {}
     order = {"code": str(o.get("code", "")), "side": o.get("side"), "qty": o.get("qty"),
-             "confidence": o.get("confidence"), "rule_exit": o.get("rule_exit", False)}
+             "confidence": o.get("confidence"), "rule_exit": o.get("rule_exit", False),
+             "today_change": broker.cached_change(str(o.get("code", "")))}
     acc = C.read_json(C.ACCOUNT)
     price = broker.cached_quote(order["code"])
     if not acc or not price:

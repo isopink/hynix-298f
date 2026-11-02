@@ -25,15 +25,20 @@ def save_account(acc):
     return acc
 
 
-def cache_quote(code, price):
+def cache_quote(code, price, change=None):
     q = C.read_json(QUOTES, {}) or {}
-    q[code] = {"price": price, "ts": time.time()}
+    q[code] = {"price": price, "ts": time.time(), "change": change}   # change = 오늘 등락률 (전일 종가 대비, 0.05 = +5%)
     C.write_json(QUOTES, q)
 
 
 def cached_quote(code, max_age=600):
     q = (C.read_json(QUOTES, {}) or {}).get(code)
     return q["price"] if q and time.time() - q["ts"] < max_age else None
+
+
+def cached_change(code, max_age=600):
+    q = (C.read_json(QUOTES, {}) or {}).get(code)
+    return q.get("change") if q and time.time() - q["ts"] < max_age else None
 
 
 def build_account(cash, holdings):
@@ -61,8 +66,13 @@ class MockBroker:
         from datetime import timedelta
         df = self.stock.get_market_ohlcv((end - timedelta(days=14)).strftime("%Y%m%d"), end.strftime("%Y%m%d"), code)
         p = int(df["종가"].iloc[-1]) if len(df) else 0
-        cache_quote(code, p)
+        chg = round(p / float(df["종가"].iloc[-2]) - 1, 4) if len(df) > 1 and df["종가"].iloc[-2] else None
+        cache_quote(code, p, chg)
         return p
+
+    def quote_info(self, code):
+        p = self.quote(code)
+        return {"price": p, "change": cached_change(code)}
 
     def account(self):
         hs = []
@@ -111,12 +121,21 @@ class KiwoomBroker:
         self._last = 0.0
 
     def _call(self, path, api_id, body):
-        wait = 0.5 - (time.time() - self._last)
+        # 모의서버는 API마다 초당 1회 ("유량=1"). 넘기면 429이고, 대회에서는 이용 제한 위반이라 1.1초 간격을 지킴
+        wait = 1.1 - (time.time() - self._last)
         if wait > 0:
             time.sleep(wait)
         self._last = time.time()
         token = self.S.get_token(self.env)
-        res, _ = self.S.post_json(self.base + path, body, {"api-id": api_id, "authorization": "Bearer " + token})
+        hdr = {"api-id": api_id, "authorization": "Bearer " + token}
+        try:
+            res, _ = self.S.post_json(self.base + path, body, hdr)
+        except RuntimeError as e:   # 잔고 루프 등 다른 프로세스와 같은 초에 겹치면 429 → 한 번만 쉬었다 재시도
+            if "HTTP 429" not in str(e):
+                raise
+            time.sleep(2)
+            self._last = time.time()
+            res, _ = self.S.post_json(self.base + path, body, hdr)
         if res.get("return_code", 0) not in (0, "0"):
             raise RuntimeError(f"{api_id} 실패: {res.get('return_msg')}")
         return res
@@ -127,8 +146,17 @@ class KiwoomBroker:
             return p
         res = self._call("/api/dostk/stkinfo", "ka10001", {"stk_cd": code})
         p = abs(self.S.num(res.get("cur_prc")))
-        cache_quote(code, p)
+        cache_quote(code, p, round(float(res.get("flu_rt") or 0) / 100, 4))   # flu_rt = 등락률 %
         return p
+
+    def quote_info(self, code):
+        """현재가 + 오늘 등락률. 잔고 조회로 캐시된 가격엔 등락률이 없으므로 그땐 새로 조회."""
+        q = (C.read_json(QUOTES, {}) or {}).get(code) or {}
+        if q.get("change") is None or time.time() - q.get("ts", 0) > 30:
+            q = {**q, "ts": 0}
+            C.write_json(QUOTES, {**(C.read_json(QUOTES, {}) or {}), code: q})
+        p = self.quote(code)
+        return {"price": p, "change": cached_change(code)}
 
     def account(self):
         self._last = time.time()

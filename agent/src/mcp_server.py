@@ -91,7 +91,28 @@ def get_briefing() -> str:
         f"- 누적 체결 {C.fill_count()}건 (대회 최소 {p['competition']['min_trades']}건)",
     ]
     b["market"]["live"] = data_prep.live_market(b)   # 장중이면 지금 KOSPI 반영 힌트도 같이
-    return data_prep.to_text(b) + "\n".join(ctx)
+    return data_prep.to_text(b) + "\n".join(ctx) + intraday(b, r)
+
+
+def intraday(b, r):
+    """후보·보유 종목의 지금 가격과 오늘 등락률. 지표는 전일 종가 기준이라 오늘 급등·급락을 여기서 봄."""
+    rows, seen = [], set()
+    for x in b.get("candidates", []) + (C.read_json(C.ACCOUNT, {}) or {}).get("holdings", []):
+        if x["code"] in seen:
+            continue
+        seen.add(x["code"])
+        try:
+            q = brk().quote_info(x["code"])
+        except Exception:  # noqa: BLE001  조회 실패는 표에서만 빠짐
+            continue
+        chg = q["change"]
+        rows.append(f"| {x['code']} | {x['name']} | {q['price']:,} | {'—' if chg is None else f'{chg:+.1%}'} |")
+    if not rows:
+        return ""
+    lim = r.get("max_buy_day_change", 0.10)
+    return "\n".join(["", "", f"## 오늘 장중 ({C.now().strftime('%H:%M')} 현재가, 전일 종가 대비)",
+                      f"위 지표는 전일 종가 기준입니다. 오늘 +{lim:.0%} 이상 오른 종목은 리스크 규칙상 매수할 수 없습니다 (추격 매수 금지).",
+                      "", "| 코드 | 종목 | 현재가 | 오늘 등락 |", "|---|---|---|---|", *rows])
 
 
 @mcp.tool()
@@ -123,7 +144,8 @@ def plan_order(code: str, side: str, confidence: float) -> dict:
     """확신도로 주문 수량을 계산합니다 (주문은 하지 않음). side 는 '매수' | '매도'.
     qty 가 0 이면 limited_by 에 이유가 있습니다. place_order 에는 여기서 나온 qty 이하만 쓸 수 있습니다."""
     acc = brk().account()
-    price = brk().quote(code)
+    qi = brk().quote_info(code)
+    price = qi["price"]
     if side == "매수":
         plan = sizing.plan_buy(code, confidence, price, acc)
     elif side == "매도":
@@ -131,6 +153,7 @@ def plan_order(code: str, side: str, confidence: float) -> dict:
     else:
         return {"error": "side 는 매수 / 매도"}
     plan["name"] = name_of(code)
+    plan["today_change"] = qi["change"]   # 오늘 등락률. +10% 이상이면 매수는 리스크 규칙에 막힘
     return plan
 
 
@@ -141,8 +164,10 @@ def place_order(code: str, side: str, qty: int, confidence: float, bull: str, be
     """시장가 주문. bull = 매수 측 핵심 근거, bear = 매도 측 핵심 근거, decision = 총괄 판단 이유 (각 1~2문장, 대시보드에 공개).
     rule_exit = 손절·익절·최대 보유일 규칙에 따른 매도이면 true. 리스크 규칙 위반이면 주문되지 않습니다."""
     acc = C.read_json(C.ACCOUNT) or brk().account()
-    price = brk().quote(code)
-    order = {"code": code, "side": side, "qty": qty, "confidence": confidence, "rule_exit": rule_exit}
+    qi = brk().quote_info(code)
+    price = qi["price"]
+    order = {"code": code, "side": side, "qty": qty, "confidence": confidence, "rule_exit": rule_exit,
+             "today_change": qi["change"]}
     bad = risk.check(order, acc, price)
     name = name_of(code)
     if bad:

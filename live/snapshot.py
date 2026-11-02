@@ -110,7 +110,7 @@ def get_balance(env, token):
         cont, key = rh.get("cont-yn", "N"), rh.get("next-key", "")
         if cont != "Y":
             break
-        time.sleep(0.3)
+        time.sleep(1.1)   # 같은 API 연속 호출은 초당 1회 (모의서버 유량 제한)
     holdings = []
     for it in items:
         qty = num(it.get("rmnd_qty"))

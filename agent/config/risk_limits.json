@@ -8,5 +8,6 @@
   "total_loss_cap_factor": 0.5,
   "max_order_amount": 10000000,
   "max_orders_per_run": 8,
+  "max_buy_day_change": 0.10,
   "initial_capital": 50000000
 }

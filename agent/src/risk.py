@@ -46,6 +46,9 @@ def check(order, account, price, p=None, r=None):
             bad.append(("실행 종류", "손절·익절 실행에서는 매수 금지"))
         if conf < C.buy_threshold(p):
             bad.append(("확신도", f"{conf:.2f} < 매수 기준 {C.buy_threshold(p):.2f}"))
+        chg, lim = order.get("today_change"), r.get("max_buy_day_change", 0.10)
+        if chg is not None and chg >= lim:
+            bad.append(("추격 매수", f"오늘 {chg:+.1%} ≥ +{lim:.0%}, 급등한 날은 매수 금지"))
         amount = qty * price
         if amount > r["max_order_amount"]:
             bad.append(("1회 주문 한도", f"{amount:,.0f}원 > {r['max_order_amount']:,}원"))
