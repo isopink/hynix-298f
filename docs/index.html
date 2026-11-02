@@ -899,6 +899,7 @@ details.log summary { border-radius: 16px; }
       const late = st.next_run && Date.now() - Date.parse(st.next_run.replace(' ', 'T') + ':00+09:00') > 30 * 60e3;
       agent = st.last_ok === false ? ['Off', 'bad', '마지막 판단 실패' + (st.note ? ' · ' + st.note : '')]
         : late ? ['Off', 'bad', '예정된 판단이 30분 넘게 지연']
+        : st.sync && st.sync.ok === false ? ['On', 'bad', '코드 동기화 멈춤 · ' + (st.sync.error || '')]   // 판단은 돌지만 새 수정이 반영 안 됨
         : ['On', 'ok', '마지막 판단 ' + st.last_run];
     }
     el.innerHTML = `<span>${pill(watch, '시장 감시')}</span><span>${pill(agent, '에이전트')}</span>`;
