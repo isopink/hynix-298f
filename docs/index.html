@@ -365,7 +365,7 @@ details.log summary { border-radius: 16px; }
         <section class="card c3"><div class="hd"><span class="eyebrow">KOSPI</span><span class="sub">11/2 시가 대비</span></div><div class="val" id="k-kospi">—</div><div class="chart" id="sp-kospi"></div></section>
         <section class="card c3"><div class="hd"><span class="eyebrow">승률</span><span class="sub" id="k-win-sub">—</span></div><div class="val" id="k-win">—</div><div class="chart" id="sp-win"></div></section>
         <section class="card c12">
-          <div class="hd"><span class="eyebrow">수익률 캘린더</span><span class="sub cal-sub">큰 숫자 The Duo · 작은 숫자 KOSPI</span></div>
+          <div class="hd"><span class="eyebrow">수익률 캘린더</span><span class="sub cal-sub">큰 숫자 병신듀오 · 작은 숫자 KOSPI</span></div>
           <div class="cal" id="ch-cal"></div>
         </section>
       </div>
@@ -998,8 +998,8 @@ details.log summary { border-radius: 16px; }
         const a = .14 + .62 * Math.min(1, Math.abs(v.day) / mx);
         c.style.background = v.day >= 0 ? `rgba(218,41,28,${a})` : `rgba(74,163,212,${a})`;
         const vl = document.createElement('span'); vl.className = 'v'; vl.textContent = pct(v.day); c.appendChild(vl);
-        c.addEventListener('pointermove', ev => showTip(ev, `<div class="t">${md(dt)}</div>${row('The Duo', pct(v.day), v.day >= 0 ? 'up' : 'down')}${row('KOSPI', pct(v.kday))}${row('초과', pct(v.day - v.kday), v.day - v.kday >= 0 ? 'up' : 'down')}`));
-        c.addEventListener('pointerdown', ev => showTip(ev, `<div class="t">${md(dt)}</div>${row('The Duo', pct(v.day), v.day >= 0 ? 'up' : 'down')}${row('KOSPI', pct(v.kday))}`));
+        c.addEventListener('pointermove', ev => showTip(ev, `<div class="t">${md(dt)}</div>${row('병신듀오', pct(v.day), v.day >= 0 ? 'up' : 'down')}${row('KOSPI', pct(v.kday))}${row('초과', pct(v.day - v.kday), v.day - v.kday >= 0 ? 'up' : 'down')}`));
+        c.addEventListener('pointerdown', ev => showTip(ev, `<div class="t">${md(dt)}</div>${row('병신듀오', pct(v.day), v.day >= 0 ? 'up' : 'down')}${row('KOSPI', pct(v.kday))}`));
         c.addEventListener('pointerleave', hideTip);
       }
     }
