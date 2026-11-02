@@ -52,7 +52,7 @@
   },
 
   "schedule": {
-    "decide_times": ["09:30", "14:30"],
+    "decide_times": ["09:30", "11:00", "14:30"],
     "monitor_start": "09:05",
     "monitor_end": "15:20",
     "monitor_interval_sec": 300
