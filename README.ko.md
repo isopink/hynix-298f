@@ -12,7 +12,7 @@
 ![Kiwoom](https://img.shields.io/badge/Broker-Kiwoom%20REST%20API-1f4fa3?style=flat-square)
 ![Supabase](https://img.shields.io/badge/Realtime-Supabase-3ecf8e?style=flat-square)
 ![D3](https://img.shields.io/badge/Viz-D3.js-f9a03c?style=flat-square)
-![Status](https://img.shields.io/badge/Status-대회%20준비%20중-da291c?style=flat-square)
+![Status](https://img.shields.io/badge/Status-대회%20진행%20중-da291c?style=flat-square)
 
 <img src="assets/dashboard.jpg" alt="Trading Dashboard" width="100%">
 
@@ -50,12 +50,12 @@ LLM에게 매매를 통째로 맡기면 두 가지 문제가 생깁니다.
 
 ```mermaid
 flowchart TB
-    subgraph S1["① 데이터 준비 · Python"]
-        direction LR
-        A1["시세 · 수급 · 뉴스 수집"] --> A2["지표 계산<br/>GS Quant"] --> A3["후보 종목 선별"]
+    subgraph S1["① 데이터 준비 · Python · 08:30"]
+        direction TB
+        A1["KRX 전 종목 시세 · 수급<br/>네이버 뉴스"] --> A2["지표 계산<br/>GS Quant"] --> A3["후보 종목 선별"]
     end
-    subgraph S2["② 판단 · 에이전트"]
-        direction LR
+    subgraph S2["② 판단 · 에이전트 · 09:30 · 11:00 · 14:30"]
+        direction TB
         B1["시장 국면 에이전트"] -->|상승 · 횡보 · 하락| B2["투자 비중 상한"]
         B2 --> C1["매수 에이전트"]
         B2 --> C2["매도 에이전트"]
@@ -65,18 +65,21 @@ flowchart TB
         E1 -->|확신도| E2{{"매수 · 보유 · 매도<br/>(미달 시 관망)"}}
     end
     subgraph S3["③ 실행"]
-        direction LR
-        F1["수량 계산 · Python"] --> F2["수량 · 손절 · 익절<br/>최대 보유일"] --> G{{"리스크 검증 Hook<br/>현금 · 종목 한도 · 일일 손실"}}
-        G -->|통과| H["주문 실행<br/>키움 REST API"]
+        direction TB
+        F1["수량 계산 · Python"] --> F2["수량 · 손절 · 익절<br/>최대 보유일"] --> G{{"리스크 검증 Hook<br/>현금 · 종목 한도 · 국면 상한 · 일일 손실"}}
+        M["장중 감시 · 5분<br/>손절 · 익절 도달"] --> G
+        G -->|통과| H["주문 실행<br/>자체 MCP → 키움 REST API"]
         G -->|위반| X["주문 차단"]
     end
     subgraph S4["④ 기록"]
-        direction LR
+        direction TB
         I[("판단 · 체결 로그")] --> K["Trading Dashboard"]
-        L["잔고 스냅샷 · 5분"] --> K
+        L["잔고 스냅샷 · 5분<br/>키움"] --> SB[("Supabase")]
+        N["KOSPI 1분봉<br/>네이버 증권"] --> SB
+        SB --> K
     end
     subgraph S5["⑤ 주간 회고"]
-        direction LR
+        direction TB
         J1["기록 분석"] --> J2["주간 회고 에이전트<br/>(리스크 한도는 수정 불가)"]
         J2 --> J3["판단 기준 · 프롬프트 조정"]
         J2 --> J4["주간 보고서 초안"]
@@ -94,9 +97,21 @@ flowchart TB
 | 시장 국면 | 서브에이전트 | 지수 추세·변동성으로 국면 분류, 전체 투자 비중 상한 조정 |
 | 매수 / 매도 | 서브에이전트 | 후보·보유 종목별 강세 / 약세 근거 제시, 서로 반박 |
 | 주간 회고 | 서브에이전트 | 거래 기록 분석, 판단 기준값 조정 제안 (리스크 한도는 수정 불가) |
-| 데이터 준비 | Python | 시세·수급·뉴스 수집, 지표 계산 → LLM에는 숫자 요약만 전달 |
+| 데이터 준비 | Python | KRX 전 종목 시세·수급, 네이버 뉴스 수집, 지표 계산 → LLM에는 숫자 요약만 전달 |
 | 수량 계산 | Python | 확신도를 주문 수량으로 변환, 손절·익절·최대 보유일 설정 |
-| 리스크 검증 | Claude Code Hook | 주문 직전 한도 강제 확인, 위반 시 차단 |
+| 리스크 검증 | Claude Code Hook | 주문 직전 현금·종목 한도·국면 상한·일일 손실 강제 확인, 위반 시 차단 |
+| 장중 감시 | Python | 5분마다 손절·익절·최대 보유일 확인, 걸리면 매도 전용 실행 |
+| 주문 실행 | 자체 MCP 서버 | 키움 REST API를 직접 호출 (키움 공식 MCP 대신 직접 구현, 대회 운영진 확인) |
+
+### 하루 일정 (평일)
+
+| 시각 | 실행 | LLM |
+|---|---|---|
+| 08:30 | 데이터 준비 — 계좌 조회, 시세·수급·뉴스 → 후보 종목 | ❌ |
+| 09:05 – 15:20 | 장중 감시 — 5분마다 손절·익절 확인 | 걸릴 때만 |
+| **09:30 · 11:00 · 14:30** | 정기 판단 — 국면 → 매수 ⇄ 매도 토론 → 총괄 결정 → 주문 | ⭕ |
+| 15:45 | 마감 기록 — 오늘 자산을 대시보드에 반영 | ❌ |
+| 토 10:00 | 주간 회고 · 보고서 초안 | ⭕ |
 
 ### 설계 원칙
 
@@ -124,6 +139,7 @@ flowchart TB
 | 기능 | 설명 |
 |---|---|
 | 실시간 수익률 | 장중 5분마다 키움 잔고를 조회해 Supabase로 전송, 화면은 30초마다 갱신 |
+| 실시간 KOSPI | 네이버 증권 1분봉을 Supabase가 1분마다 수집 (지연 없음), 전일 흐름·거래량·RSI와 함께 표시 |
 | 누적 수익률 vs KOSPI | 시장 국면(상승·횡보·하락) 띠와 함께 표시 |
 | 확신도 vs 수익 | 에이전트의 확신도가 실제 수익과 맞았는지 검증 |
 | 매매 타임라인 | 거래마다 에이전트 토론 내용을 툴팁으로 확인 |
@@ -138,10 +154,10 @@ flowchart TB
 | 영역 | 사용 |
 |---|---|
 | 에이전트 | Claude Code (서브에이전트 `.claude/agents/`, Hooks, 헤드리스 실행) |
-| 데이터 | 키움 REST API, pykrx, 네이버 뉴스 검색 API |
+| 데이터 | 키움 REST API, KRX 정보데이터시스템 (pykrx), 네이버 뉴스 검색 (NAVER API HUB), 네이버 증권 1분봉 |
 | 지표 | GS Quant (이동평균·변동성·RSI·최대 낙폭) |
 | 대시보드 | HTML · CSS · D3.js (빌드 도구 없음), GitHub Pages |
-| 실시간 · 게시판 | Supabase (PostgreSQL, RLS, RPC) |
+| 실시간 · 게시판 | Supabase (PostgreSQL, RLS, RPC, pg_cron) |
 | 자동 실행 | Windows 작업 스케줄러 |
 
 ## 폴더 구조
@@ -157,8 +173,14 @@ hynix-298f/
 │   ├── .env.example
 │   └── run_snapshot.bat
 ├── supabase/
-│   └── schema.sql        # 게시판 · 스냅샷 테이블, 접근 권한
-├── agent/                # 트레이딩 에이전트 (개발 중)
+│   ├── schema.sql        # 게시판 · 스냅샷 테이블, 접근 권한
+│   └── kospi.sql         # 실시간 KOSPI 1분 수집 (pg_cron)
+├── agent/                # 트레이딩 에이전트 (자세한 구조는 agent/README.md)
+│   ├── CLAUDE.md         # 총괄 Agent 지침
+│   ├── .claude/          # 서브에이전트 · 리스크 Hook · 도구 권한
+│   ├── config/           # 리스크 한도(고정) · 판단 기준값
+│   ├── src/              # 데이터 준비 · 수량 계산 · 리스크 · 주문 MCP · 장중 감시
+│   └── run.py            # 실행 진입점 (작업 스케줄러가 호출)
 ├── reports/              # 사전 계획서 · 주간 보고서 · 최종 보고서
 └── assets/               # README 이미지
 ```
@@ -173,6 +195,9 @@ cd docs && python -m http.server 8000   # → http://localhost:8000
 
 # 잔고 조회 확인 (키움 키 설정 후)
 cd live && python snapshot.py --dry
+
+# 에이전트 한 번 실행 (agent/.env 의 MODE=mock 이면 가상 계좌)
+cd agent && .venv\Scripts\python run.py prep && .venv\Scripts\python run.py decide
 ```
 
 ## 결과와 회고

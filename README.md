@@ -12,7 +12,7 @@ Team *Hynix 298F* · 2026 Navist UOStock AI Auto-Trading Mock Investment Competi
 ![Kiwoom](https://img.shields.io/badge/Broker-Kiwoom%20REST%20API-1f4fa3?style=flat-square)
 ![Supabase](https://img.shields.io/badge/Realtime-Supabase-3ecf8e?style=flat-square)
 ![D3](https://img.shields.io/badge/Viz-D3.js-f9a03c?style=flat-square)
-![Status](https://img.shields.io/badge/Status-Pre--competition-da291c?style=flat-square)
+![Status](https://img.shields.io/badge/Status-Competition%20live-da291c?style=flat-square)
 
 <img src="assets/dashboard.jpg" alt="Trading Dashboard" width="100%">
 
@@ -50,12 +50,12 @@ Indicators are computed in Python and handed to the model as short summaries, an
 
 ```mermaid
 flowchart TB
-    subgraph S1["① Data prep · Python"]
-        direction LR
-        A1["Collect prices · flows · filings"] --> A2["Compute indicators<br/>GS Quant"] --> A3["Select candidates"]
+    subgraph S1["① Data prep · Python · 08:30"]
+        direction TB
+        A1["KRX prices · flows<br/>Naver news"] --> A2["Compute indicators<br/>GS Quant"] --> A3["Select candidates"]
     end
-    subgraph S2["② Decide · agents"]
-        direction LR
+    subgraph S2["② Decide · agents · 09:30 · 11:00 · 14:30"]
+        direction TB
         B1["Market-regime agent"] -->|bull · sideways · bear| B2["Exposure cap"]
         B2 --> C1["Bull agent"]
         B2 --> C2["Bear agent"]
@@ -65,18 +65,21 @@ flowchart TB
         E1 -->|conviction| E2{{"buy · hold · sell<br/>(wait if below bar)"}}
     end
     subgraph S3["③ Execute"]
-        direction LR
-        F1["Sizing · Python"] --> F2["quantity · stop · target<br/>max holding days"] --> G{{"Risk Hook<br/>cash · per-stock limit · daily loss"}}
-        G -->|pass| H["Order<br/>Kiwoom REST API"]
+        direction TB
+        F1["Sizing · Python"] --> F2["quantity · stop · target<br/>max holding days"] --> G{{"Risk Hook<br/>cash · per-stock · regime cap · daily loss"}}
+        M["Intraday watch · 5 min<br/>stop / target hit"] --> G
+        G -->|pass| H["Order<br/>own MCP → Kiwoom REST API"]
         G -->|violation| X["Blocked"]
     end
     subgraph S4["④ Log"]
-        direction LR
+        direction TB
         I[("Decision & fill log")] --> K["Trading Dashboard"]
-        L["Balance snapshot · 5 min"] --> K
+        L["Balance snapshot · 5 min<br/>Kiwoom"] --> SB[("Supabase")]
+        N["KOSPI 1-min bars<br/>Naver Finance"] --> SB
+        SB --> K
     end
     subgraph S5["⑤ Weekly review"]
-        direction LR
+        direction TB
         J1["Analyse the log"] --> J2["Review agent<br/>(risk limits are fixed)"]
         J2 --> J3["Tune thresholds · prompts"]
         J2 --> J4["Weekly report draft"]
@@ -94,9 +97,21 @@ flowchart TB
 | Market regime | Sub-agent | Classifies the market from index trend and volatility, sets the overall exposure cap |
 | Bull / Bear | Sub-agents | Make the case for and against each candidate and holding, then rebut each other |
 | Weekly review | Sub-agent | Analyses the trade log and proposes threshold changes (cannot touch risk limits) |
-| Data prep | Python | Collects prices, flows and filings, computes indicators, passes only numeric summaries to the LLM |
+| Data prep | Python | Collects KRX prices and investor flows plus Naver news, computes indicators, passes only numeric summaries to the LLM |
 | Sizing | Python | Converts conviction into order quantity; sets stop-loss, take-profit and max holding days |
-| Risk check | Claude Code Hook | Enforces hard limits right before every order; blocks violations |
+| Risk check | Claude Code Hook | Enforces cash, per-stock, regime-cap and daily-loss limits right before every order; blocks violations |
+| Intraday watch | Python | Checks stop-loss, take-profit and max holding days every 5 minutes; launches a sell-only run when hit |
+| Order execution | Own MCP server | Calls the Kiwoom REST API directly instead of Kiwoom's official MCP (cleared with the organisers) |
+
+### Daily schedule (weekdays, KST)
+
+| Time | Run | LLM |
+|---|---|---|
+| 08:30 | Data prep — account, prices, flows, news → candidates | no |
+| 09:05 – 15:20 | Intraday watch — stop / take-profit every 5 min | only when triggered |
+| **09:30 · 11:00 · 14:30** | Decision — regime → bull ⇄ bear debate → lead agent → orders | yes |
+| 15:45 | Close — record today's equity on the dashboard | no |
+| Sat 10:00 | Weekly review and report draft | yes |
 
 ### Design principles
 
@@ -124,6 +139,7 @@ A single page that shows not just *what* the agent traded but *why*.
 | Feature | Description |
 |---|---|
 | Live return | Kiwoom balance polled every 5 minutes during market hours, pushed to Supabase; the page refreshes every 30 s |
+| Live KOSPI | Naver Finance 1-minute bars collected by Supabase every minute (no delay), drawn over the previous day with volume and RSI |
 | Cumulative return vs. KOSPI | Overlaid with a market-regime strip (bull · sideways · bear) |
 | Conviction vs. return | Checks whether the agent's confidence actually predicted outcomes |
 | Trade timeline | The agents' debate behind every trade, one tap away |
@@ -138,10 +154,10 @@ A single page that shows not just *what* the agent traded but *why*.
 | Area | Tools |
 |---|---|
 | Agents | Claude Code — sub-agents (`.claude/agents/`), Hooks, headless mode |
-| Market data | Kiwoom REST API, pykrx, Naver News Search API |
+| Market data | Kiwoom REST API, KRX Data Marketplace (pykrx), Naver news search (NAVER API HUB), Naver Finance 1-minute bars |
 | Indicators | GS Quant (moving averages, volatility, RSI, max drawdown) |
 | Dashboard | Plain HTML · CSS · D3.js (no build step), GitHub Pages |
-| Realtime & comments | Supabase (PostgreSQL, Row Level Security, RPC) |
+| Realtime & comments | Supabase (PostgreSQL, Row Level Security, RPC, pg_cron) |
 | Scheduling | Windows Task Scheduler |
 
 ## Repository layout
@@ -158,8 +174,14 @@ hynix-298f/
 │   ├── .env.example
 │   └── run_snapshot.bat
 ├── supabase/
-│   └── schema.sql        # Comments & snapshots tables, access rules
-├── agent/                # Trading agent (in progress)
+│   ├── schema.sql        # Comments & snapshots tables, access rules
+│   └── kospi.sql         # Live KOSPI 1-minute collector (pg_cron)
+├── agent/                # Trading agent (details in agent/README.md)
+│   ├── CLAUDE.md         # Lead agent instructions
+│   ├── .claude/          # Sub-agents, risk Hook, tool permissions
+│   ├── config/           # Risk limits (fixed) · decision thresholds
+│   ├── src/              # Data prep · sizing · risk · order MCP · intraday watch
+│   └── run.py            # Entry point called by Task Scheduler
 ├── reports/              # Plan, weekly and final reports
 └── assets/               # README images
 ```
@@ -174,6 +196,9 @@ cd docs && python -m http.server 8000   # → http://localhost:8000
 
 # Check the balance connection (after filling live/.env)
 cd live && python snapshot.py --dry
+
+# Run the agent once (MODE=mock in agent/.env trades a virtual account)
+cd agent && .venv\Scripts\python run.py prep && .venv\Scripts\python run.py decide
 ```
 
 ## Results & retrospective
