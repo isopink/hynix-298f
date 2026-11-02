@@ -98,8 +98,9 @@ reports/    보고서 PDF, drafts/ = 주간 회고 에이전트가 쓴 초안
 - [x] 네이버 검색 API → `agent/.env` NAVER_CLIENT_ID/SECRET. 11-02 DART를 빼고 뉴스로 교체. 2026-07 이후 신규 키는 NAVER API HUB(네이버 클라우드)에서만 발급 → 주소·헤더 교체
 - [x] 대회 노션 "AI Agent 연결 가이드" 확인 — 공식 MCP 설치 안내일 뿐. 11-02 운영진 확인: 키움 REST API를 직접 부르는 자체 MCP도 허용
 - [x] 대회용 계좌·App Key → `live/.env`. 11-02 `snapshot.py --dry` 통과 (kt00018·ka20001 응답 정상, 총자산 5,000만 원), Supabase 업로드도 확인
-- [ ] `agent/.env` 만들기 — 11-02 생성, 아직 `MODE=mock` → 대회 시작 시 `live`로
-- [ ] live 모드 검증: broker.py의 ka10001(현재가)·kt10000/kt10001(주문) 필드는 실제 응답으로 확인 필요. 모의 서버는 kt00001(주문가능금액)을 거절하므로 예수금은 kt00018의 추정예탁자산 − 주식평가로 계산
+- [x] `agent/.env` → 11-02 13:40 `MODE=live`, `GIT_PUSH=1` 전환. mock 기록은 work/ 에서 치움. 저장소 git 작성자(S.Lee) 설정 (에이전트 자동 커밋용)
+- [ ] live 모드 검증: kt00018(잔고)·ka10001(현재가)는 11-02 확인. kt10000/kt10001(주문) 응답 필드는 에이전트의 첫 주문으로 확인 (사람이 테스트 주문을 내면 규정 위반). 모의 서버는 kt00001을 거절하므로 예수금은 kt00018의 추정예탁자산 − 주식평가
+- 작업을 멈출 때 주의: `Stop-ScheduledTask`는 run.bat만 끄고 python 은 남음 → 감시 루프를 재시작하려면 `run.py monitor` 프로세스도 종료
 - [x] 10-29 decide 실행이 25분 시간 초과로 실패 → 11-02 bull/bear의 종목별 WebSearch를 실행당 2번으로 줄임. 11-02 mock 실행 145초·34k 토큰
 - [x] 리스크 Hook이 헤드리스 실행에서 PowerShell로 돌아 문법 오류 → 모든 주문 차단되던 문제 수정 (11-02, mock으로 통과·차단 모두 확인)
 - [x] 실시간 KOSPI를 Yahoo(20분 지연) → 네이버 증권 1분봉으로 교체 (11-02, `supabase/kospi.sql` 재실행 완료)
