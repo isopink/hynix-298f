@@ -640,7 +640,7 @@ details.log summary { border-radius: 16px; }
         }
       }
     } catch (e) { /* 다음 회차에 다시 시도 */ }
-    drawKospi(); decisionCard();   // 실시간 국면 힌트도 1분마다 갱신
+    drawKospi();
   }
   const hmOf = t => { const s = t.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Seoul' }); return +s.replace(':', ''); };
   function startKospi() {
@@ -826,30 +826,13 @@ details.log summary { border-radius: 16px; }
   // ---------- 현재 판단: docs/data/decision.json (가장 최근 정기 판단 1회분) ----------
   // 오늘 판단이 아직 없으면(최신 시장 자료가 판단보다 새것이면) 08:30 시장 자료(briefing.json)를 보여줌
   const eok = v => v == null ? '—' : (v > 0 ? '+' : v < 0 ? '−' : '') + won(Math.round(Math.abs(v) / 1e8)) + '억';
-  // 실시간 국면 힌트: 마감된 일봉(briefing closes) + 지금 KOSPI(1분봉)로 이동평균을 다시 계산. 규칙은 data_prep.rule_hint 와 같음
-  const HINT_RULE = '상승: 지수 > 20일선 > 60일선, 20일선 상승 · 하락: 지수 < 20일선 < 60일선, 20일선 하락 · 그 외 횡보. 판단 때 국면 에이전트가 참고';
-  function liveHint() {
-    const m = BRIEF.market || {}, cs = m.closes || [], L = KX && KX[KX.length - 1];
-    if (m.source !== 'KOSPI' || cs.length < 65 || !L || kstDate(L.t.toISOString()) <= BRIEF.asof) return null;
-    const s = cs.concat(L.v), ma = (n, off = 0) => d3.mean(s.slice(s.length - off - n, s.length - off));
-    const r = { close: L.v, ma20: Math.round(ma(20)), ma60: Math.round(ma(60)), slope: ma(20) / ma(20, 5) - 1, time: L.t.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Seoul' }) };
-    r.hint = r.close > r.ma20 && r.ma20 > r.ma60 && r.slope > 0 ? '상승' : r.close < r.ma20 && r.ma20 < r.ma60 && r.slope < 0 ? '하락' : '횡보';
-    return r;
-  }
   function briefingCard() {
-    const b = BRIEF, m = b.market || {}, head = $('dec-head'), list = $('dec-list');
+    const b = BRIEF, head = $('dec-head'), list = $('dec-list');
     $('dec-title').textContent = '오늘의 시장 자료';
     $('dec-asof').textContent = b.created ? md(toD(b.created)) + ' ' + b.created.slice(11, 16) + ' 수집 · 판단 전' : '';
     if (!b.created) { head.innerHTML = ''; return none(list, '시장 자료를 기다리는 중이에요. (평일 08:30 수집)'); }
     list.classList.remove('empty');
-    const lv = liveHint();
-    head.innerHTML = (lv
-      ? `<span title="${esc(HINT_RULE)}">국면 힌트 <b style="color:${regC(lv.hint)}">${lv.hint}</b> · 실시간 ${lv.time}</span>`
-        + `<span>KOSPI <b>${won(Math.round(lv.close))}</b></span><span>20일선 <b>${won(lv.ma20)}</b></span><span>60일선 <b>${won(lv.ma60)}</b></span>`
-      : `<span title="${esc(HINT_RULE)}">국면 힌트 <b style="color:${regC(m.rule_hint)}">${esc(m.rule_hint)}</b></span>`
-        + `<span>${m.source === 'KOSPI' ? 'KOSPI' : '지수'} <b>${won(m.close)}</b></span>`
-        + `<span>20일 <b class="${m.ret20 >= 0 ? 'up' : 'down'}">${pct(m.ret20, 1)}</b></span>`)
-      + `<span class="why">${md(toD(b.asof))} 종가 · ${b.source === 'krx' ? '전 종목' : '대형주'} 중 ${b.universe || '—'}종목 분석 → 후보 ${(b.candidates || []).length}개</span>`;
+    head.innerHTML = `<span class="why">${md(toD(b.asof))} 종가 · ${b.source === 'krx' ? '전 종목' : '대형주'} 중 ${b.universe || '—'}종목 분석 → 후보 ${(b.candidates || []).length}개</span>`;
     const cs = b.candidates || [];
     if (!cs.length) return none(list, '오늘은 조건을 통과한 후보가 없어요.');
     list.innerHTML = cs.map((c, i) => {
@@ -877,10 +860,8 @@ details.log summary { border-radius: 16px; }
     $('dec-title').textContent = '현재 판단';
     $('dec-asof').textContent = md(toD(dc.time)) + ' ' + dc.time.slice(11, 16) + ' 판단';
     list.classList.remove('empty');
-    const lv = liveHint();
     head.innerHTML = `<span>국면 <b style="color:${regC(dc.regime)}">${esc(dc.regime)}</b></span>`
       + `<span>주식 비중 상한 <b>${Math.round(+dc.cap * 100)}%</b></span>`
-      + (lv ? `<span title="${esc(HINT_RULE)}">실시간 힌트 <b style="color:${regC(lv.hint)}">${lv.hint}</b></span>` : '')
       + `<span class="why">${esc(dc.reason)}</span>`;
     head.querySelector('.why').title = dc.reason || '';
     const items = dc.items || [];
