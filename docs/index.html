@@ -135,8 +135,9 @@ details.log[open] > summary::after { content: "−"; }
 .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); flex: none; }
 .dot.ok { background: #e6e6e6; box-shadow: 0 0 0 3px rgba(255,255,255,.08); }
 .dot.bad { background: var(--red-hi); box-shadow: 0 0 0 3px rgba(255,90,74,.18); }
-.hero-card > .st-line { position: absolute; top: 20px; right: 20px; z-index: 1; }   /* 누적 수익률 카드 우상단 */
-.hero-chart { padding-top: 24px; }   /* 우상단 상태줄과 차트 이름표가 겹치지 않게 */
+.hero-card > .st-line { position: absolute; top: 20px; right: 20px; z-index: 1; flex-direction: column; align-items: flex-end; gap: 6px; }   /* 누적 수익률 카드 우상단, 시장 모니터링 위 · 에이전트 아래 */
+.hero-card > .st-line > span + span::before { content: none; }
+.hero-chart { padding-top: 44px; }   /* 우상단 상태줄과 차트 이름표가 겹치지 않게 */
 @media (max-width: 640px) { .hero-chart { padding-top: 0; } }
 .dec-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; margin-bottom: 6px; font-size: 13px; color: var(--body); }
 .dec-head b { color: var(--ink); font-weight: 600; }
@@ -187,6 +188,12 @@ td.k { color: var(--ink); white-space: nowrap; }
 .fl-kv .k svg { flex: none; }
 .fl-kv .v { font-size: 20px; margin-left: 8px; font-variant-numeric: tabular-nums; }
 .fl-kv .fl-sw { display: inline-block; width: 10px; height: 10px; border-radius: 2px; }
+.lim { display: flex; flex-direction: column; gap: 12px; }
+.lim-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; font-size: 13px; color: var(--body); }
+.lim-row .now { font-variant-numeric: tabular-nums; color: var(--ink); }
+.lim-row .now small { color: var(--muted); font-size: 12px; margin-left: 4px; }
+.lim-row .track { grid-column: 1 / -1; height: 6px; border-radius: 3px; background: rgba(255,255,255,.07); overflow: hidden; }
+.lim-row .track i { display: block; height: 100%; border-radius: 3px; }
 .kx-flow { margin-top: 14px; padding-top: 14px; border-top: 1px dashed rgba(255,255,255,.08); }   /* 카드 안 아래칸 (누적 수익률 → 실시간 판단, 실시간 KOSPI → 순매수) */
 .kx-flow .hd { margin-bottom: 8px; }
 .kx-flow .fl-kv .v { font-size: 17px; }
@@ -366,6 +373,14 @@ details.log summary { border-radius: 16px; }
         <section class="card c3 glow-blue"><div class="hd"><span class="eyebrow">최대 낙폭</span><span class="sub">고점 대비</span></div><div class="val" id="k-mdd">—</div><div class="chart" id="sp-dd"></div></section>
         <section class="card c3"><div class="hd"><span class="eyebrow">KOSPI</span><span class="sub">11/2 시가 대비</span></div><div class="val" id="k-kospi">—</div><div class="chart" id="sp-kospi"></div></section>
         <section class="card c3"><div class="hd"><span class="eyebrow">승률</span><span class="sub" id="k-win-sub">—</span></div><div class="val" id="k-win">—</div><div class="chart" id="sp-win"></div></section>
+        <section class="card c6">
+          <div class="hd"><span class="eyebrow">리스크 한도 사용률</span><span class="sub">주문 직전 Hook이 강제 · 100%면 차단</span></div>
+          <div class="lim" id="ch-lim"></div>
+        </section>
+        <section class="card c6">
+          <div class="hd"><span class="eyebrow">일별 초과수익</span><span class="sub">병신듀오 − KOSPI · %p</span></div>
+          <div class="chart" id="ch-alpha" style="min-height:200px"></div>
+        </section>
         <section class="card c12">
           <div class="hd"><span class="eyebrow">수익률 캘린더</span><span class="sub cal-sub">큰 숫자 병신듀오 · 작은 숫자 KOSPI</span></div>
           <div class="cal" id="ch-cal"></div>
@@ -586,14 +601,14 @@ details.log summary { border-radius: 16px; }
     const eq = d.equity.map(r => { const k = +(r.kospi ?? KD.get(r.date)) || kp; kp = k; return { ...r, d: toD(r.date), total: +r.total, kospi: k }; });
     // KOSPI 기준 = 대회 시작일 시가 (config.js kospiStart). 첫날 값을 기준으로 하면 첫날 등락이 빠짐. 없으면 첫 기록값
     const k0 = +CFG.kospiStart || (eq.find(r => r.kospi) || {}).kospi;
-    let peak = 0;
+    let peak = INIT;   // 고점은 시작 원금부터 (첫날 손실도 낙폭으로 잡음)
     eq.forEach((r, i) => {
       r.ret = r.total / INIT - 1; r.kret = k0 && r.kospi ? r.kospi / k0 - 1 : 0;
       const kPrev = i ? eq[i - 1].kospi : k0;
-      r.day = i ? r.total / eq[i - 1].total - 1 : 0; r.kday = r.kospi && kPrev ? r.kospi / kPrev - 1 : 0;
+      r.day = r.total / (i ? eq[i - 1].total : INIT) - 1; r.kday = r.kospi && kPrev ? r.kospi / kPrev - 1 : 0;   // 첫날은 시작 원금·시작일 시가 대비
       peak = Math.max(peak, r.total); r.dd = r.total / peak - 1;
     });
-    const last = eq[eq.length - 1], prevFri = eq[Math.max(0, eq.length - 6)];
+    const last = eq[eq.length - 1], prevFri = eq.length > 5 ? eq[eq.length - 6] : { total: INIT };   // 5거래일 전 마감, 없으면 시작 원금
     const trades = d.trades.map(t => ({ ...t, d: toD(t.time), qty: +t.qty, price: +t.price, amount: +t.amount, confidence: +t.confidence }));
     const hold = d.holdings.map(h => ({ ...h, value: +h.value, pnl: +h.pnl_pct }));
     trades.filter(t => t.side === '매수').forEach(b => {
@@ -632,7 +647,7 @@ details.log summary { border-radius: 16px; }
     if (!D) return;
     hero(); sparkLine($('sp-kospi'), D.eq.map(r => r.kospi), '#bdbdbd'); winDots($('sp-win'));
     sparkBars($('sp-week'), D.eq.slice(-5).map(r => r.day)); drawdown($('sp-dd'));
-    agentStatus(); decisionCard(); calendar(); donut(); pnl(); scatter(); timeline(); recent(); blocks(); tokens(); review(); drawKospi(); drawFlow();
+    agentStatus(); decisionCard(); calendar(); donut(); pnl(); scatter(); timeline(); recent(); blocks(); tokens(); review(); limits(); alpha(); drawKospi(); drawFlow();
     animated = true;
   }
 
@@ -822,6 +837,48 @@ details.log summary { border-radius: 16px; }
   }
 
 
+  // ---------- 리스크 한도: agent/config/risk_limits.json 과 같은 값 (대회 내내 고정, 바뀌면 여기도 고칠 것) ----------
+  const RL = { daily: -0.03, total: -0.10, minCash: 0.10, maxPos: 6, maxW: 0.20 };
+  function limits() {
+    const el = $('ch-lim'), tot = D.last.total, sw = tot ? D.stock / tot : 0, cash = 1 - sw;
+    const top = D.hold.reduce((a, h) => (!a || h.value > a.value ? h : a), null), tw = top && tot ? top.value / tot : 0;
+    const p1 = v => (v * 100).toFixed(1) + '%';
+    const rows = [
+      { n: '오늘 손실', now: pct(D.last.day), lim: '한도 ' + pct(RL.daily), u: Math.max(0, -D.last.day) / -RL.daily },
+      { n: '누적 손실', now: pct(D.ret), lim: '한도 ' + pct(RL.total), u: Math.max(0, -D.ret) / -RL.total },
+      D.cap ? { n: `주식 비중 · ${esc(D.last.regime || '')} 국면 상한`, now: p1(sw), lim: '상한 ' + p1(D.cap), u: sw / D.cap } : null,
+      { n: '현금 비중', now: p1(cash), lim: '최소 ' + p1(RL.minCash), u: sw / (1 - RL.minCash) },   // 최소 현금을 남기고 쓸 수 있는 몫 중 얼마나 썼나
+      { n: '보유 종목 수', now: D.hold.length + '개', lim: '최대 ' + RL.maxPos + '개', u: D.hold.length / RL.maxPos },
+      { n: '종목당 최대 비중' + (top ? ' · ' + esc(top.name) : ''), now: p1(tw), lim: '한도 ' + p1(RL.maxW), u: tw / RL.maxW }
+    ].filter(Boolean);
+    const col = u => u >= .9 ? C.redHi : u >= .6 ? '#e0b84a' : '#8f8f8f';
+    el.innerHTML = rows.map(r => `<div class="lim-row"><span>${r.n}</span><span class="now">${r.now}<small>${r.lim} · ${Math.round(Math.min(r.u, 9.99) * 100)}%</small></span>
+      <div class="track"><i style="width:${Math.min(1, r.u) * 100}%;background:${col(r.u)}"></i></div></div>`).join('');
+  }
+  // ---------- 일별 초과수익: 날짜별 (병신듀오 일수익 − KOSPI 일수익) ----------
+  function alpha() {
+    const el = $('ch-alpha'), rows = D.eq.map(r => ({ d: r.d, v: r.day - r.kday, day: r.day, kday: r.kday }));
+    if (!rows.length) return none(el, '첫 마감 기록을 기다리는 중이에요.');
+    const { svg, W, H } = svgIn(el, 200), lab = rows.length <= 12, top = 18 + (lab ? 14 : 0), bot = H - 24 - (lab ? 16 : 0);   // 막대 끝 값 글자 자리
+    const M = d3.max(rows, r => Math.abs(r.v)) || .01, y = d3.scaleLinear([-M, M], [bot, top]).nice(4);
+    const tf = v => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v * 100).toFixed(1);
+    const m = { l: d3.max(y.ticks(4), v => textW(svg, tf(v))) + 10, r: 8 };
+    const x = d3.scaleBand(rows.map(r => +r.d), [m.l, W - m.r]).paddingInner(.25).paddingOuter(.1), bw = Math.min(x.bandwidth(), 46), off = (x.bandwidth() - bw) / 2;
+    svg.append('g').selectAll('line').data(y.ticks(4)).join('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y).attr('y2', y).attr('stroke', d => d === 0 ? '#5a5a5a' : C.grid);
+    svg.append('g').selectAll('text').data(y.ticks(4)).join('text').attr('x', m.l - 8).attr('y', y).attr('dy', '.32em').attr('text-anchor', 'end').attr('font-size', 10).attr('fill', C.muted).text(tf);
+    svg.append('g').selectAll('rect').data(rows).join('rect').attr('x', r => x(+r.d) + off).attr('width', bw)
+      .attr('y', r => y(Math.max(0, r.v))).attr('height', r => Math.max(1, Math.abs(y(r.v) - y(0)))).attr('fill', r => r.v >= 0 ? C.red : C.blue).attr('opacity', .9)
+      .on('pointermove pointerdown', (ev, r) => showTip(ev, `<div class="t">${md(r.d)}</div>${row('초과', tf(r.v) + '%p', r.v >= 0 ? 'up' : 'down')}${row('병신듀오', pct(r.day), r.day >= 0 ? 'up' : 'down')}${row('KOSPI', pct(r.kday))}`))
+      .on('pointerleave', hideTip);
+    if (lab) svg.append('g').selectAll('text').data(rows).join('text').attr('x', r => x(+r.d) + x.bandwidth() / 2).attr('y', r => r.v >= 0 ? y(r.v) - 5 : y(r.v) + 13)
+      .attr('text-anchor', 'middle').attr('font-size', 11).attr('fill', r => r.v >= 0 ? C.redHi : C.blue).text(r => tf(r.v));
+    const step = Math.ceil(rows.length / Math.max(1, Math.floor((W - m.l) / 44)));   // 날짜 글자가 겹치지 않게 솎기
+    svg.append('g').selectAll('text').data(rows.filter((r, i) => i % step === 0 || i === rows.length - 1)).join('text').attr('x', r => x(+r.d) + x.bandwidth() / 2).attr('y', H - 6)
+      .attr('text-anchor', 'middle').attr('font-size', 11).attr('fill', C.muted).text(r => md(r.d));
+    const win = rows.filter(r => r.v > 0).length;
+    svg.append('text').attr('x', W - m.r).attr('y', 10).attr('text-anchor', 'end').attr('font-size', 11).attr('fill', C.body).text(`KOSPI 이긴 날 ${win} / ${rows.length}일`);
+  }
+
   function hero() {
     const el = $('ch-hero'), { svg, W, H } = svgIn(el, el.clientWidth < 520 ? (D.eq.length > 1 ? 190 : 150) : 280), rows = D.eq;   // 휴대폰에선 낮게, 하루치(점 하나)면 조금 더 낮게
     const narrow = W < 520;
@@ -927,7 +984,7 @@ details.log summary { border-radius: 16px; }
         : st.sync && st.sync.ok === false ? ['On', 'bad', '코드 동기화 멈춤 · ' + (st.sync.error || '')]   // 판단은 돌지만 새 수정이 반영 안 됨
         : ['On', 'ok', '마지막 판단 ' + st.last_run];
     }
-    el.innerHTML = `<span>${pill(agent, '에이전트')}</span><span>${pill(watch, '시장 모니터링')}</span>`;
+    el.innerHTML = `<span>${pill(watch, '시장 모니터링')}</span><span>${pill(agent, '에이전트')}</span>`;
   }
 
   // ---------- 실시간 판단: docs/data/decision.json (가장 최근 정기 판단 1회분) ----------
