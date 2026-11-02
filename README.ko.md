@@ -52,7 +52,7 @@ LLM에게 매매를 통째로 맡기면 두 가지 문제가 생깁니다.
 flowchart TB
     subgraph S1["① 데이터 준비 · Python"]
         direction LR
-        A1["시세 · 수급 · 공시 수집"] --> A2["지표 계산<br/>GS Quant"] --> A3["후보 종목 선별"]
+        A1["시세 · 수급 · 뉴스 수집"] --> A2["지표 계산<br/>GS Quant"] --> A3["후보 종목 선별"]
     end
     subgraph S2["② 판단 · 에이전트"]
         direction LR
@@ -94,7 +94,7 @@ flowchart TB
 | 시장 국면 | 서브에이전트 | 지수 추세·변동성으로 국면 분류, 전체 투자 비중 상한 조정 |
 | 매수 / 매도 | 서브에이전트 | 후보·보유 종목별 강세 / 약세 근거 제시, 서로 반박 |
 | 주간 회고 | 서브에이전트 | 거래 기록 분석, 판단 기준값 조정 제안 (리스크 한도는 수정 불가) |
-| 데이터 준비 | Python | 시세·수급·공시 수집, 지표 계산 → LLM에는 숫자 요약만 전달 |
+| 데이터 준비 | Python | 시세·수급·뉴스 수집, 지표 계산 → LLM에는 숫자 요약만 전달 |
 | 수량 계산 | Python | 확신도를 주문 수량으로 변환, 손절·익절·최대 보유일 설정 |
 | 리스크 검증 | Claude Code Hook | 주문 직전 한도 강제 확인, 위반 시 차단 |
 
@@ -138,7 +138,7 @@ flowchart TB
 | 영역 | 사용 |
 |---|---|
 | 에이전트 | Claude Code (서브에이전트 `.claude/agents/`, Hooks, 헤드리스 실행) |
-| 데이터 | 키움 REST API, pykrx, OpenDartReader, 검색 MCP |
+| 데이터 | 키움 REST API, pykrx, 네이버 뉴스 검색 API |
 | 지표 | GS Quant (이동평균·변동성·RSI·최대 낙폭) |
 | 대시보드 | HTML · CSS · D3.js (빌드 도구 없음), GitHub Pages |
 | 실시간 · 게시판 | Supabase (PostgreSQL, RLS, RPC) |

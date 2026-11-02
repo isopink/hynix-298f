@@ -1,26 +1,58 @@
 # agent/
 
-The trading agent lives here. It is being filled in ahead of the competition start (Nov 2, 2026).
+The trading agent. **The agent proposes, the rules decide**: Claude Code reads the market and debates each stock; Python code computes indicators and order sizes; a Claude Code hook blocks any order that breaks a risk limit.
 
-## Planned layout
+## Daily schedule (weekdays, KST)
+
+| Time | Run | LLM |
+|---|---|---|
+| 08:30 | `prep` — account + data prep → `work/briefing.json` | no |
+| 09:05–15:20 | `monitor` — every 5 min, checks stop / take-profit / max holding days; launches an `exit` run when hit | only when triggered |
+| 09:30, 14:30 | `decide` — regime → bull ⇄ bear debate → lead agent decides → orders | yes |
+| 15:45 | `close` — record today's equity, publish to dashboard | no |
+| Sat 10:00 | `review` — weekly review + report draft | yes |
+
+Register them with `setup_tasks.ps1` (Windows Task Scheduler).
+
+## Layout
 
 ```
 agent/
+├── CLAUDE.md                 # Lead agent instructions (decide / exit / review runs)
 ├── .claude/
-│   ├── agents/          # Sub-agent definitions
-│   │   ├── regime.md    #   market regime
-│   │   ├── bull.md      #   bull case
-│   │   ├── bear.md      #   bear case
-│   │   └── review.md    #   weekly review
-│   ├── settings.json    # Hook registration (risk check before the order tool runs)
-│   └── hooks/
-│       └── risk_check.py
+│   ├── agents/               # Sub-agents: regime, bull, bear, review
+│   ├── hooks/risk_check.py   # PreToolUse hook on mcp__kiwoom__place_order
+│   └── settings.json         # Hook registration, tool permissions (no Bash / Edit / Write)
+├── .mcp.json                 # kiwoom MCP server
+├── config/
+│   ├── risk_limits.json      # Fixed for the whole competition; enforced by the hook
+│   └── params.json           # Decision thresholds; weekly review may suggest changes
 ├── src/
-│   ├── data_prep.py     # Prices, flows, filings → indicators → candidate screen
-│   ├── sizing.py        # Conviction → quantity, stop-loss, take-profit, max holding days
-│   └── logger.py        # Decision & fill log → docs/data/*.json
-├── CLAUDE.md            # Lead agent instructions
-└── run.bat              # Headless run (Task Scheduler)
+│   ├── data_prep.py          # pykrx + Naver news → GS Quant indicators → candidate screen
+│   ├── sizing.py             # Conviction → quantity, stop, take-profit, max holding days
+│   ├── risk.py               # Risk rules (shared by the hook and the MCP server)
+│   ├── broker.py             # mock account / Kiwoom REST
+│   ├── mcp_server.py         # Tools the agent can call
+│   ├── logger.py             # work/journal.jsonl → docs/data/*.json
+│   └── monitor.py            # Intraday stop / take-profit watcher
+├── tests/test_rules.py
+├── run.py · run.bat          # Entry point for each run
+└── setup_tasks.ps1           # Task Scheduler registration
 ```
+
+## Setup
+
+```bat
+cd agent
+python -m venv .venv
+.venv\Scripts\pip install -r requirements.txt
+copy .env.example .env      :: fill KRX_ID / KRX_PW / NAVER_CLIENT_ID / NAVER_CLIENT_SECRET, MODE
+.venv\Scripts\python tests\test_rules.py
+.venv\Scripts\python run.py prep
+.venv\Scripts\python run.py decide
+```
+
+- `MODE=mock` trades a virtual account in `work/mock_account.json`. `MODE=live` uses the Kiwoom mock-trading server with keys from `live/.env`.
+- Without `KRX_ID` / `KRX_PW`, data prep falls back to a fixed large-cap list without investor flow data.
 
 > Kiwoom App Key / Secret and any `.env` file are never committed (excluded via `.gitignore`).

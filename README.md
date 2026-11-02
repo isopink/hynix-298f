@@ -138,7 +138,7 @@ A single page that shows not just *what* the agent traded but *why*.
 | Area | Tools |
 |---|---|
 | Agents | Claude Code — sub-agents (`.claude/agents/`), Hooks, headless mode |
-| Market data | Kiwoom REST API, pykrx, OpenDartReader, search MCP |
+| Market data | Kiwoom REST API, pykrx, Naver News Search API |
 | Indicators | GS Quant (moving averages, volatility, RSI, max drawdown) |
 | Dashboard | Plain HTML · CSS · D3.js (no build step), GitHub Pages |
 | Realtime & comments | Supabase (PostgreSQL, Row Level Security, RPC) |

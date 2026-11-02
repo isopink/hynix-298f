@@ -33,14 +33,25 @@ docs/       GitHub Pages 대시보드 (https://isopink.github.io/hynix-298f/)
   DEPLOY.md    배포 가이드 (한국어)
 live/       snapshot.py — 키움 kt00018 잔고 + ka20001 KOSPI를 5분마다 조회 → Supabase RPC push_snapshot
 supabase/   schema.sql — comments(익명 게시판), snapshots, app_secret, push_snapshot()
-agent/      트레이딩 에이전트 (아직 비어 있음, 예정 구조는 agent/README.md)
-reports/    보고서 PDF
+agent/      트레이딩 에이전트 (구조·실행법은 agent/README.md)
+  config/      risk_limits.json(고정, Hook이 강제) · params.json(판단 기준값)
+  src/         data_prep · sizing · risk · broker(mock/live) · mcp_server · logger · monitor
+  .claude/     서브에이전트 4개, risk_check.py Hook, 도구 권한(Bash/Edit/Write 금지)
+  run.py       prep / decide / exit / close / review / monitor
+  work/        실행 산출물 (커밋 안 함): journal.jsonl이 모든 기록의 원본
+reports/    보고서 PDF, drafts/ = 주간 회고 에이전트가 쓴 초안
 ```
 
-### 에이전트 설계 (사전 계획서 기준, 구현 예정)
+### 실행 일정 (10-29 결정: 하루 1번 → 2번 + 장중 감시)
+
+평일 08:30 준비 · 09:05~15:20 5분 감시(손절·익절 걸리면 매도 전용 실행) · **09:30·14:30 정기 판단** · 15:45 마감 기록. 토 10:00 주간 회고.
+계획서의 "장 시작 전 1회"에서 바꾼 것이므로 첫 주간 보고서에 변경 이유를 적을 것.
+손절 주문도 코드가 직접 내지 않고 에이전트 + Hook을 거침 (AI 주문 규정).
+
+### 에이전트 설계 (사전 계획서 기준)
 
 "에이전트는 제안하고, 규칙이 결정한다"
-1. 데이터 준비 (Python): pykrx·OpenDartReader·키움 → GS Quant 지표 → 후보 선별, LLM엔 숫자 요약만
+1. 데이터 준비 (Python): pykrx·네이버 뉴스·키움 → GS Quant 지표 → 후보 선별, LLM엔 숫자 요약만
 2. 시장 국면 서브에이전트: 상승/횡보/하락 → 투자 비중 상한 (상승 90% · 횡보 60% · 하락 30%)
 3. 매수 ⇄ 매도 서브에이전트 토론
 4. 총괄 Agent: 확신도 산출 → 매수/보유/매도 (기준 미달 시 관망)
@@ -77,12 +88,17 @@ reports/    보고서 PDF
 
 ## 남은 일
 
-- [ ] 사전 계획서 "1. 투자 전략" 섹션 작성 → PDF 제출 (10-28)
+- [x] 사전 계획서 제출 (10-28)
 - [ ] GitHub Pages 켜기 (Settings → Pages → main / `/docs`)
-- [ ] Supabase 프로젝트 생성, schema.sql 실행, config.js 채우기
-- [ ] 10-31 이후 대회용 계좌·App Key → `python live/snapshot.py --dry`로 실제 응답 확인 (kt00018 필드명, ka20001은 미검증)
-- [ ] `agent/` 구현 (서브에이전트, Hook, data_prep/sizing/logger, 헤드리스 실행 + 작업 스케줄러)
-- [ ] 로그를 `docs/data/*.json` 형식으로 쓰고 git push 자동화
+- [x] Supabase 프로젝트 생성, schema.sql 실행, config.js 채우기
+- [ ] 기획팀 기준값 회신 → `agent/config/*.json` 반영 (지금은 제안값. A 리스크 한도는 10-31까지)
+- [ ] KRX 정보데이터시스템 계정 → `agent/.env` KRX_ID/KRX_PW (없으면 대형주 36개 대체 모드, 수급 없음)
+- [ ] 네이버 검색 API → `agent/.env` NAVER_CLIENT_ID/SECRET (없으면 뉴스 없이 진행). 11-02 DART를 빼고 뉴스로 교체
+- [ ] 대회 노션 "AI Agent 연결 가이드" 확인 — 키움 공식 MCP만 인정하는지 (공식 MCP는 서버 차원 승인 강제 없음, 승인은 클라이언트 설정)
+- [ ] 대회용 계좌·App Key → `live/.env`, `python live/snapshot.py --dry`로 실제 응답 확인 (kt00018 필드명, ka20001은 미검증)
+- [ ] live 모드 검증: broker.py의 ka10001(현재가)·kt10000/kt10001(주문) 필드는 실제 응답으로 확인 필요. 모의 서버는 kt00001(주문가능금액)을 거절하므로 예수금은 kt00018의 추정예탁자산 − 주식평가로 계산
+- [ ] 10-29 decide 실행이 25분 시간 초과로 실패 → 11-02 bull/bear의 종목별 WebSearch를 실행당 2번으로 줄임. 실제 실행 시간 확인
+- [ ] `setup_tasks.ps1`로 작업 스케줄러 등록, `GIT_PUSH=1`
 - [ ] 대회 후 README 결과·회고 섹션 채우기
 
 ## 커밋
