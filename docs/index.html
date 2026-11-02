@@ -261,6 +261,7 @@ body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-i
 .card.glow-red { background: radial-gradient(260px 140px at 100% 0%, rgba(218,41,28,.16), transparent 70%), linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.018)); }
 .card.glow-blue { background: radial-gradient(260px 140px at 100% 0%, rgba(74,163,212,.16), transparent 70%), linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.018)); }
 .hero .big { background: linear-gradient(135deg, #ff8a70 0%, #ff4a36 45%, #c41a0d 100%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 6px 28px rgba(218,41,28,.35)); }
+.hero .big.neg { background: linear-gradient(135deg, #9ad6f2 0%, #4aa3d4 45%, #1f6f9c 100%); -webkit-background-clip: text; background-clip: text; filter: drop-shadow(0 6px 28px rgba(74,163,212,.35)); }
 .tip { background: rgba(14,14,16,.78); border: 1px solid rgba(255,255,255,.1); border-radius: 12px; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
 .f-form input, .f-form textarea { background: rgba(0,0,0,.28); border-color: rgba(255,255,255,.09); border-radius: 10px; }
 .btn { border-radius: 10px; background: linear-gradient(135deg, #ff5a4a, #da291c 55%, #a8160b); box-shadow: 0 8px 22px rgba(218,41,28,.35), inset 0 1px 0 rgba(255,255,255,.25); }
@@ -596,7 +597,7 @@ details.log summary { border-radius: 16px; }
   }
 
   function fillText() {
-    $('ret').textContent = pct(D.ret);
+    $('ret').textContent = pct(D.ret); $('ret').classList.toggle('neg', D.ret < 0);   // 손실은 파랑 (국내 증시 관례)
     $('total').textContent = won(D.last.total) + '원';
     const ex = D.ret - D.kret; $('excess').textContent = (ex >= 0 ? '+' : '−') + Math.abs(ex * 100).toFixed(2) + '%p'; tone($('excess'), ex);
     $('k-week').textContent = pct(D.week); tone($('k-week'), D.week);
