@@ -1,0 +1,325 @@
+"""
+데이터 준비: 시세·수급·뉴스 수집 → GS Quant 지표 → 후보 종목 선별 → 숫자 요약.
+
+LLM은 여기서 만든 요약(briefing)만 봅니다. 숫자는 전부 이 코드가 계산합니다.
+
+사용법
+  python src/data_prep.py          # work/briefing.json 생성 후 요약 출력
+  python src/data_prep.py --show   # 저장된 요약만 출력
+
+KRX_ID / KRX_PW 가 있으면 전 종목에서 후보를 고르고(정식 모드),
+없으면 params.json 의 fallback_universe 대형주 안에서만 고릅니다(대체 모드, 수급 없음).
+NAVER_CLIENT_ID / NAVER_CLIENT_SECRET 이 있으면 후보·보유 종목의 최근 뉴스 제목을 붙입니다.
+"""
+import html
+import json
+import os
+import re
+import sys
+import time
+import urllib.parse
+import urllib.request
+import warnings
+from datetime import timedelta
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import common as C  # noqa: E402
+
+C.load_env()
+os.environ.setdefault("MPLCONFIGDIR", os.path.join(C.WORK, ".mpl"))
+warnings.filterwarnings("ignore")
+
+import pandas as pd  # noqa: E402
+import gs_quant.timeseries as gts  # noqa: E402
+from pykrx import stock  # noqa: E402  (import 시점에 KRX_ID/KRX_PW 로 로그인)
+
+INDEX_PROXY = "069500"  # KRX 로그인 없을 때 KOSPI 대신 쓰는 KODEX 200
+NEWS_DAYS = 3  # 최근 며칠 뉴스까지 볼지
+RISK_WORDS = ["유상증자", "전환사채", "신주인수권", "감자", "횡령", "배임", "소송", "불성실공시",
+              "관리종목", "거래정지", "상장적격성", "최대주주변경", "영업정지"]
+
+
+def ymd(d):
+    return d.strftime("%Y%m%d")
+
+
+def krx_login():
+    return bool(os.environ.get("KRX_ID") and os.environ.get("KRX_PW"))
+
+
+def completed(df):
+    """장 마감(15:30) 전이면 오늘의 미완성 일봉을 뺌."""
+    if df is None or df.empty:
+        return df
+    n = C.now()
+    if n.hour * 100 + n.minute < 1530:
+        df = df[df.index.date < n.date()]
+    return df
+
+
+def ohlcv(code, days=150):
+    end = C.today()
+    df = stock.get_market_ohlcv(ymd(end - timedelta(days=days * 1.6)), ymd(end), code)
+    time.sleep(0.15)
+    return completed(df)
+
+
+def name_of(code):
+    try:
+        return stock.get_market_ticker_name(code) or code
+    except Exception:  # noqa: BLE001
+        return code
+
+
+# ---------------- 지표 (GS Quant) ----------------
+def indicators(close):
+    """종가 시리즈 → 숫자 요약. 데이터가 60일 미만이면 None."""
+    close = close.astype(float)
+    if len(close) < 60:
+        return None
+    ma20 = gts.moving_average(close, gts.Window(20, 0))
+    ma60 = gts.moving_average(close, gts.Window(60, 0))
+    rsi = gts.relative_strength_index(close, 14)
+    vol = gts.volatility(close, gts.Window(20, 0))          # 연율화 %
+    mdd = gts.max_drawdown(close, gts.Window(60, 0))        # 60일 최대 낙폭 (음수)
+    c = float(close.iloc[-1])
+    return {
+        "close": round(c),
+        "ma20": round(float(ma20.iloc[-1])),
+        "ma60": round(float(ma60.iloc[-1])),
+        "ma20_slope5": round(float(ma20.iloc[-1] / ma20.iloc[-6] - 1), 4),
+        "ret5": round(c / float(close.iloc[-6]) - 1, 4),
+        "ret20": round(c / float(close.iloc[-21]) - 1, 4),
+        "rsi14": round(float(rsi.iloc[-1]), 1),
+        "vol20": round(float(vol.iloc[-1]) / 100, 3),
+        "mdd60": round(float(mdd.iloc[-1]), 3),
+    }
+
+
+# ---------------- 시장 ----------------
+def market_summary():
+    end = C.today()
+    start = ymd(end - timedelta(days=200))
+    src = "KOSPI"
+    try:
+        if not krx_login():
+            raise RuntimeError("no login")
+        df = completed(stock.get_index_ohlcv(start, ymd(end), "1001"))
+        if df is None or df.empty:
+            raise RuntimeError("empty")
+    except Exception:  # noqa: BLE001
+        df, src = ohlcv(INDEX_PROXY, 200), "KODEX 200 (KOSPI 대용)"
+    ind = indicators(df["종가"])
+    hint = "횡보"
+    if ind:
+        if ind["close"] > ind["ma20"] > ind["ma60"] and ind["ma20_slope5"] > 0:
+            hint = "상승"
+        elif ind["close"] < ind["ma20"] < ind["ma60"] and ind["ma20_slope5"] < 0:
+            hint = "하락"
+    return {"source": src, "asof": df.index[-1].strftime("%Y-%m-%d"), **(ind or {}),
+            "rule_hint": hint}
+
+
+# ---------------- 종목 ----------------
+def universe_krx(p, asof):
+    """전 종목 중 거래대금·이름 조건으로 1차 선별 (KRX 로그인 필요)."""
+    s = p["screen"]
+    frames = []
+    for m in s["markets"]:
+        df = stock.get_market_ohlcv(ymd(asof), market=m)
+        df["market"] = m
+        frames.append(df)
+    df = pd.concat(frames)
+    df = df[(df["거래대금"] >= s["min_trading_value"]) & (df.index.str.endswith("0"))]  # 우선주 제외
+    df = df.sort_values("거래대금", ascending=False).head(s["prefilter_top"] * 2)
+    out = []
+    for code in df.index:
+        nm = name_of(code)
+        if any(k in nm for k in s["exclude_name_keywords"]):
+            continue
+        out.append((code, nm))
+        if len(out) >= s["prefilter_top"]:
+            break
+    return out
+
+
+def flows(code, asof, n):
+    """최근 n거래일 외국인·기관 순매수 금액 합 (원). KRX 로그인 필요."""
+    try:
+        df = stock.get_market_trading_value_by_date(ymd(asof - timedelta(days=n * 2 + 7)), ymd(asof), code)
+        time.sleep(0.15)
+        df = df.tail(n)
+        return int(df["외국인합계"].sum()), int(df["기관합계"].sum())
+    except Exception:  # noqa: BLE001
+        return None, None
+
+
+def news(rows):
+    """네이버 뉴스 검색 API로 종목별 최근 뉴스 제목 (최대 3개). 악재 단어가 있으면 risk=True. 키 없으면 빈 결과."""
+    cid, sec = os.environ.get("NAVER_CLIENT_ID"), os.environ.get("NAVER_CLIENT_SECRET")
+    if not (cid and sec):
+        return {}
+    since = C.today() - timedelta(days=NEWS_DAYS)
+    out = {}
+    for r in rows:
+        q = urllib.parse.quote(f'"{r["name"]}"')
+        req = urllib.request.Request(f"https://openapi.naver.com/v1/search/news.json?query={q}&display=20&sort=date",
+                                     headers={"X-Naver-Client-Id": cid, "X-Naver-Client-Secret": sec})
+        try:
+            with urllib.request.urlopen(req, timeout=10) as res:
+                items = json.loads(res.read().decode("utf-8")).get("items", [])
+        except Exception:  # noqa: BLE001
+            continue
+        finally:
+            time.sleep(0.15)
+        hits, seen = [], set()
+        for it in items:
+            d = pd.to_datetime(it.get("pubDate"), errors="coerce")
+            title = html.unescape(re.sub(r"<[^>]+>", "", it.get("title", ""))).strip()
+            if pd.isna(d) or d.date() < since or r["name"] not in title or title in seen:
+                continue
+            seen.add(title)
+            hits.append({"date": d.strftime("%m-%d"), "title": title, "risk": any(w in title for w in RISK_WORDS)})
+        hits.sort(key=lambda h: not h["risk"])  # 악재 단어가 있는 제목을 먼저
+        if hits:
+            out[r["code"]] = hits[:3]
+    return out
+
+
+def analyze(code, name, p, asof, login):
+    df = ohlcv(code)
+    if df is None or len(df) < 60:
+        return None
+    ind = indicators(df["종가"])
+    if not ind:
+        return None
+    s = p["screen"]
+    tv = df["거래대금"] if "거래대금" in df else df["종가"] * df["거래량"]
+    lim = df["등락률"].tail(s["limit_up_lookback"]) >= 29.5 if "등락률" in df else pd.Series([False])
+    row = {"code": code, "name": name, **ind,
+           "trading_value_20d": int(tv.tail(20).mean()),
+           "limit_up_recent": bool(lim.any())}
+    if login:
+        f, i = flows(code, asof, s["flow_days"])
+        row["foreign_net"], row["inst_net"] = f, i
+    return row
+
+
+def screen(rows, p, login):
+    """추세 조건 + (정식 모드) 수급 조건 → 점수순 상위."""
+    s = p["screen"]
+    ok = []
+    for r in rows:
+        if r["limit_up_recent"] or r["trading_value_20d"] < s["min_trading_value"]:
+            continue
+        if not (r["close"] > r["ma20"] > r["ma60"]):
+            continue
+        if login and r.get("foreign_net") is not None:
+            if r["foreign_net"] <= 0 and r["inst_net"] <= 0:
+                continue
+            r["flow_ratio"] = round((max(r["foreign_net"], 0) + max(r["inst_net"], 0)) / r["trading_value_20d"], 3)
+        ok.append(r)
+    if not ok:
+        return []
+    df = pd.DataFrame(ok)
+    df["trend_gap"] = df["close"] / df["ma20"] - 1
+    score = df["ret20"].rank(pct=True) + df["trend_gap"].rank(pct=True)
+    if "flow_ratio" in df:
+        score += df["flow_ratio"].fillna(0).rank(pct=True)
+    df["score"] = (score / score.max()).round(3)
+    df = df.drop(columns=["trend_gap"]).sort_values("score", ascending=False)
+    return df.head(s["max_candidates"]).to_dict("records")
+
+
+def build():
+    p = C.params()
+    login = krx_login()
+    market = market_summary()
+    asof = pd.Timestamp(market["asof"]).date()
+    held = {h["code"]: h["name"] for h in (C.read_json(C.ACCOUNT, {}) or {}).get("holdings", [])}
+
+    if login:
+        try:
+            uni = universe_krx(p, asof)
+        except Exception as e:  # noqa: BLE001
+            print(f"  ! 전 종목 조회 실패, 대체 모드로 진행: {e}")
+            login, uni = False, None
+    if not login:
+        uni = [(c, name_of(c)) for c in p["screen"]["fallback_universe"]]
+
+    rows, done = [], set()
+    for code, nm in uni + [(c, n) for c, n in held.items()]:
+        if code in done:
+            continue
+        done.add(code)
+        try:
+            r = analyze(code, nm, p, asof, login)
+        except Exception as e:  # noqa: BLE001
+            print(f"  ! {code} 건너뜀: {e}")
+            continue
+        if r:
+            rows.append(r)
+
+    cands = screen([r for r in rows if r["code"] not in held], p, login)
+    holdings = [r for r in rows if r["code"] in held]
+    found = news(cands + holdings)
+    for r in cands + holdings:
+        r["news"] = found.get(r["code"], [])
+
+    out = {
+        "created": C.stamp(), "asof": market["asof"],
+        "source": "krx" if login else "fallback",
+        "market": market, "candidates": cands, "holdings": holdings,
+        "universe_size": len(rows),
+    }
+    C.write_json(C.BRIEFING, out)
+    return out
+
+
+# ---------------- LLM 에 넘길 요약 ----------------
+def pct(x):
+    return "-" if x is None else f"{x * 100:+.1f}%"
+
+
+def eok(x):
+    return "-" if x is None else f"{x / 1e8:+,.0f}억"
+
+
+def to_text(b):
+    m = b["market"]
+    lines = [
+        f"# 브리핑 ({b['asof']} 종가 기준, {'전 종목' if b['source'] == 'krx' else '대형주 목록, 수급 없음'})",
+        "",
+        f"## 시장 ({m['source']})",
+        f"종가 {m.get('close', 0):,} · 20일선 {m.get('ma20', 0):,} · 60일선 {m.get('ma60', 0):,} · "
+        f"20일선 5일 기울기 {pct(m.get('ma20_slope5'))} · 20일 수익률 {pct(m.get('ret20'))} · "
+        f"변동성 {m.get('vol20', 0) * 100:.0f}% · 60일 최대낙폭 {pct(m.get('mdd60'))} · 규칙 기반 힌트: {m['rule_hint']}",
+        "",
+    ]
+    cols = "| 코드 | 종목 | 종가 | 20일선 | 60일선 | 5일 | 20일 | RSI | 변동성 | 60일 낙폭 | 외국인 5일 | 기관 5일 | 점수 |"
+    sep = "|" + "---|" * 13
+
+    def row(r):
+        return (f"| {r['code']} | {r['name']} | {r['close']:,} | {r['ma20']:,} | {r['ma60']:,} | {pct(r['ret5'])} | "
+                f"{pct(r['ret20'])} | {r['rsi14']} | {r['vol20'] * 100:.0f}% | {pct(r['mdd60'])} | "
+                f"{eok(r.get('foreign_net'))} | {eok(r.get('inst_net'))} | {r.get('score', '-')} |")
+
+    for title, rs in (("후보 종목", b["candidates"]), ("보유 종목", b["holdings"])):
+        lines.append(f"## {title} ({len(rs)})")
+        if rs:
+            lines += [cols, sep] + [row(r) for r in rs]
+        else:
+            lines.append("없음")
+        notes = [f"- {r['name']} {n['date']}{' ⚠' if n['risk'] else ''} {n['title']}" for r in rs for n in r.get("news", [])]
+        if notes:
+            lines += ["", f"최근 뉴스 ({NEWS_DAYS}일, ⚠ = 악재 단어 포함):"] + notes
+        lines.append("")
+    return "\n".join(lines)
+
+
+if __name__ == "__main__":
+    if "--show" not in sys.argv:
+        t = time.time()
+        b = build()
+        print(f"완료 · {b['source']} 모드 · {b['universe_size']}종목 분석 · 후보 {len(b['candidates'])}개 · {time.time() - t:.0f}초\n")
+    print(to_text(C.read_json(C.BRIEFING)))
