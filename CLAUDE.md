@@ -89,16 +89,18 @@ reports/    보고서 PDF, drafts/ = 주간 회고 에이전트가 쓴 초안
 ## 남은 일
 
 - [x] 사전 계획서 제출 (10-28)
-- [ ] GitHub Pages 켜기 (Settings → Pages → main / `/docs`)
+- [x] GitHub Pages 켜기 (https://isopink.github.io/hynix-298f/ 배포 확인)
 - [x] Supabase 프로젝트 생성, schema.sql 실행, config.js 채우기
 - [ ] 기획팀 기준값 회신 → `agent/config/*.json` 반영 (지금은 제안값. A 리스크 한도는 10-31까지)
-- [ ] KRX 정보데이터시스템 계정 → `agent/.env` KRX_ID/KRX_PW (없으면 대형주 36개 대체 모드, 수급 없음). 키움으로 대체하면 판단 1회당 호출 120번+ 늘어나 KRX 유지
-- [ ] 네이버 검색 API → `agent/.env` NAVER_CLIENT_ID/SECRET (없으면 뉴스 없이 진행). 11-02 DART를 빼고 뉴스로 교체
+- [x] KRX 정보데이터시스템 계정 → `agent/.env` KRX_ID/KRX_PW. 11-02 로그인·전 종목·수급 확인 (간편가입 계정은 pykrx 로그인 불가 → 일반 회원). 키움으로 대체하면 판단 1회당 호출 120번+ 늘어나 KRX 유지
+- [x] 네이버 검색 API → `agent/.env` NAVER_CLIENT_ID/SECRET. 11-02 DART를 빼고 뉴스로 교체. 2026-07 이후 신규 키는 NAVER API HUB(네이버 클라우드)에서만 발급 → 주소·헤더 교체
 - [x] 대회 노션 "AI Agent 연결 가이드" 확인 — 공식 MCP 설치 안내일 뿐. 11-02 운영진 확인: 키움 REST API를 직접 부르는 자체 MCP도 허용
 - [x] 대회용 계좌·App Key → `live/.env`. 11-02 `snapshot.py --dry` 통과 (kt00018·ka20001 응답 정상, 총자산 5,000만 원), Supabase 업로드도 확인
-- [ ] `agent/.env` 만들기 (`MODE=live`, `GIT_PUSH=1`)
+- [ ] `agent/.env` 만들기 — 11-02 생성, 아직 `MODE=mock` → 대회 시작 시 `live`로
 - [ ] live 모드 검증: broker.py의 ka10001(현재가)·kt10000/kt10001(주문) 필드는 실제 응답으로 확인 필요. 모의 서버는 kt00001(주문가능금액)을 거절하므로 예수금은 kt00018의 추정예탁자산 − 주식평가로 계산
-- [ ] 10-29 decide 실행이 25분 시간 초과로 실패 → 11-02 bull/bear의 종목별 WebSearch를 실행당 2번으로 줄임. 실제 실행 시간 확인
+- [x] 10-29 decide 실행이 25분 시간 초과로 실패 → 11-02 bull/bear의 종목별 WebSearch를 실행당 2번으로 줄임. 11-02 mock 실행 145초·34k 토큰
+- [x] 리스크 Hook이 헤드리스 실행에서 PowerShell로 돌아 문법 오류 → 모든 주문 차단되던 문제 수정 (11-02, mock으로 통과·차단 모두 확인)
+- [x] 실시간 KOSPI를 Yahoo(20분 지연) → 네이버 증권 1분봉으로 교체 (11-02, `supabase/kospi.sql` 재실행 완료)
 - [ ] `setup_tasks.ps1`로 작업 스케줄러 등록, `GIT_PUSH=1`
 - [ ] 대회 후 README 결과·회고 섹션 채우기
 
