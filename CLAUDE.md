@@ -92,10 +92,11 @@ reports/    보고서 PDF, drafts/ = 주간 회고 에이전트가 쓴 초안
 - [ ] GitHub Pages 켜기 (Settings → Pages → main / `/docs`)
 - [x] Supabase 프로젝트 생성, schema.sql 실행, config.js 채우기
 - [ ] 기획팀 기준값 회신 → `agent/config/*.json` 반영 (지금은 제안값. A 리스크 한도는 10-31까지)
-- [ ] KRX 정보데이터시스템 계정 → `agent/.env` KRX_ID/KRX_PW (없으면 대형주 36개 대체 모드, 수급 없음)
+- [ ] KRX 정보데이터시스템 계정 → `agent/.env` KRX_ID/KRX_PW (없으면 대형주 36개 대체 모드, 수급 없음). 키움으로 대체하면 판단 1회당 호출 120번+ 늘어나 KRX 유지
 - [ ] 네이버 검색 API → `agent/.env` NAVER_CLIENT_ID/SECRET (없으면 뉴스 없이 진행). 11-02 DART를 빼고 뉴스로 교체
-- [ ] 대회 노션 "AI Agent 연결 가이드" 확인 — 키움 공식 MCP만 인정하는지 (공식 MCP는 서버 차원 승인 강제 없음, 승인은 클라이언트 설정)
-- [ ] 대회용 계좌·App Key → `live/.env`, `python live/snapshot.py --dry`로 실제 응답 확인 (kt00018 필드명, ka20001은 미검증)
+- [x] 대회 노션 "AI Agent 연결 가이드" 확인 — 공식 MCP 설치 안내일 뿐. 11-02 운영진 확인: 키움 REST API를 직접 부르는 자체 MCP도 허용
+- [x] 대회용 계좌·App Key → `live/.env`. 11-02 `snapshot.py --dry` 통과 (kt00018·ka20001 응답 정상, 총자산 5,000만 원), Supabase 업로드도 확인
+- [ ] `agent/.env` 만들기 (`MODE=live`, `GIT_PUSH=1`)
 - [ ] live 모드 검증: broker.py의 ka10001(현재가)·kt10000/kt10001(주문) 필드는 실제 응답으로 확인 필요. 모의 서버는 kt00001(주문가능금액)을 거절하므로 예수금은 kt00018의 추정예탁자산 − 주식평가로 계산
 - [ ] 10-29 decide 실행이 25분 시간 초과로 실패 → 11-02 bull/bear의 종목별 WebSearch를 실행당 2번으로 줄임. 실제 실행 시간 확인
 - [ ] `setup_tasks.ps1`로 작업 스케줄러 등록, `GIT_PUSH=1`
