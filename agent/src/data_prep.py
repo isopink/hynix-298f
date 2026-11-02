@@ -110,14 +110,30 @@ def market_summary():
     except Exception:  # noqa: BLE001
         df, src = ohlcv(INDEX_PROXY, 200), "KODEX 200 (KOSPI 대용)"
     ind = indicators(df["종가"])
-    hint = "횡보"
-    if ind:
-        if ind["close"] > ind["ma20"] > ind["ma60"] and ind["ma20_slope5"] > 0:
-            hint = "상승"
-        elif ind["close"] < ind["ma20"] < ind["ma60"] and ind["ma20_slope5"] < 0:
-            hint = "하락"
     return {"source": src, "asof": df.index[-1].strftime("%Y-%m-%d"), **(ind or {}),
-            "rule_hint": hint}
+            "rule_hint": rule_hint(ind) if ind else "횡보",
+            "closes": [round(float(v), 2) for v in df["종가"].tail(65)]}   # 장중 실시간 힌트 계산용 (대시보드·판단)
+
+
+def rule_hint(ind):
+    """종가·20일선·60일선 배열과 20일선 기울기로 국면 힌트. 대시보드(index.html liveHint)도 같은 규칙."""
+    if ind["close"] > ind["ma20"] > ind["ma60"] and ind["ma20_slope5"] > 0:
+        return "상승"
+    if ind["close"] < ind["ma20"] < ind["ma60"] and ind["ma20_slope5"] < 0:
+        return "하락"
+    return "횡보"
+
+
+def live_market(b):
+    """장중이면 마감된 일봉 + 지금 KOSPI(잔고 루프가 5분마다 받는 값)로 힌트를 다시 계산. 키움 호출 없음."""
+    m, snap = b.get("market", {}), C.read_json(os.path.join(C.LIVE, "last_snapshot.json")) or {}
+    closes, px = m.get("closes") or [], snap.get("kospi")
+    if m.get("source") != "KOSPI" or len(closes) < 65 or not px or time.time() - snap.get("epoch", 0) > 15 * 60:
+        return None
+    s = closes + [float(px)]
+    ma = lambda n, off=0: sum(s[len(s) - off - n:len(s) - off]) / n   # noqa: E731
+    ind = {"close": round(float(px), 2), "ma20": round(ma(20)), "ma60": round(ma(60)), "ma20_slope5": round(ma(20) / ma(20, 5) - 1, 4)}
+    return {**ind, "rule_hint": rule_hint(ind), "time": C.now().strftime("%H:%M")}
 
 
 # ---------------- 종목 ----------------
@@ -297,6 +313,10 @@ def to_text(b):
         f"변동성 {m.get('vol20', 0) * 100:.0f}% · 60일 최대낙폭 {pct(m.get('mdd60'))} · 규칙 기반 힌트: {m['rule_hint']}",
         "",
     ]
+    lv = m.get("live")
+    if lv:
+        lines[-1:-1] = [f"장중 실시간 ({lv['time']}, 지금 KOSPI를 오늘 종가로 가정): {lv['close']:,} · 20일선 {lv['ma20']:,} · "
+                        f"60일선 {lv['ma60']:,} · 20일선 5일 기울기 {pct(lv['ma20_slope5'])} · 실시간 힌트: {lv['rule_hint']}"]
     cols = "| 코드 | 종목 | 종가 | 20일선 | 60일선 | 5일 | 20일 | RSI | 변동성 | 60일 낙폭 | 외국인 5일 | 기관 5일 | 점수 |"
     sep = "|" + "---|" * 13
 

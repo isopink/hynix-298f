@@ -123,7 +123,7 @@ def briefing():
     m = b.get("market", {})
     keep = ("code", "name", "close", "ret5", "ret20", "rsi14", "vol20", "foreign_net", "inst_net", "score", "news")
     return {"created": b["created"], "asof": b["asof"], "universe": b.get("universe_size"), "source": b.get("source"),
-            "market": {k: m.get(k) for k in ("source", "close", "ma20", "ma60", "ret5", "ret20", "rsi14", "rule_hint")},
+            "market": {k: m.get(k) for k in ("source", "close", "ma20", "ma60", "ret5", "ret20", "rsi14", "rule_hint", "closes")},
             "candidates": [{k: c.get(k) for k in keep} for c in b.get("candidates", [])]}
 
 
