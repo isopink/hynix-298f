@@ -77,6 +77,7 @@ def indicators(close):
     close = close.astype(float)
     if len(close) < 60:
         return None
+    ma5 = gts.moving_average(close, gts.Window(5, 0))
     ma20 = gts.moving_average(close, gts.Window(20, 0))
     ma60 = gts.moving_average(close, gts.Window(60, 0))
     rsi = gts.relative_strength_index(close, 14)
@@ -85,6 +86,7 @@ def indicators(close):
     c = float(close.iloc[-1])
     return {
         "close": round(c),
+        "ma5": round(float(ma5.iloc[-1])),
         "ma20": round(float(ma20.iloc[-1])),
         "ma60": round(float(ma60.iloc[-1])),
         "ma20_slope5": round(float(ma20.iloc[-1] / ma20.iloc[-6] - 1), 4),
@@ -116,10 +118,11 @@ def market_summary():
 
 
 def rule_hint(ind):
-    """종가·20일선·60일선 배열과 20일선 기울기로 국면 힌트. 대시보드(index.html liveHint)도 같은 규칙."""
-    if ind["close"] > ind["ma20"] > ind["ma60"] and ind["ma20_slope5"] > 0:
+    """종가·5일선·20일선 배열과 20일선 기울기로 국면 힌트.
+    대회가 4주라 60일선 기준은 너무 늦게 반응해서 11-03부터 5·20일선으로 바꿈."""
+    if ind["close"] > ind["ma5"] > ind["ma20"] and ind["ma20_slope5"] > 0:
         return "상승"
-    if ind["close"] < ind["ma20"] < ind["ma60"] and ind["ma20_slope5"] < 0:
+    if ind["close"] < ind["ma5"] < ind["ma20"] and ind["ma20_slope5"] < 0:
         return "하락"
     return "횡보"
 
@@ -132,7 +135,8 @@ def live_market(b):
         return None
     s = closes + [float(px)]
     ma = lambda n, off=0: sum(s[len(s) - off - n:len(s) - off]) / n   # noqa: E731
-    ind = {"close": round(float(px), 2), "ma20": round(ma(20)), "ma60": round(ma(60)), "ma20_slope5": round(ma(20) / ma(20, 5) - 1, 4)}
+    ind = {"close": round(float(px), 2), "ma5": round(ma(5)), "ma20": round(ma(20)), "ma60": round(ma(60)),
+           "ma20_slope5": round(ma(20) / ma(20, 5) - 1, 4)}
     return {**ind, "rule_hint": rule_hint(ind), "time": C.now().strftime("%H:%M")}
 
 
@@ -229,7 +233,9 @@ def screen(rows, p, login):
     for r in rows:
         if r["limit_up_recent"] or r["trading_value_20d"] < s["min_trading_value"]:
             continue
-        if not (r["close"] > r["ma20"] > r["ma60"]):
+        if r["vol20"] > s.get("max_vol20", 9):   # 변동성이 너무 크면 손절 -7%가 소음에도 걸림
+            continue
+        if not (r["close"] > r["ma5"] > r["ma20"]):   # 단기 상승 추세 (4주 대회라 11-03부터 20·60일선 대신 5·20일선)
             continue
         if login and r.get("foreign_net") is not None:
             if r["foreign_net"] <= 0 and r["inst_net"] <= 0:
@@ -243,7 +249,9 @@ def screen(rows, p, login):
     score = df["ret20"].rank(pct=True) + df["trend_gap"].rank(pct=True)
     if "flow_ratio" in df:
         score += df["flow_ratio"].fillna(0).rank(pct=True)
-    df["score"] = (score / score.max()).round(3)
+    score -= (df["ret5"] > s.get("spike_ret5", 9)).astype(float) * s.get("spike_penalty", 0)   # 5일 급등 종목 감점 (꼭대기 추격 방지)
+    score = score.clip(lower=0)
+    df["score"] = (score / score.max()).round(3) if score.max() > 0 else 0.0
     df = df.drop(columns=["trend_gap"]).sort_values("score", ascending=False)
     return df.head(s["max_candidates"]).to_dict("records")
 
@@ -308,20 +316,21 @@ def to_text(b):
         f"# 브리핑 ({b['asof']} 종가 기준, {'전 종목' if b['source'] == 'krx' else '대형주 목록, 수급 없음'})",
         "",
         f"## 시장 ({m['source']})",
-        f"종가 {m.get('close', 0):,} · 20일선 {m.get('ma20', 0):,} · 60일선 {m.get('ma60', 0):,} · "
+        f"종가 {m.get('close', 0):,} · 5일선 {m.get('ma5', 0):,} · 20일선 {m.get('ma20', 0):,} · 60일선 {m.get('ma60', 0):,} · "
         f"20일선 5일 기울기 {pct(m.get('ma20_slope5'))} · 20일 수익률 {pct(m.get('ret20'))} · "
         f"변동성 {m.get('vol20', 0) * 100:.0f}% · 60일 최대낙폭 {pct(m.get('mdd60'))} · 규칙 기반 힌트: {m['rule_hint']}",
         "",
     ]
     lv = m.get("live")
     if lv:
-        lines[-1:-1] = [f"장중 실시간 ({lv['time']}, 지금 KOSPI를 오늘 종가로 가정): {lv['close']:,} · 20일선 {lv['ma20']:,} · "
+        lines[-1:-1] = [f"장중 실시간 ({lv['time']}, 지금 KOSPI를 오늘 종가로 가정): {lv['close']:,} · 5일선 {lv['ma5']:,} · 20일선 {lv['ma20']:,} · "
                         f"60일선 {lv['ma60']:,} · 20일선 5일 기울기 {pct(lv['ma20_slope5'])} · 실시간 힌트: {lv['rule_hint']}"]
-    cols = "| 코드 | 종목 | 종가 | 20일선 | 60일선 | 5일 | 20일 | RSI | 변동성 | 60일 낙폭 | 외국인 5일 | 기관 5일 | 점수 |"
-    sep = "|" + "---|" * 13
+    cols = "| 코드 | 종목 | 종가 | 5일선 | 20일선 | 60일선 | 5일 | 20일 | RSI | 변동성 | 60일 낙폭 | 외국인 5일 | 기관 5일 | 점수 |"
+    sep = "|" + "---|" * 14
 
     def row(r):
-        return (f"| {r['code']} | {r['name']} | {r['close']:,} | {r['ma20']:,} | {r['ma60']:,} | {pct(r['ret5'])} | "
+        ma5 = f"{r['ma5']:,}" if r.get('ma5') else '-'
+        return (f"| {r['code']} | {r['name']} | {r['close']:,} | {ma5} | {r['ma20']:,} | {r['ma60']:,} | {pct(r['ret5'])} | "
                 f"{pct(r['ret20'])} | {r['rsi14']} | {r['vol20'] * 100:.0f}% | {pct(r['mdd60'])} | "
                 f"{eok(r.get('foreign_net'))} | {eok(r.get('inst_net'))} | {r.get('score', '-')} |")
 

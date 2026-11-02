@@ -17,9 +17,9 @@
     "max_hold_days": 10
   },
 
-  "regime_cap": { "상승": 0.90, "횡보": 0.60, "하락": 0.30 },
+  "regime_cap": { "상승": 0.90, "횡보": 0.70, "하락": 0.50 },
 
-  "week_factor": { "1": 0.5, "2": 1.0, "3": 1.0, "4": 0.5 },
+  "week_factor": { "1": 0.5, "2": 1.0, "3": 1.0, "4": 1.0 },
 
   "min_trade_guard": {
     "_note": "이 주차가 시작될 때 누적 거래가 min_count 미만이면 매수 확신도 기준을 relax 만큼 낮춤",
@@ -39,6 +39,9 @@
     "min_trading_value": 10000000000,
     "prefilter_top": 60,
     "max_candidates": 10,
+    "max_vol20": 1.0,
+    "spike_ret5": 0.20,
+    "spike_penalty": 0.5,
     "flow_days": 5,
     "limit_up_lookback": 5,
     "exclude_name_keywords": ["스팩", "리츠"],
