@@ -581,23 +581,31 @@ details.log summary { border-radius: 16px; }
   }
 
   // ---------- KOSPI 실시간: supabase/kospi.sql 이 1분마다 채우는 kospi_ticks 를 읽음 ----------
-  let KX = null, KY = [];   // KX 오늘, KY 전일 (1분 단위)
+  let KX = null, KY = [], KYday = null;   // KX 오늘, KY 전일 (분당 1~2개)
   async function pollKospi() {
     const url = (CFG.supabaseUrl || '').replace(/\/$/, ''), key = CFG.supabaseAnonKey || '';
+    // 한 번에 최대 1,000행이라 오늘·전일을 따로 받음 (하루치가 최대 약 800행)
+    const get = async q => { const r = await fetch(`${url}/rest/v1/kospi_ticks?select=*&${q}`, { headers: { apikey: key, Authorization: 'Bearer ' + key } }); return r.ok ? (await r.json()).reverse() : []; };
+    const rowsOf = (rows, d) => rows.filter(x => kstDate(x.ts) === d).map(x => ({ t: new Date(x.ts), v: +x.price, p: +x.prev_close, vol: x.volume == null ? null : +x.volume }));
     try {
-      const r = await fetch(`${url}/rest/v1/kospi_ticks?select=*&order=ts.desc&limit=900`, { headers: { apikey: key, Authorization: 'Bearer ' + key } });
-      const rows = r.ok ? (await r.json()).reverse() : [];
+      const rows = await get('order=ts.desc&limit=1000');
       if (rows.length) {
-        const days = [...new Set(rows.map(x => kstDate(x.ts)))], day = days[days.length - 1], yday = days[days.length - 2];
-        const pick = d => rows.filter(x => kstDate(x.ts) === d).map(x => ({ t: new Date(x.ts), v: +x.price, p: +x.prev_close, vol: x.volume == null ? null : +x.volume }));
-        KX = pick(day);
-        // 전일 선은 오늘 시간축에 겹쳐 그림
-        const shift = yday ? Date.parse(day) - Date.parse(yday) : 0;
-        KY = yday ? pick(yday).map(d => ({ ...d, t: new Date(+d.t + shift) })) : [];
+        const day = kstDate(rows[rows.length - 1].ts);
+        KX = rowsOf(rows, day);
+        if (KYday?.day !== day) {   // 전일은 하루에 한 번만 받음
+          const prev = await get(`ts=lt.${encodeURIComponent(day + 'T00:00:00+09:00')}&order=ts.desc&limit=1000`);
+          const yday = prev.length ? kstDate(prev[prev.length - 1].ts) : null;
+          // 전일 선은 오늘 시간축에 겹쳐 그림. 야후는 장 마감 종가를 15:00에 찍으므로 마지막 점은 실제 마감 시각 15:30으로 옮김
+          const shift = yday ? Date.parse(day) - Date.parse(yday) : 0, close = new Date(day + 'T15:30:00+09:00');
+          KY = yday ? rowsOf(prev, yday).map(d => ({ ...d, t: new Date(+d.t + shift) })) : [];
+          if (KY.length && hmOf(KY[KY.length - 1].t) >= 1500) KY[KY.length - 1].t = close;
+          KYday = { day };
+        }
       }
     } catch (e) { /* 다음 회차에 다시 시도 */ }
     drawKospi();
   }
+  const hmOf = t => { const s = t.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Seoul' }); return +s.replace(':', ''); };
   function startKospi() {
     if (!CFG.supabaseUrl || !CFG.supabaseAnonKey) return none($('ch-kx'), 'KOSPI 데이터 저장소가 연결되지 않았어요.');
     pollKospi();
