@@ -11,8 +11,9 @@ The trading agent. **The agent proposes, the rules decide**: Claude Code reads t
 | 09:30, 11:00, 14:30 | `decide` — regime → bull ⇄ bear debate → lead agent decides → orders | yes |
 | 15:45 | `close` — record today's equity, publish to dashboard | no |
 | Sat 10:00 | `review` — weekly review + report draft | yes |
+| always (from logon) | `sync` — every minute, pulls pushed code, checks it, restarts `monitor` / the balance loop if their code changed | no |
 
-Register them with `setup_tasks.ps1` (Windows Task Scheduler).
+Register them with `setup_tasks.ps1` (Windows Task Scheduler). The agent runs on an always-on PC and is edited from a laptop; see [MOVE_PC.md](MOVE_PC.md) (Korean) for moving it between machines.
 
 ## Layout
 
@@ -34,7 +35,8 @@ agent/
 │   ├── broker.py             # mock account / Kiwoom REST
 │   ├── mcp_server.py         # Tools the agent can call
 │   ├── logger.py             # work/journal.jsonl → docs/data/*.json
-│   └── monitor.py            # Intraday stop / take-profit watcher
+│   ├── monitor.py            # Intraday stop / take-profit watcher
+│   └── sync.py               # Pulls pushed code every minute and restarts the loops that changed
 ├── tests/test_rules.py
 ├── run.py · run.bat          # Entry point for each run
 └── setup_tasks.ps1           # Task Scheduler registration
