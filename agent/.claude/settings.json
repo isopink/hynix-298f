@@ -29,7 +29,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"$CLAUDE_PROJECT_DIR/.venv/Scripts/python.exe\" \"$CLAUDE_PROJECT_DIR/.claude/hooks/risk_check.py\"",
+            "command": "./.venv/Scripts/python.exe ./.claude/hooks/risk_check.py",
             "timeout": 30
           }
         ]
