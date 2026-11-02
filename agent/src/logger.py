@@ -115,6 +115,28 @@ def status(note=""):
             "failures_today": sum(1 for r in todays if not r.get("ok")), "note": note or (last or {}).get("note", "")}
 
 
+def decision(rows, nm):
+    """가장 최근 정기 판단 1회분 (국면 + 종목별 결정). 대시보드 상단 '현재 판단' 카드용."""
+    reg = next((r for r in reversed(rows) if r["kind"] == "regime"), None)
+    if not reg:
+        return {}
+    run = [r for r in rows if r.get("run") == reg["run"]]
+    items = {}
+    for r in run:
+        if r["kind"] == "decision":
+            items[r["code"]] = {"code": r["code"], "name": nm.get(r["code"], r.get("name")), "action": r["action"],
+                                "confidence": r["confidence"], "bull": r["bull"], "bear": r["bear"], "decision": r["decision"]}
+        elif r["kind"] == "fill":   # 체결이 있으면 결정보다 우선
+            items[r["code"]] = {"code": r["code"], "name": r["name"], "action": r["side"], "qty": r["qty"], "price": r["price"],
+                                "confidence": r["confidence"], "bull": r["bull"], "bear": r["bear"], "decision": r["decision"]}
+    for r in run:   # Hook 에 막힌 주문은 차단 사유를 붙임
+        if r["kind"] == "block" and r["code"] in items and "blocked" not in items[r["code"]]:
+            items[r["code"]]["blocked"] = f'{r["rule"]}: {r["detail"]}'
+    order = {"매수": 0, "매도": 1}
+    return {"time": reg["time"], "regime": reg["regime"], "cap": reg["cap"], "reason": reg.get("reason", ""),
+            "items": sorted(items.values(), key=lambda x: (order.get(x["action"], 2), -float(x["confidence"] or 0)))}
+
+
 def equity_close():
     """오늘 종가 기준 한 줄을 equity.json 에 넣음 (같은 날짜면 덮어씀)."""
     acc = C.read_json(C.ACCOUNT)
@@ -139,6 +161,7 @@ def write_all(note=""):
     out("holdings", holdings())
     out("system", system())
     out("reviews", reviews(rows))
+    out("decision", decision(rows, nm))
     out("status", status(note))
 
 
