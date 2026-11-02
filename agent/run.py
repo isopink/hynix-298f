@@ -168,6 +168,7 @@ def main():
     if kind == "prep":
         refresh_account()
         py("data_prep.py")
+        publish(f"Agent prep {C.today().isoformat()}")   # 판단 전에도 대시보드에 오늘 시장 자료가 보이도록
         return
     if kind == "close":
         refresh_account()

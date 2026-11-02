@@ -325,7 +325,7 @@ details.log summary { border-radius: 16px; }
     </section>
 
     <section class="card c12">
-      <div class="hd"><span class="eyebrow">현재 판단</span><span class="sub" id="dec-asof"></span></div>
+      <div class="hd"><span class="eyebrow" id="dec-title">현재 판단</span><span class="sub" id="dec-asof"></span></div>
       <div class="dec-head" id="dec-head"></div>
       <div class="dec-list" id="dec-list"></div>
     </section>
@@ -483,11 +483,12 @@ details.log summary { border-radius: 16px; }
   // data/*.json 이 있으면 그걸 쓰고, 없으면(파일을 더블클릭해 연 경우 등) HTML에 넣어 둔 샘플을 씀
   let SAMPLE = {};
   try { SAMPLE = JSON.parse(document.getElementById('sample-data').textContent); } catch (e) {}
-  Promise.all(['equity', 'holdings', 'trades', 'risk', 'system', 'reviews', 'status', 'decision'].map(n =>
+  Promise.all(['equity', 'holdings', 'trades', 'risk', 'system', 'reviews', 'status', 'decision', 'briefing'].map(n =>
     fetch('data/' + n + '.json', { cache: 'no-store' }).then(r => { if (!r.ok) throw 0; return r.json(); }).catch(() => SAMPLE[n] || [])
-  ).concat(Promise.resolve().then(loadKD))).then(([equity, holdings, trades, risk, system, reviews, status, decision]) => {
+  ).concat(Promise.resolve().then(loadKD))).then(([equity, holdings, trades, risk, system, reviews, status, decision, briefing]) => {
     STATUS = Array.isArray(status) ? {} : status || {};
     DECISION = Array.isArray(decision) ? {} : decision || {};
+    BRIEF = Array.isArray(briefing) ? {} : briefing || {};
     // 기록이 아직 없으면(대회 시작 전) 초기 자산 한 점으로 빈 화면을 그림
     PRE = !equity.length;
     if (PRE) equity = [{ date: START, total: INIT, kospi: null, regime: null, cap: null }];
@@ -502,7 +503,7 @@ details.log summary { border-radius: 16px; }
   });
 
   // ---------- 실시간: live/snapshot.py 가 Supabase 에 올린 잔고 스냅샷을 30초마다 확인 ----------
-  let BASE = null, LIVE_AT = null, PRE = false, STATUS = {}, DECISION = {};
+  let BASE = null, LIVE_AT = null, PRE = false, STATUS = {}, DECISION = {}, BRIEF = {};
   const CFG = window.DASH_CONFIG || {};
   const kstDate = iso => new Date(Date.parse(iso) + 9 * 3600e3).toISOString().slice(0, 10);
   // 날짜별 KOSPI 종가 (supabase/kospi.sql 의 kospi_daily). 잔고 스냅샷·equity.json 에 KOSPI 가 없는 날의 예비값
@@ -536,14 +537,15 @@ details.log summary { border-radius: 16px; }
     const h = { apikey: key, Authorization: 'Bearer ' + key };
     try {
       const json = n => fetch('data/' + n + '.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null).catch(() => null);
-      const [, snaps, latest, st, dc] = await Promise.all([
+      const [, snaps, latest, st, dc, bf] = await Promise.all([
         loadKD(),
         fetch(`${url}/rest/v1/snapshots?select=ts,account,total,kospi&ts=gte.${since}T00:00:00%2B09:00&order=ts.asc&limit=10000`, { headers: h }).then(r => r.ok ? r.json() : []),
         fetch(`${url}/rest/v1/snapshots?select=ts,account,holdings&order=ts.desc&limit=20`, { headers: h }).then(r => r.ok ? r.json() : []),
-        json('status'), json('decision')   // 에이전트가 실행할 때마다 push 하므로 페이지를 열어 둔 채로도 갱신
+        json('status'), json('decision'), json('briefing')   // 에이전트가 실행할 때마다 push 하므로 페이지를 열어 둔 채로도 갱신
       ]);
       if (st && !Array.isArray(st)) STATUS = st;
       if (dc && !Array.isArray(dc)) DECISION = dc;
+      if (bf && !Array.isArray(bf)) BRIEF = bf;
       if (!snaps.length) return;
       const holdings = [];
       for (const acc of new Set(latest.map(x => x.account))) { const s = latest.find(x => x.account === acc); if (s) holdings.push(...(s.holdings || [])); }
@@ -822,10 +824,44 @@ details.log summary { border-radius: 16px; }
   }
 
   // ---------- 현재 판단: docs/data/decision.json (가장 최근 정기 판단 1회분) ----------
+  // 오늘 판단이 아직 없으면(최신 시장 자료가 판단보다 새것이면) 08:30 시장 자료(briefing.json)를 보여줌
+  const eok = v => v == null ? '—' : (v > 0 ? '+' : v < 0 ? '−' : '') + won(Math.round(Math.abs(v) / 1e8)) + '억';
+  function briefingCard() {
+    const b = BRIEF, m = b.market || {}, head = $('dec-head'), list = $('dec-list');
+    $('dec-title').textContent = '오늘의 시장 자료';
+    $('dec-asof').textContent = b.created ? md(toD(b.created)) + ' ' + b.created.slice(11, 16) + ' 수집 · 판단 전' : '';
+    if (!b.created) { head.innerHTML = ''; return none(list, '시장 자료를 기다리는 중이에요. (평일 08:30 수집)'); }
+    list.classList.remove('empty');
+    head.innerHTML = `<span>국면 힌트 <b style="color:${regC(m.rule_hint)}">${esc(m.rule_hint)}</b></span>`
+      + `<span>${m.source === 'KOSPI' ? 'KOSPI' : '지수'} <b>${won(m.close)}</b></span>`
+      + `<span>20일 <b class="${m.ret20 >= 0 ? 'up' : 'down'}">${pct(m.ret20, 1)}</b></span>`
+      + `<span class="why">${md(toD(b.asof))} 종가 · ${b.source === 'krx' ? '전 종목' : '대형주'} 중 ${b.universe || '—'}종목 분석 → 후보 ${(b.candidates || []).length}개</span>`;
+    const cs = b.candidates || [];
+    if (!cs.length) return none(list, '오늘은 조건을 통과한 후보가 없어요.');
+    list.innerHTML = cs.map((c, i) => {
+      const n = (c.news || [])[0], s = +c.score || 0;
+      return `<div class="dec-row" data-i="${i}"><span class="nm">${esc(c.name)}</span>`
+        + `<span class="act ${c.ret5 > 0 ? 'buy' : c.ret5 < 0 ? 'sell' : ''}">${pct(c.ret5, 1)}</span>`
+        + `<span class="cf"><i><b class="${s >= .6 ? 'hi' : ''}" style="width:${Math.round(s * 100)}%"></b></i>${s.toFixed(2)}</span>`
+        + `<span class="why">${n ? (n.risk ? '<em>⚠</em> ' : '') + esc(n.title) : '최근 뉴스 없음'}</span></div>`;
+    }).join('');
+    list.querySelectorAll('.dec-row').forEach(el => {
+      const c = cs[+el.dataset.i];
+      const html = `<div class="t">${esc(c.name)} · 후보 점수 ${(+c.score).toFixed(2)}</div>`
+        + row('종가', won(c.close) + '원') + row('5일 · 20일', pct(c.ret5, 1) + ' · ' + pct(c.ret20, 1))
+        + row('RSI · 변동성', Math.round(c.rsi14) + ' · ' + Math.round(c.vol20 * 100) + '%')
+        + row('외국인 · 기관 5일', eok(c.foreign_net) + ' · ' + eok(c.inst_net))
+        + (c.news || []).map(n => `<p class="tp">${n.risk ? '<span class="up">⚠</span> ' : ''}${esc(n.date)} ${esc(n.title)}</p>`).join('');
+      el.addEventListener('mousemove', ev => showTip(ev, html));
+      el.addEventListener('mouseleave', hideTip);
+      el.addEventListener('click', ev => showTip(ev, html));
+    });
+  }
   function decisionCard() {
     const dc = DECISION, head = $('dec-head'), list = $('dec-list');
-    $('dec-asof').textContent = dc.time ? md(toD(dc.time)) + ' ' + dc.time.slice(11, 16) + ' 판단' : '';
-    if (!dc.time) { head.innerHTML = ''; return none(list, '첫 판단을 기다리는 중이에요. (평일 09:30 · 11:00 · 14:30)'); }
+    if (!dc.time || (BRIEF.created && BRIEF.created > dc.time)) return briefingCard();
+    $('dec-title').textContent = '현재 판단';
+    $('dec-asof').textContent = md(toD(dc.time)) + ' ' + dc.time.slice(11, 16) + ' 판단';
     list.classList.remove('empty');
     head.innerHTML = `<span>국면 <b style="color:${regC(dc.regime)}">${esc(dc.regime)}</b></span>`
       + `<span>주식 비중 상한 <b>${Math.round(+dc.cap * 100)}%</b></span>`

@@ -115,6 +115,18 @@ def status(note=""):
             "failures_today": sum(1 for r in todays if not r.get("ok")), "note": note or (last or {}).get("note", "")}
 
 
+def briefing():
+    """08:30 데이터 준비 결과 요약 (시장 지표 + 후보 종목). 판단 전에 '현재 판단' 카드에 보여줌."""
+    b = C.read_json(C.BRIEFING, {}) or {}
+    if not b:
+        return {}
+    m = b.get("market", {})
+    keep = ("code", "name", "close", "ret5", "ret20", "rsi14", "vol20", "foreign_net", "inst_net", "score", "news")
+    return {"created": b["created"], "asof": b["asof"], "universe": b.get("universe_size"), "source": b.get("source"),
+            "market": {k: m.get(k) for k in ("source", "close", "ma20", "ma60", "ret5", "ret20", "rsi14", "rule_hint")},
+            "candidates": [{k: c.get(k) for k in keep} for c in b.get("candidates", [])]}
+
+
 def decision(rows, nm):
     """가장 최근 정기 판단 1회분 (국면 + 종목별 결정). 대시보드 상단 '현재 판단' 카드용."""
     reg = next((r for r in reversed(rows) if r["kind"] == "regime"), None)
@@ -162,6 +174,7 @@ def write_all(note=""):
     out("system", system())
     out("reviews", reviews(rows))
     out("decision", decision(rows, nm))
+    out("briefing", briefing())
     out("status", status(note))
 
 
