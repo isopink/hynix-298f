@@ -158,9 +158,23 @@ class KiwoomBroker:
         p = self.quote(code)
         return {"price": p, "change": cached_change(code)}
 
-    def account(self):
+    def _balance(self):
+        """kt00018 잔고. _call 을 거치지 않으므로 여기서도 1.1초 간격과 429 한 번 재시도를 지킴."""
+        wait = 1.1 - (time.time() - self._last)
+        if wait > 0:
+            time.sleep(wait)
         self._last = time.time()
-        snap = self.S.get_balance(self.env, self.S.get_token(self.env))
+        try:
+            return self.S.get_balance(self.env, self.S.get_token(self.env))
+        except RuntimeError as e:   # 잔고 루프(snapshot.py)도 kt00018 을 부르므로 같은 초에 겹칠 수 있음
+            if "HTTP 429" not in str(e):
+                raise
+            time.sleep(2)
+            self._last = time.time()
+            return self.S.get_balance(self.env, self.S.get_token(self.env))
+
+    def account(self):
+        snap = self._balance()
         cash = snap["total"] - snap["stock_eval"]  # 추정예탁자산 − 주식평가
         if "mockapi" not in self.base:  # 모의투자 서버는 주문가능금액 조회(kt00001)를 거절함 (키움 SETUP-MCP.md)
             try:
@@ -181,10 +195,13 @@ class KiwoomBroker:
             "ord_uv": "", "trde_tp": "3", "cond_uv": "",   # 3 = 시장가
         })
         time.sleep(2)
-        acc = self.account()
+        try:
+            acc = self.account()
+        except Exception:  # noqa: BLE001  주문은 이미 나갔으므로 확인 조회가 실패해도 체결로 기록 (다음 조회 때 바로잡힘)
+            return {"ok": True, "order_no": res.get("ord_no", ""), "price": self.quote(code), "qty": qty, "filled": None}
         after = next((h for h in acc["holdings"] if h["code"] == code), None)
         moved = abs((after["qty"] if after else 0) - before)
-        px = after["price"] if after else self.quote(code)
+        px = after["avg_price"] if side == "매수" and after and not before else (after["price"] if after else self.quote(code))
         return {"ok": True, "order_no": res.get("ord_no", ""), "price": px, "qty": moved or qty, "filled": moved > 0}
 
 

@@ -180,7 +180,7 @@ def place_order(code: str, side: str, qty: int, confidence: float, bull: str, be
         return res
     regime = (C.latest_regime() or {}).get("regime")
     meta = C.read_json(C.POSITIONS, {}) or {}
-    held = next((h for h in brk().account()["holdings"] if h["code"] == code), None)
+    held = next((h for h in (C.read_json(C.ACCOUNT, {}) or {}).get("holdings", []) if h["code"] == code), None)   # order() 가 방금 갱신한 잔고 (키움 재조회 안 함)
     if side == "매수":
         d = C.params()["decision"]
         m = meta.get(code) or {"name": name, "entry_date": C.today().isoformat()}
