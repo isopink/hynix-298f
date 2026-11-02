@@ -163,8 +163,9 @@ def news(rows):
     out = {}
     for r in rows:
         q = urllib.parse.quote(f'"{r["name"]}"')
-        req = urllib.request.Request(f"https://openapi.naver.com/v1/search/news.json?query={q}&display=20&sort=date",
-                                     headers={"X-Naver-Client-Id": cid, "X-Naver-Client-Secret": sec})
+        # 2026-07 이후 신규 키는 NAVER API HUB(네이버 클라우드)에서만 발급 → 주소·헤더가 바뀜, 응답 형식은 같음
+        req = urllib.request.Request(f"https://naverapihub.apigw.ntruss.com/search/v1/news?query={q}&display=20&sort=date",
+                                     headers={"X-NCP-APIGW-API-KEY-ID": cid, "X-NCP-APIGW-API-KEY": sec})
         try:
             with urllib.request.urlopen(req, timeout=10) as res:
                 items = json.loads(res.read().decode("utf-8")).get("items", [])
