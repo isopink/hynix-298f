@@ -9,3 +9,8 @@ __pycache__/
 .token_cache.json
 *.log
 !.env.example
+
+# 에이전트 실행 산출물 (가상환경, 작업 파일)
+.venv/
+agent/work/
+live/last_snapshot.json

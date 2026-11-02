@@ -168,6 +168,9 @@ def run_once(env, dry=False):
     kospi = get_kospi(env, token)
     stamp = datetime.now(KST).strftime("%m-%d %H:%M:%S")
     print(f"[{stamp}] {env['ACCOUNT_NAME']} 총자산 {snap['total']:,}원 · 주식 {snap['stock_eval']:,}원 · 종목 {len(snap['holdings'])}개 · KOSPI {kospi}")
+    # 에이전트 장중 감시(agent/src/monitor.py)가 키움을 다시 부르지 않고 읽을 수 있게 로컬에 남김
+    with open(os.path.join(HERE, "last_snapshot.json"), "w", encoding="utf-8") as f:
+        json.dump({**snap, "kospi": kospi, "epoch": time.time()}, f, ensure_ascii=False)
     if dry:
         print(json.dumps(snap, ensure_ascii=False, indent=2))
         return
