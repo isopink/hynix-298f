@@ -376,7 +376,7 @@ details.log summary { border-radius: 16px; }
           <div class="chart" id="ch-donut" style="min-height:240px"></div>
         </section>
         <section class="card c6">
-          <div class="hd"><span class="eyebrow">보유 종목 손익</span><span class="sub">평단 대비</span></div>
+          <div class="hd"><span class="eyebrow">보유 종목 손익</span><span class="sub">수수료·세금 반영</span></div>
           <div class="chart" id="ch-pnl" style="min-height:240px"></div>
         </section>
       </div>
@@ -1006,7 +1006,7 @@ details.log summary { border-radius: 16px; }
     const g = svg.append('g').attr('transform', `translate(${cx},${cy})`);
     const pie = d3.pie().sort(null).value(p => p.v).padAngle(.012);
     g.selectAll('path.s').data(pie(parts)).join('path').attr('class', 's').attr('d', d3.arc().innerRadius(R * .66).outerRadius(R).cornerRadius(3)).attr('fill', (a, i) => color(a.data, i))
-      .on('pointermove pointerdown', (ev, a) => showTip(ev, `<div class="t">${esc(a.data.name)}</div>${row('평가금액', won(Math.round(a.data.v)))}${row('비중', (a.data.v / tot * 100).toFixed(1) + '%')}${a.data.pnl != null ? row('손익', pct(a.data.pnl), a.data.pnl >= 0 ? 'up' : 'down') : ''}`)).on('pointerleave', hideTip);
+      .on('pointermove pointerdown', (ev, a) => showTip(ev, `<div class="t">${esc(a.data.name)}</div>${row('평가금액', won(Math.round(a.data.v)))}${row('비중', (a.data.v / tot * 100).toFixed(1) + '%')}${a.data.pnl != null ? row('손익 (수수료·세금 반영)', pct(a.data.pnl), a.data.pnl >= 0 ? 'up' : 'down') : ''}`)).on('pointerleave', hideTip);
     if (D.cap) {
     const capA = Math.min(1, D.cap) * 2 * Math.PI;
     g.append('path').attr('d', d3.arc()({ innerRadius: R + 5, outerRadius: R + 7, startAngle: 0, endAngle: capA })).attr('fill', C.red);
@@ -1040,7 +1040,10 @@ details.log summary { border-radius: 16px; }
       svg.append('rect').attr('x', Math.min(x(0), x(r.pnl))).attr('y', yy + 3).attr('height', bh - 6).attr('rx', 2).attr('width', Math.max(2, Math.abs(x(r.pnl) - x(0)))).attr('fill', r.pnl >= 0 ? GR.redH : GR.blueH);
       svg.append('text').attr('x', W).attr('y', yy + bh / 2).attr('dy', '.32em').attr('text-anchor', 'end').attr('font-size', 12).attr('font-weight', 500).attr('fill', r.pnl >= 0 ? C.redHi : C.blue).text(pct(r.pnl));
       svg.append('rect').attr('x', 0).attr('y', yy - 4).attr('width', W).attr('height', bh + 8).attr('fill', 'transparent')
-        .on('pointermove pointerdown', ev => showTip(ev, `<div class="t">${esc(r.name)}</div>${row('평단', won(+r.avg_price))}${row('현재가', won(+r.price))}${r.stop ? row('손절 / 익절', won(+r.stop) + ' / ' + won(+r.take)) : ''}${r.held_days != null ? row('보유일', r.held_days + ' / ' + r.max_days + '일') : ''}`)).on('pointerleave', hideTip);
+        .on('pointermove pointerdown', ev => showTip(ev, `<div class="t">${esc(r.name)}</div>${row('평단', won(+r.avg_price))}${row('현재가', won(+r.price))}`
+          // 키움 수익률(prft_rt)은 매수 수수료와 매도 시 낼 수수료·세금까지 뺀 값이라 가격 변동보다 약 0.9%p 낮음. 총자산도 같은 기준
+          + `${row('가격 변동', pct(r.price / r.avg_price - 1), r.price >= r.avg_price ? 'up' : 'down')}${row('수수료·세금 반영', pct(r.pnl), r.pnl >= 0 ? 'up' : 'down')}`
+          + `${row('손익', (r.pnl > 0 ? '+' : r.pnl < 0 ? '−' : '') + won(Math.abs(Math.round(r.avg_price * r.qty * r.pnl))) + '원', r.pnl >= 0 ? 'up' : 'down')}${r.stop ? row('손절 / 익절', won(+r.stop) + ' / ' + won(+r.take)) : ''}${r.held_days != null ? row('보유일', r.held_days + ' / ' + r.max_days + '일') : ''}`)).on('pointerleave', hideTip);
     });
   }
 
