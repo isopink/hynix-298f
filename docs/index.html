@@ -586,7 +586,8 @@ details.log summary { border-radius: 16px; }
     const url = (CFG.supabaseUrl || '').replace(/\/$/, ''), key = CFG.supabaseAnonKey || '';
     // 한 번에 최대 1,000행이라 오늘·전일을 따로 받음 (하루치가 최대 약 800행)
     const get = async q => { const r = await fetch(`${url}/rest/v1/kospi_ticks?select=*&${q}`, { headers: { apikey: key, Authorization: 'Bearer ' + key } }); return r.ok ? (await r.json()).reverse() : []; };
-    const rowsOf = (rows, d) => rows.filter(x => kstDate(x.ts) === d).map(x => ({ t: new Date(x.ts), v: +x.price, p: +x.prev_close, vol: x.volume == null ? null : +x.volume }));
+    // 장 마감 종가는 15:30 이후 봉(15:31~15:32)에 찍히므로 시간축 끝(15:30)에 맞춤
+    const rowsOf = (rows, d) => rows.filter(x => kstDate(x.ts) === d).map(x => ({ t: new Date(Math.min(Date.parse(x.ts), Date.parse(d + 'T15:30:00+09:00'))), v: +x.price, p: +x.prev_close, vol: x.volume == null ? null : +x.volume }));
     try {
       const rows = await get('order=ts.desc&limit=1000');
       if (rows.length) {
@@ -595,7 +596,7 @@ details.log summary { border-radius: 16px; }
         if (KYday?.day !== day) {   // 전일은 하루에 한 번만 받음
           const prev = await get(`ts=lt.${encodeURIComponent(day + 'T00:00:00+09:00')}&order=ts.desc&limit=1000`);
           const yday = prev.length ? kstDate(prev[prev.length - 1].ts) : null;
-          // 전일 선은 오늘 시간축에 겹쳐 그림. 야후는 장 마감 종가를 15:00에 찍으므로 마지막 점은 실제 마감 시각 15:30으로 옮김
+          // 전일 선은 오늘 시간축에 겹쳐 그림. 예전(Yahoo) 데이터는 종가가 15:00에 찍혀 있어 마지막 점을 15:30으로 옮김
           const shift = yday ? Date.parse(day) - Date.parse(yday) : 0, close = new Date(day + 'T15:30:00+09:00');
           KY = yday ? rowsOf(prev, yday).map(d => ({ ...d, t: new Date(+d.t + shift) })) : [];
           if (KY.length && hmOf(KY[KY.length - 1].t) >= 1500) KY[KY.length - 1].t = close;
