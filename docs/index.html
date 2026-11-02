@@ -180,6 +180,11 @@ td.k { color: var(--ink); white-space: nowrap; }
 .f-form .two { display: grid; grid-template-columns: 140px 1fr; gap: 10px; }
 .f-form input, .f-form textarea { background: var(--canvas); color: var(--ink); border: 1px solid var(--line); border-radius: 0; padding: 12px 14px; font: inherit; font-size: 14px; width: 100%; }
 .f-form textarea { min-height: 88px; resize: vertical; line-height: 1.5; }
+.fl-kv { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 22px; font-size: 14px; }
+.fl-kv .k { display: inline-flex; align-items: center; gap: 8px; color: #a0a0a0; font-size: 13px; }
+.fl-kv .k svg { flex: none; }
+.fl-kv .v { font-size: 20px; margin-left: 8px; font-variant-numeric: tabular-nums; }
+.fl-kv .dim .v { font-size: 14px; }
 .f-form input:focus-visible, .f-form textarea:focus-visible, .btn:focus-visible { outline: 2px solid #f6e500; outline-offset: 1px; }
 .f-form .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .f-form .row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
@@ -335,6 +340,12 @@ details.log summary { border-radius: 16px; }
       <div class="hd"><span class="eyebrow">실시간 KOSPI</span><span class="sub" id="kx-asof"></span></div>
       <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><span class="val" id="kx-val">—</span><span id="kx-chg" style="font-size:14px"></span><span id="kx-rsi" style="font-size:13px;margin-left:auto"></span></div>
       <div class="chart" id="ch-kx" style="min-height:300px"></div>
+    </section>
+
+    <section class="card c12">
+      <div class="hd"><span class="eyebrow">투자자별 순매수</span><span class="sub" id="fl-asof"></span></div>
+      <div class="fl-kv" id="fl-kv"></div>
+      <div class="chart" id="ch-fl" style="min-height:180px"></div>
     </section>
 
 
@@ -613,7 +624,7 @@ details.log summary { border-radius: 16px; }
     if (!D) return;
     hero(); sparkLine($('sp-kospi'), D.eq.map(r => r.kospi), '#bdbdbd'); winDots($('sp-win'));
     sparkBars($('sp-week'), D.eq.slice(-5).map(r => r.day)); drawdown($('sp-dd'));
-    agentStatus(); decisionCard(); calendar(); donut(); pnl(); scatter(); timeline(); recent(); blocks(); tokens(); review(); drawKospi();
+    agentStatus(); decisionCard(); calendar(); donut(); pnl(); scatter(); timeline(); recent(); blocks(); tokens(); review(); drawKospi(); drawFlow();
     animated = true;
   }
 
@@ -645,9 +656,68 @@ details.log summary { border-radius: 16px; }
   }
   const hmOf = t => { const s = t.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Seoul' }); return +s.replace(':', ''); };
   function startKospi() {
-    if (!CFG.supabaseUrl || !CFG.supabaseAnonKey) return none($('ch-kx'), 'KOSPI 데이터 저장소가 연결되지 않았어요.');
-    pollKospi();
-    setInterval(() => { if (!document.hidden && marketOpen()) pollKospi(); }, 60000);
+    if (!CFG.supabaseUrl || !CFG.supabaseAnonKey) {
+      none($('ch-fl'), '수급 데이터 저장소가 연결되지 않았어요.');
+      return none($('ch-kx'), 'KOSPI 데이터 저장소가 연결되지 않았어요.');
+    }
+    pollKospi(); pollFlow();
+    setInterval(() => { if (!document.hidden && marketOpen()) { pollKospi(); pollFlow(); } }, 60000);
+  }
+
+  // ---------- 투자자별 순매수: supabase/flow.sql 이 1분마다 채우는 investor_flow (억 원, 장 시작부터 누적) ----------
+  let FL = null;
+  async function pollFlow() {
+    const url = (CFG.supabaseUrl || '').replace(/\/$/, ''), key = CFG.supabaseAnonKey || '';
+    try {
+      const r = await fetch(`${url}/rest/v1/investor_flow?select=*&order=ts.desc&limit=500`, { headers: { apikey: key, Authorization: 'Bearer ' + key } });
+      if (r.ok) {
+        const rows = (await r.json()).reverse();
+        const day = rows.length ? kstDate(rows[rows.length - 1].ts) : null;
+        // 15:30 이후 확정값은 시간축 끝(15:30)에 맞춤
+        FL = rows.filter(x => kstDate(x.ts) === day).map(x => ({ t: new Date(Math.min(Date.parse(x.ts), Date.parse(day + 'T15:30:00+09:00'))),
+          f: +x.foreign_net, i: +x.inst_net, p: +x.personal_net }));
+      }
+    } catch (e) { /* 다음 회차에 다시 시도 */ }
+    drawFlow();
+  }
+  const flowEok = v => (v > 0 ? '+' : v < 0 ? '−' : '') + won(Math.abs(Math.round(v))) + '억';
+  const FLS = [{ k: 'f', n: '외국인', c: '#f5f5f5', dash: null }, { k: 'i', n: '기관', c: '#a0a0a0', dash: '6 4' }];
+  function drawFlow() {
+    const el = $('ch-fl'), kv = $('fl-kv');
+    if (!FL || !FL.length) { kv.innerHTML = ''; $('fl-asof').textContent = ''; return none(el, '수급 데이터를 기다리는 중이에요.'); }
+    const L = FL[FL.length - 1], day = kstDate(L.t.toISOString());
+    const hm = t => t.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Seoul' });
+    $('fl-asof').textContent = md(toD(day)) + ' ' + hm(L.t) + (marketOpen() ? ' 기준 · 누적 · 억 원' : ' 장 마감 · 누적 · 억 원');
+    // 범례 겸 현재값: 순매수 빨강 · 순매도 파랑, 선 모양으로 구분
+    const sw = s => `<svg width="22" height="6" aria-hidden="true"><line x1="0" x2="22" y1="3" y2="3" stroke="${s.c}" stroke-width="2"${s.dash ? ` stroke-dasharray="${s.dash}"` : ''}/></svg>`;
+    const cls = v => v > 0 ? 'up' : v < 0 ? 'down' : '';
+    kv.innerHTML = FLS.map(s => `<span><span class="k">${sw(s)}${s.n}</span><span class="v ${cls(L[s.k])}">${flowEok(L[s.k])}</span></span>`).join('')
+      + `<span class="dim"><span class="k">개인</span><span class="v ${cls(L.p)}">${flowEok(L.p)}</span></span>`;
+    const narrow = el.clientWidth < 520, P = { t: 10, h: narrow ? 130 : 160 };
+    const { svg, W, H } = svgIn(el, P.t + P.h + 22);
+    const lo = d3.min(FL, d => Math.min(d.f, d.i, 0)), hi = d3.max(FL, d => Math.max(d.f, d.i, 0));
+    const y = d3.scaleLinear([lo, hi === lo ? lo + 1 : hi], [P.t + P.h, P.t]).nice(4);
+    const tick = v => (v > 0 ? '+' : v < 0 ? '−' : '') + won(Math.abs(v));
+    const m = { l: d3.max(y.ticks(4), v => textW(svg, tick(v))) + 10, r: 8 };
+    const x = d3.scaleUtc([new Date(day + 'T09:00:00+09:00'), new Date(day + 'T15:30:00+09:00')], [m.l, W - m.r]);
+    svg.append('g').selectAll('line').data(y.ticks(4)).join('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y).attr('y2', y).attr('stroke', C.grid);
+    svg.append('g').selectAll('text').data(y.ticks(4)).join('text').attr('x', m.l - 8).attr('y', y).attr('dy', '.32em').attr('text-anchor', 'end').attr('font-size', 11).attr('fill', C.muted).text(tick);
+    svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(0)).attr('y2', y(0)).attr('stroke', '#8a8a8a').attr('stroke-dasharray', '3 4');
+    [9, 11, 13, 15].forEach(h => svg.append('text').attr('x', x(new Date(`${day}T${String(h).padStart(2, '0')}:00:00+09:00`))).attr('y', H - 6).attr('text-anchor', h === 9 ? 'start' : 'middle').attr('font-size', 11).attr('fill', C.muted).text(h + ':00'));
+    FLS.forEach(s => {
+      svg.append('path').datum(FL).attr('fill', 'none').attr('stroke', s.c).attr('stroke-width', 2).attr('stroke-linejoin', 'round')
+        .attr('stroke-dasharray', s.dash).attr('d', d3.line().x(d => x(d.t)).y(d => y(d[s.k])));
+      svg.append('circle').attr('cx', x(L.t)).attr('cy', y(L[s.k])).attr('r', 3.5).attr('fill', L[s.k] >= 0 ? C.redHi : C.blue).attr('stroke', s.c).attr('stroke-width', 1.5);
+    });
+    const rule = svg.append('line').attr('y1', P.t).attr('y2', P.t + P.h).attr('stroke', '#444').attr('opacity', 0);
+    const bis = d3.bisector(d => d.t).center;
+    svg.append('rect').attr('x', m.l).attr('y', 0).attr('width', W - m.l - m.r).attr('height', P.t + P.h).attr('fill', 'transparent')
+      .on('pointermove pointerdown', ev => {
+        const d = FL[bis(FL, x.invert(d3.pointer(ev)[0]))];
+        rule.attr('x1', x(d.t)).attr('x2', x(d.t)).attr('opacity', 1);
+        showTip(ev, `<div class="t">${hm(d.t)} 누적</div>${row('외국인', flowEok(d.f), cls(d.f))}${row('기관', flowEok(d.i), cls(d.i))}${row('개인', flowEok(d.p), cls(d.p))}`);
+      })
+      .on('pointerleave', () => { hideTip(); rule.attr('opacity', 0); });
   }
   // RSI(14), Wilder 평활
   function rsiOf(vals, n = 14) {
