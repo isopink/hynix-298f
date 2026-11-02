@@ -194,15 +194,20 @@ class KiwoomBroker:
             "dmst_stex_tp": "KRX", "stk_cd": code, "ord_qty": str(qty),
             "ord_uv": "", "trde_tp": "3", "cond_uv": "",   # 3 = 시장가
         })
+        # kt10000/kt10001 응답 필드가 문서와 다를 수 있어 원문을 그대로 남김 (응답에는 토큰·키가 없음)
+        C.append_jsonl(os.path.join(C.WORK, "orders.jsonl"),
+                       {"time": C.stamp(), "run": os.environ.get("RUN_ID", ""), "api": api, "code": code,
+                        "side": side, "qty": qty, "response": res})
+        order_no = str(res.get("ord_no") or res.get("ordr_no") or res.get("ord_num") or "")
         time.sleep(2)
         try:
             acc = self.account()
         except Exception:  # noqa: BLE001  주문은 이미 나갔으므로 확인 조회가 실패해도 체결로 기록 (다음 조회 때 바로잡힘)
-            return {"ok": True, "order_no": res.get("ord_no", ""), "price": self.quote(code), "qty": qty, "filled": None}
+            return {"ok": True, "order_no": order_no, "price": self.quote(code), "qty": qty, "filled": None}
         after = next((h for h in acc["holdings"] if h["code"] == code), None)
         moved = abs((after["qty"] if after else 0) - before)
         px = after["avg_price"] if side == "매수" and after and not before else (after["price"] if after else self.quote(code))
-        return {"ok": True, "order_no": res.get("ord_no", ""), "price": px, "qty": moved or qty, "filled": moved > 0}
+        return {"ok": True, "order_no": order_no, "price": px, "qty": moved or qty, "filled": moved > 0}
 
 
 def get():
