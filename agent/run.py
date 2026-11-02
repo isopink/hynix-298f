@@ -12,6 +12,7 @@
 """
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -89,6 +90,20 @@ def did_work(kind, run_id):
     return any(r.get("run") == run_id and r["kind"] in EXPECT[kind] for r in C.read_jsonl(C.JOURNAL))
 
 
+SUMMARY = re.compile(r"(상승|횡보|하락)\s*/\s*매수\s*\d+건\s*/\s*매도\s*\d+건\s*/\s*관망\s*\d+건")
+
+
+def summary_line(text):
+    """대시보드 상태 문구. 에이전트 출력의 '국면 / 매수 n건 / 매도 n건 / 관망 n건' 줄을 쓰고,
+    없으면 첫 줄(마크다운 기호 제거)을 씀. 마지막 줄을 쓰면 할 일 목록 같은 게 그대로 노출됨."""
+    text = (text or "").strip()
+    m = SUMMARY.search(text)
+    if m:
+        return m.group(0)
+    first = next((ln for ln in text.splitlines() if ln.strip()), "")
+    return re.sub(r"^[\s>*#\-⚠]+|\*\*", "", first).strip()[:120]
+
+
 def claude(kind, prompt, dry=False):
     run_id = f"{C.now().strftime('%Y%m%d-%H%M')}-{kind}"
     exe = shutil.which("claude")
@@ -117,8 +132,7 @@ def claude(kind, prompt, dry=False):
         u = res.get("usage") or {}
         rec.update(ok=p.returncode == 0 and not res.get("is_error") and did_work(kind, run_id),
                    tokens=sum(u.get(k, 0) for k in ("input_tokens", "output_tokens", "cache_creation_input_tokens")),
-                   cost_usd=res.get("total_cost_usd"), note=(res.get("result") or "").strip().splitlines()[-1:] or [""])
-        rec["note"] = rec["note"][0][:120]
+                   cost_usd=res.get("total_cost_usd"), note=summary_line(res.get("result")))
         if not rec["ok"]:
             rec["note"] = ("기록 없음: " if p.returncode == 0 else "") + rec["note"]
         C.write_json(os.path.join(C.WORK, "runs", run_id + ".json"), {"cmd_prompt": prompt, "result": res, "stderr": p.stderr[-2000:]})
