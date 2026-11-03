@@ -576,11 +576,12 @@ details.log summary { border-radius: 16px; }
     const h = { apikey: key, Authorization: 'Bearer ' + key };
     try {
       const json = n => fetch('data/' + n + '.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null).catch(() => null);
-      const [, snaps, latest, st, dc, bf] = await Promise.all([
+      const [, snaps, latest, st, dc, bf, tick] = await Promise.all([
         loadKD(),
         fetch(`${url}/rest/v1/snapshots?select=ts,account,total,kospi&ts=gte.${since}T00:00:00%2B09:00&order=ts.asc&limit=10000`, { headers: h }).then(r => r.ok ? r.json() : []),
         fetch(`${url}/rest/v1/snapshots?select=ts,account,holdings&order=ts.desc&limit=20`, { headers: h }).then(r => r.ok ? r.json() : []),
-        json('status'), json('decision'), json('briefing')   // 에이전트가 실행할 때마다 push 하므로 페이지를 열어 둔 채로도 갱신
+        json('status'), json('decision'), json('briefing'),   // 에이전트가 실행할 때마다 push 하므로 페이지를 열어 둔 채로도 갱신
+        fetch(`${url}/rest/v1/kospi_ticks?select=ts,price&order=ts.desc&limit=1`, { headers: h }).then(r => r.ok ? r.json() : []).catch(() => [])
       ]);
       if (st && !Array.isArray(st)) STATUS = st;
       if (dc && !Array.isArray(dc)) DECISION = dc;
@@ -589,7 +590,10 @@ details.log summary { border-radius: 16px; }
       const holdings = [];
       for (const acc of new Set(latest.map(x => x.account))) { const s = latest.find(x => x.account === acc); if (s) holdings.push(...(s.holdings || [])); }
       LIVE_AT = snaps[snaps.length - 1].ts; PRE = false;
-      D = derive({ ...BASE, equity: liveEquity(snaps), holdings: holdings.length ? holdings : BASE.holdings });
+      const eqLive = liveEquity(snaps), tk = (tick || [])[0], lastRow = eqLive[eqLive.length - 1];
+      // 오늘 KOSPI 끝점은 실시간 KOSPI 카드와 같은 네이버 1분봉으로 (잔고 스냅샷의 키움 지수는 조금 늦음) → 누적 수익률 기준 통일
+      if (tk && lastRow && kstDate(tk.ts) === lastRow.date) lastRow.kospi = +tk.price;
+      D = derive({ ...BASE, equity: eqLive, holdings: holdings.length ? holdings : BASE.holdings });
       fillText(); drawAll();
     } catch (e) { /* 다음 회차에 다시 시도 */ }
   }
@@ -1392,22 +1396,20 @@ details.log summary { border-radius: 16px; }
   }
   tk.addEventListener('click', () => fab.click());
 
-  // ---------- 매매 시각: 평일 정기 판단 3번 (agent/setup_tasks.ps1 과 맞출 것). 다음 차례에 빨간 점 ----------
-  const SCHED = ['09:30', '11:00', '14:30'];
+  // ---------- 매매 시각: 평일 09:15~15:15 15분마다 정기 판단 (agent/setup_tasks.ps1 · params.schedule 과 맞출 것). 다음 차례에 빨간 점 ----------
+  const SCHED = { from: '09:15', to: '15:15', every: 15 };
   const sched = document.getElementById('sched');
   function drawSched() {
     const k = new Date(Date.now() + 9 * 3600e3), day = k.getUTCDay();   // 한국 시각
-    const now = String(k.getUTCHours()).padStart(2, '0') + ':' + String(k.getUTCMinutes()).padStart(2, '0');
-    const next = day >= 1 && day <= 5 ? SCHED.find(t => t > now) : null;
+    const hm = m => String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0'), toM = t => +t.slice(0, 2) * 60 + +t.slice(3);
+    const now = k.getUTCHours() * 60 + k.getUTCMinutes(), a = toM(SCHED.from), b = toM(SCHED.to);
+    const n = a + Math.max(0, Math.ceil((now + 1 - a) / SCHED.every)) * SCHED.every;
+    const next = day >= 1 && day <= 5 && n <= b ? hm(n) : null;
     sched.textContent = '';
-    const lb = document.createElement('span'); lb.className = 'chip'; lb.textContent = '평일 매매';
-    sched.appendChild(lb);
-    for (const t of SCHED) {
-      const c = document.createElement('span'); c.className = 'chip' + (t === next ? ' live' : '');
-      const b = document.createElement('b'); b.textContent = t; c.appendChild(b);
-      if (t === next) c.title = '다음 정기 판단';
-      sched.appendChild(c);
-    }
+    const add = (html, live) => { const c = document.createElement('span'); c.className = 'chip' + (live ? ' live' : ''); c.innerHTML = html; sched.appendChild(c); return c; };
+    add('평일 매매');
+    add(`<b>${SCHED.from}~${SCHED.to}</b> ${SCHED.every}분마다`);
+    if (next) add(`다음 <b>${next}</b>`, true);
   }
   drawSched(); setInterval(drawSched, 60e3);
 })();
