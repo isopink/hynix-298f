@@ -6,11 +6,11 @@
   "failures_today": 0,
   "note": "하락 / 매수 1건 / 매도 0건 / 관망 2건",
   "sync": {
-    "ok": false,
-    "error": "fea9bfb rebase 실패 · fatal: Cannot autostash",
-    "head": "77acf14",
-    "checked_at": "2026-11-03 12:53",
-    "rejected": "fea9bfbbd657b11b8882be8b0794bbc4e58e09d4",
-    "applied_at": "2026-11-03 12:08"
+    "ok": true,
+    "error": null,
+    "head": "2ce77a4",
+    "checked_at": "2026-11-03 15:44",
+    "rejected": null,
+    "applied_at": "2026-11-03 15:44"
   }
 }
