@@ -20,7 +20,7 @@
   "rsi_boost": {
     "_note": "RSI(14) 보정. 장중엔 지금 가격을 오늘 종가로 본 RSI(정기 판단 직전 intraday.py 가 계산), 그 외엔 전일 종가 RSI. 매수: RSI < buy_below 이면 확신도 + add (악재 뉴스 ⚠ 있으면 제외). 매도: RSI ≥ sell_at 이면 확신도 + add. 코드(plan_order·리스크 검사)가 적용하므로 에이전트는 보정 전 확신도를 넘김",
     "buy_below": 35,
-    "sell_at": 70,
+    "sell_at": 65,
     "add": 0.05
   },
 

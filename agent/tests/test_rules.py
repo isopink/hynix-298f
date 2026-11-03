@@ -107,9 +107,9 @@ def test_rsi_boost():
     assert C.conf_boost("MID", "매수", 0.57, P, b) == (0.57, None)      # 35 는 해당 없음 (미만만)
     assert C.conf_boost("BAD", "매수", 0.57, P, b)[0] == 0.57           # 악재 뉴스면 제외
     assert C.conf_boost("NONE", "매수", 0.57, P, b) == (0.57, None)     # 브리핑에 없는 종목
-    # 매도: RSI 70 이상(과열) 보유 종목 +0.05, 69.9 는 해당 없음, 악재 뉴스여도 적용
-    h = {"candidates": [], "holdings": [{"code": "HOT", "rsi14": 70.0, "news": [{"risk": True}]},
-                                        {"code": "WARM", "rsi14": 69.9, "news": []}]}
+    # 매도: RSI 65 이상(과열) 보유 종목 +0.05, 64.9 는 해당 없음, 악재 뉴스여도 적용
+    h = {"candidates": [], "holdings": [{"code": "HOT", "rsi14": 65.0, "news": [{"risk": True}]},
+                                        {"code": "WARM", "rsi14": 64.9, "news": []}]}
     assert C.conf_boost("HOT", "매도", 0.57, P, h)[0] == 0.62
     assert C.conf_boost("HOT", "매수", 0.57, P, h) == (0.57, None)      # 과열은 매수에 안 붙음
     assert C.conf_boost("WARM", "매도", 0.57, P, h) == (0.57, None)
