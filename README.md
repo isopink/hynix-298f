@@ -2,11 +2,11 @@
 
 # UOStock AI Trader
 
-**An automated trading system where Claude Code agents argue, and rules decide.**
+**Claude Code agents argue. Code decides.**
 
 Team *Hynix 298F* · 2026 Navist UOStock AI Auto-Trading Mock Investment Competition (University of Seoul)
 
-[**Live Dashboard →**](https://isopink.github.io/hynix-298f/?v=3) · [한국어](README.ko.md)
+[**Live Dashboard →**](https://isopink.github.io/hynix-298f/) · [한국어](README.ko.md)
 
 ![Claude Code](https://img.shields.io/badge/Agent-Claude%20Code-d97757?style=flat-square)
 ![Kiwoom](https://img.shields.io/badge/Broker-Kiwoom%20REST%20API-1f4fa3?style=flat-square)
@@ -16,8 +16,6 @@ Team *Hynix 298F* · 2026 Navist UOStock AI Auto-Trading Mock Investment Competi
 
 <img src="assets/dashboard.jpg" alt="Trading Dashboard" width="100%">
 
-<sub>Screenshot shows sample data. During the competition (Nov 2 – 27, 2026) the live account balance refreshes every minute.</sub>
-
 </div>
 
 ---
@@ -26,198 +24,240 @@ Team *Hynix 298F* · 2026 Navist UOStock AI Auto-Trading Mock Investment Competi
 
 | | |
 |---|---|
-| **Competition** | 4 weeks of Korean equities mock trading (Nov 2 – 27, 2026) · ₩50M starting capital |
-| **Rule** | The AI agent must make every investment decision and place every order **on its own** — manual orders and human approval of orders are banned |
-| **Approach** | LLMs only debate and score conviction; code decides position size, enforces risk limits and can veto any order |
-| **Result** | 🏁 To be updated after the competition (Nov 29, 2026) |
+| **Competition** | Korean equities mock trading, Nov 2 – 27, 2026 · one team account · ₩50M |
+| **Rule** | The AI must make every decision and place every order itself. No manual orders, no human approval of orders |
+| **Approach** | LLMs debate and score conviction. Python sizes the order, a Hook can veto it |
+| **Cadence** | A decision every 30 min (09:30 – 15:00), orders only on the half hour |
+| **Result** | 🏁 After the competition (Nov 29, 2026) |
 
 ## Why this design
 
-Handing the whole trading loop to an LLM fails in two ways:
+Give an LLM the whole trading loop and two things go wrong:
 
-1. **Number hallucination** — the model misreads a price or an indicator and trades on it.
-2. **No real control** — "always cut losses at −7%" in a prompt is a request, not a guarantee.
+1. **Hallucinated numbers** — it misreads a price and trades on it.
+2. **No hard limits** — "cut losses at −7%" in a prompt is a wish, not a guarantee.
 
-So the system is built on one principle: **agents propose, rules decide.**
-Indicators are computed in Python and handed to the model as short summaries, and risk limits are enforced *outside* the agent by a Claude Code Hook that runs right before the order tool fires.
+So one rule runs through everything: **agents propose, rules decide.**
 
-## Architecture
+- Every number the model sees is computed in Python first.
+- Order size is computed in Python, not by the model.
+- Risk limits live in a Claude Code Hook that fires before the order tool. The agent cannot skip it or edit it.
 
-<p align="center"><img src="assets/architecture.png" alt="Architecture" width="520"></p>
+## How it works
 
-<details>
-<summary>Mermaid source</summary>
+### The whole loop
+
+```mermaid
+flowchart LR
+    subgraph DATA["① Data · Python"]
+        D1["08:30 prep<br/>KRX prices · 5-day flows<br/>Naver news"]
+        D2["Before every decision<br/>Kiwoom intraday ranks<br/>trading value · foreign · institution"]
+    end
+    subgraph AGENT["② Decide · Claude Code"]
+        A1["Regime → exposure cap"]
+        A2["Bull ⇄ Bear debate"]
+        A3["Lead agent<br/>conviction 0–1"]
+        A1 --> A2 --> A3
+    end
+    subgraph RULES["③ Rules · code"]
+        R1["Conviction adjustments<br/>RSI · falling market"]
+        R2["Sizing<br/>qty · stop · target"]
+        R3{{"Risk Hook"}}
+        R1 --> R2 --> R3
+    end
+    K["Kiwoom REST API<br/>(own MCP server)"]
+    LOG[("journal.jsonl")]
+    WEB["Dashboard"]
+
+    DATA --> AGENT --> RULES
+    R3 -- pass --> K
+    R3 -- block --> LOG
+    K --> LOG --> WEB
+    LOG -. "daily tuning 16:00<br/>weekly review Sat" .-> AGENT
+```
+
+### One decision run
 
 ```mermaid
 flowchart TB
-    subgraph S1["① Data prep · Python · 08:30"]
-        direction TB
-        A1["KRX prices · flows<br/>Naver news"] --> A2["Compute indicators<br/>GS Quant"] --> A3["Select candidates"]
-    end
-    subgraph S2["② Decide · agents · 09:30 · 11:00 · 14:30"]
-        direction TB
-        B1["Market-regime agent"] -->|bull · sideways · bear| B2["Exposure cap"]
-        B2 --> C1["Bull agent"]
-        B2 --> C2["Bear agent"]
-        C1 <-->|rebuttal| C2
-        C1 --> E1["Lead agent"]
-        C2 --> E1
-        E1 -->|conviction| E2{{"buy · hold · sell<br/>(wait if below bar)"}}
-    end
-    subgraph S3["③ Execute"]
-        direction TB
-        F1["Sizing · Python"] --> F2["quantity · stop · target<br/>max holding days"] --> G{{"Risk Hook<br/>cash · per-stock · regime cap · daily loss"}}
-        M["Intraday watch · 5 min<br/>stop / target hit"] --> G
-        G -->|pass| H["Order<br/>own MCP → Kiwoom REST API"]
-        G -->|violation| X["Blocked"]
-    end
-    subgraph S4["④ Log"]
-        direction TB
-        I[("Decision & fill log")] --> K["Trading Dashboard"]
-        L["Balance snapshot · 1 min<br/>Kiwoom"] --> SB[("Supabase")]
-        N["KOSPI 1-min bars<br/>Naver Finance"] --> SB
-        SB --> K
-    end
-    subgraph S5["⑤ Weekly review"]
-        direction TB
-        J1["Analyse the log"] --> J2["Review agent<br/>(risk limits are fixed)"]
-        J2 --> J3["Tune thresholds · prompts"]
-        J2 --> J4["Weekly report draft"]
-    end
-    S1 --> S2 --> S3 --> S4
-    S4 -->|weekly| S5
-    S5 == "updated criteria" ==> S2
+    S["Scheduled run · every 30 min"] --> P["Intraday re-screen<br/>3 Kiwoom rank calls → up to 10 candidates<br/>(falls back to the 08:30 list on failure)"]
+    P --> G["Regime sub-agent<br/>bull 90% · sideways 70% · bear 50% stock cap<br/>× 0.75 in week 1"]
+    G --> B["Bull sub-agent<br/>case for each candidate and holding"]
+    B --> R["Bear sub-agent<br/>case against + rebuttal"]
+    R --> L["Lead agent<br/>conviction per stock"]
+    L --> T{"Half-hour slot?<br/>09:30 … 14:30"}
+    T -- "no (on the hour)" --> V["Record view only<br/>'would buy / sell', no orders"]
+    T -- yes --> C["Code adds to conviction<br/>+0.05 bear market (new buys)<br/>+0.05 RSI < 35 (buy) · +0.05 RSI ≥ 65 (sell)"]
+    C --> Q{"Buy ≥ 0.65?<br/>Sell ≥ 0.55?"}
+    Q -- no --> W["Wait / hold"]
+    Q -- yes --> Z["plan_order → place_order"]
+    Z --> H{{"Risk Hook"}}
+    H -- pass --> O["Market order"]
+    H -- violation --> X["Blocked + logged"]
 ```
 
-</details>
+Sells go first, then buys. Stop-loss, take-profit and max holding days are checked every 5 minutes by a watcher. When one hits, it starts a sell-only agent run. The agent and the Hook still place that order, never the watcher itself.
 
-| Role | Runs as | Responsibility |
+### Who does what
+
+| Role | Runs as | Job |
 |---|---|---|
-| Lead agent | Claude Code | Weighs bull vs. bear arguments, scores conviction per stock, makes the final call |
-| Market regime | Sub-agent | Classifies the market from index trend and volatility, sets the overall exposure cap |
-| Bull / Bear | Sub-agents | Make the case for and against each candidate and holding, then rebut each other |
-| Weekly review | Sub-agent | Analyses the trade log and proposes threshold changes (cannot touch risk limits) |
-| Data prep | Python | Collects KRX prices and investor flows plus Naver news, computes indicators, passes only numeric summaries to the LLM |
-| Sizing | Python | Converts conviction into order quantity; sets stop-loss, take-profit and max holding days |
-| Risk check | Claude Code Hook | Enforces cash, per-stock, regime-cap and daily-loss limits right before every order; blocks violations |
-| Intraday watch | Python | Checks stop-loss, take-profit and max holding days every 5 minutes; launches a sell-only run when hit |
-| Order execution | Own MCP server | Calls the Kiwoom REST API directly instead of Kiwoom's official MCP (cleared with the organisers) |
+| Lead agent | Claude Code (headless) | Weighs both sides, scores conviction, places orders through MCP tools |
+| Regime | Sub-agent | Reads index trend (5/20-day MAs) and volatility → bull / sideways / bear |
+| Bull / Bear | Sub-agents | Argue for and against each stock using only briefing numbers and news |
+| Review | Sub-agent | Weekly: reads the log, drafts the weekly report, suggests threshold changes |
+| Data prep | Python | KRX prices and flows, Naver news → GS Quant indicators → candidate screen |
+| Intraday re-screen | Python | Kiwoom trading-value and foreign/institution net-buy ranks → fresh candidates and live RSI |
+| Sizing | Python | Conviction → target weight → quantity; stop −7%, target +15%, max 10 days |
+| Risk check | Claude Code Hook | Runs before every `place_order`; any violation blocks the order |
+| Tuning | Python + agent | Daily: agent proposes 0–2 threshold changes, code accepts only those inside fixed rules |
+| Watcher | Python | Every 5 min: stop / target / holding days → sell-only run |
+| Order execution | Own MCP server | Calls the Kiwoom REST API directly (cleared with the organisers) |
 
-### Daily schedule (weekdays, KST)
+### Risk limits (fixed for the whole competition)
+
+| Rule | Limit |
+|---|---|
+| Per stock | ≤ 20% of equity |
+| Holdings | ≤ 20 stocks |
+| Cash | ≥ 10% of equity |
+| Per order | ≤ ₩10M · ≤ 8 orders per run |
+| Chasing | No buy if the stock is already up ≥ 10% today |
+| Daily loss | −3% → no new buys today |
+| Total loss | −10% → stock cap halved |
+| Exposure | Regime cap × week factor |
+
+The agent cannot change these. The tuner only touches decision thresholds, and only inside ranges set in [`agent/config/tuning.json`](agent/config/tuning.json).
+
+### Self-tuning, with guardrails
+
+```mermaid
+flowchart LR
+    J[("Trade & decision log")] --> T["16:00 weekdays<br/>tuning agent"]
+    T -->|"0–2 proposals + reason"| C{"tuning.py<br/>allowed key? in range?<br/>step size? cooldown?"}
+    C -- pass --> P["params.json<br/>auto-commit"]
+    C -- reject --> J
+    P --> D["Next day's decisions"]
+    J --> W["Sat 10:00<br/>weekly review"] --> R["Report draft<br/>+ suggestions"]
+```
+
+Every change and rejection shows up on the dashboard (Feedback Loop).
+
+## Daily schedule (weekdays, KST)
 
 | Time | Run | LLM |
 |---|---|---|
-| 08:30 | Data prep — account, prices, flows, news → candidates | no |
-| 09:05 – 15:20 | Intraday watch — stop / take-profit every 5 min | only when triggered |
-| **09:30 · 11:00 · 14:30** | Decision — regime → bull ⇄ bear debate → lead agent → orders | yes |
-| 15:45 | Close — record today's equity on the dashboard | no |
-| Sat 10:00 | Weekly review and report draft | yes |
+| 08:30 | `prep` — account, KRX data, news → briefing | – |
+| 08:55 → | Balance snapshot every minute → Supabase | – |
+| 09:05 – 15:20 | `monitor` — stop / target / holding days every 5 min | only when hit |
+| **09:30, 10:30 … 14:30** | `decide` — re-screen → debate → **orders** | ✓ |
+| 10:00, 11:00 … 15:00 | `view` — same debate, **no orders**, refreshes the dashboard | ✓ |
+| 15:45 | `close` — record today's equity | – |
+| 16:00 | `tune` — threshold self-tuning | ✓ |
+| Sat 10:00 | `review` — weekly review and report draft | ✓ |
+| always | `sync` — pulls pushed code every minute, restarts loops whose code changed | – |
 
-### Design principles
+The agent runs on an always-on desktop and is edited from a laptop. A push reaches the desktop within a minute.
 
-- **Code does the math** — indicators are pre-computed, which cuts tokens and removes room for hallucinated numbers.
-- **Narrow first, debate second** — only stocks that pass indicator filters reach the bull/bear debate.
-- **Rules live outside the agent** — the Hook runs before the order tool, so the agent can neither skip nor edit it.
-- **Self-improving, with fixed guardrails** — the review agent tunes decision thresholds but never the risk limits.
-- **No human in the loop** — runs headless on a schedule; nobody approves or rejects individual orders.
+## Dashboard
 
-## Trading Dashboard
-
-A single page that shows not just *what* the agent traded but *why*.
+One page that shows what the agent traded, and why.
 
 <table>
 <tr>
-<td width="62%"><img src="assets/timeline-tooltip.jpg" alt="AI trade timeline"></td>
-<td><img src="assets/mobile.jpg" alt="Mobile view"></td>
+<td width="62%"><img src="assets/timeline-tooltip.jpg" alt="Trade timeline"></td>
+<td><img src="assets/mobile.jpg" alt="Phone view"></td>
 </tr>
 <tr>
-<td align="center"><sub>Trade timeline — tap a dot to see the bull case, bear case and final decision</sub></td>
-<td align="center"><sub>Mobile</sub></td>
+<td align="center"><sub>Desktop — tap a trade to read the bull case, bear case and final call</sub></td>
+<td align="center"><sub>Phone — a short promo view</sub></td>
 </tr>
 </table>
 
-| Feature | Description |
+| Section | What's in it |
 |---|---|
-| Live return | Kiwoom balance polled every minute during market hours, pushed to Supabase; the page refreshes every 30 s |
-| Live KOSPI | Naver Finance 1-minute bars collected by Supabase every minute (no delay), drawn over the previous day with volume and RSI |
-| Cumulative return vs. KOSPI | Overlaid with a market-regime strip (bull · sideways · bear) |
-| Conviction vs. return | Checks whether the agent's confidence actually predicted outcomes |
-| Trade timeline | The agents' debate behind every trade, one tap away |
-| Blocked orders | Orders stopped by the risk Hook and the rule they broke |
-| Token usage | Daily usage and failed runs |
-| Anonymous comment board | No login, flood-protected |
+| **Hero** | Cumulative return vs. KOSPI since the start, current equity, agent on/off |
+| **Live decision** | Latest run: regime, stock cap, each stock's action and conviction (reasons on hover/tap) |
+| **Live KOSPI** | 1-minute bars vs. previous close, volume, RSI, investor net buying |
+| **Portfolio** | Holdings vs. regime cap, per-stock P&L before / after fees and tax |
+| **Trading Detail** | This week, max drawdown, win rate, risk-limit usage, daily excess return, return calendar |
+| **Agent Black Box** | Trade timeline with debate, Hook blocks, conviction vs. return, token usage, Feedback Loop, full decision log |
+| **Cheer board** | Anonymous comments, no login, flood-protected |
 
-**Security** — Kiwoom API keys exist only in the `.env` of the one PC that polls the balance; the website only ever sees numbers. Snapshots can be written solely through a secret-checked Postgres function, and visitors are read-only.
+The phone shows only the hero, buy/sell calls, holdings P&L, KOSPI and the calendar. The full view is on desktop.
+
+**Data paths** — Kiwoom keys live only in a `.env` on the desktop. The site reads two sources: JSON the agent pushes to `docs/data/`, and Supabase. In Supabase, balance snapshots arrive through a secret-checked RPC, and `pg_cron` collects KOSPI 1-minute bars (Naver) and investor flows (Daum). Visitors are read-only.
 
 ## Tech stack
 
 | Area | Tools |
 |---|---|
-| Agents | Claude Code — sub-agents (`.claude/agents/`), Hooks, headless mode |
-| Market data | Kiwoom REST API, KRX Data Marketplace (pykrx), Naver news search (NAVER API HUB), Naver Finance 1-minute bars |
-| Indicators | GS Quant (moving averages, volatility, RSI, max drawdown) |
-| Dashboard | Plain HTML · CSS · D3.js (no build step), GitHub Pages |
-| Realtime & comments | Supabase (PostgreSQL, Row Level Security, RPC, pg_cron) |
+| Agents | Claude Code — headless runs, sub-agents, PreToolUse Hook, MCP server, tool allow-list (no Bash / Edit / Write) |
+| Broker | Kiwoom REST API — balance `kt00018`, quote `ka10001`, ranks `ka10032` · `ka10065`, orders `kt10000` · `kt10001` |
+| Market data | KRX Data Marketplace (pykrx), NAVER API HUB news search, Naver / Daum Finance via Supabase |
+| Indicators | GS Quant — moving averages, RSI, volatility, max drawdown |
+| Dashboard | Plain HTML · CSS · D3.js v7, no build step, GitHub Pages |
+| Realtime | Supabase — PostgreSQL, RLS, RPC, `pg_cron`, `pg_net` |
 | Scheduling | Windows Task Scheduler |
 
 ## Repository layout
 
 ```
 hynix-298f/
-├── docs/                 # Dashboard, served by GitHub Pages
-│   ├── index.html
-│   ├── config.js         # Supabase public (anon) key
-│   ├── data/             # Agent logs: trades, rationale, weekly review, …
-│   └── DEPLOY.md         # Setup guide (Korean)
-├── live/                 # Kiwoom balance → Supabase snapshot script
-│   ├── snapshot.py
-│   ├── .env.example
-│   └── run_snapshot.bat
-├── supabase/
-│   ├── schema.sql        # Comments & snapshots tables, access rules
-│   └── kospi.sql         # Live KOSPI 1-minute collector (pg_cron)
-├── agent/                # Trading agent (details in agent/README.md)
-│   ├── CLAUDE.md         # Lead agent instructions
-│   ├── .claude/          # Sub-agents, risk Hook, tool permissions
-│   ├── config/           # Risk limits (fixed) · decision thresholds
-│   ├── src/              # Data prep · sizing · risk · order MCP · intraday watch
-│   └── run.py            # Entry point called by Task Scheduler
-├── reports/              # Plan, weekly and final reports
-└── assets/               # README images
+├── agent/                  # Trading agent → agent/README.md
+│   ├── CLAUDE.md           # Lead agent instructions
+│   ├── .claude/            # Sub-agents (regime · bull · bear · review), risk Hook, permissions
+│   ├── config/             # risk_limits.json (fixed) · params.json (tuned) · tuning.json (tuning rules)
+│   ├── src/                # data_prep · intraday · sizing · risk · broker · mcp_server
+│   │                       # monitor · tuning · logger · sync
+│   ├── tests/test_rules.py
+│   ├── run.py              # prep / decide / exit / close / tune / review / monitor / sync
+│   └── setup_tasks.ps1     # Task Scheduler registration
+├── docs/                   # Dashboard (GitHub Pages)
+│   ├── index.html          # Single file
+│   ├── config.js           # Supabase URL + public anon key
+│   └── data/               # JSON the agent publishes after each run
+├── live/snapshot.py        # Kiwoom balance + KOSPI → Supabase, every minute
+├── supabase/               # schema.sql · kospi.sql · flow.sql · ewy.sql
+├── reports/                # Plan, weekly and final reports
+└── assets/                 # README images
 ```
 
 ## Running it
 
-Step-by-step deployment and realtime setup: [`docs/DEPLOY.md`](docs/DEPLOY.md) (Korean).
+Deployment guide: [`docs/DEPLOY.md`](docs/DEPLOY.md) · agent setup: [`agent/README.md`](agent/README.md) (both partly Korean).
 
 ```bash
-# Preview the dashboard locally
-cd docs && python -m http.server 8000   # → http://localhost:8000
+# Dashboard locally
+cd docs && python -m http.server 8000          # → http://localhost:8000
 
-# Check the balance connection (after filling live/.env)
+# Balance connection (after filling live/.env)
 cd live && python snapshot.py --dry
 
-# Run the agent once (MODE=mock in agent/.env trades a virtual account)
-cd agent && .venv\Scripts\python run.py prep && .venv\Scripts\python run.py decide
+# Agent, one run (MODE=mock in agent/.env trades a virtual account)
+cd agent
+.venv\Scripts\python tests\test_rules.py
+.venv\Scripts\python run.py prep
+.venv\Scripts\python run.py decide
 ```
 
 ## Results & retrospective
 
-> 🏁 To be updated after the competition (Nov 29, 2026)
+> 🏁 After the competition (Nov 29, 2026)
 >
 > - Final return, excess return over KOSPI, turnover
-> - How well conviction scores matched realised returns
-> - How orders blocked by the risk Hook affected the outcome
-> - Calls the agents got right — and wrong
-> - What I would change next time
+> - Did conviction predict returns?
+> - What the risk Hook blocked, and what that cost or saved
+> - What self-tuning changed, and whether it helped
+> - What I'd do differently
 
 ## Acknowledgements
 
 | Repository | What I borrowed |
 |---|---|
-| [BijectiveLabs/bitra](https://github.com/BijectiveLabs/bitra) | "Agents propose, the system decides" architecture; logging of decisions and rejections |
-| [fidetolabs/qanat](https://github.com/fidetolabs/qanat) | Agents querying filings-based stock screens through MCP |
-| [Kiwoom-Securities/Kiwoom-REST-API](https://github.com/Kiwoom-Securities/Kiwoom-REST-API) | Quotes, balance and mock orders |
+| [BijectiveLabs/bitra](https://github.com/BijectiveLabs/bitra) | "Agents propose, the system decides"; logging decisions and rejections |
+| [fidetolabs/qanat](https://github.com/fidetolabs/qanat) | Agents querying stock screens through MCP |
+| [Kiwoom-Securities/Kiwoom-REST-API](https://github.com/Kiwoom-Securities/Kiwoom-REST-API) | Quotes, balance, ranks and mock orders |
 | [goldmansachs/gs-quant](https://github.com/goldmansachs/gs-quant) | Indicator computation |
 
 ## Team
@@ -229,5 +269,5 @@ cd agent && .venv\Scripts\python run.py prep && .venv\Scripts\python run.py deci
 ---
 
 <div align="center">
-<sub>Designed by <a href="https://www.instagram.com/sl2eee/">S.Lee</a> · Built for a mock-trading competition. Not investment advice.</sub>
+<sub>Designed by S.Lee &amp; M.Park · Built for a mock-trading competition. Not investment advice.</sub>
 </div>

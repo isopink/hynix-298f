@@ -2,11 +2,11 @@
 
 # UOStock AI Trader
 
-**Claude Code 멀티 에이전트가 판단하고, 규칙이 결정하는 자동매매 시스템**
+**Claude Code 에이전트가 토론하고, 코드가 결정한다**
 
 2026 나비스트 UOStock AI 자동매매 모의주식투자대회 · 팀 「하이닉스 298층 주민」
 
-[**Live Dashboard →**](https://isopink.github.io/hynix-298f/?v=3) · [English](README.md)
+[**Live Dashboard →**](https://isopink.github.io/hynix-298f/) · [English](README.md)
 
 ![Claude Code](https://img.shields.io/badge/Agent-Claude%20Code-d97757?style=flat-square)
 ![Kiwoom](https://img.shields.io/badge/Broker-Kiwoom%20REST%20API-1f4fa3?style=flat-square)
@@ -16,8 +16,6 @@
 
 <img src="assets/dashboard.jpg" alt="Trading Dashboard" width="100%">
 
-<sub>스크린샷은 샘플 데이터입니다. 대회 기간(2026.11.02 – 11.27)에는 실제 계좌 잔고가 1분마다 반영됩니다.</sub>
-
 </div>
 
 ---
@@ -26,197 +24,240 @@
 
 | | |
 |---|---|
-| **대회** | 국내 주식 모의투자 4주 (2026.11.02 – 11.27) · 초기 자산 5,000만 원 |
-| **규칙** | AI 에이전트가 투자 판단과 주문을 **자동으로** 수행 (사람의 수동 주문·주문 승인 금지) |
-| **접근** | LLM은 근거를 토론하고 확신도를 매기는 역할만, 수량·리스크·주문 차단은 코드가 결정 |
-| **결과** | 🏁 대회 종료 후 업데이트 (2026.11.29) |
+| **대회** | 국내 주식 모의투자, 2026.11.02 – 11.27 · 팀 계좌 1개 · 5,000만 원 |
+| **규칙** | 판단과 주문은 AI가 직접. 사람의 수동 주문·주문 승인 금지 |
+| **접근** | LLM은 토론하고 확신도만 매김. 수량은 Python이 계산하고, Hook이 주문을 막을 수 있음 |
+| **주기** | 30분마다 판단 (09:30 – 15:00), 주문은 매시 30분 회차에만 |
+| **결과** | 🏁 대회 종료 후 (2026.11.29) |
 
 ## 왜 이렇게 만들었나
 
-LLM에게 매매를 통째로 맡기면 두 가지 문제가 생깁니다.
+LLM에게 매매를 통째로 맡기면 두 가지가 문제입니다.
 
-1. **숫자 환각** — 시세나 지표를 틀리게 읽고 그대로 주문으로 이어짐
-2. **통제 불가** — 프롬프트로 "손절하라"고 해도 에이전트가 따르지 않을 수 있음
+1. **숫자 환각** — 가격을 잘못 읽고 그대로 주문
+2. **강제력 없음** — 프롬프트의 "−7%면 손절"은 부탁일 뿐 보장이 아님
 
-그래서 이 시스템은 **"에이전트는 제안하고, 규칙이 결정한다"** 를 원칙으로 합니다.
-숫자는 코드가 미리 계산해 요약만 넘기고, 리스크 한도는 에이전트 바깥(Claude Code Hook)에서 주문 직전에 강제로 검사합니다.
+그래서 원칙은 하나입니다. **에이전트는 제안하고, 규칙이 결정한다.**
 
-## 시스템 구조
+- 모델이 보는 숫자는 전부 Python이 먼저 계산합니다.
+- 주문 수량은 모델이 아니라 Python이 정합니다.
+- 리스크 한도는 주문 도구 직전에 실행되는 Claude Code Hook에 있습니다. 에이전트는 건너뛰지도 고치지도 못합니다.
 
-<p align="center"><img src="assets/architecture.ko.png" alt="시스템 구조" width="520"></p>
+## 동작 방식
 
-<details>
-<summary>Mermaid 원본</summary>
+### 전체 흐름
+
+```mermaid
+flowchart LR
+    subgraph DATA["① 데이터 · Python"]
+        D1["08:30 준비<br/>KRX 시세 · 5일 수급<br/>네이버 뉴스"]
+        D2["판단 직전마다<br/>키움 장중 순위<br/>거래대금 · 외국인 · 기관"]
+    end
+    subgraph AGENT["② 판단 · Claude Code"]
+        A1["국면 → 주식 비중 상한"]
+        A2["매수 측 ⇄ 매도 측 토론"]
+        A3["총괄<br/>확신도 0–1"]
+        A1 --> A2 --> A3
+    end
+    subgraph RULES["③ 규칙 · 코드"]
+        R1["확신도 보정<br/>RSI · 하락장"]
+        R2["수량 계산<br/>수량 · 손절 · 익절"]
+        R3{{"리스크 Hook"}}
+        R1 --> R2 --> R3
+    end
+    K["키움 REST API<br/>(자체 MCP 서버)"]
+    LOG[("journal.jsonl")]
+    WEB["대시보드"]
+
+    DATA --> AGENT --> RULES
+    R3 -- 통과 --> K
+    R3 -- 차단 --> LOG
+    K --> LOG --> WEB
+    LOG -. "16:00 기준값 자동 조정<br/>토요일 주간 회고" .-> AGENT
+```
+
+### 판단 1회
 
 ```mermaid
 flowchart TB
-    subgraph S1["① 데이터 준비 · Python · 08:30"]
-        direction TB
-        A1["KRX 전 종목 시세 · 수급<br/>네이버 뉴스"] --> A2["지표 계산<br/>GS Quant"] --> A3["후보 종목 선별"]
-    end
-    subgraph S2["② 판단 · 에이전트 · 09:30 · 11:00 · 14:30"]
-        direction TB
-        B1["시장 국면 에이전트"] -->|상승 · 횡보 · 하락| B2["투자 비중 상한"]
-        B2 --> C1["매수 에이전트"]
-        B2 --> C2["매도 에이전트"]
-        C1 <-->|반박| C2
-        C1 --> E1["총괄 Agent"]
-        C2 --> E1
-        E1 -->|확신도| E2{{"매수 · 보유 · 매도<br/>(미달 시 관망)"}}
-    end
-    subgraph S3["③ 실행"]
-        direction TB
-        F1["수량 계산 · Python"] --> F2["수량 · 손절 · 익절<br/>최대 보유일"] --> G{{"리스크 검증 Hook<br/>현금 · 종목 한도 · 국면 상한 · 일일 손실"}}
-        M["장중 감시 · 5분<br/>손절 · 익절 도달"] --> G
-        G -->|통과| H["주문 실행<br/>자체 MCP → 키움 REST API"]
-        G -->|위반| X["주문 차단"]
-    end
-    subgraph S4["④ 기록"]
-        direction TB
-        I[("판단 · 체결 로그")] --> K["Trading Dashboard"]
-        L["잔고 스냅샷 · 1분<br/>키움"] --> SB[("Supabase")]
-        N["KOSPI 1분봉<br/>네이버 증권"] --> SB
-        SB --> K
-    end
-    subgraph S5["⑤ 주간 회고"]
-        direction TB
-        J1["기록 분석"] --> J2["주간 회고 에이전트<br/>(리스크 한도는 수정 불가)"]
-        J2 --> J3["판단 기준 · 프롬프트 조정"]
-        J2 --> J4["주간 보고서 초안"]
-    end
-    S1 --> S2 --> S3 --> S4
-    S4 -->|주 1회| S5
-    S5 == "판단 기준 업데이트" ==> S2
+    S["정기 판단 · 30분마다"] --> P["장중 후보 재선별<br/>키움 순위 3번 → 후보 최대 10개<br/>(실패하면 08:30 후보 사용)"]
+    P --> G["국면 서브에이전트<br/>상승 90% · 횡보 70% · 하락 50% 주식 비중 상한<br/>1주차 × 0.75"]
+    G --> B["매수 측 서브에이전트<br/>후보·보유 종목별 강세 근거"]
+    B --> R["매도 측 서브에이전트<br/>약세 근거 + 반박"]
+    R --> L["총괄<br/>종목별 확신도"]
+    L --> T{"매매 회차?<br/>09:30 … 14:30"}
+    T -- "아니오 (정각)" --> V["판단만 기록<br/>'매수 예정 / 매도 예정', 주문 없음"]
+    T -- 예 --> C["코드가 확신도 보정<br/>하락장 신규 매수 +0.05<br/>RSI 35 미만 매수 +0.05 · 65 이상 매도 +0.05"]
+    C --> Q{"매수 ≥ 0.65?<br/>매도 ≥ 0.55?"}
+    Q -- 아니오 --> W["관망 / 보유"]
+    Q -- 예 --> Z["plan_order → place_order"]
+    Z --> H{{"리스크 Hook"}}
+    H -- 통과 --> O["시장가 주문"]
+    H -- 위반 --> X["차단 + 기록"]
 ```
 
-</details>
+매도를 먼저 하고 매수는 그다음입니다. 손절·익절·최대 보유일은 감시 루프가 5분마다 확인하고, 걸리면 매도 전용 에이전트 실행을 띄웁니다. 그 주문도 감시 루프가 직접 내지 않고 에이전트와 Hook을 거칩니다.
 
-| 역할 | 담당 | 하는 일 |
+### 역할
+
+| 역할 | 실행 | 하는 일 |
 |---|---|---|
-| 총괄 Agent | Claude Code | 매수·매도 근거 비교, 종목별 확신도 산출, 최종 결정 |
-| 시장 국면 | 서브에이전트 | 지수 추세·변동성으로 국면 분류, 전체 투자 비중 상한 조정 |
-| 매수 / 매도 | 서브에이전트 | 후보·보유 종목별 강세 / 약세 근거 제시, 서로 반박 |
-| 주간 회고 | 서브에이전트 | 거래 기록 분석, 판단 기준값 조정 제안 (리스크 한도는 수정 불가) |
-| 데이터 준비 | Python | KRX 전 종목 시세·수급, 네이버 뉴스 수집, 지표 계산 → LLM에는 숫자 요약만 전달 |
-| 수량 계산 | Python | 확신도를 주문 수량으로 변환, 손절·익절·최대 보유일 설정 |
-| 리스크 검증 | Claude Code Hook | 주문 직전 현금·종목 한도·국면 상한·일일 손실 강제 확인, 위반 시 차단 |
-| 장중 감시 | Python | 5분마다 손절·익절·최대 보유일 확인, 걸리면 매도 전용 실행 |
-| 주문 실행 | 자체 MCP 서버 | 키움 REST API를 직접 호출 (키움 공식 MCP 대신 직접 구현, 대회 운영진 확인) |
+| 총괄 | Claude Code (헤드리스) | 양측 근거 비교, 확신도 산출, MCP 도구로 주문 |
+| 국면 | 서브에이전트 | 지수 추세(5·20일선)와 변동성 → 상승 / 횡보 / 하락 |
+| 매수 측 / 매도 측 | 서브에이전트 | 브리핑 숫자와 뉴스만으로 종목별 찬반 토론 |
+| 주간 회고 | 서브에이전트 | 기록 분석 → 주간 보고서 초안 + 기준값 조정 제안 |
+| 데이터 준비 | Python | KRX 시세·수급, 네이버 뉴스 → GS Quant 지표 → 후보 선별 |
+| 장중 재선별 | Python | 키움 거래대금·외국인·기관 순매수 순위 → 새 후보, 장중 RSI |
+| 수량 계산 | Python | 확신도 → 목표 비중 → 수량. 손절 −7%, 익절 +15%, 최대 10거래일 |
+| 리스크 검증 | Claude Code Hook | 모든 `place_order` 직전 실행, 하나라도 위반하면 차단 |
+| 기준값 조정 | Python + 에이전트 | 매일 에이전트가 0~2개 제안, 고정 규칙 안의 것만 코드가 반영 |
+| 장중 감시 | Python | 5분마다 손절·익절·보유일 → 매도 전용 실행 |
+| 주문 | 자체 MCP 서버 | 키움 REST API 직접 호출 (운영진 확인 완료) |
 
-### 하루 일정 (평일)
+### 리스크 한도 (대회 내내 고정)
+
+| 규칙 | 한도 |
+|---|---|
+| 종목당 비중 | 총자산의 20% 이하 |
+| 보유 종목 수 | 20개 이하 |
+| 현금 | 총자산의 10% 이상 |
+| 주문 1회 | 1,000만 원 이하 · 실행 1번에 8건 이하 |
+| 추격 매수 | 오늘 +10% 이상 오른 종목은 매수 금지 |
+| 일일 손실 | −3%면 그날 신규 매수 중단 |
+| 누적 손실 | −10%면 주식 비중 상한 절반 |
+| 주식 비중 | 국면 상한 × 주차 계수 |
+
+에이전트는 이 값을 못 바꿉니다. 자동 조정도 판단 기준값만, [`agent/config/tuning.json`](agent/config/tuning.json)에 정한 범위 안에서만 바꿉니다.
+
+### 스스로 조정하되, 울타리 안에서
+
+```mermaid
+flowchart LR
+    J[("매매·판단 기록")] --> T["평일 16:00<br/>조정 에이전트"]
+    T -->|"0–2개 제안 + 근거"| C{"tuning.py<br/>허용 키? 범위? 변경 폭? 쿨다운?"}
+    C -- 통과 --> P["params.json<br/>자동 커밋"]
+    C -- 거절 --> J
+    P --> D["다음 날 판단"]
+    J --> W["토요일 10:00<br/>주간 회고"] --> R["보고서 초안<br/>+ 조정 제안"]
+```
+
+반영·거절 내역은 모두 대시보드 Feedback Loop에 공개됩니다.
+
+## 하루 일정 (평일)
 
 | 시각 | 실행 | LLM |
 |---|---|---|
-| 08:30 | 데이터 준비 — 계좌 조회, 시세·수급·뉴스 → 후보 종목 | ❌ |
-| 09:05 – 15:20 | 장중 감시 — 5분마다 손절·익절 확인 | 걸릴 때만 |
-| **09:30 · 11:00 · 14:30** | 정기 판단 — 국면 → 매수 ⇄ 매도 토론 → 총괄 결정 → 주문 | ⭕ |
-| 15:45 | 마감 기록 — 오늘 자산을 대시보드에 반영 | ❌ |
-| 토 10:00 | 주간 회고 · 보고서 초안 | ⭕ |
+| 08:30 | `prep` — 계좌, KRX 데이터, 뉴스 → 브리핑 | – |
+| 08:55 → | 잔고 스냅샷 1분마다 → Supabase | – |
+| 09:05 – 15:20 | `monitor` — 5분마다 손절·익절·보유일 | 걸릴 때만 |
+| **09:30, 10:30 … 14:30** | `decide` — 재선별 → 토론 → **주문** | ✓ |
+| 10:00, 11:00 … 15:00 | `view` — 같은 토론, **주문 없음**, 대시보드 갱신 | ✓ |
+| 15:45 | `close` — 오늘 자산 기록 | – |
+| 16:00 | `tune` — 기준값 자동 조정 | ✓ |
+| 토 10:00 | `review` — 주간 회고, 보고서 초안 | ✓ |
+| 상시 | `sync` — 1분마다 push된 코드 반영, 바뀐 루프 재시작 | – |
 
-### 설계 원칙
+에이전트는 계속 켜 두는 데스크톱에서 돌고, 수정은 노트북에서 합니다. push하면 1분 안에 데스크톱에 반영됩니다.
 
-- **숫자는 코드가 계산** — 지표를 미리 계산해 요약만 넘겨 토큰을 줄이고 환각을 막음
-- **후보를 먼저 좁힘** — 지표 조건으로 추린 종목만 토론
-- **규칙은 에이전트 밖에서 강제** — Hook이 주문 도구 실행 직전에 검사하므로 에이전트가 우회할 수 없음
-- **스스로 개선, 단 한도는 고정** — 회고 에이전트가 기준값을 조정하되 리스크 한도는 건드리지 않음
-- **사람 개입 없음** — 정해진 시각에 헤드리스로 실행, 개별 주문을 사람이 승인·거절하지 않음
+## 대시보드
 
-## Trading Dashboard
-
-에이전트가 무엇을 근거로 샀고 팔았는지를 한 화면에서 보여주는 대시보드입니다.
+에이전트가 무엇을, 왜 샀는지 한 페이지에서 봅니다.
 
 <table>
 <tr>
-<td width="62%"><img src="assets/timeline-tooltip.jpg" alt="AI 매매 타임라인"></td>
+<td width="62%"><img src="assets/timeline-tooltip.jpg" alt="매매 타임라인"></td>
 <td><img src="assets/mobile.jpg" alt="모바일 화면"></td>
 </tr>
 <tr>
-<td align="center"><sub>매매 타임라인 — 점을 누르면 매수 측·매도 측 근거와 최종 결정</sub></td>
-<td align="center"><sub>모바일</sub></td>
+<td align="center"><sub>PC — 거래를 누르면 매수 측·매도 측 근거와 최종 판단</sub></td>
+<td align="center"><sub>폰 — 홍보용 요약 화면</sub></td>
 </tr>
 </table>
 
-| 기능 | 설명 |
+| 영역 | 내용 |
 |---|---|
-| 실시간 수익률 | 장중 1분마다 키움 잔고를 조회해 Supabase로 전송, 화면은 30초마다 갱신 |
-| 실시간 KOSPI | 네이버 증권 1분봉을 Supabase가 1분마다 수집 (지연 없음), 전일 흐름·거래량·RSI와 함께 표시 |
-| 누적 수익률 vs KOSPI | 시장 국면(상승·횡보·하락) 띠와 함께 표시 |
-| 확신도 vs 수익 | 에이전트의 확신도가 실제 수익과 맞았는지 검증 |
-| 매매 타임라인 | 거래마다 에이전트 토론 내용을 툴팁으로 확인 |
-| 리스크 차단 기록 | Hook이 막은 주문과 위반 규칙 |
-| 토큰 사용량 | 일별 사용량과 실행 실패 |
-| 익명 응원 게시판 | 로그인 없이 댓글 (도배 방지 포함) |
+| **상단** | 대회 시작 이후 누적 수익률 vs KOSPI, 현재 자산, 에이전트 작동 여부 |
+| **실시간 판단** | 최근 판단의 국면·비중 상한, 종목별 행동과 확신도 (근거는 마우스 오버·탭) |
+| **실시간 KOSPI** | 1분봉 vs 전일 종가, 거래량, RSI, 투자자별 순매수 |
+| **Portfolio** | 국면 상한 대비 보유 비중, 종목별 손익 (수수료·세금 반영 전/후) |
+| **Trading Detail** | 이번 주, 최대 낙폭, 승률, 리스크 한도 사용률, 일별 초과수익, 수익률 캘린더 |
+| **Agent Black Box** | 토론 근거가 붙은 매매 타임라인, Hook 차단, 확신도 vs 수익, 토큰 사용량, Feedback Loop, 전체 판단 로그 |
+| **응원하기** | 로그인 없는 익명 게시판 (도배 방지) |
 
-**보안 설계** — 키움 App Key는 잔고를 조회하는 PC의 `.env`에만 존재하고, 웹에는 숫자만 공개됩니다. 스냅샷 업로드는 비밀문구를 확인하는 DB 함수로만 가능하며, 방문자는 읽기만 할 수 있습니다.
+폰에서는 상단, 매수·매도 판단, 보유 손익, KOSPI, 캘린더만 보입니다. 전체 화면은 PC에서 봅니다.
+
+**데이터 경로** — 키움 키는 데스크톱의 `.env`에만 있습니다. 웹은 두 곳에서 읽습니다. 하나는 에이전트가 push하는 `docs/data/` JSON이고, 다른 하나는 Supabase입니다. Supabase에는 잔고 스냅샷이 비밀문구를 확인하는 RPC로만 들어오고, KOSPI 1분봉(네이버)과 투자자별 수급(다음)은 `pg_cron`이 직접 수집합니다. 방문자는 읽기만 할 수 있습니다.
 
 ## 기술 스택
 
-| 영역 | 사용 |
+| 분야 | 도구 |
 |---|---|
-| 에이전트 | Claude Code (서브에이전트 `.claude/agents/`, Hooks, 헤드리스 실행) |
-| 데이터 | 키움 REST API, KRX 정보데이터시스템 (pykrx), 네이버 뉴스 검색 (NAVER API HUB), 네이버 증권 1분봉 |
-| 지표 | GS Quant (이동평균·변동성·RSI·최대 낙폭) |
-| 대시보드 | HTML · CSS · D3.js (빌드 도구 없음), GitHub Pages |
-| 실시간 · 게시판 | Supabase (PostgreSQL, RLS, RPC, pg_cron) |
-| 자동 실행 | Windows 작업 스케줄러 |
+| 에이전트 | Claude Code — 헤드리스 실행, 서브에이전트, PreToolUse Hook, MCP 서버, 도구 허용 목록 (Bash / Edit / Write 금지) |
+| 증권사 | 키움 REST API — 잔고 `kt00018`, 현재가 `ka10001`, 순위 `ka10032` · `ka10065`, 주문 `kt10000` · `kt10001` |
+| 시장 데이터 | KRX 정보데이터시스템 (pykrx), NAVER API HUB 뉴스 검색, Supabase로 받는 네이버·다음 금융 |
+| 지표 | GS Quant — 이동평균, RSI, 변동성, 최대 낙폭 |
+| 대시보드 | HTML · CSS · D3.js v7, 빌드 없음, GitHub Pages |
+| 실시간 | Supabase — PostgreSQL, RLS, RPC, `pg_cron`, `pg_net` |
+| 스케줄 | Windows 작업 스케줄러 |
 
-## 폴더 구조
+## 저장소 구조
 
 ```
 hynix-298f/
-├── docs/                 # GitHub Pages로 배포되는 대시보드
-│   ├── index.html
-│   ├── config.js         # Supabase 공개 키 (anon)
-│   └── data/             # 에이전트 로그 (거래·판단 근거·회고 등)
-├── live/                 # 키움 잔고 → Supabase 스냅샷 스크립트
-│   ├── snapshot.py
-│   ├── .env.example
-│   └── run_snapshot.bat
-├── supabase/
-│   ├── schema.sql        # 게시판 · 스냅샷 테이블, 접근 권한
-│   └── kospi.sql         # 실시간 KOSPI 1분 수집 (pg_cron)
-├── agent/                # 트레이딩 에이전트 (자세한 구조는 agent/README.md)
-│   ├── CLAUDE.md         # 총괄 Agent 지침
-│   ├── .claude/          # 서브에이전트 · 리스크 Hook · 도구 권한
-│   ├── config/           # 리스크 한도(고정) · 판단 기준값
-│   ├── src/              # 데이터 준비 · 수량 계산 · 리스크 · 주문 MCP · 장중 감시
-│   └── run.py            # 실행 진입점 (작업 스케줄러가 호출)
-├── reports/              # 사전 계획서 · 주간 보고서 · 최종 보고서
-└── assets/               # README 이미지
+├── agent/                  # 트레이딩 에이전트 → agent/README.md
+│   ├── CLAUDE.md           # 총괄 에이전트 지시문
+│   ├── .claude/            # 서브에이전트 (regime · bull · bear · review), 리스크 Hook, 권한
+│   ├── config/             # risk_limits.json (고정) · params.json (자동 조정) · tuning.json (조정 규칙)
+│   ├── src/                # data_prep · intraday · sizing · risk · broker · mcp_server
+│   │                       # monitor · tuning · logger · sync
+│   ├── tests/test_rules.py
+│   ├── run.py              # prep / decide / exit / close / tune / review / monitor / sync
+│   └── setup_tasks.ps1     # 작업 스케줄러 등록
+├── docs/                   # 대시보드 (GitHub Pages)
+│   ├── index.html          # 단일 파일
+│   ├── config.js           # Supabase 주소 + 공개 anon 키
+│   └── data/               # 실행마다 에이전트가 쓰는 JSON
+├── live/snapshot.py        # 키움 잔고 + KOSPI → Supabase, 1분마다
+├── supabase/               # schema.sql · kospi.sql · flow.sql · ewy.sql
+├── reports/                # 계획서, 주간·최종 보고서
+└── assets/                 # README 이미지
 ```
 
-## 직접 실행하기
+## 실행
 
-배포와 실시간 연결 방법은 [`docs/DEPLOY.md`](docs/DEPLOY.md)에 단계별로 정리했습니다.
+배포 가이드: [`docs/DEPLOY.md`](docs/DEPLOY.md) · 에이전트 설치: [`agent/README.md`](agent/README.md)
 
 ```bash
-# 대시보드 미리 보기
-cd docs && python -m http.server 8000   # → http://localhost:8000
+# 대시보드 로컬 미리보기
+cd docs && python -m http.server 8000          # → http://localhost:8000
 
-# 잔고 조회 확인 (키움 키 설정 후)
+# 잔고 연결 확인 (live/.env 작성 후)
 cd live && python snapshot.py --dry
 
-# 에이전트 한 번 실행 (agent/.env 의 MODE=mock 이면 가상 계좌)
-cd agent && .venv\Scripts\python run.py prep && .venv\Scripts\python run.py decide
+# 에이전트 1회 실행 (agent/.env 의 MODE=mock 이면 가상 계좌)
+cd agent
+.venv\Scripts\python tests\test_rules.py
+.venv\Scripts\python run.py prep
+.venv\Scripts\python run.py decide
 ```
 
 ## 결과와 회고
 
-> 🏁 대회 종료 후 업데이트 예정 (2026.11.29)
+> 🏁 대회 종료 후 (2026.11.29)
 >
-> - 최종 수익률 · KOSPI 대비 성과 · 회전율
-> - 확신도와 실제 수익의 관계
-> - 리스크 Hook이 막은 주문이 결과에 준 영향
-> - 잘된 판단 / 틀린 판단 사례
-> - 다시 만든다면 바꿀 점
+> - 최종 수익률, KOSPI 대비 초과수익, 회전율
+> - 확신도가 실제 수익을 예측했는가
+> - 리스크 Hook이 막은 주문과 그 영향
+> - 자동 조정이 무엇을 바꿨고, 도움이 됐는가
+> - 다시 한다면 바꿀 것
 
-## 참고한 오픈소스
+## 참고한 저장소
 
-| 저장소 | 참고한 점 |
+| 저장소 | 가져온 것 |
 |---|---|
-| [BijectiveLabs/bitra](https://github.com/BijectiveLabs/bitra) | "에이전트는 제안하고 시스템이 결정한다" 구조, 판단·거절 기록 방식 |
-| [fidetolabs/qanat](https://github.com/fidetolabs/qanat) | 공시 기반 종목 선별을 에이전트가 MCP로 조회하는 구조 |
-| [Kiwoom-Securities/Kiwoom-REST-API](https://github.com/Kiwoom-Securities/Kiwoom-REST-API) | 시세·잔고 조회, 모의 주문 |
+| [BijectiveLabs/bitra](https://github.com/BijectiveLabs/bitra) | "에이전트는 제안하고 시스템이 결정한다", 판단·거절 기록 |
+| [fidetolabs/qanat](https://github.com/fidetolabs/qanat) | MCP로 종목 스크리닝을 조회하는 에이전트 |
+| [Kiwoom-Securities/Kiwoom-REST-API](https://github.com/Kiwoom-Securities/Kiwoom-REST-API) | 시세·잔고·순위·모의 주문 |
 | [goldmansachs/gs-quant](https://github.com/goldmansachs/gs-quant) | 지표 계산 |
 
 ## 팀
@@ -228,5 +269,5 @@ cd agent && .venv\Scripts\python run.py prep && .venv\Scripts\python run.py deci
 ---
 
 <div align="center">
-<sub>Designed by <a href="https://www.instagram.com/sl2eee/">S.Lee</a> · 본 프로젝트는 모의투자 대회용이며 투자 권유가 아닙니다.</sub>
+<sub>Designed by S.Lee &amp; M.Park · 모의투자 대회용으로 만든 프로젝트입니다. 투자 권유가 아닙니다.</sub>
 </div>

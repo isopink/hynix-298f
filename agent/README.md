@@ -8,8 +8,9 @@ The trading agent. **The agent proposes, the rules decide**: Claude Code reads t
 |---|---|---|
 | 08:30 | `prep` — account + data prep → `work/briefing.json` | no |
 | 09:05–15:20 | `monitor` — every 5 min, checks stop / take-profit / max holding days; launches an `exit` run when hit | only when triggered |
-| 09:30–15:00, every 30 min | `decide` — regime → bull ⇄ bear debate → lead agent decides → orders on the half hour (09:30–14:30), judgment-only refresh on the hour | yes |
+| 09:30–15:00, every 30 min | `decide` — intraday re-screen → regime → bull ⇄ bear debate → lead agent decides → orders on the half hour (09:30–14:30); on the hour it runs as `view` (same debate, no orders) | yes |
 | 15:45 | `close` — record today's equity, publish to dashboard | no |
+| 16:00 | `tune` — agent proposes 0–2 threshold changes; `src/tuning.py` applies only those inside `config/tuning.json` and commits | yes |
 | Sat 10:00 | `review` — weekly review + report draft | yes |
 | always (from logon) | `sync` — every minute, pulls pushed code, checks it, restarts `monitor` / the balance loop if their code changed | no |
 
@@ -27,15 +28,18 @@ agent/
 ├── .mcp.json                 # kiwoom MCP server
 ├── config/
 │   ├── risk_limits.json      # Fixed for the whole competition; enforced by the hook
-│   └── params.json           # Decision thresholds; weekly review may suggest changes
+│   ├── params.json           # Decision thresholds, conviction adjustments, screen settings (auto-tuned daily)
+│   └── tuning.json           # What the tuner may change: keys, ranges, step size, cooldown
 ├── src/
 │   ├── data_prep.py          # pykrx + Naver news → GS Quant indicators → candidate screen
+│   ├── intraday.py           # Before each decision: Kiwoom rank APIs → re-screen candidates, intraday RSI
 │   ├── sizing.py             # Conviction → quantity, stop, take-profit, max holding days
 │   ├── risk.py               # Risk rules (shared by the hook and the MCP server)
 │   ├── broker.py             # mock account / Kiwoom REST
 │   ├── mcp_server.py         # Tools the agent can call
 │   ├── logger.py             # work/journal.jsonl → docs/data/*.json
 │   ├── monitor.py            # Intraday stop / take-profit watcher
+│   ├── tuning.py             # Validates and applies the daily threshold changes
 │   └── sync.py               # Pulls pushed code every minute and restarts the loops that changed
 ├── tests/test_rules.py
 ├── run.py · run.bat          # Entry point for each run
