@@ -1036,7 +1036,7 @@ details.log summary { border-radius: 16px; }
     const dc = DECISION, head = $('dec-head'), list = $('dec-list');
     if (!dc.time || (BRIEF.created && BRIEF.created > dc.time)) return briefingCard();
     $('dec-title').textContent = '실시간 판단';
-    $('dec-asof').textContent = md(toD(dc.time)) + ' ' + dc.time.slice(11, 16) + ' 판단';
+    $('dec-asof').textContent = md(toD(dc.time)) + ' ' + dc.time.slice(11, 16) + (dc.mode === 'view' ? ' 판단 갱신 · 주문 없음' + (dc.next_trade ? ' · 다음 매매 ' + dc.next_trade : '') : ' 판단');
     list.classList.remove('empty');
     head.innerHTML = `<span class="rg">국면 <b style="color:${regC(dc.regime)}">${esc(dc.regime)}</b></span>`
       + `<span>주식 비중 상한 <b>${Math.round(+dc.cap * 100)}%</b></span>`
@@ -1060,7 +1060,7 @@ details.log summary { border-radius: 16px; }
     const items = dc.items || [];
     if (!items.length) return none(list, '이번 판단에서 검토한 종목이 없어요.');
     list.innerHTML = items.map((d, i) => {
-      const cls = d.action === '매수' ? 'buy' : d.action === '매도' ? 'sell' : '', c = +d.confidence || 0;
+      const cls = d.action.startsWith('매수') ? 'buy' : d.action.startsWith('매도') ? 'sell' : '', c = +d.confidence || 0;   // '매수 예정'(판단 갱신)도 같은 색
       const act = d.qty ? `${d.action} ${won(d.qty)}주` : d.action;
       return `<div class="dec-row" data-i="${i}"><span class="nm">${esc(d.name)}</span><span class="act ${cls}">${esc(act)}</span>`
         + `<span class="cf"><i><b class="${c >= .6 ? 'hi' : ''}" style="width:${Math.round(c * 100)}%"></b></i>${c.toFixed(2)}</span>`
@@ -1396,8 +1396,8 @@ details.log summary { border-radius: 16px; }
   }
   tk.addEventListener('click', () => fab.click());
 
-  // ---------- 매매 시각: 평일 09:15~15:15 15분마다 정기 판단 (agent/setup_tasks.ps1 · params.schedule 과 맞출 것). 다음 차례에 빨간 점 ----------
-  const SCHED = { from: '09:15', to: '15:15', every: 15 };
+  // ---------- 매매 시각: 평일 09:30~14:30 매시 매매, 판단은 15분마다 (agent/setup_tasks.ps1 · params.schedule 과 맞출 것). 다음 매매에 빨간 점 ----------
+  const SCHED = { from: '09:30', to: '14:30', every: 60, judge: 15 };
   const sched = document.getElementById('sched');
   function drawSched() {
     const k = new Date(Date.now() + 9 * 3600e3), day = k.getUTCDay();   // 한국 시각
@@ -1408,8 +1408,9 @@ details.log summary { border-radius: 16px; }
     sched.textContent = '';
     const add = (html, live) => { const c = document.createElement('span'); c.className = 'chip' + (live ? ' live' : ''); c.innerHTML = html; sched.appendChild(c); return c; };
     add('평일 매매');
-    add(`<b>${SCHED.from}~${SCHED.to}</b> ${SCHED.every}분마다`);
-    if (next) add(`다음 <b>${next}</b>`, true);
+    add(`<b>${SCHED.from}~${SCHED.to}</b> 매시`);
+    add(`판단 <b>${SCHED.judge}분</b>마다`);
+    if (next) add(`다음 매매 <b>${next}</b>`, true);
   }
   drawSched(); setInterval(drawSched, 60e3);
 })();
