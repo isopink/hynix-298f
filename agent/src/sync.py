@@ -192,6 +192,13 @@ def once():
         log("  판단·손절 실행 중이라 끝나길 기다림")
         time.sleep(20)
 
+    # 지난 rebase 가 충돌난 채로 남은 파일이 있으면 autostash 가 안 돼 계속 실패함 (11-03 docs/index.html).
+    # 이 PC는 코드를 고치지 않으므로 docs/data 밖의 충돌 파일은 마지막 커밋 상태로 되돌림
+    for f in git("diff", "--name-only", "--diff-filter=U").stdout.split():
+        if not f.startswith("docs/data/"):
+            git("checkout", "HEAD", "--", f)
+            log(f"  충돌 상태로 남은 {f} 를 마지막 커밋 상태로 되돌림")
+
     changed = git("diff", "--name-only", base, remote).stdout.split()
     # PC가 커밋하는 건 에이전트 기록(docs/data·params.json)뿐이라, 같은 줄이 겹치면 PC 쪽(방금 만든 기록)을 씀
     r = git("rebase", "--autostash", "-X", "theirs", "-q", remote)
@@ -202,7 +209,8 @@ def once():
             log("  에이전트 커밋과 겹쳐 다음 회차에 다시")
             return False
         log("rebase 실패 (충돌 등) · 반영 안 함: " + " / ".join(msg[-3:]))
-        save(ok=False, error=f"{remote[:7]} rebase 실패 · " + (msg[-1] if msg else "?")[:200], rejected=remote)
+        # 검사 실패와 달리 rejected 로 막지 않음: 작업 트리 문제는 고쳐지면 다음 회차에 바로 반영되게
+        save(ok=False, error=f"{remote[:7]} rebase 실패 · " + (msg[-1] if msg else "?")[:200])
         return False
     if rev("HEAD") != remote:
         git("push", "-q")
