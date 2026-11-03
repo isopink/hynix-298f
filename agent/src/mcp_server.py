@@ -222,7 +222,7 @@ def place_order(code: str, side: str, qty: int, confidence: float, bull: str, be
 @mcp.tool()
 @quiet
 def record_decision(code: str, action: str, confidence: float, bull: str, bear: str, decision: str) -> dict:
-    """주문하지 않은 판단(보유 / 관망)을 기록합니다. action 은 '보유' | '관망'."""
+    """주문하지 않은 판단을 기록합니다. action 은 '보유' | '관망'. 판단 갱신(매매 없는 회차)에서는 '매수 예정' | '매도 예정' 도 씀."""
     C.journal("decision", code=code, name=name_of(code), action=action, confidence=confidence,
               bull=bull, bear=bear, decision=decision)
     return {"ok": True}

@@ -105,8 +105,8 @@ def context():
         "equity_by_day": [{"date": e["date"], "total": e["total"], "regime": e.get("regime"), "cap": e.get("cap")} for e in equity],
         "regime_by_day": regimes,
         "trades": trade_results(rows, acc),
-        "decisions": dict(Counter(x["action"] for x in rows if x["kind"] == "decision")),
-        "decision_confidence": [x["confidence"] for x in rows if x["kind"] == "decision" and x["action"] == "관망"],
+        "decisions": dict(Counter(x["action"] for x in rows if x["kind"] == "decision" and x.get("mode") != "view")),   # 판단 갱신(주문 없음) 회차는 뺌
+        "decision_confidence": [x["confidence"] for x in rows if x["kind"] == "decision" and x["action"] == "관망" and x.get("mode") != "view"],
         "blocks_by_rule": dict(Counter(x["rule"] for x in rows if x["kind"] == "block")),
         "costs_note": "키움 모의서버 실제 비용은 매수·매도 수수료 각 0.35%, 매도 세금 0.2% (왕복 약 0.9%). 보유 중 return_after_costs 는 이를 반영한 값",
         "last_weekly_review": {"time": review["time"], "suggestion": review["suggestion"]} if review else None,

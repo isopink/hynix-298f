@@ -36,6 +36,7 @@ TOOLS_DENY = ["Bash", "PowerShell", "Edit", "Write", "NotebookEdit", "WebFetch"]
 
 PROMPTS = {
     "decide": "정기 판단 실행입니다 ({time}). CLAUDE.md 의 'A. 정기 판단' 순서대로 진행하세요.",
+    "view": "판단 갱신 실행입니다 ({time}). 이번 회차는 매매하지 않습니다 (다음 매매 {next_trade}). CLAUDE.md 의 'A-2. 판단 갱신' 순서대로 진행하세요.",
     "exit": "손절·익절 실행입니다 ({time}). 대상 종목: {codes}. 감시 사유: {why}. CLAUDE.md 의 'B. 손절·익절 실행' 순서대로 진행하세요.",
     "review": "주간 회고 실행입니다 ({time}). 대회 {week}주차, 기간 {period}. CLAUDE.md 의 'C. 주간 회고' 순서대로 진행하세요.",
     "tune": "기준값 조정 실행입니다 ({time}). 대회 {week}주차. CLAUDE.md 의 'D. 기준값 조정' 순서대로 진행하세요.",
@@ -217,8 +218,10 @@ def main():
             py("intraday.py")   # 장중 거래대금·외국인·기관 순매수로 후보 갱신 (실패하면 08:30 후보 유지)
             py("intraday.py", "--rsi")   # 후보·보유 종목 RSI 를 지금 가격으로 다시 계산 (실패하면 전일 RSI)
         p = C.params()
+        if kind == "decide" and not C.trade_slot():   # 판단은 15분마다, 매매는 trade_times(매시) 회차에만
+            kind = "view"
         start = p["competition"]["start"]
-        prompt = PROMPTS[kind].format(time=C.stamp(), codes=a.codes, why=a.why,
+        prompt = PROMPTS[kind].format(time=C.stamp(), codes=a.codes, why=a.why, next_trade=C.next_trade_time() or "내일",
                                       week=C.competition_week(p=p), period=f"{start} 이후 이번 주")
         claude(kind, prompt, dry)
         publish(f"Agent {kind} {C.stamp()}")

@@ -91,7 +91,7 @@ def read_jsonl(path):
 
 def journal(kind, **fields):
     """kind: regime | decision | fill | block | review"""
-    row = {"kind": kind, "time": stamp(), "run": os.environ.get("RUN_ID", ""), **fields}
+    row = {"kind": kind, "time": stamp(), "run": os.environ.get("RUN_ID", ""), "mode": os.environ.get("RUN_MODE", ""), **fields}
     append_jsonl(JOURNAL, row)
     return row
 
@@ -181,6 +181,24 @@ def conf_boost(code, side, conf, p=None, briefing=None, regime=None):
                 add += mb["add"]
                 notes.append(f"{regime} 국면 매수 +{mb['add']:.2f}")
     return round(min(1.0, conf + add), 3), (" · ".join(notes) or None)
+
+
+def _slot(t=None):
+    """지금을 15분 단위로 내린 'HH:MM' (작업 스케줄러가 몇 초 늦게 시작해도 같은 회차로)."""
+    t = t or now()
+    return f"{t.hour:02d}:{t.minute // 15 * 15:02d}"
+
+
+def trade_slot(t=None, p=None):
+    """이번 정기 판단 회차가 주문까지 하는 회차인지 (params.schedule.trade_times). 없으면 모든 회차가 매매."""
+    times = (p or params())["schedule"].get("trade_times")
+    return not times or _slot(t) in times
+
+
+def next_trade_time(t=None, p=None):
+    times = (p or params())["schedule"].get("trade_times") or []
+    s = _slot(t)
+    return next((t for t in times if t > s), None)
 
 
 def latest_regime():

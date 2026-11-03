@@ -158,8 +158,9 @@ def decision(rows, nm):
     for r in run:   # Hook 에 막힌 주문은 차단 사유를 붙임
         if r["kind"] == "block" and r["code"] in items and "blocked" not in items[r["code"]]:
             items[r["code"]]["blocked"] = f'{r["rule"]}: {r["detail"]}'
-    order = {"매수": 0, "매도": 1}
+    order = {"매수": 0, "매수 예정": 0, "매도": 1, "매도 예정": 1}
     return {"time": reg["time"], "regime": reg["regime"], "cap": reg["cap"], "reason": reg.get("reason", ""),
+            "mode": "view" if reg.get("mode") == "view" else "trade", "next_trade": C.next_trade_time(),
             "items": sorted(items.values(), key=lambda x: (order.get(x["action"], 2), -float(x["confidence"] or 0)))}
 
 

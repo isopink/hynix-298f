@@ -4,7 +4,7 @@
 import os
 import sys
 import tempfile
-from datetime import date
+from datetime import date, datetime
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src"))
 import common as C  # noqa: E402
@@ -147,6 +147,24 @@ def test_market_boost_and_live_rsi():
         assert "확신도" not in rules({"code": "MID", "side": "매수", "qty": 1, "confidence": 0.56}, acc(), 100_000, regime="하락")
     finally:
         os.remove(C.BRIEFING)
+
+
+def test_view_run_blocks_orders():
+    os.environ["RUN_MODE"] = "view"   # 판단 갱신 회차: 매수·매도 모두 막힘
+    try:
+        a = acc(cash=40_000_000, holdings=[pos("A", 10, 100_000)])
+        assert "실행 종류" in rules({"code": "005930", "side": "매수", "qty": 1, "confidence": 0.9}, acc(), 100_000)
+        assert "실행 종류" in rules({"code": "A", "side": "매도", "qty": 10, "confidence": 0.9}, a, 100_000)
+    finally:
+        os.environ.pop("RUN_MODE", None)
+
+
+def test_trade_slot():
+    p = {"schedule": {"trade_times": ["09:30", "10:30"]}}
+    t = lambda h, m: datetime(2026, 11, 3, h, m, 7, tzinfo=C.KST)  # noqa: E731
+    assert C.trade_slot(t(9, 31), p) and not C.trade_slot(t(9, 45), p) and not C.trade_slot(t(9, 15), p)
+    assert C.next_trade_time(t(9, 45), p) == "10:30" and C.next_trade_time(t(10, 30), p) is None
+    assert C.trade_slot(t(9, 45), {"schedule": {}})   # trade_times 가 없으면 모든 회차가 매매
 
 
 def test_intraday_screen():

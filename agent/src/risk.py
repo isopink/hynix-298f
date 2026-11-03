@@ -42,6 +42,8 @@ def check(order, account, price, p=None, r=None):
         bad.append(("주문 횟수", f"한 번 실행에 최대 {r['max_orders_per_run']}건"))
 
     run_mode = os.environ.get("RUN_MODE", "decide")
+    if run_mode == "view":
+        bad.append(("실행 종류", "판단 갱신 회차(매매 없음)라 주문하지 않음"))
     if side == "매수":
         if run_mode == "exit":
             bad.append(("실행 종류", "손절·익절 실행에서는 매수 금지"))
