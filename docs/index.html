@@ -188,7 +188,9 @@ details.log[open] > summary::after { content: "−"; }
 .cal .cell .top { display: flex; justify-content: space-between; gap: 6px; font-size: 11px; color: var(--muted); }
 .cal .cell .k { color: rgba(255,255,255,.62); font-variant-numeric: tabular-nums; }
 .cal .cell .v { font-size: 14px; font-weight: 500; color: var(--ink); text-align: right; }
-.cal .cell.today { border-color: rgba(255,90,74,.7); }
+.cal .cell.has { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: inset 0 1px 0 rgba(255,255,255,.06); }
+.cal .cell .v.up { color: var(--red-hi); } .cal .cell .v.down { color: var(--blue); }
+.cal .cell.today { border-color: rgba(255,90,74,.7) !important; }
 .cal .cell.has { cursor: default; }
 @media (max-width: 640px) { .cal { grid-template-columns: 30px repeat(5, minmax(0, 1fr)); gap: 4px; } .cal .cell { min-height: 48px; padding: 6px; } .cal .cell .v { font-size: 12px; } .cal .cell .k, .cal-sub { display: none; } }
 .fb-body { padding: 4px 20px 18px; }
@@ -1147,9 +1149,11 @@ details.log summary { border-radius: 16px; }
         const dl = document.createElement('span'); dl.textContent = md(dt); top.appendChild(dl);
         if (!v) continue;
         const kl = document.createElement('span'); kl.className = 'k'; kl.textContent = 'K ' + pct(v.kday); top.appendChild(kl);
-        const a = .14 + .62 * Math.min(1, Math.abs(v.day) / mx);
-        c.style.background = v.day >= 0 ? `rgba(218,41,28,${a})` : `rgba(74,163,212,${a})`;
-        const vl = document.createElement('span'); vl.className = 'v'; vl.textContent = pct(v.day); c.appendChild(vl);
+        // 반투명 유리: 수익률이 클수록 진하게 (빨강 = 수익, 파랑 = 손실), 숫자도 같은 색
+        const a = .08 + .22 * Math.min(1, Math.abs(v.day) / mx), rgb = v.day >= 0 ? '255,90,74' : '74,163,212';
+        c.style.background = `linear-gradient(135deg, rgba(${rgb},${(a + .06).toFixed(3)}), rgba(${rgb},${(a * .35).toFixed(3)}))`;
+        c.style.borderColor = `rgba(${rgb},${(.2 + a).toFixed(3)})`;
+        const vl = document.createElement('span'); vl.className = 'v ' + (v.day >= 0 ? 'up' : 'down'); vl.textContent = pct(v.day); c.appendChild(vl);
         c.addEventListener('pointermove', ev => showTip(ev, `<div class="t">${md(dt)}</div>${row('병신듀오', pct(v.day), v.day >= 0 ? 'up' : 'down')}${row('KOSPI', pct(v.kday))}${row('초과', pct(v.day - v.kday), v.day - v.kday >= 0 ? 'up' : 'down')}`));
         c.addEventListener('pointerdown', ev => showTip(ev, `<div class="t">${md(dt)}</div>${row('병신듀오', pct(v.day), v.day >= 0 ? 'up' : 'down')}${row('KOSPI', pct(v.kday))}`));
         c.addEventListener('pointerleave', hideTip);
