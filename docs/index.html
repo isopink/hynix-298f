@@ -159,24 +159,6 @@ details.log[open] > summary::after { content: "−"; }
 .dec-row .cf i b.hi { background: var(--red-hi); }
 .dec-row .why { min-width: 0; color: var(--body); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .dec-row .why em { font-style: normal; color: var(--red-hi); }
-.deb-nav { display: inline-flex; align-items: center; gap: 6px; }
-.deb-nav button { font: inherit; font-size: 16px; line-height: 1; width: 26px; height: 26px; border-radius: 50%; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.03); color: var(--body); cursor: pointer; }
-.deb-nav button:disabled { opacity: .3; cursor: default; }
-.deb-head { font-size: 12px; color: var(--muted); }
-.deb-head b { color: var(--ink); font-weight: 600; }
-.deb-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; }
-.deb-item { border: 1px solid rgba(255,255,255,.07); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 8px; background: rgba(255,255,255,.02); min-width: 0; }
-.deb-item .dh { display: flex; align-items: center; gap: 10px; font-size: 13px; }
-.deb-item .dh .nm { color: var(--ink); flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.deb-item .dh .cf { font-size: 12px; color: var(--body); white-space: nowrap; }
-.deb-item .act { font-size: 12px; padding: 2px 10px; border-radius: 9999px; border: 1px solid rgba(255,255,255,.14); color: var(--body); white-space: nowrap; }
-.deb-item .act.buy { color: var(--red-hi); border-color: rgba(255,90,74,.45); } .deb-item .act.sell { color: var(--blue); border-color: rgba(74,163,212,.45); }
-.deb-item .say { font-size: 12px; line-height: 1.6; color: var(--body); padding-left: 10px; border-left: 2px solid rgba(255,255,255,.1); }
-.deb-item .say b { display: block; font-size: 11px; font-weight: 500; margin-bottom: 2px; }
-.deb-item .say.bull { border-left-color: rgba(255,90,74,.55); } .deb-item .say.bull b { color: var(--red-hi); }
-.deb-item .say.bear { border-left-color: rgba(74,163,212,.55); } .deb-item .say.bear b { color: var(--blue); }
-.deb-item .say.fin { border-left-color: rgba(255,255,255,.35); color: var(--ink); } .deb-item .say.fin b { color: var(--ink); }
-@media (max-width: 520px) { .deb-list { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 640px) {
   .dec-row { grid-template-columns: minmax(0, 1fr) auto 96px; gap: 6px 10px; }
   .dec-row .why { grid-column: 1 / -1; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
@@ -436,11 +418,6 @@ details.log summary { border-radius: 16px; }
     <summary>Agent Black Box</summary>
     <div class="more-body">
       <div class="grid">
-        <section class="card c12">
-          <div class="hd"><span class="eyebrow">에이전트 토론</span><span class="deb-nav"><button type="button" id="deb-prev" aria-label="이전 판단">‹</button><span class="sub" id="deb-at">—</span><button type="button" id="deb-next" aria-label="다음 판단">›</button></span></div>
-          <div class="deb-head" id="deb-head"></div>
-          <div class="deb-list" id="deb-list"></div>
-        </section>
         <section class="card c8">
           <div class="hd"><span class="eyebrow">매매 타임라인</span></div>
           <div class="chart" id="ch-timeline" style="min-height:200px"></div>
@@ -549,11 +526,10 @@ details.log summary { border-radius: 16px; }
   // data/*.json 이 있으면 그걸 쓰고, 없으면(파일을 더블클릭해 연 경우 등) HTML에 넣어 둔 샘플을 씀
   let SAMPLE = {};
   try { SAMPLE = JSON.parse(document.getElementById('sample-data').textContent); } catch (e) {}
-  Promise.all(['equity', 'holdings', 'trades', 'risk', 'system', 'reviews', 'status', 'decision', 'briefing', 'tuning', 'debates'].map(n =>
+  Promise.all(['equity', 'holdings', 'trades', 'risk', 'system', 'reviews', 'status', 'decision', 'briefing', 'tuning'].map(n =>
     fetch('data/' + n + '.json', { cache: 'no-store' }).then(r => { if (!r.ok) throw 0; return r.json(); }).catch(() => SAMPLE[n] || [])
-  ).concat(Promise.resolve().then(loadKD))).then(([equity, holdings, trades, risk, system, reviews, status, decision, briefing, tuning, debates]) => {
+  ).concat(Promise.resolve().then(loadKD))).then(([equity, holdings, trades, risk, system, reviews, status, decision, briefing, tuning]) => {
     TUNING = Array.isArray(tuning) ? tuning : [];
-    DEBATES = Array.isArray(debates) ? debates : [];
     STATUS = Array.isArray(status) ? {} : status || {};
     DECISION = Array.isArray(decision) ? {} : decision || {};
     BRIEF = Array.isArray(briefing) ? {} : briefing || {};
@@ -571,7 +547,7 @@ details.log summary { border-radius: 16px; }
   });
 
   // ---------- 실시간: live/snapshot.py 가 Supabase 에 올린 잔고 스냅샷을 30초마다 확인 ----------
-  let BASE = null, LIVE_AT = null, PRE = false, STATUS = {}, DECISION = {}, BRIEF = {}, TUNING = [], DEBATES = [];
+  let BASE = null, LIVE_AT = null, PRE = false, STATUS = {}, DECISION = {}, BRIEF = {}, TUNING = [];
   const CFG = window.DASH_CONFIG || {};
   const kstDate = iso => new Date(Date.parse(iso) + 9 * 3600e3).toISOString().slice(0, 10);
   // 날짜별 KOSPI 종가 (supabase/kospi.sql 의 kospi_daily). 잔고 스냅샷·equity.json 에 KOSPI 가 없는 날의 예비값
@@ -684,7 +660,7 @@ details.log summary { border-radius: 16px; }
     if (!D) return;
     hero(); sparkLine($('sp-kospi'), D.eq.map(r => r.kospi), '#bdbdbd'); winDots($('sp-win'));
     sparkBars($('sp-week'), D.eq.slice(-5).map(r => r.day)); drawdown($('sp-dd'));
-    agentStatus(); decisionCard(); debates(); calendar(); donut(); pnl(); scatter(); timeline(); recent(); blocks(); tokens(); review(); limits(); alpha(); drawKospi(); drawFlow();
+    agentStatus(); decisionCard(); calendar(); donut(); pnl(); scatter(); timeline(); recent(); blocks(); tokens(); review(); limits(); alpha(); drawKospi(); drawFlow();
     animated = true;
   }
 
@@ -1063,27 +1039,6 @@ details.log summary { border-radius: 16px; }
     if (!it || !it.time || !BRIEF.created || BRIEF.created.slice(0, 10) !== (DECISION.time || '').slice(0, 10)) return '';   // 같은 날 판단에만
     return it.kept_prep ? `장중 수급 <b style="color:var(--muted)">${it.error ? '실패' : '통과 0'}</b>` : `장중 수급 <b>${it.passed}종목</b>`;
   }
-  // ---------- 에이전트 토론: docs/data/debates.json (정기 판단마다 매수 측 ⇄ 매도 측 → 총괄 결정, 최신 순) ----------
-  let debI = 0;
-  $('deb-prev').addEventListener('click', () => { debI = Math.min(DEBATES.length - 1, debI + 1); debates(); });
-  $('deb-next').addEventListener('click', () => { debI = Math.max(0, debI - 1); debates(); });
-  function debates() {
-    const list = $('deb-list'), head = $('deb-head');
-    $('deb-prev').disabled = debI >= DEBATES.length - 1; $('deb-next').disabled = debI <= 0;
-    if (!DEBATES.length) { $('deb-at').textContent = '—'; head.innerHTML = ''; return none(list, '정기 판단이 돌면 매수 측 · 매도 측 토론이 쌓여요.'); }
-    const d = DEBATES[debI];
-    $('deb-at').textContent = `${md(toD(d.time))} ${d.time.slice(11, 16)} · ${debI + 1} / ${DEBATES.length}`;
-    head.innerHTML = `국면 <b style="color:${regC(d.regime)}">${esc(d.regime)}</b> · 상한 <b>${Math.round(+d.cap * 100)}%</b> · ${d.mode === 'view' ? '판단 갱신 (주문 없음)' : '매매 회차'}`;
-    list.classList.remove('empty');
-    list.innerHTML = d.items.map(x => {
-      const cls = x.action.startsWith('매수') ? 'buy' : x.action.startsWith('매도') ? 'sell' : '';
-      return `<div class="deb-item"><div class="dh"><span class="nm">${esc(x.name)}</span>`
-        + `<span class="act ${cls}">${esc(x.qty ? x.action + ' ' + won(x.qty) + '주' : x.action)}</span><span class="cf">확신도 ${(+x.confidence).toFixed(2)}</span></div>`
-        + `<div class="say bull"><b>매수 측</b>${esc(x.bull)}</div><div class="say bear"><b>매도 측</b>${esc(x.bear)}</div>`
-        + `<div class="say fin"><b>총괄 결정</b>${esc(x.decision)}${x.blocked ? `<br><span class="up">Hook 차단</span> ${esc(x.blocked)}` : ''}</div></div>`;
-    }).join('');
-  }
-
   function decisionCard() {
     const dc = DECISION, head = $('dec-head'), list = $('dec-list');
     if (!dc.time || (BRIEF.created && BRIEF.created > dc.time)) return briefingCard();
