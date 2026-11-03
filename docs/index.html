@@ -48,6 +48,9 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
 .chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 9999px; font-size: 12px; color: var(--body); white-space: nowrap; }
 .chip b { color: var(--ink); font-weight: 500; }
 .chip.live::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--red); }
+.sched { margin-top: 14px; }
+.sched .chip.live { border-color: rgba(218,41,28,.5); color: var(--ink); }
+@media (max-width: 640px) { .sched { justify-content: center; } }
 
 .grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 16px; }
 .card { background: var(--card); border: 1px solid var(--line); padding: 20px; display: flex; flex-direction: column; gap: 12px; min-width: 0; position: relative; }
@@ -302,6 +305,7 @@ details.log summary { border-radius: 16px; }
     <div class="brand">
       <div>
         <h1>병신 듀오 <span class="tagline">합산손실 4억, 미래가 없다</span></h1>
+        <div class="chips sched" id="sched" aria-label="평일 정기 매매 판단 시각"></div>
       </div>
     </div>
     <div class="cheer">
@@ -1364,6 +1368,25 @@ details.log summary { border-radius: 16px; }
     requestAnimationFrame(() => tkTrack.style.setProperty('--dur', Math.max(15, tkTrack.scrollWidth / 2 / 45) + 's'));   // 초당 45px
   }
   tk.addEventListener('click', () => fab.click());
+
+  // ---------- 매매 시각: 평일 정기 판단 3번 (agent/setup_tasks.ps1 과 맞출 것). 다음 차례에 빨간 점 ----------
+  const SCHED = ['09:30', '11:00', '14:30'];
+  const sched = document.getElementById('sched');
+  function drawSched() {
+    const k = new Date(Date.now() + 9 * 3600e3), day = k.getUTCDay();   // 한국 시각
+    const now = String(k.getUTCHours()).padStart(2, '0') + ':' + String(k.getUTCMinutes()).padStart(2, '0');
+    const next = day >= 1 && day <= 5 ? SCHED.find(t => t > now) : null;
+    sched.textContent = '';
+    const lb = document.createElement('span'); lb.className = 'chip'; lb.textContent = '평일 매매';
+    sched.appendChild(lb);
+    for (const t of SCHED) {
+      const c = document.createElement('span'); c.className = 'chip' + (t === next ? ' live' : '');
+      const b = document.createElement('b'); b.textContent = t; c.appendChild(b);
+      if (t === next) c.title = '다음 정기 판단';
+      sched.appendChild(c);
+    }
+  }
+  drawSched(); setInterval(drawSched, 60e3);
 })();
 </script>
 </body>
