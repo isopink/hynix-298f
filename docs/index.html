@@ -352,7 +352,7 @@ details.log summary { border-radius: 16px; }
           </div>
           <div class="kv"><span class="eyebrow">시작 원금</span><span>50,000,000원</span></div>
           <div class="kv"><span class="eyebrow">현재 자산</span><span id="total">—</span></div>
-          <div class="kv"><span class="eyebrow">KOSPI 누적 수익률</span><span id="excess">—</span></div>
+          <div class="kv"><span class="eyebrow">누적 KOSPI 수익률</span><span id="excess">—</span></div>
         </div>
         <div class="hero-chart" style="display:flex;flex-direction:column;gap:10px;min-width:0">
           <div class="chart" id="ch-hero" style="min-height:210px"></div>
@@ -651,7 +651,7 @@ details.log summary { border-radius: 16px; }
   function fillText() {
     $('ret').textContent = pct(D.ret); $('ret').classList.toggle('neg', D.ret < 0); document.querySelector('.hero-card').classList.toggle('neg', D.ret < 0);   // 손실은 파랑 (국내 증시 관례)
     $('total').textContent = won(D.last.total) + '원';
-    $('excess').textContent = pct(D.kret); tone($('excess'), D.kret);   // KOSPI 누적 수익률 (대회 시작 1분봉 kospiStart 기준)
+    $('excess').textContent = pct(D.kret); tone($('excess'), D.kret);   // 누적 KOSPI 수익률 (대회 시작 1분봉 kospiStart 기준)
     $('k-week').textContent = pct(D.week); tone($('k-week'), D.week);
     $('k-mdd').textContent = pct(D.mdd); tone($('k-mdd'), D.mdd);
     $('k-kospi').textContent = pct(D.kret); tone($('k-kospi'), D.kret);
