@@ -1,5 +1,5 @@
 {
-  "_note": "판단 기준값. 화·수·목 장 마감 뒤 조정 실행(run.py tune)이 config/tuning.json 규칙 안에서 자동으로 바꾸고 커밋함. 변경 이력은 docs/data/tuning.json.",
+  "_note": "판단 기준값. 평일 장 마감 뒤 조정 실행(run.py tune)이 config/tuning.json 규칙 안에서 자동으로 바꾸고 커밋함. 변경 이력은 docs/data/tuning.json.",
 
   "competition": {
     "start": "2026-11-02",
@@ -8,8 +8,8 @@
   },
 
   "decision": {
-    "buy_min_confidence": 0.60,
-    "sell_min_confidence": 0.60,
+    "buy_min_confidence": 0.65,
+    "sell_min_confidence": 0.55,
     "full_size_confidence": 0.80,
     "min_weight": 0.10,
     "stop_loss_pct": -0.07,
@@ -26,7 +26,7 @@
 
   "regime_cap": { "상승": 0.90, "횡보": 0.70, "하락": 0.50 },
 
-  "week_factor": { "1": 0.5, "2": 1.0, "3": 1.0, "4": 1.0 },
+  "week_factor": { "1": 0.75, "2": 1.0, "3": 1.0, "4": 1.0 },
 
   "min_trade_guard": {
     "_note": "이 주차가 시작될 때 누적 거래가 min_count 미만이면 매수 확신도 기준을 relax 만큼 낮춤",

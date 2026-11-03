@@ -18,8 +18,10 @@ import risk  # noqa: E402
 import sizing  # noqa: E402
 
 P, R = C.params(), C.risk_limits()
-P["competition"]["start"] = C.today().isoformat()   # 1주차 → 비중 계수 0.5
+P["competition"]["start"] = C.today().isoformat()   # 1주차
 P["week_factor"]["1"] = 1.0                         # 계산을 단순하게 하려고 1.0 으로
+P["decision"]["buy_min_confidence"] = 0.60          # 기준값은 자동 조정으로 바뀌므로 테스트에선 고정
+P["decision"]["sell_min_confidence"] = 0.60
 
 
 def acc(cash=50_000_000, holdings=()):
