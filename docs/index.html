@@ -60,6 +60,9 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
 .c12 { grid-column: span 12; } .c6 { grid-column: span 6; } .c8 { grid-column: span 8; } .c7 { grid-column: span 7; } .c5 { grid-column: span 5; } .c4 { grid-column: span 4; } .c3 { grid-column: span 3; }
 .up { color: var(--red-hi); } .down { color: var(--blue); }
 .chart { width: 100%; flex: 1; min-height: 56px; }
+.seg { display: inline-flex; border: 1px solid rgba(255,255,255,.09); border-radius: 9999px; padding: 2px; background: rgba(255,255,255,.03); }
+.seg button { font: inherit; font-size: 11px; color: var(--muted); background: none; border: 0; border-radius: 9999px; padding: 3px 10px; cursor: pointer; white-space: nowrap; }
+.seg button[aria-pressed="true"] { background: rgba(255,255,255,.1); color: var(--ink); }
 .chart.empty { min-height: 0 !important; flex: 0 0 auto; }
 .chart svg { display: block; width: 100%; overflow: visible; }
 
@@ -378,7 +381,7 @@ details.log summary { border-radius: 16px; }
           <div class="chart" id="ch-donut" style="min-height:240px"></div>
         </section>
         <section class="card c6">
-          <div class="hd"><span class="eyebrow">보유 종목 손익</span><span class="sub">수수료·세금 반영</span></div>
+          <div class="hd"><span class="eyebrow">보유 종목 손익</span><span class="seg" id="pnl-mode" role="group" aria-label="손익 기준"><button type="button" data-m="gross" aria-pressed="true">순수</button><button type="button" data-m="net" aria-pressed="false">수수료·세금 반영</button></span></div>
           <div class="chart" id="ch-pnl" style="min-height:240px"></div>
         </section>
       </div>
@@ -1139,25 +1142,41 @@ details.log summary { border-radius: 16px; }
     }
   }
 
+  // 순수 = 평단 대비 가격 변동, 수수료·세금 반영 = 키움 수익률(prft_rt: 매수 수수료와 매도 시 낼 수수료·세금까지 뺀 값, 약 0.9%p 낮음)
+  let pnlMode = 'gross';
+  document.querySelectorAll('#pnl-mode button').forEach(b => b.addEventListener('click', () => {
+    pnlMode = b.dataset.m;
+    document.querySelectorAll('#pnl-mode button').forEach(x => x.setAttribute('aria-pressed', x === b));
+    pnl();
+  }));
+
   function pnl() {
     if (!D.hold.length) return none($('ch-pnl'), '보유 종목이 없어요.');
-    const el = $('ch-pnl'), rows = [...D.hold].sort((a, b) => b.pnl - a.pnl), bh = 22, gap = 22;
-    const H = Math.max(220, rows.length * (bh + gap) + 20), { svg, W } = svgIn(el, H);
+    const gross = r => r.price / r.avg_price - 1, cost = r => r.avg_price * r.qty;
+    const val = r => pnlMode === 'gross' ? gross(r) : r.pnl;
+    const sumCost = d3.sum(D.hold, cost);
+    const total = { name: '합계', total: true,
+      v: pnlMode === 'gross' ? d3.sum(D.hold, r => r.price * r.qty) / sumCost - 1 : d3.sum(D.hold, r => cost(r) * r.pnl) / sumCost };
+    const rows = [...D.hold].map(r => ({ ...r, v: val(r) })).sort((a, b) => b.v - a.v).concat(D.hold.length > 1 ? [total] : []), bh = 22, gap = 22;
+    const H = Math.max(220, rows.length * (bh + gap) + 20), { svg, W } = svgIn($('ch-pnl'), H);
     const lw = d3.max(rows, r => textW(svg, r.name, 12)) + 12, vw = 54;
-    const mx = d3.max(rows, r => Math.abs(r.pnl)) || .01;
+    const mx = d3.max(rows, r => Math.abs(r.v)) || .01;
     const x = d3.scaleLinear([-mx, mx], [lw, W - vw]);
     svg.append('line').attr('x1', x(0)).attr('x2', x(0)).attr('y1', 4).attr('y2', H - 4).attr('stroke', '#3a3a3a');
     const top = (H - rows.length * (bh + gap) + gap) / 2;
     rows.forEach((r, i) => {
-      const yy = top + i * (bh + gap);
-      svg.append('text').attr('x', 0).attr('y', yy + bh / 2).attr('dy', '.32em').attr('font-size', 12).attr('fill', C.body).text(r.name);
-      svg.append('rect').attr('x', Math.min(x(0), x(r.pnl))).attr('y', yy + 3).attr('height', bh - 6).attr('rx', 2).attr('width', Math.max(2, Math.abs(x(r.pnl) - x(0)))).attr('fill', r.pnl >= 0 ? GR.redH : GR.blueH);
-      svg.append('text').attr('x', W).attr('y', yy + bh / 2).attr('dy', '.32em').attr('text-anchor', 'end').attr('font-size', 12).attr('font-weight', 500).attr('fill', r.pnl >= 0 ? C.redHi : C.blue).text(pct(r.pnl));
+      const yy = top + i * (bh + gap), up = r.v >= 0;
+      if (r.total) svg.append('line').attr('x1', 0).attr('x2', W).attr('y1', yy - gap / 2).attr('y2', yy - gap / 2).attr('stroke', 'rgba(255,255,255,.08)');
+      svg.append('text').attr('x', 0).attr('y', yy + bh / 2).attr('dy', '.32em').attr('font-size', 12).attr('fill', r.total ? C.ink : C.body).attr('font-weight', r.total ? 500 : null).text(r.name);
+      svg.append('rect').attr('x', Math.min(x(0), x(r.v))).attr('y', yy + 3).attr('height', bh - 6).attr('rx', 2).attr('width', Math.max(2, Math.abs(x(r.v) - x(0)))).attr('fill', up ? GR.redH : GR.blueH).attr('opacity', r.total ? .7 : null);
+      svg.append('text').attr('x', W).attr('y', yy + bh / 2).attr('dy', '.32em').attr('text-anchor', 'end').attr('font-size', 12).attr('font-weight', 500).attr('fill', up ? C.redHi : C.blue).text(pct(r.v));
+      const tip = r.total
+        ? `<div class="t">보유 합계</div>${row('매입금액', won(Math.round(sumCost)))}${row('순수', pct(d3.sum(D.hold, h => h.price * h.qty) / sumCost - 1))}${row('수수료·세금 반영', pct(d3.sum(D.hold, h => cost(h) * h.pnl) / sumCost))}`
+        : `<div class="t">${esc(r.name)}</div>${row('평단', won(+r.avg_price))}${row('현재가', won(+r.price))}`
+          + `${row('순수', pct(gross(r)), gross(r) >= 0 ? 'up' : 'down')}${row('수수료·세금 반영', pct(r.pnl), r.pnl >= 0 ? 'up' : 'down')}`
+          + `${row('손익 (반영)', (r.pnl > 0 ? '+' : r.pnl < 0 ? '−' : '') + won(Math.abs(Math.round(cost(r) * r.pnl))) + '원', r.pnl >= 0 ? 'up' : 'down')}${r.stop ? row('손절 / 익절', won(+r.stop) + ' / ' + won(+r.take)) : ''}${r.held_days != null ? row('보유일', r.held_days + ' / ' + r.max_days + '일') : ''}`;
       svg.append('rect').attr('x', 0).attr('y', yy - 4).attr('width', W).attr('height', bh + 8).attr('fill', 'transparent')
-        .on('pointermove pointerdown', ev => showTip(ev, `<div class="t">${esc(r.name)}</div>${row('평단', won(+r.avg_price))}${row('현재가', won(+r.price))}`
-          // 키움 수익률(prft_rt)은 매수 수수료와 매도 시 낼 수수료·세금까지 뺀 값이라 가격 변동보다 약 0.9%p 낮음. 총자산도 같은 기준
-          + `${row('가격 변동', pct(r.price / r.avg_price - 1), r.price >= r.avg_price ? 'up' : 'down')}${row('수수료·세금 반영', pct(r.pnl), r.pnl >= 0 ? 'up' : 'down')}`
-          + `${row('손익', (r.pnl > 0 ? '+' : r.pnl < 0 ? '−' : '') + won(Math.abs(Math.round(r.avg_price * r.qty * r.pnl))) + '원', r.pnl >= 0 ? 'up' : 'down')}${r.stop ? row('손절 / 익절', won(+r.stop) + ' / ' + won(+r.take)) : ''}${r.held_days != null ? row('보유일', r.held_days + ' / ' + r.max_days + '일') : ''}`)).on('pointerleave', hideTip);
+        .on('pointermove pointerdown', ev => showTip(ev, tip)).on('pointerleave', hideTip);
     });
   }
 
