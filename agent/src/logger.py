@@ -141,27 +141,50 @@ def briefing():
             "candidates": [{k: c.get(k) for k in keep + live if k in keep or c.get(k) is not None} for c in b.get("candidates", [])]}
 
 
-def decision(rows, nm):
-    """가장 최근 정기 판단 1회분 (국면 + 종목별 결정). 대시보드 상단 '현재 판단' 카드용."""
-    reg = next((r for r in reversed(rows) if r["kind"] == "regime"), None)
-    if not reg:
-        return {}
-    run = [r for r in rows if r.get("run") == reg["run"]]
+def run_items(run, nm):
+    """한 실행의 종목별 결정 (체결이 있으면 결정보다 우선, Hook 차단 사유 붙임)."""
     items = {}
     for r in run:
         if r["kind"] == "decision":
             items[r["code"]] = {"code": r["code"], "name": nm.get(r["code"], r.get("name")), "action": r["action"],
                                 "confidence": r["confidence"], "bull": r["bull"], "bear": r["bear"], "decision": r["decision"]}
-        elif r["kind"] == "fill":   # 체결이 있으면 결정보다 우선
+        elif r["kind"] == "fill":
             items[r["code"]] = {"code": r["code"], "name": r["name"], "action": r["side"], "qty": r["qty"], "price": r["price"],
                                 "confidence": r["confidence"], "bull": r["bull"], "bear": r["bear"], "decision": r["decision"]}
-    for r in run:   # Hook 에 막힌 주문은 차단 사유를 붙임
+    for r in run:
         if r["kind"] == "block" and r["code"] in items and "blocked" not in items[r["code"]]:
             items[r["code"]]["blocked"] = f'{r["rule"]}: {r["detail"]}'
     order = {"매수": 0, "매수 예정": 0, "매도": 1, "매도 예정": 1}
+    return sorted(items.values(), key=lambda x: (order.get(x["action"], 2), -float(x["confidence"] or 0)))
+
+
+def decision(rows, nm):
+    """가장 최근 정기 판단 1회분 (국면 + 종목별 결정). 대시보드 상단 '현재 판단' 카드용."""
+    reg = next((r for r in reversed(rows) if r["kind"] == "regime"), None)
+    if not reg:
+        return {}
     return {"time": reg["time"], "regime": reg["regime"], "cap": reg["cap"], "reason": reg.get("reason", ""),
             "mode": "view" if reg.get("mode") == "view" else "trade", "next_trade": C.next_trade_time(),
-            "items": sorted(items.values(), key=lambda x: (order.get(x["action"], 2), -float(x["confidence"] or 0)))}
+            "items": run_items([r for r in rows if r.get("run") == reg["run"]], nm)}
+
+
+def debates(rows, nm, keep=120):
+    """정기 판단마다 매수 측(bull) ⇄ 매도 측(bear) 토론과 총괄 결정. 최신 순, keep 회차까지. Agent Black Box 의 토론 기록용."""
+    regs = {}
+    for r in rows:
+        if r["kind"] == "regime" and r.get("run"):
+            regs[r["run"]] = r   # 같은 실행에 여러 번이면 마지막 국면
+    by_run = {}
+    for r in rows:
+        if r.get("run") in regs and r["kind"] in ("decision", "fill", "block"):
+            by_run.setdefault(r["run"], []).append(r)
+    out_ = []
+    for run, reg in sorted(regs.items(), key=lambda x: x[1]["time"], reverse=True)[:keep]:
+        items = run_items(by_run.get(run, []), nm)
+        if items:
+            out_.append({"time": reg["time"], "regime": reg["regime"], "cap": reg["cap"], "reason": reg.get("reason", ""),
+                         "mode": "view" if reg.get("mode") == "view" else "trade", "items": items})
+    return out_
 
 
 def equity_close():
@@ -190,6 +213,7 @@ def write_all(note=""):
     out("reviews", reviews(rows))
     out("tuning", tuning(rows))
     out("decision", decision(rows, nm))
+    out("debates", debates(rows, nm))
     out("briefing", briefing())
     out("status", status(note))
 
