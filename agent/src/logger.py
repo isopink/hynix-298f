@@ -134,9 +134,11 @@ def briefing():
         return {}
     m = b.get("market", {})
     keep = ("code", "name", "close", "ret5", "ret20", "rsi14", "vol20", "foreign_net", "inst_net", "score", "news")
+    live = ("price", "chg", "activity", "foreign_today", "inst_today")   # 장중 재선별(intraday.py)이 채운 값
     return {"created": b["created"], "asof": b["asof"], "universe": b.get("universe_size"), "source": b.get("source"),
             "market": {k: m.get(k) for k in ("source", "close", "ma20", "ma60", "ret5", "ret20", "rsi14", "rule_hint", "closes")},
-            "candidates": [{k: c.get(k) for k in keep} for c in b.get("candidates", [])]}
+            "intraday": b.get("intraday"),
+            "candidates": [{k: c.get(k) for k in keep + live if k in keep or c.get(k) is not None} for c in b.get("candidates", [])]}
 
 
 def decision(rows, nm):

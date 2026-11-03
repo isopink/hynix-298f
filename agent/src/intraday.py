@@ -228,3 +228,7 @@ if __name__ == "__main__":
         run(dry="--dry" in sys.argv)
     except Exception as e:  # noqa: BLE001  실패해도 판단은 08:30 후보로 진행
         print(f"장중 후보 갱신 실패, 08:30 후보를 그대로 씀: {type(e).__name__}: {e}")
+        b = C.read_json(C.BRIEFING)
+        if b:   # 실패도 briefing 에 남겨 대시보드·커밋에서 보이게
+            b["intraday"] = {"time": C.now().strftime("%H:%M"), "kept_prep": True, "error": f"{type(e).__name__}: {str(e)[:120]}"}
+            C.write_json(C.BRIEFING, b)

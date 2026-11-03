@@ -77,7 +77,7 @@ reports/    보고서 PDF, drafts/ = 주간 회고 에이전트가 쓴 초안
 - `reviews.json`: `[{week, period, suggestion, status "반영"|"검토 중"}]`
 - `status.json`: `{last_run "YYYY-MM-DD HH:MM", last_ok, next_run "YYYY-MM-DD HH:MM", runs_today, failures_today, note}` — 에이전트가 실행할 때마다 덮어씀. next_run을 30분 넘기면 대시보드에 "지연" 표시 (시각은 화면에 안 보이고 상태 판정에만 씀)
 - `decision.json`: `{time, regime, cap, reason, items: [{code, name, action "매수"|"매도"|"관망"|"보유", qty?, price?, confidence, bull, bear, decision, blocked?}]}` — 가장 최근 정기 판단 1회분. 대시보드 상단 "현재 판단" 카드
-- `briefing.json`: `{created, asof, universe, source, market {close, ma20, ma60, ret5, ret20, rsi14, rule_hint}, candidates [{code, name, close, ret5, ret20, rsi14, vol20, foreign_net, inst_net, score, news}]}` — 08:30 데이터 준비 직후 push. 오늘 판단이 아직 없으면 같은 카드에 "오늘의 시장 자료"로 표시
+- `briefing.json`: `{created, asof, universe, source, market {close, ma20, ma60, ret5, ret20, rsi14, rule_hint}, intraday {time, pool, passed, kept_prep, error?}, candidates [{code, name, close, ret5, ret20, rsi14, vol20, foreign_net, inst_net, score, news, (장중 재선별 시) price, chg, activity, foreign_today, inst_today}]}` — 08:30 데이터 준비 직후 push, 정기 판단마다 장중 수급 재선별 결과로 다시 push. 오늘 판단이 아직 없으면 같은 카드에 "오늘의 시장 자료"로 표시
 - KOSPI 수익률 기준은 `docs/config.js`의 `kospiStart` (대회 시작일 11-02 09:00 1분봉 5,645.52)
 
 ## 디자인 규칙 (대시보드)

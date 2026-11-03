@@ -1022,6 +1022,12 @@ details.log summary { border-radius: 16px; }
       el.addEventListener('click', ev => showTip(ev, html));
     });
   }
+  // 장중 수급 재선별 표시: 성공이면 '장중 수급 반영', 아니면 '이전 후보' (briefing.json 의 intraday)
+  function liveTag() {
+    const it = BRIEF.intraday;
+    if (!it || !it.time || !BRIEF.created || BRIEF.created.slice(0, 10) !== (DECISION.time || '').slice(0, 10)) return '';   // 같은 날 판단에만
+    return it.kept_prep ? `장중 수급 <b style="color:var(--muted)">${it.error ? '실패' : '통과 0'}</b>` : `장중 수급 <b>${it.passed}종목</b>`;
+  }
   function decisionCard() {
     const dc = DECISION, head = $('dec-head'), list = $('dec-list');
     if (!dc.time || (BRIEF.created && BRIEF.created > dc.time)) return briefingCard();
@@ -1030,8 +1036,19 @@ details.log summary { border-radius: 16px; }
     list.classList.remove('empty');
     head.innerHTML = `<span>국면 <b style="color:${regC(dc.regime)}">${esc(dc.regime)}</b></span>`
       + `<span>주식 비중 상한 <b>${Math.round(+dc.cap * 100)}%</b></span>`
+      + (liveTag() ? `<span class="it">${liveTag()}</span>` : '')
       + `<span class="why">${esc(dc.reason)}</span>`;
     head.querySelector('.why').title = dc.reason || '';
+    const itEl = head.querySelector('.it'), it = BRIEF.intraday;
+    if (itEl) {   // 장중 수급 재선별 결과: 마우스 오버·터치로 상세
+      const html = `<div class="t">장중 수급 재선별 · ${esc(it.time)}</div>`
+        + (it.error ? `<p class="tp">순위 API 실패, 이전 후보로 판단</p><p class="tp">${esc(it.error)}</p>`
+          : it.kept_prep ? `<p class="tp">순위 상위 ${it.pool || 0}종목 중 조건 통과 0개, 이전 후보로 판단</p>`
+          : row('순위 상위 풀', (it.pool || 0) + '종목') + row('조건 통과', (it.passed || 0) + '종목'));
+      itEl.addEventListener('mousemove', ev => showTip(ev, html));
+      itEl.addEventListener('mouseleave', hideTip);
+      itEl.addEventListener('click', ev => showTip(ev, html));
+    }
     const items = dc.items || [];
     if (!items.length) return none(list, '이번 판단에서 검토한 종목이 없어요.');
     list.innerHTML = items.map((d, i) => {
@@ -1042,8 +1059,10 @@ details.log summary { border-radius: 16px; }
         + `<span class="why">${d.blocked ? '<em>차단</em> · ' : ''}${esc(d.decision)}</span></div>`;
     }).join('');
     list.querySelectorAll('.dec-row').forEach(el => {
-      const d = items[+el.dataset.i];
+      const d = items[+el.dataset.i], lc = (BRIEF.candidates || []).find(c => c.code === d.code && c.activity !== undefined);
       const html = `<div class="t">${esc(d.name)} · ${esc(d.action)} · 확신도 ${(+d.confidence).toFixed(2)}</div>`
+        + (lc ? row('오늘 외국인 · 기관', eok(lc.foreign_today) + ' · ' + eok(lc.inst_today))
+          + (lc.activity != null ? row('거래 활발도', '평소의 ' + lc.activity.toFixed(1) + '배') : '') : '')
         + `<p class="tp"><span class="up">매수 측</span> ${esc(d.bull)}</p><p class="tp"><span class="down">매도 측</span> ${esc(d.bear)}</p>`
         + `<p class="tp"><b>결정</b> ${esc(d.decision)}</p>` + (d.blocked ? `<p class="tp"><span class="up">Hook 차단</span> ${esc(d.blocked)}</p>` : '');
       el.addEventListener('mousemove', ev => showTip(ev, html));
