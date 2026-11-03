@@ -10,7 +10,7 @@
     "weight": 0.0557,
     "stop": 59272,
     "take": 73293,
-    "held_days": 1,
+    "held_days": 2,
     "max_days": 10
   },
   {
@@ -24,7 +24,7 @@
     "weight": 0.0611,
     "stop": 179397,
     "take": 221835,
-    "held_days": 0,
+    "held_days": 1,
     "max_days": 10
   },
   {
@@ -38,7 +38,7 @@
     "weight": 0.0565,
     "stop": 186930,
     "take": 231150,
-    "held_days": 0,
+    "held_days": 1,
     "max_days": 10
   },
   {
@@ -52,7 +52,7 @@
     "weight": 0.0584,
     "stop": 1343850,
     "take": 1661750,
-    "held_days": 0,
+    "held_days": 1,
     "max_days": 10
   }
 ]
