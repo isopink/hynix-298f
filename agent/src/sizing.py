@@ -45,18 +45,22 @@ def plan_buy(code, conf, price, account, p=None, r=None, regime=None):
         "1회 주문 한도": r["max_order_amount"],
         "종목 한도": total * r["max_weight_per_stock"] - held_value,
     }
+    hv = C.high_vol(code, p)
+    if hv:   # 변동성이 큰 종목은 작게만
+        limits["고변동 종목 한도"] = total * hv["weight_cap"] - held_value
     binding = min(limits, key=limits.get)
     budget = max(0.0, limits[binding])
     unit = price * (1 + p["costs"]["fee_rate"])
     qty = math.floor(budget / unit) if price > 0 else 0
-    d = p["decision"]
+    stop_pct, take_pct, max_days = C.exit_levels(code, p)
     return {
         "side": "매수", "code": code, "qty": qty, "price": price, "amount": qty * price,
         "confidence": conf, "target_weight": round(w, 4), "regime": regime, "equity_cap": cap,
         "limited_by": binding if qty else (binding if w else "확신도 기준 미달"),
-        "stop": round(price * (1 + d["stop_loss_pct"])),
-        "take": round(price * (1 + d["take_profit_pct"])),
-        "max_days": d["max_hold_days"],
+        "stop": round(price * (1 + stop_pct)),
+        "take": round(price * (1 + take_pct)),
+        "max_days": max_days,
+        "high_vol": bool(hv),
         "buy_threshold": C.buy_threshold(p),
     }
 

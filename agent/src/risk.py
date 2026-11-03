@@ -58,6 +58,9 @@ def check(order, account, price, p=None, r=None):
         pos_after = (held["qty"] if held else 0) * price + amount
         if pos_after > total * r["max_weight_per_stock"] * 1.001:
             bad.append(("종목 한도", f"매수 후 비중 {pos_after / total:.1%} > {r['max_weight_per_stock']:.0%}"))
+        hv = C.high_vol(code, p)
+        if hv and pos_after > total * hv["weight_cap"] * 1.001:
+            bad.append(("고변동 종목 한도", f"매수 후 비중 {pos_after / total:.1%} > 고변동 종목 {hv['weight_cap']:.0%}"))
         if not held and len(account["holdings"]) >= r["max_positions"]:
             bad.append(("보유 종목 수", f"이미 {len(account['holdings'])}종목 (최대 {r['max_positions']})"))
         cash_after = account["cash"] - amount * (1 + p["costs"]["fee_rate"])

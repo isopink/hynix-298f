@@ -234,7 +234,9 @@ def screen(rows, p, login):
     for r in rows:
         if r["limit_up_recent"] or r["trading_value_20d"] < s["min_trading_value"]:
             continue
-        if r["vol20"] > s.get("max_vol20", 9):   # 변동성이 너무 크면 손절 -7%가 소음에도 걸림
+        hv = p.get("high_vol") or {}
+        r["high_vol"] = r["vol20"] > s.get("max_vol20", 9)   # 변동성이 크면 손절 -7%가 소음에도 걸림 → 고변동 몫으로 따로, 작게
+        if r["high_vol"] and not (hv.get("enabled") and r["vol20"] <= hv.get("max_vol20", 0)):
             continue
         if not (r["close"] > r["ma5"] > r["ma20"]):   # 단기 상승 추세 (4주 대회라 11-03부터 20·60일선 대신 5·20일선)
             continue
@@ -254,7 +256,9 @@ def screen(rows, p, login):
     score = score.clip(lower=0)
     df["score"] = (score / score.max()).round(3) if score.max() > 0 else 0.0
     df = df.drop(columns=["trend_gap"]).sort_values("score", ascending=False)
-    return df.head(s["max_candidates"]).to_dict("records")
+    hv_n = (p.get("high_vol") or {}).get("max_candidates", 0)
+    return (df[~df["high_vol"]].head(s["max_candidates"]).to_dict("records")
+            + df[df["high_vol"]].head(hv_n).to_dict("records"))
 
 
 def build():
@@ -332,7 +336,7 @@ def to_text(b):
 
     def row(r):
         ma5 = f"{r['ma5']:,}" if r.get('ma5') else '-'
-        return (f"| {r['code']} | {r['name']} | {r['close']:,} | {ma5} | {r['ma20']:,} | {r['ma60']:,} | {pct(r['ret5'])} | "
+        return (f"| {r['code']} | {r['name']}{' ⚡고변동' if r.get('high_vol') else ''} | {r['close']:,} | {ma5} | {r['ma20']:,} | {r['ma60']:,} | {pct(r['ret5'])} | "
                 f"{pct(r['ret20'])} | {r['rsi14']} | {r['vol20'] * 100:.0f}% | {pct(r['mdd60'])} | "
                 f"{eok(r.get('foreign_net'))} | {eok(r.get('inst_net'))} | {r.get('score', '-')} |")
 

@@ -30,6 +30,16 @@
     "add": 0.05
   },
 
+  "high_vol": {
+    "_note": "고변동 종목 (11-03). 20일 변동성이 screen.max_vol20 을 넘어도 max_vol20 이하면 후보에서 빼지 않고 따로 max_candidates 개까지 넣음. 대신 종목당 비중 weight_cap 이하(코드·Hook 이 강제), 손절·익절은 넓게. 판단은 08:30·장중 브리핑의 vol20 기준",
+    "enabled": true,
+    "max_vol20": 3.0,
+    "max_candidates": 3,
+    "weight_cap": 0.05,
+    "stop_loss_pct": -0.12,
+    "take_profit_pct": 0.20
+  },
+
   "regime_cap": { "상승": 0.90, "횡보": 0.70, "하락": 0.50 },
 
   "week_factor": { "1": 0.75, "2": 1.0, "3": 1.0, "4": 1.0 },

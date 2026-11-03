@@ -93,6 +93,9 @@ def get_briefing() -> str:
         f"- 손절 {p['decision']['stop_loss_pct']:.0%} · 익절 {p['decision']['take_profit_pct']:.0%} · 최대 보유 {p['decision']['max_hold_days']}거래일",
         f"- 누적 체결 {C.fill_count()}건 (대회 최소 {p['competition']['min_trades']}건)",
     ]
+    if (hv := p.get("high_vol")) and hv.get("enabled"):
+        ctx.append(f"- ⚡고변동 종목 (20일 변동성 {p['screen']['max_vol20']:.0%} 초과): 후보에 최대 {hv['max_candidates']}개 따로 포함. "
+                   f"종목당 {hv['weight_cap']:.0%} 이하만 (코드가 강제), 손절 {hv['stop_loss_pct']:.0%} · 익절 {hv['take_profit_pct']:+.0%}")
     if rb := p.get("rsi_boost"):
         buy = [f"{x['name']}({n})" for x in b.get("candidates", []) + b.get("holdings", [])
                for _, n in [C.conf_boost(x["code"], "매수", 0, p, b, regime="")] if n]
@@ -206,8 +209,8 @@ def place_order(code: str, side: str, qty: int, confidence: float, bull: str, be
     if side == "매수":
         d = C.params()["decision"]
         m = meta.get(code) or {"name": name, "entry_date": C.today().isoformat()}
-        m.update(stop=round(res["price"] * (1 + d["stop_loss_pct"])), take=round(res["price"] * (1 + d["take_profit_pct"])),
-                 max_days=d["max_hold_days"])
+        sl, tp, md = C.exit_levels(code)   # 고변동 종목은 손절·익절 폭이 넓음
+        m.update(stop=round(res["price"] * (1 + sl)), take=round(res["price"] * (1 + tp)), max_days=md)
         meta[code] = m
     elif not held:
         meta.pop(code, None)

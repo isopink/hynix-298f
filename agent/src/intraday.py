@@ -110,7 +110,9 @@ def screen(rows, p, r, frac):
             continue
         if x.get("limit_up_recent") or x.get("trading_value_20d", 0) < s["min_trading_value"]:
             continue
-        if x.get("vol20", 0) > s.get("max_vol20", 9):
+        hv = p.get("high_vol") or {}
+        x["high_vol"] = x.get("vol20", 0) > s.get("max_vol20", 9)
+        if x["high_vol"] and not (hv.get("enabled") and x["vol20"] <= hv.get("max_vol20", 0)):
             continue
         if (x.get("chg") or 0) >= lim:              # 어차피 리스크 규칙이 막는 추격 매수
             continue
@@ -142,7 +144,8 @@ def screen(rows, p, r, frac):
         x["score"] = round(sc / top, 3)
         x.pop("trend_gap", None)
     ok.sort(key=lambda x: -x["score"])
-    return ok[: s["max_candidates"]]
+    hv_n = (p.get("high_vol") or {}).get("max_candidates", 0)   # 고변동 종목은 따로 몇 개만 (작게 사는 몫)
+    return [x for x in ok if not x["high_vol"]][: s["max_candidates"]] + [x for x in ok if x["high_vol"]][:hv_n]
 
 
 def run(dry=False):

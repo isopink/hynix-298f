@@ -187,6 +187,33 @@ def test_intraday_screen():
     assert intraday.rank_pct([3, 1, 2, 2]) == [1.0, 0.25, 0.625, 0.625]
 
 
+def test_high_vol_small_and_wide():
+    b = {"candidates": [{"code": "HOT", "vol20": 1.6, "news": []}, {"code": "CALM", "vol20": 0.4, "news": []}], "holdings": []}
+    C.write_json(C.BRIEFING, b)
+    try:
+        assert C.high_vol("HOT", P) and C.high_vol("CALM", P) is None
+        assert C.exit_levels("HOT", P)[:2] == (P["high_vol"]["stop_loss_pct"], P["high_vol"]["take_profit_pct"])
+        C.journal("regime", regime="상승", cap=P["regime_cap"]["상승"])
+        plan = sizing.plan_buy("HOT", 0.95, 10_000, acc(), P, R)
+        assert plan["qty"] * 10_000 <= 50_000_000 * P["high_vol"]["weight_cap"] and plan["limited_by"] == "고변동 종목 한도"
+        assert plan["stop"] == round(10_000 * (1 + P["high_vol"]["stop_loss_pct"]))
+        assert "고변동 종목 한도" in rules({"code": "HOT", "side": "매수", "qty": 300, "confidence": 0.95}, acc(), 10_000)   # 6%
+        assert "고변동 종목 한도" not in rules({"code": "CALM", "side": "매수", "qty": 300, "confidence": 0.95}, acc(), 10_000)
+    finally:
+        os.remove(C.BRIEFING)
+
+
+def test_intraday_keeps_high_vol_separately():
+    import intraday
+    base = {"ma5": 10_000, "ma20": 9_500, "trading_value_20d": 50_000_000_000, "ret5": 0.03, "limit_up_recent": False,
+            "price": 10_500, "chg": 0.02, "value": 30_000_000_000, "foreign_qty": 5_000, "inst_qty": 0}
+    rows = [{**base, "code": f"0000{i}0", "name": f"보통{i}", "vol20": 0.4} for i in range(1, 4)]
+    rows += [{**base, "code": "000910", "name": "고변동", "vol20": 1.8}, {**base, "code": "000920", "name": "너무큼", "vol20": 3.5}]
+    out = intraday.screen([dict(r) for r in rows], P, R, frac=0.5)
+    names = [c["name"] for c in out]
+    assert "고변동" in names and "너무큼" not in names and names[-1] == "고변동"
+
+
 if __name__ == "__main__":
     fails = 0
     for n, f in list(globals().items()):

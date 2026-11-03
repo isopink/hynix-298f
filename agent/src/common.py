@@ -144,6 +144,31 @@ def buy_threshold(p=None):
     return base
 
 
+def briefing_row(code, briefing=None):
+    b = briefing if briefing is not None else (read_json(BRIEFING, {}) or {})
+    return next((r for r in b.get("candidates", []) + b.get("holdings", []) if r.get("code") == code), None)
+
+
+def high_vol(code, p=None, briefing=None):
+    """고변동 종목이면 params.high_vol 설정, 아니면 None. 브리핑의 20일 변동성 > screen.max_vol20 이 기준."""
+    p = p or params()
+    hv = p.get("high_vol")
+    if not hv or not hv.get("enabled"):
+        return None
+    row = briefing_row(code, briefing) or {}
+    v = row.get("vol20")
+    return hv if v is not None and v > p["screen"].get("max_vol20", 9) else None
+
+
+def exit_levels(code, p=None, briefing=None):
+    """(손절 %, 익절 %, 최대 보유일). 고변동 종목은 손절·익절 폭이 넓음."""
+    p = p or params()
+    d, hv = p["decision"], high_vol(code, p, briefing)
+    if hv:
+        return hv["stop_loss_pct"], hv["take_profit_pct"], d["max_hold_days"]
+    return d["stop_loss_pct"], d["take_profit_pct"], d["max_hold_days"]
+
+
 def conf_boost(code, side, conf, p=None, briefing=None, regime=None):
     """확신도 보정 (보정 후 확신도, 보정 설명 또는 None). plan_order·리스크 검사·체결 기록이 같은 함수를 써서 결과가 항상 같음.
     1. RSI(14): 매수 RSI < buy_below(과매도) → + add (악재 뉴스 ⚠ 있으면 제외), 매도 RSI ≥ sell_at(과열) → + add.
