@@ -29,7 +29,7 @@ def check(order, account, price, p=None, r=None):
     p, r = p or C.params(), r or C.risk_limits()
     code, side = order["code"], order["side"]
     qty, conf = int(order.get("qty") or 0), float(order.get("confidence") or 0)
-    conf, _ = C.rsi_boost(code, side, conf, p)   # RSI 과매도(매수)·과열(매도) 보정 (plan_order 와 같은 계산)
+    conf, _ = C.conf_boost(code, side, conf, p)   # RSI 과매도·과열 + 시장 하락 보정 (plan_order 와 같은 계산)
     total = account["total"]
     held = next((h for h in account["holdings"] if h["code"] == code), None)
     bad = []

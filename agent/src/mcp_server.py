@@ -95,13 +95,18 @@ def get_briefing() -> str:
     ]
     if rb := p.get("rsi_boost"):
         buy = [f"{x['name']}({n})" for x in b.get("candidates", []) + b.get("holdings", [])
-               for _, n in [C.rsi_boost(x["code"], "매수", 0, p, b)] if n]
+               for _, n in [C.conf_boost(x["code"], "매수", 0, p, b, regime="")] if n]
         sell = [f"{x['name']}({n})" for x in b.get("holdings", [])
-                for _, n in [C.rsi_boost(x["code"], "매도", 0, p, b)] if n]
+                for _, n in [C.conf_boost(x["code"], "매도", 0, p, b, regime="")] if n]
+        live = any(x.get("rsi14_live") is not None for x in b.get("candidates", []) + b.get("holdings", []))
         ctx.append(f"- RSI 보정 (코드가 적용, 확신도는 보정 전 값으로 넘길 것): 매수 RSI {rb['buy_below']} 미만 · "
-                   f"매도 RSI {rb['sell_at']} 이상이면 확신도 +{rb['add']:.2f}")
+                   f"매도 RSI {rb['sell_at']} 이상이면 확신도 +{rb['add']:.2f}. "
+                   + ("RSI 는 지금 가격을 오늘 종가로 본 장중 값" if live else "RSI 는 전일 종가 기준"))
         ctx.append("  - 매수 보정 대상: " + (", ".join(buy) if buy else "없음"))
         ctx.append("  - 매도 보정 대상(보유): " + (", ".join(sell) if sell else "없음"))
+    if mb := p.get("market_boost"):
+        ctx.append(f"- 시장 하락 보정 (코드가 적용): set_regime 으로 기록한 국면이 {'·'.join(mb['regimes'])} 이면 "
+                   f"신규 매수 확신도 +{mb['add']:.2f} (악재 뉴스 ⚠ 제외). 국면을 이유로 스스로 확신도를 올리거나 내리지 않음")
     b["market"]["live"] = data_prep.live_market(b)   # 장중이면 지금 KOSPI 반영 힌트도 같이
     return data_prep.to_text(b) + "\n".join(ctx) + intraday(b, r)
 
@@ -159,13 +164,13 @@ def plan_order(code: str, side: str, confidence: float) -> dict:
     qi = brk().quote_info(code)
     price = qi["price"]
     if side == "매수":
-        adj, note = C.rsi_boost(code, side, confidence)
+        adj, note = C.conf_boost(code, side, confidence)
         plan = sizing.plan_buy(code, adj, price, acc)
-        plan.update(confidence_raw=confidence, rsi_boost=note)
+        plan.update(confidence_raw=confidence, boost=note)
     elif side == "매도":
-        adj, note = C.rsi_boost(code, side, confidence)
+        adj, note = C.conf_boost(code, side, confidence)
         plan = sizing.plan_sell(code, adj, price, acc)
-        plan.update(confidence_raw=confidence, rsi_boost=note)
+        plan.update(confidence_raw=confidence, boost=note)
     else:
         return {"error": "side 는 매수 / 매도"}
     plan["name"] = name_of(code)
@@ -186,7 +191,7 @@ def place_order(code: str, side: str, qty: int, confidence: float, bull: str, be
              "today_change": qi["change"]}
     bad = risk.check(order, acc, price)
     name = name_of(code)
-    adj, note = C.rsi_boost(code, side, confidence)   # 기록은 보정 후 확신도 (사이징·리스크 검사와 같은 값)
+    adj, note = C.conf_boost(code, side, confidence)   # 기록은 보정 후 확신도 (사이징·리스크 검사와 같은 값)
     if bad:
         for rule, detail in bad:
             C.journal("block", code=code, name=name, side=side, rule=rule, detail=detail, by="server")
@@ -208,7 +213,7 @@ def place_order(code: str, side: str, qty: int, confidence: float, bull: str, be
         meta.pop(code, None)
     C.write_json(C.POSITIONS, meta)
     C.journal("fill", code=code, name=name, side=side, qty=res["qty"], price=res["price"],
-              amount=res["qty"] * res["price"], confidence=adj, confidence_raw=confidence, rsi_boost=note, regime=regime,
+              amount=res["qty"] * res["price"], confidence=adj, confidence_raw=confidence, boost=note, regime=regime,
               bull=bull, bear=bear, decision=decision, order_no=res.get("order_no"),
               filled=res.get("filled", True), rule_exit=rule_exit)
     return {"ok": True, **res, "name": name}

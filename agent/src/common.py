@@ -144,30 +144,43 @@ def buy_threshold(p=None):
     return base
 
 
-def rsi_boost(code, side, conf, p=None, briefing=None):
-    """RSI(14) 보정. 매수: RSI < buy_below(과매도) → 확신도 + add (악재 뉴스 ⚠ 있으면 제외).
-    매도: RSI ≥ sell_at(과열) → 확신도 + add. (보정 후 확신도, 보정 설명 또는 None).
-    plan_order·리스크 검사·체결 기록이 같은 함수를 써서 결과가 항상 같음."""
+def conf_boost(code, side, conf, p=None, briefing=None, regime=None):
+    """확신도 보정 (보정 후 확신도, 보정 설명 또는 None). plan_order·리스크 검사·체결 기록이 같은 함수를 써서 결과가 항상 같음.
+    1. RSI(14): 매수 RSI < buy_below(과매도) → + add (악재 뉴스 ⚠ 있으면 제외), 매도 RSI ≥ sell_at(과열) → + add.
+       장중이면 지금 가격을 오늘 종가로 본 RSI(rsi14_live, intraday.py 가 채움), 없으면 전일 종가 RSI.
+    2. 시장 하락: 오늘 국면이 market_boost.regimes 중 하나면 매수 + add (악재 뉴스 ⚠ 있으면 제외)."""
     p = p or params()
-    cfg = p.get("rsi_boost")
     conf = float(conf or 0)
-    if side not in ("매수", "매도") or not cfg:
+    if side not in ("매수", "매도"):
         return conf, None
     b = briefing if briefing is not None else (read_json(BRIEFING, {}) or {})
-    row = next((r for r in b.get("candidates", []) + b.get("holdings", []) if r.get("code") == code), None)
-    rsi = row.get("rsi14") if row else None
-    if rsi is None:
-        return conf, None
-    up = lambda: round(min(1.0, conf + cfg["add"]), 3)  # noqa: E731
-    if side == "매수":
-        if rsi >= cfg["buy_below"]:
-            return conf, None
-        if any(n.get("risk") for n in row.get("news", [])):
-            return conf, f"RSI {rsi} 과매도지만 악재 뉴스로 보정 안 함"
-        return up(), f"RSI {rsi} < {cfg['buy_below']} 과매도 매수 +{cfg['add']:.2f}"
-    if rsi < cfg["sell_at"]:
-        return conf, None
-    return up(), f"RSI {rsi} ≥ {cfg['sell_at']} 과열 매도 +{cfg['add']:.2f}"
+    row = next((r for r in b.get("candidates", []) + b.get("holdings", []) if r.get("code") == code), None) or {}
+    bad_news = any(n.get("risk") for n in row.get("news", []))
+    add, notes = 0.0, []
+    cfg = p.get("rsi_boost")
+    live = row.get("rsi14_live") is not None
+    rsi = row.get("rsi14_live") if live else row.get("rsi14")
+    tag = "장중 RSI" if live else "RSI"
+    if cfg and rsi is not None:
+        if side == "매수" and rsi < cfg["buy_below"]:
+            if bad_news:
+                notes.append(f"{tag} {rsi} 과매도지만 악재 뉴스로 보정 안 함")
+            else:
+                add += cfg["add"]
+                notes.append(f"{tag} {rsi} < {cfg['buy_below']} 과매도 매수 +{cfg['add']:.2f}")
+        elif side == "매도" and rsi >= cfg["sell_at"]:
+            add += cfg["add"]
+            notes.append(f"{tag} {rsi} ≥ {cfg['sell_at']} 과열 매도 +{cfg['add']:.2f}")
+    mb = p.get("market_boost")
+    if mb and side == "매수":
+        regime = regime if regime is not None else (latest_regime() or {}).get("regime")
+        if regime in mb["regimes"]:
+            if bad_news:
+                notes.append(f"{regime} 국면이지만 악재 뉴스로 보정 안 함")
+            else:
+                add += mb["add"]
+                notes.append(f"{regime} 국면 매수 +{mb['add']:.2f}")
+    return round(min(1.0, conf + add), 3), (" · ".join(notes) or None)
 
 
 def latest_regime():

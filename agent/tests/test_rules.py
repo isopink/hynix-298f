@@ -69,7 +69,7 @@ def test_regime_cap():
 
 
 def test_max_positions():
-    a = acc(cash=40_000_000, holdings=[pos(str(i), 10, 100_000) for i in range(6)])
+    a = acc(cash=40_000_000, holdings=[pos(str(i), 10, 100_000) for i in range(R["max_positions"])])
     assert "보유 종목 수" in rules({"code": "X", "side": "매수", "qty": 1, "confidence": 0.9}, a, 100_000)
 
 
@@ -102,17 +102,17 @@ def test_rsi_boost():
     b = {"candidates": [{"code": "LOW", "rsi14": 30.2, "news": []},
                         {"code": "BAD", "rsi14": 28.0, "news": [{"risk": True}]},
                         {"code": "MID", "rsi14": 35.0, "news": []}], "holdings": []}
-    assert C.rsi_boost("LOW", "매수", 0.57, P, b)[0] == 0.62
-    assert C.rsi_boost("LOW", "매도", 0.57, P, b) == (0.57, None)      # 과매도는 매도에 안 붙음
-    assert C.rsi_boost("MID", "매수", 0.57, P, b) == (0.57, None)      # 35 는 해당 없음 (미만만)
-    assert C.rsi_boost("BAD", "매수", 0.57, P, b)[0] == 0.57           # 악재 뉴스면 제외
-    assert C.rsi_boost("NONE", "매수", 0.57, P, b) == (0.57, None)     # 브리핑에 없는 종목
+    assert C.conf_boost("LOW", "매수", 0.57, P, b)[0] == 0.62
+    assert C.conf_boost("LOW", "매도", 0.57, P, b) == (0.57, None)      # 과매도는 매도에 안 붙음
+    assert C.conf_boost("MID", "매수", 0.57, P, b) == (0.57, None)      # 35 는 해당 없음 (미만만)
+    assert C.conf_boost("BAD", "매수", 0.57, P, b)[0] == 0.57           # 악재 뉴스면 제외
+    assert C.conf_boost("NONE", "매수", 0.57, P, b) == (0.57, None)     # 브리핑에 없는 종목
     # 매도: RSI 70 이상(과열) 보유 종목 +0.05, 69.9 는 해당 없음, 악재 뉴스여도 적용
     h = {"candidates": [], "holdings": [{"code": "HOT", "rsi14": 70.0, "news": [{"risk": True}]},
                                         {"code": "WARM", "rsi14": 69.9, "news": []}]}
-    assert C.rsi_boost("HOT", "매도", 0.57, P, h)[0] == 0.62
-    assert C.rsi_boost("HOT", "매수", 0.57, P, h) == (0.57, None)      # 과열은 매수에 안 붙음
-    assert C.rsi_boost("WARM", "매도", 0.57, P, h) == (0.57, None)
+    assert C.conf_boost("HOT", "매도", 0.57, P, h)[0] == 0.62
+    assert C.conf_boost("HOT", "매수", 0.57, P, h) == (0.57, None)      # 과열은 매수에 안 붙음
+    assert C.conf_boost("WARM", "매도", 0.57, P, h) == (0.57, None)
     C.write_json(C.BRIEFING, h)
     try:
         a = acc(cash=40_000_000, holdings=[pos("HOT", 10, 100_000), pos("WARM", 10, 100_000)])
@@ -125,6 +125,26 @@ def test_rsi_boost():
     try:
         assert "확신도" not in rules({"code": "LOW", "side": "매수", "qty": 10, "confidence": 0.57}, acc(), 100_000)
         assert "확신도" in rules({"code": "MID", "side": "매수", "qty": 10, "confidence": 0.57}, acc(), 100_000)
+    finally:
+        os.remove(C.BRIEFING)
+
+
+def test_market_boost_and_live_rsi():
+    b = {"candidates": [{"code": "LOW", "rsi14": 30.2, "news": []},
+                        {"code": "BAD", "rsi14": 50.0, "news": [{"risk": True}]},
+                        {"code": "UP", "rsi14": 50.0, "rsi14_live": 33.0, "news": []},
+                        {"code": "DOWN", "rsi14": 30.0, "rsi14_live": 40.0, "news": []}], "holdings": []}
+    assert C.conf_boost("MID", "매수", 0.60, P, b, regime="하락")[0] == 0.65      # 하락 국면 매수 +0.05
+    assert C.conf_boost("LOW", "매수", 0.55, P, b, regime="하락")[0] == 0.65      # RSI 과매도와 합산
+    assert C.conf_boost("BAD", "매수", 0.60, P, b, regime="하락")[0] == 0.60      # 악재 뉴스면 제외
+    assert C.conf_boost("MID", "매수", 0.60, P, b, regime="횡보") == (0.60, None)
+    assert C.conf_boost("MID", "매도", 0.60, P, b, regime="하락") == (0.60, None)   # 매도엔 안 붙음
+    assert C.conf_boost("UP", "매수", 0.57, P, b, regime="")[0] == 0.62           # 장중 RSI 우선
+    assert C.conf_boost("DOWN", "매수", 0.57, P, b, regime="") == (0.57, None)
+    C.write_json(C.BRIEFING, b)
+    try:   # 리스크 검사는 오늘 기록된 국면을 읽음 (rules() 가 국면을 기록)
+        assert "확신도" in rules({"code": "MID", "side": "매수", "qty": 1, "confidence": 0.56}, acc(), 100_000, regime="횡보")
+        assert "확신도" not in rules({"code": "MID", "side": "매수", "qty": 1, "confidence": 0.56}, acc(), 100_000, regime="하락")
     finally:
         os.remove(C.BRIEFING)
 

@@ -219,7 +219,8 @@ def analyze(code, name, p, asof, login):
     lim = df["등락률"].tail(s["limit_up_lookback"]) >= 29.5 if "등락률" in df else pd.Series([False])
     row = {"code": code, "name": name, **ind,
            "trading_value_20d": int(tv.tail(20).mean()),
-           "limit_up_recent": bool(lim.any())}
+           "limit_up_recent": bool(lim.any()),
+           "closes": [round(float(x)) for x in df["종가"].tail(120)]}   # 장중 RSI 계산용 (intraday.py)
     if login:
         f, i = flows(code, asof, s["flow_days"])
         row["foreign_net"], row["inst_net"] = f, i

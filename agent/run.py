@@ -215,6 +215,7 @@ def main():
             py("data_prep.py")
         if kind == "decide":
             py("intraday.py")   # 장중 거래대금·외국인·기관 순매수로 후보 갱신 (실패하면 08:30 후보 유지)
+            py("intraday.py", "--rsi")   # 후보·보유 종목 RSI 를 지금 가격으로 다시 계산 (실패하면 전일 RSI)
         p = C.params()
         start = p["competition"]["start"]
         prompt = PROMPTS[kind].format(time=C.stamp(), codes=a.codes, why=a.why,

@@ -222,8 +222,66 @@ def run(dry=False):
 PREP_ROWS = os.path.join(C.WORK, "prep_rows.json")   # 08:30 준비에서 계산한 전 종목 일봉 지표 (data_prep.build 가 씀)
 
 
+def rsi_now(closes, price):
+    """전일까지 종가 + 지금 가격(오늘 종가로 가정) → RSI(14). 전일 RSI 와 같은 GS Quant 함수."""
+    import pandas as pd
+    from data_prep import gts
+    s = pd.Series([*closes, price], index=pd.bdate_range(end=C.today(), periods=len(closes) + 1), dtype=float)
+    return round(float(gts.relative_strength_index(s, 14).iloc[-1]), 1)
+
+
+def live_rsi():
+    """후보·보유 종목의 rsi14_live 를 지금 가격으로 채움 (conf_boost 가 씀). 오늘 산 종목도 보유에 넣음.
+    현재가는 순위 API 값(있으면) → 없으면 ka10001 (1.1초 간격). 종가가 없으면 pykrx 로 받음."""
+    import broker
+    n = C.now()
+    if not (900 <= n.hour * 100 + n.minute <= 1530) or n.weekday() >= 5:
+        return print("장중이 아니라 장중 RSI 생략 (전일 RSI 사용)")
+    brk = broker.get()
+    if brk.name != "live":
+        return print("mock 모드: 장중 RSI 생략")
+    b = C.read_json(C.BRIEFING)
+    if not b:
+        return
+    cache = {x["code"]: x for x in (C.read_json(PREP_ROWS, []) or [])}
+    for x in b.get("candidates_prep", []) + b.get("candidates", []):
+        cache.setdefault(x["code"], x)
+    hold = b.setdefault("holdings", [])
+    for h in (C.read_json(C.ACCOUNT, {}) or {}).get("holdings", []):
+        if h["code"] not in {x["code"] for x in hold} and h["code"] in cache:
+            hold.append({**cache[h["code"]]})
+    done, out = {}, []
+    for x in b.get("candidates", []) + hold:
+        c = x["code"]
+        if c not in done:
+            try:
+                closes = x.get("closes") or cache.get(c, {}).get("closes")
+                if not closes:
+                    import data_prep
+                    closes = [round(float(v)) for v in data_prep.ohlcv(c)["종가"].tail(120)]
+                    x["closes"] = closes
+                price = x.get("price") if x.get("activity") is not None else None   # 순위 API 로 방금 받은 가격
+                price = price or brk.quote_info(c)["price"]
+                done[c] = rsi_now(closes, price) if len(closes) >= 15 and price else None
+            except Exception as e:  # noqa: BLE001  한 종목 실패는 전일 RSI 로
+                print(f"  ! {c} 장중 RSI 실패: {e}")
+                done[c] = None
+            if done[c] is not None:
+                out.append(f"{x.get('name', c)} {x.get('rsi14')}→{done[c]}")
+        x["rsi14_live"] = done[c]
+    b["rsi_live_time"] = n.strftime("%H:%M")
+    C.write_json(C.BRIEFING, b)
+    print(f"장중 RSI ({n.strftime('%H:%M')}): " + (", ".join(out) or "없음"))
+
+
 if __name__ == "__main__":
     C.load_env()
+    if "--rsi" in sys.argv:   # run.py decide 가 후보 갱신 다음에 따로 부름 (서로 실패해도 영향 없게)
+        try:
+            live_rsi()
+        except Exception as e:  # noqa: BLE001
+            print(f"장중 RSI 실패, 전일 RSI 를 씀: {type(e).__name__}: {e}")
+        sys.exit(0)
     try:
         run(dry="--dry" in sys.argv)
     except Exception as e:  # noqa: BLE001  실패해도 판단은 08:30 후보로 진행

@@ -18,9 +18,15 @@
   },
 
   "rsi_boost": {
-    "_note": "RSI(14, 전일 종가) 보정. 매수: RSI < buy_below 이면 확신도 + add (악재 뉴스 ⚠ 있으면 제외). 매도: RSI ≥ sell_at 이면 확신도 + add. 코드(plan_order·리스크 검사)가 적용하므로 에이전트는 보정 전 확신도를 넘김",
+    "_note": "RSI(14) 보정. 장중엔 지금 가격을 오늘 종가로 본 RSI(정기 판단 직전 intraday.py 가 계산), 그 외엔 전일 종가 RSI. 매수: RSI < buy_below 이면 확신도 + add (악재 뉴스 ⚠ 있으면 제외). 매도: RSI ≥ sell_at 이면 확신도 + add. 코드(plan_order·리스크 검사)가 적용하므로 에이전트는 보정 전 확신도를 넘김",
     "buy_below": 35,
     "sell_at": 70,
+    "add": 0.05
+  },
+
+  "market_boost": {
+    "_note": "시장 하락 보정 (11-03). 오늘 국면(set_regime)이 regimes 중 하나면 신규 매수 확신도 + add (악재 뉴스 ⚠ 있으면 제외). RSI 보정과 더해짐. 예전의 '하락 국면 −0.05'를 뒤집은 것. 비중은 국면 상한이 따로 막음",
+    "regimes": ["하락"],
     "add": 0.05
   },
 
