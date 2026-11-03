@@ -47,54 +47,11 @@ LLM에게 매매를 통째로 맡기면 두 가지가 문제입니다.
 
 ### 전체 흐름
 
-```mermaid
-flowchart LR
-    subgraph DATA["① 데이터 · Python"]
-        D1["08:30 준비<br/>KRX 시세 · 5일 수급<br/>네이버 뉴스"]
-        D2["판단 직전마다<br/>키움 장중 순위<br/>거래대금 · 외국인 · 기관"]
-    end
-    subgraph AGENT["② 판단 · Claude Code"]
-        A1["국면 → 주식 비중 상한"]
-        A2["매수 측 ⇄ 매도 측 토론"]
-        A3["총괄<br/>확신도 0–1"]
-        A1 --> A2 --> A3
-    end
-    subgraph RULES["③ 규칙 · 코드"]
-        R1["확신도 보정<br/>RSI · 하락장"]
-        R2["수량 계산<br/>수량 · 손절 · 익절"]
-        R3{{"리스크 Hook"}}
-        R1 --> R2 --> R3
-    end
-    K["키움 REST API<br/>(자체 MCP 서버)"]
-    LOG[("journal.jsonl")]
-    WEB["대시보드"]
-
-    DATA --> AGENT --> RULES
-    R3 -- 통과 --> K
-    R3 -- 차단 --> LOG
-    K --> LOG --> WEB
-    LOG -. "16:00 기준값 자동 조정<br/>토요일 주간 회고" .-> AGENT
-```
+<p align="center"><img src="assets/diagrams/loop.ko.png" alt="전체 흐름" width="560"></p>
 
 ### 판단 1회
 
-```mermaid
-flowchart TB
-    S["정기 판단 · 30분마다"] --> P["장중 후보 재선별<br/>키움 순위 3번 → 후보 최대 10개<br/>(실패하면 08:30 후보 사용)"]
-    P --> G["국면 서브에이전트<br/>상승 90% · 횡보 70% · 하락 50% 주식 비중 상한<br/>1주차 × 0.75"]
-    G --> B["매수 측 서브에이전트<br/>후보·보유 종목별 강세 근거"]
-    B --> R["매도 측 서브에이전트<br/>약세 근거 + 반박"]
-    R --> L["총괄<br/>종목별 확신도"]
-    L --> T{"매매 회차?<br/>09:30 … 14:30"}
-    T -- "아니오 (정각)" --> V["판단만 기록<br/>'매수 예정 / 매도 예정', 주문 없음"]
-    T -- 예 --> C["코드가 확신도 보정<br/>하락장 신규 매수 +0.05<br/>RSI 35 미만 매수 +0.05 · 65 이상 매도 +0.05"]
-    C --> Q{"매수 ≥ 0.65?<br/>매도 ≥ 0.55?"}
-    Q -- 아니오 --> W["관망 / 보유"]
-    Q -- 예 --> Z["plan_order → place_order"]
-    Z --> H{{"리스크 Hook"}}
-    H -- 통과 --> O["시장가 주문"]
-    H -- 위반 --> X["차단 + 기록"]
-```
+<p align="center"><img src="assets/diagrams/decision.ko.png" alt="판단 1회" width="520"></p>
 
 매도를 먼저 하고 매수는 그다음입니다. 손절·익절·최대 보유일은 감시 루프가 5분마다 확인하고, 걸리면 매도 전용 에이전트 실행을 띄웁니다. 그 주문도 감시 루프가 직접 내지 않고 에이전트와 Hook을 거칩니다.
 
@@ -131,17 +88,11 @@ flowchart TB
 
 ### 스스로 조정하되, 울타리 안에서
 
-```mermaid
-flowchart LR
-    J[("매매·판단 기록")] --> T["평일 16:00<br/>조정 에이전트"]
-    T -->|"0–2개 제안 + 근거"| C{"tuning.py<br/>허용 키? 범위? 변경 폭? 쿨다운?"}
-    C -- 통과 --> P["params.json<br/>자동 커밋"]
-    C -- 거절 --> J
-    P --> D["다음 날 판단"]
-    J --> W["토요일 10:00<br/>주간 회고"] --> R["보고서 초안<br/>+ 조정 제안"]
-```
+<p align="center"><img src="assets/diagrams/tuning.ko.png" alt="기준값 자동 조정" width="440"></p>
 
 반영·거절 내역은 모두 대시보드 Feedback Loop에 공개됩니다.
+
+<sub>도식 원본: [`assets/diagrams/*.mmd`](assets/diagrams) → `node assets/diagrams/render.js` 로 다시 그림</sub>
 
 ## 하루 일정 (평일)
 

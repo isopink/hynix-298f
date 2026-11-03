@@ -47,54 +47,11 @@ So one rule runs through everything: **agents propose, rules decide.**
 
 ### The whole loop
 
-```mermaid
-flowchart LR
-    subgraph DATA["① Data · Python"]
-        D1["08:30 prep<br/>KRX prices · 5-day flows<br/>Naver news"]
-        D2["Before every decision<br/>Kiwoom intraday ranks<br/>trading value · foreign · institution"]
-    end
-    subgraph AGENT["② Decide · Claude Code"]
-        A1["Regime → exposure cap"]
-        A2["Bull ⇄ Bear debate"]
-        A3["Lead agent<br/>conviction 0–1"]
-        A1 --> A2 --> A3
-    end
-    subgraph RULES["③ Rules · code"]
-        R1["Conviction adjustments<br/>RSI · falling market"]
-        R2["Sizing<br/>qty · stop · target"]
-        R3{{"Risk Hook"}}
-        R1 --> R2 --> R3
-    end
-    K["Kiwoom REST API<br/>(own MCP server)"]
-    LOG[("journal.jsonl")]
-    WEB["Dashboard"]
-
-    DATA --> AGENT --> RULES
-    R3 -- pass --> K
-    R3 -- block --> LOG
-    K --> LOG --> WEB
-    LOG -. "daily tuning 16:00<br/>weekly review Sat" .-> AGENT
-```
+<p align="center"><img src="assets/diagrams/loop.en.png" alt="The whole loop" width="560"></p>
 
 ### One decision run
 
-```mermaid
-flowchart TB
-    S["Scheduled run · every 30 min"] --> P["Intraday re-screen<br/>3 Kiwoom rank calls → up to 10 candidates<br/>(falls back to the 08:30 list on failure)"]
-    P --> G["Regime sub-agent<br/>bull 90% · sideways 70% · bear 50% stock cap<br/>× 0.75 in week 1"]
-    G --> B["Bull sub-agent<br/>case for each candidate and holding"]
-    B --> R["Bear sub-agent<br/>case against + rebuttal"]
-    R --> L["Lead agent<br/>conviction per stock"]
-    L --> T{"Half-hour slot?<br/>09:30 … 14:30"}
-    T -- "no (on the hour)" --> V["Record view only<br/>'would buy / sell', no orders"]
-    T -- yes --> C["Code adds to conviction<br/>+0.05 bear market (new buys)<br/>+0.05 RSI < 35 (buy) · +0.05 RSI ≥ 65 (sell)"]
-    C --> Q{"Buy ≥ 0.65?<br/>Sell ≥ 0.55?"}
-    Q -- no --> W["Wait / hold"]
-    Q -- yes --> Z["plan_order → place_order"]
-    Z --> H{{"Risk Hook"}}
-    H -- pass --> O["Market order"]
-    H -- violation --> X["Blocked + logged"]
-```
+<p align="center"><img src="assets/diagrams/decision.en.png" alt="One decision run" width="520"></p>
 
 Sells go first, then buys. Stop-loss, take-profit and max holding days are checked every 5 minutes by a watcher. When one hits, it starts a sell-only agent run. The agent and the Hook still place that order, never the watcher itself.
 
@@ -131,17 +88,11 @@ The agent cannot change these. The tuner only touches decision thresholds, and o
 
 ### Self-tuning, with guardrails
 
-```mermaid
-flowchart LR
-    J[("Trade & decision log")] --> T["16:00 weekdays<br/>tuning agent"]
-    T -->|"0–2 proposals + reason"| C{"tuning.py<br/>allowed key? in range?<br/>step size? cooldown?"}
-    C -- pass --> P["params.json<br/>auto-commit"]
-    C -- reject --> J
-    P --> D["Next day's decisions"]
-    J --> W["Sat 10:00<br/>weekly review"] --> R["Report draft<br/>+ suggestions"]
-```
+<p align="center"><img src="assets/diagrams/tuning.en.png" alt="Self-tuning loop" width="440"></p>
 
 Every change and rejection shows up on the dashboard (Feedback Loop).
+
+<sub>Diagram sources: [`assets/diagrams/*.mmd`](assets/diagrams) → `node assets/diagrams/render.js`</sub>
 
 ## Daily schedule (weekdays, KST)
 
