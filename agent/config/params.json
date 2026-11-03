@@ -52,6 +52,13 @@
     "flow_days": 5,
     "limit_up_lookback": 5,
     "exclude_name_keywords": ["스팩", "리츠"],
+    "intraday": {
+      "_note": "정기 판단 직전 장중 수급으로 후보 재선별 (src/intraday.py). 키움 순위 API 3번: 거래대금 상위 ka10032 + 장중 외국인·기관 순매수 상위 ka10065. 실패하면 08:30 후보 유지",
+      "enabled": true,
+      "require_flow": true,
+      "max_new_analyze": 30,
+      "trend_weight": 0.5
+    },
     "fallback_universe": [
       "005930", "000660", "373220", "207940", "005380", "000270", "068270", "105560",
       "035420", "055550", "012330", "005490", "028260", "051910", "006400", "035720",

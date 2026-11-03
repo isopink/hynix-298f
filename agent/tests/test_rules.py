@@ -127,6 +127,26 @@ def test_rsi_boost():
         os.remove(C.BRIEFING)
 
 
+def test_intraday_screen():
+    import intraday
+    base = {"ma5": 10_000, "ma20": 9_500, "trading_value_20d": 50_000_000_000, "vol20": 0.4, "ret5": 0.03,
+            "limit_up_recent": False}
+    rows = [
+        {**base, "code": "000010", "name": "활발", "price": 10_500, "chg": 0.03, "value": 40_000_000_000, "foreign_qty": 50_000, "inst_qty": 10_000},
+        {**base, "code": "000020", "name": "보통", "price": 10_300, "chg": 0.01, "value": 10_000_000_000, "foreign_qty": 5_000, "inst_qty": 0},
+        {**base, "code": "000030", "name": "개인만", "price": 10_300, "chg": 0.01, "value": 30_000_000_000, "foreign_qty": -1, "inst_qty": -1},
+        {**base, "code": "000040", "name": "급등", "price": 11_500, "chg": 0.12, "value": 60_000_000_000, "foreign_qty": 9_000, "inst_qty": 0},
+        {**base, "code": "000050", "name": "추세이탈", "price": 9_400, "chg": -0.02, "value": 30_000_000_000, "foreign_qty": 9_000, "inst_qty": 0},
+        {**base, "code": "000061", "name": "우선주", "price": 10_500, "chg": 0.01, "value": 30_000_000_000, "foreign_qty": 9_000, "inst_qty": 0},
+        {**base, "code": "000070", "name": "가나스팩", "price": 10_500, "chg": 0.01, "value": 30_000_000_000, "foreign_qty": 9_000, "inst_qty": 0},
+    ]
+    out = intraday.screen([dict(r) for r in rows], P, R, frac=0.5)
+    assert [c["name"] for c in out] == ["활발", "보통"], [c["name"] for c in out]   # 외국인·기관 매수 없음·+10%·추세 이탈·우선주·스팩 제외
+    assert out[0]["score"] == 1.0 and out[0]["activity"] == 1.6                     # 400억 ÷ (500억 × 0.5)
+    assert intraday.code6("A005930_AL") == "005930" and intraday.num("+1,234") == 1234
+    assert intraday.rank_pct([3, 1, 2, 2]) == [1.0, 0.25, 0.625, 0.625]
+
+
 if __name__ == "__main__":
     fails = 0
     for n, f in list(globals().items()):

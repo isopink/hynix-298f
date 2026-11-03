@@ -213,6 +213,8 @@ def main():
         if kind == "decide" and not briefing_fresh():
             refresh_account()
             py("data_prep.py")
+        if kind == "decide":
+            py("intraday.py")   # 장중 거래대금·외국인·기관 순매수로 후보 갱신 (실패하면 08:30 후보 유지)
         p = C.params()
         start = p["competition"]["start"]
         prompt = PROMPTS[kind].format(time=C.stamp(), codes=a.codes, why=a.why,

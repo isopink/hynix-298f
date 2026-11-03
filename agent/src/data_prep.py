@@ -298,6 +298,7 @@ def build():
         "universe_size": len(rows),
     }
     C.write_json(C.BRIEFING, out)
+    C.write_json(os.path.join(C.WORK, "prep_rows.json"), [{k: v for k, v in r.items() if k != "news"} for r in rows])   # 장중 후보 갱신(intraday.py)이 재사용
     return out
 
 
@@ -334,6 +335,20 @@ def to_text(b):
                 f"{pct(r['ret20'])} | {r['rsi14']} | {r['vol20'] * 100:.0f}% | {pct(r['mdd60'])} | "
                 f"{eok(r.get('foreign_net'))} | {eok(r.get('inst_net'))} | {r.get('score', '-')} |")
 
+    it = b.get("intraday") or {}
+    if it and not it.get("kept_prep"):
+        lines += [f"## 장중 수급 ({it['time']} 기준) — 아래 후보는 오늘 장중 거래대금·외국인·기관 순매수로 다시 뽑은 것",
+                  "지표(5일선·RSI 등)는 전일 종가 기준, 현재가·등락·거래대금·순매수는 지금 기준. "
+                  "활발도 = 오늘 거래대금 ÷ 평소 같은 시각까지 거래대금 (1.0 = 평소 수준)", "",
+                  "| 코드 | 종목 | 현재가 | 오늘 등락 | 오늘 거래대금 | 활발도 | 외국인 오늘 | 기관 오늘 |", "|" + "---|" * 8]
+        for r in b["candidates"]:
+            act = r.get("activity")
+            lines.append(f"| {r['code']} | {r['name']} | {r.get('price', 0):,} | {pct(r.get('chg'))} | "
+                         f"{(r.get('value') or 0) / 1e8:,.0f}억 | {'-' if act is None else f'{act:.1f}배'} | "
+                         f"{eok(r.get('foreign_today'))} | {eok(r.get('inst_today'))} |")
+        lines.append("")
+    elif it:
+        lines += [f"장중 수급 갱신({it['time']}): 조건 통과 종목이 없어 08:30 후보를 그대로 씀", ""]
     for title, rs in (("후보 종목", b["candidates"]), ("보유 종목", b["holdings"])):
         lines.append(f"## {title} ({len(rs)})")
         if rs:
