@@ -93,6 +93,11 @@ def get_briefing() -> str:
         f"- 손절 {p['decision']['stop_loss_pct']:.0%} · 익절 {p['decision']['take_profit_pct']:.0%} · 최대 보유 {p['decision']['max_hold_days']}거래일",
         f"- 누적 체결 {C.fill_count()}건 (대회 최소 {p['competition']['min_trades']}건)",
     ]
+    if p.get("rsi_boost"):
+        boosted = [f"{x['name']}({note})" for x in b.get("candidates", []) + b.get("holdings", [])
+                   for _, note in [C.rsi_boost(x["code"], "매수", 0, p, b)] if note]
+        ctx.append(f"- 과매도 보정: RSI {p['rsi_boost']['below']} 미만 매수는 코드가 확신도 +{p['rsi_boost']['add']:.2f} "
+                   f"(확신도는 보정 전 값으로 넘길 것): " + (", ".join(boosted) if boosted else "오늘 해당 없음"))
     b["market"]["live"] = data_prep.live_market(b)   # 장중이면 지금 KOSPI 반영 힌트도 같이
     return data_prep.to_text(b) + "\n".join(ctx) + intraday(b, r)
 
@@ -150,7 +155,9 @@ def plan_order(code: str, side: str, confidence: float) -> dict:
     qi = brk().quote_info(code)
     price = qi["price"]
     if side == "매수":
-        plan = sizing.plan_buy(code, confidence, price, acc)
+        adj, note = C.rsi_boost(code, side, confidence)
+        plan = sizing.plan_buy(code, adj, price, acc)
+        plan.update(confidence_raw=confidence, rsi_boost=note)
     elif side == "매도":
         plan = sizing.plan_sell(code, confidence, price, acc)
     else:
@@ -173,6 +180,7 @@ def place_order(code: str, side: str, qty: int, confidence: float, bull: str, be
              "today_change": qi["change"]}
     bad = risk.check(order, acc, price)
     name = name_of(code)
+    adj, note = C.rsi_boost(code, side, confidence)   # 기록은 보정 후 확신도 (사이징·리스크 검사와 같은 값)
     if bad:
         for rule, detail in bad:
             C.journal("block", code=code, name=name, side=side, rule=rule, detail=detail, by="server")
@@ -194,7 +202,7 @@ def place_order(code: str, side: str, qty: int, confidence: float, bull: str, be
         meta.pop(code, None)
     C.write_json(C.POSITIONS, meta)
     C.journal("fill", code=code, name=name, side=side, qty=res["qty"], price=res["price"],
-              amount=res["qty"] * res["price"], confidence=confidence, regime=regime,
+              amount=res["qty"] * res["price"], confidence=adj, confidence_raw=confidence, rsi_boost=note, regime=regime,
               bull=bull, bear=bear, decision=decision, order_no=res.get("order_no"),
               filled=res.get("filled", True), rule_exit=rule_exit)
     return {"ok": True, **res, "name": name}

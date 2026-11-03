@@ -144,6 +144,24 @@ def buy_threshold(p=None):
     return base
 
 
+def rsi_boost(code, side, conf, p=None, briefing=None):
+    """과매도 보정. 매수이고 브리핑 RSI(14) < below 이면 확신도 + add (악재 뉴스 ⚠ 있으면 제외).
+    (보정 후 확신도, 보정 설명 또는 None). plan_order·리스크 검사가 같은 함수를 써서 결과가 항상 같음."""
+    p = p or params()
+    cfg = p.get("rsi_boost")
+    conf = float(conf or 0)
+    if side != "매수" or not cfg:
+        return conf, None
+    b = briefing if briefing is not None else (read_json(BRIEFING, {}) or {})
+    row = next((r for r in b.get("candidates", []) + b.get("holdings", []) if r.get("code") == code), None)
+    rsi = row.get("rsi14") if row else None
+    if rsi is None or rsi >= cfg["below"]:
+        return conf, None
+    if any(n.get("risk") for n in row.get("news", [])):
+        return conf, f"RSI {rsi} 과매도지만 악재 뉴스로 보정 안 함"
+    return round(min(1.0, conf + cfg["add"]), 3), f"RSI {rsi} < {cfg['below']} 과매도 +{cfg['add']:.2f}"
+
+
 def latest_regime():
     """오늘 기록된 마지막 시장 국면 (없으면 None)."""
     t = today().isoformat()
