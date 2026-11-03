@@ -7,7 +7,7 @@ The trading agent. **The agent proposes, the rules decide**: Claude Code reads t
 | Time | Run | LLM |
 |---|---|---|
 | 08:30 | `prep` — account + data prep → `work/briefing.json` | no |
-| 09:05–15:20 | `monitor` — every 5 min, checks stop / take-profit / max holding days; launches an `exit` run when hit | only when triggered |
+| 08:30–15:20 | `monitor` — every 5 min, checks stop / take-profit / max holding days; launches an `exit` run when hit | only when triggered |
 | 09:30–15:00, every 30 min | `decide` — intraday re-screen → regime → bull ⇄ bear debate → lead agent decides → orders on the half hour (09:30–14:30); on the hour it runs as `view` (same debate, no orders) | yes |
 | 15:45 | `close` — record today's equity, publish to dashboard | no |
 | 16:00 | `tune` — agent proposes 0–2 threshold changes; `src/tuning.py` applies only those inside `config/tuning.json` and commits | yes |

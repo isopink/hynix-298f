@@ -7,7 +7,7 @@
 
 사용법
   python snapshot.py            # 지금 한 번 조회해서 올림
-  python snapshot.py --loop     # 장중(평일 09:00~15:35) 동안 INTERVAL_SEC 마다 반복, 장 끝나면 종료
+  python snapshot.py --loop     # 평일 08:30~15:35 동안 INTERVAL_SEC 마다 반복, 장 끝나면 종료
   python snapshot.py --dry      # 올리지 않고 조회 결과만 출력 (처음 설정 확인용)
 """
 import json
@@ -159,7 +159,7 @@ def market_open(now):
     if now.weekday() >= 5:
         return False
     hm = now.hour * 100 + now.minute
-    return 900 <= hm <= 1535
+    return 830 <= hm <= 1535   # 08:30부터: 장 전에도 손절·익절 감시(monitor)가 이 잔고를 읽음 (가격은 09:00부터 움직임)
 
 
 def run_once(env, dry=False):

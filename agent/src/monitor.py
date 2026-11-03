@@ -48,15 +48,24 @@ def check_once():
     hit = triggers(hs)
     st = C.read_json(STATE, {}) or {}
     if st.get("date") != C.today().isoformat():
-        st = {"date": C.today().isoformat(), "fired": []}
-    new = {c: why for c, why in hit.items() if c not in st["fired"]}
+        st = {"date": C.today().isoformat(), "fired": [], "pre": []}
+    n = C.now()
+    hm = n.hour * 100 + n.minute
+    # 장 전(08:30~09:00)에 낸 매도는 09:00 동시호가로 체결되거나 거절될 수 있음 → 09:05 뒤에도 잔고에 남아 있으면 한 번 더
+    retry = [c for c in st.get("pre", []) if hm >= 905]
+    new = {c: why for c, why in hit.items() if c not in st["fired"] or c in retry}
+    st["pre"] = [c for c in st.get("pre", []) if c not in retry]
     if not new:
+        if retry:
+            C.write_json(STATE, st)
         return
     print(f"[{C.now().strftime('%H:%M')}] 조건 도달: " + " / ".join(new.values()), flush=True)
     r = subprocess.run([sys.executable, os.path.join(C.AGENT, "run.py"), "exit",
                         "--codes", ",".join(new), "--why", " / ".join(new.values())], cwd=C.AGENT)
     if r.returncode == 0:
-        st["fired"] += list(new)   # 같은 종목은 하루 한 번만 (실행이 잠금으로 건너뛰었으면 다음 회차에 다시)
+        st["fired"] += [c for c in new if c not in st["fired"]]   # 같은 종목은 하루 한 번만 (실행이 잠금으로 건너뛰었으면 다음 회차에 다시)
+        if hm < 900:
+            st["pre"] += [c for c in new if c not in retry]
         C.write_json(STATE, st)
 
 

@@ -30,7 +30,7 @@ SELF = "agent/src/sync.py"
 # (이름, 작업 스케줄러 작업, 명령줄에서 찾을 문자열, 이 경로가 바뀌면 재시작, 동작 시간)
 LOOPS = [
     ("monitor", "Hynix298-monitor", "run.py monitor", ("agent/src/", "agent/run.py", "agent/config/"), None),
-    ("snapshot", "Hynix298-snapshot", "snapshot.py --loop", ("live/snapshot.py",), ("08:55", "15:35")),
+    ("snapshot", "Hynix298-snapshot", "snapshot.py --loop", ("live/snapshot.py",), ("08:25", "15:35")),
 ]
 CHECK_IMPORTS = ["common", "monitor", "broker", "risk", "sizing", "logger", "tuning", "sync"]
 
