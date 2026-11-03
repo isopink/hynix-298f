@@ -101,10 +101,23 @@ def test_rsi_boost():
                         {"code": "BAD", "rsi14": 28.0, "news": [{"risk": True}]},
                         {"code": "MID", "rsi14": 35.0, "news": []}], "holdings": []}
     assert C.rsi_boost("LOW", "매수", 0.57, P, b)[0] == 0.62
-    assert C.rsi_boost("LOW", "매도", 0.57, P, b) == (0.57, None)      # 매도엔 안 붙음
+    assert C.rsi_boost("LOW", "매도", 0.57, P, b) == (0.57, None)      # 과매도는 매도에 안 붙음
     assert C.rsi_boost("MID", "매수", 0.57, P, b) == (0.57, None)      # 35 는 해당 없음 (미만만)
     assert C.rsi_boost("BAD", "매수", 0.57, P, b)[0] == 0.57           # 악재 뉴스면 제외
     assert C.rsi_boost("NONE", "매수", 0.57, P, b) == (0.57, None)     # 브리핑에 없는 종목
+    # 매도: RSI 70 이상(과열) 보유 종목 +0.05, 69.9 는 해당 없음, 악재 뉴스여도 적용
+    h = {"candidates": [], "holdings": [{"code": "HOT", "rsi14": 70.0, "news": [{"risk": True}]},
+                                        {"code": "WARM", "rsi14": 69.9, "news": []}]}
+    assert C.rsi_boost("HOT", "매도", 0.57, P, h)[0] == 0.62
+    assert C.rsi_boost("HOT", "매수", 0.57, P, h) == (0.57, None)      # 과열은 매수에 안 붙음
+    assert C.rsi_boost("WARM", "매도", 0.57, P, h) == (0.57, None)
+    C.write_json(C.BRIEFING, h)
+    try:
+        a = acc(cash=40_000_000, holdings=[pos("HOT", 10, 100_000), pos("WARM", 10, 100_000)])
+        assert "확신도" not in rules({"code": "HOT", "side": "매도", "qty": 10, "confidence": 0.57}, a, 100_000)
+        assert "확신도" in rules({"code": "WARM", "side": "매도", "qty": 10, "confidence": 0.57}, a, 100_000)
+    finally:
+        os.remove(C.BRIEFING)
     # 리스크 검사도 같은 보정: 0.57 은 원래 막히지만 RSI 30 종목은 통과
     C.write_json(C.BRIEFING, b)
     try:

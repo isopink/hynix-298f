@@ -93,11 +93,15 @@ def get_briefing() -> str:
         f"- 손절 {p['decision']['stop_loss_pct']:.0%} · 익절 {p['decision']['take_profit_pct']:.0%} · 최대 보유 {p['decision']['max_hold_days']}거래일",
         f"- 누적 체결 {C.fill_count()}건 (대회 최소 {p['competition']['min_trades']}건)",
     ]
-    if p.get("rsi_boost"):
-        boosted = [f"{x['name']}({note})" for x in b.get("candidates", []) + b.get("holdings", [])
-                   for _, note in [C.rsi_boost(x["code"], "매수", 0, p, b)] if note]
-        ctx.append(f"- 과매도 보정: RSI {p['rsi_boost']['below']} 미만 매수는 코드가 확신도 +{p['rsi_boost']['add']:.2f} "
-                   f"(확신도는 보정 전 값으로 넘길 것): " + (", ".join(boosted) if boosted else "오늘 해당 없음"))
+    if rb := p.get("rsi_boost"):
+        buy = [f"{x['name']}({n})" for x in b.get("candidates", []) + b.get("holdings", [])
+               for _, n in [C.rsi_boost(x["code"], "매수", 0, p, b)] if n]
+        sell = [f"{x['name']}({n})" for x in b.get("holdings", [])
+                for _, n in [C.rsi_boost(x["code"], "매도", 0, p, b)] if n]
+        ctx.append(f"- RSI 보정 (코드가 적용, 확신도는 보정 전 값으로 넘길 것): 매수 RSI {rb['buy_below']} 미만 · "
+                   f"매도 RSI {rb['sell_at']} 이상이면 확신도 +{rb['add']:.2f}")
+        ctx.append("  - 매수 보정 대상: " + (", ".join(buy) if buy else "없음"))
+        ctx.append("  - 매도 보정 대상(보유): " + (", ".join(sell) if sell else "없음"))
     b["market"]["live"] = data_prep.live_market(b)   # 장중이면 지금 KOSPI 반영 힌트도 같이
     return data_prep.to_text(b) + "\n".join(ctx) + intraday(b, r)
 
@@ -159,7 +163,9 @@ def plan_order(code: str, side: str, confidence: float) -> dict:
         plan = sizing.plan_buy(code, adj, price, acc)
         plan.update(confidence_raw=confidence, rsi_boost=note)
     elif side == "매도":
-        plan = sizing.plan_sell(code, confidence, price, acc)
+        adj, note = C.rsi_boost(code, side, confidence)
+        plan = sizing.plan_sell(code, adj, price, acc)
+        plan.update(confidence_raw=confidence, rsi_boost=note)
     else:
         return {"error": "side 는 매수 / 매도"}
     plan["name"] = name_of(code)

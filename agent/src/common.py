@@ -145,21 +145,29 @@ def buy_threshold(p=None):
 
 
 def rsi_boost(code, side, conf, p=None, briefing=None):
-    """과매도 보정. 매수이고 브리핑 RSI(14) < below 이면 확신도 + add (악재 뉴스 ⚠ 있으면 제외).
-    (보정 후 확신도, 보정 설명 또는 None). plan_order·리스크 검사가 같은 함수를 써서 결과가 항상 같음."""
+    """RSI(14) 보정. 매수: RSI < buy_below(과매도) → 확신도 + add (악재 뉴스 ⚠ 있으면 제외).
+    매도: RSI ≥ sell_at(과열) → 확신도 + add. (보정 후 확신도, 보정 설명 또는 None).
+    plan_order·리스크 검사·체결 기록이 같은 함수를 써서 결과가 항상 같음."""
     p = p or params()
     cfg = p.get("rsi_boost")
     conf = float(conf or 0)
-    if side != "매수" or not cfg:
+    if side not in ("매수", "매도") or not cfg:
         return conf, None
     b = briefing if briefing is not None else (read_json(BRIEFING, {}) or {})
     row = next((r for r in b.get("candidates", []) + b.get("holdings", []) if r.get("code") == code), None)
     rsi = row.get("rsi14") if row else None
-    if rsi is None or rsi >= cfg["below"]:
+    if rsi is None:
         return conf, None
-    if any(n.get("risk") for n in row.get("news", [])):
-        return conf, f"RSI {rsi} 과매도지만 악재 뉴스로 보정 안 함"
-    return round(min(1.0, conf + cfg["add"]), 3), f"RSI {rsi} < {cfg['below']} 과매도 +{cfg['add']:.2f}"
+    up = lambda: round(min(1.0, conf + cfg["add"]), 3)  # noqa: E731
+    if side == "매수":
+        if rsi >= cfg["buy_below"]:
+            return conf, None
+        if any(n.get("risk") for n in row.get("news", [])):
+            return conf, f"RSI {rsi} 과매도지만 악재 뉴스로 보정 안 함"
+        return up(), f"RSI {rsi} < {cfg['buy_below']} 과매도 매수 +{cfg['add']:.2f}"
+    if rsi < cfg["sell_at"]:
+        return conf, None
+    return up(), f"RSI {rsi} ≥ {cfg['sell_at']} 과열 매도 +{cfg['add']:.2f}"
 
 
 def latest_regime():
