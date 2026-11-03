@@ -1,7 +1,7 @@
 """
 기준값 자동 조정 (피드백 루프).
 
-화·수·목 장 마감 뒤 조정 실행(run.py tune)에서 에이전트가
+평일 장 마감 뒤 조정 실행(run.py tune)에서 에이전트가
   1) get_tuning_context 로 성과 요약을 보고
   2) apply_tuning 으로 바꿀 값을 제안하면
 서버가 config/tuning.json 규칙(허용 키·범위·1회 변경 폭·횟수·쿨다운·일관성)으로 검사해
@@ -210,7 +210,7 @@ def apply(changes, summary):
     if os.environ.get("RUN_MODE") != "tune":
         return {"ok": False, "error": "기준값 조정은 조정 실행(tune)에서만 할 수 있습니다."}
     if not allowed_today(rl):
-        return {"ok": False, "error": "기준값 조정은 화·수·목에만 반영합니다."}
+        return {"ok": False, "error": "기준값 조정은 평일에만 반영합니다."}
     if run and any(r.get("run") == run for r in history()):
         return {"ok": False, "error": "이번 실행에서 이미 제출했습니다."}
     ok, bad = check(changes, p, rl, cooldown_keys(rl=rl))

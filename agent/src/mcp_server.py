@@ -8,7 +8,7 @@
   place_order     주문. 실행 직전에 Hook 이 리스크 검사, 서버도 한 번 더 검사
   record_decision 보유·관망 판단 기록
   submit_review   주간 회고 결과 (조정 제안 + 보고서 초안)
-  get_tuning_context  기준값 조정용 성과 요약 + 조정 가능한 값·범위 (화·수·목 조정 실행)
+  get_tuning_context  기준값 조정용 성과 요약 + 조정 가능한 값·범위 (평일 조정 실행)
   apply_tuning    기준값 조정 제안 → 서버가 규칙(config/tuning.json)으로 검사해 통과분만 params.json 에 반영
 
 stdout 은 MCP 통신용이라, pykrx 등이 찍는 메시지는 전부 stderr 로 돌립니다.

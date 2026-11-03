@@ -94,7 +94,7 @@ def reviews(rows):
 
 
 def tuning(rows):
-    """기준값 자동 조정 이력 (화·수·목). 대시보드 Feedback Loop 카드용."""
+    """기준값 자동 조정 이력 (평일). 대시보드 Feedback Loop 카드용."""
     return [{"time": r["time"], "summary": r.get("summary", ""),
              "applied": [{k: a[k] for k in ("key", "label", "from", "to", "reason")} for a in r.get("applied", [])],
              "rejected": [{"key": b["key"], "to": b.get("to"), "rejected": b["rejected"]} for b in r.get("rejected", [])]}

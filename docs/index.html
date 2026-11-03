@@ -1226,14 +1226,14 @@ details.log summary { border-radius: 16px; }
     svg.append('g').selectAll('text.x').data(rows.filter((r, i) => i % every === 0)).join('text').attr('x', r => x(r.date) + x.bandwidth() / 2).attr('y', H - 6).attr('text-anchor', 'middle').attr('font-size', 11).attr('fill', C.muted).text(r => md(r.d));
   }
 
-  // 기준값 자동 조정 (화·수·목 장 마감 뒤, agent/src/tuning.py). 최근 것이 위
+  // 기준값 자동 조정 (평일 장 마감 뒤, agent/src/tuning.py). 최근 것이 위
   function tuningLog(el) {
     // 확신도는 0.60 처럼, 비율은 %, 보유일은 정수 그대로
     const fmt = (v, key) => key.includes('confidence') ? (+v).toFixed(2) : Number.isInteger(v) && Math.abs(v) >= 1 ? String(v) : (v * 100).toFixed(1).replace(/\.0$/, '') + '%';
     const box = document.createElement('div'); box.style.cssText = 'display:grid;gap:12px';
-    const h = document.createElement('div'); h.className = 'eyebrow'; h.textContent = '기준값 자동 조정 · 화·수·목'; box.appendChild(h);
+    const h = document.createElement('div'); h.className = 'eyebrow'; h.textContent = '기준값 자동 조정 · 매일'; box.appendChild(h);
     if (!TUNING.length) {
-      const p = document.createElement('p'); p.className = 'f-empty'; p.style.margin = '0'; p.textContent = '화·수·목 장 마감 뒤 성과를 보고 기준값을 스스로 조정해요. 아직 조정 기록이 없어요.'; box.appendChild(p);
+      const p = document.createElement('p'); p.className = 'f-empty'; p.style.margin = '0'; p.textContent = '매일 장 마감 뒤 성과를 보고 기준값을 스스로 조정해요. 아직 조정 기록이 없어요.'; box.appendChild(p);
     }
     [...TUNING].reverse().forEach(t => {
       const it = document.createElement('div'); it.style.cssText = 'display:grid;grid-template-columns:44px 1fr;gap:10px;align-items:start;font-size:12px;line-height:1.55';

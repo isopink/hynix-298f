@@ -1,7 +1,7 @@
 {
-  "_note": "기준값 자동 조정 규칙 (고정). 화·수·목 장 마감 뒤 조정 실행(run.py tune)에서 에이전트가 apply_tuning 으로 제안하면, 서버가 이 규칙으로 검사해 통과한 것만 params.json 에 씀. 에이전트는 이 파일과 risk_limits.json 을 바꿀 수 없음.",
+  "_note": "기준값 자동 조정 규칙 (고정). 평일 장 마감 뒤 조정 실행(run.py tune)에서 에이전트가 apply_tuning 으로 제안하면, 서버가 이 규칙으로 검사해 통과한 것만 params.json 에 씀. 에이전트는 이 파일과 risk_limits.json 을 바꿀 수 없음.",
 
-  "weekdays": [1, 2, 3],
+  "weekdays": [0, 1, 2, 3, 4],
   "max_changes_per_run": 2,
   "cooldown_runs": 1,
 
