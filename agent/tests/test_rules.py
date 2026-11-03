@@ -214,6 +214,24 @@ def test_intraday_keeps_high_vol_separately():
     assert "고변동" in names and "너무큼" not in names and names[-1] == "고변동"
 
 
+def test_reconcile_partial_fill():
+    import logger
+    old = C.ACCOUNT
+    C.ACCOUNT = os.path.join(tmp, "account.json")
+    try:
+        t = lambda side, qty, code="086280": {"code": code, "side": side, "qty": qty, "price": 201000, "amount": qty * 201000}
+        C.write_json(C.ACCOUNT, {"holdings": [{"code": "086280", "qty": 14}]})
+        ts = logger.reconcile([t("매수", 3)])                 # 2초 뒤엔 3주만 보였지만 잔고는 14주
+        assert ts[0]["qty"] == 14 and ts[0]["amount"] == 14 * 201000, ts
+        C.write_json(C.ACCOUNT, {"holdings": []})
+        ts = logger.reconcile([t("매수", 10), t("매도", 4)])   # 매도가 일부만 보였지만 이미 다 팔림
+        assert ts[1]["qty"] == 10, ts
+        C.write_json(C.ACCOUNT, {"holdings": [{"code": "086280", "qty": 14}]})
+        ts = logger.reconcile([t("매수", 14)])                # 맞으면 그대로
+        assert ts[0]["qty"] == 14, ts
+    finally:
+        C.ACCOUNT = old
+
 if __name__ == "__main__":
     fails = 0
     for n, f in list(globals().items()):

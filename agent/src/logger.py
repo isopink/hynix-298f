@@ -31,10 +31,28 @@ def names():
 
 
 def trades(rows):
-    return [{"id": i + 1, "time": r["time"], "code": r["code"], "name": r["name"], "side": r["side"],
+    out_ = [{"id": i + 1, "time": r["time"], "code": r["code"], "name": r["name"], "side": r["side"],
              "qty": r["qty"], "price": r["price"], "amount": r["amount"], "confidence": r["confidence"],
              "regime": r.get("regime"), "bull": r["bull"], "bear": r["bear"], "decision": r["decision"]}
             for i, r in enumerate(x for x in rows if x["kind"] == "fill")]
+    return reconcile(out_)
+
+
+def reconcile(ts):
+    """체결 기록의 순수량(매수 − 매도)이 실제 잔고와 다르면 그 종목의 마지막 체결 수량을 잔고에 맞춤.
+    주문 직후 확인 때 일부만 체결돼 있던 경우를 바로잡음 (journal 은 그대로 두고 대시보드 값만 고침)."""
+    acc = C.read_json(C.ACCOUNT, {}) or {}
+    if not acc.get("holdings") and not ts:
+        return ts
+    held = {h["code"]: h["qty"] for h in acc.get("holdings", [])}
+    for code in {t["code"] for t in ts}:
+        mine = [t for t in ts if t["code"] == code]
+        diff = held.get(code, 0) - sum(t["qty"] if t["side"] == "매수" else -t["qty"] for t in mine)
+        last = mine[-1]
+        q = last["qty"] + (diff if last["side"] == "매수" else -diff)
+        if diff and q > 0:
+            last["qty"], last["amount"] = q, q * last["price"]
+    return ts
 
 
 def risks(rows, nm):

@@ -199,13 +199,21 @@ class KiwoomBroker:
                        {"time": C.stamp(), "run": os.environ.get("RUN_ID", ""), "api": api, "code": code,
                         "side": side, "qty": qty, "response": res})
         order_no = str(res.get("ord_no") or res.get("ordr_no") or res.get("ord_num") or "")
-        time.sleep(2)
-        try:
-            acc = self.account()
-        except Exception:  # noqa: BLE001  주문은 이미 나갔으므로 확인 조회가 실패해도 체결로 기록 (다음 조회 때 바로잡힘)
+        # 시장가도 나눠 체결될 수 있음 (11-03 현대글로비스: 2초 뒤 확인 땐 3주, 실제 잔고는 14주 → 3주로 기록됨)
+        # → 주문 수량이 다 보일 때까지 2초 간격으로 최대 5번 잔고 확인. 그래도 덜 보이면 logger 가 잔고로 바로잡음
+        acc = None
+        for _ in range(5):
+            time.sleep(2)
+            try:
+                acc = self.account()
+            except Exception:  # noqa: BLE001  주문은 이미 나갔으므로 확인 조회가 실패해도 체결로 기록 (다음 조회 때 바로잡힘)
+                continue
+            after = next((h for h in acc["holdings"] if h["code"] == code), None)
+            moved = abs((after["qty"] if after else 0) - before)
+            if moved >= qty:
+                break
+        if acc is None:
             return {"ok": True, "order_no": order_no, "price": self.quote(code), "qty": qty, "filled": None}
-        after = next((h for h in acc["holdings"] if h["code"] == code), None)
-        moved = abs((after["qty"] if after else 0) - before)
         px = after["avg_price"] if side == "매수" and after and not before else (after["price"] if after else self.quote(code))
         return {"ok": True, "order_no": order_no, "price": px, "qty": moved or qty, "filled": moved > 0}
 
