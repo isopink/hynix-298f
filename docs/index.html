@@ -342,7 +342,7 @@ details.log summary { border-radius: 16px; }
           </div>
           <div class="kv"><span class="eyebrow">시작 원금</span><span>50,000,000원</span></div>
           <div class="kv"><span class="eyebrow">현재 자산</span><span id="total">—</span></div>
-          <div class="kv"><span class="eyebrow">KOSPI 대비</span><span id="excess">—</span></div>
+          <div class="kv"><span class="eyebrow">KOSPI 누적 수익률</span><span id="excess">—</span></div>
         </div>
         <div class="hero-chart" style="display:flex;flex-direction:column;gap:10px;min-width:0">
           <div class="chart" id="ch-hero" style="min-height:210px"></div>
@@ -370,6 +370,22 @@ details.log summary { border-radius: 16px; }
   </div>
 
   <details class="log more">
+    <summary>Portfolio</summary>
+    <div class="more-body">
+      <div class="grid">
+        <section class="card c6">
+          <div class="hd"><span class="eyebrow">포트폴리오</span><span class="sub">빨간 호 = 국면 상한</span></div>
+          <div class="chart" id="ch-donut" style="min-height:240px"></div>
+        </section>
+        <section class="card c6">
+          <div class="hd"><span class="eyebrow">보유 종목 손익</span><span class="sub">수수료·세금 반영</span></div>
+          <div class="chart" id="ch-pnl" style="min-height:240px"></div>
+        </section>
+      </div>
+    </div>
+  </details>
+
+  <details class="log more">
     <summary>Trading Detail</summary>
     <div class="more-body">
       <div class="grid">
@@ -388,22 +404,6 @@ details.log summary { border-radius: 16px; }
         <section class="card c12">
           <div class="hd"><span class="eyebrow">수익률 캘린더</span><span class="sub cal-sub">큰 숫자 병신듀오 · 작은 숫자 KOSPI</span></div>
           <div class="cal" id="ch-cal"></div>
-        </section>
-      </div>
-    </div>
-  </details>
-
-  <details class="log more">
-    <summary>Portfolio</summary>
-    <div class="more-body">
-      <div class="grid">
-        <section class="card c6">
-          <div class="hd"><span class="eyebrow">포트폴리오</span><span class="sub">빨간 호 = 국면 상한</span></div>
-          <div class="chart" id="ch-donut" style="min-height:240px"></div>
-        </section>
-        <section class="card c6">
-          <div class="hd"><span class="eyebrow">보유 종목 손익</span><span class="sub">수수료·세금 반영</span></div>
-          <div class="chart" id="ch-pnl" style="min-height:240px"></div>
         </section>
       </div>
     </div>
@@ -637,7 +637,7 @@ details.log summary { border-radius: 16px; }
   function fillText() {
     $('ret').textContent = pct(D.ret); $('ret').classList.toggle('neg', D.ret < 0); document.querySelector('.hero-card').classList.toggle('neg', D.ret < 0);   // 손실은 파랑 (국내 증시 관례)
     $('total').textContent = won(D.last.total) + '원';
-    const ex = D.ret - D.kret; $('excess').textContent = (ex >= 0 ? '+' : '−') + Math.abs(ex * 100).toFixed(2) + '%p'; tone($('excess'), ex);
+    $('excess').textContent = pct(D.kret); tone($('excess'), D.kret);   // KOSPI 누적 수익률 (대회 시작 1분봉 kospiStart 기준)
     $('k-week').textContent = pct(D.week); tone($('k-week'), D.week);
     $('k-mdd').textContent = pct(D.mdd); tone($('k-mdd'), D.mdd);
     $('k-kospi').textContent = pct(D.kret); tone($('k-kospi'), D.kret);
@@ -842,7 +842,7 @@ details.log summary { border-radius: 16px; }
 
 
   // ---------- 리스크 한도: agent/config/risk_limits.json 과 같은 값 (대회 내내 고정, 바뀌면 여기도 고칠 것) ----------
-  const RL = { daily: -0.03, total: -0.10, minCash: 0.10, maxPos: 6, maxW: 0.20 };
+  const RL = { daily: -0.03, total: -0.10, minCash: 0.10, maxPos: 20, maxW: 0.20 };
   function limits() {
     const el = $('ch-lim'), tot = D.last.total, sw = tot ? D.stock / tot : 0, cash = 1 - sw;
     const top = D.hold.reduce((a, h) => (!a || h.value > a.value ? h : a), null), tw = top && tot ? top.value / tot : 0;
@@ -1034,11 +1034,15 @@ details.log summary { border-radius: 16px; }
     $('dec-title').textContent = '실시간 판단';
     $('dec-asof').textContent = md(toD(dc.time)) + ' ' + dc.time.slice(11, 16) + ' 판단';
     list.classList.remove('empty');
-    head.innerHTML = `<span>국면 <b style="color:${regC(dc.regime)}">${esc(dc.regime)}</b></span>`
+    head.innerHTML = `<span class="rg">국면 <b style="color:${regC(dc.regime)}">${esc(dc.regime)}</b></span>`
       + `<span>주식 비중 상한 <b>${Math.round(+dc.cap * 100)}%</b></span>`
-      + (liveTag() ? `<span class="it">${liveTag()}</span>` : '')
-      + `<span class="why">${esc(dc.reason)}</span>`;
-    head.querySelector('.why').title = dc.reason || '';
+      + (liveTag() ? `<span class="it">${liveTag()}</span>` : '');
+    if (dc.reason) {   // 국면 근거 문장은 화면에서 빼고 툴팁으로
+      const rg = head.querySelector('.rg'), html = `<div class="t">${esc(dc.regime)} 국면 근거</div><p class="tp">${esc(dc.reason)}</p>`;
+      rg.addEventListener('mousemove', ev => showTip(ev, html));
+      rg.addEventListener('mouseleave', hideTip);
+      rg.addEventListener('click', ev => showTip(ev, html));
+    }
     const itEl = head.querySelector('.it'), it = BRIEF.intraday;
     if (itEl) {   // 장중 수급 재선별 결과: 마우스 오버·터치로 상세
       const html = `<div class="t">장중 수급 재선별 · ${esc(it.time)}</div>`
