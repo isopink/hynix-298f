@@ -80,6 +80,12 @@
       5859.08
     ]
   },
+  "intraday": {
+    "time": "14:30",
+    "pool": 244,
+    "passed": 0,
+    "kept_prep": true
+  },
   "candidates": [
     {
       "code": "064400",
