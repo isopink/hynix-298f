@@ -1396,8 +1396,8 @@ details.log summary { border-radius: 16px; }
   }
   tk.addEventListener('click', () => fab.click());
 
-  // ---------- 매매 시각: 평일 09:30~14:30 매시 매매, 판단은 15분마다 (agent/setup_tasks.ps1 · params.schedule 과 맞출 것). 다음 매매에 빨간 점 ----------
-  const SCHED = { from: '09:30', to: '14:30', every: 60, judge: 15 };
+  // ---------- 매매 시각: 평일 09:30~14:30 매시 매매, 판단은 30분마다 (agent/setup_tasks.ps1 · params.schedule 과 맞출 것). 다음 매매에 빨간 점 ----------
+  const SCHED = { from: '09:30', to: '14:30', every: 60, judge: 30 };
   const sched = document.getElementById('sched');
   function drawSched() {
     const k = new Date(Date.now() + 9 * 3600e3), day = k.getUTCDay();   // 한국 시각

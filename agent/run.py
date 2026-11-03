@@ -218,7 +218,7 @@ def main():
             py("intraday.py")   # 장중 거래대금·외국인·기관 순매수로 후보 갱신 (실패하면 08:30 후보 유지)
             py("intraday.py", "--rsi")   # 후보·보유 종목 RSI 를 지금 가격으로 다시 계산 (실패하면 전일 RSI)
         p = C.params()
-        if kind == "decide" and not C.trade_slot():   # 판단은 15분마다, 매매는 trade_times(매시) 회차에만
+        if kind == "decide" and not C.trade_slot():   # 판단은 30분마다, 매매는 trade_times(매시 30분) 회차에만
             kind = "view"
         start = p["competition"]["start"]
         prompt = PROMPTS[kind].format(time=C.stamp(), codes=a.codes, why=a.why, next_trade=C.next_trade_time() or "내일",

@@ -8,7 +8,7 @@ The trading agent. **The agent proposes, the rules decide**: Claude Code reads t
 |---|---|---|
 | 08:30 | `prep` — account + data prep → `work/briefing.json` | no |
 | 09:05–15:20 | `monitor` — every 5 min, checks stop / take-profit / max holding days; launches an `exit` run when hit | only when triggered |
-| 09:15–15:15, every 15 min | `decide` — regime → bull ⇄ bear debate → lead agent decides → orders | yes |
+| 09:30–15:00, every 30 min | `decide` — regime → bull ⇄ bear debate → lead agent decides → orders on the half hour (09:30–14:30), judgment-only refresh on the hour | yes |
 | 15:45 | `close` — record today's equity, publish to dashboard | no |
 | Sat 10:00 | `review` — weekly review + report draft | yes |
 | always (from logon) | `sync` — every minute, pulls pushed code, checks it, restarts `monitor` / the balance loop if their code changed | no |
