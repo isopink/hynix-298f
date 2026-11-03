@@ -159,6 +159,8 @@ details.log[open] > summary::after { content: "−"; }
 .dec-row .cf i b.hi { background: var(--red-hi); }
 .dec-row .why { min-width: 0; color: var(--body); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .dec-row .why em { font-style: normal; color: var(--red-hi); }
+/* 폰: 꼭 필요한 정보만 (11-03). 관망·보유 판단은 종목·확신도만, 근거는 탭하면 툴팁 */
+@media (max-width: 640px) { .m-hide { display: none !important; } .dec-row.quiet .why { display: none; } .grid > .m-full { grid-column: span 12; } }
 @media (max-width: 640px) {
   .dec-row { grid-template-columns: minmax(0, 1fr) auto 96px; gap: 6px 10px; }
   .dec-row .why { grid-column: 1 / -1; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
@@ -310,7 +312,7 @@ details.log summary { border-radius: 16px; }
     <div class="brand">
       <div>
         <h1>하닉 평단 298 <span class="tagline">목표 : 시장을 이기기</span></h1>
-        <div class="chips sched" id="sched" aria-label="평일 정기 매매 판단 시각"></div>
+        <div class="chips sched m-hide" id="sched" aria-label="평일 정기 매매 판단 시각"></div>
       </div>
     </div>
     <div class="cheer">
@@ -367,7 +369,7 @@ details.log summary { border-radius: 16px; }
       <div class="kx-flow">
         <div class="hd"><span class="eyebrow">투자자별 순매수</span><span class="sub" id="fl-asof"></span></div>
         <div class="fl-kv" id="fl-kv"></div>
-        <div class="chart" id="ch-fl" style="min-height:150px"></div>
+        <div class="chart m-hide" id="ch-fl" style="min-height:150px"></div>
       </div>
     </section>
 
@@ -378,7 +380,7 @@ details.log summary { border-radius: 16px; }
     <summary>Portfolio</summary>
     <div class="more-body">
       <div class="grid">
-        <section class="card c6">
+        <section class="card c6 m-hide">
           <div class="hd"><span class="eyebrow">포트폴리오</span><span class="sub">빨간 호 = 국면 상한</span></div>
           <div class="chart" id="ch-donut" style="min-height:240px"></div>
         </section>
@@ -394,15 +396,15 @@ details.log summary { border-radius: 16px; }
     <summary>Trading Detail</summary>
     <div class="more-body">
       <div class="grid">
-        <section class="card c3 glow-red"><div class="hd"><span class="eyebrow">이번 주</span><span class="sub">vs 지난 금요일</span></div><div class="val" id="k-week">—</div><div class="chart" id="sp-week"></div></section>
-        <section class="card c3 glow-blue"><div class="hd"><span class="eyebrow">최대 낙폭</span><span class="sub">고점 대비</span></div><div class="val" id="k-mdd">—</div><div class="chart" id="sp-dd"></div></section>
-        <section class="card c3"><div class="hd"><span class="eyebrow">KOSPI</span><span class="sub">11/2 시가 대비</span></div><div class="val" id="k-kospi">—</div><div class="chart" id="sp-kospi"></div></section>
-        <section class="card c3"><div class="hd"><span class="eyebrow">승률</span><span class="sub" id="k-win-sub">—</span></div><div class="val" id="k-win">—</div><div class="chart" id="sp-win"></div></section>
-        <section class="card c6">
+        <section class="card c3 glow-red m-hide"><div class="hd"><span class="eyebrow">이번 주</span><span class="sub">vs 지난 금요일</span></div><div class="val" id="k-week">—</div><div class="chart" id="sp-week"></div></section>
+        <section class="card c3 glow-blue m-hide"><div class="hd"><span class="eyebrow">최대 낙폭</span><span class="sub">고점 대비</span></div><div class="val" id="k-mdd">—</div><div class="chart" id="sp-dd"></div></section>
+        <section class="card c3 m-hide"><div class="hd"><span class="eyebrow">KOSPI</span><span class="sub">11/2 시가 대비</span></div><div class="val" id="k-kospi">—</div><div class="chart" id="sp-kospi"></div></section>
+        <section class="card c3 m-full"><div class="hd"><span class="eyebrow">승률</span><span class="sub" id="k-win-sub">—</span></div><div class="val" id="k-win">—</div><div class="chart" id="sp-win"></div></section>
+        <section class="card c6 m-hide">
           <div class="hd"><span class="eyebrow">리스크 한도 사용률</span><span class="sub">주문 직전 Hook이 강제 · 100%면 차단</span></div>
           <div class="lim" id="ch-lim"></div>
         </section>
-        <section class="card c6">
+        <section class="card c6 m-hide">
           <div class="hd"><span class="eyebrow">일별 초과수익</span><span class="sub">박문화 − KOSPI · %p</span></div>
           <div class="chart" id="ch-alpha" style="min-height:200px"></div>
         </section>
@@ -419,8 +421,8 @@ details.log summary { border-radius: 16px; }
     <div class="more-body">
       <div class="grid">
         <section class="card c8">
-          <div class="hd"><span class="eyebrow">매매 타임라인</span></div>
-          <div class="chart" id="ch-timeline" style="min-height:200px"></div>
+          <div class="hd m-hide"><span class="eyebrow">매매 타임라인</span></div>
+          <div class="chart m-hide" id="ch-timeline" style="min-height:200px"></div>
           <div class="recent" id="recent"></div>
         </section>
         <section class="card c4">
@@ -428,11 +430,11 @@ details.log summary { border-radius: 16px; }
           <div class="val" id="k-blocks">—</div>
           <div class="chart" id="ch-blocks" style="min-height:110px"></div>
         </section>
-        <section class="card c6">
+        <section class="card c6 m-hide">
           <div class="hd"><span class="eyebrow">확신도 vs 수익</span><span class="sub">원 크기 = 매수 금액 · 흐린 원 = 보유 중</span></div>
           <div class="chart" id="ch-scatter" style="min-height:240px"></div>
         </section>
-        <section class="card c6">
+        <section class="card c6 m-hide">
           <div class="hd"><span class="eyebrow">토큰 사용량</span><span class="sub">천 토큰 / 일 · 빨간 점 = 실행 실패</span></div>
           <div class="chart" id="ch-tokens" style="min-height:160px"></div>
         </section>
@@ -1069,7 +1071,7 @@ details.log summary { border-radius: 16px; }
     list.innerHTML = items.map((d, i) => {
       const cls = d.action.startsWith('매수') ? 'buy' : d.action.startsWith('매도') ? 'sell' : '', c = +d.confidence || 0;   // '매수 예정'(판단 갱신)도 같은 색
       const act = d.qty ? `${d.action} ${won(d.qty)}주` : d.action;
-      return `<div class="dec-row" data-i="${i}"><span class="nm">${esc(d.name)}</span><span class="act ${cls}">${esc(act)}</span>`
+      return `<div class="dec-row${cls ? '' : ' quiet'}" data-i="${i}"><span class="nm">${esc(d.name)}</span><span class="act ${cls}">${esc(act)}</span>`
         + `<span class="cf"><i><b class="${c >= .6 ? 'hi' : ''}" style="width:${Math.round(c * 100)}%"></b></i>${c.toFixed(2)}</span>`
         + `<span class="why">${d.blocked ? '<em>차단</em> · ' : ''}${esc(d.decision)}</span></div>`;
     }).join('');
