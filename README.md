@@ -131,7 +131,7 @@ One page that shows what the agent traded, and why.
 | **Live decision** | Latest run: regime, stock cap, each stock's action and conviction (reasons on hover/tap) |
 | **Live KOSPI** | 1-minute bars vs. previous close, volume, RSI, investor net buying |
 | **Portfolio** | Holdings vs. regime cap, per-stock P&L before / after fees and tax |
-| **Trading Detail** | This week, max drawdown, win rate, risk-limit usage, daily excess return, return calendar |
+| **Record** | This week, max drawdown, win rate, risk-limit usage, daily excess return, return calendar |
 | **Agent Black Box** | Trade timeline with debate, Hook blocks, conviction vs. return, token usage, Feedback Loop, full decision log |
 | **Cheer board** | Anonymous comments, no login, flood-protected |
 
