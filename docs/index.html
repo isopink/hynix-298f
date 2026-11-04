@@ -70,7 +70,9 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
 .hero .big { font-size: clamp(44px, 5.2vw, 72px); font-weight: 500; letter-spacing: -2px; line-height: 1; color: var(--red-hi); margin: 12px 0 8px; }
 .hero .side { display: flex; flex-direction: column; justify-content: flex-start; gap: 28px; }
 .kv { display: grid; gap: 4px; }
-.hero .vs { display: flex; align-items: baseline; gap: 10px; font-size: 16px; margin-top: 6px; }
+.hero .vs { display: flex; align-items: baseline; gap: 10px; font-size: 18px; margin-top: 8px; }
+.hero .vs.sm { font-size: 13px; margin-top: 4px; }
+.hero .big.won { font-size: clamp(36px, 4.4vw, 60px); letter-spacing: -1.5px; white-space: nowrap; }   /* 누적 손익 (원) */
 .hero .ret-row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 6px 20px; }
 .hero .vs-side { display: grid; gap: 4px; font-size: 18px; padding-bottom: 14px; }
 .kv span:last-child { font-size: 18px; font-weight: 500; }
@@ -255,6 +257,7 @@ td.k { color: var(--ink); white-space: nowrap; }
   .hero .side { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px 10px; }
   .hero .side > div:first-child { grid-column: 1 / -1; }
   .hero .big { font-size: 52px; margin: 8px 0 0; }
+  .hero .big.won { font-size: 40px; }
   .hero .kv { padding-top: 12px; border-top: 1px solid rgba(255,255,255,.08); }
   .hero .kv span:last-child { font-size: 14px; white-space: nowrap; }
   .eyebrow { letter-spacing: .2px; font-size: 12px; }
@@ -350,12 +353,10 @@ details.log summary { border-radius: 16px; }
       <div class="hero">
         <div class="side">
           <div>
-            <span class="eyebrow">누적 수익률</span>
-            <div class="ret-row">
-              <div class="big" id="ret">—</div>
-              <div class="vs-side"><span class="eyebrow">KOSPI 대비</span><span id="k-alpha">—</span></div>
-            </div>
-            <div class="vs" id="realized"><span class="eyebrow">양도차익</span><span id="pnl-won">—</span></div>
+            <div id="realized"><span class="eyebrow">양도차익</span>
+            <div class="big won" id="pnl-won">—</div></div>
+            <div class="vs"><span class="eyebrow">KOSPI 대비</span><span id="k-alpha">—</span></div>
+            <div class="vs sm"><span class="eyebrow">수익률</span><span id="ret-pct">—</span></div>
           </div>
         </div>
         <div class="hero-chart" style="display:flex;flex-direction:column;gap:10px;min-width:0">
@@ -675,10 +676,11 @@ details.log summary { border-radius: 16px; }
   }
 
   function fillText() {
-    $('ret').textContent = pct(D.ret); $('ret').classList.toggle('neg', D.ret < 0); document.querySelector('.hero-card').classList.toggle('neg', D.ret < 0);   // 손실은 파랑 (국내 증시 관례)
-    const rz = realized(D.trades), pl = rz.net;   // 양도차익 = 판 종목의 (매도금액 − 매도 수수료·세금) − (평단 × 수량 + 매수 수수료)
     const signed = v => (v > 0 ? '+' : v < 0 ? '−' : '') + won(Math.abs(Math.round(v))) + '원';
-    $('pnl-won').textContent = rz.n ? signed(pl) : '0원'; tone($('pnl-won'), pl);
+    $('ret-pct').textContent = pct(D.ret); tone($('ret-pct'), D.ret);   // 전체 수익률 = 현재 자산 ÷ 시작 원금 − 1
+    const rz = realized(D.trades), pl = rz.net;   // 양도차익 = 판 종목의 (매도금액 − 매도 수수료·세금) − (평단 × 수량 + 매수 수수료)
+    $('pnl-won').textContent = rz.n ? signed(pl) : '0원';
+    $('pnl-won').classList.toggle('neg', pl < 0); document.querySelector('.hero-card').classList.toggle('neg', pl < 0);   // 손실은 파랑 (국내 증시 관례)
     const rtip = `<div class="t">양도차익 (판 종목만, 매도 ${rz.n}건)</div>${row('매도금액', won(Math.round(rz.sell)) + '원')}${row('취득가액', won(Math.round(rz.cost)) + '원')}`
       + `${row('수수료·세금', '−' + won(Math.round(rz.fees)) + '원')}${row('양도차익', signed(pl), pl >= 0 ? 'up' : 'down')}`;
     $('realized').onpointermove = $('realized').onpointerdown = ev => showTip(ev, rtip);
