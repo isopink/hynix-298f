@@ -173,6 +173,14 @@ def index_etf(code, p=None):
     return ix if ix and ix.get("enabled") and code in ix.get("codes", {}) else None
 
 
+def other_etf(name, p=None):
+    """KODEX 인버스·KODEX 200(market_etf) 말고 다른 ETF·ETN 인지 이름으로 판별. 장중 순위에 섞여 들어오는 걸 막음."""
+    p = p or params()
+    nm = str(name or "").strip()
+    pre = p["screen"].get("exclude_etf_prefixes", [])
+    return "ETN" in nm.upper() or any(nm.upper().startswith(x.upper()) for x in pre)
+
+
 def market_etf(code, p=None):
     """시장 ETF(인버스·지수추종)면 (설정, '인버스' | '지수'), 아니면 (None, None). 둘 다 국면·하루 매수 횟수·짧은 익절 규칙을 씀."""
     p = p or params()

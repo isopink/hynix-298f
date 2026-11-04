@@ -106,7 +106,7 @@ def screen(rows, p, r, frac):
     ok = []
     for x in rows:
         nm, px = x.get("name", ""), x.get("price") or x.get("close")
-        if not x["code"].endswith("0") or any(k in nm for k in s["exclude_name_keywords"]):
+        if not x["code"].endswith("0") or any(k in nm for k in s["exclude_name_keywords"]) or C.other_etf(nm, p):
             continue
         if x.get("limit_up_recent") or x.get("trading_value_20d", 0) < s["min_trading_value"]:
             continue

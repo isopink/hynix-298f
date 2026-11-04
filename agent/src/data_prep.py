@@ -154,22 +154,21 @@ def live_market(b):
 def universe_krx(p, asof):
     """전 종목 중 거래대금·이름 조건으로 1차 선별 (KRX 로그인 필요)."""
     s = p["screen"]
-    frames = []
-    for m in s["markets"]:
-        df = stock.get_market_ohlcv(ymd(asof), market=m)
-        df["market"] = m
-        frames.append(df)
-    df = pd.concat(frames)
-    df = df[(df["거래대금"] >= s["min_trading_value"]) & (df.index.str.endswith("0"))]  # 우선주 제외
-    df = df.sort_values("거래대금", ascending=False).head(s["prefilter_top"] * 2)
+    quota = {k: v for k, v in (s.get("prefilter_by_market") or {}).items() if not k.startswith("_")}
     out = []
-    for code in df.index:
-        nm = name_of(code)
-        if any(k in nm for k in s["exclude_name_keywords"]):
-            continue
-        out.append((code, nm))
-        if len(out) >= s["prefilter_top"]:
-            break
+    for m in s["markets"]:   # 11-04 시장별로 따로 상위 N (합쳐 뽑으면 코스피 대형주가 거의 다 차지해 코스닥이 빠짐)
+        n = quota.get(m, s["prefilter_top"])
+        df = stock.get_market_ohlcv(ymd(asof), market=m)
+        df = df[(df["거래대금"] >= s["min_trading_value"]) & (df.index.str.endswith("0"))]  # 우선주 제외
+        got = 0
+        for code in df.sort_values("거래대금", ascending=False).index[: n * 2]:
+            nm = name_of(code)
+            if any(k in nm for k in s["exclude_name_keywords"]) or C.other_etf(nm, p):
+                continue
+            out.append((code, nm))
+            got += 1
+            if got >= n:
+                break
     return out
 
 
