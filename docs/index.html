@@ -1028,7 +1028,7 @@ details.log summary { border-radius: 16px; }
       : age <= 12 ? ['On', 'ok', `마지막 잔고 조회 ${Math.max(0, Math.round(age))}분 전`]
       : ['Off', 'bad', LIVE_AT ? `잔고 조회가 ${Math.round(age)}분째 없음` : '잔고 조회 기록 없음'];
     let agent;
-    if (!st.last_run) agent = ['On', 'ok', '첫 판단 대기 · 평일 09:30부터 30분마다'];   // 아직 실행 전이어도 스케줄은 켜져 있음
+    if (!st.last_run) agent = ['On', 'ok', '첫 판단 대기 · 평일 09:30부터 15분마다'];   // 아직 실행 전이어도 스케줄은 켜져 있음
     else {
       const late = st.next_run && Date.now() - Date.parse(st.next_run.replace(' ', 'T') + ':00+09:00') > 30 * 60e3;
       agent = st.last_ok === false ? ['Off', 'bad', '마지막 판단 실패' + (st.note ? ' · ' + st.note : '')]
@@ -1463,8 +1463,8 @@ details.log summary { border-radius: 16px; }
   }
   tk.addEventListener('click', () => fab.click());
 
-  // ---------- 매매 시각: 평일 09:30~14:30 매시 매매, 판단은 30분마다 (agent/setup_tasks.ps1 · params.schedule 과 맞출 것). 다음 매매에 빨간 점 ----------
-  const SCHED = { from: '09:30', to: '14:30', every: 60, judge: 30 };
+  // ---------- 매매 시각: 평일 09:30~14:30 매시 매매, 판단은 15분마다 (agent/setup_tasks.ps1 · params.schedule 과 맞출 것). 다음 매매에 빨간 점 ----------
+  const SCHED = { from: '09:30', to: '14:30', every: 60, judge: 15 };
   const sched = document.getElementById('sched');
   function drawSched() {
     const k = new Date(Date.now() + 9 * 3600e3), day = k.getUTCDay();   // 한국 시각
