@@ -371,6 +371,19 @@ def test_fill_up_keeps_both_etfs():
     out = intraday.fill_up([{"code": "X"}], prep, held=set(), n=5)
     assert [c["code"] for c in out] == ["X", "A", "114800", "069500"], out
 
+def test_missed_trade_catch_up():
+    p = {"schedule": {"trade_times": ["09:45", "10:45"]}}
+    t = lambda h, m: datetime(2026, 11, 4, h, m, 7, tzinfo=C.KST)  # noqa: E731
+    reg = lambda hm, mode: {"kind": "regime", "time": f"2026-11-04 {hm}", "mode": mode}  # noqa: E731
+    assert C.missed_trade(t(9, 30), p, []) is None                       # 아직 매매 시각 전
+    assert C.missed_trade(t(10, 0), p, []) == "09:45"                     # 09:45 매매 실행이 없었음 → 10:00 이 대신
+    assert C.missed_trade(t(10, 0), p, [reg("09:47", "decide")]) is None  # 09:45 매매 실행 있었음
+    assert C.missed_trade(t(10, 0), p, [reg("09:47", "view")]) == "09:45" # 판단 갱신은 매매로 안 침
+    assert C.missed_trade(t(10, 0), p, [reg("09:31", "decide")]) == "09:45"   # 매매 시각 전 기록은 안 침
+    assert C.missed_trade(t(11, 0), p, [reg("09:47", "decide")]) == "10:45"   # 가장 최근 매매 시각 기준
+    assert C.missed_trade(t(10, 0), p, [{**reg("09:47", "decide"), "time": "2026-11-03 09:47"}]) == "09:45"   # 어제 기록은 안 침
+
+
 def test_last_trade_summary():
     import logger
     t = C.today().isoformat()

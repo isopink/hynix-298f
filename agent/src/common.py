@@ -279,6 +279,22 @@ def trade_slot(t=None, p=None):
     return not times or _slot(t) in times
 
 
+def missed_trade(t=None, p=None, rows=None):
+    """직전 매매 시각 이후 오늘 매매 실행이 한 번도 없었으면 그 시각, 있었으면 None.
+    작업 스케줄러가 그 회차를 안 돌렸거나(일정 변경·PC 꺼짐), 앞 실행 때문에 건너뛰었거나, 국면 기록 전에 실패한 경우
+    다음 판단 회차가 대신 매매함. 매매 실행 = RUN_MODE decide 로 남은 국면(regime) 기록."""
+    times = (p or params())["schedule"].get("trade_times") or []
+    s = _slot(t)
+    due = [x for x in times if x < s]
+    if not due:
+        return None
+    last, d = due[-1], (t or now()).date().isoformat()
+    rows = read_jsonl(JOURNAL) if rows is None else rows
+    done = any(r["kind"] == "regime" and r.get("mode") == "decide" and r["time"].startswith(d) and r["time"][11:16] >= last
+               for r in rows)
+    return None if done else last
+
+
 def next_trade_time(t=None, p=None):
     times = (p or params())["schedule"].get("trade_times") or []
     s = _slot(t)

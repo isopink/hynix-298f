@@ -208,7 +208,15 @@ def main():
             log("기준값 조정은 평일에만 실행함")
             return
 
-    if not acquire():
+    trading = kind == "decide" and (C.trade_slot() or C.missed_trade())
+    got = acquire()
+    if not got and trading:   # 매매 회차는 앞 실행(판단 갱신 등)이 끝날 때까지 최대 10분 기다림
+        log("앞 실행이 진행 중이라 매매 회차를 최대 10분 기다림")
+        for _ in range(40):
+            time.sleep(15)
+            if (got := acquire()):
+                break
+    if not got:
         log("다른 실행이 진행 중이라 건너뜀")
         sys.exit(3)   # 감시 루프가 다음 회차에 다시 시도하도록
     try:
@@ -220,7 +228,11 @@ def main():
             py("intraday.py", "--rsi")   # 후보·보유 종목 RSI 를 지금 가격으로 다시 계산 (실패하면 전일 RSI)
         p = C.params()
         if kind == "decide" and not C.trade_slot():   # 판단은 15분마다, 매매는 params.schedule.trade_times 회차에만
-            kind = "view"
+            missed = C.missed_trade()
+            if missed:   # 직전 매매 회차가 실행되지 않았으면 이번 회차가 대신 매매
+                log(f"{missed} 매매 회차가 실행되지 않아 이번 회차에서 매매함")
+            else:
+                kind = "view"
         start = p["competition"]["start"]
         prompt = PROMPTS[kind].format(time=C.stamp(), codes=a.codes, why=a.why, next_trade=C.next_trade_time() or "내일",
                                       week=C.competition_week(p=p), period=f"{start} 이후 이번 주")
