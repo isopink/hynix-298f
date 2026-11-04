@@ -1,15 +1,15 @@
 {
-  "last_run": "2026-11-04 12:20",
+  "last_run": "2026-11-04 12:30",
   "last_ok": true,
-  "next_run": "2026-11-04 12:30",
-  "runs_today": 7,
+  "next_run": "2026-11-04 13:00",
+  "runs_today": 8,
   "failures_today": 1,
-  "note": "KODEX 인버스(114800)는 팔지 않고 보유로 기록했습니다. 감시가 1,241원을 잡았지만, 계좌에서 다시 확인했을 때 현재가가 이미 1,238원으로 내려와 있었습니다.",
+  "note": "하락 / 매수 0건 / 매도 0건 / 관망 3건",
   "sync": {
     "ok": true,
     "error": null,
-    "head": "3e0727c",
-    "checked_at": "2026-11-04 12:21",
+    "head": "d83bca4",
+    "checked_at": "2026-11-04 12:33",
     "rejected": null,
     "applied_at": "2026-11-04 12:17"
   }

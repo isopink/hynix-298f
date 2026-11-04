@@ -81,8 +81,8 @@
     ]
   },
   "intraday": {
-    "time": "12:00",
-    "pool": 235,
+    "time": "12:30",
+    "pool": 236,
     "analyzed_new": 30,
     "passed": 5,
     "kept_prep": false
