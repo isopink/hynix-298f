@@ -27,7 +27,7 @@
 7. **매도 먼저, 매수는 그다음** 순서로 주문합니다.
    - `plan_order(code, side, confidence)` → qty > 0 이면 `place_order(...)` (qty 는 plan 값 그대로)
    - qty 가 0 이면 주문하지 않고 `record_decision(action="관망")` 으로 이유(limited_by)를 남깁니다.
-   - 주문하지 않은 보유 종목은 `record_decision(action="보유")`, 확신도가 가장 높았던 미매수 후보 1~3개는 `record_decision(action="관망")`.
+   - 주문하지 않은 보유 종목은 `record_decision(action="보유")`, 사지 않은 후보는 **전부** `record_decision(action="관망")` (확신도가 낮아도 빠짐없이. 대시보드가 검토한 종목을 모두 보여줌).
 8. 마지막에 한 줄 요약을 출력하고 끝냅니다: `국면 / 매수 n건 / 매도 n건 / 관망 n건`
 
 ### A-2. 판단 갱신 (매매 없는 회차: 09:30~15:00 15분 간격 중 위 6개를 뺀 나머지)

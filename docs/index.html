@@ -153,9 +153,11 @@ details.log[open] > summary::after { content: "−"; }
 .dec-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; margin-bottom: 6px; font-size: 13px; color: var(--body); }
 .dec-head b { color: var(--ink); font-weight: 600; }
 .dec-head .why { flex: 1 1 260px; min-width: 0; color: var(--muted); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.dec-row { display: grid; grid-template-columns: minmax(80px, 150px) 64px 128px minmax(0, 1fr); gap: 14px; align-items: center; padding: 11px 0; border-top: 1px solid rgba(255,255,255,.06); font-size: 13px; }
+.dec-row { display: grid; grid-template-columns: minmax(80px, 150px) 78px 128px minmax(0, 1fr); gap: 14px; align-items: center; padding: 11px 0; border-top: 1px solid rgba(255,255,255,.06); font-size: 13px; }
 .dec-row .nm { color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.dec-row .act { justify-self: start; font-size: 12px; padding: 2px 10px; border-radius: 9999px; border: 1px solid rgba(255,255,255,.14); color: var(--body); }
+.dec-row .nm .vl { display: block; margin-top: 2px; font-size: 11px; color: var(--muted); }   /* 20일 변동성 */
+.dec-row .nm .vl.hi { color: var(--red-hi); }
+.dec-row .act { justify-self: start; font-size: 12px; padding: 2px 10px; border-radius: 9999px; border: 1px solid rgba(255,255,255,.14); color: var(--body); white-space: nowrap; }
 .dec-row .act.buy { color: var(--red-hi); border-color: rgba(255,90,74,.45); }
 .dec-row .act.sell { color: #4aa3d4; border-color: rgba(74,163,212,.45); }
 .dec-row .cf { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--body); }
@@ -503,6 +505,8 @@ window.TRADE_TIMES = ['09:45', '10:30', '11:30', '13:00', '14:00', '15:00'];
   window.addEventListener('scroll', () => { if (lastPointer !== 'mouse') tip.hidden = true; }, { passive: true });
   const hideTip = () => { if (lastPointer === 'mouse') tip.hidden = true; };      // 터치는 탭한 말풍선을 고정
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  // 20일 변동성(연율화) 꼬리표. 100% 넘으면 ⚡고변동 (agent params.screen.max_vol20 기준과 같음)
+  const volTag = v => v == null || isNaN(+v) ? '' : `<span class="vl${+v > 1 ? ' hi' : ''}">${+v > 1 ? '⚡' : ''}변동성 ${Math.round(+v * 100)}%</span>`;
   const row = (a, b, cls) => `<div class="r"><span>${esc(a)}</span><span class="${cls || ''}">${esc(b)}</span></div>`;
 
   const none = (el, msg) => { el.innerHTML = ''; el.classList.add('empty'); const p = document.createElement('p'); p.className = 'f-empty'; p.textContent = msg; el.appendChild(p); };
@@ -1058,7 +1062,7 @@ window.TRADE_TIMES = ['09:45', '10:30', '11:30', '13:00', '14:00', '15:00'];
     if (!cs.length) return none(list, '오늘은 조건을 통과한 후보가 없어요.');
     list.innerHTML = cs.map((c, i) => {
       const n = (c.news || [])[0], s = +c.score || 0;
-      return `<div class="dec-row" data-i="${i}"><span class="nm">${esc(c.name)}</span>`
+      return `<div class="dec-row" data-i="${i}"><span class="nm">${esc(c.name)}${volTag(c.vol20)}</span>`
         + `<span class="act ${c.ret5 > 0 ? 'buy' : c.ret5 < 0 ? 'sell' : ''}">${pct(c.ret5, 1)}</span>`
         + `<span class="cf"><i><b class="${s >= .6 ? 'hi' : ''}" style="width:${Math.round(s * 100)}%"></b></i>${s.toFixed(2)}</span>`
         + `<span class="why">${n ? (n.risk ? '<em>⚠</em> ' : '') + esc(n.title) : '최근 뉴스 없음'}</span></div>`;
@@ -1113,7 +1117,8 @@ window.TRADE_TIMES = ['09:45', '10:30', '11:30', '13:00', '14:00', '15:00'];
     list.innerHTML = items.map((d, i) => {
       const cls = d.action.startsWith('매수') ? 'buy' : d.action.startsWith('매도') ? 'sell' : '', c = +d.confidence || 0;   // '매수 예정'(판단 갱신)도 같은 색
       const act = d.qty ? `${d.action} ${won(d.qty)}주` : d.action;
-      return `<div class="dec-row${cls ? '' : ' quiet'}" data-i="${i}"><span class="nm">${esc(d.name)}</span><span class="act ${cls}">${esc(act)}</span>`
+      const vol = d.vol20 ?? ((BRIEF.candidates || []).find(c => c.code === d.code) || {}).vol20;   // 예전 decision.json 엔 vol20 이 없어 후보 자료로 보충
+      return `<div class="dec-row${cls ? '' : ' quiet'}" data-i="${i}"><span class="nm">${esc(d.name)}${volTag(vol)}</span><span class="act ${cls}">${esc(act)}</span>`
         + `<span class="cf"><i><b class="${c >= .6 ? 'hi' : ''}" style="width:${Math.round(c * 100)}%"></b></i>${c.toFixed(2)}</span>`
         + `<span class="why">${d.blocked ? '<em>차단</em> · ' : ''}${esc(d.decision)}</span></div>`;
     }).join('');

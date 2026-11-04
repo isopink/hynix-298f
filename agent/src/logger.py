@@ -181,9 +181,15 @@ def decision(rows, nm):
     reg = next((r for r in reversed(rows) if r["kind"] == "regime"), None)
     if not reg:
         return {}
+    items = run_items([r for r in rows if r.get("run") == reg["run"]], nm)
+    b = C.read_json(C.BRIEFING, {}) or {}
+    for it in items:   # 20일 변동성 (연율화). 대시보드가 종목명 아래에 표시
+        row = C.briefing_row(it["code"], b) or {}
+        if row.get("vol20") is not None:
+            it["vol20"] = row["vol20"]
     return {"time": reg["time"], "regime": reg["regime"], "cap": reg["cap"], "reason": reg.get("reason", ""),
             "mode": "view" if reg.get("mode") == "view" else "trade", "next_trade": C.next_trade_time(),
-            "items": run_items([r for r in rows if r.get("run") == reg["run"]], nm)}
+            "items": items}
 
 
 def debates(rows, nm, keep=120):
