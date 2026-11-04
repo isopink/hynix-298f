@@ -66,11 +66,13 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
 .chart.empty { min-height: 0 !important; flex: 0 0 auto; }
 .chart svg { display: block; width: 100%; overflow: visible; }
 
-.hero { display: grid; grid-template-columns: minmax(0, 290px) minmax(0, 1fr); gap: 32px; }
+.hero { display: grid; grid-template-columns: minmax(0, 400px) minmax(0, 1fr); gap: 32px; }
 .hero .big { font-size: clamp(44px, 5.2vw, 72px); font-weight: 500; letter-spacing: -2px; line-height: 1; color: var(--red-hi); margin: 12px 0 8px; }
 .hero .side { display: flex; flex-direction: column; justify-content: flex-start; gap: 28px; }
 .kv { display: grid; gap: 4px; }
 .hero .vs { display: flex; align-items: baseline; gap: 10px; font-size: 16px; margin-top: 6px; }
+.hero .ret-row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 6px 20px; }
+.hero .vs-side { display: grid; gap: 4px; font-size: 18px; padding-bottom: 14px; }
 .kv span:last-child { font-size: 18px; font-weight: 500; }
 .legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 11px; color: var(--muted); }
 .legend i { display: inline-block; width: 10px; height: 2px; vertical-align: middle; margin-right: 6px; }
@@ -145,7 +147,7 @@ details.log[open] > summary::after { content: "−"; }
 .hero-card > .st-line { position: absolute; top: 20px; right: 20px; z-index: 1; flex-direction: column; align-items: flex-end; gap: 6px; }   /* 누적 수익률 카드 우상단, 시장 모니터링 위 · 에이전트 아래 */
 .hero-card > .st-line > span + span::before { content: none; }
 .hero-chart { padding-top: 44px; }   /* 우상단 상태줄과 차트 이름표가 겹치지 않게 */
-@media (max-width: 640px) { .hero-chart { padding-top: 0; } }
+@media (max-width: 640px) { .hero-chart { padding-top: 0; } .hero-card > .st-line { position: static; flex-direction: row; gap: 4px 14px; } }   /* 폰: 상태 표시를 위 한 줄로 (KOSPI 대비와 겹침 방지) */
 .dec-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; margin-bottom: 6px; font-size: 13px; color: var(--body); }
 .dec-head b { color: var(--ink); font-weight: 600; }
 .dec-head .why { flex: 1 1 260px; min-width: 0; color: var(--muted); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -349,9 +351,11 @@ details.log summary { border-radius: 16px; }
         <div class="side">
           <div>
             <span class="eyebrow">누적 수익률</span>
-            <div class="big" id="ret">—</div>
+            <div class="ret-row">
+              <div class="big" id="ret">—</div>
+              <div class="vs-side"><span class="eyebrow">KOSPI 대비</span><span id="k-alpha">—</span></div>
+            </div>
             <div class="vs"><span class="eyebrow">손익</span><span id="pnl-won">—</span></div>
-            <div class="vs"><span class="eyebrow">KOSPI 대비</span><span id="k-alpha">—</span></div>
           </div>
         </div>
         <div class="hero-chart" style="display:flex;flex-direction:column;gap:10px;min-width:0">
