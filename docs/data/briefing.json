@@ -81,8 +81,8 @@
     ]
   },
   "intraday": {
-    "time": "11:00",
-    "pool": 227,
+    "time": "11:30",
+    "pool": 235,
     "analyzed_new": 30,
     "passed": 5,
     "kept_prep": false
@@ -106,7 +106,7 @@
           "risk": false
         }
       ],
-      "foreign_today": 494250000,
+      "foreign_today": 362450000,
       "inst_today": 0
     },
     {
@@ -119,7 +119,7 @@
       "vol20": 1.13,
       "foreign_net": -20169999850,
       "inst_net": 26384209825,
-      "score": 0.444,
+      "score": 0.857,
       "news": [
         {
           "date": "11-04",
@@ -137,8 +137,8 @@
           "risk": false
         }
       ],
-      "foreign_today": 0,
-      "inst_today": 532950000
+      "foreign_today": 1114350000,
+      "inst_today": 1501950000
     },
     {
       "code": "000810",
