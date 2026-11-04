@@ -470,6 +470,8 @@ details.log summary { border-radius: 16px; }
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
 <script src="config.js"></script>
 <script>
+// 매매 회차 (agent/config/params.json 의 schedule.trade_times 와 맞출 것). 판단 카드·상단 칩이 같이 씀
+window.TRADE_TIMES = ['09:45', '10:30', '11:30', '13:00', '14:00', '15:00'];
 (function () {
   const GR = { red: 'url(#gradRed)', blue: 'url(#gradBlue)', grey: 'url(#gradGrey)', redH: 'url(#gradRedH)', blueH: 'url(#gradBlueH)', ring: 'url(#gradRing)' };
   const C = { red: '#da291c', redHi: '#ff5a4a', blue: '#4aa3d4', grey: '#585858', muted: '#8c8c8c', grid: 'rgba(255,255,255,.06)', ink: '#f5f5f5', body: '#a0a0a0' };
@@ -1082,7 +1084,9 @@ details.log summary { border-radius: 16px; }
     const dc = DECISION, head = $('dec-head'), list = $('dec-list');
     if (!dc.time || (BRIEF.created && BRIEF.created > dc.time)) return briefingCard();
     $('dec-title').textContent = '실시간 판단';
-    $('dec-asof').textContent = md(toD(dc.time)) + ' ' + dc.time.slice(11, 16) + (dc.mode === 'view' ? ' 판단 갱신 · 주문 없음' + (dc.next_trade ? ' · 다음 매매 ' + dc.next_trade : '') : ' 판단');
+    const kst = new Date(Date.now() + 9 * 3600e3), nowHM = kst.toISOString().slice(11, 16), wd = kst.getUTCDay();
+    const nextTrade = wd >= 1 && wd <= 5 ? window.TRADE_TIMES.find(t => t > nowHM) : null;
+    $('dec-asof').textContent = nextTrade ? '다음 매매 ' + nextTrade : '';   // 판단 시각·갱신 여부는 빼고 다음 매매만
     list.classList.remove('empty');
     head.innerHTML = `<span class="rg">국면 <b style="color:${regC(dc.regime)}">${esc(dc.regime)}</b></span>`
       + `<span>주식 비중 상한 <b>${Math.round(+dc.cap * 100)}%</b></span>`
@@ -1464,7 +1468,7 @@ details.log summary { border-radius: 16px; }
   tk.addEventListener('click', () => fab.click());
 
   // ---------- 매매 시각: 평일 하루 6번 매매, 판단은 15분마다 (agent/setup_tasks.ps1 · params.schedule.trade_times 와 맞출 것). 다음 매매에 빨간 점 ----------
-  const SCHED = { trades: ['09:45', '10:30', '11:30', '13:00', '14:00', '15:00'], judge: 15 };
+  const SCHED = { trades: window.TRADE_TIMES, judge: 15 };
   const sched = document.getElementById('sched');
   function drawSched() {
     const k = new Date(Date.now() + 9 * 3600e3), day = k.getUTCDay();   // 한국 시각
