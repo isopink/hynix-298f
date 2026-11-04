@@ -314,3 +314,58 @@ def latest_regime():
     t = today().isoformat()
     rows = [r for r in read_jsonl(JOURNAL) if r["kind"] == "regime" and r["time"].startswith(t)]
     return rows[-1] if rows else None
+
+
+def prior_judgments(n=2, rows=None, run=None):
+    """오늘 직전 판단 n회(이번 실행 제외)의 종목별 행동·확신도·결정 문장. 15분마다 새로 판단하면서 근거가 그대로인데
+    확신도만 크게 흔들리지 않도록 참고로 줌 (11-04). 매매 회차는 앞의 판단 갱신을 이어받는 셈."""
+    rows = read_jsonl(JOURNAL) if rows is None else rows
+    run = os.environ.get("RUN_ID", "") if run is None else run
+    t = today().isoformat()
+    runs = []
+    for x in rows:
+        if x["kind"] == "regime" and x["time"].startswith(t) and x.get("run") and x["run"] != run and x["run"] not in runs:
+            runs.append(x["run"])
+    out = []
+    for rid in runs[-n:][::-1]:   # 최근 것부터
+        reg = next(x for x in reversed(rows) if x["kind"] == "regime" and x.get("run") == rid)
+        items = {}
+        for x in rows:
+            if x.get("run") != rid:
+                continue
+            if x["kind"] == "decision":
+                items[x["code"]] = (x.get("name", x["code"]), x["action"], x["confidence"], x.get("decision", ""))
+            elif x["kind"] == "fill":
+                items[x["code"]] = (x.get("name", x["code"]), x["side"], x.get("confidence"), x.get("decision", ""))
+        if not items:
+            continue
+        mode = "판단 갱신" if reg.get("mode") == "view" else "매매"
+        out += ["", f"### {reg['time'][11:16]} {mode} · 국면 {reg['regime']}", "| 종목 | 행동 | 확신도(보정 전) | 결정 |", "|---|---|---|---|"]
+        for name, act, conf, dec in sorted(items.values(), key=lambda v: -(v[2] or 0)):
+            dec = (dec or "").replace("|", "/").replace("\n", " ")
+            out.append(f"| {name} | {act} | {conf if conf is not None else '-'} | {dec[:90]}{'…' if len(dec) > 90 else ''} |")
+    if not out:
+        return ""
+    return "\n".join(["", "", "## 직전 판단 (오늘, 참고용)",
+                      "15분 전·30분 전 판단입니다. 숫자·뉴스·수급이 그때와 크게 다르지 않으면 확신도를 0.05 넘게 바꾸지 마세요. "
+                      "크게 바꾼다면 무엇이 달라졌는지 decision 문장에 적으세요. 이 표는 근거가 아니라 일관성 확인용입니다.", *out])
+
+def intraday(b, r):
+    """후보·보유 종목의 지금 가격과 오늘 등락률. 지표는 전일 종가 기준이라 오늘 급등·급락을 여기서 봄."""
+    rows, seen = [], set()
+    for x in b.get("candidates", []) + (C.read_json(C.ACCOUNT, {}) or {}).get("holdings", []):
+        if x["code"] in seen:
+            continue
+        seen.add(x["code"])
+        try:
+            q = brk().quote_info(x["code"])
+        except Exception:  # noqa: BLE001  조회 실패는 표에서만 빠짐
+            continue
+        chg = q["change"]
+        rows.append(f"| {x['code']} | {x['name']} | {q['price']:,} | {'—' if chg is None else f'{chg:+.1%}'} |")
+    if not rows:
+        return ""
+    lim = r.get("max_buy_day_change", 0.10)
+    return "\n".join(["", "", f"## 오늘 장중 ({C.now().strftime('%H:%M')} 현재가, 전일 종가 대비)",
+                      f"위 지표는 전일 종가 기준입니다. 오늘 +{lim:.0%} 이상 오른 종목은 리스크 규칙상 매수할 수 없습니다 (추격 매수 금지).",
+                      "", "| 코드 | 종목 | 현재가 | 오늘 등락 |", "|---|---|---|---|", *rows])

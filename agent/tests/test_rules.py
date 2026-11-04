@@ -440,6 +440,22 @@ def test_tuning_sees_boosted_watch_confidence():
     assert any("최대 종목 비중" in e for e in tuning.consistency(bad))
 
 
+def test_prior_judgments_in_briefing():
+    t = C.today().isoformat()
+    rows = [
+        {"kind": "regime", "run": "r1", "time": f"{t} 13:46", "regime": "하락", "mode": "view"},
+        {"kind": "decision", "run": "r1", "code": "114800", "name": "KODEX 인버스", "action": "관망", "confidence": 0.6, "decision": "a|b"},
+        {"kind": "regime", "run": "r2", "time": f"{t} 14:01", "regime": "하락", "mode": "view"},
+        {"kind": "decision", "run": "r2", "code": "114800", "name": "KODEX 인버스", "action": "매수 예정", "confidence": 0.68, "decision": "x"},
+        {"kind": "regime", "run": "r3", "time": f"{t} 14:16", "regime": "하락", "mode": "decide"},   # 이번 실행 → 빠짐
+        {"kind": "regime", "run": "old", "time": "2026-01-01 10:00", "regime": "상승"},              # 오늘 아님 → 빠짐
+    ]
+    txt = C.prior_judgments(rows=rows, run="r3")
+    assert "## 직전 판단" in txt and txt.index("14:01 판단 갱신") < txt.index("13:46 판단 갱신")   # 최근 것부터
+    assert "| KODEX 인버스 | 매수 예정 | 0.68 |" in txt and "a/b" in txt and "14:16" not in txt
+    assert C.prior_judgments(rows=rows[-2:], run="r3") == ""
+
+
 if __name__ == "__main__":
     fails = 0
     for n, f in list(globals().items()):

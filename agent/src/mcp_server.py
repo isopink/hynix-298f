@@ -123,28 +123,8 @@ def get_briefing() -> str:
         ctx.append(f"- 시장 하락 보정 (코드가 적용): set_regime 으로 기록한 국면이 {'·'.join(mb['regimes'])} 이면 "
                    f"신규 매수 확신도 +{mb['add']:.2f} (악재 뉴스 ⚠ 제외). 국면을 이유로 스스로 확신도를 올리거나 내리지 않음")
     b["market"]["live"] = data_prep.live_market(b)   # 장중이면 지금 KOSPI 반영 힌트도 같이
-    return data_prep.to_text(b) + "\n".join(ctx) + intraday(b, r)
+    return data_prep.to_text(b) + "\n".join(ctx) + intraday(b, r) + C.prior_judgments()
 
-
-def intraday(b, r):
-    """후보·보유 종목의 지금 가격과 오늘 등락률. 지표는 전일 종가 기준이라 오늘 급등·급락을 여기서 봄."""
-    rows, seen = [], set()
-    for x in b.get("candidates", []) + (C.read_json(C.ACCOUNT, {}) or {}).get("holdings", []):
-        if x["code"] in seen:
-            continue
-        seen.add(x["code"])
-        try:
-            q = brk().quote_info(x["code"])
-        except Exception:  # noqa: BLE001  조회 실패는 표에서만 빠짐
-            continue
-        chg = q["change"]
-        rows.append(f"| {x['code']} | {x['name']} | {q['price']:,} | {'—' if chg is None else f'{chg:+.1%}'} |")
-    if not rows:
-        return ""
-    lim = r.get("max_buy_day_change", 0.10)
-    return "\n".join(["", "", f"## 오늘 장중 ({C.now().strftime('%H:%M')} 현재가, 전일 종가 대비)",
-                      f"위 지표는 전일 종가 기준입니다. 오늘 +{lim:.0%} 이상 오른 종목은 리스크 규칙상 매수할 수 없습니다 (추격 매수 금지).",
-                      "", "| 코드 | 종목 | 현재가 | 오늘 등락 |", "|---|---|---|---|", *rows])
 
 
 @mcp.tool()
