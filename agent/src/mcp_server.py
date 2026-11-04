@@ -86,7 +86,7 @@ def get_briefing() -> str:
         "", "## 오늘 기준값 (코드가 강제함)",
         f"- 실행 종류: {os.environ.get('RUN_MODE', 'decide')} · 대회 {C.competition_week(p=p)}주차 · 주차 비중 계수 ×{C.week_factor(p)}",
         f"- 매수 확신도 기준 {C.buy_threshold(p):.2f} · 매도 확신도 기준 {p['decision']['sell_min_confidence']:.2f} · "
-        f"확신도 {p['decision']['full_size_confidence']:.2f} 이상이면 종목 한도까지",
+        f"확신도 기준이면 종목당 {p['decision']['min_weight']:.0%}, {p['decision']['full_size_confidence']:.2f} 이상이면 {p['decision'].get('max_weight', r['max_weight_per_stock']):.0%} (여러 종목으로 나눠 삼)",
         f"- 국면별 주식 비중 상한: " + " · ".join(f"{k} {v:.0%}" for k, v in p["regime_cap"].items()),
         f"- 종목당 최대 {r['max_weight_per_stock']:.0%} · 최대 {r['max_positions']}종목 · 현금 {r['min_cash_ratio']:.0%} 이상 · "
         f"일일 손실 {r['daily_loss_limit']:.0%} 도달 시 신규 매수 중단",
@@ -238,8 +238,10 @@ def place_order(code: str, side: str, qty: int, confidence: float, bull: str, be
 @quiet
 def record_decision(code: str, action: str, confidence: float, bull: str, bear: str, decision: str) -> dict:
     """주문하지 않은 판단을 기록합니다. action 은 '보유' | '관망'. 판단 갱신(매매 없는 회차)에서는 '매수 예정' | '매도 예정' 도 씀."""
+    side = "매도" if action in ("보유", "매도 예정") else "매수"
+    adj, note = C.conf_boost(code, side, confidence)   # 매수였다면 / 매도였다면 코드가 붙였을 보정
     C.journal("decision", code=code, name=name_of(code), action=action, confidence=confidence,
-              bull=bull, bear=bear, decision=decision)
+              confidence_adj=adj, boost=note, bull=bull, bear=bear, decision=decision)
     return {"ok": True}
 
 

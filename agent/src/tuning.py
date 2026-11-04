@@ -106,7 +106,9 @@ def context():
         "regime_by_day": regimes,
         "trades": trade_results(rows, acc),
         "decisions": dict(Counter(x["action"] for x in rows if x["kind"] == "decision" and x.get("mode") != "view")),   # 판단 갱신(주문 없음) 회차는 뺌
-        "decision_confidence": [x["confidence"] for x in rows if x["kind"] == "decision" and x["action"] == "관망" and x.get("mode") != "view"],
+        "decision_confidence": watch_confidence(rows, p),
+        "decision_confidence_note": "매매 회차에서 관망한 후보의 확신도. 코드 보정(하락장 · RSI)을 더한 값이라 매수 기준과 바로 비교할 수 있음",
+        "buy_threshold_now": C.buy_threshold(p),
         "blocks_by_rule": dict(Counter(x["rule"] for x in rows if x["kind"] == "block")),
         "costs_note": "키움 모의서버 실제 비용은 매수·매도 수수료 각 0.35%, 매도 세금 0.2% (왕복 약 0.9%). 보유 중 return_after_costs 는 이를 반영한 값",
         "last_weekly_review": {"time": review["time"], "suggestion": review["suggestion"]} if review else None,
@@ -115,6 +117,21 @@ def context():
         "max_changes_per_run": rl["max_changes_per_run"],
         "tunable": {k: {**v, "current": get_value(p, k), "cooldown": k in cd} for k, v in rl["keys"].items()},
     }
+
+
+def watch_confidence(rows, p):
+    """매매 회차에서 관망한 후보의 보정 후 확신도 (높은 순). 11-04 전 기록은 보정 값이 없어 그 실행의 국면으로 하락장 보정만 더해 추정."""
+    mb = p.get("market_boost") or {}
+    reg = {x.get("run"): x.get("regime") for x in rows if x["kind"] == "regime"}
+    out = []
+    for x in rows:
+        if x["kind"] != "decision" or x["action"] != "관망" or x.get("mode") == "view":
+            continue
+        c = x.get("confidence_adj")
+        if c is None:
+            c = float(x["confidence"]) + (mb.get("add", 0) if reg.get(x.get("run")) in mb.get("regimes", []) else 0)
+        out.append(round(float(c), 3))
+    return sorted(out, reverse=True)
 
 
 # ---------------- 검사 · 반영 ----------------
@@ -167,6 +184,8 @@ def consistency(p):
     """바꾼 뒤에도 기준값끼리 말이 되는지."""
     d, rc = p["decision"], p["regime_cap"]
     errs = []
+    if d.get("max_weight", 1) < d["min_weight"] - 1e-9:
+        errs.append("최대 종목 비중은 최소 종목 비중보다 작을 수 없음")
     if d["full_size_confidence"] - d["buy_min_confidence"] < 0.10 - 1e-9:
         errs.append("최대 비중 확신도는 매수 기준보다 0.10 이상 높아야 함")
     if not rc["상승"] >= rc["횡보"] >= rc["하락"]:

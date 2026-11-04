@@ -22,6 +22,8 @@ P["competition"]["start"] = C.today().isoformat()   # 1주차
 P["week_factor"]["1"] = 1.0                         # 계산을 단순하게 하려고 1.0 으로
 P["decision"]["buy_min_confidence"] = 0.60          # 기준값은 자동 조정으로 바뀌므로 테스트에선 고정
 P["decision"]["sell_min_confidence"] = 0.60
+P["decision"]["min_weight"], P["decision"]["max_weight"] = 0.10, 0.20   # 수량 계산 테스트는 예전 크기(10~20%)로 고정
+P["regime_cap"]["하락"] = 0.50                    # 국면 상한 테스트는 하락 50% 기준으로 고정
 
 
 def acc(cash=50_000_000, holdings=()):
@@ -401,6 +403,31 @@ def test_last_trade_summary():
     assert lt["time"] == "10:31" and lt["bought"] == [{"name": "KT&G", "qty": 10}] and lt["sold"] == []
     assert lt["blocked"] == [{"name": "안랩", "rule": "고변동 종목 한도"}] and lt["watch"] == 2 and lt["hold"] == 1
     assert logger.last_trade(rows[-1:], {}) is None   # 오늘 매매 회차가 없으면 표시 안 함
+
+
+def test_max_weight_splits_positions():
+    p = {**P, "decision": {**P["decision"], "min_weight": 0.05, "max_weight": 0.10}}
+    assert sizing.target_weight(0.60, p, R) == 0.05
+    assert sizing.target_weight(0.95, p, R) == 0.10            # 확신도 최대여도 종목당 10% (리스크 한도 20% 보다 작게)
+    C.journal("regime", regime="상승", cap=P["regime_cap"]["상승"])
+    plan = sizing.plan_buy("005930", 0.95, 10_000, acc(), p, R)
+    assert plan["qty"] * 10_000 <= 50_000_000 * 0.10 + 10_000
+
+
+def test_other_etf_names_blocked():
+    assert C.other_etf("TIGER 반도체", P) and C.other_etf("KODEX 레버리지", P) and C.other_etf("신한 인버스 2X 원유선물 ETN", P)
+    assert not C.other_etf("SK하이닉스", P) and not C.other_etf("한화비전", P)
+
+
+def test_tuning_sees_boosted_watch_confidence():
+    import tuning
+    rows = [{"kind": "regime", "run": "a", "regime": "하락"},
+            {"kind": "decision", "run": "a", "action": "관망", "confidence": 0.57, "mode": "decide"},           # 옛 기록 → +0.05 추정
+            {"kind": "decision", "run": "a", "action": "관망", "confidence": 0.55, "confidence_adj": 0.65, "mode": "decide"},
+            {"kind": "decision", "run": "a", "action": "관망", "confidence": 0.70, "mode": "view"}]            # 판단 갱신은 뺌
+    assert tuning.watch_confidence(rows, P) == [0.65, 0.62]
+    bad = {**P, "decision": {**P["decision"], "min_weight": 0.15, "max_weight": 0.10}}
+    assert any("최대 종목 비중" in e for e in tuning.consistency(bad))
 
 
 if __name__ == "__main__":

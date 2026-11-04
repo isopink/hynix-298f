@@ -11,6 +11,7 @@
     "decision.sell_min_confidence": { "label": "매도 확신도 기준",   "min": 0.50, "max": 0.75, "step": 0.05 },
     "decision.full_size_confidence": { "label": "최대 비중 확신도",  "min": 0.70, "max": 0.90, "step": 0.05 },
     "decision.min_weight":          { "label": "최소 종목 비중",     "min": 0.05, "max": 0.15, "step": 0.025 },
+    "decision.max_weight":          { "label": "최대 종목 비중",     "min": 0.05, "max": 0.20, "step": 0.025 },
     "decision.stop_loss_pct":       { "label": "손절선",             "min": -0.10, "max": -0.04, "step": 0.01 },
     "decision.take_profit_pct":     { "label": "익절선",             "min": 0.06, "max": 0.25, "step": 0.03 },
     "decision.max_hold_days":       { "label": "최대 보유일",        "min": 3, "max": 15, "step": 2, "int": true },

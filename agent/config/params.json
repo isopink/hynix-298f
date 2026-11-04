@@ -8,10 +8,11 @@
   },
 
   "decision": {
-    "buy_min_confidence": 0.65,
+    "buy_min_confidence": 0.62,
     "sell_min_confidence": 0.55,
     "full_size_confidence": 0.80,
-    "min_weight": 0.10,
+    "min_weight": 0.05,
+    "max_weight": 0.10,
     "stop_loss_pct": -0.07,
     "take_profit_pct": 0.15,
     "max_hold_days": 10
@@ -63,7 +64,7 @@
     "max_hold_days": 2
   },
 
-  "regime_cap": { "상승": 0.90, "횡보": 0.70, "하락": 0.50 },
+  "regime_cap": { "상승": 0.90, "횡보": 0.70, "하락": 0.60 },
 
   "week_factor": { "1": 0.75, "2": 1.0, "3": 1.0, "4": 1.0 },
 
@@ -84,13 +85,15 @@
     "markets": ["KOSPI", "KOSDAQ"],
     "min_trading_value": 10000000000,
     "prefilter_top": 60,
-    "max_candidates": 10,
+    "prefilter_by_market": { "_note": "11-04 시장별로 따로 뽑음 (합쳐 뽑으면 코스피 대형주가 거의 다 차지)", "KOSPI": 45, "KOSDAQ": 25 },
+    "max_candidates": 15,
     "max_vol20": 1.0,
     "spike_ret5": 0.20,
     "spike_penalty": 0.5,
     "flow_days": 5,
     "limit_up_lookback": 5,
     "exclude_name_keywords": ["스팩", "리츠"],
+    "exclude_etf_prefixes": ["KODEX", "TIGER", "ACE", "RISE", "KBSTAR", "SOL", "HANARO", "ARIRANG", "KOSEF", "PLUS", "KIWOOM", "TIMEFOLIO", "WON", "BNK", "ITF", "FOCUS", "마이티", "VITA", "TRUSTON", "1Q", "KoAct", "TREX", "파워", "히어로즈", "에셋플러스", "UNICORN", "DAISHIN343", "HK"],
     "intraday": {
       "_note": "정기 판단 직전 장중 수급으로 후보 재선별 (src/intraday.py). 키움 순위 API 3번: 거래대금 상위 ka10032 + 장중 외국인·기관 순매수 상위 ka10065. 실패하면 08:30 후보 유지. 통과가 min_candidates 개보다 적으면 08:30 후보로 채움 (11-04)",
       "enabled": true,

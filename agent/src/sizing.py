@@ -9,10 +9,11 @@ import common as C
 
 
 def target_weight(conf, p, r):
-    """확신도 → 종목 목표 비중. 기준 미만이면 0, full_size 이상이면 종목 한도."""
+    """확신도 → 종목 목표 비중. 기준 미만이면 0, 기준이면 min_weight, full_size 이상이면 max_weight.
+    max_weight(11-04 10%)는 리스크 한도 종목당 비중(20%)보다 작게 잡아 여러 종목으로 나눠 삼."""
     d = p["decision"]
     lo, hi = C.buy_threshold(p), d["full_size_confidence"]
-    top = r["max_weight_per_stock"]
+    top = min(d.get("max_weight", r["max_weight_per_stock"]), r["max_weight_per_stock"])
     if conf < lo:
         return 0.0
     if conf >= hi:
