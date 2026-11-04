@@ -88,14 +88,15 @@ def mcp_config():
 
 
 # 실행이 정말 일을 했는지: 에이전트가 끝까지 갔다면 이 종류의 기록이 하나 이상 남아 있어야 함
-EXPECT = {"decide": {"regime"}, "exit": {"fill", "decision", "block"}, "review": {"review"}, "tune": {"tune"}}
+EXPECT = {"decide": {"regime"}, "view": {"regime"}, "exit": {"fill", "decision", "block"}, "review": {"review"}, "tune": {"tune"}}
 
 
 def did_work(kind, run_id):
     return any(r.get("run") == run_id and r["kind"] in EXPECT[kind] for r in C.read_jsonl(C.JOURNAL))
 
 
-SUMMARY = re.compile(r"(상승|횡보|하락)\s*/\s*매수\s*\d+건\s*/\s*매도\s*\d+건\s*/\s*관망\s*\d+건"
+SUMMARY = re.compile(r"판단 갱신\s*/\s*(상승|횡보|하락)\s*/\s*매수 예정\s*\d+건\s*/\s*매도 예정\s*\d+건\s*/\s*관망\s*\d+건"
+                     r"|(상승|횡보|하락)\s*/\s*매수\s*\d+건\s*/\s*매도\s*\d+건\s*/\s*관망\s*\d+건"
                      r"|기준값 조정\s*/\s*반영\s*\d+건\s*/\s*거절\s*\d+건")
 
 

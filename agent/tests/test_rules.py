@@ -272,6 +272,13 @@ def test_fill_up_from_prep():
     out = intraday.fill_up([{"code": c} for c in "VWXYZ"], prep, held=set(), n=5)
     assert [c["code"] for c in out] == list("VWXYZ") + ["114800"]
 
+def test_every_run_kind_has_a_work_check():
+    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    import run
+    assert set(run.PROMPTS) <= set(run.EXPECT), set(run.PROMPTS) - set(run.EXPECT)   # 11-04 view 가 빠져 KeyError 로 실패
+    assert run.summary_line("판단 갱신 / 하락 / 매수 예정 1건 / 매도 예정 0건 / 관망 3건") == "판단 갱신 / 하락 / 매수 예정 1건 / 매도 예정 0건 / 관망 3건"
+    assert run.summary_line("하락 / 매수 0건 / 매도 0건 / 관망 2건") == "하락 / 매수 0건 / 매도 0건 / 관망 2건"
+
 if __name__ == "__main__":
     fails = 0
     for n, f in list(globals().items()):
