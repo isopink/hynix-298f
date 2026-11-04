@@ -562,12 +562,19 @@ window.TRADE_TIMES = ['09:45', '10:45', '11:45', '13:15', '14:15', '15:15'];
     if (PRE) equity = [{ date: START, total: INIT, kospi: null, regime: null, cap: null }];
     BASE = { equity, holdings, trades, risk, system, reviews };
     D = derive(BASE);
-    fillText(); drawAll(); fillLog(); startKospi();
-    if (document.fonts) document.fonts.ready.then(drawAll);   // 웹폰트 적용 후 글자 폭 다시 계산
-    document.querySelectorAll('details.more').forEach(d => d.addEventListener('toggle', () => { if (d.open) drawAll(); }));
-    let w = window.innerWidth, t;
-    window.addEventListener('resize', () => { if (window.innerWidth === w) return; w = window.innerWidth; clearTimeout(t); t = setTimeout(drawAll, 150); });
-    startLive();
+    // 첫 화면은 실시간 잔고(Supabase)를 받은 뒤 한 번에 그림. 예전엔 json(지난 마감 기록)으로 먼저 그렸다가 몇 초 뒤
+    // 최신 값으로 바뀌어 숫자가 튀었음. 4초 안에 안 오면 json 으로 먼저 그리고, 늦게 오면 그때 갱신
+    const live = CFG.supabaseUrl && CFG.supabaseAnonKey;
+    const first = live ? Promise.race([pollLive(), new Promise(r => setTimeout(r, 4000))]) : Promise.resolve();
+    first.then(() => {
+      if (!LIVE_AT) { fillText(); drawAll(); }   // 실시간 값이 왔으면 pollLive 가 이미 그렸음
+      fillLog(); startKospi();
+      if (document.fonts) document.fonts.ready.then(drawAll);   // 웹폰트 적용 후 글자 폭 다시 계산
+      document.querySelectorAll('details.more').forEach(d => d.addEventListener('toggle', () => { if (d.open) drawAll(); }));
+      let w = window.innerWidth, t;
+      window.addEventListener('resize', () => { if (window.innerWidth === w) return; w = window.innerWidth; clearTimeout(t); t = setTimeout(drawAll, 150); });
+      startLive(true);
+    });
   });
 
   // ---------- 실시간: live/snapshot.py 가 Supabase 에 올린 잔고 스냅샷을 30초마다 확인 ----------
@@ -627,9 +634,9 @@ window.TRADE_TIMES = ['09:45', '10:45', '11:45', '13:15', '14:15', '15:15'];
       fillText(); drawAll();
     } catch (e) { /* 다음 회차에 다시 시도 */ }
   }
-  function startLive() {
+  function startLive(polled) {
     if (!CFG.supabaseUrl || !CFG.supabaseAnonKey) return;
-    pollLive();
+    if (!polled) pollLive();   // 첫 화면에서 이미 한 번 받았으면 바로 다시 받지 않음
     setInterval(() => { if (!document.hidden) pollLive(); }, 30000);
     document.addEventListener('visibilitychange', () => { if (!document.hidden) pollLive(); });   // 휴대폰에서 다른 앱 갔다 오면 바로 갱신
   }
