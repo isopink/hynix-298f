@@ -8,12 +8,13 @@ import math
 import common as C
 
 
-def target_weight(conf, p, r):
+def target_weight(conf, p, r, top=None):
     """확신도 → 종목 목표 비중. 기준 미만이면 0, 기준이면 min_weight, full_size 이상이면 max_weight.
-    max_weight(11-04 10%)는 리스크 한도 종목당 비중(20%)보다 작게 잡아 여러 종목으로 나눠 삼."""
+    max_weight(11-04 10%)는 리스크 한도 종목당 비중(20%)보다 작게 잡아 여러 종목으로 나눠 삼.
+    top 을 주면 그 값이 최대 (인버스는 inverse.weight_cap 20%까지 한 번에 살 수 있게 예외)."""
     d = p["decision"]
     lo, hi = C.buy_threshold(p), d["full_size_confidence"]
-    top = min(d.get("max_weight", r["max_weight_per_stock"]), r["max_weight_per_stock"])
+    top = min(top if top is not None else d.get("max_weight", r["max_weight_per_stock"]), r["max_weight_per_stock"])
     if conf < lo:
         return 0.0
     if conf >= hi:
@@ -39,7 +40,7 @@ def plan_buy(code, conf, price, account, p=None, r=None, regime=None):
     cap, regime = equity_cap(p, r, account, regime)
     inv = C.inverse(code, p)
 
-    w = target_weight(conf, p, r)
+    w = target_weight(conf, p, r, top=inv["weight_cap"] if inv else None)   # 인버스는 종목당 10% 대신 인버스 한도 20%까지
     limits = {
         "확신도 비중": total * w * C.week_factor(p) - held_value,
         "국면 상한 여유": total * cap - stock_value,

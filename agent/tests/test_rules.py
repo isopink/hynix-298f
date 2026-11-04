@@ -414,6 +414,16 @@ def test_max_weight_splits_positions():
     assert plan["qty"] * 10_000 <= 50_000_000 * 0.10 + 10_000
 
 
+def test_inverse_buys_up_to_its_own_cap():
+    """종목당 최대 10% 로 나눠 사도, 인버스는 확신도 최대면 인버스 한도 20% 까지 한 번에."""
+    p = {**P, "decision": {**P["decision"], "min_weight": 0.05, "max_weight": 0.10}}
+    C.journal("regime", regime="하락", cap=P["regime_cap"]["하락"])
+    stock = sizing.plan_buy("005930", 0.95, 10_000, acc(), p, R)
+    inv = sizing.plan_buy("114800", 0.95, 5_000, acc(), p, R)
+    assert stock["target_weight"] == 0.10 and inv["target_weight"] == 0.20, (stock, inv)
+    assert sizing.target_weight(0.95, p, R, top=P["inverse"]["weight_cap"]) == 0.20
+
+
 def test_other_etf_names_blocked():
     assert C.other_etf("TIGER 반도체", P) and C.other_etf("KODEX 레버리지", P) and C.other_etf("신한 인버스 2X 원유선물 ETN", P)
     assert not C.other_etf("SK하이닉스", P) and not C.other_etf("한화비전", P)
