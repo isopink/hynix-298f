@@ -355,7 +355,7 @@ details.log summary { border-radius: 16px; }
               <div class="big" id="ret">—</div>
               <div class="vs-side"><span class="eyebrow">KOSPI 대비</span><span id="k-alpha">—</span></div>
             </div>
-            <div class="vs"><span class="eyebrow">손익</span><span id="pnl-won">—</span></div>
+            <div class="vs" id="realized"><span class="eyebrow">양도차익</span><span id="pnl-won">—</span></div>
           </div>
         </div>
         <div class="hero-chart" style="display:flex;flex-direction:column;gap:10px;min-width:0">
@@ -654,10 +654,35 @@ details.log summary { border-radius: 16px; }
     };
   }
 
+  // 실현 손익: 체결 순서대로 종목별 평단(매수 수수료 포함)을 쌓고, 매도할 때 그 평단으로 차익 계산
+  function realized(trades) {
+    const cs = CFG.costs || { fee: 0, sellTax: 0, taxFree: [] }, pos = new Map();
+    const out = { net: 0, sell: 0, cost: 0, fees: 0, n: 0 };
+    for (const t of [...trades].sort((a, b) => a.time < b.time ? -1 : a.time > b.time ? 1 : a.id - b.id)) {
+      const p = pos.get(t.code) || { qty: 0, cost: 0, fee: 0 };
+      if (t.side === '매수') {
+        p.qty += t.qty; p.cost += t.amount; p.fee += t.amount * cs.fee;
+      } else if (p.qty > 0) {
+        const q = Math.min(t.qty, p.qty), f = q / p.qty;
+        const sellFee = t.price * q * (cs.fee + (cs.taxFree.includes(t.code) ? 0 : cs.sellTax));
+        out.sell += t.price * q; out.cost += p.cost * f; out.fees += p.fee * f + sellFee; out.n += 1;
+        p.qty -= q; p.cost -= p.cost * f; p.fee -= p.fee * f;
+      }
+      pos.set(t.code, p);
+    }
+    out.net = out.sell - out.cost - out.fees;
+    return out;
+  }
+
   function fillText() {
     $('ret').textContent = pct(D.ret); $('ret').classList.toggle('neg', D.ret < 0); document.querySelector('.hero-card').classList.toggle('neg', D.ret < 0);   // 손실은 파랑 (국내 증시 관례)
-    const pl = D.last.total - INIT;   // 손익 금액 = 현재 자산 − 시작 원금
-    $('pnl-won').textContent = (pl > 0 ? '+' : pl < 0 ? '−' : '') + won(Math.abs(Math.round(pl))) + '원'; tone($('pnl-won'), pl);
+    const rz = realized(D.trades), pl = rz.net;   // 양도차익 = 판 종목의 (매도금액 − 매도 수수료·세금) − (평단 × 수량 + 매수 수수료)
+    const signed = v => (v > 0 ? '+' : v < 0 ? '−' : '') + won(Math.abs(Math.round(v))) + '원';
+    $('pnl-won').textContent = rz.n ? signed(pl) : '0원'; tone($('pnl-won'), pl);
+    const rtip = `<div class="t">양도차익 (판 종목만, 매도 ${rz.n}건)</div>${row('매도금액', won(Math.round(rz.sell)) + '원')}${row('취득가액', won(Math.round(rz.cost)) + '원')}`
+      + `${row('수수료·세금', '−' + won(Math.round(rz.fees)) + '원')}${row('양도차익', signed(pl), pl >= 0 ? 'up' : 'down')}`;
+    $('realized').onpointermove = $('realized').onpointerdown = ev => showTip(ev, rtip);
+    $('realized').onpointerleave = hideTip;
     $('k-alpha').textContent = pct(D.alpha).replace('%', '%p'); tone($('k-alpha'), D.alpha);   // 누적 초과수익 = 누적 수익률 − 누적 KOSPI 수익률
     $('k-week').textContent = pct(D.week); tone($('k-week'), D.week);
     $('k-mdd').textContent = pct(D.mdd); tone($('k-mdd'), D.mdd);
