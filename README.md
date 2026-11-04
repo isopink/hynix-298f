@@ -65,7 +65,7 @@ Sells go first, then buys. Stop-loss, take-profit and max holding days are check
 | Review | Sub-agent | Weekly: reads the log, drafts the weekly report, suggests threshold changes |
 | Data prep | Python | KRX prices and flows, Naver news → GS Quant indicators → candidate screen |
 | Intraday re-screen | Python | Kiwoom trading-value and foreign/institution net-buy ranks → fresh candidates and live RSI |
-| Sizing | Python | Conviction → target weight → quantity; stop −7%, target +15%, max 10 days |
+| Sizing | Python | Conviction → 5–10% of equity per stock (split across many names) → quantity; stop −7%, target +15%, max 10 days |
 | Risk check | Claude Code Hook | Runs before every `place_order`; any violation blocks the order |
 | Tuning | Python + agent | Daily: agent proposes 0–2 threshold changes, code accepts only those inside fixed rules |
 | Watcher | Python | Every 5 min: stop / target / holding days → sell-only run |
@@ -100,7 +100,7 @@ Every change and rejection shows up on the dashboard (Feedback Loop).
 |---|---|---|
 | 08:30 | `prep` — account, KRX data, news → briefing | – |
 | 08:55 → | Balance snapshot every minute → Supabase | – |
-| 09:05 – 15:20 | `monitor` — stop / target / holding days every 5 min | only when hit |
+| 08:30 – 15:20 | `monitor` — stop / target / holding days every minute | only when hit |
 | **09:45, 10:45, 11:45, 13:15, 14:15, 15:15** | `decide` — re-screen → debate → **orders** | ✓ |
 | the other 15-min slots, 09:30 – 15:00 | `view` — same debate, **no orders**, refreshes the dashboard | ✓ |
 | 15:45 | `close` — record today's equity | – |

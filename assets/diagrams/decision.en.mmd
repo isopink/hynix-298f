@@ -1,13 +1,13 @@
 flowchart TB
-    S["Scheduled run · every 15 min"] --> P["Intraday re-screen<br/>3 Kiwoom rank calls → up to 10 candidates<br/>(falls back to the 08:30 list on failure)"]
-    P --> G["Regime sub-agent<br/>bull 90% · sideways 70% · bear 50% stock cap<br/>× 0.75 in week 1"]
+    S["Scheduled run · every 15 min"] --> P["Intraday re-screen<br/>3 Kiwoom rank calls → up to 15 candidates<br/>(falls back to the 08:30 list on failure)"]
+    P --> G["Regime sub-agent<br/>bull 90% · sideways 70% · bear 60% stock cap<br/>× 0.75 in week 1"]
     G --> B["Bull sub-agent<br/>case for each candidate and holding"]
     B --> R["Bear sub-agent<br/>case against + rebuttal"]
     R --> L["Lead agent<br/>conviction per stock"]
     L --> T{"Trading slot?<br/>09:45 · 10:45 · 11:45<br/>13:15 · 14:15 · 15:15"}
     T -- "no (other slots)" --> V["Record view only<br/>'would buy / sell', no orders"]
     T -- yes --> C["Code adds to conviction<br/>+0.05 bear market (new buys)<br/>+0.05 RSI < 35 (buy) · +0.05 RSI ≥ 65 (sell)"]
-    C --> Q{"Buy ≥ 0.65?<br/>Sell ≥ 0.55?"}
+    C --> Q{"Buy ≥ 0.62?<br/>Sell ≥ 0.55?"}
     Q -- no --> W["Wait / hold"]
     Q -- yes --> Z["plan_order → place_order"]
     Z --> H{{"Risk Hook"}}
