@@ -152,6 +152,10 @@ details.log[open] > summary::after { content: "−"; }
 @media (max-width: 640px) { .hero-chart { padding-top: 0; } .hero-card > .st-line { position: static; flex-direction: row; gap: 4px 14px; } }   /* 폰: 상태 표시를 위 한 줄로 (KOSPI 대비와 겹침 방지) */
 .dec-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; margin-bottom: 6px; font-size: 13px; color: var(--body); }
 .dec-head b { color: var(--ink); font-weight: 600; }
+/* 오늘 마지막 매매 회차 결과 한 줄 (샀다 / 팔았다 / 막혔다 / 관망) */
+.dec-trade { margin: 2px 0 8px; padding: 8px 12px; border-radius: 10px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); font-size: 13px; color: var(--body); line-height: 1.6; }
+.dec-trade .t { color: var(--ink); font-weight: 600; margin-right: 6px; }
+.dec-trade .buy { color: var(--red-hi); } .dec-trade .sell { color: #4aa3d4; } .dec-trade .blk { color: var(--muted); }
 .dec-head .why { flex: 1 1 260px; min-width: 0; color: var(--muted); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .dec-row { display: grid; grid-template-columns: minmax(80px, 150px) 78px 128px minmax(0, 1fr); gap: 14px; align-items: center; padding: 11px 0; border-top: 1px solid rgba(255,255,255,.06); font-size: 13px; }
 .dec-row .nm { color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -368,6 +372,7 @@ details.log summary { border-radius: 16px; }
       <div class="kx-flow">
         <div class="hd"><span class="eyebrow" id="dec-title">실시간 판단</span><span class="sub" id="dec-asof"></span></div>
         <div class="dec-head m-hide" id="dec-head"></div>
+        <div class="dec-trade" id="dec-trade" hidden></div>
         <div class="dec-list" id="dec-list"></div>
       </div>
     </section>
@@ -1052,6 +1057,7 @@ window.TRADE_TIMES = ['09:45', '10:45', '11:45', '13:15', '14:15', '15:15'];
   const eok = v => v == null ? '—' : (v > 0 ? '+' : v < 0 ? '−' : '') + won(Math.round(Math.abs(v) / 1e8)) + '억';
   function briefingCard() {
     const b = BRIEF, head = $('dec-head'), list = $('dec-list');
+    $('dec-trade').hidden = true;
     $('dec-title').textContent = '오늘의 시장 자료';
     $('dec-asof').textContent = b.created ? md(toD(b.created)) + ' ' + b.created.slice(11, 16) + ' 수집 · 판단 전' : '';
     if (!b.created) { head.innerHTML = ''; return none(list, '시장 자료를 기다리는 중이에요. (평일 08:30 수집)'); }
@@ -1091,6 +1097,18 @@ window.TRADE_TIMES = ['09:45', '10:45', '11:45', '13:15', '14:15', '15:15'];
     const kst = new Date(Date.now() + 9 * 3600e3), nowHM = kst.toISOString().slice(11, 16), wd = kst.getUTCDay();
     const nextTrade = wd >= 1 && wd <= 5 ? window.TRADE_TIMES.find(t => t > nowHM) : null;
     $('dec-asof').textContent = nextTrade ? '다음 매매 ' + nextTrade : '';   // 판단 시각·갱신 여부는 빼고 다음 매매만
+    const lt = dc.last_trade, tr = $('dec-trade');   // 오늘 마지막 매매 회차 결과: 샀다 / 팔았다 / 막혔다 / 관망
+    tr.hidden = !lt;
+    if (lt) {
+      const q = x => esc(x.name) + (x.qty ? ` ${won(x.qty)}주` : '');
+      const parts = [];
+      if (lt.bought.length) parts.push(`<span class="buy">${lt.bought.map(q).join(', ')} 매수</span>`);
+      if (lt.sold.length) parts.push(`<span class="sell">${lt.sold.map(q).join(', ')} 매도</span>`);
+      if (!lt.bought.length && !lt.sold.length) parts.push('사고판 종목 없음');
+      if (lt.blocked.length) parts.push(`<span class="blk">${lt.blocked.map(x => esc(x.name) + '(' + esc(x.rule) + ')').join(', ')} 차단</span>`);
+      parts.push(`관망 ${lt.watch} · 보유 ${lt.hold}`);
+      tr.innerHTML = `<span class="t">${esc(lt.time)} 매매</span>` + parts.join(' · ');
+    }
     list.classList.remove('empty');
     head.innerHTML = `<span class="rg">국면 <b style="color:${regC(dc.regime)}">${esc(dc.regime)}</b></span>`
       + `<span>주식 비중 상한 <b>${Math.round(+dc.cap * 100)}%</b></span>`

@@ -371,6 +371,25 @@ def test_fill_up_keeps_both_etfs():
     out = intraday.fill_up([{"code": "X"}], prep, held=set(), n=5)
     assert [c["code"] for c in out] == ["X", "A", "114800", "069500"], out
 
+def test_last_trade_summary():
+    import logger
+    t = C.today().isoformat()
+    base = {"bull": "", "bear": "", "decision": ""}
+    rows = [
+        {"kind": "regime", "run": "r1", "time": f"{t} 10:31", "regime": "하락", "cap": .38},
+        {"kind": "fill", "run": "r1", "code": "A", "name": "KT&G", "side": "매수", "qty": 10, "price": 1, "confidence": .67, **base},
+        {"kind": "decision", "run": "r1", "code": "B", "name": "삼성화재", "action": "관망", "confidence": .5, **base},
+        {"kind": "decision", "run": "r1", "code": "C", "name": "안랩", "action": "관망", "confidence": .6, **base},
+        {"kind": "block", "run": "r1", "code": "C", "name": "안랩", "side": "매수", "rule": "고변동 종목 한도", "detail": "6%"},
+        {"kind": "decision", "run": "r1", "code": "D", "name": "HMM", "action": "보유", "confidence": .3, **base},
+        {"kind": "regime", "run": "r2", "time": f"{t} 10:46", "regime": "하락", "cap": .38, "mode": "view"},   # 판단 갱신은 무시
+    ]
+    lt = logger.last_trade(rows, {})
+    assert lt["time"] == "10:31" and lt["bought"] == [{"name": "KT&G", "qty": 10}] and lt["sold"] == []
+    assert lt["blocked"] == [{"name": "안랩", "rule": "고변동 종목 한도"}] and lt["watch"] == 2 and lt["hold"] == 1
+    assert logger.last_trade(rows[-1:], {}) is None   # 오늘 매매 회차가 없으면 표시 안 함
+
+
 if __name__ == "__main__":
     fails = 0
     for n, f in list(globals().items()):

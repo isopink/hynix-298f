@@ -189,7 +189,22 @@ def decision(rows, nm):
             it["vol20"] = row["vol20"]
     return {"time": reg["time"], "regime": reg["regime"], "cap": reg["cap"], "reason": reg.get("reason", ""),
             "mode": "view" if reg.get("mode") == "view" else "trade", "next_trade": C.next_trade_time(),
-            "items": items}
+            "items": items, "last_trade": last_trade(rows, nm)}
+
+
+def last_trade(rows, nm):
+    """오늘 마지막 매매 회차의 결과 요약 (샀다 / 팔았다 / 막혔다 / 관망·보유 몇 종목). 판단 카드 위 한 줄용. 오늘 매매 회차가 없으면 None."""
+    t = C.today().isoformat()
+    reg = next((r for r in reversed(rows) if r["kind"] == "regime" and r.get("mode") != "view"
+                and r["time"].startswith(t) and r.get("run")), None)
+    if not reg:
+        return None
+    items = run_items([r for r in rows if r.get("run") == reg["run"]], nm)
+    pick = lambda a: [{"name": i["name"], "qty": i.get("qty")} for i in items if i["action"] == a]   # noqa: E731
+    return {"time": reg["time"][11:16], "regime": reg["regime"], "bought": pick("매수"), "sold": pick("매도"),
+            "blocked": [{"name": i["name"], "rule": i["blocked"].split(":")[0]} for i in items
+                        if i.get("blocked") and i["action"] not in ("매수", "매도")],
+            "watch": sum(i["action"] == "관망" for i in items), "hold": sum(i["action"] == "보유" for i in items)}
 
 
 def debates(rows, nm, keep=120):
