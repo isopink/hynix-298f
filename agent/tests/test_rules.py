@@ -284,9 +284,17 @@ def test_inverse_quick_exit_and_one_buy_a_day():
     inv = "114800"
     sl, tp, md = C.exit_levels(inv, P)
     c = P["costs"]
-    net = (1 + tp) * (1 - c["fee_rate"] - c["sell_tax_rate"]) / (1 + c["fee_rate"]) - 1
+    net = (1 + tp) * (1 - c["fee_rate"] - P["inverse"]["sell_tax_rate"]) / (1 + c["fee_rate"]) - 1   # ETF 는 매도 세금 없음
     assert abs(net - P["inverse"]["take_profit_net_pct"]) < 1e-4 and md == P["inverse"]["max_hold_days"], (tp, net, md)
     assert C.exit_levels("005930", P)[1] == P["decision"]["take_profit_pct"]   # 다른 종목은 그대로
+    old = C.POSITIONS
+    try:   # 예전 규칙(+15% · 10일)으로 기록된 보유분도 평단 기준 지금 규칙으로 (11-04 10:33 매수분)
+        C.POSITIONS = os.path.join(tmp, "positions.json")
+        C.write_json(C.POSITIONS, {inv: {"entry_date": "2026-11-04", "stop": 1129, "take": 1396, "max_days": 10}, "005930": {"take": 9}})
+        m = C.position_meta([{"code": inv, "avg_price": 1214}, {"code": "005930", "avg_price": 100}], P)
+        assert m[inv]["take"] == 1241 and m[inv]["max_days"] == 2 and m["005930"]["take"] == 9, m
+    finally:
+        C.POSITIONS = old
     open(C.JOURNAL, "w").close()
     C.journal("regime", regime="하락", cap=P["regime_cap"]["하락"])
     a = acc()
