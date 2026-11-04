@@ -590,6 +590,11 @@ window.TRADE_TIMES = ['09:45', '10:45', '11:45', '13:15', '14:15', '15:15'];
       if (r.ok) KD = new Map((await r.json()).map(x => [x.date, +x.close]));
     } catch (e) { /* 예비값 없이 진행 */ }
   }
+  // 에이전트가 일하는 시간 (08:30 준비 · 손절·익절 감시 시작 ~ 15:35). 상태 표시 On/Off 에만 씀. 장 시간(marketOpen)은 09:00~
+  function opsOpen() {
+    const k = new Date(Date.now() + 9 * 3600e3), wd = k.getUTCDay(), hm = k.getUTCHours() * 100 + k.getUTCMinutes();
+    return wd >= 1 && wd <= 5 && hm >= 830 && hm <= 1535;
+  }
   function marketOpen() {
     const k = new Date(Date.now() + 9 * 3600e3), wd = k.getUTCDay(), hm = k.getUTCHours() * 100 + k.getUTCMinutes();
     return wd >= 1 && wd <= 5 && hm >= 900 && hm <= 1535;
@@ -1054,7 +1059,7 @@ window.TRADE_TIMES = ['09:45', '10:45', '11:45', '13:15', '14:15', '15:15'];
     const st = STATUS, el = $('st-line');
     const pill = ([state, cls, tip], name) => `<span class="who" title="${esc(tip)}"><i class="dot ${cls}"></i>${name} <b class="${state === 'On' ? 'on' : ''}">${state}</b></span>`;
     const age = LIVE_AT ? (Date.now() - Date.parse(LIVE_AT)) / 60e3 : Infinity;
-    const watch = !marketOpen() ? ['Off', '', '장 마감 · 평일 장중에만 동작']
+    const watch = !opsOpen() ? ['Off', '', '장 마감 · 평일 08:30~15:35 동작']
       : age <= 12 ? ['On', 'ok', `마지막 잔고 조회 ${Math.max(0, Math.round(age))}분 전`]
       : ['Off', 'bad', LIVE_AT ? `잔고 조회가 ${Math.round(age)}분째 없음` : '잔고 조회 기록 없음'];
     let agent;
@@ -1067,7 +1072,7 @@ window.TRADE_TIMES = ['09:45', '10:45', '11:45', '13:15', '14:15', '15:15'];
         : ['On', 'ok', '마지막 판단 ' + st.last_run];
     }
     // 장 밖에선 판단이 돌지 않으므로 Off (실패·동기화 문제는 그대로 보여줌)
-    if (!marketOpen()) agent = ['Off', agent[1] === 'bad' ? 'bad' : '', agent[1] === 'bad' ? '장 마감 · ' + agent[2] : '장 마감 · 다음 판단 ' + (st.next_run || '평일 09:30')];
+    if (!opsOpen()) agent = ['Off', agent[1] === 'bad' ? 'bad' : '', agent[1] === 'bad' ? '장 마감 · ' + agent[2] : '장 마감 · 다음 판단 ' + (st.next_run || '평일 09:30')];
     else {
       // 판단 실행 중 (시간으로 추정): 판단 회차(09:30~15:15, 15분마다) 시작 뒤 6분 안이고 그 회차 결과가 아직 안 올라왔으면.
       // 실행은 보통 3~4분, 끝나면 status.json 의 last_run 이 그 회차 시각으로 바뀜
