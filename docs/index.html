@@ -353,7 +353,7 @@ details.log summary { border-radius: 16px; }
       <div class="hero">
         <div class="side">
           <div>
-            <div id="realized"><span class="eyebrow">양도차익</span>
+            <div id="realized"><span class="eyebrow">누적 양도차익</span>
             <div class="big won" id="pnl-won">—</div></div>
             <div class="vs"><span class="eyebrow">KOSPI 대비</span><span id="k-alpha">—</span></div>
             <div class="vs sm"><span class="eyebrow">현재 수익률</span><span id="ret-pct">—</span></div>
@@ -681,8 +681,8 @@ details.log summary { border-radius: 16px; }
     const rz = realized(D.trades), pl = rz.net;   // 양도차익 = 판 종목의 (매도금액 − 매도 수수료·세금) − (평단 × 수량 + 매수 수수료)
     $('pnl-won').textContent = rz.n ? signed(pl) : '0원';
     $('pnl-won').classList.toggle('neg', pl < 0); document.querySelector('.hero-card').classList.toggle('neg', pl < 0);   // 손실은 파랑 (국내 증시 관례)
-    const rtip = `<div class="t">양도차익 (판 종목만, 매도 ${rz.n}건)</div>${row('매도금액', won(Math.round(rz.sell)) + '원')}${row('취득가액', won(Math.round(rz.cost)) + '원')}`
-      + `${row('수수료·세금', '−' + won(Math.round(rz.fees)) + '원')}${row('양도차익', signed(pl), pl >= 0 ? 'up' : 'down')}`;
+    const rtip = `<div class="t">누적 양도차익 (판 종목만, 매도 ${rz.n}건)</div>${row('매도금액', won(Math.round(rz.sell)) + '원')}${row('취득가액', won(Math.round(rz.cost)) + '원')}`
+      + `${row('수수료·세금', '−' + won(Math.round(rz.fees)) + '원')}${row('누적 양도차익', signed(pl), pl >= 0 ? 'up' : 'down')}`;
     $('realized').onpointermove = $('realized').onpointerdown = ev => showTip(ev, rtip);
     $('realized').onpointerleave = hideTip;
     $('k-alpha').textContent = pct(D.alpha).replace('%', '%p'); tone($('k-alpha'), D.alpha);   // 누적 초과수익 = 누적 수익률 − 누적 KOSPI 수익률
