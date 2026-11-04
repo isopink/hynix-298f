@@ -53,6 +53,8 @@ def plan_buy(code, conf, price, account, p=None, r=None, regime=None):
         limits["인버스 한도"] = total * inv["weight_cap"] - inv_held
         if regime not in inv["regimes"]:
             limits["인버스는 " + "·".join(inv["regimes"]) + " 국면만"] = 0
+        if C.buys_today(code) >= inv.get("max_buys_per_day", 99):
+            limits[f"인버스는 하루 {inv['max_buys_per_day']}번만"] = 0
     hv = C.high_vol(code, p)
     if hv:   # 변동성이 큰 종목은 작게만
         limits["고변동 종목 한도"] = total * hv["weight_cap"] - held_value

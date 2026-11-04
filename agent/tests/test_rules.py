@@ -279,6 +279,26 @@ def test_every_run_kind_has_a_work_check():
     assert run.summary_line("판단 갱신 / 하락 / 매수 예정 1건 / 매도 예정 0건 / 관망 3건") == "판단 갱신 / 하락 / 매수 예정 1건 / 매도 예정 0건 / 관망 3건"
     assert run.summary_line("하락 / 매수 0건 / 매도 0건 / 관망 2건") == "하락 / 매수 0건 / 매도 0건 / 관망 2건"
 
+def test_inverse_quick_exit_and_one_buy_a_day():
+    """인버스: 수수료·세금 뺀 순익 +1.5% 에 익절, 최대 2일, 하루 1번만 매수."""
+    inv = "114800"
+    sl, tp, md = C.exit_levels(inv, P)
+    c = P["costs"]
+    net = (1 + tp) * (1 - c["fee_rate"] - c["sell_tax_rate"]) / (1 + c["fee_rate"]) - 1
+    assert abs(net - P["inverse"]["take_profit_net_pct"]) < 1e-4 and md == P["inverse"]["max_hold_days"], (tp, net, md)
+    assert C.exit_levels("005930", P)[1] == P["decision"]["take_profit_pct"]   # 다른 종목은 그대로
+    open(C.JOURNAL, "w").close()
+    C.journal("regime", regime="하락", cap=P["regime_cap"]["하락"])
+    a = acc()
+    assert sizing.plan_buy(inv, 0.80, 5_000, a, P, R)["qty"] > 0
+    C.journal("fill", code=inv, side="매수", qty=100, price=5_000)
+    C.journal("fill", code=inv, side="매도", qty=100, price=5_100)
+    plan = sizing.plan_buy(inv, 0.80, 5_000, a, P, R)
+    assert plan["qty"] == 0 and "하루" in plan["limited_by"], plan
+    assert "인버스 하루 매수" in rules({"code": inv, "side": "매수", "qty": 100, "confidence": 0.80}, a, 5_000, regime="하락")
+    assert "인버스 하루 매수" not in rules({"code": "005930", "side": "매수", "qty": 10, "confidence": 0.80}, a, 100_000, regime="하락")
+
+
 def test_monitor_retries_same_position_after_cooldown():
     """감시: 같은 매수 건은 실행 뒤 10분 안엔 다시 안 띄움, 지나면 다시 (하루 1번 제한 없음). 장 전엔 한 번만."""
     import monitor

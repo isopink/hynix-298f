@@ -172,10 +172,26 @@ def stock_value(holdings, p=None):
     return sum(h["value"] for h in holdings if not inverse(h["code"], p))
 
 
+def buys_today(code):
+    """오늘 이 종목을 산 횟수 (체결 기록 기준)."""
+    t = today().isoformat()
+    return sum(1 for r in read_jsonl(JOURNAL)
+               if r["kind"] == "fill" and r.get("side") == "매수" and r.get("code") == code and r["time"].startswith(t))
+
+
+def gross_take(net, p=None):
+    """수수료·세금을 뺀 순익 net 을 내려면 매수가 대비 몇 % 올라야 하는지.
+    순익 = 매도가 × (1 − 수수료 − 세금) ÷ (매수가 × (1 + 수수료)) − 1"""
+    c = (p or params())["costs"]
+    return round((1 + net) * (1 + c["fee_rate"]) / (1 - c["fee_rate"] - c["sell_tax_rate"]) - 1, 4)
+
+
 def exit_levels(code, p=None, briefing=None):
-    """(손절 %, 익절 %, 최대 보유일). 고변동 종목은 손절·익절 폭이 넓음."""
+    """(손절 %, 익절 %, 최대 보유일). 고변동 종목은 손절·익절 폭이 넓고, 인버스는 익절·보유일이 짧음."""
     p = p or params()
     d, hv = p["decision"], high_vol(code, p, briefing)
+    if inv := inverse(code, p):
+        return d["stop_loss_pct"], gross_take(inv["take_profit_net_pct"], p), inv.get("max_hold_days", d["max_hold_days"])
     if hv:
         return hv["stop_loss_pct"], hv["take_profit_pct"], d["max_hold_days"]
     return d["stop_loss_pct"], d["take_profit_pct"], d["max_hold_days"]
