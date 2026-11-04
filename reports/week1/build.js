@@ -19,6 +19,7 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;',
 const rows = fs.readFileSync(path.join(HERE, 'changes.tsv'), 'utf8').split('\n')
   .filter(l => l.trim() && !l.startsWith('#')).map(l => { const [h, cat, text] = l.split('\t'); return { h, cat, text }; });
 const byHash = new Map(rows.map(r => [r.h, r]));
+const SKIP = new Set(['대시보드']);   // 보고서엔 전략·운영·문서만 (대시보드 변경은 changes.tsv 에만 남김)
 const log = execSync(`git log --since="${SINCE}" --format="%h|%ad|%s" --date=format-local:"%Y-%m-%d %H:%M"`,
   { cwd: ROOT, env: { ...process.env, TZ: 'Asia/Seoul' } }).toString().trim().split('\n').map(l => {
   const [h, t, ...s] = l.split('|'); return { h, t, s: s.join('|') };
@@ -26,8 +27,8 @@ const log = execSync(`git log --since="${SINCE}" --format="%h|%ad|%s" --date=for
 const missing = log.filter(c => !RUNS.test(c.s) && !byHash.has(c.h) && !c.s.startsWith('Report:'));
 if (missing.length) console.warn(`changes.tsv 에 없는 커밋 ${missing.length}건 (보고서에서 빠짐, 필요하면 추가):\n` + missing.map(c => `  ${c.h} ${c.t} ${c.s}`).join('\n'));
 const time = new Map(log.map(c => [c.h, c.t]));
-const entries = rows.filter(r => time.has(r.h)).map(r => ({ ...r, t: time.get(r.h) })).sort((a, b) => a.t < b.t ? -1 : 1);
-const cats = ['전략', '운영', '대시보드', '문서'];
+const entries = rows.filter(r => time.has(r.h) && !SKIP.has(r.cat)).map(r => ({ ...r, t: time.get(r.h) })).sort((a, b) => a.t < b.t ? -1 : 1);
+const cats = ['전략', '운영', '문서'];
 const count = Object.fromEntries(cats.map(c => [c, entries.filter(e => e.cat === c).length]));
 
 (async () => {
