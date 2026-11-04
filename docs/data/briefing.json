@@ -81,13 +81,39 @@
     ]
   },
   "intraday": {
-    "time": "09:30",
-    "pool": 168,
+    "time": "10:00",
+    "pool": 227,
     "analyzed_new": 30,
-    "passed": 2,
+    "passed": 6,
     "kept_prep": false
   },
   "candidates": [
+    {
+      "code": "011200",
+      "name": "HMM",
+      "close": 23250,
+      "ret5": 0.0403,
+      "ret20": 0.0864,
+      "rsi14": 59.6,
+      "vol20": 0.369,
+      "foreign_net": 8782857750,
+      "inst_net": 19248053225,
+      "score": 0.438,
+      "news": [
+        {
+          "date": "11-04",
+          "title": "HMM, 부산 대표 기업 부상..매출 10조원·전국 60위",
+          "risk": false
+        },
+        {
+          "date": "11-04",
+          "title": "HMM, 아시아-유럽 노선 수에즈 운하 통항 재개…글로벌 선사 '복귀 러시...",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 186000000
+    },
     {
       "code": "278650",
       "name": "HLB바이오스텝",
@@ -111,7 +137,7 @@
           "risk": false
         }
       ],
-      "foreign_today": 507430000,
+      "foreign_today": 494250000,
       "inst_today": 0
     },
     {
@@ -124,13 +150,92 @@
       "vol20": 1.114,
       "foreign_net": -258212010500,
       "inst_net": 423060951500,
-      "score": 0.875,
-      "news": [],
-      "price": 938000,
-      "chg": 0.0434,
-      "activity": 1.67,
-      "foreign_today": 6566000000,
-      "inst_today": 0
+      "score": 1.0,
+      "news": [
+        {
+          "date": "11-04",
+          "title": "SK스퀘어, 4.5조 목표라던 티맵 8천억 '손절'…국민 74억건 이동데이터 ...",
+          "risk": false
+        },
+        {
+          "date": "11-04",
+          "title": "SK스퀘어 주가, 11월 4일 장중 932,000원 3.67% 상승",
+          "risk": false
+        }
+      ],
+      "price": 931000,
+      "chg": 0.0356,
+      "activity": 1.36,
+      "foreign_today": 14896000000,
+      "inst_today": 5586000000
+    },
+    {
+      "code": "489790",
+      "name": "한화비전",
+      "close": 48450,
+      "ret5": 0.2391,
+      "ret20": -0.0574,
+      "rsi14": 56.4,
+      "vol20": 1.13,
+      "foreign_net": -20169999850,
+      "inst_net": 26384209825,
+      "score": 0.438,
+      "news": [
+        {
+          "date": "11-04",
+          "title": "“한화비전, 후공정 장비사로 도약 기대…목표가 ↓”",
+          "risk": false
+        },
+        {
+          "date": "11-04",
+          "title": "[모닝 리포트] \"한화비전, 성장 기대에도 목표가 6.5% 하향\"",
+          "risk": false
+        },
+        {
+          "date": "11-02",
+          "title": "영상보안·AI 솔루션 키우는 한화비전…5만1700원 강보합",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 532950000
+    },
+    {
+      "code": "000810",
+      "name": "삼성화재",
+      "close": 654000,
+      "ret5": 0.0955,
+      "ret20": 0.0397,
+      "rsi14": 60.9,
+      "vol20": 0.329,
+      "foreign_net": -3352880500,
+      "inst_net": 20680297500,
+      "score": 0.444,
+      "news": [
+        {
+          "date": "11-03",
+          "title": "삼성화재, 왕빈 앞세워 배구 명가 재건 신호탄",
+          "risk": false
+        },
+        {
+          "date": "11-03",
+          "title": "이문화 삼성화재 대표, AI 에이전트 앞세워 디지털 혁신 가속 [보험사 A...",
+          "risk": false
+        }
+      ]
+    },
+    {
+      "code": "114800",
+      "name": "KODEX 인버스",
+      "close": 1195,
+      "ret5": -0.014,
+      "ret20": 0.2256,
+      "rsi14": 56.7,
+      "vol20": 0.584,
+      "foreign_net": null,
+      "inst_net": null,
+      "score": null,
+      "news": []
     }
   ]
 }
