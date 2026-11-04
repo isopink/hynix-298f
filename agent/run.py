@@ -2,7 +2,7 @@
 에이전트 실행기. 작업 스케줄러가 run.bat 을 통해 부릅니다.
 
   python run.py prep                  08:30  계좌 조회 + 데이터 준비 (LLM 없음)
-  python run.py decide                09:30~15:00 15분마다  정기 판단 (trade_times 회차만 주문, 나머지는 view)
+  python run.py decide                09:30~15:15 15분마다  정기 판단 (trade_times 회차만 주문, 나머지는 view)
   python run.py exit --codes A,B      장중 감시가 손절·익절 조건을 보면 호출 (매도만)
   python run.py close                 15:45  계좌 조회 + 오늘 자산을 equity 에 기록
   python run.py review                토 10:00  주간 회고 (보고서 초안 + 조정 제안)
