@@ -81,39 +81,13 @@
     ]
   },
   "intraday": {
-    "time": "10:30",
-    "pool": 226,
+    "time": "11:00",
+    "pool": 227,
     "analyzed_new": 30,
-    "passed": 6,
+    "passed": 5,
     "kept_prep": false
   },
   "candidates": [
-    {
-      "code": "011200",
-      "name": "HMM",
-      "close": 23250,
-      "ret5": 0.0403,
-      "ret20": 0.0864,
-      "rsi14": 59.6,
-      "vol20": 0.369,
-      "foreign_net": 8782857750,
-      "inst_net": 19248053225,
-      "score": 0.538,
-      "news": [
-        {
-          "date": "11-04",
-          "title": "글로벌 물동량 회복 기대…팬오션·HMM 해운주 상승 주도",
-          "risk": false
-        },
-        {
-          "date": "11-04",
-          "title": "HMM, 부산 대표 기업 부상..매출 10조원·전국 60위",
-          "risk": false
-        }
-      ],
-      "foreign_today": 0,
-      "inst_today": 186000000
-    },
     {
       "code": "278650",
       "name": "HLB바이오스텝",
@@ -130,11 +104,6 @@
           "date": "11-02",
           "title": "[상한가 종목] 샘표식품-HLB바이오스텝 이어 피앤에스로보틱스 등 마감",
           "risk": false
-        },
-        {
-          "date": "11-02",
-          "title": "HLB바이오스텝 24.95% 급등…비임상 CRO와 자금조달에 시선",
-          "risk": false
         }
       ],
       "foreign_today": 494250000,
@@ -150,7 +119,7 @@
       "vol20": 1.13,
       "foreign_net": -20169999850,
       "inst_net": 26384209825,
-      "score": 0.538,
+      "score": 0.444,
       "news": [
         {
           "date": "11-04",
@@ -225,17 +194,33 @@
       ]
     },
     {
-      "code": "114800",
-      "name": "KODEX 인버스",
-      "close": 1195,
-      "ret5": -0.014,
-      "ret20": 0.2256,
-      "rsi14": 56.7,
-      "vol20": 0.584,
-      "foreign_net": null,
-      "inst_net": null,
-      "score": null,
-      "news": []
+      "code": "030530",
+      "name": "원익홀딩스",
+      "close": 33100,
+      "ret5": 0.3621,
+      "ret20": 0.1278,
+      "rsi14": 68.8,
+      "vol20": 1.195,
+      "foreign_net": -9320865625,
+      "inst_net": 31342522425,
+      "score": 0.667,
+      "news": [
+        {
+          "date": "11-03",
+          "title": "[매일경제TV] 원익홀딩스 돌풍에 수익률 경쟁 후끈",
+          "risk": false
+        },
+        {
+          "date": "11-03",
+          "title": "원익홀딩스 보합 마감에도 500만주 거래…반도체·로봇 사업 재평가",
+          "risk": false
+        },
+        {
+          "date": "11-03",
+          "title": "[코스닥 기관] 원익홀딩스·동국제약 담고 반도체 장비주는 줄줄이 매도",
+          "risk": false
+        }
+      ]
     }
   ]
 }
