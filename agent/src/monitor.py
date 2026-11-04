@@ -27,7 +27,7 @@ def holdings():
 
 def triggers(hs):
     """{code: (매수 건 키, 사유)}. 키는 진입일·손절가·익절가로 만들어 다시 사거나 더 사면 새 건으로 봄."""
-    meta = C.read_json(C.POSITIONS, {}) or {}
+    meta = C.position_meta(hs)
     hit = {}
     for h in hs:
         m = meta.get(h["code"])

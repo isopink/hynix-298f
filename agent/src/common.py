@@ -1,5 +1,6 @@
 """경로·설정·작업 파일·날짜 계산 등 모든 모듈이 같이 쓰는 도구."""
 import json
+import math
 import os
 import sys
 from datetime import date, datetime, timedelta, timezone
@@ -179,11 +180,25 @@ def buys_today(code):
                if r["kind"] == "fill" and r.get("side") == "매수" and r.get("code") == code and r["time"].startswith(t))
 
 
-def gross_take(net, p=None):
+def gross_take(net, p=None, tax=None):
     """수수료·세금을 뺀 순익 net 을 내려면 매수가 대비 몇 % 올라야 하는지.
     순익 = 매도가 × (1 − 수수료 − 세금) ÷ (매수가 × (1 + 수수료)) − 1"""
     c = (p or params())["costs"]
-    return round((1 + net) * (1 + c["fee_rate"]) / (1 - c["fee_rate"] - c["sell_tax_rate"]) - 1, 4)
+    tax = c["sell_tax_rate"] if tax is None else tax
+    return (1 + net) * (1 + c["fee_rate"]) / (1 - c["fee_rate"] - tax) - 1
+
+
+def position_meta(holdings, p=None):
+    """positions.json 의 손절가·익절가·최대 보유일. 인버스는 매수 때 기록한 값 대신 평단 기준으로 지금 규칙을 적용
+    (11-04 10:33 에 산 인버스가 예전 규칙 +15% · 10일로 기록돼 있었음). 익절가는 순익이 기준을 넘도록 올림."""
+    p = p or params()
+    meta = read_json(POSITIONS, {}) or {}
+    for h in holdings:
+        inv, m = inverse(h["code"], p), meta.get(h["code"])
+        if inv and m and h.get("avg_price"):
+            sl, tp, md = exit_levels(h["code"], p)
+            meta[h["code"]] = {**m, "stop": round(h["avg_price"] * (1 + sl)), "take": math.ceil(h["avg_price"] * (1 + tp) - 1e-9), "max_days": md}
+    return meta
 
 
 def exit_levels(code, p=None, briefing=None):
@@ -191,7 +206,7 @@ def exit_levels(code, p=None, briefing=None):
     p = p or params()
     d, hv = p["decision"], high_vol(code, p, briefing)
     if inv := inverse(code, p):
-        return d["stop_loss_pct"], gross_take(inv["take_profit_net_pct"], p), inv.get("max_hold_days", d["max_hold_days"])
+        return d["stop_loss_pct"], gross_take(inv["take_profit_net_pct"], p, inv.get("sell_tax_rate")), inv.get("max_hold_days", d["max_hold_days"])
     if hv:
         return hv["stop_loss_pct"], hv["take_profit_pct"], d["max_hold_days"]
     return d["stop_loss_pct"], d["take_profit_pct"], d["max_hold_days"]

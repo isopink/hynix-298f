@@ -63,7 +63,7 @@ def name_of(code):
 
 
 def positions_view(acc):
-    meta = C.read_json(C.POSITIONS, {}) or {}
+    meta = C.position_meta(acc["holdings"])
     out = []
     for h in acc["holdings"]:
         m = meta.get(h["code"], {})
@@ -100,7 +100,7 @@ def get_briefing() -> str:
         names = ", ".join(f"{n}({c})" for c, n in inv["codes"].items())
         ctx.append(f"- 🔻인버스 {names}: 시장이 내리면 오르는 ETF. 후보에 매일 따로 들어옴. 오늘 국면이 {'·'.join(inv['regimes'])}일 때만 매수 가능, "
                    f"주식 비중 상한과 별도로 {inv['weight_cap']:.0%}까지, 하루 {inv.get('max_buys_per_day', '-')}번만 매수 (코드가 강제). "
-                   f"짧게 치고 빠짐: 수수료·세금 뺀 순익 {inv['take_profit_net_pct']:+.1%}(매수가 대비 {C.gross_take(inv['take_profit_net_pct'], p):+.2%})에 익절 · 최대 보유 {inv.get('max_hold_days', p['decision']['max_hold_days'])}거래일. "
+                   f"짧게 치고 빠짐: 수수료·세금 뺀 순익 {inv['take_profit_net_pct']:+.1%}(평단 대비 {C.gross_take(inv['take_profit_net_pct'], p, inv.get('sell_tax_rate')):+.2%})에 익절 · 최대 보유 {inv.get('max_hold_days', p['decision']['max_hold_days'])}거래일. "
                    f"보유 중인데 국면이 바뀌면 매도 확신도를 높게 볼 것")
     if rb := p.get("rsi_boost"):
         buy = [f"{x['name']}({n})" for x in b.get("candidates", []) + b.get("holdings", [])

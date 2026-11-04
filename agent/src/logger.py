@@ -73,7 +73,7 @@ def holdings():
     acc = C.read_json(C.ACCOUNT)
     if not acc:
         return []
-    meta = C.read_json(C.POSITIONS, {}) or {}
+    meta = C.position_meta(acc["holdings"])
     res = []
     for h in acc["holdings"]:
         m = meta.get(h["code"], {})
