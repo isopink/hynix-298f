@@ -81,9 +81,9 @@
     ]
   },
   "intraday": {
-    "time": "14:30",
-    "pool": 232,
-    "analyzed_new": 19,
+    "time": "14:45",
+    "pool": 231,
+    "analyzed_new": 5,
     "passed": 7,
     "kept_prep": false
   },
@@ -142,11 +142,11 @@
           "risk": false
         }
       ],
-      "price": 186900,
-      "chg": 0.0668,
-      "activity": 19.62,
+      "price": 188800,
+      "chg": 0.0776,
+      "activity": 19.53,
       "foreign_today": 0,
-      "inst_today": 7476000000
+      "inst_today": 7552000000
     },
     {
       "code": "489790",
