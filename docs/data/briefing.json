@@ -81,13 +81,34 @@
     ]
   },
   "intraday": {
-    "time": "11:30",
+    "time": "12:00",
     "pool": 235,
     "analyzed_new": 30,
     "passed": 5,
     "kept_prep": false
   },
   "candidates": [
+    {
+      "code": "033780",
+      "name": "KT&G",
+      "close": 192700,
+      "ret5": 0.0327,
+      "ret20": 0.0899,
+      "rsi14": 61.6,
+      "vol20": 0.248,
+      "foreign_net": -20911539600,
+      "inst_net": 10785450700,
+      "score": 0.636,
+      "news": [
+        {
+          "date": "11-03",
+          "title": "KT&G, 변동장에도 신고가…해외 성장·주주환원 힘입어",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 770800000
+    },
     {
       "code": "278650",
       "name": "HLB바이오스텝",
@@ -119,7 +140,7 @@
       "vol20": 1.13,
       "foreign_net": -20169999850,
       "inst_net": 26384209825,
-      "score": 0.857,
+      "score": 0.818,
       "news": [
         {
           "date": "11-04",
@@ -189,35 +210,6 @@
         {
           "date": "11-04",
           "title": "iM證 “한진칼 경영권 분쟁 장기전 불가피⋯주가 급등은 부담”",
-          "risk": false
-        }
-      ]
-    },
-    {
-      "code": "030530",
-      "name": "원익홀딩스",
-      "close": 33100,
-      "ret5": 0.3621,
-      "ret20": 0.1278,
-      "rsi14": 68.8,
-      "vol20": 1.195,
-      "foreign_net": -9320865625,
-      "inst_net": 31342522425,
-      "score": 0.667,
-      "news": [
-        {
-          "date": "11-03",
-          "title": "[매일경제TV] 원익홀딩스 돌풍에 수익률 경쟁 후끈",
-          "risk": false
-        },
-        {
-          "date": "11-03",
-          "title": "원익홀딩스 보합 마감에도 500만주 거래…반도체·로봇 사업 재평가",
-          "risk": false
-        },
-        {
-          "date": "11-03",
-          "title": "[코스닥 기관] 원익홀딩스·동국제약 담고 반도체 장비주는 줄줄이 매도",
           "risk": false
         }
       ]
