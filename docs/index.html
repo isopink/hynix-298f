@@ -383,7 +383,7 @@ details.log summary { border-radius: 16px; }
     <summary>Portfolio</summary>
     <div class="more-body">
       <div class="grid">
-        <section class="card c6 m-hide">
+        <section class="card c6">
           <div class="hd"><span class="eyebrow">포트폴리오</span><span class="sub">빨간 호 = 국면 상한</span></div>
           <div class="chart" id="ch-donut" style="min-height:240px"></div>
         </section>
@@ -604,6 +604,7 @@ details.log summary { border-radius: 16px; }
       // 오늘 KOSPI 끝점은 실시간 KOSPI 카드와 같은 네이버 1분봉으로 (잔고 스냅샷의 키움 지수는 조금 늦음) → 누적 수익률 기준 통일
       if (tk && lastRow && kstDate(tk.ts) === lastRow.date) lastRow.kospi = +tk.price;
       D = derive({ ...BASE, equity: eqLive, holdings: holdings.length ? holdings : BASE.holdings });
+      if (lastPointer !== 'mouse') tip.hidden = true;   // 터치로 고정한 말풍선은 누른 순간 값이라, 새 값이 오면 닫음
       fillText(); drawAll();
     } catch (e) { /* 다음 회차에 다시 시도 */ }
   }
@@ -611,6 +612,7 @@ details.log summary { border-radius: 16px; }
     if (!CFG.supabaseUrl || !CFG.supabaseAnonKey) return;
     pollLive();
     setInterval(() => { if (!document.hidden) pollLive(); }, 30000);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) pollLive(); });   // 휴대폰에서 다른 앱 갔다 오면 바로 갱신
   }
 
   function derive(d) {
@@ -1125,8 +1127,9 @@ details.log summary { border-radius: 16px; }
 
 
   function donut() {
-    const el = $('ch-donut'), { svg, W, H } = svgIn(el, el.clientWidth < 520 ? 200 : 240);
     const parts = D.hold.map(h => ({ name: h.name, v: h.value, pnl: h.pnl })).sort((a, b) => b.v - a.v).concat([{ name: '현금', v: D.cash }]);
+    const el = $('ch-donut'), below = el.clientWidth < 340, ring = el.clientWidth < 520 ? 200 : 240;   // 좁은 폰은 범례를 도넛 아래로
+    const { svg, W, H: H0 } = svgIn(el, ring + (below ? parts.length * 22 + 8 : 0)), H = below ? ring : H0;
     const tot = d3.sum(parts, p => p.v);
     const shades = ['#da291c', '#ff7a6e', '#bdbdbd', '#7a7a7a', '#4a4a4a', '#3a3a3a'];
     const color = (p, i) => p.name === '현금' ? 'rgba(255,255,255,.08)' : shades[i];
@@ -1143,13 +1146,14 @@ details.log summary { border-radius: 16px; }
     }
     g.append('text').attr('text-anchor', 'middle').attr('dy', '-.1em').attr('font-size', 24).attr('font-weight', 500).attr('fill', C.ink).text((D.stock / tot * 100).toFixed(0) + '%');
     g.append('text').attr('text-anchor', 'middle').attr('dy', '1.4em').attr('font-size', 11).attr('fill', C.muted).text(D.cap ? '주식 / 상한 ' + Math.round(D.cap * 100) + '%' : '주식 비중');
-    if (legendW) {
-      const lg = svg.append('g').attr('transform', `translate(${W - legendW + 8},${cy - (parts.length - 1) * 11})`);
+    if (legendW || below) {
+      const lw2 = legendW || Math.min(W, 260);
+      const lg = svg.append('g').attr('transform', below ? `translate(${(W - lw2) / 2},${ring + 14})` : `translate(${W - legendW + 8},${cy - (parts.length - 1) * 11})`);
       parts.forEach((p, i) => {
         const r = lg.append('g').attr('transform', `translate(0,${i * 22})`);
         r.append('rect').attr('width', 8).attr('height', 8).attr('y', -6).attr('fill', color(p, i)).attr('stroke', p.name === '현금' ? '#555' : 'none');
-        r.append('text').attr('x', 14).attr('font-size', 11).attr('fill', C.body).text(p.name.length > 7 ? p.name.slice(0, 7) + '…' : p.name);
-        r.append('text').attr('x', legendW - 12).attr('text-anchor', 'end').attr('font-size', 11).attr('fill', C.ink).text((p.v / tot * 100).toFixed(0) + '%');
+        r.append('text').attr('x', 14).attr('font-size', 11).attr('fill', C.body).text(p.name.length > (below ? 12 : 7) ? p.name.slice(0, below ? 12 : 7) + '…' : p.name);
+        r.append('text').attr('x', (legendW || lw2) - 12).attr('text-anchor', 'end').attr('font-size', 11).attr('fill', C.ink).text((p.v / tot * 100).toFixed(0) + '%');
       });
     }
   }
