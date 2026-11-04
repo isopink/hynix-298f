@@ -81,9 +81,9 @@
     ]
   },
   "intraday": {
-    "time": "13:45",
+    "time": "14:00",
     "pool": 234,
-    "analyzed_new": 12,
+    "analyzed_new": 6,
     "passed": 7,
     "kept_prep": false
   },
@@ -137,11 +137,11 @@
           "risk": false
         }
       ],
-      "price": 185200,
-      "chg": 0.0571,
-      "activity": 21.27,
+      "price": 187500,
+      "chg": 0.0702,
+      "activity": 20.9,
       "foreign_today": 0,
-      "inst_today": 4815200000
+      "inst_today": 4875000000
     },
     {
       "code": "278650",
@@ -184,6 +184,11 @@
         {
           "date": "11-04",
           "title": "[모닝 리포트] \"한화비전, 성장 기대에도 목표가 6.5% 하향\"",
+          "risk": false
+        },
+        {
+          "date": "11-02",
+          "title": "영상보안·AI 솔루션 키우는 한화비전…5만1700원 강보합",
           "risk": false
         }
       ],
