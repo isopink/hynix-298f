@@ -279,6 +279,36 @@ def test_every_run_kind_has_a_work_check():
     assert run.summary_line("판단 갱신 / 하락 / 매수 예정 1건 / 매도 예정 0건 / 관망 3건") == "판단 갱신 / 하락 / 매수 예정 1건 / 매도 예정 0건 / 관망 3건"
     assert run.summary_line("하락 / 매수 0건 / 매도 0건 / 관망 2건") == "하락 / 매수 0건 / 매도 0건 / 관망 2건"
 
+def test_monitor_retries_same_position_after_cooldown():
+    """감시: 같은 매수 건은 실행 뒤 10분 안엔 다시 안 띄움, 지나면 다시 (하루 1번 제한 없음). 장 전엔 한 번만."""
+    import monitor
+    old = (C.POSITIONS, monitor.STATE, monitor.holdings, monitor.subprocess.run, monitor.time.time, C.now)
+    calls, clock = [], {"t": 1_000_000.0, "now": datetime(2026, 11, 4, 10, 0, tzinfo=C.KST)}
+    try:
+        C.POSITIONS, monitor.STATE = os.path.join(tmp, "positions.json"), os.path.join(tmp, "monitor_state.json")
+        C.write_json(C.POSITIONS, {"114800": {"name": "인버스", "entry_date": "2026-11-04", "stop": 4_650, "take": 5_121, "max_days": 2}})
+        hs = [{"code": "114800", "name": "인버스", "price": 5_130}]
+        monitor.holdings = lambda: hs
+        monitor.subprocess.run = lambda *a, **k: calls.append(a) or type("R", (), {"returncode": 0})()
+        monitor.time.time = lambda: clock["t"]
+        C.now = lambda: clock["now"]
+        if os.path.exists(monitor.STATE):
+            os.remove(monitor.STATE)
+        monitor.check_once(); assert len(calls) == 1
+        clock["t"] += 60; monitor.check_once(); assert len(calls) == 1          # 1분 뒤: 아직 매도 체결 대기 → 다시 안 띄움
+        clock["t"] += 10 * 60; monitor.check_once(); assert len(calls) == 2     # 10분 지나도 남아 있으면 다시
+        C.write_json(C.POSITIONS, {"114800": {"name": "인버스", "entry_date": "2026-11-04", "stop": 4_700, "take": 5_125, "max_days": 2}})
+        clock["t"] += 60; monitor.check_once(); assert len(calls) == 3          # 다시 산 새 건은 바로
+        os.remove(monitor.STATE); calls.clear()
+        clock["now"] = datetime(2026, 11, 4, 8, 40, tzinfo=C.KST)
+        monitor.check_once(); clock["t"] += 15 * 60; monitor.check_once()
+        assert len(calls) == 1                                                 # 장 전엔 한 번만
+        clock["now"] = datetime(2026, 11, 4, 9, 6, tzinfo=C.KST)
+        monitor.check_once(); assert len(calls) == 2                           # 09:05 뒤 남아 있으면 다시
+    finally:
+        C.POSITIONS, monitor.STATE, monitor.holdings, monitor.subprocess.run, monitor.time.time, C.now = old
+
+
 if __name__ == "__main__":
     fails = 0
     for n, f in list(globals().items()):

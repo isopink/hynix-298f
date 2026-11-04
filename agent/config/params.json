@@ -99,6 +99,6 @@
     "decide_times": ["09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00"],
     "monitor_start": "08:30",
     "monitor_end": "15:20",
-    "monitor_interval_sec": 300
+    "monitor_interval_sec": 60
   }
 }
