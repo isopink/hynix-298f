@@ -402,7 +402,7 @@ details.log summary { border-radius: 16px; }
           <div class="chart" id="ch-donut" style="min-height:240px"></div>
         </section>
         <section class="card c6">
-          <div class="hd"><span class="eyebrow">보유 종목 손익</span><span class="seg" id="pnl-mode" role="group" aria-label="손익 기준"><button type="button" data-m="gross" aria-pressed="true">순수</button><button type="button" data-m="net" aria-pressed="false">수수료·세금 반영</button></span></div>
+          <div class="hd"><span class="eyebrow">보유 종목 손익</span><span class="sub">수수료·세금 반영</span></div>
           <div class="chart" id="ch-pnl" style="min-height:240px"></div>
         </section>
       </div>
@@ -1247,12 +1247,7 @@ window.TRADE_TIMES = ['09:45', '10:45', '11:45', '13:15', '14:15', '15:15'];
   }
 
   // 순수 = 평단 대비 가격 변동, 수수료·세금 반영 = 키움 수익률(prft_rt: 매수 수수료와 매도 시 낼 수수료·세금까지 뺀 값, 약 0.9%p 낮음)
-  let pnlMode = 'gross';
-  document.querySelectorAll('#pnl-mode button').forEach(b => b.addEventListener('click', () => {
-    pnlMode = b.dataset.m;
-    document.querySelectorAll('#pnl-mode button').forEach(x => x.setAttribute('aria-pressed', x === b));
-    pnl();
-  }));
+  const pnlMode = 'net';   // 11-04 순수(가격 변동만) 토글 없앰 → 키움 수익률(수수료·세금 반영)만
 
   function pnl() {
     if (!D.hold.length) return none($('ch-pnl'), '보유 종목이 없어요.');
@@ -1277,7 +1272,7 @@ window.TRADE_TIMES = ['09:45', '10:45', '11:45', '13:15', '14:15', '15:15'];
       const tip = r.total
         ? `<div class="t">보유 합계</div>${row('매입금액', won(Math.round(sumCost)))}${row('순수', pct(d3.sum(D.hold, h => h.price * h.qty) / sumCost - 1))}${row('수수료·세금 반영', pct(d3.sum(D.hold, h => cost(h) * h.pnl) / sumCost))}`
         : `<div class="t">${esc(r.name)}</div>${row('평단', won(+r.avg_price))}${row('현재가', won(+r.price))}`
-          + `${row('순수', pct(gross(r)), gross(r) >= 0 ? 'up' : 'down')}${row('수수료·세금 반영', pct(r.pnl), r.pnl >= 0 ? 'up' : 'down')}`
+          + `${row('수수료·세금 반영', pct(r.pnl), r.pnl >= 0 ? 'up' : 'down')}`
           + `${row('손익 (반영)', (r.pnl > 0 ? '+' : r.pnl < 0 ? '−' : '') + won(Math.abs(Math.round(cost(r) * r.pnl))) + '원', r.pnl >= 0 ? 'up' : 'down')}${r.stop ? row('손절 / 익절', won(+r.stop) + ' / ' + won(+r.take)) : ''}${r.held_days != null ? row('보유일', r.held_days + ' / ' + r.max_days + '일') : ''}`;
       svg.append('rect').attr('x', 0).attr('y', yy - 4).attr('width', W).attr('height', bh + 8).attr('fill', 'transparent')
         .on('pointermove pointerdown', ev => showTip(ev, tip)).on('pointerleave', hideTip);
