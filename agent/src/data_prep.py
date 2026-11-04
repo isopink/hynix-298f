@@ -59,7 +59,7 @@ def completed(df):
 
 def ohlcv(code, days=150):
     end = C.today()
-    if C.inverse(code):   # ETF 는 ETF 시세 (종목 시세 조회에 안 나올 수 있음)
+    if C.market_etf(code)[0]:   # ETF 는 ETF 시세 (종목 시세 조회에 안 나올 수 있음)
         try:
             df = stock.get_etf_ohlcv_by_date(ymd(end - timedelta(days=days * 1.6)), ymd(end), code)
             time.sleep(0.15)
@@ -73,8 +73,8 @@ def ohlcv(code, days=150):
 
 
 def name_of(code):
-    if inv := C.inverse(code):
-        return inv["codes"][code]
+    if etf := C.market_etf(code)[0]:
+        return etf["codes"][code]
     try:
         return stock.get_market_ticker_name(code) or code
     except Exception:  # noqa: BLE001
@@ -271,23 +271,25 @@ def screen(rows, p, login):
             + df[df["high_vol"]].head(hv_n).to_dict("records"))
 
 
-def inverse_rows(p, asof, login, held):
-    """인버스 ETF 는 추세·수급 조건 없이 매일 후보에 따로 넣음 (살 수 있는지는 국면으로 코드가 정함). 보유 중이면 보유 쪽에만."""
-    inv = p.get("inverse") or {}
-    if not inv.get("enabled"):
-        return []
+def inverse_rows(p, asof, login, held, kinds=("inverse", "index")):
+    """시장 ETF(인버스·지수추종)는 추세·수급 조건 없이 매일 후보에 따로 넣음 (살 수 있는지는 국면으로 코드가 정함).
+    보유 중이면 보유 쪽에만. 행에 inverse=True 또는 index=True 표시."""
     out = []
-    for code, nm in inv.get("codes", {}).items():
-        if code in held:
+    for kind in kinds:
+        cfg = p.get(kind) or {}
+        if not cfg.get("enabled"):
             continue
-        try:
-            r = analyze(code, nm, p, asof, False)   # ETF 는 투자자별 수급 조회를 하지 않음
-        except Exception as e:  # noqa: BLE001
-            print(f"  ! 인버스 {code} 건너뜀: {e}")
-            continue
-        if r:
-            r["inverse"], r["score"] = True, None
-            out.append(r)
+        for code, nm in cfg.get("codes", {}).items():
+            if code in held:
+                continue
+            try:
+                r = analyze(code, nm, p, asof, False)   # ETF 는 투자자별 수급 조회를 하지 않음
+            except Exception as e:  # noqa: BLE001
+                print(f"  ! {nm}({code}) 건너뜀: {e}")
+                continue
+            if r:
+                r[kind], r["score"] = True, None
+                out.append(r)
     return out
 
 
@@ -320,7 +322,7 @@ def build():
         if r:
             rows.append(r)
 
-    cands = screen([r for r in rows if r["code"] not in held and not C.inverse(r["code"], p)], p, login)
+    cands = screen([r for r in rows if r["code"] not in held and not C.market_etf(r["code"], p)[0]], p, login)
     cands += inverse_rows(p, asof, login, held)
     holdings = [r for r in rows if r["code"] in held]
     found = news(cands + holdings)
@@ -367,7 +369,8 @@ def to_text(b):
 
     def row(r):
         ma5 = f"{r['ma5']:,}" if r.get('ma5') else '-'
-        tag = " 🔻인버스" if r.get("inverse") or C.inverse(r["code"]) else " ⚡고변동" if r.get("high_vol") else ""
+        kind = C.market_etf(r["code"])[1]
+        tag = " 🔻인버스" if kind == "인버스" else " 📈지수" if kind == "지수" else " ⚡고변동" if r.get("high_vol") else ""
         return (f"| {r['code']} | {r['name']}{tag} | {r['close']:,} | {ma5} | {r['ma20']:,} | {r['ma60']:,} | {pct(r['ret5'])} | "
                 f"{pct(r['ret20'])} | {r['rsi14']} | {r['vol20'] * 100:.0f}% | {pct(r['mdd60'])} | "
                 f"{eok(r.get('foreign_net'))} | {eok(r.get('inst_net'))} | {r.get('score', '-')} |")
@@ -379,8 +382,8 @@ def to_text(b):
                   "활발도 = 오늘 거래대금 ÷ 평소 같은 시각까지 거래대금 (1.0 = 평소 수준)", "",
                   "| 코드 | 종목 | 현재가 | 오늘 등락 | 오늘 거래대금 | 활발도 | 외국인 오늘 | 기관 오늘 |", "|" + "---|" * 8]
         for r in b["candidates"]:
-            if r.get("from_prep") or r.get("inverse"):
-                lines.append(f"| {r['code']} | {r['name']} | - | - | - | - | - | - |   ({'인버스' if r.get('inverse') else '08:30 후보로 채움'})")
+            if r.get("from_prep") or r.get("inverse") or r.get("index"):
+                lines.append(f"| {r['code']} | {r['name']} | - | - | - | - | - | - |   ({'인버스' if r.get('inverse') else '지수추종' if r.get('index') else '08:30 후보로 채움'})")
                 continue
             act = r.get("activity")
             lines.append(f"| {r['code']} | {r['name']} | {r.get('price', 0):,} | {pct(r.get('chg'))} | "

@@ -70,12 +70,14 @@ def check(order, account, price, p=None, r=None):
         if dp <= r["daily_loss_limit"]:
             bad.append(("일일 손실 한도", f"오늘 {dp:.1%} ≤ {r['daily_loss_limit']:.0%}, 신규 매수 중단"))
         cap, regime = sizing.equity_cap(p, r, account)
+        etf, label = C.market_etf(code, p)
+        if etf:   # 시장 ETF(인버스·지수): 정해진 국면에서만, 하루 정해진 횟수만
+            if regime not in etf["regimes"]:
+                bad.append((f"{label} 국면", f"오늘 국면 {regime} · {label}는 {'·'.join(etf['regimes'])} 국면에서만 매수"))
+            if (n := C.buys_today(code)) >= etf.get("max_buys_per_day", 99):
+                bad.append((f"{label} 하루 매수", f"오늘 이미 {n}번 매수 · {label}는 하루 {etf['max_buys_per_day']}번만"))
         inv = C.inverse(code, p)
-        if inv:   # 인버스: 정해진 국면에서만, 주식 상한 대신 인버스 한도
-            if regime not in inv["regimes"]:
-                bad.append(("인버스 국면", f"오늘 국면 {regime} · 인버스는 {'·'.join(inv['regimes'])} 국면에서만 매수"))
-            if (n := C.buys_today(code)) >= inv.get("max_buys_per_day", 99):
-                bad.append(("인버스 하루 매수", f"오늘 이미 {n}번 매수 · 인버스는 하루 {inv['max_buys_per_day']}번만"))
+        if inv:   # 인버스: 주식 상한 대신 인버스 한도
             inv_after = sum(h["value"] for h in account["holdings"] if C.inverse(h["code"], p) and h["code"] != code) + pos_after
             if inv_after > total * inv["weight_cap"] * 1.001:
                 bad.append(("인버스 한도", f"매수 후 인버스 {inv_after / total:.1%} > {inv['weight_cap']:.0%}"))

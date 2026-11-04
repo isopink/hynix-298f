@@ -51,10 +51,12 @@ def plan_buy(code, conf, price, account, p=None, r=None, regime=None):
         inv_held = sum(h["qty"] * price if h["code"] == code else h["value"]
                        for h in account["holdings"] if C.inverse(h["code"], p))
         limits["인버스 한도"] = total * inv["weight_cap"] - inv_held
-        if regime not in inv["regimes"]:
-            limits["인버스는 " + "·".join(inv["regimes"]) + " 국면만"] = 0
-        if C.buys_today(code) >= inv.get("max_buys_per_day", 99):
-            limits[f"인버스는 하루 {inv['max_buys_per_day']}번만"] = 0
+    etf, label = C.market_etf(code, p)
+    if etf:   # 시장 ETF(인버스·지수): 정해진 국면에서만, 하루 정해진 횟수만
+        if regime not in etf["regimes"]:
+            limits[f"{label}는 " + "·".join(etf["regimes"]) + " 국면만"] = 0
+        if C.buys_today(code) >= etf.get("max_buys_per_day", 99):
+            limits[f"{label}는 하루 {etf['max_buys_per_day']}번만"] = 0
     hv = C.high_vol(code, p)
     if hv:   # 변동성이 큰 종목은 작게만
         limits["고변동 종목 한도"] = total * hv["weight_cap"] - held_value
@@ -70,7 +72,7 @@ def plan_buy(code, conf, price, account, p=None, r=None, regime=None):
         "stop": round(price * (1 + stop_pct)),
         "take": round(price * (1 + take_pct)),
         "max_days": max_days,
-        "high_vol": bool(hv), "inverse": bool(inv),
+        "high_vol": bool(hv), "inverse": bool(inv), "index": bool(C.index_etf(code, p)),
         "buy_threshold": C.buy_threshold(p),
     }
 

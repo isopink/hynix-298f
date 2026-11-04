@@ -52,6 +52,17 @@
     "max_hold_days": 2
   },
 
+  "index": {
+    "_note": "지수추종 ETF (11-04, 인버스와 짝). 매일 후보에 따로 넣고, 오늘 국면이 regimes 중 하나일 때만 살 수 있음(코드·Hook 이 강제). 인버스와 달리 주식 비중 상한·종목 한도 안에서 삼. 매도 규칙은 인버스와 같음: 하루 max_buys_per_day 번만 매수, 수수료 뺀 순익 take_profit_net_pct 에 익절(ETF 는 매도 세금 없음), max_hold_days 일 지나면 매도, 손절은 decision.stop_loss_pct",
+    "enabled": true,
+    "codes": {"069500": "KODEX 200"},
+    "regimes": ["상승", "횡보"],
+    "max_buys_per_day": 1,
+    "take_profit_net_pct": 0.015,
+    "sell_tax_rate": 0.0,
+    "max_hold_days": 2
+  },
+
   "regime_cap": { "상승": 0.90, "횡보": 0.70, "하락": 0.50 },
 
   "week_factor": { "1": 0.75, "2": 1.0, "3": 1.0, "4": 1.0 },

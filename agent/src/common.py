@@ -167,6 +167,22 @@ def inverse(code, p=None):
     return inv if inv and inv.get("enabled") and code in inv.get("codes", {}) else None
 
 
+def index_etf(code, p=None):
+    """지수추종 ETF 면 params.index 설정, 아니면 None."""
+    ix = (p or params()).get("index")
+    return ix if ix and ix.get("enabled") and code in ix.get("codes", {}) else None
+
+
+def market_etf(code, p=None):
+    """시장 ETF(인버스·지수추종)면 (설정, '인버스' | '지수'), 아니면 (None, None). 둘 다 국면·하루 매수 횟수·짧은 익절 규칙을 씀."""
+    p = p or params()
+    if inv := inverse(code, p):
+        return inv, "인버스"
+    if ix := index_etf(code, p):
+        return ix, "지수"
+    return None, None
+
+
 def stock_value(holdings, p=None):
     """국면 비중 상한에 들어가는 평가금액 = 인버스를 뺀 보유 종목 합 (인버스는 inverse.weight_cap 이 따로 막음)."""
     p = p or params()
@@ -189,24 +205,24 @@ def gross_take(net, p=None, tax=None):
 
 
 def position_meta(holdings, p=None):
-    """positions.json 의 손절가·익절가·최대 보유일. 인버스는 매수 때 기록한 값 대신 평단 기준으로 지금 규칙을 적용
+    """positions.json 의 손절가·익절가·최대 보유일. 시장 ETF(인버스·지수)는 매수 때 기록한 값 대신 평단 기준으로 지금 규칙을 적용
     (11-04 10:33 에 산 인버스가 예전 규칙 +15% · 10일로 기록돼 있었음). 익절가는 순익이 기준을 넘도록 올림."""
     p = p or params()
     meta = read_json(POSITIONS, {}) or {}
     for h in holdings:
-        inv, m = inverse(h["code"], p), meta.get(h["code"])
-        if inv and m and h.get("avg_price"):
+        etf, m = market_etf(h["code"], p)[0], meta.get(h["code"])
+        if etf and m and h.get("avg_price"):
             sl, tp, md = exit_levels(h["code"], p)
             meta[h["code"]] = {**m, "stop": round(h["avg_price"] * (1 + sl)), "take": math.ceil(h["avg_price"] * (1 + tp) - 1e-9), "max_days": md}
     return meta
 
 
 def exit_levels(code, p=None, briefing=None):
-    """(손절 %, 익절 %, 최대 보유일). 고변동 종목은 손절·익절 폭이 넓고, 인버스는 익절·보유일이 짧음."""
+    """(손절 %, 익절 %, 최대 보유일). 고변동 종목은 손절·익절 폭이 넓고, 시장 ETF(인버스·지수)는 익절·보유일이 짧음."""
     p = p or params()
     d, hv = p["decision"], high_vol(code, p, briefing)
-    if inv := inverse(code, p):
-        return d["stop_loss_pct"], gross_take(inv["take_profit_net_pct"], p, inv.get("sell_tax_rate")), inv.get("max_hold_days", d["max_hold_days"])
+    if etf := market_etf(code, p)[0]:
+        return d["stop_loss_pct"], gross_take(etf["take_profit_net_pct"], p, etf.get("sell_tax_rate")), etf.get("max_hold_days", d["max_hold_days"])
     if hv:
         return hv["stop_loss_pct"], hv["take_profit_pct"], d["max_hold_days"]
     return d["stop_loss_pct"], d["take_profit_pct"], d["max_hold_days"]

@@ -149,34 +149,39 @@ def screen(rows, p, r, frac):
 
 
 def ensure_inverse(b, p, held):
-    """08:30 준비에 인버스 후보가 없으면(설정을 장중에 켠 날) 여기서 한 번 만들어 후보에 붙임."""
-    inv = p.get("inverse") or {}
-    if not inv.get("enabled") or any(x.get("inverse") for x in b.get("candidates_prep", b.get("candidates", []))):
+    """08:30 준비에 시장 ETF(인버스·지수) 후보가 없으면(설정을 장중에 켠 날) 여기서 한 번 만들어 후보에 붙임."""
+    have = b.get("candidates_prep", b.get("candidates", []))
+    kinds = tuple(k for k in ("inverse", "index") if (p.get(k) or {}).get("enabled") and not any(x.get(k) for x in have))
+    if not kinds:
         return
     try:
         import pandas as pd
         import data_prep
-        rows = data_prep.inverse_rows(p, pd.Timestamp(b["asof"]).date(), False, held)
+        rows = data_prep.inverse_rows(p, pd.Timestamp(b["asof"]).date(), False, held, kinds)
     except Exception as e:  # noqa: BLE001
         return print(f"  ! 인버스 후보 추가 실패: {e}")
     for key in ("candidates", "candidates_prep"):
         if key in b:
             b[key] = b[key] + rows
     if rows:
-        print("인버스 후보 추가: " + ", ".join(r["name"] for r in rows))
+        print("시장 ETF 후보 추가: " + ", ".join(r["name"] for r in rows))
 
 
 def fill_up(cands, prep, held, n):
-    """장중 통과가 n개보다 적으면 08:30 후보로 n개까지 채우고(from_prep), 08:30 인버스 후보는 항상 붙임.
+    """장중 통과가 n개보다 적으면 08:30 후보로 n개까지 채우고(from_prep), 08:30 시장 ETF(인버스·지수) 후보는 항상 붙임.
     (11-04 09:30 처럼 통과 2개만 남아 판단할 게 없는 일 방지)"""
     out, have = list(cands), {c["code"] for c in cands}
     for x in prep:
-        if sum(1 for c in out if not c.get("inverse")) >= n:
+        if sum(1 for c in out if not etf(c)) >= n:
             break
-        if x["code"] not in have and x["code"] not in held and not x.get("inverse"):
+        if x["code"] not in have and x["code"] not in held and not etf(x):
             out.append({**x, "from_prep": True})
             have.add(x["code"])
-    return out + [x for x in prep if x.get("inverse") and x["code"] not in have and x["code"] not in held]
+    return out + [x for x in prep if etf(x) and x["code"] not in have and x["code"] not in held]
+
+
+def etf(x):
+    return x.get("inverse") or x.get("index")
 
 
 def run(dry=False):
@@ -210,7 +215,7 @@ def run(dry=False):
     ensure_inverse(b, p, held)
 
     # 풀 정렬: 거래대금 순위·외국인·기관 순위 중 가장 좋은 것 순 → 일봉 지표가 없는 종목은 max_new_analyze 개까지만 새로 계산
-    order = sorted((x for c, x in pool.items() if c not in held and not C.inverse(c, p)),
+    order = sorted((x for c, x in pool.items() if c not in held and not C.market_etf(c, p)[0]),
                    key=lambda x: min(x.get("value_rank", 999), x.get("foreign_rank", 999), x.get("inst_rank", 999)))
     login, asof, new = None, None, 0
     rows = []

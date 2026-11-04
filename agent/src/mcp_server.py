@@ -102,6 +102,12 @@ def get_briefing() -> str:
                    f"주식 비중 상한과 별도로 {inv['weight_cap']:.0%}까지, 하루 {inv.get('max_buys_per_day', '-')}번만 매수 (코드가 강제). "
                    f"짧게 치고 빠짐: 수수료·세금 뺀 순익 {inv['take_profit_net_pct']:+.1%}(평단 대비 {C.gross_take(inv['take_profit_net_pct'], p, inv.get('sell_tax_rate')):+.2%})에 익절 · 최대 보유 {inv.get('max_hold_days', p['decision']['max_hold_days'])}거래일. "
                    f"보유 중인데 국면이 바뀌면 매도 확신도를 높게 볼 것")
+    if (ix := p.get("index")) and ix.get("enabled"):
+        names = ", ".join(f"{n}({c})" for c, n in ix["codes"].items())
+        ctx.append(f"- 📈지수 {names}: 시장을 그대로 따라가는 ETF (인버스와 짝). 후보에 매일 따로 들어옴. 오늘 국면이 {'·'.join(ix['regimes'])}일 때만 매수 가능, "
+                   f"주식 비중 상한·종목 한도 안에서, 하루 {ix.get('max_buys_per_day', '-')}번만 매수 (코드가 강제). "
+                   f"인버스와 같이 짧게 치고 빠짐: 순익 {ix['take_profit_net_pct']:+.1%}(평단 대비 {C.gross_take(ix['take_profit_net_pct'], p, ix.get('sell_tax_rate')):+.2%})에 익절 · 최대 보유 {ix.get('max_hold_days', p['decision']['max_hold_days'])}거래일. "
+                   f"보유 중인데 국면이 하락으로 바뀌면 매도 확신도를 높게 볼 것")
     if rb := p.get("rsi_boost"):
         buy = [f"{x['name']}({n})" for x in b.get("candidates", []) + b.get("holdings", [])
                for _, n in [C.conf_boost(x["code"], "매수", 0, p, b, regime="")] if n]

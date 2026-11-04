@@ -337,6 +337,40 @@ def test_monitor_retries_same_position_after_cooldown():
         C.POSITIONS, monitor.STATE, monitor.holdings, monitor.subprocess.run, monitor.time.time, C.now = old
 
 
+def test_index_etf_only_in_rising_or_sideways():
+    ix = "069500"
+    assert C.index_etf(ix, P) and C.market_etf(ix, P)[1] == "지수" and C.market_etf("114800", P)[1] == "인버스"
+    assert C.market_etf("005930", P) == (None, None)
+    a = acc()
+    C.journal("regime", regime="하락", cap=P["regime_cap"]["하락"])
+    plan = sizing.plan_buy(ix, 0.80, 40_000, a, P, R)
+    assert plan["qty"] == 0 and "지수는" in plan["limited_by"], plan
+    assert "지수 국면" in rules({"code": ix, "side": "매수", "qty": 10, "confidence": 0.80}, a, 40_000, regime="하락")
+    C.journal("regime", regime="횡보", cap=P["regime_cap"]["횡보"])
+    plan = sizing.plan_buy(ix, 0.80, 40_000, a, P, R)
+    assert plan["qty"] > 0 and plan["index"], plan
+    assert not rules({"code": ix, "side": "매수", "qty": plan["qty"], "confidence": 0.80}, a, 40_000, regime="횡보")
+    # 지수는 주식 상한 안에서 (인버스처럼 빠지지 않음)
+    assert C.stock_value([pos(ix, 100, 40_000)], P) == 4_000_000
+    sl, tp, md = C.exit_levels(ix, P)
+    assert md == P["index"]["max_hold_days"] and abs(tp - C.gross_take(P["index"]["take_profit_net_pct"], P, 0.0)) < 1e-9
+
+
+def test_index_once_a_day():
+    ix = "069500"
+    C.journal("fill", code=ix, name="KODEX 200", side="매수", qty=10, price=40_000, amount=400_000)
+    C.journal("regime", regime="상승", cap=P["regime_cap"]["상승"])
+    plan = sizing.plan_buy(ix, 0.80, 40_000, acc(), P, R)
+    assert plan["qty"] == 0 and "하루" in plan["limited_by"], plan
+    assert "지수 하루 매수" in rules({"code": ix, "side": "매수", "qty": 10, "confidence": 0.80}, acc(), 40_000, regime="상승")
+
+
+def test_fill_up_keeps_both_etfs():
+    import intraday
+    prep = [{"code": "A"}, {"code": "114800", "inverse": True}, {"code": "069500", "index": True}]
+    out = intraday.fill_up([{"code": "X"}], prep, held=set(), n=5)
+    assert [c["code"] for c in out] == ["X", "A", "114800", "069500"], out
+
 if __name__ == "__main__":
     fails = 0
     for n, f in list(globals().items()):
