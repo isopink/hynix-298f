@@ -160,6 +160,18 @@ def high_vol(code, p=None, briefing=None):
     return hv if v is not None and v > p["screen"].get("max_vol20", 9) else None
 
 
+def inverse(code, p=None):
+    """인버스 ETF 면 params.inverse 설정, 아니면 None."""
+    inv = (p or params()).get("inverse")
+    return inv if inv and inv.get("enabled") and code in inv.get("codes", {}) else None
+
+
+def stock_value(holdings, p=None):
+    """국면 비중 상한에 들어가는 평가금액 = 인버스를 뺀 보유 종목 합 (인버스는 inverse.weight_cap 이 따로 막음)."""
+    p = p or params()
+    return sum(h["value"] for h in holdings if not inverse(h["code"], p))
+
+
 def exit_levels(code, p=None, briefing=None):
     """(손절 %, 익절 %, 최대 보유일). 고변동 종목은 손절·익절 폭이 넓음."""
     p = p or params()

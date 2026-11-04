@@ -59,12 +59,22 @@ def completed(df):
 
 def ohlcv(code, days=150):
     end = C.today()
+    if C.inverse(code):   # ETF 는 ETF 시세 (종목 시세 조회에 안 나올 수 있음)
+        try:
+            df = stock.get_etf_ohlcv_by_date(ymd(end - timedelta(days=days * 1.6)), ymd(end), code)
+            time.sleep(0.15)
+            if df is not None and not df.empty:
+                return completed(df)
+        except Exception as e:  # noqa: BLE001  아래 일반 시세로 한 번 더
+            print(f"  ! {code} ETF 시세 실패, 일반 시세로: {e}")
     df = stock.get_market_ohlcv(ymd(end - timedelta(days=days * 1.6)), ymd(end), code)
     time.sleep(0.15)
     return completed(df)
 
 
 def name_of(code):
+    if inv := C.inverse(code):
+        return inv["codes"][code]
     try:
         return stock.get_market_ticker_name(code) or code
     except Exception:  # noqa: BLE001
@@ -261,6 +271,26 @@ def screen(rows, p, login):
             + df[df["high_vol"]].head(hv_n).to_dict("records"))
 
 
+def inverse_rows(p, asof, login, held):
+    """인버스 ETF 는 추세·수급 조건 없이 매일 후보에 따로 넣음 (살 수 있는지는 국면으로 코드가 정함). 보유 중이면 보유 쪽에만."""
+    inv = p.get("inverse") or {}
+    if not inv.get("enabled"):
+        return []
+    out = []
+    for code, nm in inv.get("codes", {}).items():
+        if code in held:
+            continue
+        try:
+            r = analyze(code, nm, p, asof, False)   # ETF 는 투자자별 수급 조회를 하지 않음
+        except Exception as e:  # noqa: BLE001
+            print(f"  ! 인버스 {code} 건너뜀: {e}")
+            continue
+        if r:
+            r["inverse"], r["score"] = True, None
+            out.append(r)
+    return out
+
+
 def build():
     p = C.params()
     login = krx_login()
@@ -290,7 +320,8 @@ def build():
         if r:
             rows.append(r)
 
-    cands = screen([r for r in rows if r["code"] not in held], p, login)
+    cands = screen([r for r in rows if r["code"] not in held and not C.inverse(r["code"], p)], p, login)
+    cands += inverse_rows(p, asof, login, held)
     holdings = [r for r in rows if r["code"] in held]
     found = news(cands + holdings)
     for r in cands + holdings:
@@ -336,7 +367,8 @@ def to_text(b):
 
     def row(r):
         ma5 = f"{r['ma5']:,}" if r.get('ma5') else '-'
-        return (f"| {r['code']} | {r['name']}{' ⚡고변동' if r.get('high_vol') else ''} | {r['close']:,} | {ma5} | {r['ma20']:,} | {r['ma60']:,} | {pct(r['ret5'])} | "
+        tag = " 🔻인버스" if r.get("inverse") or C.inverse(r["code"]) else " ⚡고변동" if r.get("high_vol") else ""
+        return (f"| {r['code']} | {r['name']}{tag} | {r['close']:,} | {ma5} | {r['ma20']:,} | {r['ma60']:,} | {pct(r['ret5'])} | "
                 f"{pct(r['ret20'])} | {r['rsi14']} | {r['vol20'] * 100:.0f}% | {pct(r['mdd60'])} | "
                 f"{eok(r.get('foreign_net'))} | {eok(r.get('inst_net'))} | {r.get('score', '-')} |")
 
@@ -347,6 +379,9 @@ def to_text(b):
                   "활발도 = 오늘 거래대금 ÷ 평소 같은 시각까지 거래대금 (1.0 = 평소 수준)", "",
                   "| 코드 | 종목 | 현재가 | 오늘 등락 | 오늘 거래대금 | 활발도 | 외국인 오늘 | 기관 오늘 |", "|" + "---|" * 8]
         for r in b["candidates"]:
+            if r.get("from_prep") or r.get("inverse"):
+                lines.append(f"| {r['code']} | {r['name']} | - | - | - | - | - | - |   ({'인버스' if r.get('inverse') else '08:30 후보로 채움'})")
+                continue
             act = r.get("activity")
             lines.append(f"| {r['code']} | {r['name']} | {r.get('price', 0):,} | {pct(r.get('chg'))} | "
                          f"{(r.get('value') or 0) / 1e8:,.0f}억 | {'-' if act is None else f'{act:.1f}배'} | "

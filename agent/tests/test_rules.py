@@ -232,6 +232,46 @@ def test_reconcile_partial_fill():
     finally:
         C.ACCOUNT = old
 
+def test_inverse_only_in_falling_market():
+    inv = "114800"
+    assert C.inverse(inv, P) and not C.inverse("005930", P)
+    a = acc()
+    C.journal("regime", regime="횡보", cap=P["regime_cap"]["횡보"])
+    plan = sizing.plan_buy(inv, 0.80, 5_000, a, P, R)
+    assert plan["qty"] == 0 and "국면만" in plan["limited_by"], plan
+    assert "인버스 국면" in rules({"code": inv, "side": "매수", "qty": 100, "confidence": 0.80}, a, 5_000, regime="횡보")
+    C.journal("regime", regime="하락", cap=P["regime_cap"]["하락"])
+    plan = sizing.plan_buy(inv, 0.80, 5_000, a, P, R)
+    assert plan["qty"] > 0 and plan["inverse"], plan
+    assert plan["qty"] * 5_000 <= a["total"] * P["inverse"]["weight_cap"], plan
+    assert not rules({"code": inv, "side": "매수", "qty": plan["qty"], "confidence": 0.80}, a, 5_000, regime="하락")
+    held = acc(40_000_000, [pos(inv, 1_800, 5_000)])   # 이미 18% 보유 → 1,000주(+10%) 더 사면 인버스 한도 20% 초과
+    assert "인버스 한도" in rules({"code": inv, "side": "매수", "qty": 1_000, "confidence": 0.80}, held, 5_000, regime="하락")
+
+
+def test_inverse_outside_equity_cap():
+    """인버스 보유분은 주식 비중 상한에 들어가지 않음."""
+    C.journal("regime", regime="하락", cap=P["regime_cap"]["하락"])
+    big = [pos("000660", 200, 100_000)]   # 주식 2,000만 (40%) → 국면 상한까지 여유가 확신도 비중보다 작음
+    a = acc(25_000_000, big + [pos("114800", 1_000, 5_000)])   # + 인버스 500만 (10%)
+    b = acc(30_000_000, big)
+    assert C.stock_value(a["holdings"], P) == 20_000_000
+    with_inv = sizing.plan_buy("005930", 0.80, 100_000, a, P, R)
+    without = sizing.plan_buy("005930", 0.80, 100_000, b, P, R)
+    assert with_inv["qty"] == without["qty"] and with_inv["limited_by"] == "국면 상한 여유", (with_inv, without)
+    assert "국면 비중 상한" not in rules({"code": "005930", "side": "매수", "qty": with_inv["qty"], "confidence": 0.80}, a, 100_000, regime="하락")
+
+
+def test_fill_up_from_prep():
+    import intraday
+    prep = [{"code": c} for c in ("A", "B", "C", "D", "E", "F")] + [{"code": "114800", "inverse": True}]
+    out = intraday.fill_up([{"code": "X"}, {"code": "B"}], prep, held={"A"}, n=5)
+    codes = [c["code"] for c in out]
+    assert codes == ["X", "B", "C", "D", "E", "114800"], codes
+    assert [c.get("from_prep") for c in out[:5]] == [None, None, True, True, True]
+    out = intraday.fill_up([{"code": c} for c in "VWXYZ"], prep, held=set(), n=5)
+    assert [c["code"] for c in out] == list("VWXYZ") + ["114800"]
+
 if __name__ == "__main__":
     fails = 0
     for n, f in list(globals().items()):

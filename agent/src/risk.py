@@ -70,9 +70,17 @@ def check(order, account, price, p=None, r=None):
         if dp <= r["daily_loss_limit"]:
             bad.append(("일일 손실 한도", f"오늘 {dp:.1%} ≤ {r['daily_loss_limit']:.0%}, 신규 매수 중단"))
         cap, regime = sizing.equity_cap(p, r, account)
-        stock_after = sum(h["value"] for h in account["holdings"]) + amount
-        if stock_after > total * cap * 1.001:
-            bad.append(("국면 비중 상한", f"매수 후 주식 {stock_after / total:.1%} > {regime} 상한 {cap:.0%}"))
+        inv = C.inverse(code, p)
+        if inv:   # 인버스: 정해진 국면에서만, 주식 상한 대신 인버스 한도
+            if regime not in inv["regimes"]:
+                bad.append(("인버스 국면", f"오늘 국면 {regime} · 인버스는 {'·'.join(inv['regimes'])} 국면에서만 매수"))
+            inv_after = sum(h["value"] for h in account["holdings"] if C.inverse(h["code"], p) and h["code"] != code) + pos_after
+            if inv_after > total * inv["weight_cap"] * 1.001:
+                bad.append(("인버스 한도", f"매수 후 인버스 {inv_after / total:.1%} > {inv['weight_cap']:.0%}"))
+        else:
+            stock_after = C.stock_value(account["holdings"], p) + amount
+            if stock_after > total * cap * 1.001:
+                bad.append(("국면 비중 상한", f"매수 후 주식 {stock_after / total:.1%} > {regime} 상한 {cap:.0%}"))
         plan = sizing.plan_buy(code, conf, price, account, p, r)
         if qty > plan["qty"] * 1.03 + 1:   # 계산 시점과 검사 시점의 가격 차이만큼 여유
             bad.append(("수량 계산 초과", f"{qty}주 > 계산값 {plan['qty']}주"))

@@ -96,6 +96,10 @@ def get_briefing() -> str:
     if (hv := p.get("high_vol")) and hv.get("enabled"):
         ctx.append(f"- ⚡고변동 종목 (20일 변동성 {p['screen']['max_vol20']:.0%} 초과): 후보에 최대 {hv['max_candidates']}개 따로 포함. "
                    f"종목당 {hv['weight_cap']:.0%} 이하만 (코드가 강제), 손절 {hv['stop_loss_pct']:.0%} · 익절 {hv['take_profit_pct']:+.0%}")
+    if (inv := p.get("inverse")) and inv.get("enabled"):
+        names = ", ".join(f"{n}({c})" for c, n in inv["codes"].items())
+        ctx.append(f"- 🔻인버스 {names}: 시장이 내리면 오르는 ETF. 후보에 매일 따로 들어옴. 오늘 국면이 {'·'.join(inv['regimes'])}일 때만 매수 가능, "
+                   f"주식 비중 상한과 별도로 {inv['weight_cap']:.0%}까지 (코드가 강제). 보유 중인데 국면이 바뀌면 매도 확신도를 높게 볼 것")
     if rb := p.get("rsi_boost"):
         buy = [f"{x['name']}({n})" for x in b.get("candidates", []) + b.get("holdings", [])
                for _, n in [C.conf_boost(x["code"], "매수", 0, p, b, regime="")] if n]

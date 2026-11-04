@@ -34,8 +34,9 @@ def plan_buy(code, conf, price, account, p=None, r=None, regime=None):
     total, cash = account["total"], account["cash"]
     held = next((h for h in account["holdings"] if h["code"] == code), None)
     held_value = held["qty"] * price if held else 0
-    stock_value = sum(h["value"] for h in account["holdings"])
+    stock_value = C.stock_value(account["holdings"], p)
     cap, regime = equity_cap(p, r, account, regime)
+    inv = C.inverse(code, p)
 
     w = target_weight(conf, p, r)
     limits = {
@@ -45,6 +46,13 @@ def plan_buy(code, conf, price, account, p=None, r=None, regime=None):
         "1회 주문 한도": r["max_order_amount"],
         "종목 한도": total * r["max_weight_per_stock"] - held_value,
     }
+    if inv:   # 인버스는 주식 상한 대신 자기 한도. 정해진 국면이 아니면 0
+        del limits["국면 상한 여유"]
+        inv_held = sum(h["qty"] * price if h["code"] == code else h["value"]
+                       for h in account["holdings"] if C.inverse(h["code"], p))
+        limits["인버스 한도"] = total * inv["weight_cap"] - inv_held
+        if regime not in inv["regimes"]:
+            limits["인버스는 " + "·".join(inv["regimes"]) + " 국면만"] = 0
     hv = C.high_vol(code, p)
     if hv:   # 변동성이 큰 종목은 작게만
         limits["고변동 종목 한도"] = total * hv["weight_cap"] - held_value
@@ -60,7 +68,7 @@ def plan_buy(code, conf, price, account, p=None, r=None, regime=None):
         "stop": round(price * (1 + stop_pct)),
         "take": round(price * (1 + take_pct)),
         "max_days": max_days,
-        "high_vol": bool(hv),
+        "high_vol": bool(hv), "inverse": bool(inv),
         "buy_threshold": C.buy_threshold(p),
     }
 
