@@ -1133,7 +1133,7 @@ details.log summary { border-radius: 16px; }
     const tot = d3.sum(parts, p => p.v);
     const shades = ['#da291c', '#ff7a6e', '#bdbdbd', '#7a7a7a', '#4a4a4a', '#3a3a3a'];
     const color = (p, i) => p.name === '현금' ? 'rgba(255,255,255,.08)' : shades[i];
-    const legendW = W >= 340 ? 130 : 0;
+    const legendW = W >= 340 ? 150 : 0;
     const R = Math.min((W - legendW) / 2, H / 2) - 14, cx = legendW ? (W - legendW) / 2 : W / 2, cy = H / 2;
     const g = svg.append('g').attr('transform', `translate(${cx},${cy})`);
     const pie = d3.pie().sort(null).value(p => p.v).padAngle(.012);
@@ -1144,8 +1144,8 @@ details.log summary { border-radius: 16px; }
     g.append('path').attr('d', d3.arc()({ innerRadius: R + 5, outerRadius: R + 7, startAngle: 0, endAngle: capA })).attr('fill', C.red);
     g.append('line').attr('x1', (R + 2) * Math.sin(capA)).attr('y1', -(R + 2) * Math.cos(capA)).attr('x2', (R + 11) * Math.sin(capA)).attr('y2', -(R + 11) * Math.cos(capA)).attr('stroke', C.red).attr('stroke-width', 2);
     }
-    g.append('text').attr('text-anchor', 'middle').attr('dy', '-.1em').attr('font-size', 24).attr('font-weight', 500).attr('fill', C.ink).text((D.stock / tot * 100).toFixed(0) + '%');
-    g.append('text').attr('text-anchor', 'middle').attr('dy', '1.4em').attr('font-size', 11).attr('fill', C.muted).text(D.cap ? '주식 / 상한 ' + Math.round(D.cap * 100) + '%' : '주식 비중');
+    g.append('text').attr('text-anchor', 'middle').attr('dy', '-.1em').attr('font-size', 24).attr('font-weight', 500).attr('fill', C.ink).text((D.stock / tot * 100).toFixed(1) + '%');
+    g.append('text').attr('text-anchor', 'middle').attr('dy', '1.4em').attr('font-size', 11).attr('fill', C.muted).text(D.cap ? '주식 / 상한 ' + (D.cap * 100).toFixed(1) + '%' : '주식 비중');
     if (legendW || below) {
       const lw2 = legendW || Math.min(W, 260);
       const lg = svg.append('g').attr('transform', below ? `translate(${(W - lw2) / 2},${ring + 14})` : `translate(${W - legendW + 8},${cy - (parts.length - 1) * 11})`);
@@ -1153,7 +1153,7 @@ details.log summary { border-radius: 16px; }
         const r = lg.append('g').attr('transform', `translate(0,${i * 22})`);
         r.append('rect').attr('width', 8).attr('height', 8).attr('y', -6).attr('fill', color(p, i)).attr('stroke', p.name === '현금' ? '#555' : 'none');
         r.append('text').attr('x', 14).attr('font-size', 11).attr('fill', C.body).text(p.name.length > (below ? 12 : 7) ? p.name.slice(0, below ? 12 : 7) + '…' : p.name);
-        r.append('text').attr('x', (legendW || lw2) - 12).attr('text-anchor', 'end').attr('font-size', 11).attr('fill', C.ink).text((p.v / tot * 100).toFixed(0) + '%');
+        r.append('text').attr('x', (legendW || lw2) - 12).attr('text-anchor', 'end').attr('font-size', 11).attr('fill', C.ink).text((p.v / tot * 100).toFixed(1) + '%');
       });
     }
   }
