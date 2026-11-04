@@ -284,7 +284,8 @@ body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-i
   background-size: 48px 48px; mask-image: radial-gradient(ellipse at 50% 0%, #000 0%, transparent 70%); -webkit-mask-image: radial-gradient(ellipse at 50% 0%, #000 0%, transparent 70%); }
 .wrap { position: relative; z-index: 1; }
 .brand { display: flex; align-items: center; gap: 16px; }
-.top h1 { background: linear-gradient(180deg, #ffffff 30%, #9a9a9a 120%); -webkit-background-clip: text; background-clip: text; color: transparent; letter-spacing: -1.2px; }
+.top h1 { background: linear-gradient(180deg, #ffffff 30%, #9a9a9a 120%); -webkit-background-clip: text; background-clip: text; color: transparent; letter-spacing: -1.2px;
+  padding-bottom: .18em; margin-bottom: -.18em; }   /* 그라데이션 글자는 줄 높이(1.1) 밖이 안 칠해져 g·y 꼬리가 잘림 → 아래로 칠할 공간만 늘리고 레이아웃은 그대로 */
 .chip { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.09); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
 .chip.live::before { box-shadow: 0 0 0 0 rgba(218,41,28,.6); animation: pulse 2s infinite; }
 @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(218,41,28,.6); } 70% { box-shadow: 0 0 0 8px rgba(218,41,28,0); } 100% { box-shadow: 0 0 0 0 rgba(218,41,28,0); } }
