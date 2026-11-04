@@ -27,7 +27,7 @@ Team *Hynix 298F* · 2026 Navist UOStock AI Auto-Trading Mock Investment Competi
 | **Competition** | Korean equities mock trading, Nov 2 – 27, 2026 · one team account · ₩50M |
 | **Rule** | The AI must make every decision and place every order itself. No manual orders, no human approval of orders |
 | **Approach** | LLMs debate and score conviction. Python sizes the order, a Hook can veto it |
-| **Cadence** | A decision every 15 min (09:30 – 15:00), orders only on the half hour |
+| **Cadence** | A decision every 15 min (09:30 – 15:00), orders in 6 of them |
 | **Result** | 🏁 After the competition (Nov 29, 2026) |
 
 ## Why this design
@@ -101,8 +101,8 @@ Every change and rejection shows up on the dashboard (Feedback Loop).
 | 08:30 | `prep` — account, KRX data, news → briefing | – |
 | 08:55 → | Balance snapshot every minute → Supabase | – |
 | 09:05 – 15:20 | `monitor` — stop / target / holding days every 5 min | only when hit |
-| **09:30, 10:30 … 14:30** | `decide` — re-screen → debate → **orders** | ✓ |
-| 09:45, 10:00, 10:15 … 15:00 (every 15 min, except :30 slots) | `view` — same debate, **no orders**, refreshes the dashboard | ✓ |
+| **09:45, 10:30, 11:30, 13:00, 14:00, 15:00** | `decide` — re-screen → debate → **orders** | ✓ |
+| the other 15-min slots, 09:30 – 14:45 | `view` — same debate, **no orders**, refreshes the dashboard | ✓ |
 | 15:45 | `close` — record today's equity | – |
 | 16:00 | `tune` — threshold self-tuning | ✓ |
 | Sat 10:00 | `review` — weekly review and report draft | ✓ |

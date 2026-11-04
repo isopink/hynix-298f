@@ -2,7 +2,7 @@
 에이전트 실행기. 작업 스케줄러가 run.bat 을 통해 부릅니다.
 
   python run.py prep                  08:30  계좌 조회 + 데이터 준비 (LLM 없음)
-  python run.py decide                09:30 · 11:00 · 14:30  정기 판단 (Claude Code 헤드리스)
+  python run.py decide                09:30~15:00 15분마다  정기 판단 (trade_times 회차만 주문, 나머지는 view)
   python run.py exit --codes A,B      장중 감시가 손절·익절 조건을 보면 호출 (매도만)
   python run.py close                 15:45  계좌 조회 + 오늘 자산을 equity 에 기록
   python run.py review                토 10:00  주간 회고 (보고서 초안 + 조정 제안)
@@ -219,7 +219,7 @@ def main():
             py("intraday.py")   # 장중 거래대금·외국인·기관 순매수로 후보 갱신 (실패하면 08:30 후보 유지)
             py("intraday.py", "--rsi")   # 후보·보유 종목 RSI 를 지금 가격으로 다시 계산 (실패하면 전일 RSI)
         p = C.params()
-        if kind == "decide" and not C.trade_slot():   # 판단은 30분마다, 매매는 trade_times(매시 30분) 회차에만
+        if kind == "decide" and not C.trade_slot():   # 판단은 15분마다, 매매는 params.schedule.trade_times 회차에만
             kind = "view"
         start = p["competition"]["start"]
         prompt = PROMPTS[kind].format(time=C.stamp(), codes=a.codes, why=a.why, next_trade=C.next_trade_time() or "내일",

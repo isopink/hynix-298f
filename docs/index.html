@@ -1463,19 +1463,19 @@ details.log summary { border-radius: 16px; }
   }
   tk.addEventListener('click', () => fab.click());
 
-  // ---------- 매매 시각: 평일 09:30~14:30 매시 매매, 판단은 15분마다 (agent/setup_tasks.ps1 · params.schedule 과 맞출 것). 다음 매매에 빨간 점 ----------
-  const SCHED = { from: '09:30', to: '14:30', every: 60, judge: 15 };
+  // ---------- 매매 시각: 평일 하루 6번 매매, 판단은 15분마다 (agent/setup_tasks.ps1 · params.schedule.trade_times 와 맞출 것). 다음 매매에 빨간 점 ----------
+  const SCHED = { trades: ['09:45', '10:30', '11:30', '13:00', '14:00', '15:00'], judge: 15 };
   const sched = document.getElementById('sched');
   function drawSched() {
     const k = new Date(Date.now() + 9 * 3600e3), day = k.getUTCDay();   // 한국 시각
     const hm = m => String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0'), toM = t => +t.slice(0, 2) * 60 + +t.slice(3);
-    const now = k.getUTCHours() * 60 + k.getUTCMinutes(), a = toM(SCHED.from), b = toM(SCHED.to);
-    const n = a + Math.max(0, Math.ceil((now + 1 - a) / SCHED.every)) * SCHED.every;
-    const next = day >= 1 && day <= 5 && n <= b ? hm(n) : null;
+    const now = k.getUTCHours() * 60 + k.getUTCMinutes(), tt = SCHED.trades;
+    const n = tt.map(toM).find(m => m > now);
+    const next = day >= 1 && day <= 5 && n != null ? hm(n) : null;
     sched.textContent = '';
     const add = (html, live) => { const c = document.createElement('span'); c.className = 'chip' + (live ? ' live' : ''); c.innerHTML = html; sched.appendChild(c); return c; };
     add('평일 매매');
-    add(`<b>${SCHED.from}~${SCHED.to}</b> 매시`);
+    add(`<b>${tt[0]}~${tt[tt.length - 1]}</b> ${tt.length}번`);
     add(`판단 <b>${SCHED.judge}분</b>마다`);
     if (next) add(`다음 매매 <b>${next}</b>`, true);
   }
