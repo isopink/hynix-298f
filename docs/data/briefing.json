@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "12:30",
+    "time": "13:00",
     "pool": 236,
-    "analyzed_new": 30,
-    "passed": 5,
+    "analyzed_new": 22,
+    "passed": 7,
     "kept_prep": false
   },
   "candidates": [
@@ -98,7 +98,7 @@
       "vol20": 0.248,
       "foreign_net": -20911539600,
       "inst_net": 10785450700,
-      "score": 0.636,
+      "score": 0.714,
       "news": [
         {
           "date": "11-03",
@@ -140,7 +140,7 @@
       "vol20": 1.13,
       "foreign_net": -20169999850,
       "inst_net": 26384209825,
-      "score": 0.818,
+      "score": 0.786,
       "news": [
         {
           "date": "11-04",
@@ -160,6 +160,37 @@
       ],
       "foreign_today": 1114350000,
       "inst_today": 1501950000
+    },
+    {
+      "code": "053800",
+      "name": "안랩",
+      "close": 113900,
+      "ret5": 0.2027,
+      "ret20": 0.4528,
+      "rsi14": 64.2,
+      "vol20": 1.672,
+      "foreign_net": -14990391500,
+      "inst_net": 1881959300,
+      "score": 0.5,
+      "news": [
+        {
+          "date": "11-03",
+          "title": "해킹 잇따르자 안랩 한때 50%↑…종가는 전일 대비 2.24% 하락",
+          "risk": false
+        },
+        {
+          "date": "11-03",
+          "title": "안랩 장중 13만7300원 찍고 11만3600원 마감",
+          "risk": false
+        },
+        {
+          "date": "11-03",
+          "title": "해킹 잇따르자 안랩 50%↑…41억원 베팅한 안철수 수익률은? [오늘, 이 종...",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 455600000
     },
     {
       "code": "000810",
@@ -186,33 +217,30 @@
       ]
     },
     {
-      "code": "180640",
-      "name": "한진칼",
-      "close": 175200,
-      "ret5": 0.4588,
-      "ret20": 0.3193,
-      "rsi14": 81.2,
-      "vol20": 1.032,
-      "foreign_net": -15132032700,
-      "inst_net": 16543949850,
-      "score": 1.0,
-      "news": [
-        {
-          "date": "11-04",
-          "title": "조원태, 우호지분 결집 속도…한진칼 경영권 방어전 새 국면",
-          "risk": false
-        },
-        {
-          "date": "11-04",
-          "title": "[증시키워드] 美 반도체 반등에 삼전·SK하닉 재도전…한진칼·ESS 강세 ...",
-          "risk": false
-        },
-        {
-          "date": "11-04",
-          "title": "iM證 “한진칼 경영권 분쟁 장기전 불가피⋯주가 급등은 부담”",
-          "risk": false
-        }
-      ]
+      "code": "114800",
+      "name": "KODEX 인버스",
+      "close": 1195,
+      "ret5": -0.014,
+      "ret20": 0.2256,
+      "rsi14": 56.7,
+      "vol20": 0.584,
+      "foreign_net": null,
+      "inst_net": null,
+      "score": null,
+      "news": []
+    },
+    {
+      "code": "069500",
+      "name": "KODEX 200",
+      "close": 89325,
+      "ret5": 0.0047,
+      "ret20": -0.2029,
+      "rsi14": 40.7,
+      "vol20": 0.59,
+      "foreign_net": null,
+      "inst_net": null,
+      "score": null,
+      "news": []
     }
   ]
 }
