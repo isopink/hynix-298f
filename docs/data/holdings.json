@@ -10,7 +10,7 @@
     "weight": 0.0027,
     "stop": 21734,
     "take": 25707,
-    "held_days": 1,
+    "held_days": 2,
     "max_days": 5
   },
   {
@@ -24,7 +24,7 @@
     "weight": 0.018,
     "stop": 29295,
     "take": 34650,
-    "held_days": 0,
+    "held_days": 1,
     "max_days": 5
   },
   {
@@ -38,7 +38,7 @@
     "weight": 0.022,
     "stop": 170655,
     "take": 201850,
-    "held_days": 0,
+    "held_days": 1,
     "max_days": 5
   },
   {
@@ -52,7 +52,7 @@
     "weight": 0.2401,
     "stop": 78237,
     "take": 87259,
-    "held_days": 0,
+    "held_days": 1,
     "max_days": 5
   },
   {
@@ -66,7 +66,7 @@
     "weight": 0.056,
     "stop": 186930,
     "take": 221100,
-    "held_days": 2,
+    "held_days": 3,
     "max_days": 5
   },
   {
@@ -80,7 +80,7 @@
     "weight": 0.0603,
     "stop": 1343850,
     "take": 1589500,
-    "held_days": 2,
+    "held_days": 3,
     "max_days": 5
   }
 ]
