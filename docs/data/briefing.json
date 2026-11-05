@@ -81,8 +81,8 @@
     ]
   },
   "intraday": {
-    "time": "12:30",
-    "pool": 231,
+    "time": "12:45",
+    "pool": 232,
     "analyzed_new": 5,
     "passed": 20,
     "kept_prep": false
@@ -102,25 +102,25 @@
       "news": [
         {
           "date": "11-05",
-          "title": "[민주 약국] 셀트리온·한미사이언스·보령파마솔루션",
+          "title": "셀트리온, 브라질서 바이오시밀러 3종 출시… 10종으로 확대",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "셀트리온, 롯데바이오로직스와 CMO 협력 논의",
+          "title": "셀트리온, 브라질서 바이오시밀러 3종 출시…현지 판매 제품 10종으로 확...",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "3중 넘어 4중으로…셀트리온 비만 신약, 효능 차이 입증할까",
+          "title": "셀트리온, 브라질에 바이오시밀러 3종 출시",
           "risk": false
         }
       ],
-      "price": 214500,
-      "chg": 0.0725,
-      "activity": 4.12,
-      "foreign_today": 35178000000,
-      "inst_today": 25954500000,
+      "price": 214000,
+      "chg": 0.07,
+      "activity": 3.97,
+      "foreign_today": 35096000000,
+      "inst_today": 25894000000,
       "exchange": null
     },
     {
@@ -141,11 +141,11 @@
           "risk": false
         }
       ],
-      "price": 32400,
-      "chg": 0.0675,
-      "activity": 1.55,
-      "foreign_today": 2818800000,
-      "inst_today": 4536000000,
+      "price": 32375,
+      "chg": 0.0667,
+      "activity": 1.5,
+      "foreign_today": 2816625000,
+      "inst_today": 4532500000,
       "exchange": null
     },
     {
@@ -176,11 +176,11 @@
           "risk": false
         }
       ],
-      "price": 30175,
-      "chg": 0.0194,
-      "activity": 2.09,
+      "price": 30300,
+      "chg": 0.0236,
+      "activity": 2.0,
       "foreign_today": 0,
-      "inst_today": 2051900000,
+      "inst_today": 2060400000,
       "exchange": null
     },
     {
@@ -193,7 +193,7 @@
       "vol20": 0.658,
       "foreign_net": -34495865250,
       "inst_net": 64637407000,
-      "score": 0.655,
+      "score": 0.664,
       "news": [
         {
           "date": "11-04",
@@ -211,11 +211,11 @@
           "risk": false
         }
       ],
-      "price": 363500,
-      "chg": 0.0239,
-      "activity": 1.69,
+      "price": 365500,
+      "chg": 0.0296,
+      "activity": 1.64,
       "foreign_today": 0,
-      "inst_today": 2908000000,
+      "inst_today": 2924000000,
       "exchange": null
     },
     {
@@ -232,17 +232,17 @@
       "news": [
         {
           "date": "11-05",
+          "title": "KT-삼성전자 맞손...AI로 고속철도 통신 끊김 줄인다",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "1승1패로 원점…가을에 진 적 없는 KT 소형준 vs PO에서만 2승 거둔 삼성...",
+          "risk": false
+        },
+        {
+          "date": "11-05",
           "title": "대기업집단 2026년 11월 브랜드평판...삼성, 현대자동차, KT 順",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "KT·삼성전자, 시속 250km 고속철 '통신 끊김' AI로 잡는다",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "경찰, ‘동덕여대·KT본사 테러’ 협박 게시자들 상대로 손해배상 청구",
           "risk": false
         }
       ],
@@ -278,10 +278,10 @@
           "risk": false
         }
       ],
-      "price": 65400,
-      "chg": -0.0015,
-      "activity": 1.15,
-      "foreign_today": 3924000000,
+      "price": 65500,
+      "chg": 0.0,
+      "activity": 1.09,
+      "foreign_today": 3930000000,
       "inst_today": 0,
       "exchange": null
     },
@@ -303,11 +303,11 @@
           "risk": false
         }
       ],
-      "price": 121300,
-      "chg": 0.0359,
-      "activity": 1.05,
-      "foreign_today": 3639000000,
-      "inst_today": 2789900000,
+      "price": 121400,
+      "chg": 0.0367,
+      "activity": 1.01,
+      "foreign_today": 3642000000,
+      "inst_today": 2792200000,
       "exchange": null
     },
     {
@@ -448,7 +448,7 @@
       "vol20": 0.827,
       "foreign_net": -41540468400,
       "inst_net": 68116800900,
-      "score": 0.487,
+      "score": 0.479,
       "news": [
         {
           "date": "11-04",
@@ -629,12 +629,12 @@
         },
         {
           "date": "11-05",
-          "title": "루닛, 글로벌 진단기업과 AI 암 분석 성과…난소암·방광암 치료 예측 가...",
+          "title": "루닛, 글로벌 파트너와 난소·방광암 AI 분석 결과 공개",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "루닛, 볼파라 인수 CB 갚으려 또 477억 CB…상장사 조달 꼬리 문다",
+          "title": "루닛, 글로벌 진단기업과 AI 암 분석 성과…난소암·방광암 치료 예측 가...",
           "risk": false
         }
       ],
