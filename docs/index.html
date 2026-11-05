@@ -237,7 +237,7 @@ td.k { color: var(--ink); white-space: nowrap; }
 .cover .live { position: absolute; inset: 0; width: 100%; height: 100%; }
 .cover::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, rgba(10,10,12,0) 30%, rgba(10,10,12,.55) 100%); pointer-events: none; }   /* 가장자리로 갈수록 어둡게, 글자가 가운데서 뜸 */
 .cover-text { position: absolute; inset: 0; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; pointer-events: none; padding: 0 24px; text-align: center; }
-.cover-title { margin: 0; font-size: clamp(34px, 7vw, 76px); font-weight: 500; letter-spacing: -1px; line-height: 1.1; color: var(--ink); text-shadow: 0 0 24px rgba(0,0,0,.9), 0 0 60px rgba(218,41,28,.25); text-wrap: balance; }
+.cover-title { margin: 0; font-size: clamp(34px, 4.2vw, 54px); font-weight: 500; letter-spacing: -1px; line-height: 1.1; color: var(--ink); text-shadow: 0 0 24px rgba(0,0,0,.9), 0 0 60px rgba(218,41,28,.25); text-wrap: balance; }
 body.covered { overflow: hidden; }
 .kx-flow { margin-top: 14px; padding-top: 14px; border-top: 1px dashed rgba(255,255,255,.08); }   /* 카드 안 아래칸 (누적 수익률 → 실시간 판단, 실시간 KOSPI → 순매수) */
 .kx-flow .hd { margin-bottom: 8px; }
@@ -1657,7 +1657,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const bg = document.createElement('canvas');
     function fit() {
       const r = cv.getBoundingClientRect(); if (r.width < 1) return;
-      const ph = r.width < 560, dpr = Math.min(ph ? 3 : 2, devicePixelRatio || 1);   // 폰은 화면 픽셀 그대로 선명하게   // 폰은 화면 픽셀 그대로 그려 선명하게 (캔버스가 작아 비용 적음)
+      const ph = r.width < 560, dpr = Math.min(3, devicePixelRatio || 1);   // 화면 픽셀 그대로 선명하게 (최대 3배)   // 폰은 화면 픽셀 그대로 그려 선명하게 (캔버스가 작아 비용 적음)
       const h = Math.max(300, Math.min(2600, Math.round(W * r.height / r.width)));   // 상자 비율대로 세로 길이 (1000 기준)
       if (ph !== phone || Math.abs(h - H) > 8) { phone = ph; lw = ph ? 1.6 : 1; H = h; ys = H / 620; build(); }
       const cw = Math.round(r.width * dpr), ch = Math.round(cw * H / W);
