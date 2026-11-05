@@ -81,9 +81,9 @@
     ]
   },
   "intraday": {
-    "time": "11:30",
-    "pool": 231,
-    "analyzed_new": 28,
+    "time": "11:45",
+    "pool": 230,
+    "analyzed_new": 5,
     "passed": 20,
     "kept_prep": false
   },
@@ -102,25 +102,25 @@
       "news": [
         {
           "date": "11-05",
+          "title": "셀트리온 비만치료제, 위고비·마운자로 벽 넘을까",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "셀트리온, 브라질 의약품 포트폴리오 10종으로 확대… 중남미 공략 본격...",
+          "risk": false
+        },
+        {
+          "date": "11-05",
           "title": "[굿모닝! 5일 제약바이오 소식] 지씨셀·보령파마솔루션·셀트리온·동국...",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "셀트리온, 브라질 바이오시밀러 판 키운다…신제품 3종 출격",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "\"중남미 핵심 시장 공략 박차\"…셀트리온, 브라질서 후속 바이오시밀러...",
           "risk": false
         }
       ],
-      "price": 215500,
-      "chg": 0.0775,
-      "activity": 4.94,
-      "foreign_today": 35342000000,
-      "inst_today": 26075500000,
+      "price": 215000,
+      "chg": 0.075,
+      "activity": 4.72,
+      "foreign_today": 35260000000,
+      "inst_today": 26015000000,
       "exchange": null
     },
     {
@@ -151,11 +151,11 @@
           "risk": false
         }
       ],
-      "price": 183000,
-      "chg": 0.0714,
-      "activity": 2.95,
-      "foreign_today": 18117000000,
-      "inst_today": 10248000000,
+      "price": 183650,
+      "chg": 0.0752,
+      "activity": 2.81,
+      "foreign_today": 18181350000,
+      "inst_today": 10284400000,
       "exchange": null
     },
     {
@@ -168,29 +168,29 @@
       "vol20": 0.272,
       "foreign_net": 4222456675,
       "inst_net": 11246144775,
-      "score": 0.856,
+      "score": 0.864,
       "news": [
         {
           "date": "11-05",
-          "title": "카카오, 플랫폼 성장에 3Q 영업익 2403억…톡비즈 13%↑",
+          "title": "\"2028년 AI 손익분기점 달성 순항\"…카카오, 에이전틱 AI·클라우드 전략...",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "카카오, \"광고 수익화·비용 효율화로 AI 사업 2028년 손익분기점\"",
+          "title": "[특징주] 카카오, 3분기 실적·자사주 소각 계획 발표 '상승'",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "[컨콜 종합] 카카오 \"더 속도감 있게 AI 서비스 확대⋯매출 10% 이상 성장...",
+          "title": "카카오AI 출범 앞둔 정신아, AI 에이전트 전략 '수정'",
           "risk": false
         }
       ],
-      "price": 31975,
-      "chg": 0.0988,
-      "activity": 5.75,
-      "foreign_today": 3261450000,
-      "inst_today": 2366150000,
+      "price": 32000,
+      "chg": 0.0997,
+      "activity": 5.42,
+      "foreign_today": 3264000000,
+      "inst_today": 2368000000,
       "exchange": null
     },
     {
@@ -203,7 +203,7 @@
       "vol20": 0.301,
       "foreign_net": -56327899900,
       "inst_net": 59042064425,
-      "score": 0.765,
+      "score": 0.75,
       "news": [
         {
           "date": "11-05",
@@ -211,11 +211,11 @@
           "risk": false
         }
       ],
-      "price": 32525,
-      "chg": 0.0717,
+      "price": 32450,
+      "chg": 0.0692,
       "activity": 1.67,
-      "foreign_today": 2829675000,
-      "inst_today": 4553500000,
+      "foreign_today": 2823150000,
+      "inst_today": 4543000000,
       "exchange": null
     },
     {
@@ -248,7 +248,7 @@
       ],
       "price": 30000,
       "chg": 0.0135,
-      "activity": 2.62,
+      "activity": 2.45,
       "foreign_today": 0,
       "inst_today": 2040000000,
       "exchange": null
@@ -281,11 +281,11 @@
           "risk": false
         }
       ],
-      "price": 364500,
-      "chg": 0.0268,
-      "activity": 2.07,
+      "price": 365000,
+      "chg": 0.0282,
+      "activity": 1.96,
       "foreign_today": 0,
-      "inst_today": 2916000000,
+      "inst_today": 2920000000,
       "exchange": null
     },
     {
@@ -302,17 +302,17 @@
       "news": [
         {
           "date": "11-05",
-          "title": "KT, 서울대에 융합보안 계약학과…내년 석사과정 개설",
+          "title": "KT, 기업 AI 전환 지원하는 ‘AX 비즈 포털’ 개설",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "KTX 내 통신 끊김 줄인다…KT-삼성, AI로 고속철도 무선망 최적화",
+          "title": "KT·서울대 ‘융합보안 계약학과’ 설립 협약 체결",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "통신 3사, 고객 체감 품질 높인다…SKT·KT는 통신망, LG유플은 공간 경...",
+          "title": "[기업경쟁력]KT·삼성전자, AI로 고속철도 통신 끊김 줄였다…실증서 29...",
           "risk": false
         }
       ],
@@ -348,10 +348,10 @@
           "risk": false
         }
       ],
-      "price": 65600,
-      "chg": 0.0015,
-      "activity": 1.45,
-      "foreign_today": 3936000000,
+      "price": 65500,
+      "chg": 0.0,
+      "activity": 1.35,
+      "foreign_today": 3930000000,
       "inst_today": 0,
       "exchange": null
     },
@@ -373,11 +373,11 @@
           "risk": false
         }
       ],
-      "price": 122300,
-      "chg": 0.0444,
-      "activity": 1.2,
-      "foreign_today": 3669000000,
-      "inst_today": 2812900000,
+      "price": 122500,
+      "chg": 0.0461,
+      "activity": 1.17,
+      "foreign_today": 3675000000,
+      "inst_today": 2817500000,
       "exchange": null
     },
     {
@@ -390,51 +390,29 @@
       "vol20": 0.279,
       "foreign_net": -48818326000,
       "inst_net": 54420877600,
-      "score": 0.538,
+      "score": 0.545,
       "news": [
+        {
+          "date": "11-05",
+          "title": "한국ESG평가원, KB금융 이재근 회장 선임 찬성 권고 … \"이사회 독립성...",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "한국ESG평가원, KB금융 이재근 차기회장 후보 찬성 의결 권고",
+          "risk": false
+        },
         {
           "date": "11-05",
           "title": "한국ESG평가원, KB금융 이재근 회장 선임 찬성 권고…이사회 독립성 호...",
           "risk": false
         }
       ],
-      "price": 157900,
-      "chg": 0.0422,
-      "activity": 1.23,
-      "foreign_today": 7579200000,
-      "inst_today": 3158000000,
-      "exchange": null
-    },
-    {
-      "code": "000100",
-      "name": "유한양행",
-      "close": 78600,
-      "ret5": 0.0103,
-      "ret20": 0.0288,
-      "rsi14": 50.8,
-      "vol20": 0.543,
-      "foreign_net": -183011000,
-      "inst_net": 1391209200,
-      "score": 0.508,
-      "news": [
-        {
-          "date": "11-05",
-          "title": "군포시, 당정 공업지역 정비사업 본격화…옛 유한양행 부지 복합단지 조...",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "군포시 당정동 옛 유한양행 부지, 도시혁신구역 결정안 조건부 가결",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "옛 유한양행 부지 개발 가시화…군포 정비사업 국토부 심의 통과",
-          "risk": false
-        }
-      ],
-      "foreign_today": 3144000000,
-      "inst_today": 235800000,
+      "price": 158000,
+      "chg": 0.0429,
+      "activity": 1.18,
+      "foreign_today": 7584000000,
+      "inst_today": 3160000000,
       "exchange": null
     },
     {
@@ -470,6 +448,38 @@
       "exchange": null
     },
     {
+      "code": "000100",
+      "name": "유한양행",
+      "close": 78600,
+      "ret5": 0.0103,
+      "ret20": 0.0288,
+      "rsi14": 50.8,
+      "vol20": 0.543,
+      "foreign_net": -183011000,
+      "inst_net": 1391209200,
+      "score": 0.5,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "군포시, 당정 공업지역 정비사업 본격화…옛 유한양행 부지 복합단지 조...",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "군포시 당정동 옛 유한양행 부지, 도시혁신구역 결정안 조건부 가결",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "옛 유한양행 부지 개발 가시화…군포 정비사업 국토부 심의 통과",
+          "risk": false
+        }
+      ],
+      "foreign_today": 3144000000,
+      "inst_today": 235800000,
+      "exchange": null
+    },
+    {
       "code": "004020",
       "name": "현대제철",
       "close": 29200,
@@ -483,17 +493,17 @@
       "news": [
         {
           "date": "11-05",
-          "title": "현대제철, 임직원이 참여하는 헤리티지 플랫폼 'H.ARCHIVE' 구축...70년 역...",
+          "title": "대한중공업공사부터 70년 발자취 집대성…현대제철, '에이치 아카이브'...",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "현대제철, 디지털 아카이브 ‘H.ARCHIVE’ 개설…70년 역사 주요 자산 활...",
+          "title": "현대제철, 사내 역사 기록 플랫폼 'H.ARCHIVE' 개설",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "현대제철, 사내 기록을 브랜드 자산으로…직원 참여형 플랫폼 개설",
+          "title": "현대제철, 회사 역사 담는 디지털 플랫폼 ‘에이치 아카이브’ 오픈",
           "risk": false
         }
       ],
@@ -515,17 +525,17 @@
       "news": [
         {
           "date": "11-05",
+          "title": "교보증권 \"카카오뱅크 목표주가 하향 조정, 이자·수수료이익 성장은 안...",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "“원하는 시간·장소에서만 보인다” 카카오뱅크, ‘스텔스통장’ 출시",
+          "risk": false
+        },
+        {
+          "date": "11-05",
           "title": "카카오뱅크, 금융사기 예방 'AI 콜봇' 도입···의심 거래에 자동 전화",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "카카오뱅크, 원하는 시간·장소에서만 보이는 '스텔스통장' 출시",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "카카오뱅크, 시간·장소 따라 계좌 숨기는 '스텔스통장' 출시",
           "risk": false
         }
       ],
@@ -543,7 +553,7 @@
       "vol20": 0.827,
       "foreign_net": -41540468400,
       "inst_net": 68116800900,
-      "score": 0.447,
+      "score": 0.455,
       "news": [
         {
           "date": "11-04",
