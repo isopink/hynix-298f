@@ -579,14 +579,14 @@ def test_partial_sell_by_confidence():
 
 def test_index_dip_buy_in_falling_market():
     """급락일 지수 예외: KODEX 200 이 −3% 이하면 15:00 이후엔 하락 국면이어도 매수 (7%), 그 전·덜 빠진 날은 막힘."""
-    open(C.JOURNAL, "w").close()
-    C.journal("regime", regime="하락", cap=P["regime_cap"]["하락"])
     at = lambda h, m: datetime(2026, 11, 5, h, m, tzinfo=C.KST)
     assert C.index_dip("069500", -0.052, P, at(15, 15)) and not C.index_dip("069500", -0.052, P, at(14, 45))
     assert not C.index_dip("069500", -0.02, P, at(15, 15)) and not C.index_dip("005930", -0.06, P, at(15, 15))
     real = C.now
     try:
         C.now = lambda: at(15, 15)
+        open(C.JOURNAL, "w").close()   # 국면 기록은 고정한 시계로 남겨야 '오늘 국면'으로 읽힘 (실제 날짜가 바뀌면 깨지던 것)
+        C.journal("regime", regime="하락", cap=P["regime_cap"]["하락"])
         plan = sizing.plan_buy("069500", 0.85, 10_000, acc(), P, R, today_change=-0.052)
         assert plan["qty"] > 0 and plan["index_dip"] and plan["target_weight"] == 0.35 and plan["max_days"] == 5, plan
         assert sizing.plan_buy("069500", 0.65, 10_000, acc(), P, R, today_change=-0.01)["qty"] == 0
