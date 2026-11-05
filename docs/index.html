@@ -373,35 +373,19 @@ details.log summary { border-radius: 16px; }
       </div>
     </section>
 
-    <section class="card c12">
-      <div class="hd"><span class="eyebrow">실시간 KOSPI</span><span class="sub" id="kx-asof"></span></div>
-      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><span class="val" id="kx-val">—</span><span id="kx-chg" style="font-size:14px"></span><span id="kx-rsi" style="font-size:13px;margin-left:auto"></span></div>
-      <div class="chart" id="ch-kx" style="min-height:300px"></div>
-      <div class="kx-flow m-hide">
-        <div class="hd"><span class="eyebrow">투자자별 순매수</span><span class="sub" id="fl-asof"></span></div>
-        <div class="fl-kv" id="fl-kv"></div>
-        <div class="chart m-hide" id="ch-fl" style="min-height:150px"></div>
-      </div>
+    <!-- 포트폴리오: 접지 않고 늘 펼쳐 둠 (11-05) -->
+    <section class="card c6">
+      <div class="hd"><span class="eyebrow">포트폴리오</span><span class="sub">빨간 호 = 국면 상한</span></div>
+      <div class="chart" id="ch-donut" style="min-height:240px"></div>
+    </section>
+    <section class="card c6">
+      <div class="hd"><span class="eyebrow">보유 종목 손익</span><span class="sub">수수료·세금 반영</span></div>
+      <div class="chart" id="ch-pnl" style="min-height:240px"></div>
     </section>
 
 
   </div>
 
-  <details class="log more">
-    <summary>Portfolio</summary>
-    <div class="more-body">
-      <div class="grid">
-        <section class="card c6">
-          <div class="hd"><span class="eyebrow">포트폴리오</span><span class="sub">빨간 호 = 국면 상한</span></div>
-          <div class="chart" id="ch-donut" style="min-height:240px"></div>
-        </section>
-        <section class="card c6">
-          <div class="hd"><span class="eyebrow">보유 종목 손익</span><span class="sub">수수료·세금 반영</span></div>
-          <div class="chart" id="ch-pnl" style="min-height:240px"></div>
-        </section>
-      </div>
-    </div>
-  </details>
 
   <!-- 실시간 판단: 길어서 접는 섹션으로 (11-05). 기본은 접힘 -->
   <details class="log more" id="dec-box">
@@ -413,6 +397,25 @@ details.log summary { border-radius: 16px; }
           <div class="dec-head m-hide" id="dec-head"></div>
           <div class="dec-trade" id="dec-trade" hidden></div>
           <div class="dec-list" id="dec-list"></div>
+        </section>
+      </div>
+    </div>
+  </details>
+
+  <!-- 실시간 KOSPI: 접는 섹션 (11-05). 펼칠 때 다시 그림 -->
+  <details class="log more" id="kx-box">
+    <summary>Live KOSPI</summary>
+    <div class="more-body">
+      <div class="grid">
+        <section class="card c12">
+          <div class="hd"><span class="eyebrow">실시간 KOSPI</span><span class="sub" id="kx-asof"></span></div>
+          <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><span class="val" id="kx-val">—</span><span id="kx-chg" style="font-size:14px"></span><span id="kx-rsi" style="font-size:13px;margin-left:auto"></span></div>
+          <div class="chart" id="ch-kx" style="min-height:300px"></div>
+          <div class="kx-flow m-hide">
+            <div class="hd"><span class="eyebrow">투자자별 순매수</span><span class="sub" id="fl-asof"></span></div>
+            <div class="fl-kv" id="fl-kv"></div>
+            <div class="chart m-hide" id="ch-fl" style="min-height:150px"></div>
+          </div>
         </section>
       </div>
     </div>
