@@ -81,7 +81,7 @@
     ]
   },
   "intraday": {
-    "time": "12:45",
+    "time": "12:55",
     "pool": 232,
     "analyzed_new": 5,
     "passed": 20,
@@ -107,20 +107,20 @@
         },
         {
           "date": "11-05",
-          "title": "셀트리온, 브라질서 바이오시밀러 3종 출시…현지 판매 제품 10종으로 확...",
+          "title": "셀트리온, 브라질에 바이오시밀러 3종 출시",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "셀트리온, 브라질에 바이오시밀러 3종 출시",
+          "title": "셀트리온, 브라질서 바이오시밀러 3종 출시…현지 판매 제품 10종으로 확...",
           "risk": false
         }
       ],
-      "price": 214000,
-      "chg": 0.07,
-      "activity": 3.97,
-      "foreign_today": 35096000000,
-      "inst_today": 25894000000,
+      "price": 213000,
+      "chg": 0.065,
+      "activity": 3.9,
+      "foreign_today": 34932000000,
+      "inst_today": 25773000000,
       "exchange": null
     },
     {
@@ -133,7 +133,7 @@
       "vol20": 0.301,
       "foreign_net": -56327899900,
       "inst_net": 59042064425,
-      "score": 0.782,
+      "score": 0.779,
       "news": [
         {
           "date": "11-05",
@@ -141,11 +141,46 @@
           "risk": false
         }
       ],
-      "price": 32375,
-      "chg": 0.0667,
-      "activity": 1.5,
-      "foreign_today": 2816625000,
-      "inst_today": 4532500000,
+      "price": 32350,
+      "chg": 0.0659,
+      "activity": 1.48,
+      "foreign_today": 2814450000,
+      "inst_today": 4529000000,
+      "exchange": null
+    },
+    {
+      "code": "112610",
+      "name": "씨에스윈드",
+      "close": 44400,
+      "ret5": 0.1198,
+      "ret20": -0.2318,
+      "rsi14": 46.4,
+      "vol20": 0.786,
+      "foreign_net": -21046654725,
+      "inst_net": 1518542300,
+      "score": 0.754,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "[특징주] 씨에스윈드, 미국 베스타스와 797억원 공급계약",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "씨에스윈드, 797억원 규모 미국 풍력타워 공급 계약 체결",
+          "risk": false
+        },
+        {
+          "date": "11-04",
+          "title": "씨에스윈드 5.66% 상승…풍력 수주 회복 기대 유입",
+          "risk": false
+        }
+      ],
+      "price": 49050,
+      "chg": 0.0985,
+      "activity": 5.97,
+      "foreign_today": 1030050000,
+      "inst_today": 490500000,
       "exchange": null
     },
     {
@@ -158,7 +193,7 @@
       "vol20": 0.575,
       "foreign_net": 1168053400,
       "inst_net": 89060007775,
-      "score": 0.706,
+      "score": 0.697,
       "news": [
         {
           "date": "11-05",
@@ -176,11 +211,11 @@
           "risk": false
         }
       ],
-      "price": 30300,
-      "chg": 0.0236,
-      "activity": 2.0,
+      "price": 30250,
+      "chg": 0.022,
+      "activity": 1.93,
       "foreign_today": 0,
-      "inst_today": 2060400000,
+      "inst_today": 2057000000,
       "exchange": null
     },
     {
@@ -193,7 +228,7 @@
       "vol20": 0.658,
       "foreign_net": -34495865250,
       "inst_net": 64637407000,
-      "score": 0.664,
+      "score": 0.648,
       "news": [
         {
           "date": "11-04",
@@ -211,11 +246,11 @@
           "risk": false
         }
       ],
-      "price": 365500,
-      "chg": 0.0296,
-      "activity": 1.64,
+      "price": 364000,
+      "chg": 0.0254,
+      "activity": 1.6,
       "foreign_today": 0,
-      "inst_today": 2924000000,
+      "inst_today": 2912000000,
       "exchange": null
     },
     {
@@ -228,21 +263,21 @@
       "vol20": 0.333,
       "foreign_net": -8556535000,
       "inst_net": 22696941275,
-      "score": 0.63,
+      "score": 0.631,
       "news": [
         {
           "date": "11-05",
-          "title": "KT-삼성전자 맞손...AI로 고속철도 통신 끊김 줄인다",
+          "title": "KT, 기업 AI 도입 길잡이 'AX 비즈 포털' 열어",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "1승1패로 원점…가을에 진 적 없는 KT 소형준 vs PO에서만 2승 거둔 삼성...",
+          "title": "KT-서울대, 융합보안 계약학과 설립…내년 3월 개강",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "대기업집단 2026년 11월 브랜드평판...삼성, 현대자동차, KT 順",
+          "title": "경찰, 동덕여대·KT 등 테러 협박 손해배상 청구",
           "risk": false
         }
       ],
@@ -260,7 +295,7 @@
       "vol20": 0.915,
       "foreign_net": 17644093900,
       "inst_net": 14865329300,
-      "score": 0.622,
+      "score": 0.615,
       "news": [
         {
           "date": "11-04",
@@ -278,10 +313,10 @@
           "risk": false
         }
       ],
-      "price": 65500,
-      "chg": 0.0,
-      "activity": 1.09,
-      "foreign_today": 3930000000,
+      "price": 65100,
+      "chg": -0.0061,
+      "activity": 1.07,
+      "foreign_today": 3906000000,
       "inst_today": 0,
       "exchange": null
     },
@@ -295,7 +330,7 @@
       "vol20": 0.282,
       "foreign_net": -34944478850,
       "inst_net": 38697479450,
-      "score": 0.613,
+      "score": 0.598,
       "news": [
         {
           "date": "11-04",
@@ -303,11 +338,43 @@
           "risk": false
         }
       ],
-      "price": 121400,
-      "chg": 0.0367,
-      "activity": 1.01,
-      "foreign_today": 3642000000,
-      "inst_today": 2792200000,
+      "price": 120900,
+      "chg": 0.0325,
+      "activity": 0.98,
+      "foreign_today": 3627000000,
+      "inst_today": 2780700000,
+      "exchange": null
+    },
+    {
+      "code": "004020",
+      "name": "현대제철",
+      "close": 29200,
+      "ret5": 0.0977,
+      "ret20": -0.0283,
+      "rsi14": 53.5,
+      "vol20": 0.653,
+      "foreign_net": -7113250,
+      "inst_net": 14875195900,
+      "score": 0.541,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "70년 역사 디지털 자산화..현대제철, 참여형 아카이브 개설",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "현대제철, 70년 역사 디지털로 기록한다…'H.ARCHIVE' 개설",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "현대제철, 임직원 참여형 헤리티지 플랫폼 ‘H.ARCHIVE’ 개설",
+          "risk": false
+        }
+      ],
+      "foreign_today": 905200000,
+      "inst_today": 0,
       "exchange": null
     },
     {
@@ -320,7 +387,7 @@
       "vol20": 0.246,
       "foreign_net": -22209841000,
       "inst_net": 23560336700,
-      "score": 0.538,
+      "score": 0.541,
       "news": [
         {
           "date": "11-05",
@@ -343,38 +410,6 @@
       "exchange": null
     },
     {
-      "code": "004020",
-      "name": "현대제철",
-      "close": 29200,
-      "ret5": 0.0977,
-      "ret20": -0.0283,
-      "rsi14": 53.5,
-      "vol20": 0.653,
-      "foreign_net": -7113250,
-      "inst_net": 14875195900,
-      "score": 0.529,
-      "news": [
-        {
-          "date": "11-05",
-          "title": "현대제철, 70년 역사 디지털로 기록한다…'H.ARCHIVE' 개설",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "현대제철, 임직원 참여형 헤리티지 플랫폼 ‘H.ARCHIVE’ 개설",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "현대제철, 사내 지식부터 70년 역사까지…디지털 자산화 확대",
-          "risk": false
-        }
-      ],
-      "foreign_today": 905200000,
-      "inst_today": 0,
-      "exchange": null
-    },
-    {
       "code": "323410",
       "name": "카카오뱅크",
       "close": 20150,
@@ -384,8 +419,13 @@
       "vol20": 0.242,
       "foreign_net": 9075318265,
       "inst_net": -1800833610,
-      "score": 0.521,
+      "score": 0.525,
       "news": [
+        {
+          "date": "11-05",
+          "title": "“의심 거래 주의하세요” 카카오뱅크, ‘AI-Safety 콜봇’ 도입해 금융...",
+          "risk": false
+        },
         {
           "date": "11-05",
           "title": "카카오뱅크, 금융사기 의심되면 AI가 먼저 전화…송금 멈추는 보안기술...",
@@ -394,11 +434,6 @@
         {
           "date": "11-05",
           "title": "카카오뱅크, 금융사기 예방 'AI 콜봇' 도입…의심 거래 선제 대응",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "카카오뱅크, AI 전화로 송금 재확인…이체취소율 54% 증가",
           "risk": false
         }
       ],
@@ -416,7 +451,7 @@
       "vol20": 0.543,
       "foreign_net": -183011000,
       "inst_net": 1391209200,
-      "score": 0.521,
+      "score": 0.525,
       "news": [
         {
           "date": "11-05",
@@ -448,7 +483,7 @@
       "vol20": 0.827,
       "foreign_net": -41540468400,
       "inst_net": 68116800900,
-      "score": 0.479,
+      "score": 0.467,
       "news": [
         {
           "date": "11-04",
@@ -480,7 +515,7 @@
       "vol20": 0.469,
       "foreign_net": -1971006900,
       "inst_net": 10321604175,
-      "score": 0.454,
+      "score": 0.459,
       "news": [
         {
           "date": "11-05",
@@ -512,7 +547,7 @@
       "vol20": 0.684,
       "foreign_net": -3227196600,
       "inst_net": 4571927700,
-      "score": 0.361,
+      "score": 0.352,
       "news": [
         {
           "date": "11-05",
@@ -525,38 +560,6 @@
       "exchange": null
     },
     {
-      "code": "032640",
-      "name": "LG유플러스",
-      "close": 15620,
-      "ret5": 0.1302,
-      "ret20": 0.0728,
-      "rsi14": 65.1,
-      "vol20": 0.385,
-      "foreign_net": -22582018525,
-      "inst_net": 42525214065,
-      "score": 0.345,
-      "news": [
-        {
-          "date": "11-05",
-          "title": "LG유플러스, 문화예술 입은 'U+일상비일상의틈' 체류시간 두 배 늘어",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "LG유플러스 복합문화공간 '틈', 관람객 머무는 시간 2배 늘어",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "LG유플러스, AI 데이터센터 성장에 실적 개선 기대감 확대",
-          "risk": false
-        }
-      ],
-      "foreign_today": 0,
-      "inst_today": 156200000,
-      "exchange": null
-    },
-    {
       "code": "489790",
       "name": "한화비전",
       "close": 47800,
@@ -566,7 +569,7 @@
       "vol20": 1.13,
       "foreign_net": -20705757000,
       "inst_net": 27169405150,
-      "score": 0.681,
+      "score": 0.689,
       "news": [
         {
           "date": "11-04",
@@ -588,7 +591,7 @@
       "vol20": 1.262,
       "foreign_net": -8327822450,
       "inst_net": 3094928250,
-      "score": 0.58,
+      "score": 0.582,
       "news": [
         {
           "date": "11-05",
@@ -620,7 +623,7 @@
       "vol20": 1.382,
       "foreign_net": -15849296990,
       "inst_net": 14299779995,
-      "score": 0.521,
+      "score": 0.516,
       "news": [
         {
           "date": "11-05",
