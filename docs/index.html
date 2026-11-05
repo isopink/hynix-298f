@@ -1694,15 +1694,17 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       if (dt && clock > nextSpark) { nextSpark = clock + 900 + rnd() * 1400; bursts.push({ s: mesh[Math.floor(rnd() * mesh.length)], t: 0, life: 1600, size: 7, c: 'n' }); }
       Object.values(N).forEach(n => {
         const target = (n.on || 0) > 0 ? 1 : [...n.nb].some(o => o.on > 0) ? .35 : [...n.near].some(o => o.on > 0) ? .15 : 0;
-        n.glow += (target - n.glow) * Math.min(1, sec * 8);
+        n.glow += (target - n.glow) * Math.min(1, sec * (target > n.glow ? 8 : 2.5));
+        if (n.on > 0) n.lit = clock;
         if (n.glow > .02) { stamp(n.x, n.y, SP.w, n.size, n.glow * .6); stamp(n.x, n.y, SP.r, n.size * 3.2, n.glow * blink); stamp(n.x, n.y, SP.r, n.size * 1.4, n.glow); stamp(n.x, n.y, SP.r, n.size * .7, n.glow); }
       });
       // 이름은 켜졌을 때만. 폰에서도 읽히게 화면 기준 12px 이상
       ctx.globalCompositeOperation = 'source-over'; ctx.textAlign = 'center';
       const fs = Math.max(11 / scale, 11), ln = n => Math.min(fs * 1.25, fs + n.deg * .15);
       Object.values(N).forEach(n => {
-        if (!(n.on > 0) && n.glow < .6) return;   // 이름은 직접 켜진 지점만
-        const f = ln(n); ctx.globalAlpha = Math.min(1, n.glow * 1.4);
+        const ago = n.lit == null ? Infinity : clock - n.lit;   // 이름은 직접 켜진 지점만, 꺼진 뒤 2.5초 더 보임
+        if (!(n.on > 0) && ago > 2500) return;
+        const f = ln(n); ctx.globalAlpha = n.on > 0 ? Math.min(1, n.glow * 1.4) : Math.min(1, (2500 - ago) / 800);
         ctx.font = `500 ${f}px ${FONT}`; ctx.lineWidth = 4; ctx.lineJoin = 'round'; ctx.strokeStyle = 'rgba(10,10,12,.94)';
         const y = n.y + n.size * .42 + f * .8;
         ctx.strokeText(n.t, n.x, y); ctx.fillStyle = '#ffd2cc'; ctx.fillText(n.t, n.x, y);
