@@ -295,7 +295,8 @@ def test_inverse_quick_exit_and_one_buy_a_day():
         C.POSITIONS = os.path.join(tmp, "positions.json")
         C.write_json(C.POSITIONS, {inv: {"entry_date": "2026-11-04", "stop": 1129, "take": 1396, "max_days": 10}, "005930": {"take": 9}})
         m = C.position_meta([{"code": inv, "avg_price": 1214}, {"code": "005930", "avg_price": 100}], P)
-        assert m[inv]["take"] == 1241 and m[inv]["max_days"] == 2 and m["005930"]["take"] == 9, m
+        assert m[inv]["take"] == 1241 and m[inv]["max_days"] == 2, m
+        assert m["005930"]["take"] == round(100 * (1 + P["decision"]["take_profit_pct"])) and m["005930"]["max_days"] == P["decision"]["max_hold_days"], m   # 일반 종목도 지금 규칙
     finally:
         C.POSITIONS = old
     open(C.JOURNAL, "w").close()
@@ -512,6 +513,14 @@ def test_probe_band_buys_small():
     assert "수량 계산 초과" in big                                  # 소액 구간인데 크게 사려 하면 Hook 이 막음
     low = [x for x, _ in risk.check({"code": "005930", "side": "매수", "qty": 10, "confidence": 0.55}, acc(), 10_000, p, R)]
     assert "확신도" in low
+
+
+def test_falling_market_trend_and_wider_probe():
+    row = {"ma5": 10_000, "ma20": 9_500}
+    assert not C.trend_ok(9_800, row, "횡보", P) and C.trend_ok(10_100, row, "횡보", P)   # 평소: 현재가 > 5일선 > 20일선
+    assert C.trend_ok(9_800, row, "하락", P) and not C.trend_ok(9_400, row, "하락", P)     # 하락장: 20일선 위면 통과
+    p = {**P, "decision": {**P["decision"], "probe": {"enabled": True, "band": 0.07, "weight": 0.025}}}
+    assert C.probe_floor(p) == 0.53 and sizing.target_weight(0.55, p, R) == 0.025          # 기준 0.60 → 0.53~0.60 소액
 
 
 if __name__ == "__main__":

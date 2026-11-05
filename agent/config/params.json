@@ -13,10 +13,10 @@
     "full_size_confidence": 0.80,
     "min_weight": 0.05,
     "max_weight": 0.10,
-    "probe": { "_note": "소액 매수 구간 (11-05). 보정 후 확신도가 매수 기준 바로 아래(기준 - band ~ 기준)면 종목당 weight 로만 삼. 기준이 자동 조정으로 바뀌어도 band 만큼 아래를 따라감", "enabled": true, "band": 0.04, "weight": 0.025 },
+    "probe": { "_note": "소액 매수 구간 (11-05). 보정 후 확신도가 매수 기준 바로 아래(기준 - band ~ 기준)면 종목당 weight 로만 삼. 기준이 자동 조정으로 바뀌어도 band 만큼 아래를 따라감", "enabled": true, "band": 0.07, "weight": 0.025 },
     "stop_loss_pct": -0.07,
-    "take_profit_pct": 0.15,
-    "max_hold_days": 10
+    "take_profit_pct": 0.10,
+    "max_hold_days": 5
   },
 
   "rsi_boost": {
@@ -94,6 +94,7 @@
     "flow_days": 5,
     "limit_up_lookback": 5,
     "exclude_name_keywords": ["스팩", "리츠"],
+    "falling_trend": { "_note": "11-05 하락 국면이면 후보 추세 조건을 '현재가 > 5일선 > 20일선' 대신 '현재가 > 20일선'으로 완화 (하락장에 후보가 거의 안 남아서). 국면은 오늘 set_regime, 없으면 시장 규칙 힌트", "regimes": ["하락"] },
     "exclude_etf_prefixes": ["KODEX", "TIGER", "ACE", "RISE", "KBSTAR", "SOL", "HANARO", "ARIRANG", "KOSEF", "PLUS", "KIWOOM", "TIMEFOLIO", "WON", "BNK", "ITF", "FOCUS", "마이티", "VITA", "TRUSTON", "1Q", "KoAct", "TREX", "파워", "히어로즈", "에셋플러스", "UNICORN", "DAISHIN343", "HK"],
     "intraday": {
       "_note": "정기 판단 직전 장중 수급으로 후보 재선별 (src/intraday.py). 키움 순위 API 3번: 거래대금 상위 ka10032 + 장중 외국인·기관 순매수 상위 ka10065. 실패하면 08:30 후보 유지. 통과가 min_candidates 개보다 적으면 08:30 후보로 채움 (11-04)",

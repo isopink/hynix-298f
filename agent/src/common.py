@@ -221,13 +221,14 @@ def gross_take(net, p=None, tax=None):
 
 
 def position_meta(holdings, p=None):
-    """positions.json 의 손절가·익절가·최대 보유일. 시장 ETF(인버스·지수)는 매수 때 기록한 값 대신 평단 기준으로 지금 규칙을 적용
-    (11-04 10:33 에 산 인버스가 예전 규칙 +15% · 10일로 기록돼 있었음). 익절가는 순익이 기준을 넘도록 올림."""
+    """positions.json 의 손절가·익절가·최대 보유일. 매수 때 기록한 값 대신 평단 기준으로 지금 규칙(params)을 적용.
+    (11-04 인버스가 예전 규칙으로 기록돼 있던 일 → 11-05 모든 종목으로 넓힘: 익절 +15→+10% · 보유 10→5일이 이미 산 종목에도 적용)
+    익절가는 순익이 기준을 넘도록 올림."""
     p = p or params()
     meta = read_json(POSITIONS, {}) or {}
     for h in holdings:
-        etf, m = market_etf(h["code"], p)[0], meta.get(h["code"])
-        if etf and m and h.get("avg_price"):
+        m = meta.get(h["code"])
+        if m and h.get("avg_price"):
             sl, tp, md = exit_levels(h["code"], p)
             meta[h["code"]] = {**m, "stop": round(h["avg_price"] * (1 + sl)), "take": math.ceil(h["avg_price"] * (1 + tp) - 1e-9), "max_days": md}
     return meta
@@ -365,3 +366,12 @@ def market_of(code, p=None, markets=None):
         return "ETF"
     m = markets if markets is not None else (read_json(MARKETS, {}) or {})
     return m.get(code)
+
+
+def trend_ok(px, row, regime=None, p=None):
+    """후보 추세 조건. 평소엔 현재가 > 5일선 > 20일선(단기 상승 추세), 하락 국면(screen.falling_trend.regimes)이면 현재가 > 20일선만."""
+    p = p or params()
+    ft = p["screen"].get("falling_trend") or {}
+    if regime in ft.get("regimes", []):
+        return px > row["ma20"]
+    return px > row["ma5"] > row["ma20"]

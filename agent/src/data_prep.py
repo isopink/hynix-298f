@@ -238,7 +238,7 @@ def analyze(code, name, p, asof, login):
     return row
 
 
-def screen(rows, p, login):
+def screen(rows, p, login, regime=None):
     """추세 조건 + (정식 모드) 수급 조건 → 점수순 상위."""
     s = p["screen"]
     ok = []
@@ -249,7 +249,7 @@ def screen(rows, p, login):
         r["high_vol"] = r["vol20"] > s.get("max_vol20", 9)   # 변동성이 크면 손절 -7%가 소음에도 걸림 → 고변동 몫으로 따로, 작게
         if r["high_vol"] and not (hv.get("enabled") and r["vol20"] <= hv.get("max_vol20", 0)):
             continue
-        if not (r["close"] > r["ma5"] > r["ma20"]):   # 단기 상승 추세 (4주 대회라 11-03부터 20·60일선 대신 5·20일선)
+        if not C.trend_ok(r["close"], r, regime, p):   # 단기 상승 추세 (11-03 5·20일선). 하락 국면이면 20일선 위만 (11-05)
             continue
         if login and r.get("foreign_net") is not None:
             if r["foreign_net"] <= 0 and r["inst_net"] <= 0:
@@ -323,7 +323,7 @@ def build():
         if r:
             rows.append(r)
 
-    cands = screen([r for r in rows if r["code"] not in held and not C.market_etf(r["code"], p)[0]], p, login)
+    cands = screen([r for r in rows if r["code"] not in held and not C.market_etf(r["code"], p)[0]], p, login, market.get("rule_hint"))
     cands += inverse_rows(p, asof, login, held)
     holdings = [r for r in rows if r["code"] in held]
     found = news(cands + holdings)

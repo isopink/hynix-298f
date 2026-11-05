@@ -99,7 +99,7 @@ def rank_pct(vals):
     return out
 
 
-def screen(rows, p, r, frac):
+def screen(rows, p, r, frac, regime=None):
     """rows: 일봉 지표 + 장중 값(price, chg, value, foreign_qty, inst_qty)이 합쳐진 종목들 → 점수순 후보."""
     s, it = p["screen"], p["screen"].get("intraday", {})
     lim = r.get("max_buy_day_change", 0.10)
@@ -116,7 +116,7 @@ def screen(rows, p, r, frac):
             continue
         if (x.get("chg") or 0) >= lim:              # 어차피 리스크 규칙이 막는 추격 매수
             continue
-        if not (px > x["ma5"] > x["ma20"]):           # 단기 상승 추세 (지금 가격 기준)
+        if not C.trend_ok(px, x, regime, p):          # 단기 상승 추세 (지금 가격 기준). 하락 국면이면 20일선 위만
             continue
         f_amt = (x.get("foreign_qty") or 0) * px
         i_amt = (x.get("inst_qty") or 0) * px
@@ -236,7 +236,8 @@ def run(dry=False):
         if ind:
             rows.append({**ind, **{k: v for k, v in x.items() if v not in (None, "")}})
 
-    cands = screen(rows, p, r, elapsed_frac(n))
+    regime = (C.latest_regime() or {}).get("regime") or b.get("market", {}).get("rule_hint")
+    cands = screen(rows, p, r, elapsed_frac(n), regime)
     if not cands:
         print("장중 조건을 통과한 종목이 없어 08:30 후보를 그대로 씀")
         b["intraday"] = {"time": n.strftime("%H:%M"), "pool": len(pool), "passed": 0, "kept_prep": True}
