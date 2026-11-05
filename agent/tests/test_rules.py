@@ -456,6 +456,21 @@ def test_prior_judgments_in_briefing():
     assert C.prior_judgments(rows=rows[-2:], run="r3") == ""
 
 
+def test_mcp_server_names_defined():
+    """11-05 09:45 사고 재발 방지: 함수를 옮기다 mcp_server 의 intraday() 가 사라져 get_briefing 이 NameError 로 실패.
+    mcp_server 를 불러오지 않고(키움·MCP 필요) 소스에서 호출하는 이름이 모두 정의돼 있는지만 확인."""
+    import ast, builtins
+    tree = ast.parse(open(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src", "mcp_server.py"), encoding="utf-8").read())
+    names = {n.name for n in ast.walk(tree) if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef))}
+    names |= {a.asname or a.name.split(".")[0] for n in ast.walk(tree) if isinstance(n, (ast.Import, ast.ImportFrom)) for a in n.names}
+    names |= {t.id for n in ast.walk(tree) if isinstance(n, ast.Assign) for t in n.targets if isinstance(t, ast.Name)}
+    names |= {a.arg for n in ast.walk(tree) if isinstance(n, (ast.FunctionDef, ast.Lambda)) for a in n.args.args + n.args.kwonlyargs}
+    names |= {t.id for n in ast.walk(tree) if isinstance(n, ast.NamedExpr) for t in [n.target]}
+    called = {n.func.id for n in ast.walk(tree) if isinstance(n, ast.Call) and isinstance(n.func, ast.Name)}
+    missing = sorted(c for c in called if c not in names and not hasattr(builtins, c))
+    assert not missing, missing
+
+
 if __name__ == "__main__":
     fails = 0
     for n, f in list(globals().items()):

@@ -351,26 +351,6 @@ def prior_judgments(n=2, rows=None, run=None):
                       "15분 전·30분 전 판단입니다. 숫자·뉴스·수급이 그때와 크게 다르지 않으면 확신도를 0.05 넘게 바꾸지 마세요. "
                       "크게 바꾼다면 무엇이 달라졌는지 decision 문장에 적으세요. 이 표는 근거가 아니라 일관성 확인용입니다.", *out])
 
-def intraday(b, r):
-    """후보·보유 종목의 지금 가격과 오늘 등락률. 지표는 전일 종가 기준이라 오늘 급등·급락을 여기서 봄."""
-    rows, seen = [], set()
-    for x in b.get("candidates", []) + (C.read_json(C.ACCOUNT, {}) or {}).get("holdings", []):
-        if x["code"] in seen:
-            continue
-        seen.add(x["code"])
-        try:
-            q = brk().quote_info(x["code"])
-        except Exception:  # noqa: BLE001  조회 실패는 표에서만 빠짐
-            continue
-        chg = q["change"]
-        rows.append(f"| {x['code']} | {x['name']} | {q['price']:,} | {'—' if chg is None else f'{chg:+.1%}'} |")
-    if not rows:
-        return ""
-    lim = r.get("max_buy_day_change", 0.10)
-    return "\n".join(["", "", f"## 오늘 장중 ({C.now().strftime('%H:%M')} 현재가, 전일 종가 대비)",
-                      f"위 지표는 전일 종가 기준입니다. 오늘 +{lim:.0%} 이상 오른 종목은 리스크 규칙상 매수할 수 없습니다 (추격 매수 금지).",
-                      "", "| 코드 | 종목 | 현재가 | 오늘 등락 |", "|---|---|---|---|", *rows])
-
 
 def market_of(code, p=None, markets=None):
     """'KOSPI' | 'KOSDAQ' | 'ETF' | None. 시장 ETF(인버스·KODEX 200)는 ETF, 나머지는 08:30 준비가 저장한 KRX 시장 목록."""
