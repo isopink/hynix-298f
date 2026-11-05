@@ -231,7 +231,7 @@ td.k { color: var(--ink); white-space: nowrap; }
 .lim-row .now small { color: var(--muted); font-size: 12px; margin-left: 4px; }
 .lim-row .track { grid-column: 1 / -1; height: 6px; border-radius: 3px; background: rgba(255,255,255,.07); overflow: hidden; }
 .lim-row .track i { display: block; height: 100%; border-radius: 3px; }
-.live { display: block; width: 100%; max-width: 100%; aspect-ratio: 1000 / 620; margin-top: -4px; }   /* Live Status 캔버스. 폰은 코드가 세로로 늘림 */
+.live { display: block; width: 100%; max-width: 100%; aspect-ratio: 1000 / 620; margin-top: -4px; }   /* Sigma Engine 캔버스. 폰은 코드가 세로로 늘림 */
 .kx-flow { margin-top: 14px; padding-top: 14px; border-top: 1px dashed rgba(255,255,255,.08); }   /* 카드 안 아래칸 (누적 수익률 → 실시간 판단, 실시간 KOSPI → 순매수) */
 .kx-flow .hd { margin-bottom: 8px; }
 .kx-flow .fl-kv .v { font-size: 17px; }
@@ -387,9 +387,9 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
       </div>
     </section>
 
-    <!-- Live Status: 시스템 전체를 뉴런 망으로, 일하는 부분만 빨강 (11-05) -->
+    <!-- Sigma Engine: 시스템 전체를 뉴런 망으로, 일하는 부분만 빨강 (11-05) -->
     <section class="card c12">
-      <div class="hd"><h2 class="eyebrow">Live Status</h2><span class="sub" id="ls-sub"></span></div>
+      <div class="hd"><h2 class="eyebrow">Sigma Engine</h2><span class="sub" id="ls-sub"></span></div>
       <canvas id="ch-live" class="live" role="img" aria-label="시스템 구성 요소를 뉴런 망으로 그린 그림. 지금 일하는 부분이 빨강으로 켜지고 데이터가 선을 따라 흐릅니다."></canvas>
     </section>
 
@@ -1509,7 +1509,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       tb.appendChild(tr);
     });
   }
-  // ---------- Live Status: 시스템 전체를 뉴런 망으로, 지금 일하는 부분만 빨강으로 (11-05) ----------
+  // ---------- Sigma Engine: 시스템 전체를 뉴런 망으로, 지금 일하는 부분만 빨강으로 (11-05) ----------
   // 실제 신호로 움직임: 잔고 스냅샷·KOSPI 틱·수급이 새로 오면 그 경로가 흐르고, 새 판단(decision.json)이 오면 기록·게시 경로가 흐름.
   // 판단 실행 자체는 밖에서 볼 수 없어 스케줄(매매 시각 + 약 14분)로 '실행 중'이라 보고 토론 경로를 돌림 → 부제에 (예상) 표시.
   function liveStatus() {
