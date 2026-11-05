@@ -81,9 +81,9 @@
     ]
   },
   "intraday": {
-    "time": "14:00",
+    "time": "14:15",
     "pool": 228,
-    "analyzed_new": 4,
+    "analyzed_new": 3,
     "passed": 20,
     "kept_prep": false
   },
@@ -102,26 +102,26 @@
       "news": [
         {
           "date": "11-05",
+          "title": "셀트리온, 브라질서 바이오시밀러 3종 출시⋯현지 판매 제품 10종으로 확...",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "셀트리온, 브라질서 바이오시밀러 3종 출시...현지 포트폴리오 10종으로...",
+          "risk": false
+        },
+        {
+          "date": "11-05",
           "title": "셀트리온, 브라질서 바이오시밀러 3종 동시 출격…중남미 공략 가속",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "셀트리온, 브라질 판매 10종…후속 시밀러 가세",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "서정진 셀트리온 회장, 인공장기 전망 물었더니 \"전공 바꿔라\"",
           "risk": false
         }
       ],
-      "price": 214500,
-      "chg": 0.0725,
-      "activity": 3.62,
-      "foreign_today": 32175000000,
-      "inst_today": 59845500000,
-      "exchange": null
+      "price": 215000,
+      "chg": 0.075,
+      "activity": 3.61,
+      "foreign_today": 32250000000,
+      "inst_today": 59985000000,
+      "exchange": "KOSPI"
     },
     {
       "code": "035720",
@@ -137,26 +137,26 @@
       "news": [
         {
           "date": "11-05",
-          "title": "카카오뱅크, 금융사기 예방 'AI 콜봇' 도입 …\"이체취소율 54%↑\"",
+          "title": "카카오뱅크, 대출 성장 정체 벗어나나…4분기 반등이 주가 변수 [주가동...",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "챗GPT·제미나이 확산에 AI 챗봇주 들썩… 카카오·NAVER '함박웃음'",
+          "title": "카카오뱅크, AI가 금융사기 의심 고객에 먼저 전화…이체취소율 54%↑",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "카카오 인적분할 내년 2월로 연기…분할비율도 소폭 조정",
+          "title": "[실적 사용설명서] 카카오게임즈, 영업손실 늘었는데 최종 순손실은 줄...",
           "risk": false
         }
       ],
-      "price": 31950,
-      "chg": 0.0979,
-      "activity": 3.9,
-      "foreign_today": 5175900000,
-      "inst_today": 2428200000,
-      "exchange": null
+      "price": 31925,
+      "chg": 0.0971,
+      "activity": 3.81,
+      "foreign_today": 5171850000,
+      "inst_today": 2426300000,
+      "exchange": "KOSPI"
     },
     {
       "code": "112610",
@@ -168,7 +168,7 @@
       "vol20": 0.786,
       "foreign_net": -21046654725,
       "inst_net": 1518542300,
-      "score": 0.831,
+      "score": 0.838,
       "news": [
         {
           "date": "11-05",
@@ -186,12 +186,12 @@
           "risk": false
         }
       ],
-      "price": 48550,
-      "chg": 0.0873,
-      "activity": 5.28,
+      "price": 48700,
+      "chg": 0.0907,
+      "activity": 5.14,
       "foreign_today": 0,
-      "inst_today": 2815900000,
-      "exchange": null
+      "inst_today": 2824600000,
+      "exchange": "KOSPI"
     },
     {
       "code": "316140",
@@ -203,7 +203,7 @@
       "vol20": 0.301,
       "foreign_net": -56327899900,
       "inst_net": 59042064425,
-      "score": 0.808,
+      "score": 0.815,
       "news": [
         {
           "date": "11-05",
@@ -213,10 +213,10 @@
       ],
       "price": 32200,
       "chg": 0.061,
-      "activity": 1.38,
+      "activity": 1.36,
       "foreign_today": 0,
       "inst_today": 15359400000,
-      "exchange": null
+      "exchange": "KOSPI"
     },
     {
       "code": "003490",
@@ -246,12 +246,12 @@
           "risk": false
         }
       ],
-      "price": 30325,
-      "chg": 0.0245,
-      "activity": 1.76,
+      "price": 30350,
+      "chg": 0.0253,
+      "activity": 1.72,
       "foreign_today": 0,
-      "inst_today": 4215175000,
-      "exchange": null
+      "inst_today": 4218650000,
+      "exchange": "KOSPI"
     },
     {
       "code": "012330",
@@ -263,7 +263,7 @@
       "vol20": 0.658,
       "foreign_net": -34495865250,
       "inst_net": 64637407000,
-      "score": 0.662,
+      "score": 0.654,
       "news": [
         {
           "date": "11-04",
@@ -281,12 +281,12 @@
           "risk": false
         }
       ],
-      "price": 364000,
-      "chg": 0.0254,
-      "activity": 1.48,
+      "price": 363000,
+      "chg": 0.0225,
+      "activity": 1.5,
       "foreign_today": 0,
-      "inst_today": 6188000000,
-      "exchange": null
+      "inst_today": 6171000000,
+      "exchange": "KOSPI"
     },
     {
       "code": "030200",
@@ -298,27 +298,27 @@
       "vol20": 0.333,
       "foreign_net": -8556535000,
       "inst_net": 22696941275,
-      "score": 0.615,
+      "score": 0.608,
       "news": [
         {
           "date": "11-05",
-          "title": "경찰, 동덕여대·KT 테러 협박 등 4건 손해배상소송 청구",
-          "risk": true
-        },
-        {
-          "date": "11-05",
-          "title": "KT, 서울대와 '융합보안 계약학과' 신설…AI 시대 핵심 보안 인재 키운다",
+          "title": "KT·서울대, 보안 석사과정 협약…2027년 3월 개설 추진",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "KT, 서울대와 '융합보안 계약학과' 신설…보안 정예 키운다",
+          "title": "KT, 기업 AX 도입 고민 해결한다…‘AX 비즈 포털’ 오픈",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "KT, 서울대와 융합보안 석사과정 신설…AI·6G 전문가 양성",
           "risk": false
         }
       ],
       "foreign_today": 4920300000,
       "inst_today": 2982000000,
-      "exchange": null
+      "exchange": "KOSPI"
     },
     {
       "code": "064400",
@@ -330,7 +330,7 @@
       "vol20": 0.827,
       "foreign_net": -41540468400,
       "inst_net": 68116800900,
-      "score": 0.562,
+      "score": 0.569,
       "news": [
         {
           "date": "11-04",
@@ -350,7 +350,7 @@
       ],
       "foreign_today": 1783200000,
       "inst_today": 4309400000,
-      "exchange": null
+      "exchange": "KOSPI"
     },
     {
       "code": "028050",
@@ -380,12 +380,12 @@
           "risk": false
         }
       ],
-      "price": 65450,
-      "chg": -0.0008,
-      "activity": 0.96,
-      "foreign_today": 4057900000,
-      "inst_today": 1505350000,
-      "exchange": null
+      "price": 65300,
+      "chg": -0.0031,
+      "activity": 0.95,
+      "foreign_today": 4048600000,
+      "inst_today": 1501900000,
+      "exchange": "KOSPI"
     },
     {
       "code": "086790",
@@ -405,12 +405,12 @@
           "risk": false
         }
       ],
-      "price": 121200,
-      "chg": 0.035,
-      "activity": 0.88,
+      "price": 121100,
+      "chg": 0.0342,
+      "activity": 0.87,
       "foreign_today": 0,
-      "inst_today": 6302400000,
-      "exchange": null
+      "inst_today": 6297200000,
+      "exchange": "KOSPI"
     },
     {
       "code": "323410",
@@ -426,23 +426,23 @@
       "news": [
         {
           "date": "11-05",
-          "title": "카카오뱅크, 금융사기 예방 'AI 콜봇' 도입 …\"이체취소율 54%↑\"",
+          "title": "카카오뱅크, 대출 성장 정체 벗어나나…4분기 반등이 주가 변수 [주가동...",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "[금융 브리핑] 토스·카카오뱅크·케이뱅크",
+          "title": "카카오뱅크, AI가 금융사기 의심 고객에 먼저 전화…이체취소율 54%↑",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "카카오뱅크, 금융사기 예방 위한 ‘AI-세이프티 콜봇’ 도입…관심도 상...",
+          "title": "카카오뱅크 여신 성장 이끈 '사장님'…다음은 법인금융",
           "risk": false
         }
       ],
       "foreign_today": 1229150000,
       "inst_today": 201500000,
-      "exchange": null
+      "exchange": "KOSPI"
     },
     {
       "code": "000100",
@@ -474,7 +474,7 @@
       ],
       "foreign_today": 2122200000,
       "inst_today": 2358000000,
-      "exchange": null
+      "exchange": "KOSPI"
     },
     {
       "code": "033780",
@@ -495,18 +495,18 @@
         },
         {
           "date": "11-05",
-          "title": "KT&G 상상마당, 구미시 지역 브랜드 기획전 'WITH. GOOMI' 개최",
+          "title": "[위클리오늘] KT&G, 현대제철(11.05)",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "[민주 유통가] 코웨이·KT&G·유니클로",
+          "title": "KT&G 상상마당, 서울 홍대서 경북 구미 캐릭터 활용 지역 기획전 열어",
           "risk": false
         }
       ],
       "foreign_today": 4852500000,
       "inst_today": 0,
-      "exchange": null
+      "exchange": "KOSPI"
     },
     {
       "code": "004020",
@@ -522,23 +522,23 @@
       "news": [
         {
           "date": "11-05",
+          "title": "1953년부터 쌓아온 철강의 역사…현대제철, 70년 기록 디지털로 잇는다",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "[위클리오늘] KT&G, 현대제철(11.05)",
+          "risk": false
+        },
+        {
+          "date": "11-05",
           "title": "현대제철, 디지털 아카이브 ‘H.ARCHIVE’ 개설…70년 헤리티지 집대성",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "[산업 Pick] LS일렉트릭·현대제철, 첨단 예방진단 기술 확보와 헤리티지...",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "현대제철, 디지털 아카이브 플랫폼 'H아카이브' 개설",
           "risk": false
         }
       ],
       "foreign_today": 759200000,
       "inst_today": 0,
-      "exchange": null
+      "exchange": "KOSPI"
     },
     {
       "code": "086450",
@@ -550,7 +550,7 @@
       "vol20": 0.469,
       "foreign_net": -1971006900,
       "inst_net": 10321604175,
-      "score": 0.408,
+      "score": 0.4,
       "news": [
         {
           "date": "11-05",
@@ -570,7 +570,7 @@
       ],
       "foreign_today": 1102500000,
       "inst_today": 0,
-      "exchange": null
+      "exchange": "KOSDAQ"
     },
     {
       "code": "098120",
@@ -592,7 +592,7 @@
       ],
       "foreign_today": 1056400000,
       "inst_today": 0,
-      "exchange": null
+      "exchange": "KOSDAQ"
     },
     {
       "code": "489790",
@@ -614,39 +614,32 @@
       ],
       "foreign_today": 1434000000,
       "inst_today": 0,
-      "exchange": null
+      "exchange": "KOSPI"
     },
     {
-      "code": "059090",
-      "name": "미코",
-      "close": 22900,
-      "ret5": -0.1192,
-      "ret20": -0.0438,
-      "rsi14": 52.0,
-      "vol20": 1.262,
-      "foreign_net": -8327822450,
-      "inst_net": 3094928250,
-      "score": 0.515,
+      "code": "010060",
+      "name": "OCI홀딩스",
+      "close": 208000,
+      "ret5": 0.1473,
+      "ret20": -0.151,
+      "rsi14": 52.2,
+      "vol20": 1.174,
+      "foreign_net": -40252824550,
+      "inst_net": 44921083550,
+      "score": 0.546,
       "news": [
         {
           "date": "11-05",
-          "title": "'미코' 56살 오현경, 요즘 어떻게 지내나 봤더니 ‘방부제 미모’",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "'56세' 오현경, 군살 없이 선명한 11자 복근…여전한 '미코' 미모 [N샷]",
-          "risk": false
-        },
-        {
-          "date": "11-04",
-          "title": "미코 출신·연봉 2억...'돌싱모솔' 2기 돌싱녀들 스펙 역대급",
+          "title": "iM證 \"OCI홀딩스, 우주로 향할 시간…목표가 30만원\"",
           "risk": false
         }
       ],
+      "price": 206500,
+      "chg": 0.0325,
+      "activity": 2.42,
       "foreign_today": 0,
-      "inst_today": 1809100000,
-      "exchange": null
+      "inst_today": 1858500000,
+      "exchange": "KOSPI"
     },
     {
       "code": "114800",
