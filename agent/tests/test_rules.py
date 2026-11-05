@@ -585,10 +585,10 @@ def test_index_dip_buy_in_falling_market():
     real = C.now
     try:
         C.now = lambda: at(15, 15)
-        plan = sizing.plan_buy("069500", 0.65, 10_000, acc(), P, R, today_change=-0.052)
+        plan = sizing.plan_buy("069500", 0.85, 10_000, acc(), P, R, today_change=-0.052)
         assert plan["qty"] > 0 and plan["index_dip"] and plan["target_weight"] == 0.35 and plan["max_days"] == 5, plan
         assert sizing.plan_buy("069500", 0.65, 10_000, acc(), P, R, today_change=-0.01)["qty"] == 0
-        chk = lambda chg: [x for x, _ in risk.check({"code": "069500", "side": "매수", "qty": plan["qty"], "confidence": 0.65, "today_change": chg}, acc(), 10_000, P, R)]
+        chk = lambda chg: [x for x, _ in risk.check({"code": "069500", "side": "매수", "qty": plan["qty"], "confidence": 0.85, "today_change": chg}, acc(), 10_000, P, R)]
         assert "지수 국면" not in chk(-0.052) and "지수 국면" in chk(-0.01)
         C.now = lambda: at(14, 30)
         assert sizing.plan_buy("069500", 0.65, 10_000, acc(), P, R, today_change=-0.052)["qty"] == 0
@@ -615,11 +615,14 @@ def test_index_dip_tiers_and_limit_exception():
     real = C.now
     try:
         C.now = lambda: at
-        plan = sizing.plan_buy("069500", 0.65, 10_000, acc(), P, R, today_change=-0.052)
-        assert plan["qty"] * 10_000 > 50_000_000 * 0.30, plan                       # 35% (20%·1,000만 원 한도 예외)
-        ok = [x for x, _ in risk.check({"code": "069500", "side": "매수", "qty": plan["qty"], "confidence": 0.65, "today_change": -0.052}, acc(), 10_000, P, R)]
+        plan = sizing.plan_buy("069500", 0.85, 10_000, acc(), P, R, today_change=-0.052)
+        assert plan["qty"] * 10_000 > 50_000_000 * 0.30, plan
+        low = sizing.plan_buy("069500", 0.40, 10_000, acc(), P, R, today_change=-0.052)
+        assert low["qty"] > 0 and abs(low["target_weight"] - 0.35 * 0.40 / 0.80) < 1e-9, low   # 확신도 낮아도 매수, 크기만 비례
+        assert "확신도" not in [x for x, _ in risk.check({"code": "069500", "side": "매수", "qty": low["qty"], "confidence": 0.40, "today_change": -0.052}, acc(), 10_000, P, R)]                       # 35% (20%·1,000만 원 한도 예외)
+        ok = [x for x, _ in risk.check({"code": "069500", "side": "매수", "qty": plan["qty"], "confidence": 0.85, "today_change": -0.052}, acc(), 10_000, P, R)]
         assert "종목 한도" not in ok and "1회 주문 한도" not in ok, ok
-        big = [x for x, _ in risk.check({"code": "069500", "side": "매수", "qty": plan["qty"], "confidence": 0.65, "today_change": -0.031}, acc(), 10_000, P, R)]
+        big = [x for x, _ in risk.check({"code": "069500", "side": "매수", "qty": plan["qty"], "confidence": 0.85, "today_change": -0.031}, acc(), 10_000, P, R)]
         assert "종목 한도" in big                                                     # −3% 날엔 같은 수량이 한도 초과
     finally:
         C.now = real

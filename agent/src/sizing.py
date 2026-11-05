@@ -50,8 +50,8 @@ def plan_buy(code, conf, price, account, p=None, r=None, regime=None, today_chan
     w = target_weight(conf, p, r, top=top)
     dp = C.dip(code, p)
     xd = C.index_dip(code, today_change, p)   # 급락일 지수 예외: 국면과 상관없이, 하락 폭별 크기 (종목당 20% 예외)
-    if xd and conf >= C.buy_threshold(p) - 1e-9:
-        w = xd["weight"]
+    if xd:   # 11-05 S.Lee: 급락일엔 확신도 기준 없이 무조건 매수, 크기 = 하락 폭별 비중 × 확신도 비례 (0.80 이상이면 전부)
+        w = xd["weight"] * max(0.0, min(1.0, conf / p["decision"]["full_size_confidence"]))
     if dp and conf >= C.buy_threshold(p) - 1e-9:   # 📉급락 반등 후보: 매수 기준을 넘으면 정해진 크기(7%)로 (소액 매수 구간은 그대로 작게)
         w = min(dp["weight"], r["max_weight_per_stock"])
     limits = {
