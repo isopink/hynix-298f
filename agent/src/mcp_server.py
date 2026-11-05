@@ -85,7 +85,7 @@ def get_briefing() -> str:
     ctx = [
         "", "## 오늘 기준값 (코드가 강제함)",
         f"- 실행 종류: {os.environ.get('RUN_MODE', 'decide')} · 대회 {C.competition_week(p=p)}주차 · 주차 비중 계수 ×{C.week_factor(p)}",
-        f"- 매수 확신도 기준 {C.buy_threshold(p):.2f} (보정 후 {C.probe_floor(p):.2f}~{C.buy_threshold(p):.2f} 는 종목당 {(p['decision'].get('probe') or {}).get('weight', 0):.1%} 소액 매수) · 매도 확신도 기준 {p['decision']['sell_min_confidence']:.2f} · "
+        f"- 매수 확신도 기준 {C.buy_threshold(p):.2f} (보정 후 {C.probe_floor(p):.2f}~{C.buy_threshold(p):.2f} 는 확신도에 비례해 종목당 {(p['decision'].get('probe') or {}).get('weight_min', 0):.0%}~{(p['decision'].get('probe') or {}).get('weight', 0):.0%} 소액 매수) · 매도 확신도 기준 {p['decision']['sell_min_confidence']:.2f} · "
         f"확신도 기준이면 종목당 {p['decision']['min_weight']:.0%}, {p['decision']['full_size_confidence']:.2f} 이상이면 {p['decision'].get('max_weight', r['max_weight_per_stock']):.0%} (여러 종목으로 나눠 삼)",
         f"- 국면별 주식 비중 상한: " + " · ".join(f"{k} {v:.0%}" for k, v in p["regime_cap"].items()),
         f"- 종목당 최대 {r['max_weight_per_stock']:.0%} · 최대 {r['max_positions']}종목 · 현금 {r['min_cash_ratio']:.0%} 이상 · "

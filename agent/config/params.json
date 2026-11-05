@@ -13,7 +13,7 @@
     "full_size_confidence": 0.80,
     "min_weight": 0.05,
     "max_weight": 0.10,
-    "probe": { "_note": "소액 매수 구간 (11-05). 보정 후 확신도가 매수 기준 바로 아래(기준 - band ~ 기준)면 종목당 weight 로만 삼. 기준이 자동 조정으로 바뀌어도 band 만큼 아래를 따라감", "enabled": true, "band": 0.07, "weight": 0.025 },
+    "probe": { "_note": "소액 매수 구간 (11-05). 보정 후 확신도가 매수 기준 바로 아래(기준 - band ~ 기준)면 작게 삼. 11-05 S.Lee: 확신도 비례 — 구간 아래 끝 weight_min(2%) → 기준 바로 아래 weight(5%, 정식 매수 최소와 이어짐). 기준이 자동 조정으로 바뀌어도 band 만큼 아래를 따라감", "enabled": true, "band": 0.07, "weight_min": 0.02, "weight": 0.05 },
     "stop_loss_pct": -0.07,
     "take_profit_pct": 0.10,
     "max_hold_days": 5,

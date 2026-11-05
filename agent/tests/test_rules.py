@@ -625,6 +625,13 @@ def test_index_dip_tiers_and_limit_exception():
         C.now = real
 
 
+def test_probe_weight_scales_with_confidence():
+    """소액 매수 구간(0.53~0.60, 기준 0.60·band 0.07)에서 2% → 5%로 확신도에 비례."""
+    p = {**P, "decision": {**P["decision"], "probe": {"enabled": True, "band": 0.07, "weight_min": 0.02, "weight": 0.05}}}
+    tw = lambda c: round(sizing.target_weight(c, p, R), 4)
+    assert tw(0.53) == 0.02 and tw(0.565) == 0.035 and tw(0.599) > 0.049 and tw(0.52) == 0
+
+
 if __name__ == "__main__":
     fails = 0
     for n, f in list(globals().items()):

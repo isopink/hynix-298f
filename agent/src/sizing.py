@@ -17,7 +17,11 @@ def target_weight(conf, p, r, top=None):
     top = min(top if top is not None else d.get("max_weight", r["max_weight_per_stock"]), r["max_weight_per_stock"])
     if conf < lo:   # 매수 기준 바로 아래(소액 매수 구간)면 작게만, 그보다 낮으면 0
         pr = d.get("probe") or {}
-        return min(pr["weight"], top) if pr.get("enabled") and conf >= C.probe_floor(p) - 1e-9 else 0.0
+        if not pr.get("enabled") or conf < C.probe_floor(p) - 1e-9:
+            return 0.0
+        lo_w = pr.get("weight_min", pr["weight"])   # 11-05 확신도 비례: 구간 아래 끝 weight_min → 기준 바로 아래 weight
+        f = (conf - C.probe_floor(p)) / max(pr["band"], 1e-9)
+        return min(lo_w + max(0.0, min(1.0, f)) * (pr["weight"] - lo_w), top)
     if conf >= hi:
         return top
     return d["min_weight"] + (conf - lo) / (hi - lo) * (top - d["min_weight"])
