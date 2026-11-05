@@ -161,8 +161,9 @@ details.log[open] > summary::after { content: "−"; }
 .dec-more:hover { color: var(--ink); } .dec-more:focus-visible { outline: 2px solid #f6e500; outline-offset: 2px; border-radius: 6px; }
 .dec-more::after { content: "+"; font-size: 15px; line-height: 1; } .dec-more[aria-expanded="true"]::after { content: "−"; }
 /* 오늘 마지막 매매 회차 결과 한 줄 (샀다 / 팔았다 / 막혔다 / 관망) */
-.dec-trade { margin: 2px 0 8px; padding: 8px 12px; border-radius: 10px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); font-size: 13px; color: var(--body); line-height: 1.6; }
-.dec-trade .t { color: var(--ink); font-weight: 600; margin-right: 6px; }
+.dec-trade { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 14px; margin: 2px 0 8px; padding: 8px 12px; border-radius: 10px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); font-size: 13px; color: var(--body); line-height: 1.6; }
+.dec-trade[hidden] { display: none; }
+.dec-trade .t { color: var(--ink); font-weight: 600; }
 .dec-trade .buy { color: var(--red-hi); } .dec-trade .sell { color: #4aa3d4; } .dec-trade .blk { color: var(--muted); }
 .dec-head .why { flex: 1 1 260px; min-width: 0; color: var(--muted); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .dec-row { display: grid; grid-template-columns: minmax(80px, 150px) 78px 128px minmax(0, 1fr); gap: 14px; align-items: center; padding: 11px 0; border-top: 1px solid rgba(255,255,255,.06); font-size: 13px; }
@@ -426,15 +427,15 @@ details.log summary { border-radius: 16px; }
         <section class="card c3 m-hide"><div class="hd"><span class="eyebrow">KOSPI</span><span class="sub">11/2 시가 대비</span></div><div class="val" id="k-kospi">—</div><div class="chart" id="sp-kospi"></div></section>
         <section class="card c3 m-hide"><div class="hd"><span class="eyebrow">승률</span><span class="sub" id="k-win-sub">—</span></div><div class="val" id="k-win">—</div><div class="chart" id="sp-win"></div></section>
         <section class="card c6 m-hide">
-          <div class="hd"><span class="eyebrow">리스크 한도 사용률</span><span class="sub">주문 직전 Hook이 강제 · 100%면 차단</span></div>
+          <div class="hd"><span class="eyebrow">리스크 한도 사용률</span><span class="sub">주문 직전 Hook이 강제, 100%면 차단</span></div>
           <div class="lim" id="ch-lim"></div>
         </section>
         <section class="card c6 m-hide">
-          <div class="hd"><span class="eyebrow">일별 초과수익</span><span class="sub">Sigma Six − KOSPI · %p</span></div>
+          <div class="hd"><span class="eyebrow">일별 초과수익</span><span class="sub">Sigma Six − KOSPI (%p)</span></div>
           <div class="chart" id="ch-alpha" style="min-height:200px"></div>
         </section>
         <section class="card c12">
-          <div class="hd"><span class="eyebrow">수익률 캘린더</span><span class="sub cal-sub">큰 숫자 Sigma Six · 작은 숫자 KOSPI</span></div>
+          <div class="hd"><span class="eyebrow">수익률 캘린더</span><span class="sub cal-sub">큰 숫자 Sigma Six, 작은 숫자 KOSPI</span></div>
           <div class="cal" id="ch-cal"></div>
         </section>
       </div>
@@ -446,11 +447,11 @@ details.log summary { border-radius: 16px; }
     <div class="more-body">
       <div class="grid">
         <section class="card c6 m-hide">
-          <div class="hd"><span class="eyebrow">확신도 vs 수익</span><span class="sub">원 크기 = 매수 금액 · 흐린 원 = 보유 중</span></div>
+          <div class="hd"><span class="eyebrow">확신도 vs 수익</span><span class="sub">원 크기 = 매수 금액, 흐린 원 = 보유 중</span></div>
           <div class="chart" id="ch-scatter" style="min-height:240px"></div>
         </section>
         <section class="card c6 m-hide">
-          <div class="hd"><span class="eyebrow">토큰 사용량</span><span class="sub">천 토큰 / 일 · 빨간 점 = 실행 실패</span></div>
+          <div class="hd"><span class="eyebrow">토큰 사용량</span><span class="sub">천 토큰 / 일, 빨간 점 = 실행 실패</span></div>
           <div class="chart" id="ch-tokens" style="min-height:160px"></div>
         </section>
       </div>
@@ -813,7 +814,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const L = FL[FL.length - 1], day = kstDate(L.t.toISOString());
     const hm = t => t.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Seoul' });
     const narrow = el.clientWidth < 520, MIN = narrow ? 10 : 5, STEP = MIN * 60000, N = 390 / MIN;   // 휴대폰은 막대가 너무 가늘어서 10분
-    $('fl-asof').textContent = md(toD(day)) + ' ' + hm(L.t) + (marketOpen() ? ' 기준' : ' 장 마감') + ` · ${MIN}분 막대 · 억 원`;
+    $('fl-asof').textContent = md(toD(day)) + ' ' + hm(L.t) + (marketOpen() ? ' 기준' : ' 장 마감') + `, ${MIN}분 막대, 억 원`;
     // 머리줄 = 범례 + 장 시작부터 누적 순매수 (빨강 순매수 · 파랑 순매도)
     const cls = v => v > 0 ? 'up' : v < 0 ? 'down' : '';
     kv.innerHTML = FLS.map(s => `<span><span class="k"><i class="fl-sw" style="background:${s.c}"></i>${s.n}</span><span class="v ${cls(L[s.k])}">${flowEok(L[s.k])}</span></span>`).join('');
@@ -946,13 +947,13 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const rows = [
       { n: '오늘 손실', now: pct(D.last.day), lim: '한도 ' + pct(RL.daily), u: Math.max(0, -D.last.day) / -RL.daily },
       { n: '누적 손실', now: pct(D.ret), lim: '한도 ' + pct(RL.total), u: Math.max(0, -D.ret) / -RL.total },
-      D.cap ? { n: `주식 비중 · ${esc(D.last.regime || '')} 국면 상한`, now: p1(sw), lim: '상한 ' + p1(D.cap), u: sw / D.cap } : null,
+      D.cap ? { n: `주식 비중 (${esc(D.last.regime || '')} 국면 상한)`, now: p1(sw), lim: '상한 ' + p1(D.cap), u: sw / D.cap } : null,
       { n: '현금 비중', now: p1(cash), lim: '최소 ' + p1(RL.minCash), u: sw / (1 - RL.minCash) },   // 최소 현금을 남기고 쓸 수 있는 몫 중 얼마나 썼나
       { n: '보유 종목 수', now: D.hold.length + '개', lim: '최대 ' + RL.maxPos + '개', u: D.hold.length / RL.maxPos },
-      { n: '종목당 최대 비중' + (top ? ' · ' + esc(top.name) : ''), now: p1(tw), lim: '한도 ' + p1(RL.maxW), u: tw / RL.maxW }
+      { n: '종목당 최대 비중' + (top ? ` (${esc(top.name)})` : ''), now: p1(tw), lim: '한도 ' + p1(RL.maxW), u: tw / RL.maxW }
     ].filter(Boolean);
     const col = u => u >= .9 ? C.redHi : u >= .6 ? '#e0b84a' : '#8f8f8f';
-    el.innerHTML = rows.map(r => `<div class="lim-row"><span>${r.n}</span><span class="now">${r.now}<small>${r.lim} · ${Math.round(Math.min(r.u, 9.99) * 100)}%</small></span>
+    el.innerHTML = rows.map(r => `<div class="lim-row"><span>${r.n}</span><span class="now">${r.now}<small>${r.lim}, ${Math.round(Math.min(r.u, 9.99) * 100)}%</small></span>
       <div class="track"><i style="width:${Math.min(1, r.u) * 100}%;background:${col(r.u)}"></i></div></div>`).join('');
   }
   // ---------- 일별 초과수익: 날짜별 (Sigma Six 일수익 − KOSPI 일수익) ----------
@@ -1217,8 +1218,8 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       if (lt.sold.length) parts.push(`<span class="sell">${lt.sold.map(q).join(', ')} 매도</span>`);
       if (!lt.bought.length && !lt.sold.length) parts.push('사고판 종목 없음');
       if (lt.blocked.length) parts.push(`<span class="blk">${lt.blocked.map(x => esc(x.name) + '(' + esc(x.rule) + ')').join(', ')} 차단</span>`);
-      parts.push(`관망 ${lt.watch} · 보유 ${lt.hold}`);
-      tr.innerHTML = `<span class="t">${esc(lt.time)} 매매</span>` + parts.join(' · ');
+      parts.push(`관망 ${lt.watch}`, `보유 ${lt.hold}`);
+      tr.innerHTML = `<span class="t">${esc(lt.time)} 매매</span>` + parts.map(p => `<span>${p}</span>`).join('');
     }
     list.classList.remove('empty');
     head.innerHTML = `<span class="rg">국면 <b style="color:${regC(dc.regime)}">${esc(dc.regime)}</b></span>`
@@ -1253,7 +1254,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     }).join('');
     list.querySelectorAll('.dec-row').forEach(el => {
       const d = items[+el.dataset.i], lc = (BRIEF.candidates || []).find(c => c.code === d.code && c.activity !== undefined);
-      const html = `<div class="t">${esc(d.name)} · ${esc(d.action)} · 확신도 ${(+d.confidence).toFixed(2)}</div>`
+      const html = `<div class="t">${esc(d.name)} ${esc(d.action)}, 확신도 ${(+d.confidence).toFixed(2)}</div>`
         + (lc ? row('오늘 외국인 · 기관', eok(lc.foreign_today) + ' · ' + eok(lc.inst_today))
           + (lc.activity != null ? row('거래 활발도', '평소의 ' + lc.activity.toFixed(1) + '배') : '') : '')
         + `<p class="tp"><span class="up">매수 측</span> ${esc(d.bull)}</p><p class="tp"><span class="down">매도 측</span> ${esc(d.bear)}</p>`
@@ -1404,7 +1405,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     // 확신도는 0.60 처럼, 비율은 %, 보유일은 정수 그대로
     const fmt = (v, key) => key.includes('confidence') ? (+v).toFixed(2) : Number.isInteger(v) && Math.abs(v) >= 1 ? String(v) : (v * 100).toFixed(1).replace(/\.0$/, '') + '%';
     const box = document.createElement('div'); box.style.cssText = 'display:grid;gap:12px';
-    const h = document.createElement('div'); h.className = 'eyebrow'; h.textContent = '기준값 자동 조정 · 매일'; box.appendChild(h);
+    const h = document.createElement('div'); h.className = 'eyebrow'; h.textContent = '기준값 자동 조정 (매일)'; box.appendChild(h);
     if (!TUNING.length) {
       const p = document.createElement('p'); p.className = 'f-empty'; p.style.margin = '0'; p.textContent = '매일 장 마감 뒤 성과를 보고 기준값을 스스로 조정해요. 아직 조정 기록이 없어요.'; box.appendChild(p);
     }
@@ -1428,7 +1429,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   function review() {
     const el = $('ch-review'); el.innerHTML = ''; el.classList.remove('empty');
     tuningLog(el);
-    const h = document.createElement('div'); h.className = 'eyebrow'; h.style.marginTop = '18px'; h.textContent = '주간 회고 · 토'; el.appendChild(h);
+    const h = document.createElement('div'); h.className = 'eyebrow'; h.style.marginTop = '18px'; h.textContent = '주간 회고 (토요일)'; el.appendChild(h);
     if (!D.reviews.length) { const p = document.createElement('p'); p.className = 'f-empty'; p.style.margin = '8px 0 0'; p.textContent = '첫 주간 회고는 11/7(토)에 올라와요.'; el.appendChild(p); return; }
     const wrap = document.createElement('div'); wrap.style.cssText = 'display:grid;gap:14px;margin-top:12px';
     D.reviews.forEach(r => {
