@@ -81,9 +81,9 @@
     ]
   },
   "intraday": {
-    "time": "13:15",
+    "time": "13:30",
     "pool": 229,
-    "analyzed_new": 30,
+    "analyzed_new": 4,
     "passed": 20,
     "kept_prep": false
   },
@@ -102,6 +102,11 @@
       "news": [
         {
           "date": "11-05",
+          "title": "서정진 셀트리온 회장, 인공장기 전망 물었더니 \"전공 바꿔라\"",
+          "risk": false
+        },
+        {
+          "date": "11-05",
           "title": "셀트리온, 브라질서 자가면역·골질환 시밀러 3종 동시 출시",
           "risk": false
         },
@@ -109,18 +114,48 @@
           "date": "11-05",
           "title": "셀트리온, 브라질서 바이오시밀러 3종 출시… 10종으로 확대",
           "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "셀트리온, 브라질에 바이오시밀러 3종 출시",
-          "risk": false
         }
       ],
       "price": 214500,
       "chg": 0.0725,
-      "activity": 3.78,
+      "activity": 3.69,
       "foreign_today": 32175000000,
       "inst_today": 59845500000,
+      "exchange": null
+    },
+    {
+      "code": "035720",
+      "name": "카카오",
+      "close": 29450,
+      "ret5": -0.0151,
+      "ret20": -0.1222,
+      "rsi14": 35.7,
+      "vol20": 0.272,
+      "foreign_net": 4222456675,
+      "inst_net": 11246144775,
+      "score": 0.877,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "카카오뱅크, 금융사기 예방 위한 ‘AI-세이프티 콜봇’ 도입…관심도 상...",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "검색창 대신 대화창 노리는 광고주들…출격 예고 ‘카카오 AI 크루’ 뭐...",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "카카오엔터, '이태원 클라쓰' 태국 드라마로 재탄생...관심도 상승",
+          "risk": false
+        }
+      ],
+      "price": 31950,
+      "chg": 0.0979,
+      "activity": 4.2,
+      "foreign_today": 5175900000,
+      "inst_today": 2428200000,
       "exchange": null
     },
     {
@@ -133,7 +168,7 @@
       "vol20": 0.786,
       "foreign_net": -21046654725,
       "inst_net": 1518542300,
-      "score": 0.828,
+      "score": 0.838,
       "news": [
         {
           "date": "11-05",
@@ -151,11 +186,11 @@
           "risk": false
         }
       ],
-      "price": 48700,
-      "chg": 0.0907,
-      "activity": 5.79,
+      "price": 48850,
+      "chg": 0.0941,
+      "activity": 5.6,
       "foreign_today": 0,
-      "inst_today": 2824600000,
+      "inst_today": 2833300000,
       "exchange": null
     },
     {
@@ -168,7 +203,7 @@
       "vol20": 0.301,
       "foreign_net": -56327899900,
       "inst_net": 59042064425,
-      "score": 0.803,
+      "score": 0.808,
       "news": [
         {
           "date": "11-05",
@@ -176,11 +211,11 @@
           "risk": false
         }
       ],
-      "price": 32350,
-      "chg": 0.0659,
-      "activity": 1.44,
+      "price": 32300,
+      "chg": 0.0643,
+      "activity": 1.42,
       "foreign_today": 0,
-      "inst_today": 15430950000,
+      "inst_today": 15407100000,
       "exchange": null
     },
     {
@@ -193,7 +228,7 @@
       "vol20": 0.575,
       "foreign_net": 1168053400,
       "inst_net": 89060007775,
-      "score": 0.664,
+      "score": 0.662,
       "news": [
         {
           "date": "11-05",
@@ -211,11 +246,11 @@
           "risk": false
         }
       ],
-      "price": 30600,
-      "chg": 0.0338,
-      "activity": 1.89,
+      "price": 30400,
+      "chg": 0.027,
+      "activity": 1.86,
       "foreign_today": 0,
-      "inst_today": 4253400000,
+      "inst_today": 4225600000,
       "exchange": null
     },
     {
@@ -228,7 +263,7 @@
       "vol20": 0.658,
       "foreign_net": -34495865250,
       "inst_net": 64637407000,
-      "score": 0.639,
+      "score": 0.646,
       "news": [
         {
           "date": "11-04",
@@ -248,7 +283,7 @@
       ],
       "price": 363500,
       "chg": 0.0239,
-      "activity": 1.55,
+      "activity": 1.51,
       "foreign_today": 0,
       "inst_today": 6179500000,
       "exchange": null
@@ -263,61 +298,26 @@
       "vol20": 0.333,
       "foreign_net": -8556535000,
       "inst_net": 22696941275,
-      "score": 0.598,
+      "score": 0.608,
       "news": [
         {
           "date": "11-05",
-          "title": "비트배트 vs 하늘색 우비, KT와 삼성의 응원 전쟁 [한국시리즈]",
+          "title": "KT-삼성, 한국시리즈 3차전 격돌…소형준·후라도 선발 맞대결",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "KT-서울대, AI 시대 맞춤 '융합보안 계약학과' 설립… 실무형 인재 키운...",
+          "title": "KT, 기업 AI 전환 돕는 'AX 비즈 포털' 개설",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "KT, 서울대와 AI·6G 사이버보안 전문가 키운다…2027년 융합보안 석사과...",
+          "title": "동덕여대·KT 테러 협박범에 손해배상 청구…경찰력 낭비·공공 위협 대...",
           "risk": false
         }
       ],
       "foreign_today": 4920300000,
       "inst_today": 2982000000,
-      "exchange": null
-    },
-    {
-      "code": "028050",
-      "name": "삼성E&A",
-      "close": 66900,
-      "ret5": 0.0552,
-      "ret20": 0.3923,
-      "rsi14": 72.5,
-      "vol20": 0.915,
-      "foreign_net": 17644093900,
-      "inst_net": 14865329300,
-      "score": 0.566,
-      "news": [
-        {
-          "date": "11-04",
-          "title": "삼성E&A 6만4500원…수주 목표 상향에 4.71% 상승",
-          "risk": false
-        },
-        {
-          "date": "11-04",
-          "title": "삼성E&A, AI·모듈러 공법 앞세워 EPC 체질 혁신…KB證, 목표가 8만8000원...",
-          "risk": false
-        },
-        {
-          "date": "11-04",
-          "title": "건설 섹터, '계룡건설' 추천...'GS건설' TOP PICK...'삼성E&A' 차선호주",
-          "risk": false
-        }
-      ],
-      "price": 65300,
-      "chg": -0.0031,
-      "activity": 1.02,
-      "foreign_today": 4048600000,
-      "inst_today": 1501900000,
       "exchange": null
     },
     {
@@ -330,7 +330,7 @@
       "vol20": 0.827,
       "foreign_net": -41540468400,
       "inst_net": 68116800900,
-      "score": 0.557,
+      "score": 0.562,
       "news": [
         {
           "date": "11-04",
@@ -353,6 +353,41 @@
       "exchange": null
     },
     {
+      "code": "028050",
+      "name": "삼성E&A",
+      "close": 66900,
+      "ret5": 0.0552,
+      "ret20": 0.3923,
+      "rsi14": 72.5,
+      "vol20": 0.915,
+      "foreign_net": 17644093900,
+      "inst_net": 14865329300,
+      "score": 0.562,
+      "news": [
+        {
+          "date": "11-04",
+          "title": "삼성E&A 6만4500원…수주 목표 상향에 4.71% 상승",
+          "risk": false
+        },
+        {
+          "date": "11-04",
+          "title": "삼성E&A, AI·모듈러 공법 앞세워 EPC 체질 혁신…KB證, 목표가 8만8000원...",
+          "risk": false
+        },
+        {
+          "date": "11-04",
+          "title": "건설 섹터, '계룡건설' 추천...'GS건설' TOP PICK...'삼성E&A' 차선호주",
+          "risk": false
+        }
+      ],
+      "price": 65200,
+      "chg": -0.0046,
+      "activity": 0.98,
+      "foreign_today": 4042400000,
+      "inst_today": 1499600000,
+      "exchange": null
+    },
+    {
       "code": "086790",
       "name": "하나금융지주",
       "close": 119200,
@@ -362,7 +397,7 @@
       "vol20": 0.282,
       "foreign_net": -34944478850,
       "inst_net": 38697479450,
-      "score": 0.557,
+      "score": 0.546,
       "news": [
         {
           "date": "11-04",
@@ -370,11 +405,11 @@
           "risk": false
         }
       ],
-      "price": 121300,
-      "chg": 0.0359,
-      "activity": 0.94,
+      "price": 121000,
+      "chg": 0.0333,
+      "activity": 0.91,
       "foreign_today": 0,
-      "inst_today": 6307600000,
+      "inst_today": 6292000000,
       "exchange": null
     },
     {
@@ -387,21 +422,21 @@
       "vol20": 0.242,
       "foreign_net": 9075318265,
       "inst_net": -1800833610,
-      "score": 0.516,
+      "score": 0.508,
       "news": [
         {
           "date": "11-05",
-          "title": "바로 풀어보자…카카오뱅크 AI 퀴즈 11월 5일 정답",
+          "title": "카카오뱅크, 금융사기 예방 위한 ‘AI-세이프티 콜봇’ 도입…관심도 상...",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "카카오뱅크, ‘스텔스통장’ 9일 출시...소비자 관심도 상승",
+          "title": "[HOT 금융 트렌드] 카카오뱅크, 금융사기 의심 거래에 AI가 먼저 전화한...",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "11월 5일 카카오뱅크 AI 퀴즈 낮 12시 정답은 ‘일교차’",
+          "title": "카카오뱅크, AI가 금융사기 의심 거래에 먼저 전화…이체취소율 54%↑",
           "risk": false
         }
       ],
@@ -419,7 +454,7 @@
       "vol20": 0.543,
       "foreign_net": -183011000,
       "inst_net": 1391209200,
-      "score": 0.508,
+      "score": 0.5,
       "news": [
         {
           "date": "11-05",
@@ -460,12 +495,12 @@
         },
         {
           "date": "11-05",
-          "title": "[민주 유통가] 코웨이·KT&G·유니클로",
+          "title": "KT&G 상상마당, 구미시 지역 브랜드 기획전 'WITH. GOOMI' 개최",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "KT&G 상상마당, 구미 로컬 브랜드 기획전 '윗 굼이' 열어",
+          "title": "[민주 유통가] 코웨이·KT&G·유니클로",
           "risk": false
         }
       ],
@@ -483,21 +518,21 @@
       "vol20": 0.653,
       "foreign_net": -7113250,
       "inst_net": 14875195900,
-      "score": 0.426,
+      "score": 0.438,
       "news": [
         {
           "date": "11-05",
+          "title": "현대제철, 디지털 아카이브 플랫폼 'H아카이브' 개설",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "현대제철 '70년 헤리티지', 임직원들이 함께 만든다",
+          "risk": false
+        },
+        {
+          "date": "11-05",
           "title": "\"회사 역사 한눈에\"...현대제철, 디지털 아카이브 플랫폼 'H.ARCHIVE' 개설",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "70년 역사 디지털 자산화..현대제철, 참여형 아카이브 개설",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "현대제철, 70년 역사 디지털로 기록한다…'H.ARCHIVE' 개설",
           "risk": false
         }
       ],
@@ -515,7 +550,7 @@
       "vol20": 0.469,
       "foreign_net": -1971006900,
       "inst_net": 10321604175,
-      "score": 0.393,
+      "score": 0.4,
       "news": [
         {
           "date": "11-05",
@@ -538,28 +573,6 @@
       "exchange": null
     },
     {
-      "code": "023530",
-      "name": "롯데쇼핑",
-      "close": 90900,
-      "ret5": 0.0886,
-      "ret20": -0.0901,
-      "rsi14": 48.5,
-      "vol20": 0.684,
-      "foreign_net": -3227196600,
-      "inst_net": 4571927700,
-      "score": 0.385,
-      "news": [
-        {
-          "date": "11-05",
-          "title": "저PBR 롯데쇼핑, 자산보다 수익성에 주목...기업가치 재평가 가능할까",
-          "risk": false
-        }
-      ],
-      "foreign_today": 0,
-      "inst_today": 909000000,
-      "exchange": null
-    },
-    {
       "code": "098120",
       "name": "마이크로컨텍솔",
       "close": 55600,
@@ -569,7 +582,7 @@
       "vol20": 1.253,
       "foreign_net": -7161108700,
       "inst_net": 7424801750,
-      "score": 0.566,
+      "score": 0.577,
       "news": [
         {
           "date": "11-03",
@@ -591,7 +604,7 @@
       "vol20": 1.13,
       "foreign_net": -20705757000,
       "inst_net": 27169405150,
-      "score": 0.557,
+      "score": 0.569,
       "news": [
         {
           "date": "11-04",
@@ -613,7 +626,7 @@
       "vol20": 1.174,
       "foreign_net": -40252824550,
       "inst_net": 44921083550,
-      "score": 0.549,
+      "score": 0.538,
       "news": [
         {
           "date": "11-05",
@@ -623,7 +636,7 @@
       ],
       "price": 207500,
       "chg": 0.0375,
-      "activity": 2.71,
+      "activity": 2.63,
       "foreign_today": 0,
       "inst_today": 1867500000,
       "exchange": null
