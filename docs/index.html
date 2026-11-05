@@ -1518,13 +1518,13 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     if (document.fonts && document.fonts.load) ['600', '700'].forEach(w => document.fonts.load(`${w} 16px "Noto Serif KR"`));   // 캔버스 글자가 대체 글꼴로 그려지지 않게 미리 받음
     // 지점 (x, y, 이름). 왼쪽 시장 → 가운데 데스크톱 → 오른쪽 클라우드·화면. 좌표는 1000 × 620 기준, 폰은 세로로 늘림
     const BASE_N = {
-      kbal: [60, 70, '잔고 조회'], krank: [45, 170, '거래 순위'], krx: [105, 255, '시장 데이터'], news: [45, 330, '뉴스'], kprice: [60, 405, '현재가'], korder: [85, 495, '주문 전송'],
-      snap: [245, 60, '잔고 수집'], lsnap: [365, 110, '잔고 기록'], mon: [485, 95, '손절 감시'], intr: [220, 160, '장중 후보'], prep: [250, 275, '데이터 준비'], brief: [360, 210, '브리핑'],
-      sched: [300, 355, '스케줄러'], run: [405, 305, '실행기'], cl: [505, 235, '총괄 AI'], reg: [410, 160, '국면 판단'], bull: [590, 150, '매수 측'], bear: [620, 260, '매도 측'], web: [690, 195, '웹 검색'],
-      mcp: [505, 350, '주문 도구'], plan: [420, 410, '수량 계산'], hook: [305, 440, '리스크 검사'], limits: [190, 375, '리스크 한도'], broker: [205, 505, '증권사 연결'], params: [590, 395, '기준값'], tune: [675, 435, '자동 조정'], rev: [605, 480, '주간 회고'],
-      jrn: [410, 500, '판단 기록'], logger: [515, 545, '기록 정리'], pub: [655, 555, '게시'], sync: [355, 585, '코드 반영'],
-      sbs: [775, 70, '잔고 저장소'], kxt: [785, 165, 'KOSPI'], flw: [860, 225, '투자자 수급'], cron: [745, 285, '수집 작업'], nav: [785, 365, '네이버 증권'],
-      gh: [780, 495, '코드 저장소'], pg: [885, 450, '웹 호스팅'], lap: [810, 585, '노트북'], dash: [945, 275, '대시보드']
+      kbal: [60, 70, 'Balance API'], krank: [45, 170, 'Trade Ranking'], krx: [105, 255, 'Market Data'], news: [45, 330, 'News'], kprice: [60, 405, 'Price Quote'], korder: [85, 495, 'Order API'],
+      snap: [245, 60, 'Balance Poll'], lsnap: [365, 110, 'Snapshot File'], mon: [485, 95, 'Stop Watch'], intr: [220, 160, 'Intraday Picks'], prep: [250, 275, 'Data Prep'], brief: [360, 210, 'Briefing'],
+      sched: [300, 355, 'Scheduler'], run: [405, 305, 'Runner'], cl: [505, 235, 'Lead AI'], reg: [410, 160, 'Regime'], bull: [590, 150, 'Bull Side'], bear: [620, 260, 'Bear Side'], web: [690, 195, 'Web Search'],
+      mcp: [505, 350, 'Order Tools'], plan: [420, 410, 'Sizing'], hook: [305, 440, 'Risk Check'], limits: [190, 375, 'Risk Limits'], broker: [205, 505, 'Broker Link'], params: [590, 395, 'Parameters'], tune: [675, 435, 'Auto Tuning'], rev: [605, 480, 'Weekly Review'],
+      jrn: [410, 500, 'Decision Log'], logger: [515, 545, 'Log Writer'], pub: [655, 555, 'Publish'], sync: [355, 585, 'Code Sync'],
+      sbs: [775, 70, 'Snapshot Store'], kxt: [785, 165, 'KOSPI'], flw: [860, 225, 'Investor Flow'], cron: [745, 285, 'Collector'], nav: [785, 365, 'Naver Finance'],
+      gh: [780, 495, 'Code Repo'], pg: [885, 450, 'Web Hosting'], lap: [810, 585, 'Laptop'], dash: [945, 275, 'Dashboard']
     };
     // 경로 = 출발-도착
     const LINKS = 'kbal-snap snap-sbs sbs-dash nav-cron cron-kxt cron-flw kxt-dash flw-dash snap-lsnap lsnap-mon mon-run sched-run sched-snap sched-mon krank-intr krx-prep news-prep prep-brief intr-brief run-prep run-intr brief-cl run-cl cl-reg reg-cl cl-bull bull-web bull-bear bear-web bear-cl cl-mcp mcp-plan params-plan plan-mcp mcp-hook limits-hook hook-broker broker-korder kprice-broker mcp-jrn jrn-logger logger-pub pub-gh gh-pg pg-dash lap-gh gh-sync sync-run cl-tune tune-params cl-rev rev-pub params-pub'.split(' ');
@@ -1631,11 +1631,11 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       });
       // 이름은 켜졌을 때만. 폰에서도 읽히게 화면 기준 12px 이상
       ctx.globalCompositeOperation = 'source-over'; ctx.textAlign = 'center';
-      const fs = Math.max(12 / scale, 11 + Math.min(8, 0)), ln = n => Math.max(fs, Math.min(fs * 1.5, fs + n.deg * .35));
+      const fs = Math.max(11 / scale, 11), ln = n => Math.min(fs * 1.25, fs + n.deg * .15);
       Object.values(N).forEach(n => {
         if (n.glow < .05) return;
         const f = ln(n); ctx.globalAlpha = Math.min(1, n.glow * 1.4);
-        ctx.font = `${n.deg >= 6 ? 700 : 600} ${f}px ${FONT}`; ctx.lineWidth = 6; ctx.lineJoin = 'round'; ctx.strokeStyle = 'rgba(10,10,12,.94)';
+        ctx.font = `500 ${f}px ${FONT}`; ctx.lineWidth = 4; ctx.lineJoin = 'round'; ctx.strokeStyle = 'rgba(10,10,12,.94)';
         const y = n.y + n.size * .42 + f * .8;
         ctx.strokeText(n.t, n.x, y); ctx.fillStyle = '#ffd2cc'; ctx.fillText(n.t, n.x, y);
       });
@@ -1686,7 +1686,11 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       if (m >= 510 && m < 516) return { kind: 'prep', text: '장 전 준비 중 (예상)' };
       if (m >= 960 && m < 968) return { kind: 'tune', text: '기준값 조정 중 (예상)' };
       const t = window.TRADE_TIMES.map(x => +x.slice(0, 2) * 60 + +x.slice(3)).find(x => m >= x && m < x + 14);
-      if (t != null) return { kind: 'decide', text: `${String(Math.floor(t / 60)).padStart(2, '0')}:${String(t % 60).padStart(2, '0')} 회차 판단 실행 중 (예상)` };
+      if (t != null) {
+        const slot = `${String(Math.floor(t / 60)).padStart(2, '0')}:${String(t % 60).padStart(2, '0')}`, k = new Date(Date.now() + 9 * 3600e3).toISOString().slice(0, 10);
+        if (DECISION.time && DECISION.time.slice(0, 10) === k && DECISION.time.slice(11, 16) >= slot) return { kind: '', text: `${slot} 회차 판단 완료 ${DECISION.time.slice(11, 16)}, 다음 판단 ${nextTrade()}` };   // 결과가 이미 게시됨
+        return { kind: 'decide', text: `${slot} 회차 판단 실행 중 (예상)` };
+      }
       return null;
     }
     function nextTrade() { const { wd, m } = kst(); if (wd < 1 || wd > 5) return '평일 09:30'; return window.TRADE_TIMES.find(x => +x.slice(0, 2) * 60 + +x.slice(3) > m) || '내일 09:30'; }
