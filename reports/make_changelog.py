@@ -40,9 +40,9 @@ out = ["# 전략 변경 로그", "",
 import datetime as dt
 for d in sorted(by_day, reverse=True):
     w = WD[dt.date.fromisoformat(d).weekday()]
-    out += [f"## {d[5:].replace('-', '/')} ({w})", ""]
+    out += [f"## {d[5:].replace('-', '/')} ({w}) · {len(by_day[d])}건", "", "| 시각 | 변경 내용 | 커밋 |", "|:---:|---|:---:|"]
     for t, h, text in by_day[d]:
-        out.append(f"- `{t}` {text} ([{h}](https://github.com/isopink/hynix-298f/commit/{h}))")
+        out.append(f"| {t} | {text.replace('|', '/')} | [{h}](https://github.com/isopink/hynix-298f/commit/{h}) |")
     out.append("")
 open(OUT, "w", encoding="utf-8").write("\n".join(out))
 print(f"CHANGELOG.md: 전략 변경 {len(rows)}건, {len(by_day)}일")
