@@ -86,10 +86,21 @@ def plan_buy(code, conf, price, account, p=None, r=None, regime=None):
     }
 
 
-def plan_sell(code, conf, price, account, p=None):
-    """매도는 전량. (분할 매도는 아직 안 함)"""
+def sell_qty(have, conf, p, rule_exit=False):
+    """판단 매도 분할 (11-05): 보정 후 확신도가 매도 기준 ~ full_at 이면 fraction 만(올림), 그 이상·규칙 매도면 전량."""
+    ps = p["decision"].get("partial_sell") or {}
+    if rule_exit or not ps.get("enabled") or conf >= ps["full_at"] - 1e-9 or have <= 1:
+        return have, False
+    return min(have, math.ceil(have * ps["fraction"])), True
+
+
+def plan_sell(code, conf, price, account, p=None, rule_exit=False):
+    """판단 매도는 확신도에 따라 일부 또는 전량, 손절·익절·보유일 규칙 매도(rule_exit)는 전량."""
     p = p or C.params()
     held = next((h for h in account["holdings"] if h["code"] == code), None)
-    qty = held["qty"] if held else 0
-    return {"side": "매도", "code": code, "qty": qty, "price": price, "amount": qty * price,
-            "confidence": conf, "limited_by": "보유 수량" if qty else "보유하지 않은 종목"}
+    have = held["qty"] if held else 0
+    qty, part = sell_qty(have, conf, p, rule_exit)
+    return {"side": "매도", "code": code, "qty": qty, "price": price, "amount": qty * price, "held_qty": have,
+            "confidence": conf, "partial": part, "rule_exit": rule_exit,
+            "limited_by": ("분할 매도 (확신도 %.2f < 전량 기준 %.2f)" % (conf, p["decision"]["partial_sell"]["full_at"]) if part
+                           else "보유 수량" if have else "보유하지 않은 종목")}

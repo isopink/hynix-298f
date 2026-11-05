@@ -178,9 +178,10 @@ def set_regime(regime: str, reason: str) -> dict:
 
 @mcp.tool()
 @quiet
-def plan_order(code: str, side: str, confidence: float) -> dict:
+def plan_order(code: str, side: str, confidence: float, rule_exit: bool = False) -> dict:
     """확신도로 주문 수량을 계산합니다 (주문은 하지 않음). side 는 '매수' | '매도'.
-    qty 가 0 이면 limited_by 에 이유가 있습니다. place_order 에는 여기서 나온 qty 이하만 쓸 수 있습니다."""
+    qty 가 0 이면 limited_by 에 이유가 있습니다. place_order 에는 여기서 나온 qty 이하만 쓸 수 있습니다.
+    매도: 손절·익절·최대 보유일 규칙 매도면 rule_exit=true (전량). 판단 매도는 확신도가 낮으면 일부만(partial=true)."""
     acc = brk().account()
     qi = brk().quote_info(code)
     price = qi["price"]
@@ -190,7 +191,7 @@ def plan_order(code: str, side: str, confidence: float) -> dict:
         plan.update(confidence_raw=confidence, boost=note)
     elif side == "매도":
         adj, note = C.conf_boost(code, side, confidence)
-        plan = sizing.plan_sell(code, adj, price, acc)
+        plan = sizing.plan_sell(code, adj, price, acc, rule_exit=rule_exit or os.environ.get("RUN_MODE") == "exit")
         plan.update(confidence_raw=confidence, boost=note)
     else:
         return {"error": "side 는 매수 / 매도"}

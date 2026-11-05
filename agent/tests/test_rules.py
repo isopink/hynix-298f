@@ -561,6 +561,20 @@ def test_dip_candidates_at_close_sized_7pct():
         os.remove(C.BRIEFING)
 
 
+def test_partial_sell_by_confidence():
+    """판단 매도: 기준~0.65 미만이면 절반(올림), 0.65 이상·규칙 매도면 전량. Hook 도 같은 수량으로 막음."""
+    a = acc(holdings=[pos("005930", 29, 10_000), pos("000660", 1, 10_000)])
+    p = {**P, "decision": {**P["decision"], "partial_sell": {"enabled": True, "full_at": 0.65, "fraction": 0.5}}}
+    pl = sizing.plan_sell("005930", 0.60, 10_000, a, p)
+    assert pl["qty"] == 15 and pl["partial"], pl
+    assert sizing.plan_sell("005930", 0.70, 10_000, a, p)["qty"] == 29
+    assert sizing.plan_sell("005930", 0.60, 10_000, a, p, rule_exit=True)["qty"] == 29
+    assert sizing.plan_sell("000660", 0.60, 10_000, a, p)["qty"] == 1        # 1주면 그대로 전량
+    chk = lambda q, c, rx=False: [x for x, _ in risk.check({"code": "005930", "side": "매도", "qty": q, "confidence": c, "rule_exit": rx}, a, 10_000, p, R)]
+    assert "분할 매도" in chk(29, 0.60) and "분할 매도" not in chk(15, 0.60)
+    assert "분할 매도" not in chk(29, 0.70) and "분할 매도" not in chk(29, 0.40, True)
+
+
 if __name__ == "__main__":
     fails = 0
     for n, f in list(globals().items()):

@@ -96,6 +96,9 @@ def check(order, account, price, p=None, r=None):
             bad.append(("보유 수량", f"매도 {qty}주 > 보유 {have}주 (공매도 불가)"))
         if run_mode != "exit" and conf < p["decision"]["sell_min_confidence"] and not order.get("rule_exit"):
             bad.append(("확신도", f"{conf:.2f} < 매도 기준 {p['decision']['sell_min_confidence']:.2f}"))
+        cap_q, part = sizing.sell_qty(have, conf, p, order.get("rule_exit") or run_mode == "exit")
+        if part and qty > cap_q:
+            bad.append(("분할 매도", f"확신도 {conf:.2f} < 전량 기준 {p['decision']['partial_sell']['full_at']:.2f} → 최대 {cap_q}주 (요청 {qty}주)"))
     else:
         bad.append(("주문 방향", f"알 수 없는 side: {side}"))
     return bad
