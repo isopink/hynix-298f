@@ -42,7 +42,7 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
 
 .top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; padding-bottom: 16px; }
 .top h1 { margin: 6px 0 0; font-size: clamp(26px, 3.4vw, 40px); font-weight: 500; letter-spacing: -0.8px; line-height: 1.1; }
-.top h1 .tagline { font-size: clamp(13px, 1.3vw, 16px); font-weight: 400; letter-spacing: 0; margin-left: 10px; color: var(--muted); -webkit-text-fill-color: var(--muted); white-space: nowrap; }
+.top h1 .tagline { font-size: clamp(13px, 1.3vw, 16px); font-weight: 400; letter-spacing: 0; margin-left: 10px; color: var(--muted); white-space: nowrap; }
 .eyebrow { margin: 0; font-size: 12px; font-weight: 600; color: var(--muted); }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 9999px; font-size: 12px; color: var(--body); white-space: nowrap; }
@@ -295,8 +295,7 @@ body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-i
   background-size: 48px 48px; mask-image: radial-gradient(ellipse at 50% 0%, #000 0%, transparent 70%); -webkit-mask-image: radial-gradient(ellipse at 50% 0%, #000 0%, transparent 70%); }
 .wrap { position: relative; z-index: 1; }
 .brand { display: flex; align-items: center; gap: 16px; }
-.top h1 { background: linear-gradient(180deg, #ffffff 30%, #9a9a9a 120%); -webkit-background-clip: text; background-clip: text; color: transparent; letter-spacing: -1.2px;
-  padding-bottom: .18em; margin-bottom: -.18em; }   /* 그라데이션 글자는 줄 높이(1.1) 밖이 안 칠해져 g·y 꼬리가 잘림 → 아래로 칠할 공간만 늘리고 레이아웃은 그대로 */
+.top h1 { color: var(--ink); letter-spacing: -1.2px; }
 .chip { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.09); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
 .chip.live::before { box-shadow: 0 0 0 0 rgba(218,41,28,.6); animation: pulse 2s infinite; }
 @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(218,41,28,.6); } 70% { box-shadow: 0 0 0 8px rgba(218,41,28,0); } 100% { box-shadow: 0 0 0 0 rgba(218,41,28,0); } }
