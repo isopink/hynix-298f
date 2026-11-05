@@ -210,6 +210,16 @@ def index_dip(code, chg, p=None, t=None):
     return {**dd, "weight": w}
 
 
+def dip_exit(code, p=None, tp=None, md=None):
+    """급락일 예외로 산 지수 ETF 의 (익절 %, 최대 보유일). 설정이 없으면 받은 값 그대로."""
+    p = p or params()
+    dd = ((index_etf(code, p) or {}).get("dip_buy")) or {}
+    etf = index_etf(code, p) or {}
+    if dd.get("take_profit_net_pct") is not None:
+        tp = gross_take(dd["take_profit_net_pct"], p, etf.get("sell_tax_rate"))
+    return tp, dd.get("max_hold_days", md)
+
+
 def market_etf(code, p=None):
     """시장 ETF(인버스·지수추종)면 (설정, '인버스' | '지수'), 아니면 (None, None). 둘 다 국면·하루 매수 횟수·짧은 익절 규칙을 씀."""
     p = p or params()
@@ -258,8 +268,8 @@ def position_meta(holdings, p=None):
         m = meta.get(h["code"])
         if m and h.get("avg_price"):
             sl, tp, md = exit_levels(h["code"], p)
-            if m.get("index_dip"):   # 급락일 예외로 산 지수 ETF 는 보유일이 김
-                md = ((index_etf(h["code"], p) or {}).get("dip_buy") or {}).get("max_hold_days", md)
+            if m.get("index_dip"):   # 급락일 예외로 산 지수 ETF 는 익절 폭·보유일이 따로
+                tp, md = dip_exit(h["code"], p, tp, md)
             meta[h["code"]] = {**m, "stop": round(h["avg_price"] * (1 + sl)), "take": math.ceil(h["avg_price"] * (1 + tp) - 1e-9), "max_days": md}
     return meta
 

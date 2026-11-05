@@ -1,6 +1,7 @@
 """
 수량 계산·리스크 규칙 테스트 (네트워크 없음).  실행: .venv/Scripts/python tests/test_rules.py
 """
+import math
 import os
 import sys
 import tempfile
@@ -633,6 +634,27 @@ def test_probe_weight_scales_with_confidence():
     p = {**P, "decision": {**P["decision"], "probe": {"enabled": True, "band": 0.07, "weight_min": 0.02, "weight": 0.05}}}
     tw = lambda c: round(sizing.target_weight(c, p, R), 4)
     assert tw(0.53) == 0.02 and tw(0.565) == 0.035 and tw(0.599) > 0.049 and tw(0.52) == 0
+
+
+def test_index_dip_exit_levels():
+    """급락일 예외로 산 KODEX 200: 익절 순익 +3% (ETF 매도세 없음 → 평단 대비 약 +3.7%), 최대 5일. 기록된 포지션에도 적용."""
+    at = datetime(2026, 11, 5, 15, 15, tzinfo=C.KST)
+    real = C.now
+    try:
+        C.now = lambda: at
+        open(C.JOURNAL, "w").close()
+        C.journal("regime", regime="하락", cap=P["regime_cap"]["하락"])
+        plan = sizing.plan_buy("069500", 0.85, 10_000, acc(), P, R, today_change=-0.052)
+        want = C.gross_take(0.03, P, P["index"].get("sell_tax_rate"))
+        assert plan["take"] == round(10_000 * (1 + want)) and plan["max_days"] == 5, plan
+    finally:
+        C.now = real
+    old_pos, C.POSITIONS = C.POSITIONS, os.path.join(tmp, "positions.json")   # 실제 work/ 를 건드리지 않게
+    C.write_json(C.POSITIONS, {"069500": {"name": "KODEX 200", "entry_date": "2026-11-05", "index_dip": True}})
+    m = C.position_meta([{"code": "069500", "avg_price": 10_000}], P)["069500"]
+    assert m["max_days"] == 5 and m["take"] == math.ceil(10_000 * (1 + want) - 1e-9)
+    os.remove(C.POSITIONS)
+    C.POSITIONS = old_pos
 
 
 if __name__ == "__main__":

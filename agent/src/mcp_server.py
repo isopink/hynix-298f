@@ -115,7 +115,7 @@ def get_briefing() -> str:
                    f"보유 중인데 국면이 하락으로 바뀌면 매도 확신도를 높게 볼 것")
         if (xd := ix.get("dip_buy")) and xd.get("enabled"):
             ctx.append(f"  - 📈급락일 예외: 오늘 지수 ETF 가 {xd['drop']:.0%} 이하로 빠졌으면 {xd['from']} 이후 회차에는 하락 국면이어도 매수 가능 (코드가 확인). "
-                       f"**확신도 기준 없이 반드시 매수** (plan_order → place_order). 크기 = 하락 폭별 최대 " + " · ".join(f"{a:.0%} 이하 {w:.0%}" for a, w in xd['tiers']) + f" × 확신도 비례(보정 후 {p['decision']['full_size_confidence']:.2f} 이상이면 전부, 종목당 20% 한도 예외). 이렇게 산 건 최대 보유 {xd['max_hold_days']}거래일. "
+                       f"**확신도 기준 없이 반드시 매수** (plan_order → place_order). 크기 = 하락 폭별 최대 " + " · ".join(f"{a:.0%} 이하 {w:.0%}" for a, w in xd['tiers']) + f" × 확신도 비례(보정 후 {p['decision']['full_size_confidence']:.2f} 이상이면 전부, 종목당 20% 한도 예외). 이렇게 산 건 수수료 뺀 순익 {xd.get('take_profit_net_pct', 0):+.0%}에 익절, 최대 보유 {xd['max_hold_days']}거래일. "
                        f"과거 3년 KODEX 200 −3% 이하 날 종가 매수는 83%가 익절됐음. bull = 과매도·투매 근거, bear = 다음날 추가 급락 근거(해외 악재 지속, 외국인 대량 순매도)")
     if rb := p.get("rsi_boost"):
         buy = [f"{x['name']}({n})" for x in b.get("candidates", []) + b.get("holdings", [])
@@ -233,8 +233,8 @@ def place_order(code: str, side: str, qty: int, confidence: float, bull: str, be
         d = C.params()["decision"]
         m = meta.get(code) or {"name": name, "entry_date": C.today().isoformat()}
         sl, tp, md = C.exit_levels(code)   # 고변동 종목은 손절·익절 폭이 넓음
-        if xd := C.index_dip(code, qi["change"]):   # 급락일 지수 예외로 산 건 보유일이 김
-            md, m["index_dip"] = xd["max_hold_days"], True
+        if C.index_dip(code, qi["change"]):   # 급락일 지수 예외로 산 건 익절 폭·보유일이 따로
+            (tp, md), m["index_dip"] = C.dip_exit(code, None, tp, md), True
         m.update(stop=round(res["price"] * (1 + sl)), take=round(res["price"] * (1 + tp)), max_days=md)
         meta[code] = m
     elif not held:
