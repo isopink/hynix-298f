@@ -90,6 +90,7 @@ def get_briefing() -> str:
         f"- 국면별 주식 비중 상한: " + " · ".join(f"{k} {v:.0%}" for k, v in p["regime_cap"].items()),
         f"- 종목당 최대 {r['max_weight_per_stock']:.0%} · 최대 {r['max_positions']}종목 · 현금 {r['min_cash_ratio']:.0%} 이상 · "
         f"일일 손실 {r['daily_loss_limit']:.0%} 도달 시 신규 매수 중단",
+        f"- 보유 종목 추가 매수: 보정 후 매수 확신도 {C.buy_threshold(p):.2f} 이상이고 현재가 ≥ 평단(이익 중)일 때만 목표 비중까지 (손실 중 물타기·소액 구간 추가는 코드가 막음)",
         f"- 손절 {p['decision']['stop_loss_pct']:.0%} · 익절 {p['decision']['take_profit_pct']:.0%} · 최대 보유 {p['decision']['max_hold_days']}거래일",
         f"- 누적 체결 {C.fill_count()}건 (대회 최소 {p['competition']['min_trades']}건)",
     ]

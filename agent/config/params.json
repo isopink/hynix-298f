@@ -18,6 +18,7 @@
     "take_profit_pct": 0.10,
     "max_hold_days": 5,
     "no_rebuy_same_day": true,
+    "add_on": { "_note": "보유 종목 추가 매수 (11-05 S.Lee). 보유 중인 종목도 매수 확신도가 정식 매수 기준 이상이면 목표 비중까지 더 삼 (소액 매수 구간으로는 추가 매수 안 함). 지금 가격이 평단 미만(손실 중)이면 물타기 방지로 추가 매수 금지. sizing·Hook 이 강제", "enabled": true },
     "partial_sell": { "_note": "판단 매도 분할 (11-05, S.Lee). 보정 후 매도 확신도가 기준 이상 full_at 미만이면 보유 수량의 fraction(올림)만 팖, full_at 이상이면 전량. 손절·익절·최대 보유일 규칙 매도(rule_exit)와 장중 감시 실행은 항상 전량. 남은 수량은 다음 회차에 다시 판단", "enabled": true, "full_at": 0.65, "fraction": 0.5 }
   },
 

@@ -704,6 +704,23 @@ def test_schedule_slots():
     finally:
         C.params = real
 
+def test_add_on_buy_only_when_in_profit():
+    """보유 종목 추가 매수 (11-05): 정식 매수 기준 이상 + 현재가 ≥ 평단이면 목표 비중까지, 손실 중·소액 구간이면 막음."""
+    open(C.JOURNAL, "w").close()
+    C.journal("regime", regime="상승", cap=P["regime_cap"]["상승"])
+    h = pos("005930", 100, 10_000)                                   # 100만 원 = 2% 보유, 평단 10,000
+    a = acc(cash=49_000_000, holdings=[h])
+    up = sizing.plan_buy("005930", 0.85, 10_500, a, P, R)             # 이익 중 → 목표 20%(테스트 설정)까지 추가
+    assert up["qty"] > 0, up
+    down = sizing.plan_buy("005930", 0.85, 9_500, a, P, R)            # 손실 중 → 0
+    assert down["qty"] == 0 and "손실 중" in down["limited_by"], down
+    p = {**P, "decision": {**P["decision"], "probe": {"enabled": True, "band": 0.07, "weight_min": 0.02, "weight": 0.05}}}
+    low = sizing.plan_buy("005930", 0.57, 10_500, a, p, R)            # 소액 구간 → 추가 안 함
+    assert low["qty"] == 0 and "소액" in low["limited_by"], low
+    chk = lambda px, c, pp=P: [x for x, _ in risk.check({"code": "005930", "side": "매수", "qty": 10, "confidence": c}, a, px, pp, R)]
+    assert "추가 매수" in chk(9_500, 0.85) and "추가 매수" not in chk(10_500, 0.85) and "추가 매수" in chk(10_500, 0.57, p)
+
+
 if __name__ == "__main__":
     fails = 0
     for n, f in list(globals().items()):

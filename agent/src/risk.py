@@ -79,6 +79,13 @@ def check(order, account, price, p=None, r=None):
                 bad.append((f"{label} 하루 매수", f"오늘 이미 {n}번 매수 · {label}는 하루 {etf['max_buys_per_day']}번만"))
         if p["decision"].get("no_rebuy_same_day") and C.sold_today(code):
             bad.append(("당일 재매수", "오늘 판 종목은 그날 다시 사지 않음"))
+        if held:   # 보유 종목 추가 매수 (11-05): 손실 중 물타기 금지, 소액 매수 구간으로는 추가 안 함
+            if not (p["decision"].get("add_on") or {}).get("enabled"):
+                bad.append(("추가 매수", "보유 종목 추가 매수가 꺼져 있음"))
+            elif held.get("avg_price") and price < held["avg_price"]:
+                bad.append(("추가 매수", f"현재가 {price:,.0f}원 < 평단 {held['avg_price']:,.0f}원, 손실 중 물타기 금지"))
+            elif conf < C.buy_threshold(p) - 1e-9 and not xd:
+                bad.append(("추가 매수", f"확신도 {conf:.2f} < 매수 기준 {C.buy_threshold(p):.2f}, 소액 매수 구간으로는 추가 매수 안 함"))
         inv = C.inverse(code, p)
         if inv:   # 인버스: 주식 상한 대신 인버스 한도
             inv_after = sum(h["value"] for h in account["holdings"] if C.inverse(h["code"], p) and h["code"] != code) + pos_after

@@ -72,6 +72,14 @@ def plan_buy(code, conf, price, account, p=None, r=None, regime=None, today_chan
             limits[f"{label}는 " + "·".join(etf["regimes"]) + " 국면만"] = 0
         if C.buys_today(code) >= etf.get("max_buys_per_day", 99):
             limits[f"{label}는 하루 {etf['max_buys_per_day']}번만"] = 0
+    if held:   # 11-05 보유 종목 추가 매수: 정식 매수 기준 이상 + 평단 이상(이익 중)일 때만, 목표 비중까지
+        ao = p["decision"].get("add_on") or {}
+        if not ao.get("enabled"):
+            limits["보유 종목 추가 매수 꺼짐"] = 0
+        elif held.get("avg_price") and price < held["avg_price"]:
+            limits[f"평단 {held['avg_price']:,.0f}원 대비 손실 중이라 추가 매수 금지"] = 0
+        elif conf < C.buy_threshold(p) - 1e-9 and not xd:
+            limits["추가 매수는 정식 매수 기준 이상만 (소액 매수 구간 제외)"] = 0
     if p["decision"].get("no_rebuy_same_day") and C.sold_today(code):   # 15분마다 매매하면서 팔고 바로 다시 사는 왕복(수수료 0.9%) 방지
         limits["오늘 판 종목은 재매수 안 함"] = 0
     hv = C.high_vol(code, p)
