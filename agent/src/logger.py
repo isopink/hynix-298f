@@ -34,9 +34,12 @@ def trades(rows):
     out_ = [{"id": i + 1, "time": r["time"], "code": r["code"], "name": r["name"], "side": r["side"],
              "qty": r["qty"], "price": r["price"], "amount": r["amount"], "confidence": r["confidence"],
              "regime": r.get("regime"), "bull": r["bull"], "bear": r["bear"], "decision": r["decision"],
-             "ordered": r.get("ordered")}
+             "ordered": r.get("ordered") or FIXES.get(f'{r["time"][:16]}|{r["code"]}')}
             for i, r in enumerate(x for x in rows if x["kind"] == "fill")]
     return reconcile(out_)
+
+
+FIXES = {k: v for k, v in (C.read_json(os.path.join(C.AGENT, "config", "fill_fixes.json"), {}) or {}).items() if not k.startswith("_")}
 
 
 def reconcile(ts):
