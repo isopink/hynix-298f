@@ -104,6 +104,8 @@ def check(order, account, price, p=None, r=None):
             bad.append(("보유 수량", f"매도 {qty}주 > 보유 {have}주 (공매도 불가)"))
         if run_mode != "exit" and conf < p["decision"]["sell_min_confidence"] and not order.get("rule_exit"):
             bad.append(("확신도", f"{conf:.2f} < 매도 기준 {p['decision']['sell_min_confidence']:.2f}"))
+        if run_mode != "exit" and not order.get("rule_exit") and C.dip_held(code):   # 11-06 급락일 예외 매수분은 판단 매도 금지
+            bad.append(("급락일 예외 보유", "급락일 예외로 산 지수 ETF 는 익절·손절·보유일 규칙 매도만"))
         cap_q, part = sizing.sell_qty(have, conf, p, order.get("rule_exit") or run_mode == "exit")
         if part and C.sold_today(code):
             bad.append(("분할 매도", f"오늘 이미 분할 매도한 종목 · 확신도 {conf:.2f} < 전량 기준 {p['decision']['partial_sell']['full_at']:.2f}이면 하루 1번만"))

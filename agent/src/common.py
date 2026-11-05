@@ -210,6 +210,11 @@ def index_dip(code, chg, p=None, t=None):
     return {**dd, "weight": w}
 
 
+def dip_held(code):
+    """급락일 지수 예외(index.dip_buy)로 산 보유분인지 (positions.json 의 index_dip 표시). 11-06 S.Lee: 이런 보유분은 판단 매도 없이 익절·손절·보유일 규칙으로만 판다."""
+    return bool(((read_json(POSITIONS, {}) or {}).get(code) or {}).get("index_dip"))
+
+
 def dip_exit(code, p=None, tp=None, md=None):
     """급락일 예외로 산 지수 ETF 의 (익절 %, 최대 보유일). 설정이 없으면 받은 값 그대로."""
     p = p or params()

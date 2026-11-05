@@ -658,6 +658,24 @@ def test_index_dip_exit_levels():
     C.POSITIONS = old_pos
 
 
+def test_index_dip_hold_no_judgment_sell():
+    """11-06 S.Lee: 급락일 예외로 산 KODEX 200 은 판단 매도 금지 (계산·Hook 둘 다). 규칙 매도(익절·손절·보유일)는 그대로 전량."""
+    a = acc(holdings=[{**pos("069500", 100, 10_000), "name": "KODEX 200"}])
+    old_pos, C.POSITIONS = C.POSITIONS, os.path.join(tmp, "positions.json")
+    try:
+        C.write_json(C.POSITIONS, {"069500": {"name": "KODEX 200", "entry_date": "2026-11-05", "index_dip": True}})
+        assert sizing.plan_sell("069500", 0.90, 10_000, a, P)["qty"] == 0
+        assert sizing.plan_sell("069500", 0.30, 10_000, a, P, rule_exit=True)["qty"] == 100
+        bad = [x for x, _ in risk.check({"code": "069500", "side": "매도", "qty": 100, "confidence": 0.90}, a, 10_000, P, R)]
+        assert "급락일 예외 보유" in bad, bad
+        bad = [x for x, _ in risk.check({"code": "069500", "side": "매도", "qty": 100, "confidence": 0.30, "rule_exit": True}, a, 10_000, P, R)]
+        assert "급락일 예외 보유" not in bad, bad
+        C.write_json(C.POSITIONS, {"069500": {"name": "KODEX 200", "entry_date": "2026-11-05"}})   # 평소 지수 매수는 판단 매도 가능
+        assert sizing.plan_sell("069500", 0.90, 10_000, a, P)["qty"] == 100
+    finally:
+        os.remove(C.POSITIONS)
+        C.POSITIONS = old_pos
+
 def test_partial_sell_once_a_day():
     """11-05 HMM: 15분마다 절반씩 팔던 문제 → 분할은 하루 1번, 그 뒤엔 0.65 이상·규칙 매도만 전량."""
     a = acc(holdings=[pos("011200", 111, 10_000)])

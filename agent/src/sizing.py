@@ -123,8 +123,12 @@ def plan_sell(code, conf, price, account, p=None, rule_exit=False):
     again = part and C.sold_today(code)   # 11-05 HMM: 15분마다 절반씩 팔아 1시간 만에 97% 매도 → 분할은 하루 1번
     if again:
         qty = 0
+    hold = not rule_exit and have and C.dip_held(code)   # 11-06 급락일 예외 매수분은 규칙 매도만 (반등을 기다리는 매수라 확신도로 중간에 팔지 않음)
+    if hold:
+        qty = 0
     return {"side": "매도", "code": code, "qty": qty, "price": price, "amount": qty * price, "held_qty": have,
             "confidence": conf, "partial": part, "rule_exit": rule_exit,
-            "limited_by": ("오늘 이미 분할 매도함 (나머지는 확신도 %.2f 이상이거나 손절·익절·보유일 때 전량)" % p["decision"]["partial_sell"]["full_at"] if again
+            "limited_by": ("급락일 예외 매수분 (익절·손절·보유일 규칙 매도만)" if hold
+                           else "오늘 이미 분할 매도함 (나머지는 확신도 %.2f 이상이거나 손절·익절·보유일 때 전량)" % p["decision"]["partial_sell"]["full_at"] if again
                            else "분할 매도 (확신도 %.2f < 전량 기준 %.2f)" % (conf, p["decision"]["partial_sell"]["full_at"]) if part
                            else "보유 수량" if have else "보유하지 않은 종목")}
