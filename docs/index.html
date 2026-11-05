@@ -239,6 +239,7 @@ td.k { color: var(--ink); white-space: nowrap; }
 .cover-text { position: absolute; inset: 0; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; pointer-events: none; padding: 0 24px; text-align: center; }
 .cover-title { margin: 0; font-size: clamp(34px, 7vw, 76px); font-weight: 500; letter-spacing: -1px; line-height: 1.1; color: var(--ink); text-shadow: 0 0 24px rgba(0,0,0,.9), 0 0 60px rgba(218,41,28,.25); text-wrap: balance; }
 body.covered { overflow: hidden; }
+@media (min-width: 641px) { .cover { display: none; } }   /* PC 는 커버 없이 바로 대시보드 (11-05) */
 .kx-flow { margin-top: 14px; padding-top: 14px; border-top: 1px dashed rgba(255,255,255,.08); }   /* 카드 안 아래칸 (누적 수익률 → 실시간 판단, 실시간 KOSPI → 순매수) */
 .kx-flow .hd { margin-bottom: 8px; }
 .kx-flow .fl-kv .v { font-size: 17px; }
@@ -1767,10 +1768,12 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     (async () => { const t = T(); for (;;) for (const list of SHOW) { await play(t, list); await wait(t, 1500); } })();
     return { stop() { visible = false; } };
   }
-  const engine = liveStatus();
+  // 커버는 폰에서만. PC 는 커버를 지우고 바로 대시보드 (11-05 S.Lee)
+  const cover = $('cover'), onPhone = matchMedia('(max-width: 640px)').matches;
+  if (cover && !onPhone) cover.remove();
+  const engine = cover && onPhone ? liveStatus() : null;
   // 커버: 아무 곳이나 터치(또는 Enter·Space)하면 서서히 사라지고 대시보드
-  const cover = $('cover');
-  if (cover) {
+  if (cover && onPhone) {
     document.body.classList.add('covered');
     const leave = () => {
       if (cover.classList.contains('out')) return;
