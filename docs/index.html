@@ -619,6 +619,23 @@ window.TRADE_TIMES = ['09:45', '10:45', '11:45', '13:15', '14:15', '15:15'];
       return { date, total: d3.sum([...acc.values()]) || INIT, kospi: k, regime, cap };   // 빈 KOSPI 는 derive 에서 채움
     });
   }
+  // 마감 기록(equity.json)이 빠진 지난 거래일은 그날 마지막 잔고 스냅샷으로 채움 (마감 실행이 실패한 날 대비). 날짜별로 한 번만 조회
+  const FILL = new Map();
+  async function fillMissingDays(url, h, since, today) {
+    const have = new Set((BASE.equity || []).map(r => r.date));
+    const days = d3.utcDays(toD(since), toD(today)).filter(d => d.getUTCDay() % 6 !== 0).map(d => d.toISOString().slice(0, 10))
+      .filter(d => !have.has(d) && !FILL.has(d));
+    for (const d of days) {
+      const next = d3.utcDay.offset(toD(d), 1).toISOString().slice(0, 10);
+      try {
+        const r = await fetch(`${url}/rest/v1/snapshots?select=ts,total,kospi&ts=gte.${d}T00:00:00%2B09:00&ts=lt.${next}T00:00:00%2B09:00&order=ts.desc&limit=1`, { headers: h });
+        if (!r.ok) continue;   // 실패하면 다음 회차에 다시
+        const s = (await r.json())[0];
+        FILL.set(d, s ? { date: d, total: +s.total, kospi: s.kospi != null ? +s.kospi : null, regime: null, cap: null } : null);   // 스냅샷도 없으면(휴장) 비움
+      } catch (e) { /* 다음 회차에 다시 */ }
+    }
+    return [...FILL.values()].filter(Boolean);
+  }
   async function pollLive() {
     const url = (CFG.supabaseUrl || '').replace(/\/$/, ''), key = CFG.supabaseAnonKey || '';
     const since = CFG.liveSince || START, today = kstDate(new Date().toISOString());
@@ -641,7 +658,9 @@ window.TRADE_TIMES = ['09:45', '10:45', '11:45', '13:15', '14:15', '15:15'];
       const holdings = [];
       for (const acc of new Set(latest.map(x => x.account))) { const s = latest.find(x => x.account === acc); if (s) holdings.push(...(s.holdings || [])); }
       LIVE_AT = snaps[snaps.length - 1].ts; PRE = false;
-      const eqLive = (BASE.equity || []).filter(r => r.date < today && r.date >= since).concat(liveEquity(snaps)), tk = (tick || [])[0], lastRow = eqLive[eqLive.length - 1];
+      const filled = await fillMissingDays(url, h, since, today);
+      const eqLive = (BASE.equity || []).concat(filled).filter(r => r.date < today && r.date >= since).sort((a, b) => a.date < b.date ? -1 : 1)
+        .concat(liveEquity(snaps)), tk = (tick || [])[0], lastRow = eqLive[eqLive.length - 1];
       // 오늘 KOSPI 끝점은 실시간 KOSPI 카드와 같은 네이버 1분봉으로 (잔고 스냅샷의 키움 지수는 조금 늦음) → 누적 수익률 기준 통일
       if (tk && lastRow && kstDate(tk.ts) === lastRow.date) lastRow.kospi = +tk.price;
       D = derive({ ...BASE, equity: eqLive, holdings: holdings.length ? holdings : BASE.holdings });
