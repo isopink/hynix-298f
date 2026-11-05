@@ -1517,13 +1517,13 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const ctx = cv.getContext('2d'), FONT = '"Noto Serif KR", serif', W = 1000;
     // 지점 (x, y, 이름). 왼쪽 시장 → 가운데 데스크톱 → 오른쪽 클라우드·화면. 좌표는 1000 × 620 기준, 폰은 세로로 늘림
     const BASE_N = {
-      kbal: [60, 70, 'Kiwoom Balance'], krank: [45, 170, 'Kiwoom Rank'], krx: [105, 255, 'KRX · pykrx'], news: [45, 330, 'Naver News'], kprice: [60, 405, 'Kiwoom Price'], korder: [85, 495, 'Kiwoom Order'],
-      snap: [245, 60, 'snapshot.py'], lsnap: [365, 110, 'last_snapshot'], mon: [485, 95, 'monitor'], intr: [220, 160, 'intraday.py'], prep: [250, 275, 'data_prep.py'], brief: [360, 210, 'briefing.json'],
-      sched: [300, 355, 'Task Scheduler'], run: [405, 305, 'run.py'], cl: [505, 235, 'Lead Agent'], reg: [410, 160, 'Regime'], bull: [590, 150, 'Bull'], bear: [620, 260, 'Bear'], web: [690, 195, 'WebSearch'],
-      mcp: [505, 350, 'MCP Server'], plan: [420, 410, 'plan_order'], hook: [305, 440, 'Risk Hook'], limits: [190, 375, 'risk_limits'], broker: [205, 505, 'broker.py'], params: [590, 395, 'params.json'], tune: [675, 435, 'tuning.py'], rev: [605, 480, 'Weekly Review'],
-      jrn: [410, 500, 'journal.jsonl'], logger: [515, 545, 'logger.py'], pub: [655, 555, 'Git Push'], sync: [355, 585, 'sync.py'],
-      sbs: [775, 70, 'snapshots'], kxt: [785, 165, 'kospi_ticks'], flw: [860, 225, 'investor_flow'], cron: [745, 285, 'pg_cron'], nav: [785, 365, 'Naver Finance'],
-      gh: [780, 495, 'GitHub'], pg: [885, 450, 'GitHub Pages'], lap: [810, 585, 'Laptop'], dash: [945, 275, 'Dashboard']
+      kbal: [60, 70, '잔고 조회'], krank: [45, 170, '거래 순위'], krx: [105, 255, '시장 데이터'], news: [45, 330, '뉴스'], kprice: [60, 405, '현재가'], korder: [85, 495, '주문 전송'],
+      snap: [245, 60, '잔고 수집'], lsnap: [365, 110, '잔고 기록'], mon: [485, 95, '손절 감시'], intr: [220, 160, '장중 후보'], prep: [250, 275, '데이터 준비'], brief: [360, 210, '브리핑'],
+      sched: [300, 355, '스케줄러'], run: [405, 305, '실행기'], cl: [505, 235, '총괄 AI'], reg: [410, 160, '국면 판단'], bull: [590, 150, '매수 측'], bear: [620, 260, '매도 측'], web: [690, 195, '웹 검색'],
+      mcp: [505, 350, '주문 도구'], plan: [420, 410, '수량 계산'], hook: [305, 440, '리스크 검사'], limits: [190, 375, '리스크 한도'], broker: [205, 505, '증권사 연결'], params: [590, 395, '기준값'], tune: [675, 435, '자동 조정'], rev: [605, 480, '주간 회고'],
+      jrn: [410, 500, '판단 기록'], logger: [515, 545, '기록 정리'], pub: [655, 555, '게시'], sync: [355, 585, '코드 반영'],
+      sbs: [775, 70, '잔고 저장소'], kxt: [785, 165, 'KOSPI'], flw: [860, 225, '투자자 수급'], cron: [745, 285, '수집 작업'], nav: [785, 365, '네이버 증권'],
+      gh: [780, 495, '코드 저장소'], pg: [885, 450, '웹 호스팅'], lap: [810, 585, '노트북'], dash: [945, 275, '대시보드']
     };
     // 경로 = 출발-도착
     const LINKS = 'kbal-snap snap-sbs sbs-dash nav-cron cron-kxt cron-flw kxt-dash flw-dash snap-lsnap lsnap-mon mon-run sched-run sched-snap sched-mon krank-intr krx-prep news-prep prep-brief intr-brief run-prep run-intr brief-cl run-cl cl-reg reg-cl cl-bull bull-web bull-bear bear-web bear-cl cl-mcp mcp-plan params-plan plan-mcp mcp-hook limits-hook hook-broker broker-korder kprice-broker mcp-jrn jrn-logger logger-pub pub-gh gh-pg pg-dash lap-gh gh-sync sync-run cl-tune tune-params cl-rev rev-pub params-pub'.split(' ');
