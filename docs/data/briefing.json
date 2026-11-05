@@ -81,9 +81,9 @@
     ]
   },
   "intraday": {
-    "time": "12:15",
+    "time": "12:30",
     "pool": 231,
-    "analyzed_new": 6,
+    "analyzed_new": 5,
     "passed": 20,
     "kept_prep": false
   },
@@ -116,11 +116,11 @@
           "risk": false
         }
       ],
-      "price": 215500,
-      "chg": 0.0775,
-      "activity": 4.32,
-      "foreign_today": 35342000000,
-      "inst_today": 26075500000,
+      "price": 214500,
+      "chg": 0.0725,
+      "activity": 4.12,
+      "foreign_today": 35178000000,
+      "inst_today": 25954500000,
       "exchange": null
     },
     {
@@ -133,7 +133,7 @@
       "vol20": 0.301,
       "foreign_net": -56327899900,
       "inst_net": 59042064425,
-      "score": 0.79,
+      "score": 0.782,
       "news": [
         {
           "date": "11-05",
@@ -141,11 +141,11 @@
           "risk": false
         }
       ],
-      "price": 32350,
-      "chg": 0.0659,
-      "activity": 1.58,
-      "foreign_today": 2814450000,
-      "inst_today": 4529000000,
+      "price": 32400,
+      "chg": 0.0675,
+      "activity": 1.55,
+      "foreign_today": 2818800000,
+      "inst_today": 4536000000,
       "exchange": null
     },
     {
@@ -158,7 +158,7 @@
       "vol20": 0.575,
       "foreign_net": 1168053400,
       "inst_net": 89060007775,
-      "score": 0.702,
+      "score": 0.706,
       "news": [
         {
           "date": "11-05",
@@ -176,11 +176,11 @@
           "risk": false
         }
       ],
-      "price": 30200,
-      "chg": 0.0203,
-      "activity": 2.19,
+      "price": 30175,
+      "chg": 0.0194,
+      "activity": 2.09,
       "foreign_today": 0,
-      "inst_today": 2053600000,
+      "inst_today": 2051900000,
       "exchange": null
     },
     {
@@ -193,7 +193,7 @@
       "vol20": 0.658,
       "foreign_net": -34495865250,
       "inst_net": 64637407000,
-      "score": 0.661,
+      "score": 0.655,
       "news": [
         {
           "date": "11-04",
@@ -211,36 +211,11 @@
           "risk": false
         }
       ],
-      "price": 364500,
-      "chg": 0.0268,
-      "activity": 1.77,
+      "price": 363500,
+      "chg": 0.0239,
+      "activity": 1.69,
       "foreign_today": 0,
-      "inst_today": 2916000000,
-      "exchange": null
-    },
-    {
-      "code": "086790",
-      "name": "하나금융지주",
-      "close": 119200,
-      "ret5": 0.032,
-      "ret20": -0.0774,
-      "rsi14": 43.1,
-      "vol20": 0.282,
-      "foreign_net": -34944478850,
-      "inst_net": 38697479450,
-      "score": 0.637,
-      "news": [
-        {
-          "date": "11-04",
-          "title": "하나금융지주, 보통주 188만5706주 6일 소각 예정",
-          "risk": false
-        }
-      ],
-      "price": 121900,
-      "chg": 0.041,
-      "activity": 1.09,
-      "foreign_today": 3657000000,
-      "inst_today": 2803700000,
+      "inst_today": 2908000000,
       "exchange": null
     },
     {
@@ -253,12 +228,12 @@
       "vol20": 0.333,
       "foreign_net": -8556535000,
       "inst_net": 22696941275,
-      "score": 0.629,
+      "score": 0.63,
       "news": [
         {
           "date": "11-05",
-          "title": "동덕여대 흉기·KT 폭파 협박에…경찰, 2600여만원 손해배상 소송 제기",
-          "risk": true
+          "title": "대기업집단 2026년 11월 브랜드평판...삼성, 현대자동차, KT 順",
+          "risk": false
         },
         {
           "date": "11-05",
@@ -267,7 +242,7 @@
         },
         {
           "date": "11-05",
-          "title": "동덕여대·KT에 '칼부림·폭파 협박' … 경찰, 2657만원 손배소",
+          "title": "경찰, ‘동덕여대·KT본사 테러’ 협박 게시자들 상대로 손해배상 청구",
           "risk": false
         }
       ],
@@ -285,7 +260,7 @@
       "vol20": 0.915,
       "foreign_net": 17644093900,
       "inst_net": 14865329300,
-      "score": 0.621,
+      "score": 0.622,
       "news": [
         {
           "date": "11-04",
@@ -305,44 +280,34 @@
       ],
       "price": 65400,
       "chg": -0.0015,
-      "activity": 1.2,
+      "activity": 1.15,
       "foreign_today": 3924000000,
       "inst_today": 0,
       "exchange": null
     },
     {
-      "code": "105560",
-      "name": "KB금융",
-      "close": 154700,
-      "ret5": 0.0059,
-      "ret20": -0.0759,
-      "rsi14": 41.6,
-      "vol20": 0.279,
-      "foreign_net": -48818326000,
-      "inst_net": 54420877600,
-      "score": 0.556,
+      "code": "086790",
+      "name": "하나금융지주",
+      "close": 119200,
+      "ret5": 0.032,
+      "ret20": -0.0774,
+      "rsi14": 43.1,
+      "vol20": 0.282,
+      "foreign_net": -34944478850,
+      "inst_net": 38697479450,
+      "score": 0.613,
       "news": [
         {
-          "date": "11-05",
-          "title": "한국ESG평가원, KB금융 이재근 회장 선임 찬성 권고 … \"이사회 독립성...",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "한국ESG평가원, KB금융 이재근 차기회장 후보 찬성 의결 권고",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "한국ESG평가원, KB금융 이재근 회장 선임 찬성 권고…이사회 독립성 호...",
+          "date": "11-04",
+          "title": "하나금융지주, 보통주 188만5706주 6일 소각 예정",
           "risk": false
         }
       ],
-      "price": 157600,
-      "chg": 0.0403,
-      "activity": 1.06,
-      "foreign_today": 7564800000,
-      "inst_today": 3152000000,
+      "price": 121300,
+      "chg": 0.0359,
+      "activity": 1.05,
+      "foreign_today": 3639000000,
+      "inst_today": 2789900000,
       "exchange": null
     },
     {
@@ -355,7 +320,7 @@
       "vol20": 0.246,
       "foreign_net": -22209841000,
       "inst_net": 23560336700,
-      "score": 0.54,
+      "score": 0.538,
       "news": [
         {
           "date": "11-05",
@@ -364,17 +329,49 @@
         },
         {
           "date": "11-05",
-          "title": "[잘먹잘살+]코웨이·KT&G·코오롱FnC·비욘드·교원라이프·에이피뷰티·...",
+          "title": "[민주 유통가] 코웨이·KT&G·유니클로",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "KT&G 상상마당, 구미 로컬 브랜드 기획전 개최…굿즈 172종 선보여",
+          "title": "KT&G 상상마당, 구미 로컬 브랜드 기획전 '윗 굼이' 열어",
           "risk": false
         }
       ],
       "foreign_today": 3882000000,
       "inst_today": 582300000,
+      "exchange": null
+    },
+    {
+      "code": "004020",
+      "name": "현대제철",
+      "close": 29200,
+      "ret5": 0.0977,
+      "ret20": -0.0283,
+      "rsi14": 53.5,
+      "vol20": 0.653,
+      "foreign_net": -7113250,
+      "inst_net": 14875195900,
+      "score": 0.529,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "현대제철, 70년 역사 디지털로 기록한다…'H.ARCHIVE' 개설",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "현대제철, 임직원 참여형 헤리티지 플랫폼 ‘H.ARCHIVE’ 개설",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "현대제철, 사내 지식부터 70년 역사까지…디지털 자산화 확대",
+          "risk": false
+        }
+      ],
+      "foreign_today": 905200000,
+      "inst_today": 0,
       "exchange": null
     },
     {
@@ -387,7 +384,7 @@
       "vol20": 0.242,
       "foreign_net": 9075318265,
       "inst_net": -1800833610,
-      "score": 0.524,
+      "score": 0.521,
       "news": [
         {
           "date": "11-05",
@@ -419,7 +416,7 @@
       "vol20": 0.543,
       "foreign_net": -183011000,
       "inst_net": 1391209200,
-      "score": 0.524,
+      "score": 0.521,
       "news": [
         {
           "date": "11-05",
@@ -442,38 +439,6 @@
       "exchange": null
     },
     {
-      "code": "004020",
-      "name": "현대제철",
-      "close": 29200,
-      "ret5": 0.0977,
-      "ret20": -0.0283,
-      "rsi14": 53.5,
-      "vol20": 0.653,
-      "foreign_net": -7113250,
-      "inst_net": 14875195900,
-      "score": 0.516,
-      "news": [
-        {
-          "date": "11-05",
-          "title": "현대제철, 임직원 참여형 헤리티지 플랫폼 ‘H.ARCHIVE’ 개설",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "현대제철, 사내 지식부터 70년 역사까지…디지털 자산화 확대",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "대한중공업공사부터 70년 발자취 집대성…현대제철, '에이치 아카이브'...",
-          "risk": false
-        }
-      ],
-      "foreign_today": 905200000,
-      "inst_today": 0,
-      "exchange": null
-    },
-    {
       "code": "064400",
       "name": "LG씨엔에스",
       "close": 74300,
@@ -483,7 +448,7 @@
       "vol20": 0.827,
       "foreign_net": -41540468400,
       "inst_net": 68116800900,
-      "score": 0.468,
+      "score": 0.487,
       "news": [
         {
           "date": "11-04",
@@ -515,7 +480,7 @@
       "vol20": 0.469,
       "foreign_net": -1971006900,
       "inst_net": 10321604175,
-      "score": 0.444,
+      "score": 0.454,
       "news": [
         {
           "date": "11-05",
@@ -547,7 +512,7 @@
       "vol20": 0.684,
       "foreign_net": -3227196600,
       "inst_net": 4571927700,
-      "score": 0.355,
+      "score": 0.361,
       "news": [
         {
           "date": "11-05",
@@ -560,6 +525,38 @@
       "exchange": null
     },
     {
+      "code": "032640",
+      "name": "LG유플러스",
+      "close": 15620,
+      "ret5": 0.1302,
+      "ret20": 0.0728,
+      "rsi14": 65.1,
+      "vol20": 0.385,
+      "foreign_net": -22582018525,
+      "inst_net": 42525214065,
+      "score": 0.345,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "LG유플러스, 문화예술 입은 'U+일상비일상의틈' 체류시간 두 배 늘어",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "LG유플러스 복합문화공간 '틈', 관람객 머무는 시간 2배 늘어",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "LG유플러스, AI 데이터센터 성장에 실적 개선 기대감 확대",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 156200000,
+      "exchange": null
+    },
+    {
       "code": "489790",
       "name": "한화비전",
       "close": 47800,
@@ -569,7 +566,7 @@
       "vol20": 1.13,
       "foreign_net": -20705757000,
       "inst_net": 27169405150,
-      "score": 0.677,
+      "score": 0.681,
       "news": [
         {
           "date": "11-04",
@@ -591,7 +588,7 @@
       "vol20": 1.262,
       "foreign_net": -8327822450,
       "inst_net": 3094928250,
-      "score": 0.573,
+      "score": 0.58,
       "news": [
         {
           "date": "11-05",
@@ -623,7 +620,7 @@
       "vol20": 1.382,
       "foreign_net": -15849296990,
       "inst_net": 14299779995,
-      "score": 0.508,
+      "score": 0.521,
       "news": [
         {
           "date": "11-05",
