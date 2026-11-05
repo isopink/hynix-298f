@@ -690,14 +690,19 @@ def test_reconcile_fills_partial_order_first():
         C.ACCOUNT = old
 
 
-def test_ten_minute_slots():
-    """11-06 10분마다: 09:30~15:20 36회, 회차는 10분 단위로 내림."""
+def test_schedule_slots():
+    """회차 단위는 params.schedule.interval_min (지금 15분: 09:30~15:15 24회)."""
     p = C.params()
-    assert C.interval_min(p) == 10 and len(p["schedule"]["trade_times"]) == 36
-    assert p["schedule"]["trade_times"][0] == "09:30" and p["schedule"]["trade_times"][-1] == "15:20"
-    assert C._slot(datetime(2026, 11, 6, 9, 49, 30, tzinfo=C.KST)) == "09:40"
-    assert C.trade_slot(datetime(2026, 11, 6, 15, 20, 5, tzinfo=C.KST), p)
-
+    assert C.interval_min(p) == 15 and len(p["schedule"]["trade_times"]) == 24
+    assert p["schedule"]["trade_times"][-1] == "15:15"
+    assert C._slot(datetime(2026, 11, 6, 9, 49, 30, tzinfo=C.KST)) == "09:45"
+    q = {**p, "schedule": {**p["schedule"], "interval_min": 10}}
+    real = C.params
+    C.params = lambda: q
+    try:
+        assert C._slot(datetime(2026, 11, 6, 9, 49, 30, tzinfo=C.KST)) == "09:40"
+    finally:
+        C.params = real
 
 if __name__ == "__main__":
     fails = 0

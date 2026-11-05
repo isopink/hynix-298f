@@ -478,7 +478,7 @@ details.log summary { border-radius: 16px; }
 <script src="config.js"></script>
 <script>
 // 매매 회차 (agent/config/params.json 의 schedule.trade_times 와 맞출 것). 판단 카드·상단 칩이 같이 씀
-window.TRADE_TIMES = ['09:30', '09:40', '09:50', '10:00', '10:10', '10:20', '10:30', '10:40', '10:50', '11:00', '11:10', '11:20', '11:30', '11:40', '11:50', '12:00', '12:10', '12:20', '12:30', '12:40', '12:50', '13:00', '13:10', '13:20', '13:30', '13:40', '13:50', '14:00', '14:10', '14:20', '14:30', '14:40', '14:50', '15:00', '15:10', '15:20'];   // 11-06 10분마다 매매 (하루 36번). agent params.schedule 과 맞출 것
+window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:00', '11:15', '11:30', '11:45', '12:00', '12:15', '12:30', '12:45', '13:00', '13:15', '13:30', '13:45', '14:00', '14:15', '14:30', '14:45', '15:00', '15:15'];   // 15분마다 매매 (하루 24번). agent params.schedule 과 맞출 것
 (function () {
   const GR = { red: 'url(#gradRed)', blue: 'url(#gradBlue)', grey: 'url(#gradGrey)', redH: 'url(#gradRedH)', blueH: 'url(#gradBlueH)', ring: 'url(#gradRing)' };
   const C = { red: '#da291c', redHi: '#ff5a4a', blue: '#4aa3d4', grey: '#585858', muted: '#8c8c8c', grid: 'rgba(255,255,255,.06)', ink: '#f5f5f5', body: '#a0a0a0' };
@@ -1139,7 +1139,7 @@ window.TRADE_TIMES = ['09:30', '09:40', '09:50', '10:00', '10:10', '10:20', '10:
       : age <= 12 ? ['On', 'ok run', `마지막 잔고 조회 ${Math.max(0, Math.round(age))}분 전`]
       : ['Off', 'bad', LIVE_AT ? `잔고 조회가 ${Math.round(age)}분째 없음` : '잔고 조회 기록 없음'];
     let agent;
-    if (!st.last_run) agent = ['On', 'ok', '첫 판단 대기 · 평일 09:30부터 10분마다'];   // 아직 실행 전이어도 스케줄은 켜져 있음
+    if (!st.last_run) agent = ['On', 'ok', '첫 판단 대기 · 평일 09:30부터 15분마다'];   // 아직 실행 전이어도 스케줄은 켜져 있음
     else {
       const late = st.next_run && Date.now() - Date.parse(st.next_run.replace(' ', 'T') + ':00+09:00') > 30 * 60e3;
       agent = st.last_ok === false ? ['Off', 'bad', '마지막 판단 실패' + (st.note ? ' · ' + st.note : '')]
@@ -1150,10 +1150,10 @@ window.TRADE_TIMES = ['09:30', '09:40', '09:50', '10:00', '10:10', '10:20', '10:
     // 장 밖에선 판단이 돌지 않으므로 Off (실패·동기화 문제는 그대로 보여줌)
     if (!opsOpen()) agent = ['Off', agent[1] === 'bad' ? 'bad' : '', agent[1] === 'bad' ? '장 마감 · ' + agent[2] : '장 마감 · 다음 판단 ' + (st.next_run || '평일 09:30')];
     else {
-      // 판단 실행 중 (시간으로 추정): 판단 회차(09:30~15:20, 10분마다) 시작 뒤 6분 안이고 그 회차 결과가 아직 안 올라왔으면.
+      // 판단 실행 중 (시간으로 추정): 판단 회차(09:30~15:15, 15분마다) 시작 뒤 6분 안이고 그 회차 결과가 아직 안 올라왔으면.
       // 실행은 보통 3~4분, 끝나면 status.json 의 last_run 이 그 회차 시각으로 바뀜
       const k = new Date(Date.now() + 9 * 3600e3), m = k.getUTCHours() * 60 + k.getUTCMinutes();
-      const IV = 10, slot = Math.floor(m / IV) * IV, hm = String(Math.floor(slot / 60)).padStart(2, '0') + ':' + String(slot % 60).padStart(2, '0');
+      const IV = 15, slot = Math.floor(m / IV) * IV, hm = String(Math.floor(slot / 60)).padStart(2, '0') + ':' + String(slot % 60).padStart(2, '0');
       const today = k.toISOString().slice(0, 10), done = st.last_run && st.last_run >= today + ' ' + hm;
       if (window.TRADE_TIMES.includes(hm) && m - slot < 6 && !done) {
         const trade = window.TRADE_TIMES.includes(hm);
@@ -1537,8 +1537,8 @@ window.TRADE_TIMES = ['09:30', '09:40', '09:50', '10:00', '10:10', '10:20', '10:
   }
   tk.addEventListener('click', () => fab.click());
 
-  // ---------- 매매 시각: 평일 10분마다 매매 (11-06, 하루 36번) (agent/setup_tasks.ps1 · params.schedule.trade_times 와 맞출 것). 다음 매매에 빨간 점 ----------
-  const SCHED = { trades: window.TRADE_TIMES, judge: 10 };
+  // ---------- 매매 시각: 평일 15분마다 매매 (하루 24번) (agent/setup_tasks.ps1 · params.schedule.trade_times 와 맞출 것). 다음 매매에 빨간 점 ----------
+  const SCHED = { trades: window.TRADE_TIMES, judge: 15 };
   const sched = document.getElementById('sched');
   function drawSched() {
     const k = new Date(Date.now() + 9 * 3600e3), day = k.getUTCDay();   // 한국 시각

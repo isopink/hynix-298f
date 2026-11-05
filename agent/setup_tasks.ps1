@@ -12,8 +12,8 @@ $tasks = @(
   @{ Name = "Hynix298-prep";     Time = "08:30"; Days = $wk;  Cmd = "`"$agent\run.bat`" prep" },
   @{ Name = "Hynix298-snapshot"; Time = "08:25"; Days = $wk;  Cmd = "`"$live\run_snapshot.bat`"" },
   @{ Name = "Hynix298-monitor";  Time = "08:30"; Days = $wk;  Cmd = "`"$agent\run.bat`" monitor" },
-  # 정기 판단: 09:30 부터 10분마다 15:20 까지 36번 (11-06, params.schedule.interval_min · sync 가 반복 간격을 자동으로 맞춤) · 예전: 09:30 부터 15분마다 15:15 까지 24번 (11-04 마지막 매매 15:15 → 기간 05:31 → 05:46) (11-03 하루 3번 → 30분마다 → 11-04 15분마다, 매매 회차는 params.schedule.trade_times). 앞 회차가 아직 돌면 그 회차는 건너뜀
-  @{ Name = "Hynix298-decide";   Time = "09:30"; Days = $wk;  Cmd = "`"$agent\run.bat`" decide"; Every = 10; For = "05:51" },
+  # 정기 판단: 09:30 부터 15분마다 15:15 까지 24번 (params.schedule.interval_min · 바꾸면 sync 가 반복 간격을 자동으로 맞춤) (11-04 마지막 매매 15:15 → 기간 05:31 → 05:46) (11-03 하루 3번 → 30분마다 → 11-04 15분마다, 매매 회차는 params.schedule.trade_times). 앞 회차가 아직 돌면 그 회차는 건너뜀
+  @{ Name = "Hynix298-decide";   Time = "09:30"; Days = $wk;  Cmd = "`"$agent\run.bat`" decide"; Every = 15; For = "05:46" },
   @{ Name = "Hynix298-close";    Time = "15:45"; Days = $wk;  Cmd = "`"$agent\run.bat`" close" },
   @{ Name = "Hynix298-tune";     Time = "16:00"; Days = $wk;  Cmd = "`"$agent\run.bat`" tune" },
   @{ Name = "Hynix298-review";   Time = "10:00"; Days = "SAT"; Cmd = "`"$agent\run.bat`" review" }
