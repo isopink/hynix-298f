@@ -1,16 +1,16 @@
 {
-  "last_run": "2026-11-05 09:45",
-  "last_ok": false,
-  "next_run": "2026-11-05 10:00",
-  "runs_today": 2,
+  "last_run": "2026-11-05 10:00",
+  "last_ok": true,
+  "next_run": "2026-11-05 10:15",
+  "runs_today": 3,
   "failures_today": 1,
-  "note": "기록 없음: 09:45 매매 회차는 주문 없이 끝났습니다. 브리핑 도구가 고장 나서 정상 판단을 하지 못했습니다.",
+  "note": "하락 / 매수 0건 / 매도 1건 / 관망 7건",
   "sync": {
     "ok": true,
     "error": null,
-    "head": "39c665f",
-    "checked_at": "2026-11-05 09:46",
+    "head": "048c0e0",
+    "checked_at": "2026-11-05 10:03",
     "rejected": null,
-    "applied_at": "2026-11-05 09:44"
+    "applied_at": "2026-11-05 09:59"
   }
 }
