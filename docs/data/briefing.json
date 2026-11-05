@@ -81,9 +81,9 @@
     ]
   },
   "intraday": {
-    "time": "14:45",
+    "time": "15:00",
     "pool": 230,
-    "analyzed_new": 4,
+    "analyzed_new": 3,
     "passed": 20,
     "kept_prep": false
   },
@@ -116,11 +116,11 @@
           "risk": false
         }
       ],
-      "price": 214500,
-      "chg": 0.0725,
-      "activity": 3.67,
-      "foreign_today": 36679500000,
-      "inst_today": 77863500000,
+      "price": 214000,
+      "chg": 0.07,
+      "activity": 3.78,
+      "foreign_today": 36594000000,
+      "inst_today": 77682000000,
       "exchange": "KOSPI"
     },
     {
@@ -133,7 +133,7 @@
       "vol20": 0.742,
       "foreign_net": -58696055500,
       "inst_net": 74156028000,
-      "score": 0.963,
+      "score": 0.962,
       "news": [
         {
           "date": "11-05",
@@ -151,11 +151,36 @@
           "risk": false
         }
       ],
-      "price": 465500,
-      "chg": 0.0992,
-      "activity": 2.37,
+      "price": 462500,
+      "chg": 0.0921,
+      "activity": 2.36,
       "foreign_today": 0,
-      "inst_today": 15827000000,
+      "inst_today": 15725000000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "316140",
+      "name": "우리금융지주",
+      "close": 30800,
+      "ret5": 0.0353,
+      "ret20": -0.0792,
+      "rsi14": 43.4,
+      "vol20": 0.301,
+      "foreign_net": -56327899900,
+      "inst_net": 59042064425,
+      "score": 0.779,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "[특징주] 은행주 동반 강세…우리금융지주 5.9% 급등",
+          "risk": false
+        }
+      ],
+      "price": 31800,
+      "chg": 0.0478,
+      "activity": 1.37,
+      "foreign_today": 0,
+      "inst_today": 18285000000,
       "exchange": "KOSPI"
     },
     {
@@ -168,7 +193,7 @@
       "vol20": 0.786,
       "foreign_net": -21046654725,
       "inst_net": 1518542300,
-      "score": 0.824,
+      "score": 0.779,
       "news": [
         {
           "date": "11-05",
@@ -186,36 +211,11 @@
           "risk": false
         }
       ],
-      "price": 47750,
-      "chg": 0.0694,
-      "activity": 4.83,
+      "price": 47125,
+      "chg": 0.0554,
+      "activity": 4.72,
       "foreign_today": 0,
-      "inst_today": 3676750000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "316140",
-      "name": "우리금융지주",
-      "close": 30800,
-      "ret5": 0.0353,
-      "ret20": -0.0792,
-      "rsi14": 43.4,
-      "vol20": 0.301,
-      "foreign_net": -56327899900,
-      "inst_net": 59042064425,
-      "score": 0.801,
-      "news": [
-        {
-          "date": "11-05",
-          "title": "[특징주] 은행주 동반 강세…우리금융지주 5.9% 급등",
-          "risk": false
-        }
-      ],
-      "price": 32050,
-      "chg": 0.056,
-      "activity": 1.35,
-      "foreign_today": 0,
-      "inst_today": 18428750000,
+      "inst_today": 3628625000,
       "exchange": "KOSPI"
     },
     {
@@ -228,7 +228,7 @@
       "vol20": 0.575,
       "foreign_net": 1168053400,
       "inst_net": 89060007775,
-      "score": 0.721,
+      "score": 0.725,
       "news": [
         {
           "date": "11-05",
@@ -246,11 +246,11 @@
           "risk": false
         }
       ],
-      "price": 30400,
-      "chg": 0.027,
-      "activity": 1.64,
-      "foreign_today": 942400000,
-      "inst_today": 4894400000,
+      "price": 30300,
+      "chg": 0.0236,
+      "activity": 1.61,
+      "foreign_today": 939300000,
+      "inst_today": 4878300000,
       "exchange": "KOSPI"
     },
     {
@@ -263,21 +263,21 @@
       "vol20": 0.333,
       "foreign_net": -8556535000,
       "inst_net": 22696941275,
-      "score": 0.625,
+      "score": 0.641,
       "news": [
         {
           "date": "11-05",
-          "title": "경찰, ‘동덕여대·KT 테러 협박’ 등 4건에 손해배상 청구 소송",
-          "risk": true
-        },
-        {
-          "date": "11-05",
-          "title": "아웃백, KT 멤버십 제휴 확대...전국 매장서 3만 원 할인",
+          "title": "KT·삼성전자, 고속철도 통신 안정화 '맞손'…끊김 29% 감소",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "KT, 기업용 AX 포털 개설… 맞춤형 AI 솔루션 추천",
+          "title": "‘인천체고 출신’ KT 박하준, 세계선수권 동메달 합작…국제무대 존재...",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "KT-삼성전자, AI로 고속철도 통신 품질 잡는다…끊김 현상 29% 감소 확인",
           "risk": false
         }
       ],
@@ -313,11 +313,11 @@
           "risk": false
         }
       ],
-      "price": 362000,
-      "chg": 0.0197,
+      "price": 360500,
+      "chg": 0.0155,
       "activity": 1.51,
       "foreign_today": 0,
-      "inst_today": 6516000000,
+      "inst_today": 6489000000,
       "exchange": "KOSPI"
     },
     {
@@ -330,21 +330,21 @@
       "vol20": 0.184,
       "foreign_net": 178003700,
       "inst_net": 3751059850,
-      "score": 0.581,
+      "score": 0.58,
       "news": [
         {
           "date": "11-05",
+          "title": "오리온 견과류 및 렌틸콩 함유 단백질 간식 라인업 확장",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "오리온, 저당 단백질바 내놨다···당 2.4g에 단백질 12g",
+          "risk": false
+        },
+        {
+          "date": "11-05",
           "title": "오리온, 당 줄이고 단백질·식이섬유 높인 '닥터유 단백질바 저당' 출시",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "당은 낮추고 단백질은 채웠다…오리온, ‘닥터유 단백질바 저당’ 출시",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "오리온, 당 2.4g으로 낮춘 '닥터유 단백질바 저당' 출시",
           "risk": false
         }
       ],
@@ -362,7 +362,7 @@
       "vol20": 0.915,
       "foreign_net": 17644093900,
       "inst_net": 14865329300,
-      "score": 0.574,
+      "score": 0.573,
       "news": [
         {
           "date": "11-04",
@@ -380,11 +380,11 @@
           "risk": false
         }
       ],
-      "price": 64900,
-      "chg": -0.0092,
-      "activity": 0.93,
-      "foreign_today": 4932400000,
-      "inst_today": 4218500000,
+      "price": 64200,
+      "chg": -0.0198,
+      "activity": 0.94,
+      "foreign_today": 4879200000,
+      "inst_today": 4173000000,
       "exchange": "KOSPI"
     },
     {
@@ -397,7 +397,7 @@
       "vol20": 0.246,
       "foreign_net": -22209841000,
       "inst_net": 23560336700,
-      "score": 0.566,
+      "score": 0.573,
       "news": [
         {
           "date": "11-05",
@@ -411,7 +411,7 @@
         },
         {
           "date": "11-05",
-          "title": "[위클리오늘] KT&G, 현대제철(11.05)",
+          "title": "KT&G 상상마당, 서울 홍대서 경북 구미 캐릭터 활용 지역 기획전 열어",
           "risk": false
         }
       ],
@@ -429,7 +429,7 @@
       "vol20": 0.827,
       "foreign_net": -41540468400,
       "inst_net": 68116800900,
-      "score": 0.529,
+      "score": 0.527,
       "news": [
         {
           "date": "11-04",
@@ -452,31 +452,6 @@
       "exchange": "KOSPI"
     },
     {
-      "code": "086790",
-      "name": "하나금융지주",
-      "close": 119200,
-      "ret5": 0.032,
-      "ret20": -0.0774,
-      "rsi14": 43.1,
-      "vol20": 0.282,
-      "foreign_net": -34944478850,
-      "inst_net": 38697479450,
-      "score": 0.507,
-      "news": [
-        {
-          "date": "11-04",
-          "title": "하나금융지주, 보통주 188만5706주 6일 소각 예정",
-          "risk": false
-        }
-      ],
-      "price": 120700,
-      "chg": 0.0307,
-      "activity": 0.87,
-      "foreign_today": 0,
-      "inst_today": 7121300000,
-      "exchange": "KOSPI"
-    },
-    {
       "code": "323410",
       "name": "카카오뱅크",
       "close": 20150,
@@ -486,7 +461,7 @@
       "vol20": 0.242,
       "foreign_net": 9075318265,
       "inst_net": -1800833610,
-      "score": 0.471,
+      "score": 0.481,
       "news": [
         {
           "date": "11-05",
@@ -518,7 +493,7 @@
       "vol20": 0.653,
       "foreign_net": -7113250,
       "inst_net": 14875195900,
-      "score": 0.456,
+      "score": 0.466,
       "news": [
         {
           "date": "11-05",
@@ -550,7 +525,7 @@
       "vol20": 0.543,
       "foreign_net": -183011000,
       "inst_net": 1391209200,
-      "score": 0.449,
+      "score": 0.443,
       "news": [
         {
           "date": "11-05",
@@ -573,6 +548,38 @@
       "exchange": "KOSPI"
     },
     {
+      "code": "021240",
+      "name": "코웨이",
+      "close": 106700,
+      "ret5": 0.0554,
+      "ret20": 0.0638,
+      "rsi14": 57.0,
+      "vol20": 0.294,
+      "foreign_net": -3904874550,
+      "inst_net": 5001384050,
+      "score": 0.359,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "코웨이, 한국서비스품질지수 정수기·공기청정기 A/S 부문 1위",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "코웨이, AI 사용 경험부터 사후관리까지…품질 평가서 잇단 1위",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "코웨이, 한국서비스품질지수(KS-SQI) 정수기 10년·공기청정기 9년 연속...",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 1387100000,
+      "exchange": "KOSPI"
+    },
+    {
       "code": "489790",
       "name": "한화비전",
       "close": 47800,
@@ -582,7 +589,7 @@
       "vol20": 1.13,
       "foreign_net": -20705757000,
       "inst_net": 27169405150,
-      "score": 0.559,
+      "score": 0.557,
       "news": [
         {
           "date": "11-04",
@@ -604,7 +611,7 @@
       "vol20": 1.253,
       "foreign_net": -7161108700,
       "inst_net": 7424801750,
-      "score": 0.559,
+      "score": 0.557,
       "news": [
         {
           "date": "11-03",
@@ -617,29 +624,36 @@
       "exchange": "KOSDAQ"
     },
     {
-      "code": "010060",
-      "name": "OCI홀딩스",
-      "close": 208000,
-      "ret5": 0.1473,
-      "ret20": -0.151,
-      "rsi14": 52.2,
-      "vol20": 1.174,
-      "foreign_net": -40252824550,
-      "inst_net": 44921083550,
-      "score": 0.544,
+      "code": "059090",
+      "name": "미코",
+      "close": 22900,
+      "ret5": -0.1192,
+      "ret20": -0.0438,
+      "rsi14": 52.0,
+      "vol20": 1.262,
+      "foreign_net": -8327822450,
+      "inst_net": 3094928250,
+      "score": 0.542,
       "news": [
         {
           "date": "11-05",
-          "title": "iM證 \"OCI홀딩스, 우주로 향할 시간…목표가 30만원\"",
+          "title": "'미코' 56살 오현경, 요즘 어떻게 지내나 봤더니 ‘방부제 미모’",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "'56세' 오현경, 군살 없이 선명한 11자 복근…여전한 '미코' 미모 [N샷]",
+          "risk": false
+        },
+        {
+          "date": "11-04",
+          "title": "미코 출신·연봉 2억...'돌싱모솔' 2기 돌싱녀들 스펙 역대급",
           "risk": false
         }
       ],
-      "price": 203500,
-      "chg": 0.0175,
-      "activity": 2.31,
       "foreign_today": 0,
-      "inst_today": 3256000000,
-      "exchange": "KOSPI"
+      "inst_today": 1717500000,
+      "exchange": "KOSDAQ"
     },
     {
       "code": "114800",
