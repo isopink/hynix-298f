@@ -20,7 +20,7 @@ import time
 import urllib.parse
 import urllib.request
 import warnings
-from datetime import timedelta
+from datetime import datetime, timedelta, timezone
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import common as C  # noqa: E402
@@ -124,7 +124,43 @@ def market_summary():
     ind = indicators(df["종가"])
     return {"source": src, "asof": df.index[-1].strftime("%Y-%m-%d"), **(ind or {}),
             "rule_hint": rule_hint(ind) if ind else "횡보",
+            "us": us_overnight(),   # 11-06 밤사이 미국장 (국면 판단 참고)
             "closes": [round(float(v), 2) for v in df["종가"].tail(65)]}   # 장중 실시간 힌트 계산용 (대시보드·판단)
+
+
+US_INDEX = {"^IXIC": "나스닥", "^SOX": "필라델피아 반도체", "^GSPC": "S&P 500"}   # 11-06 S.Lee: 밤사이 미국장
+
+
+def us_parse(body):
+    """Yahoo chart(1일봉) 응답 → {date, close, chg} (마지막 두 종가로 등락률). 값이 없으면 None."""
+    r = ((body or {}).get("chart") or {}).get("result") or []
+    if not r:
+        return None
+    ts, cl = r[0].get("timestamp") or [], ((r[0].get("indicators") or {}).get("quote") or [{}])[0].get("close") or []
+    pts = [(t, c) for t, c in zip(ts, cl) if c is not None]
+    if len(pts) < 2:
+        return None
+    (_, prev), (t, last) = pts[-2], pts[-1]
+    tz = timedelta(seconds=r[0].get("meta", {}).get("gmtoffset", 0))
+    day = (datetime.fromtimestamp(t, timezone.utc) + tz).strftime("%Y-%m-%d")   # 미국 현지 거래일
+    return {"date": day, "close": round(float(last), 2), "chg": round(float(last) / float(prev) - 1, 4)}
+
+
+def us_overnight():
+    """08:30 준비 때 전날 밤 미국 지수 3개 (나스닥·필라델피아 반도체·S&P 500). 실패해도 준비는 계속 (빈 목록)."""
+    out = []
+    for sym, name in US_INDEX.items():
+        try:
+            req = urllib.request.Request(f"https://query1.finance.yahoo.com/v8/finance/chart/{urllib.parse.quote(sym)}?range=5d&interval=1d",
+                                         headers={"User-Agent": "Mozilla/5.0"})
+            with urllib.request.urlopen(req, timeout=10) as res:
+                v = us_parse(json.load(res))
+            if v:
+                out.append({"symbol": sym, "name": name, **v})
+        except Exception as e:  # noqa: BLE001
+            print(f"  ! 미국 지수 {name} 조회 실패: {e}")
+        time.sleep(0.5)
+    return out
 
 
 def rule_hint(ind):
@@ -361,6 +397,9 @@ def to_text(b):
         f"변동성 {m.get('vol20', 0) * 100:.0f}% · 60일 최대낙폭 {pct(m.get('mdd60'))} · 규칙 기반 힌트: {m['rule_hint']}",
         "",
     ]
+    us = m.get("us") or []
+    if us:   # 11-06 밤사이 미국장
+        lines[-1:-1] = ["밤사이 미국장 (" + us[0]["date"] + " 종가): " + " · ".join(f"{u['name']} {u['close']:,} ({pct(u['chg'])})" for u in us)]
     lv = m.get("live")
     if lv:
         lines[-1:-1] = [f"장중 실시간 ({lv['time']}, 지금 KOSPI를 오늘 종가로 가정): {lv['close']:,} · 5일선 {lv['ma5']:,} · 20일선 {lv['ma20']:,} · "
