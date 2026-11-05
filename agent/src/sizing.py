@@ -45,17 +45,17 @@ def plan_buy(code, conf, price, account, p=None, r=None, regime=None, today_chan
     top = inv["weight_cap"] if inv else ix.get("weight_cap") if ix else None   # 인버스·지수(11-05)는 종목당 10% 대신 자기 한도 20%까지
     w = target_weight(conf, p, r, top=top)
     dp = C.dip(code, p)
-    xd = C.index_dip(code, today_change, p)   # 급락일 지수 예외: 국면과 상관없이, 크기 7%
+    xd = C.index_dip(code, today_change, p)   # 급락일 지수 예외: 국면과 상관없이, 하락 폭별 크기 (종목당 20% 예외)
     if xd and conf >= C.buy_threshold(p) - 1e-9:
-        w = min(xd["weight"], r["max_weight_per_stock"])
+        w = xd["weight"]
     if dp and conf >= C.buy_threshold(p) - 1e-9:   # 📉급락 반등 후보: 매수 기준을 넘으면 정해진 크기(7%)로 (소액 매수 구간은 그대로 작게)
         w = min(dp["weight"], r["max_weight_per_stock"])
     limits = {
         "확신도 비중": total * w * C.week_factor(p) - held_value,
         "국면 상한 여유": total * cap - stock_value,
         "최소 현금 유지": cash - total * r["min_cash_ratio"],
-        "1회 주문 한도": r["max_order_amount"],
-        "종목 한도": total * r["max_weight_per_stock"] - held_value,
+        "1회 주문 한도": max(r["max_order_amount"], total * xd["weight"]) if xd else r["max_order_amount"],   # 급락일 지수 예외는 한 번에 비중만큼
+        "종목 한도": total * max(r["max_weight_per_stock"], xd["weight"] if xd else 0) - held_value,
     }
     if inv:   # 인버스는 주식 상한 대신 자기 한도. 정해진 국면이 아니면 0
         del limits["국면 상한 여유"]

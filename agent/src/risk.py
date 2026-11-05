@@ -53,10 +53,11 @@ def check(order, account, price, p=None, r=None):
         if chg is not None and chg >= lim:
             bad.append(("추격 매수", f"오늘 {chg:+.1%} ≥ +{lim:.0%}, 급등한 날은 매수 금지"))
         amount = qty * price
-        if amount > r["max_order_amount"]:
+        xd = C.index_dip(code, order.get("today_change"), p) if side == "매수" else None   # 급락일 지수 예외: 종목·1회 주문 한도를 그 비중까지
+        if amount > max(r["max_order_amount"], total * xd["weight"] * 1.001 if xd else 0):
             bad.append(("1회 주문 한도", f"{amount:,.0f}원 > {r['max_order_amount']:,}원"))
         pos_after = (held["qty"] if held else 0) * price + amount
-        if pos_after > total * r["max_weight_per_stock"] * 1.001:
+        if pos_after > total * max(r["max_weight_per_stock"], xd["weight"] if xd else 0) * 1.001:
             bad.append(("종목 한도", f"매수 후 비중 {pos_after / total:.1%} > {r['max_weight_per_stock']:.0%}"))
         hv = C.high_vol(code, p)
         if hv and pos_after > total * hv["weight_cap"] * 1.001:

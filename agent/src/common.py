@@ -205,7 +205,9 @@ def index_dip(code, chg, p=None, t=None):
     dd = ((index_etf(code, p) or {}).get("dip_buy")) or {}
     if not dd.get("enabled") or chg is None or chg > dd["drop"] or (t or now()).strftime("%H:%M") < dd["from"]:
         return None
-    return dd
+    tiers = dd.get("tiers") or [[dd["drop"], dd.get("weight", 0)]]
+    w = max((wt for lim, wt in tiers if chg <= lim + 1e-12), default=0)   # 11-05 하락 폭이 클수록 크게 (−3% 15 · −4% 25 · −5% 35%)
+    return {**dd, "weight": w}
 
 
 def market_etf(code, p=None):
