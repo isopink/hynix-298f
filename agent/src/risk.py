@@ -72,7 +72,7 @@ def check(order, account, price, p=None, r=None):
         cap, regime = sizing.equity_cap(p, r, account)
         etf, label = C.market_etf(code, p)
         if etf:   # 시장 ETF(인버스·지수): 정해진 국면에서만, 하루 정해진 횟수만
-            if regime not in etf["regimes"]:
+            if regime not in etf["regimes"] and not C.index_dip(code, order.get("today_change"), p):   # 급락일 지수 예외는 국면 무관
                 bad.append((f"{label} 국면", f"오늘 국면 {regime} · {label}는 {'·'.join(etf['regimes'])} 국면에서만 매수"))
             if (n := C.buys_today(code)) >= etf.get("max_buys_per_day", 99):
                 bad.append((f"{label} 하루 매수", f"오늘 이미 {n}번 매수 · {label}는 하루 {etf['max_buys_per_day']}번만"))
@@ -87,7 +87,7 @@ def check(order, account, price, p=None, r=None):
             stock_after = C.stock_value(account["holdings"], p) + amount
             if stock_after > total * cap * 1.001:
                 bad.append(("국면 비중 상한", f"매수 후 주식 {stock_after / total:.1%} > {regime} 상한 {cap:.0%}"))
-        plan = sizing.plan_buy(code, conf, price, account, p, r)
+        plan = sizing.plan_buy(code, conf, price, account, p, r, today_change=order.get("today_change"))
         if qty > plan["qty"] * 1.03 + 1:   # 계산 시점과 검사 시점의 가격 차이만큼 여유
             bad.append(("수량 계산 초과", f"{qty}주 > 계산값 {plan['qty']}주"))
     elif side == "매도":

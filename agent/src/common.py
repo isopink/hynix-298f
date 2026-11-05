@@ -199,6 +199,15 @@ def other_etf(name, p=None):
     return "ETN" in nm.upper() or any(nm.upper().startswith(x.upper()) for x in pre)
 
 
+def index_dip(code, chg, p=None, t=None):
+    """급락일 지수 예외 (params.index.dip_buy, 11-05): KODEX 200 이 오늘 drop 이하이고 from 이후면 설정, 아니면 None."""
+    p = p or params()
+    dd = ((index_etf(code, p) or {}).get("dip_buy")) or {}
+    if not dd.get("enabled") or chg is None or chg > dd["drop"] or (t or now()).strftime("%H:%M") < dd["from"]:
+        return None
+    return dd
+
+
 def market_etf(code, p=None):
     """시장 ETF(인버스·지수추종)면 (설정, '인버스' | '지수'), 아니면 (None, None). 둘 다 국면·하루 매수 횟수·짧은 익절 규칙을 씀."""
     p = p or params()
@@ -247,6 +256,8 @@ def position_meta(holdings, p=None):
         m = meta.get(h["code"])
         if m and h.get("avg_price"):
             sl, tp, md = exit_levels(h["code"], p)
+            if m.get("index_dip"):   # 급락일 예외로 산 지수 ETF 는 보유일이 김
+                md = ((index_etf(h["code"], p) or {}).get("dip_buy") or {}).get("max_hold_days", md)
             meta[h["code"]] = {**m, "stop": round(h["avg_price"] * (1 + sl)), "take": math.ceil(h["avg_price"] * (1 + tp) - 1e-9), "max_days": md}
     return meta
 

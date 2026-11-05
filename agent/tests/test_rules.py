@@ -575,6 +575,27 @@ def test_partial_sell_by_confidence():
     assert "분할 매도" not in chk(29, 0.70) and "분할 매도" not in chk(29, 0.40, True)
 
 
+def test_index_dip_buy_in_falling_market():
+    """급락일 지수 예외: KODEX 200 이 −3% 이하면 15:00 이후엔 하락 국면이어도 매수 (7%), 그 전·덜 빠진 날은 막힘."""
+    open(C.JOURNAL, "w").close()
+    C.journal("regime", regime="하락", cap=P["regime_cap"]["하락"])
+    at = lambda h, m: datetime(2026, 11, 5, h, m, tzinfo=C.KST)
+    assert C.index_dip("069500", -0.052, P, at(15, 15)) and not C.index_dip("069500", -0.052, P, at(14, 45))
+    assert not C.index_dip("069500", -0.02, P, at(15, 15)) and not C.index_dip("005930", -0.06, P, at(15, 15))
+    real = C.now
+    try:
+        C.now = lambda: at(15, 15)
+        plan = sizing.plan_buy("069500", 0.65, 10_000, acc(), P, R, today_change=-0.052)
+        assert plan["qty"] > 0 and plan["index_dip"] and plan["target_weight"] == 0.07 and plan["max_days"] == 5, plan
+        assert sizing.plan_buy("069500", 0.65, 10_000, acc(), P, R, today_change=-0.01)["qty"] == 0
+        chk = lambda chg: [x for x, _ in risk.check({"code": "069500", "side": "매수", "qty": plan["qty"], "confidence": 0.65, "today_change": chg}, acc(), 10_000, P, R)]
+        assert "지수 국면" not in chk(-0.052) and "지수 국면" in chk(-0.01)
+        C.now = lambda: at(14, 30)
+        assert sizing.plan_buy("069500", 0.65, 10_000, acc(), P, R, today_change=-0.052)["qty"] == 0
+    finally:
+        C.now = real
+
+
 if __name__ == "__main__":
     fails = 0
     for n, f in list(globals().items()):

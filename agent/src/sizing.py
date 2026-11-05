@@ -32,7 +32,7 @@ def equity_cap(p, r, account, regime=None):
     return round(cap, 4), regime
 
 
-def plan_buy(code, conf, price, account, p=None, r=None, regime=None):
+def plan_buy(code, conf, price, account, p=None, r=None, regime=None, today_change=None):
     p, r = p or C.params(), r or C.risk_limits()
     total, cash = account["total"], account["cash"]
     held = next((h for h in account["holdings"] if h["code"] == code), None)
@@ -43,6 +43,9 @@ def plan_buy(code, conf, price, account, p=None, r=None, regime=None):
 
     w = target_weight(conf, p, r, top=inv["weight_cap"] if inv else None)   # 인버스는 종목당 10% 대신 인버스 한도 20%까지
     dp = C.dip(code, p)
+    xd = C.index_dip(code, today_change, p)   # 급락일 지수 예외: 국면과 상관없이, 크기 7%
+    if xd and conf >= C.buy_threshold(p) - 1e-9:
+        w = min(xd["weight"], r["max_weight_per_stock"])
     if dp and conf >= C.buy_threshold(p) - 1e-9:   # 📉급락 반등 후보: 매수 기준을 넘으면 정해진 크기(7%)로 (소액 매수 구간은 그대로 작게)
         w = min(dp["weight"], r["max_weight_per_stock"])
     limits = {
@@ -59,7 +62,7 @@ def plan_buy(code, conf, price, account, p=None, r=None, regime=None):
         limits["인버스 한도"] = total * inv["weight_cap"] - inv_held
     etf, label = C.market_etf(code, p)
     if etf:   # 시장 ETF(인버스·지수): 정해진 국면에서만, 하루 정해진 횟수만
-        if regime not in etf["regimes"]:
+        if regime not in etf["regimes"] and not xd:
             limits[f"{label}는 " + "·".join(etf["regimes"]) + " 국면만"] = 0
         if C.buys_today(code) >= etf.get("max_buys_per_day", 99):
             limits[f"{label}는 하루 {etf['max_buys_per_day']}번만"] = 0
@@ -73,6 +76,7 @@ def plan_buy(code, conf, price, account, p=None, r=None, regime=None):
     unit = price * (1 + p["costs"]["fee_rate"])
     qty = math.floor(budget / unit) if price > 0 else 0
     stop_pct, take_pct, max_days = C.exit_levels(code, p)
+    max_days = xd["max_hold_days"] if xd else max_days
     return {
         "side": "매수", "code": code, "qty": qty, "price": price, "amount": qty * price,
         "confidence": conf, "target_weight": round(w, 4), "regime": regime, "equity_cap": cap,
@@ -80,7 +84,7 @@ def plan_buy(code, conf, price, account, p=None, r=None, regime=None):
         "stop": round(price * (1 + stop_pct)),
         "take": round(price * (1 + take_pct)),
         "max_days": max_days,
-        "high_vol": bool(hv), "dip": bool(dp), "inverse": bool(inv), "index": bool(C.index_etf(code, p)),
+        "high_vol": bool(hv), "dip": bool(dp), "index_dip": bool(xd), "inverse": bool(inv), "index": bool(C.index_etf(code, p)),
         "buy_threshold": C.buy_threshold(p),
         "probe": C.probe_floor(p) - 1e-9 <= conf < C.buy_threshold(p),   # 소액 매수 구간이면 True
     }

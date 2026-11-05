@@ -113,6 +113,10 @@ def get_briefing() -> str:
                    f"주식 비중 상한·종목 한도 안에서, 하루 {ix.get('max_buys_per_day', '-')}번만 매수 (코드가 강제). "
                    f"인버스와 같이 짧게 치고 빠짐: 순익 {ix['take_profit_net_pct']:+.1%}(평단 대비 {C.gross_take(ix['take_profit_net_pct'], p, ix.get('sell_tax_rate')):+.2%})에 익절 · 최대 보유 {ix.get('max_hold_days', p['decision']['max_hold_days'])}거래일. "
                    f"보유 중인데 국면이 하락으로 바뀌면 매도 확신도를 높게 볼 것")
+        if (xd := ix.get("dip_buy")) and xd.get("enabled"):
+            ctx.append(f"  - 📈급락일 예외: 오늘 지수 ETF 가 {xd['drop']:.0%} 이하로 빠졌으면 {xd['from']} 이후 회차에는 하락 국면이어도 매수 가능 (코드가 확인). "
+                       f"매수 기준을 넘으면 {xd['weight']:.0%}, 이렇게 산 건 최대 보유 {xd['max_hold_days']}거래일. "
+                       f"과거 3년 KODEX 200 −3% 이하 날 종가 매수는 83%가 익절됐음. bull = 과매도·투매 근거, bear = 다음날 추가 급락 근거(해외 악재 지속, 외국인 대량 순매도)")
     if rb := p.get("rsi_boost"):
         buy = [f"{x['name']}({n})" for x in b.get("candidates", []) + b.get("holdings", [])
                for _, n in [C.conf_boost(x["code"], "매수", 0, p, b, regime="")] if n]
@@ -187,7 +191,7 @@ def plan_order(code: str, side: str, confidence: float, rule_exit: bool = False)
     price = qi["price"]
     if side == "매수":
         adj, note = C.conf_boost(code, side, confidence)
-        plan = sizing.plan_buy(code, adj, price, acc)
+        plan = sizing.plan_buy(code, adj, price, acc, today_change=qi["change"])
         plan.update(confidence_raw=confidence, boost=note)
     elif side == "매도":
         adj, note = C.conf_boost(code, side, confidence)
@@ -229,6 +233,8 @@ def place_order(code: str, side: str, qty: int, confidence: float, bull: str, be
         d = C.params()["decision"]
         m = meta.get(code) or {"name": name, "entry_date": C.today().isoformat()}
         sl, tp, md = C.exit_levels(code)   # 고변동 종목은 손절·익절 폭이 넓음
+        if xd := C.index_dip(code, qi["change"]):   # 급락일 지수 예외로 산 건 보유일이 김
+            md, m["index_dip"] = xd["max_hold_days"], True
         m.update(stop=round(res["price"] * (1 + sl)), take=round(res["price"] * (1 + tp)), max_days=md)
         meta[code] = m
     elif not held:
