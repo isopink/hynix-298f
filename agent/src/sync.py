@@ -147,6 +147,32 @@ def restart(name, task, pattern):
         log(f"  {name} 재시작")
 
 
+def ensure_schedule():
+    """정기 판단 작업(Hynix298-decide)의 반복 간격을 params.schedule.interval_min 에 맞춤 (11-06 15분 → 10분).
+    설정이 바뀔 때 한 번만 시도 (실패해도 1분마다 다시 하지 않음). 실패하면 setup_tasks.ps1 을 다시 실행해야 함."""
+    if os.name != "nt":
+        return
+    s = C.params()["schedule"]
+    times = s.get("trade_times") or []
+    if not times:
+        return
+    k = C.interval_min()
+    h0, m0 = map(int, times[0].split(":"))
+    h1, m1 = map(int, times[-1].split(":"))
+    span = (h1 * 60 + m1) - (h0 * 60 + m0) + 1   # 마지막 회차까지 포함
+    dur = f"{span // 60:04d}:{span % 60:02d}"
+    want = f"{times[0]}|{k}|{dur}"
+    if state().get("decide_schedule") == want:
+        return
+    save(decide_schedule=want)
+    r = subprocess.run(["schtasks", "/Change", "/TN", "Hynix298-decide", "/RI", str(k), "/DU", dur],
+                       capture_output=True, text=True, encoding="mbcs", errors="replace", input="", timeout=60)
+    if r.returncode == 0:
+        log(f"정기 판단 작업을 {times[0]}부터 {k}분마다 {dur} 동안으로 바꿈")
+    else:
+        log(f"  ! 정기 판단 간격 변경 실패 (setup_tasks.ps1 을 다시 실행할 것): {(r.stderr or r.stdout).strip()[:200]}")
+
+
 _last_heal = {}
 
 
@@ -239,7 +265,7 @@ def single_instance():
 
 
 def catch_up(now=None):
-    """놓친 매매 회차를 다음 15분 회차까지 기다리지 않고 바로 보충 (11-05 09:45 사고 뒤 추가).
+    """놓친 매매 회차를 다음 회차까지 기다리지 않고 바로 보충 (11-05 09:45 사고 뒤 추가).
     매매 회차가 실패·건너뜀으로 국면 기록 없이 끝났으면(C.missed_trade) 정기 판단 작업을 지금 한 번 더 띄움.
     같은 회차·같은 코드로는 한 번만 시도 → 코드 버그로 계속 실패해도 1분마다 토큰을 쓰지 않음.
     수정 코드가 반영되면(HEAD 가 바뀌면) 다시 한 번 시도 = '복구되자마자 매매'."""
@@ -271,6 +297,7 @@ def loop():
                 log("sync.py 가 바뀌어 새 코드로 다시 시작")
                 return 10
             heal()
+            ensure_schedule()
             catch_up()
         except Exception as e:  # noqa: BLE001
             log(f"  ! 동기화 실패: {type(e).__name__}: {e}")

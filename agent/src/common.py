@@ -325,9 +325,15 @@ def conf_boost(code, side, conf, p=None, briefing=None, regime=None):
 
 
 def _slot(t=None):
-    """지금을 15분 단위로 내린 'HH:MM' (작업 스케줄러가 몇 초 늦게 시작해도 같은 회차로)."""
+    """지금을 회차 단위(params.schedule.interval_min, 11-06부터 10분)로 내린 'HH:MM' (작업 스케줄러가 몇 초 늦게 시작해도 같은 회차로)."""
     t = t or now()
-    return f"{t.hour:02d}:{t.minute // 15 * 15:02d}"
+    k = interval_min()
+    return f"{t.hour:02d}:{t.minute // k * k:02d}"
+
+
+def interval_min(p=None):
+    """정기 판단 간격(분). 11-04~05 15분 → 11-06 10분."""
+    return int(((p or params()).get("schedule") or {}).get("interval_min", 15))
 
 
 def trade_slot(t=None, p=None):
@@ -396,7 +402,7 @@ def prior_judgments(n=2, rows=None, run=None):
     if not out:
         return ""
     return "\n".join(["", "", "## 직전 판단 (오늘, 참고용)",
-                      "15분 전·30분 전 판단입니다. 숫자·뉴스·수급이 그때와 크게 다르지 않으면 확신도를 0.05 넘게 바꾸지 마세요. "
+                      "직전 두 회차의 판단입니다. 숫자·뉴스·수급이 그때와 크게 다르지 않으면 확신도를 0.05 넘게 바꾸지 마세요. "
                       "크게 바꾼다면 무엇이 달라졌는지 decision 문장에 적으세요. 이 표는 근거가 아니라 일관성 확인용입니다.", *out])
 
 
