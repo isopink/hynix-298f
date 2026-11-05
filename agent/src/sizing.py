@@ -106,12 +106,17 @@ def sell_qty(have, conf, p, rule_exit=False):
 
 
 def plan_sell(code, conf, price, account, p=None, rule_exit=False):
-    """판단 매도는 확신도에 따라 일부 또는 전량, 손절·익절·보유일 규칙 매도(rule_exit)는 전량."""
+    """판단 매도는 확신도에 따라 일부 또는 전량, 손절·익절·보유일 규칙 매도(rule_exit)는 전량.
+    분할 매도는 종목당 하루 1번 (11-05): 이미 오늘 판 종목은 확신도가 full_at 이상일 때만 나머지 전량."""
     p = p or C.params()
     held = next((h for h in account["holdings"] if h["code"] == code), None)
     have = held["qty"] if held else 0
     qty, part = sell_qty(have, conf, p, rule_exit)
+    again = part and C.sold_today(code)   # 11-05 HMM: 15분마다 절반씩 팔아 1시간 만에 97% 매도 → 분할은 하루 1번
+    if again:
+        qty = 0
     return {"side": "매도", "code": code, "qty": qty, "price": price, "amount": qty * price, "held_qty": have,
             "confidence": conf, "partial": part, "rule_exit": rule_exit,
-            "limited_by": ("분할 매도 (확신도 %.2f < 전량 기준 %.2f)" % (conf, p["decision"]["partial_sell"]["full_at"]) if part
+            "limited_by": ("오늘 이미 분할 매도함 (나머지는 확신도 %.2f 이상이거나 손절·익절·보유일 때 전량)" % p["decision"]["partial_sell"]["full_at"] if again
+                           else "분할 매도 (확신도 %.2f < 전량 기준 %.2f)" % (conf, p["decision"]["partial_sell"]["full_at"]) if part
                            else "보유 수량" if have else "보유하지 않은 종목")}

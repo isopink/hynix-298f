@@ -564,6 +564,7 @@ def test_dip_candidates_at_close_sized_7pct():
 
 def test_partial_sell_by_confidence():
     """판단 매도: 기준~0.65 미만이면 절반(올림), 0.65 이상·규칙 매도면 전량. Hook 도 같은 수량으로 막음."""
+    open(C.JOURNAL, "w").close()
     a = acc(holdings=[pos("005930", 29, 10_000), pos("000660", 1, 10_000)])
     p = {**P, "decision": {**P["decision"], "partial_sell": {"enabled": True, "full_at": 0.65, "fraction": 0.5}}}
     pl = sizing.plan_sell("005930", 0.60, 10_000, a, p)
@@ -655,6 +656,38 @@ def test_index_dip_exit_levels():
     assert m["max_days"] == 5 and m["take"] == math.ceil(10_000 * (1 + want) - 1e-9)
     os.remove(C.POSITIONS)
     C.POSITIONS = old_pos
+
+
+def test_partial_sell_once_a_day():
+    """11-05 HMM: 15분마다 절반씩 팔던 문제 → 분할은 하루 1번, 그 뒤엔 0.65 이상·규칙 매도만 전량."""
+    a = acc(holdings=[pos("011200", 111, 10_000)])
+    p = {**P, "decision": {**P["decision"], "partial_sell": {"enabled": True, "full_at": 0.65, "fraction": 0.5}}}
+    open(C.JOURNAL, "w").close()
+    assert sizing.plan_sell("011200", 0.58, 10_000, a, p)["qty"] == 56
+    C.journal("fill", code="011200", side="매도", qty=56, price=10_000)
+    again = sizing.plan_sell("011200", 0.58, 10_000, a, p)
+    assert again["qty"] == 0 and "이미 분할" in again["limited_by"], again
+    assert sizing.plan_sell("011200", 0.70, 10_000, a, p)["qty"] == 111
+    assert sizing.plan_sell("011200", 0.40, 10_000, a, p, rule_exit=True)["qty"] == 111
+    chk = lambda q, c: [x for x, _ in risk.check({"code": "011200", "side": "매도", "qty": q, "confidence": c}, a, 10_000, p, R)]
+    assert "분할 매도" in chk(28, 0.58) and "분할 매도" not in chk(111, 0.70)
+
+
+def test_reconcile_fills_partial_order_first():
+    """덜 체결돼 기록된 주문(qty < ordered)에 나머지를 채움 (마지막 체결에 몰아 붙이지 않음)."""
+    import logger
+    ts = [{"code": "011200", "side": "매수", "qty": 223, "price": 1, "amount": 223, "ordered": 223},
+          {"code": "011200", "side": "매도", "qty": 43, "price": 1, "amount": 43, "ordered": 112},
+          {"code": "011200", "side": "매도", "qty": 56, "price": 1, "amount": 56, "ordered": 56},
+          {"code": "011200", "side": "매도", "qty": 7, "price": 1, "amount": 7, "ordered": 7}]
+    old, C.ACCOUNT = C.ACCOUNT, os.path.join(tmp, "account_reconcile.json")   # 실제 work/ 를 건드리지 않게
+    C.write_json(C.ACCOUNT, {"holdings": [{"code": "011200", "qty": 48}]})
+    try:
+        out = logger.reconcile([dict(t) for t in ts])
+        assert [t["qty"] for t in out] == [223, 112, 56, 7] and "ordered" not in out[0], out
+    finally:
+        os.remove(C.ACCOUNT)
+        C.ACCOUNT = old
 
 
 if __name__ == "__main__":
