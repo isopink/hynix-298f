@@ -81,8 +81,8 @@
     ]
   },
   "intraday": {
-    "time": "09:30",
-    "pool": 168,
+    "time": "09:45",
+    "pool": 169,
     "analyzed_new": 30,
     "passed": 7,
     "kept_prep": false
@@ -116,11 +116,47 @@
           "risk": false
         }
       ],
-      "price": 31700,
-      "chg": 0.0411,
-      "activity": 10.86,
-      "foreign_today": 1933700000,
-      "inst_today": 0
+      "price": 31600,
+      "chg": 0.0378,
+      "activity": 8.1,
+      "foreign_today": 1927600000,
+      "inst_today": 0,
+      "exchange": null
+    },
+    {
+      "code": "347850",
+      "name": "디앤디파마텍",
+      "close": 39000,
+      "ret5": -0.0898,
+      "ret20": -0.1832,
+      "rsi14": 42.4,
+      "vol20": 0.886,
+      "foreign_net": -3685502750,
+      "inst_net": 2166974500,
+      "score": 0.643,
+      "news": [
+        {
+          "date": "11-04",
+          "title": "디앤디파마텍 주가, 11월 4일 애프터마켓 38,500원 6.10% 하락",
+          "risk": false
+        },
+        {
+          "date": "11-04",
+          "title": "디앤디파마텍 5.37% 하락…바이오 기대와 임상 변동성",
+          "risk": false
+        },
+        {
+          "date": "11-04",
+          "title": "디앤디파마텍 \"DD01 연내 기술이전 정조준…후속 신약도 속도\"",
+          "risk": false
+        }
+      ],
+      "price": 41550,
+      "chg": 0.0695,
+      "activity": 6.92,
+      "foreign_today": 831000000,
+      "inst_today": 0,
+      "exchange": null
     },
     {
       "code": "028050",
@@ -132,7 +168,7 @@
       "vol20": 0.915,
       "foreign_net": 17644093900,
       "inst_net": 14865329300,
-      "score": 0.667,
+      "score": 0.5,
       "news": [
         {
           "date": "11-04",
@@ -150,11 +186,12 @@
           "risk": false
         }
       ],
-      "price": 66000,
-      "chg": 0.0076,
-      "activity": 3.87,
-      "foreign_today": 4488000000,
-      "inst_today": 0
+      "price": 65650,
+      "chg": 0.0023,
+      "activity": 2.86,
+      "foreign_today": 4464200000,
+      "inst_today": 0,
+      "exchange": null
     },
     {
       "code": "034730",
@@ -183,7 +220,8 @@
           "title": "SKT, 부산불꽃축제 통신 품질 관리에 AI 지표 도입",
           "risk": false
         }
-      ]
+      ],
+      "exchange": null
     },
     {
       "code": "003490",
@@ -212,31 +250,8 @@
           "title": "바비킴, 기내 난동 논란 언급 “좌석 트라우마 생겨...아직 대한항공 안...",
           "risk": false
         }
-      ]
-    },
-    {
-      "code": "028260",
-      "name": "삼성물산",
-      "close": 316000,
-      "ret5": -0.0262,
-      "ret20": -0.0801,
-      "rsi14": 49.9,
-      "vol20": 0.711,
-      "foreign_net": -55507389500,
-      "inst_net": 116978730750,
-      "score": 0.562,
-      "news": [
-        {
-          "date": "11-05",
-          "title": "삼성물산, 금성백조와 스마트 주거서비스 협력",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "[똑똑한유통] 무신사, 알레르망, 삼성물산 패션 SSG샵, LF 닥스, 카카오...",
-          "risk": false
-        }
-      ]
+      ],
+      "exchange": null
     },
     {
       "code": "114800",
@@ -255,7 +270,8 @@
           "title": "코스피 급등락 속 인버스 ETF 거래 급증…KODEX 인버스 97%↑",
           "risk": false
         }
-      ]
+      ],
+      "exchange": "ETF"
     },
     {
       "code": "069500",
@@ -284,7 +300,8 @@
           "title": "KODEX 200 3.89% 하락…대형주 조정에 거래대금 2조원 육박",
           "risk": false
         }
-      ]
+      ],
+      "exchange": "ETF"
     }
   ]
 }
