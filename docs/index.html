@@ -885,12 +885,12 @@ window.TRADE_TIMES = ['09:45', '10:45', '11:45', '13:15', '14:15', '15:15'];
     [9, 11, 13, 15].forEach(h => svg.append('text').attr('x', x(new Date(`${day}T${String(h).padStart(2, '0')}:00:00+09:00`))).attr('y', H - 6).attr('text-anchor', h === 9 ? 'start' : 'middle').attr('font-size', 11).attr('fill', C.muted).text(h + ':00'));
     svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(prev)).attr('y2', y(prev)).attr('stroke', '#8a8a8a').attr('stroke-dasharray', '3 4');
     if (KY.length) {
-      svg.append('path').datum(KY).attr('fill', 'none').attr('stroke', '#6a6a6a').attr('stroke-width', 1.5).attr('stroke-linejoin', 'round').attr('d', d3.line().x(d => x(d.t)).y(d => y(d.v)));
+      svg.append('path').datum(KY).attr('fill', 'none').attr('stroke', '#6a6a6a').attr('stroke-width', 1.1).attr('stroke-linejoin', 'round').attr('d', d3.line().x(d => x(d.t)).y(d => y(d.v)));
       const Y = KY[KY.length - 1];
       svg.append('text').attr('x', x(Y.t) + 6).attr('y', y(Y.v)).attr('dy', '.32em').attr('font-size', 11).attr('fill', C.muted).text('전일');
     }
     svg.append('path').datum(KX).attr('fill', gradient(svg, 'gKx', col, .3)).attr('d', d3.area().x(d => x(d.t)).y0(P.t + P.h).y1(d => y(d.v)));
-    svg.append('path').datum(KX).attr('fill', 'none').attr('stroke', col).attr('stroke-width', 2).attr('stroke-linejoin', 'round').attr('d', d3.line().x(d => x(d.t)).y(d => y(d.v)));
+    svg.append('path').datum(KX).attr('fill', 'none').attr('stroke', col).attr('stroke-width', 1.4).attr('stroke-linejoin', 'round').attr('d', d3.line().x(d => x(d.t)).y(d => y(d.v)));
     svg.append('circle').attr('cx', x(L.t)).attr('cy', y(L.v)).attr('r', 4).attr('fill', col).attr('stroke', '#fff').attr('stroke-width', 1.5);
     // 거래량 (전 분보다 오르면 빨강, 내리면 파랑)
     if (V.h) {
@@ -991,7 +991,7 @@ window.TRADE_TIMES = ['09:45', '10:45', '11:45', '13:15', '14:15', '15:15'];
     const gap = d3.area().x(r => x(r.d)).y0(r => y(r.kret)).y1(r => y(r.ret));
     svg.append('path').datum(rows).attr('clip-path', 'url(#cHeroUp)').attr('fill', 'rgba(255,74,54,.28)').attr('d', gap);
     svg.append('path').datum(rows).attr('clip-path', 'url(#cHeroDn)').attr('fill', 'rgba(74,163,212,.28)').attr('d', gap);
-    svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', '#a8a8a8').attr('stroke-width', 1.75).attr('stroke-linejoin', 'round').attr('d', kLine);
+    svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', '#a8a8a8').attr('stroke-width', 1.1).attr('stroke-linejoin', 'round').attr('d', kLine);   // 11-05 1.75 → 1.1 (얇게)
     const p = svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', col).attr('stroke-width', 2.5).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round').attr('d', d3.line().x(r => x(r.d)).y(r => y(r.ret)));
     if (!animated) animate(p);
     const L = rows[rows.length - 1];
@@ -1008,7 +1008,7 @@ window.TRADE_TIMES = ['09:45', '10:45', '11:45', '13:15', '14:15', '15:15'];
       const t1 = g.append('text').attr('x', 20).attr('dy', '.32em').attr('font-size', 12).attr('fill', colHi);
       t1.append('tspan').attr('font-weight', 600).text('피터 린치'); t1.append('tspan').attr('dx', 5).text(pct(L.ret));
       const x2 = 20 + t1.node().getComputedTextLength() + 18;
-      g.append('line').attr('x1', x2).attr('x2', x2 + 14).attr('y1', 0).attr('y2', 0).attr('stroke', '#a8a8a8').attr('stroke-width', 1.75);
+      g.append('line').attr('x1', x2).attr('x2', x2 + 14).attr('y1', 0).attr('y2', 0).attr('stroke', '#a8a8a8').attr('stroke-width', 1.1);
       const t2 = g.append('text').attr('x', x2 + 20).attr('dy', '.32em').attr('font-size', 12).attr('fill', '#9a9a9a');
       t2.append('tspan').attr('font-weight', 600).text('KOSPI'); t2.append('tspan').attr('dx', 5).text(pct(L.kret));
     }
