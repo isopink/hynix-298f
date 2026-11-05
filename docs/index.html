@@ -371,12 +371,6 @@ details.log summary { border-radius: 16px; }
           <div class="chart" id="ch-hero" style="min-height:210px"></div>
         </div>
       </div>
-      <div class="kx-flow">
-        <div class="hd"><span class="eyebrow" id="dec-title">실시간 판단</span><span class="sub" id="dec-asof"></span></div>
-        <div class="dec-head m-hide" id="dec-head"></div>
-        <div class="dec-trade" id="dec-trade" hidden></div>
-        <div class="dec-list" id="dec-list"></div>
-      </div>
     </section>
 
     <section class="card c12">
@@ -404,6 +398,21 @@ details.log summary { border-radius: 16px; }
         <section class="card c6">
           <div class="hd"><span class="eyebrow">보유 종목 손익</span><span class="sub">수수료·세금 반영</span></div>
           <div class="chart" id="ch-pnl" style="min-height:240px"></div>
+        </section>
+      </div>
+    </div>
+  </details>
+
+  <!-- 실시간 판단: 길어서 접는 섹션으로 (11-05). 기본은 접힘 -->
+  <details class="log more" id="dec-box">
+    <summary>Live Decision</summary>
+    <div class="more-body">
+      <div class="grid">
+        <section class="card c12">
+          <div class="hd"><span class="eyebrow" id="dec-title">실시간 판단</span><span class="sub" id="dec-asof"></span></div>
+          <div class="dec-head m-hide" id="dec-head"></div>
+          <div class="dec-trade" id="dec-trade" hidden></div>
+          <div class="dec-list" id="dec-list"></div>
         </section>
       </div>
     </div>
