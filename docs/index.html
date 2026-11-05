@@ -364,9 +364,9 @@ details.log summary { border-radius: 16px; }
       <div class="hero">
         <div class="side">
           <div>
-            <div id="realized"><span class="eyebrow">누적 양도차익</span>
+            <div id="realized"><span class="eyebrow">누적 양도차익 (판 종목만)</span>
             <div class="big won" id="pnl-won">—</div></div>
-            <div class="vs sm"><span class="eyebrow">현재 수익률</span><span id="ret-pct">—</span></div>
+            <div class="vs sm"><span class="eyebrow">전체 손익 (보유분 포함)</span><span id="pnl-all">—</span><span id="ret-pct">—</span></div>
             <div class="vs sm"><span class="eyebrow">KOSPI 대비</span><span id="k-alpha">—</span></div>
           </div>
         </div>
@@ -725,6 +725,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
 
   function fillText() {
     const signed = v => (v > 0 ? '+' : v < 0 ? '−' : '') + won(Math.abs(Math.round(v))) + '원';
+    $('pnl-all').textContent = signed(D.ret * INIT); tone($('pnl-all'), D.ret);   // 현재 자산 − 시작 원금 (양도차익과 달리 보유 종목 평가손익 포함)
     $('ret-pct').textContent = pct(D.ret); tone($('ret-pct'), D.ret);   // 전체 수익률 = 현재 자산 ÷ 시작 원금 − 1
     $('k-alpha').textContent = pct(D.alpha).replace('%', '%p'); tone($('k-alpha'), D.alpha);   // 11-05 차트 배지 대신 여기 숫자로 (누적 수익률 − 누적 KOSPI 수익률)
     const rz = realized(D.trades), pl = rz.net;   // 양도차익 = 판 종목의 (매도금액 − 매도 수수료·세금) − (평단 × 수량 + 매수 수수료)
