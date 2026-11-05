@@ -81,9 +81,9 @@
     ]
   },
   "intraday": {
-    "time": "14:15",
-    "pool": 228,
-    "analyzed_new": 3,
+    "time": "14:30",
+    "pool": 230,
+    "analyzed_new": 13,
     "passed": 20,
     "kept_prep": false
   },
@@ -116,11 +116,41 @@
           "risk": false
         }
       ],
-      "price": 215000,
-      "chg": 0.075,
-      "activity": 3.61,
-      "foreign_today": 32250000000,
-      "inst_today": 59985000000,
+      "price": 214500,
+      "chg": 0.0725,
+      "activity": 3.62,
+      "foreign_today": 36679500000,
+      "inst_today": 77863500000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "128940",
+      "name": "한미약품",
+      "close": 426500,
+      "ret5": 0.1419,
+      "ret20": -0.1938,
+      "rsi14": 51.8,
+      "vol20": 0.742,
+      "foreign_net": -58696055500,
+      "inst_net": 74156028000,
+      "score": 0.95,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "지씨씨엘, 한미약품 비만 신약 ‘에페’ 임상 3상 참여…약동학 검사 맡...",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "지씨씨엘, 한미약품 비만 신약 '에페' 임상 분석 지원…센트럴랩 역량 ...",
+          "risk": false
+        }
+      ],
+      "price": 462500,
+      "chg": 0.0921,
+      "activity": 2.33,
+      "foreign_today": 0,
+      "inst_today": 15725000000,
       "exchange": "KOSPI"
     },
     {
@@ -133,29 +163,29 @@
       "vol20": 0.272,
       "foreign_net": 4222456675,
       "inst_net": 11246144775,
-      "score": 0.892,
+      "score": 0.885,
       "news": [
         {
           "date": "11-05",
-          "title": "카카오뱅크, 대출 성장 정체 벗어나나…4분기 반등이 주가 변수 [주가동...",
+          "title": "카카오뱅크, 9일 '스텔스통장' 출시",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "카카오뱅크, AI가 금융사기 의심 고객에 먼저 전화…이체취소율 54%↑",
+          "title": "카카오, 인적분할 한 달 연기…임시주총 내년 1월로",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "[실적 사용설명서] 카카오게임즈, 영업손실 늘었는데 최종 순손실은 줄...",
+          "title": "\"지방은행 격차 더 벌린다\"...질주하는 카카오뱅크",
           "risk": false
         }
       ],
-      "price": 31925,
-      "chg": 0.0971,
-      "activity": 3.81,
-      "foreign_today": 5171850000,
-      "inst_today": 2426300000,
+      "price": 31950,
+      "chg": 0.0979,
+      "activity": 3.7,
+      "foreign_today": 5207850000,
+      "inst_today": 3035250000,
       "exchange": "KOSPI"
     },
     {
@@ -168,7 +198,7 @@
       "vol20": 0.786,
       "foreign_net": -21046654725,
       "inst_net": 1518542300,
-      "score": 0.838,
+      "score": 0.863,
       "news": [
         {
           "date": "11-05",
@@ -186,11 +216,11 @@
           "risk": false
         }
       ],
-      "price": 48700,
-      "chg": 0.0907,
-      "activity": 5.14,
+      "price": 48400,
+      "chg": 0.084,
+      "activity": 4.98,
       "foreign_today": 0,
-      "inst_today": 2824600000,
+      "inst_today": 3726800000,
       "exchange": "KOSPI"
     },
     {
@@ -203,7 +233,7 @@
       "vol20": 0.301,
       "foreign_net": -56327899900,
       "inst_net": 59042064425,
-      "score": 0.815,
+      "score": 0.777,
       "news": [
         {
           "date": "11-05",
@@ -211,11 +241,11 @@
           "risk": false
         }
       ],
-      "price": 32200,
-      "chg": 0.061,
-      "activity": 1.36,
+      "price": 32000,
+      "chg": 0.0544,
+      "activity": 1.35,
       "foreign_today": 0,
-      "inst_today": 15359400000,
+      "inst_today": 18400000000,
       "exchange": "KOSPI"
     },
     {
@@ -228,7 +258,7 @@
       "vol20": 0.575,
       "foreign_net": 1168053400,
       "inst_net": 89060007775,
-      "score": 0.662,
+      "score": 0.712,
       "news": [
         {
           "date": "11-05",
@@ -248,9 +278,41 @@
       ],
       "price": 30350,
       "chg": 0.0253,
-      "activity": 1.72,
-      "foreign_today": 0,
-      "inst_today": 4218650000,
+      "activity": 1.68,
+      "foreign_today": 940850000,
+      "inst_today": 4886350000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "030200",
+      "name": "KT",
+      "close": 49700,
+      "ret5": 0.0983,
+      "ret20": -0.0368,
+      "rsi14": 53.3,
+      "vol20": 0.333,
+      "foreign_net": -8556535000,
+      "inst_net": 22696941275,
+      "score": 0.612,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "경찰, ‘동덕여대·KT 테러 협박’ 등 4건에 손해배상 청구 소송",
+          "risk": true
+        },
+        {
+          "date": "11-05",
+          "title": "[인터뷰] 하늘길도 AI가 교통정리?⋯KT가 'UAM 에이전트' 만든 이유",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "AI로 고속철도 통신 품질 개선…KT·삼성, 무선망 최적화 기술 실증",
+          "risk": false
+        }
+      ],
+      "foreign_today": 6610100000,
+      "inst_today": 4174800000,
       "exchange": "KOSPI"
     },
     {
@@ -263,7 +325,7 @@
       "vol20": 0.658,
       "foreign_net": -34495865250,
       "inst_net": 64637407000,
-      "score": 0.654,
+      "score": 0.59,
       "news": [
         {
           "date": "11-04",
@@ -281,75 +343,43 @@
           "risk": false
         }
       ],
-      "price": 363000,
-      "chg": 0.0225,
-      "activity": 1.5,
+      "price": 361500,
+      "chg": 0.0183,
+      "activity": 1.51,
       "foreign_today": 0,
-      "inst_today": 6171000000,
+      "inst_today": 6507000000,
       "exchange": "KOSPI"
     },
     {
-      "code": "030200",
-      "name": "KT",
-      "close": 49700,
-      "ret5": 0.0983,
-      "ret20": -0.0368,
-      "rsi14": 53.3,
-      "vol20": 0.333,
-      "foreign_net": -8556535000,
-      "inst_net": 22696941275,
-      "score": 0.608,
+      "code": "271560",
+      "name": "오리온",
+      "close": 116700,
+      "ret5": 0.0466,
+      "ret20": 0.0968,
+      "rsi14": 62.3,
+      "vol20": 0.184,
+      "foreign_net": 178003700,
+      "inst_net": 3751059850,
+      "score": 0.576,
       "news": [
         {
           "date": "11-05",
-          "title": "KT·서울대, 보안 석사과정 협약…2027년 3월 개설 추진",
+          "title": "오리온, 당 줄이고 단백질·식이섬유 높인 '닥터유 단백질바 저당' 출시",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "KT, 기업 AX 도입 고민 해결한다…‘AX 비즈 포털’ 오픈",
+          "title": "당은 낮추고 단백질은 채웠다…오리온, ‘닥터유 단백질바 저당’ 출시",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "KT, 서울대와 융합보안 석사과정 신설…AI·6G 전문가 양성",
+          "title": "오리온, 당 2.4g으로 낮춘 '닥터유 단백질바 저당' 출시",
           "risk": false
         }
       ],
-      "foreign_today": 4920300000,
-      "inst_today": 2982000000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "064400",
-      "name": "LG씨엔에스",
-      "close": 74300,
-      "ret5": -0.0654,
-      "ret20": 0.0068,
-      "rsi14": 52.7,
-      "vol20": 0.827,
-      "foreign_net": -41540468400,
-      "inst_net": 68116800900,
-      "score": 0.569,
-      "news": [
-        {
-          "date": "11-04",
-          "title": "LG씨엔에스 7만3600원 약보합…AI·클라우드 성장성 점검",
-          "risk": false
-        },
-        {
-          "date": "11-04",
-          "title": "LG씨엔에스, 교보증권 주관 4일 기관 IR",
-          "risk": false
-        },
-        {
-          "date": "11-03",
-          "title": "LG씨엔에스 주가, 11월 3일 애프터마켓 73,900원 5.26% 하락",
-          "risk": false
-        }
-      ],
-      "foreign_today": 1783200000,
-      "inst_today": 4309400000,
+      "foreign_today": 0,
+      "inst_today": 1400400000,
       "exchange": "KOSPI"
     },
     {
@@ -362,7 +392,7 @@
       "vol20": 0.915,
       "foreign_net": 17644093900,
       "inst_net": 14865329300,
-      "score": 0.562,
+      "score": 0.568,
       "news": [
         {
           "date": "11-04",
@@ -380,100 +410,11 @@
           "risk": false
         }
       ],
-      "price": 65300,
-      "chg": -0.0031,
-      "activity": 0.95,
-      "foreign_today": 4048600000,
-      "inst_today": 1501900000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "086790",
-      "name": "하나금융지주",
-      "close": 119200,
-      "ret5": 0.032,
-      "ret20": -0.0774,
-      "rsi14": 43.1,
-      "vol20": 0.282,
-      "foreign_net": -34944478850,
-      "inst_net": 38697479450,
-      "score": 0.554,
-      "news": [
-        {
-          "date": "11-04",
-          "title": "하나금융지주, 보통주 188만5706주 6일 소각 예정",
-          "risk": false
-        }
-      ],
-      "price": 121100,
-      "chg": 0.0342,
-      "activity": 0.87,
-      "foreign_today": 0,
-      "inst_today": 6297200000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "323410",
-      "name": "카카오뱅크",
-      "close": 20150,
-      "ret5": 0.0307,
-      "ret20": 0.005,
-      "rsi14": 51.7,
-      "vol20": 0.242,
-      "foreign_net": 9075318265,
-      "inst_net": -1800833610,
-      "score": 0.508,
-      "news": [
-        {
-          "date": "11-05",
-          "title": "카카오뱅크, 대출 성장 정체 벗어나나…4분기 반등이 주가 변수 [주가동...",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "카카오뱅크, AI가 금융사기 의심 고객에 먼저 전화…이체취소율 54%↑",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "카카오뱅크 여신 성장 이끈 '사장님'…다음은 법인금융",
-          "risk": false
-        }
-      ],
-      "foreign_today": 1229150000,
-      "inst_today": 201500000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "000100",
-      "name": "유한양행",
-      "close": 78600,
-      "ret5": 0.0103,
-      "ret20": 0.0288,
-      "rsi14": 50.8,
-      "vol20": 0.543,
-      "foreign_net": -183011000,
-      "inst_net": 1391209200,
-      "score": 0.5,
-      "news": [
-        {
-          "date": "11-05",
-          "title": "군포시, 당정 공업지역 정비사업 본격화…옛 유한양행 부지 복합단지 조...",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "군포시 당정동 옛 유한양행 부지, 도시혁신구역 결정안 조건부 가결",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "옛 유한양행 부지 개발 가시화…군포 정비사업 국토부 심의 통과",
-          "risk": false
-        }
-      ],
-      "foreign_today": 2122200000,
-      "inst_today": 2358000000,
+      "price": 65200,
+      "chg": -0.0046,
+      "activity": 0.94,
+      "foreign_today": 4955200000,
+      "inst_today": 4238000000,
       "exchange": "KOSPI"
     },
     {
@@ -486,12 +427,12 @@
       "vol20": 0.246,
       "foreign_net": -22209841000,
       "inst_net": 23560336700,
-      "score": 0.5,
+      "score": 0.532,
       "news": [
         {
           "date": "11-05",
-          "title": "특허 소송서 형사 고소로…KT&G·이엠텍, 기술 탈취·거래 중단 공방",
-          "risk": true
+          "title": "KT&G 상상마당, 구미 로컬 브랜드 12곳 모은 기획전 개최",
+          "risk": false
         },
         {
           "date": "11-05",
@@ -504,8 +445,97 @@
           "risk": false
         }
       ],
-      "foreign_today": 4852500000,
+      "foreign_today": 6987600000,
       "inst_today": 0,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "064400",
+      "name": "LG씨엔에스",
+      "close": 74300,
+      "ret5": -0.0654,
+      "ret20": 0.0068,
+      "rsi14": 52.7,
+      "vol20": 0.827,
+      "foreign_net": -41540468400,
+      "inst_net": 68116800900,
+      "score": 0.525,
+      "news": [
+        {
+          "date": "11-04",
+          "title": "LG씨엔에스 7만3600원 약보합…AI·클라우드 성장성 점검",
+          "risk": false
+        },
+        {
+          "date": "11-04",
+          "title": "LG씨엔에스, 교보증권 주관 4일 기관 IR",
+          "risk": false
+        },
+        {
+          "date": "11-03",
+          "title": "LG씨엔에스 주가, 11월 3일 애프터마켓 73,900원 5.26% 하락",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 6464100000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "086790",
+      "name": "하나금융지주",
+      "close": 119200,
+      "ret5": 0.032,
+      "ret20": -0.0774,
+      "rsi14": 43.1,
+      "vol20": 0.282,
+      "foreign_net": -34944478850,
+      "inst_net": 38697479450,
+      "score": 0.496,
+      "news": [
+        {
+          "date": "11-04",
+          "title": "하나금융지주, 보통주 188만5706주 6일 소각 예정",
+          "risk": false
+        }
+      ],
+      "price": 120700,
+      "chg": 0.0307,
+      "activity": 0.86,
+      "foreign_today": 0,
+      "inst_today": 7121300000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "323410",
+      "name": "카카오뱅크",
+      "close": 20150,
+      "ret5": 0.0307,
+      "ret20": 0.005,
+      "rsi14": 51.7,
+      "vol20": 0.242,
+      "foreign_net": 9075318265,
+      "inst_net": -1800833610,
+      "score": 0.46,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "카카오뱅크, 9일 '스텔스통장' 출시",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "\"지방은행 격차 더 벌린다\"...질주하는 카카오뱅크",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "“아무 때나 못 봐요”…카카오뱅크가 내놓는 ‘비밀통장’",
+          "risk": false
+        }
+      ],
+      "foreign_today": 1148550000,
+      "inst_today": 241800000,
       "exchange": "KOSPI"
     },
     {
@@ -518,16 +548,16 @@
       "vol20": 0.653,
       "foreign_net": -7113250,
       "inst_net": 14875195900,
-      "score": 0.438,
+      "score": 0.453,
       "news": [
         {
           "date": "11-05",
-          "title": "1953년부터 쌓아온 철강의 역사…현대제철, 70년 기록 디지털로 잇는다",
+          "title": "[위클리오늘] KT&G, 현대제철(11.05)",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "[위클리오늘] KT&G, 현대제철(11.05)",
+          "title": "1953년부터 쌓아온 철강의 역사…현대제철, 70년 기록 디지털로 잇는다",
           "risk": false
         },
         {
@@ -536,83 +566,7 @@
           "risk": false
         }
       ],
-      "foreign_today": 759200000,
-      "inst_today": 0,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "086450",
-      "name": "동국제약",
-      "close": 24500,
-      "ret5": 0.0251,
-      "ret20": 0.1187,
-      "rsi14": 58.6,
-      "vol20": 0.469,
-      "foreign_net": -1971006900,
-      "inst_net": 10321604175,
-      "score": 0.4,
-      "news": [
-        {
-          "date": "11-05",
-          "title": "동국제약, 다이어트 탈모에 '판시딜'...\"살 뺐더니 머리 빠지네\"",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "동국제약, 질염치료제 '지노멜라' 출격...\"블록버스터 도전장\"",
-          "risk": false
-        },
-        {
-          "date": "11-04",
-          "title": "[경력채용] 한미약품, 제일약품, 삼성바이오에피스, 동국제약",
-          "risk": false
-        }
-      ],
-      "foreign_today": 1102500000,
-      "inst_today": 0,
-      "exchange": "KOSDAQ"
-    },
-    {
-      "code": "098120",
-      "name": "마이크로컨텍솔",
-      "close": 55600,
-      "ret5": 0.0258,
-      "ret20": -0.0855,
-      "rsi14": 56.6,
-      "vol20": 1.253,
-      "foreign_net": -7161108700,
-      "inst_net": 7424801750,
-      "score": 0.577,
-      "news": [
-        {
-          "date": "11-03",
-          "title": "[MK 시그널] 반도체 후공정 부품업체 … 마이크로컨텍솔 수익률 1위",
-          "risk": false
-        }
-      ],
-      "foreign_today": 1056400000,
-      "inst_today": 0,
-      "exchange": "KOSDAQ"
-    },
-    {
-      "code": "489790",
-      "name": "한화비전",
-      "close": 47800,
-      "ret5": 0.1817,
-      "ret20": -0.0808,
-      "rsi14": 55.1,
-      "vol20": 1.13,
-      "foreign_net": -20705757000,
-      "inst_net": 27169405150,
-      "score": 0.562,
-      "news": [
-        {
-          "date": "11-04",
-          "title": "AI 카메라 잘 팔린 한화비전… 영업익 80% 증가의 속사정",
-          "risk": false
-        }
-      ],
-      "foreign_today": 1434000000,
+      "foreign_today": 963600000,
       "inst_today": 0,
       "exchange": "KOSPI"
     },
@@ -626,7 +580,7 @@
       "vol20": 1.174,
       "foreign_net": -40252824550,
       "inst_net": 44921083550,
-      "score": 0.546,
+      "score": 0.583,
       "news": [
         {
           "date": "11-05",
@@ -634,12 +588,56 @@
           "risk": false
         }
       ],
-      "price": 206500,
-      "chg": 0.0325,
-      "activity": 2.42,
+      "price": 206000,
+      "chg": 0.03,
+      "activity": 2.36,
       "foreign_today": 0,
-      "inst_today": 1858500000,
+      "inst_today": 3296000000,
       "exchange": "KOSPI"
+    },
+    {
+      "code": "489790",
+      "name": "한화비전",
+      "close": 47800,
+      "ret5": 0.1817,
+      "ret20": -0.0808,
+      "rsi14": 55.1,
+      "vol20": 1.13,
+      "foreign_net": -20705757000,
+      "inst_net": 27169405150,
+      "score": 0.554,
+      "news": [
+        {
+          "date": "11-04",
+          "title": "AI 카메라 잘 팔린 한화비전… 영업익 80% 증가의 속사정",
+          "risk": false
+        }
+      ],
+      "foreign_today": 1768600000,
+      "inst_today": 0,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "098120",
+      "name": "마이크로컨텍솔",
+      "close": 55600,
+      "ret5": 0.0258,
+      "ret20": -0.0855,
+      "rsi14": 56.6,
+      "vol20": 1.253,
+      "foreign_net": -7161108700,
+      "inst_net": 7424801750,
+      "score": 0.554,
+      "news": [
+        {
+          "date": "11-03",
+          "title": "[MK 시그널] 반도체 후공정 부품업체 … 마이크로컨텍솔 수익률 1위",
+          "risk": false
+        }
+      ],
+      "foreign_today": 1223200000,
+      "inst_today": 0,
+      "exchange": "KOSDAQ"
     },
     {
       "code": "114800",
