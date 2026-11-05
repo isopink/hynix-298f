@@ -991,8 +991,8 @@ window.TRADE_TIMES = ['09:45', '10:45', '11:45', '13:15', '14:15', '15:15'];
     const gap = d3.area().x(r => x(r.d)).y0(r => y(r.kret)).y1(r => y(r.ret));
     svg.append('path').datum(rows).attr('clip-path', 'url(#cHeroUp)').attr('fill', 'rgba(255,74,54,.28)').attr('d', gap);
     svg.append('path').datum(rows).attr('clip-path', 'url(#cHeroDn)').attr('fill', 'rgba(74,163,212,.28)').attr('d', gap);
-    svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', '#a8a8a8').attr('stroke-width', 1.1).attr('stroke-linejoin', 'round').attr('d', kLine);   // 11-05 1.75 → 1.1 (얇게)
-    const p = svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', col).attr('stroke-width', 2.5).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round').attr('d', d3.line().x(r => x(r.d)).y(r => y(r.ret)));
+    svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', '#a8a8a8').attr('stroke-width', 0.6).attr('stroke-linejoin', 'round').attr('d', kLine);   // 11-05 1.75 → 0.6 (얇게)
+    const p = svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', col).attr('stroke-width', 0.6).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round').attr('d', d3.line().x(r => x(r.d)).y(r => y(r.ret)));   // 11-05 2.5 → 0.6
     if (!animated) animate(p);
     const L = rows[rows.length - 1];
     svg.append('circle').attr('cx', x(L.d)).attr('cy', y(L.kret)).attr('r', 3.5).attr('fill', '#a8a8a8');   // KOSPI 끝점 (하루치일 땐 선 대신 이 점만 보임)
@@ -1004,11 +1004,11 @@ window.TRADE_TIMES = ['09:45', '10:45', '11:45', '13:15', '14:15', '15:15'];
       labs.forEach(l => { const t = svg.append('text').attr('x', x(L.d) + 12).attr('y', l.y).attr('dy', '.32em').attr('font-size', 12).attr('fill', l.c); t.append('tspan').attr('font-weight', 600).text(l.n); t.append('tspan').attr('dx', 6).text(pct(l.v)); });
     } else {   // 휴대폰: 오른쪽 이름표 대신 위쪽 한 줄 범례
       const g = svg.append('g').attr('transform', `translate(${m.l},12)`);
-      g.append('line').attr('x1', 0).attr('x2', 14).attr('y1', 0).attr('y2', 0).attr('stroke', col).attr('stroke-width', 2.5);
+      g.append('line').attr('x1', 0).attr('x2', 14).attr('y1', 0).attr('y2', 0).attr('stroke', col).attr('stroke-width', 1.5);
       const t1 = g.append('text').attr('x', 20).attr('dy', '.32em').attr('font-size', 12).attr('fill', colHi);
       t1.append('tspan').attr('font-weight', 600).text('피터 린치'); t1.append('tspan').attr('dx', 5).text(pct(L.ret));
       const x2 = 20 + t1.node().getComputedTextLength() + 18;
-      g.append('line').attr('x1', x2).attr('x2', x2 + 14).attr('y1', 0).attr('y2', 0).attr('stroke', '#a8a8a8').attr('stroke-width', 1.1);
+      g.append('line').attr('x1', x2).attr('x2', x2 + 14).attr('y1', 0).attr('y2', 0).attr('stroke', '#a8a8a8').attr('stroke-width', 1.5);
       const t2 = g.append('text').attr('x', x2 + 20).attr('dy', '.32em').attr('font-size', 12).attr('fill', '#9a9a9a');
       t2.append('tspan').attr('font-weight', 600).text('KOSPI'); t2.append('tspan').attr('dx', 5).text(pct(L.kret));
     }
