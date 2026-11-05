@@ -72,8 +72,6 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
 .kv { display: grid; gap: 4px; }
 .hero .vs { display: flex; align-items: baseline; gap: 10px; font-size: 18px; margin-top: 8px; }
 .hero .vs.sm { font-size: 13px; margin-top: 4px; }
-#k-alpha { font-size: 15px; font-weight: 600; padding: 2px 11px; border-radius: 999px; border: 1px solid currentColor; background: rgba(20,20,20,.55); align-self: center; }   /* 11-05 차트 배지와 같은 칩 */
-#k-alpha.up { color: var(--red-hi); border-color: rgba(255,90,74,.6); } #k-alpha.down { color: #4aa3d4; border-color: rgba(74,163,212,.6); }
 .hero .big.won { font-size: clamp(36px, 4.4vw, 60px); letter-spacing: -1.5px; white-space: nowrap; }   /* 누적 손익 (원) */
 .hero .ret-row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 6px 20px; }
 .hero .vs-side { display: grid; gap: 4px; font-size: 18px; padding-bottom: 14px; }
@@ -371,7 +369,6 @@ details.log summary { border-radius: 16px; }
           <div>
             <div id="realized"><span class="eyebrow">누적 양도차익</span>
             <div class="big won" id="pnl-won">—</div></div>
-            <div class="vs"><span class="eyebrow">KOSPI 대비</span><span id="k-alpha">—</span></div>
             <div class="vs sm"><span class="eyebrow">현재 수익률</span><span id="ret-pct">—</span></div>
           </div>
         </div>
@@ -747,7 +744,6 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       + `${row('수수료·세금', '−' + won(Math.round(rz.fees)) + '원')}${row('누적 양도차익', signed(pl), pl >= 0 ? 'up' : 'down')}`;
     $('realized').onpointermove = $('realized').onpointerdown = ev => showTip(ev, rtip);
     $('realized').onpointerleave = hideTip;
-    $('k-alpha').textContent = pct(D.alpha).replace('%', '%p'); tone($('k-alpha'), D.alpha);   // 누적 초과수익 = 누적 수익률 − 누적 KOSPI 수익률
     $('k-week').textContent = pct(D.week); tone($('k-week'), D.week);
     $('k-mdd').textContent = pct(D.mdd); tone($('k-mdd'), D.mdd);
     $('k-kospi').textContent = pct(D.kret); tone($('k-kospi'), D.kret);
