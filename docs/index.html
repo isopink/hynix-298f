@@ -320,6 +320,7 @@ body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-i
 details.log summary { border-radius: 16px; }
 .foot { display: flex; flex-direction: column; align-items: center; gap: 6px; }
 .foot a { color: var(--body); text-decoration: none; display: inline-flex; align-items: center; padding: 4px 6px; vertical-align: -4px; }
+button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:focus-visible { outline: 2px solid #f6e500; outline-offset: 2px; }
 .foot a:hover, .foot a:focus-visible { color: var(--ink); }
 </style>
 </head>
@@ -373,7 +374,7 @@ details.log summary { border-radius: 16px; }
         </div>
       </div>
       <div class="kx-flow">   <!-- 실시간 판단: 누적 수익률 카드 안 아래칸 -->
-        <div class="hd"><span class="eyebrow" id="dec-title">Live Decision</span><span class="sub" id="dec-asof"></span></div>
+        <div class="hd"><h2 class="eyebrow" id="dec-title">Live Decision</h2><span class="sub" id="dec-asof"></span></div>
         <div class="dec-head m-hide" id="dec-head"></div>
         <div class="dec-trade" id="dec-trade" hidden></div>
         <div class="dec-list" id="dec-list"></div>
@@ -383,10 +384,10 @@ details.log summary { border-radius: 16px; }
 
     <!-- 포트폴리오: 접지 않고 늘 펼쳐 둠 (11-05) -->
     <section class="card c12">
-      <div class="hd"><span class="eyebrow">포트폴리오</span><span class="sub">빨간 호 = 국면 상한</span></div>
+      <div class="hd"><h2 class="eyebrow">포트폴리오</h2><span class="sub">빨간 호 = 국면 상한</span></div>
       <div class="chart" id="ch-donut" style="min-height:240px"></div>
       <div class="kx-flow">   <!-- 보유 종목 손익: 포트폴리오 카드 안 아래칸 (11-05) -->
-        <div class="hd"><span class="eyebrow">보유 종목 손익</span><span class="sub">수수료·세금 반영</span></div>
+        <div class="hd"><h3 class="eyebrow">보유 종목 손익</h3><span class="sub">수수료·세금 반영</span></div>
         <div class="chart" id="ch-pnl" style="min-height:200px"></div>
       </div>
     </section>
@@ -402,11 +403,11 @@ details.log summary { border-radius: 16px; }
     <div class="more-body">
       <div class="grid">
         <section class="card c12">
-          <div class="hd"><span class="eyebrow">실시간 KOSPI</span><span class="sub" id="kx-asof"></span></div>
+          <div class="hd"><h2 class="eyebrow">실시간 KOSPI</h2><span class="sub" id="kx-asof"></span></div>
           <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><span class="val" id="kx-val">—</span><span id="kx-chg" style="font-size:14px"></span><span id="kx-rsi" style="font-size:13px;margin-left:auto"></span></div>
           <div class="chart" id="ch-kx" style="min-height:300px"></div>
           <div class="kx-flow m-hide">
-            <div class="hd"><span class="eyebrow">투자자별 순매수</span><span class="sub" id="fl-asof"></span></div>
+            <div class="hd"><h3 class="eyebrow">투자자별 순매수</h3><span class="sub" id="fl-asof"></span></div>
             <div class="fl-kv" id="fl-kv"></div>
             <div class="chart m-hide" id="ch-fl" style="min-height:150px"></div>
           </div>
@@ -419,20 +420,20 @@ details.log summary { border-radius: 16px; }
     <summary>Record</summary>
     <div class="more-body">
       <div class="grid">
-        <section class="card c3 glow-red m-hide"><div class="hd"><span class="eyebrow">이번 주</span><span class="sub">vs 지난 금요일</span></div><div class="val" id="k-week">—</div><div class="chart" id="sp-week"></div></section>
-        <section class="card c3 glow-blue m-hide"><div class="hd"><span class="eyebrow">최대 낙폭</span><span class="sub">고점 대비</span></div><div class="val" id="k-mdd">—</div><div class="chart" id="sp-dd"></div></section>
-        <section class="card c3 m-hide"><div class="hd"><span class="eyebrow">KOSPI</span><span class="sub">11/2 시가 대비</span></div><div class="val" id="k-kospi">—</div><div class="chart" id="sp-kospi"></div></section>
-        <section class="card c3 m-hide"><div class="hd"><span class="eyebrow">승률</span><span class="sub" id="k-win-sub">—</span></div><div class="val" id="k-win">—</div><div class="chart" id="sp-win"></div></section>
+        <section class="card c3 glow-red m-hide"><div class="hd"><h2 class="eyebrow">이번 주</h2><span class="sub">vs 지난 금요일</span></div><div class="val" id="k-week">—</div><div class="chart" id="sp-week"></div></section>
+        <section class="card c3 glow-blue m-hide"><div class="hd"><h2 class="eyebrow">최대 낙폭</h2><span class="sub">고점 대비</span></div><div class="val" id="k-mdd">—</div><div class="chart" id="sp-dd"></div></section>
+        <section class="card c3 m-hide"><div class="hd"><h2 class="eyebrow">KOSPI</h2><span class="sub">11/2 시가 대비</span></div><div class="val" id="k-kospi">—</div><div class="chart" id="sp-kospi"></div></section>
+        <section class="card c3 m-hide"><div class="hd"><h2 class="eyebrow">승률</h2><span class="sub" id="k-win-sub">—</span></div><div class="val" id="k-win">—</div><div class="chart" id="sp-win"></div></section>
         <section class="card c6 m-hide">
-          <div class="hd"><span class="eyebrow">리스크 한도 사용률</span><span class="sub">주문 직전 Hook이 강제, 100%면 차단</span></div>
+          <div class="hd"><h2 class="eyebrow">리스크 한도 사용률</h2><span class="sub">주문 직전 Hook이 강제, 100%면 차단</span></div>
           <div class="lim" id="ch-lim"></div>
         </section>
         <section class="card c6 m-hide">
-          <div class="hd"><span class="eyebrow">일별 초과수익</span><span class="sub">Sigma Six − KOSPI (%p)</span></div>
+          <div class="hd"><h2 class="eyebrow">일별 초과수익</h2><span class="sub">Sigma Six − KOSPI (%p)</span></div>
           <div class="chart" id="ch-alpha" style="min-height:200px"></div>
         </section>
         <section class="card c12">
-          <div class="hd"><span class="eyebrow">수익률 캘린더</span><span class="sub cal-sub">큰 숫자 Sigma Six, 작은 숫자 KOSPI</span></div>
+          <div class="hd"><h2 class="eyebrow">수익률 캘린더</h2><span class="sub cal-sub">큰 숫자 Sigma Six, 작은 숫자 KOSPI</span></div>
           <div class="cal" id="ch-cal"></div>
         </section>
       </div>
@@ -444,11 +445,11 @@ details.log summary { border-radius: 16px; }
     <div class="more-body">
       <div class="grid">
         <section class="card c6 m-hide">
-          <div class="hd"><span class="eyebrow">확신도 vs 수익</span><span class="sub">원 크기 = 매수 금액, 흐린 원 = 보유 중</span></div>
+          <div class="hd"><h2 class="eyebrow">확신도 vs 수익</h2><span class="sub">원 크기 = 매수 금액, 흐린 원 = 보유 중</span></div>
           <div class="chart" id="ch-scatter" style="min-height:240px"></div>
         </section>
         <section class="card c6 m-hide">
-          <div class="hd"><span class="eyebrow">토큰 사용량</span><span class="sub">천 토큰 / 일, 빨간 점 = 실행 실패</span></div>
+          <div class="hd"><h2 class="eyebrow">토큰 사용량</h2><span class="sub">천 토큰 / 일, 빨간 점 = 실행 실패</span></div>
           <div class="chart" id="ch-tokens" style="min-height:160px"></div>
         </section>
       </div>
@@ -469,7 +470,7 @@ details.log summary { border-radius: 16px; }
   <p class="foot"><span>Designed by S.Lee &amp; M.Park</span></p>
 </div>
 
-<div class="tip" id="tip" hidden></div>
+<div class="tip" id="tip" role="tooltip" hidden></div>
 
 <script id="sample-data" type="application/json">{}</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
@@ -506,6 +507,22 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   }, true);
   window.addEventListener('scroll', () => { if (lastPointer !== 'mouse') tip.hidden = true; }, { passive: true });
   const hideTip = () => { if (lastPointer === 'mouse') tip.hidden = true; };      // 터치는 탭한 말풍선을 고정
+  // 툴팁 공통: 마우스 오버 + 터치 + 키보드 (Tab 으로 가면 열림, Enter·Space 다시 열기, Esc 닫기)
+  const kbAt = el => { const r = el.getBoundingClientRect(); return { pageX: r.left + window.scrollX + Math.min(24, r.width / 2), pageY: r.top + window.scrollY }; };
+  function tipTarget(el, html) {
+    el._tip = html;
+    if (el._tipOn) return;   // 다시 그릴 때 내용만 바꿈
+    el._tipOn = true; el.tabIndex = 0; el.setAttribute('role', 'button'); el.setAttribute('aria-describedby', 'tip');
+    el.addEventListener('mousemove', ev => showTip(ev, el._tip));
+    el.addEventListener('mouseleave', hideTip);
+    el.addEventListener('click', ev => showTip(ev, el._tip));
+    el.addEventListener('focus', () => { if (el.matches(':focus-visible')) showTip(kbAt(el), el._tip); });
+    el.addEventListener('blur', () => { tip.hidden = true; });
+    el.addEventListener('keydown', ev => {
+      if (ev.key === 'Escape') tip.hidden = true;
+      else if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); showTip(kbAt(el), el._tip); }
+    });
+  }
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   // 20일 변동성(연율화) 꼬리표. 100% 넘으면 '고변동' (agent params.screen.max_vol20 기준과 같음)
   // 시장 꼬리표 (KOSPI · KOSDAQ · ETF)
@@ -731,8 +748,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     $('pnl-won').classList.toggle('neg', pl < 0); document.querySelector('.hero-card').classList.toggle('neg', pl < 0);   // 손실은 파랑 (국내 증시 관례)
     const rtip = `<div class="t">누적 양도차익 (판 종목만, 매도 ${rz.n}건)</div>${row('매도금액', won(Math.round(rz.sell)) + '원')}${row('취득가액', won(Math.round(rz.cost)) + '원')}`
       + `${row('수수료·세금', '−' + won(Math.round(rz.fees)) + '원')}${row('누적 양도차익', signed(pl), pl >= 0 ? 'up' : 'down')}`;
-    $('realized').onpointermove = $('realized').onpointerdown = ev => showTip(ev, rtip);
-    $('realized').onpointerleave = hideTip;
+    tipTarget($('realized'), rtip);
     $('k-week').textContent = pct(D.week); tone($('k-week'), D.week);
     $('k-mdd').textContent = pct(D.mdd); tone($('k-mdd'), D.mdd);
     $('k-kospi').textContent = pct(D.kret); tone($('k-kospi'), D.kret);
@@ -1190,9 +1206,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
         + row('RSI · 변동성', Math.round(c.rsi14) + ' · ' + Math.round(c.vol20 * 100) + '%')
         + row('외국인 · 기관 5일', eok(c.foreign_net) + ' · ' + eok(c.inst_net))
         + (c.news || []).map(n => `<p class="tp">${n.risk ? '<span class="up">악재</span> ' : ''}${esc(n.date)} ${esc(n.title)}</p>`).join('');
-      el.addEventListener('mousemove', ev => showTip(ev, html));
-      el.addEventListener('mouseleave', hideTip);
-      el.addEventListener('click', ev => showTip(ev, html));
+      tipTarget(el, html);
     });
   }
   // 장중 수급 재선별 표시: 성공이면 '장중 수급 반영', 아니면 '이전 후보' (briefing.json 의 intraday)
@@ -1224,9 +1238,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       + (liveTag() ? `<span class="it">${liveTag()}</span>` : '');
     if (dc.reason) {   // 국면 근거 문장은 화면에서 빼고 툴팁으로
       const rg = head.querySelector('.rg'), html = `<div class="t">${esc(dc.regime)} 국면 근거</div><p class="tp">${esc(dc.reason)}</p>`;
-      rg.addEventListener('mousemove', ev => showTip(ev, html));
-      rg.addEventListener('mouseleave', hideTip);
-      rg.addEventListener('click', ev => showTip(ev, html));
+      tipTarget(rg, html);
     }
     const itEl = head.querySelector('.it'), it = BRIEF.intraday;
     if (itEl) {   // 장중 수급 재선별 결과: 마우스 오버·터치로 상세
@@ -1234,9 +1246,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
         + (it.error ? `<p class="tp">순위 API 실패, 이전 후보로 판단</p><p class="tp">${esc(it.error)}</p>`
           : it.kept_prep ? `<p class="tp">순위 상위 ${it.pool || 0}종목 중 조건 통과 0개, 이전 후보로 판단</p>`
           : row('순위 상위 풀', (it.pool || 0) + '종목') + row('조건 통과', (it.passed || 0) + '종목'));
-      itEl.addEventListener('mousemove', ev => showTip(ev, html));
-      itEl.addEventListener('mouseleave', hideTip);
-      itEl.addEventListener('click', ev => showTip(ev, html));
+      tipTarget(itEl, html);
     }
     const items = dc.items || [];
     if (!items.length) return none(list, '이번 판단에서 검토한 종목이 없어요.');
@@ -1256,9 +1266,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
           + (lc.activity != null ? row('거래 활발도', '평소의 ' + lc.activity.toFixed(1) + '배') : '') : '')
         + `<p class="tp"><span class="up">매수 측</span> ${esc(d.bull)}</p><p class="tp"><span class="down">매도 측</span> ${esc(d.bear)}</p>`
         + `<p class="tp"><b>결정</b> ${esc(d.decision)}</p>` + (d.blocked ? `<p class="tp"><span class="up">Hook 차단</span> ${esc(d.blocked)}</p>` : '');
-      el.addEventListener('mousemove', ev => showTip(ev, html));
-      el.addEventListener('mouseleave', hideTip);
-      el.addEventListener('click', ev => showTip(ev, html));
+      tipTarget(el, html);
     });
   }
 
@@ -1285,9 +1293,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
         c.style.background = `linear-gradient(135deg, rgba(${rgb},${(a + .06).toFixed(3)}), rgba(${rgb},${(a * .35).toFixed(3)}))`;
         c.style.borderColor = `rgba(${rgb},${(.2 + a).toFixed(3)})`;
         const vl = document.createElement('span'); vl.className = 'v ' + (v.day >= 0 ? 'up' : 'down'); vl.textContent = pct(v.day); c.appendChild(vl);
-        c.addEventListener('pointermove', ev => showTip(ev, `<div class="t">${md(dt)}</div>${row('Sigma Six', pct(v.day), v.day >= 0 ? 'up' : 'down')}${row('KOSPI', pct(v.kday))}${row('초과', pct(v.day - v.kday), v.day - v.kday >= 0 ? 'up' : 'down')}`));
-        c.addEventListener('pointerdown', ev => showTip(ev, `<div class="t">${md(dt)}</div>${row('Sigma Six', pct(v.day), v.day >= 0 ? 'up' : 'down')}${row('KOSPI', pct(v.kday))}`));
-        c.addEventListener('pointerleave', hideTip);
+        tipTarget(c, `<div class="t">${md(dt)}</div>${row('Sigma Six', pct(v.day), v.day >= 0 ? 'up' : 'down')}${row('KOSPI', pct(v.kday))}${row('초과', pct(v.day - v.kday), v.day - v.kday >= 0 ? 'up' : 'down')}`);
       }
     }
   }
