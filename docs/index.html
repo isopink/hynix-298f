@@ -990,21 +990,25 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   }
 
   function hero() {
-    const el = $('ch-hero'), { svg, W, H } = svgIn(el, el.clientWidth < 520 ? (D.eq.length > 1 ? 190 : 150) : 280), rows = D.eq;   // 휴대폰에선 낮게, 하루치(점 하나)면 조금 더 낮게
+    const el = $('ch-hero'), { svg, W, H } = svgIn(el, el.clientWidth < 520 ? (D.eq.length > 1 ? 250 : 170) : 280), rows = D.eq;   // 휴대폰에선 낮게, 하루치(점 하나)면 조금 더 낮게
     const narrow = W < 520;
     const neg = D.ret < 0, col = neg ? C.blue : C.red, colHi = neg ? '#7cc4ea' : C.redHi;   // 수익률 양수 빨강 · 음수 파랑
     const lo = Math.min(0, d3.min(rows, r => Math.min(r.ret, r.kret))), hi = Math.max(0, d3.max(rows, r => Math.max(r.ret, r.kret)));
-    const y0 = d3.scaleLinear([lo, hi], [0, 1]).nice(narrow ? 3 : 4), ticks = y0.ticks(narrow ? 3 : 4), tstep = ticks.length > 1 ? ticks[1] - ticks[0] : .01, tf = v => (v > 0 ? '+' : '') + (v * 100).toFixed(tstep < .0099 ? 1 : 0) + '%';
+    const y0 = d3.scaleLinear([lo, hi], [0, 1]).nice(4), ticks = y0.ticks(4), tstep = ticks.length > 1 ? ticks[1] - ticks[0] : .01, tf = v => (v > 0 ? '+' : '') + (v * 100).toFixed(tstep < .0099 ? 1 : 0) + '%';
     const lw = Math.max(textW(svg, '피터 린치 ' + pct(D.ret), 12), textW(svg, 'KOSPI ' + pct(D.kret), 12));
     const m = { t: narrow ? 30 : 10, r: narrow ? 8 : lw + 18, b: 28, l: d3.max(ticks, v => textW(svg, tf(v))) + 10 };   // 휴대폰은 위쪽에 범례 자리
     // 가로축 = 대회 기간 전체 거래일(11/2~11/27, 주말 뺌)을 고정 칸으로. 하루에 한 칸씩 오른쪽으로 채워지고 주말 빈 구간이 없음
     const DAYS = d3.utcDays(toD(START), d3.utcDay.offset(toD(END), 1)).filter(d => d.getUTCDay() % 6 !== 0);
     const di = new Map(DAYS.map((d, i) => [+d, i])), idx = r => di.get(+r.d) ?? d3.bisectLeft(DAYS, r.d);
-    const xi = d3.scaleLinear([0, DAYS.length - 1], [m.l, W - m.r]), x = d => xi(idx({ d }));
+    const Li = idx(rows[rows.length - 1]), N1 = DAYS.length - 1;
+    // 11-05 폰: 지나간 날이 몇 칸 안 되면 왼쪽에 몰려 작게 보임 → 지나간 구간에 폭의 72%, 남은 날은 28%로 눌러 그림 (11/27 깃발은 그대로 끝에)
+    const squeeze = narrow && Li >= 1 && Li < N1 && Li / N1 < .72;
+    const xi = squeeze ? d3.scaleLinear([0, Li, N1], [m.l, m.l + (W - m.r - m.l) * .72, W - m.r]) : d3.scaleLinear([0, N1], [m.l, W - m.r]), x = d => xi(idx({ d }));
     const y = d3.scaleLinear(y0.domain(), [H - m.b, m.t]);
     svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(0)).attr('y2', y(0)).attr('stroke', 'rgba(255,255,255,.16)');   // 11-05 격자는 0%만 (나머지는 축 글씨로)
     svg.append('g').selectAll('text').data(ticks).join('text').attr('x', m.l - 8).attr('y', y).attr('dy', '.32em').attr('text-anchor', 'end').attr('font-size', 11).attr('fill', C.muted).text(tf);
-    const xt = DAYS.filter((d, i) => i % 5 === 0 || i === DAYS.length - 1).map(d => ({ d }));   // 매주 월요일 + 마지막 날
+    const xt = (squeeze ? DAYS.filter((d, i) => i === 0 || i === Li || i === N1 || (i < Li && i % 5 === 0 && Li - i >= 2))   // 폰(눌러 그릴 때): 첫날·오늘·마지막 날 (+ 지나간 월요일)
+      : DAYS.filter((d, i) => i % 5 === 0 || i === N1)).map(d => ({ d }));   // 매주 월요일 + 마지막 날
     svg.append('g').selectAll('text').data(xt).join('text').attr('x', r => x(r.d)).attr('y', H - 8).attr('font-size', 11).attr('fill', C.muted)
       .attr('text-anchor', (r, i) => i === 0 ? 'start' : i === xt.length - 1 ? 'end' : 'middle').text(r => md(r.d));
     // 우리 ↔ KOSPI 격차 색칠: 우리가 위면 빨강(앞섬), 아래면 파랑(뒤짐). KOSPI 선을 기준으로 위·아래를 잘라 칠함
