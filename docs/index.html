@@ -373,7 +373,7 @@ details.log summary { border-radius: 16px; }
         </div>
       </div>
       <div class="kx-flow">   <!-- 실시간 판단: 누적 수익률 카드 안 아래칸 -->
-        <div class="hd"><span class="eyebrow" id="dec-title">실시간 판단</span><span class="sub" id="dec-asof"></span></div>
+        <div class="hd"><span class="eyebrow" id="dec-title">Live Decision</span><span class="sub" id="dec-asof"></span></div>
         <div class="dec-head m-hide" id="dec-head"></div>
         <div class="dec-trade" id="dec-trade" hidden></div>
         <div class="dec-list" id="dec-list"></div>
@@ -518,6 +518,8 @@ window.TRADE_TIMES = ['09:45', '10:45', '11:45', '13:15', '14:15', '15:15'];
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   // 20일 변동성(연율화) 꼬리표. 100% 넘으면 ⚡고변동 (agent params.screen.max_vol20 기준과 같음)
   // 시장 꼬리표 (KOSPI · KOSDAQ · ETF)
+  let EXCH = {};   // 종목코드 → KOSPI · KOSDAQ · ETF 예비값 (docs/data/exchange.json). 에이전트 기록에 exchange 가 있으면 그게 우선
+  fetch('data/exchange.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : {}).then(m => { EXCH = m || {}; if (D) decisionCard(); }).catch(() => {});
   const exTag = x => x ? `<span class="ex">${x === 'KOSPI' ? 'Kospi' : x === 'KOSDAQ' ? 'Kosdaq' : esc(x)}</span>` : '';
   const volTag = v => v == null || isNaN(+v) ? '' : `<span class="vl${+v > 1 ? ' hi' : ''}">${+v > 1 ? '⚡' : ''}변동성 ${Math.round(+v * 100)}%</span>`;
   const row = (a, b, cls) => `<div class="r"><span>${esc(a)}</span><span class="${cls || ''}">${esc(b)}</span></div>`;
@@ -1110,7 +1112,7 @@ window.TRADE_TIMES = ['09:45', '10:45', '11:45', '13:15', '14:15', '15:15'];
     cs.sort((a, b) => (+b.score || 0) - (+a.score || 0));   // 후보 점수 높은 순 (점수 없는 ETF 는 아래로)
     list.innerHTML = cs.map((c, i) => {
       const n = (c.news || [])[0], s = +c.score || 0;
-      return `<div class="dec-row" data-i="${i}"><span class="nm">${esc(c.name)}${exTag(c.exchange)}${volTag(c.vol20)}</span>`
+      return `<div class="dec-row" data-i="${i}"><span class="nm">${esc(c.name)}${exTag(c.exchange || EXCH[c.code])}${volTag(c.vol20)}</span>`
         + `<span class="act ${c.ret5 > 0 ? 'buy' : c.ret5 < 0 ? 'sell' : ''}">${pct(c.ret5, 1)}</span>`
         + `<span class="cf"><i><b class="${s >= .6 ? 'hi' : ''}" style="width:${Math.round(s * 100)}%"></b></i>${s.toFixed(2)}</span>`
         + `<span class="why">${n ? (n.risk ? '<em>⚠</em> ' : '') + esc(n.title) : '최근 뉴스 없음'}</span></div>`;
@@ -1136,7 +1138,7 @@ window.TRADE_TIMES = ['09:45', '10:45', '11:45', '13:15', '14:15', '15:15'];
   function decisionCard() {
     const dc = DECISION, head = $('dec-head'), list = $('dec-list');
     if (!dc.time || (BRIEF.created && BRIEF.created > dc.time)) return briefingCard();
-    $('dec-title').textContent = '실시간 판단';
+    $('dec-title').textContent = 'Live Decision';
     const kst = new Date(Date.now() + 9 * 3600e3), nowHM = kst.toISOString().slice(11, 16), wd = kst.getUTCDay();
     const nextTrade = wd >= 1 && wd <= 5 ? window.TRADE_TIMES.find(t => t > nowHM) : null;
     $('dec-asof').textContent = nextTrade ? '다음 매매 ' + nextTrade : '';   // 판단 시각·갱신 여부는 빼고 다음 매매만
@@ -1178,7 +1180,7 @@ window.TRADE_TIMES = ['09:45', '10:45', '11:45', '13:15', '14:15', '15:15'];
       const cls = d.action.startsWith('매수') ? 'buy' : d.action.startsWith('매도') ? 'sell' : '', c = +d.confidence || 0;   // '매수 예정'(판단 갱신)도 같은 색
       const act = d.qty ? `${d.action} ${won(d.qty)}주` : d.action;
       const vol = d.vol20 ?? ((BRIEF.candidates || []).find(c => c.code === d.code) || {}).vol20;   // 예전 decision.json 엔 vol20 이 없어 후보 자료로 보충
-      const exch = d.exchange ?? ((BRIEF.candidates || []).find(c => c.code === d.code) || {}).exchange;
+      const exch = d.exchange ?? ((BRIEF.candidates || []).find(c => c.code === d.code) || {}).exchange ?? EXCH[d.code];
       return `<div class="dec-row${cls ? '' : ' quiet'}" data-i="${i}"><span class="nm">${esc(d.name)}${exTag(exch)}${volTag(vol)}</span><span class="act ${cls}">${esc(act)}</span>`
         + `<span class="cf"><i><b class="${c >= .6 ? 'hi' : ''}" style="width:${Math.round(c * 100)}%"></b></i>${c.toFixed(2)}</span>`
         + `<span class="why">${d.blocked ? '<em>차단</em> · ' : ''}${esc(d.decision)}</span></div>`;
