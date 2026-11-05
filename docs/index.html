@@ -231,7 +231,14 @@ td.k { color: var(--ink); white-space: nowrap; }
 .lim-row .now small { color: var(--muted); font-size: 12px; margin-left: 4px; }
 .lim-row .track { grid-column: 1 / -1; height: 6px; border-radius: 3px; background: rgba(255,255,255,.07); overflow: hidden; }
 .lim-row .track i { display: block; height: 100%; border-radius: 3px; }
-.live { display: block; width: 100%; max-width: 100%; aspect-ratio: 1000 / 620; margin-top: -4px; }   /* Sigma Network 캔버스. 폰은 코드가 세로로 늘림 */
+/* Sigma Network. PC: 누적 수익률 카드 전체를 덮는 배경(옅게). 폰: 따로 카드 안에 블록으로 */
+.live-bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; border-radius: 16px; pointer-events: none; }
+.live-bg .live { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .55; }
+.live-bg { mask-image: linear-gradient(180deg, #000 0, #000 42%, transparent 68%); -webkit-mask-image: linear-gradient(180deg, #000 0, #000 42%, transparent 68%); }   /* 아래쪽 판단 목록 글자 뒤에서는 사라짐 */
+.hero-card > :not(.live-bg) { position: relative; z-index: 1; }
+#live-slot .live { display: block; width: 100%; max-width: 100%; aspect-ratio: 1000 / 961; }
+#live-card { display: none; }
+@media (max-width: 640px) { .live-bg { display: none; } #live-card { display: flex; } }
 .kx-flow { margin-top: 14px; padding-top: 14px; border-top: 1px dashed rgba(255,255,255,.08); }   /* 카드 안 아래칸 (누적 수익률 → 실시간 판단, 실시간 KOSPI → 순매수) */
 .kx-flow .hd { margin-bottom: 8px; }
 .kx-flow .fl-kv .v { font-size: 17px; }
@@ -364,6 +371,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
 
   <div class="grid">
     <section class="card c12 hero-card">
+      <div class="live-bg" id="live-bg"><canvas id="ch-live" class="live" role="img" aria-label="시스템 구성 요소를 뉴런 망으로 그린 그림. 지금 일하는 부분이 빨강으로 켜지고 데이터가 선을 따라 흐릅니다."></canvas></div>   <!-- Sigma Network: PC 에선 이 카드 배경 (11-05) -->
       <div class="st-line" id="st-line"></div>
       <div class="hero">
         <div class="side">
@@ -387,10 +395,10 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
       </div>
     </section>
 
-    <!-- Sigma Network: 시스템 전체를 뉴런 망으로, 일하는 부분만 빨강 (11-05) -->
-    <section class="card c12">
+    <!-- Sigma Network: 폰에서는 따로 카드로 (PC 에선 비어 있음, 캔버스는 누적 수익률 카드 배경) (11-05) -->
+    <section class="card c12 m-only" id="live-card">
       <div class="hd"><h2 class="eyebrow">Sigma Network</h2></div>
-      <canvas id="ch-live" class="live" role="img" aria-label="시스템 구성 요소를 뉴런 망으로 그린 그림. 지금 일하는 부분이 빨강으로 켜지고 데이터가 선을 따라 흐릅니다."></canvas>
+      <div id="live-slot"></div>
     </section>
 
     <!-- 포트폴리오: 접지 않고 늘 펼쳐 둠 (11-05) -->
@@ -1651,7 +1659,8 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     function fit() {
       const r = cv.getBoundingClientRect(); if (r.width < 1) return;
       const ph = r.width < 560, dpr = Math.min(ph ? 3 : 2, devicePixelRatio || 1);   // 폰은 화면 픽셀 그대로 그려 선명하게 (캔버스가 작아 비용 적음)
-      if (ph !== phone) { phone = ph; lw = ph ? 1.6 : 1; ys = ph ? 1.55 : 1; H = Math.round(620 * ys); cv.style.aspectRatio = `${W} / ${H}`; build(); }
+      const h = Math.max(300, Math.min(1400, Math.round(W * r.height / r.width)));   // 상자 비율대로 세로 길이 (1000 기준)
+      if (ph !== phone || Math.abs(h - H) > 8) { phone = ph; lw = ph ? 1.6 : 1; H = h; ys = H / 620; build(); }
       const cw = Math.round(r.width * dpr), ch = Math.round(cw * H / W);
       if (cw === cv.width && ch === cv.height && bg.width === cw) return;
       cv.width = cw; cv.height = ch; scale = cw / W;
@@ -1667,6 +1676,9 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       Object.values(N).forEach(n => { g.globalAlpha = .42; g.drawImage(SP.w, n.x - n.size / 2, n.y - n.size / 2, n.size, n.size); });
       g.globalAlpha = 1; g.globalCompositeOperation = 'source-over';
     }
+    const bgBox = $('live-bg'), slot = $('live-slot'), mq = matchMedia('(max-width: 640px)');
+    const place = () => { const want = mq.matches ? slot : bgBox; if (want && cv.parentNode !== want) { want.appendChild(cv); fit(); } };
+    place(); mq.addEventListener('change', place);
     fit(); addEventListener('resize', fit);
     if (window.ResizeObserver) new ResizeObserver(fit).observe(cv);
 
@@ -1702,9 +1714,8 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       ctx.globalCompositeOperation = 'source-over'; ctx.textAlign = 'center';
       const fs = Math.max(11 / scale, 11), ln = n => Math.min(fs * 1.25, fs + n.deg * .15);
       Object.values(N).forEach(n => {
-        const ago = n.lit == null ? Infinity : clock - n.lit;   // 이름은 직접 켜진 지점만, 꺼진 뒤 2.5초 더 보임
-        if (!(n.on > 0) && ago > 2500) return;
-        const f = ln(n); ctx.globalAlpha = n.on > 0 ? Math.min(1, n.glow * 1.4) : Math.min(1, (2500 - ago) / 800);
+        if (!(n.on > 0)) return;   // 이름은 켜져 있는 동안만, 빛과 같은 리듬으로 깜빡임
+        const f = ln(n); ctx.globalAlpha = Math.min(1, n.glow * 1.4) * (.55 + .45 * blink);
         ctx.font = `500 ${f}px ${FONT}`; ctx.lineWidth = 4; ctx.lineJoin = 'round'; ctx.strokeStyle = 'rgba(10,10,12,.94)';
         const y = n.y + n.size * .42 + f * .8;
         ctx.strokeText(n.t, n.x, y); ctx.fillStyle = '#ffd2cc'; ctx.fillText(n.t, n.x, y);
@@ -1737,7 +1748,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
         if (t.dead) return;
         if (Array.isArray(x)) await Promise.all(x.map(y => play(t, [y])));
         else if (x.includes('-')) await flow(t, x);
-        else { const [id, ms] = x.split(':'); await hold(t, id, (+ms || 400) * 2.2); }   // 지점이 켜져 있는 시간 (11-05 2.2배로)
+        else { const [id, ms] = x.split(':'); await hold(t, id, (+ms || 400) * 3.5); }   // 지점이 켜져 있는 시간 (11-05 3.5배로)
       }
     }
     const T = () => ({ dead: false });
