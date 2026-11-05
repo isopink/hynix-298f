@@ -24,6 +24,7 @@ P["decision"]["buy_min_confidence"] = 0.60          # 기준값은 자동 조정
 P["decision"]["sell_min_confidence"] = 0.60
 P["decision"]["min_weight"], P["decision"]["max_weight"] = 0.10, 0.20   # 수량 계산 테스트는 예전 크기(10~20%)로 고정
 P["regime_cap"]["하락"] = 0.50                    # 국면 상한 테스트는 하락 50% 기준으로 고정
+P["decision"]["probe"] = {**P["decision"].get("probe", {}), "enabled": False}   # 기존 테스트는 소액 매수 구간 없이 (아래 전용 테스트에서 켬)
 
 
 def acc(cash=50_000_000, holdings=()):
@@ -494,6 +495,23 @@ def test_sync_catch_up_once_per_slot_and_code():
         assert not sync.catch_up(datetime(2026, 11, 5, 15, 30, tzinfo=C.KST))   # 장 끝난 뒤엔 안 함
     finally:
         C.missed_trade = orig
+
+
+def test_probe_band_buys_small():
+    p = {**P, "decision": {**P["decision"], "min_weight": 0.05, "max_weight": 0.10,
+                           "probe": {"enabled": True, "band": 0.04, "weight": 0.025}}}   # 기준 0.60 → 소액 매수 0.56~0.60
+    assert C.probe_floor(p) == 0.56
+    assert sizing.target_weight(0.58, p, R) == 0.025 and sizing.target_weight(0.55, p, R) == 0
+    assert sizing.target_weight(0.60, p, R) == 0.05                 # 기준 이상은 원래대로
+    C.journal("regime", regime="상승", cap=P["regime_cap"]["상승"])
+    plan = sizing.plan_buy("005930", 0.58, 10_000, acc(), p, R)
+    assert plan["probe"] and plan["qty"] * 10_000 <= 50_000_000 * 0.025 + 10_000
+    ok = [x for x, _ in risk.check({"code": "005930", "side": "매수", "qty": plan["qty"], "confidence": 0.58}, acc(), 10_000, p, R)]
+    assert "확신도" not in ok and "수량 계산 초과" not in ok
+    big = [x for x, _ in risk.check({"code": "005930", "side": "매수", "qty": plan["qty"] * 3, "confidence": 0.58}, acc(), 10_000, p, R)]
+    assert "수량 계산 초과" in big                                  # 소액 구간인데 크게 사려 하면 Hook 이 막음
+    low = [x for x, _ in risk.check({"code": "005930", "side": "매수", "qty": 10, "confidence": 0.55}, acc(), 10_000, p, R)]
+    assert "확신도" in low
 
 
 if __name__ == "__main__":

@@ -47,8 +47,8 @@ def check(order, account, price, p=None, r=None):
     if side == "매수":
         if run_mode == "exit":
             bad.append(("실행 종류", "손절·익절 실행에서는 매수 금지"))
-        if conf < C.buy_threshold(p):
-            bad.append(("확신도", f"{conf:.2f} < 매수 기준 {C.buy_threshold(p):.2f}"))
+        if conf < C.probe_floor(p) - 1e-9:   # 매수 기준 바로 아래는 소액 매수 구간 (크기는 수량 계산이 작게 잡음)
+            bad.append(("확신도", f"{conf:.2f} < 매수 기준 {C.buy_threshold(p):.2f} (소액 매수 {C.probe_floor(p):.2f})"))
         chg, lim = order.get("today_change"), r.get("max_buy_day_change", 0.10)
         if chg is not None and chg >= lim:
             bad.append(("추격 매수", f"오늘 {chg:+.1%} ≥ +{lim:.0%}, 급등한 날은 매수 금지"))

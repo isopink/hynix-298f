@@ -136,6 +136,13 @@ def fill_count():
     return sum(1 for r in read_jsonl(JOURNAL) if r["kind"] == "fill")
 
 
+def probe_floor(p=None):
+    """소액 매수 구간의 아래 끝. 구간이 꺼져 있으면 매수 기준과 같음."""
+    p = p or params()
+    pr = p["decision"].get("probe") or {}
+    return round(buy_threshold(p) - pr["band"], 3) if pr.get("enabled") else buy_threshold(p)
+
+
 def buy_threshold(p=None):
     """매수 확신도 기준. 최소 거래 횟수가 모자라면 정해진 주차부터 조금 낮춤."""
     p = p or params()

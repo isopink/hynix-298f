@@ -15,8 +15,9 @@ def target_weight(conf, p, r, top=None):
     d = p["decision"]
     lo, hi = C.buy_threshold(p), d["full_size_confidence"]
     top = min(top if top is not None else d.get("max_weight", r["max_weight_per_stock"]), r["max_weight_per_stock"])
-    if conf < lo:
-        return 0.0
+    if conf < lo:   # 매수 기준 바로 아래(소액 매수 구간)면 작게만, 그보다 낮으면 0
+        pr = d.get("probe") or {}
+        return min(pr["weight"], top) if pr.get("enabled") and conf >= C.probe_floor(p) - 1e-9 else 0.0
     if conf >= hi:
         return top
     return d["min_weight"] + (conf - lo) / (hi - lo) * (top - d["min_weight"])
@@ -76,6 +77,7 @@ def plan_buy(code, conf, price, account, p=None, r=None, regime=None):
         "max_days": max_days,
         "high_vol": bool(hv), "inverse": bool(inv), "index": bool(C.index_etf(code, p)),
         "buy_threshold": C.buy_threshold(p),
+        "probe": C.probe_floor(p) - 1e-9 <= conf < C.buy_threshold(p),   # 소액 매수 구간이면 True
     }
 
 
