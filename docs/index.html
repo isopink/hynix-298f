@@ -367,9 +367,9 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
       <div class="hero">
         <div class="side">
           <div>
-            <div id="realized"><span class="eyebrow">누적 양도차익 (판 종목만)</span>
+            <div id="realized"><span class="eyebrow">총 손익</span>
             <div class="big won" id="pnl-won">—</div></div>
-            <div class="vs sm"><span class="eyebrow">전체 손익 (보유분 포함)</span><span id="pnl-all">—</span><span id="ret-pct">—</span></div>
+            <div class="vs sm"><span class="eyebrow">현재 수익률</span><span id="ret-pct">—</span></div>
             <div class="vs sm"><span class="eyebrow">KOSPI 대비</span><span id="k-alpha">—</span></div>
           </div>
         </div>
@@ -754,14 +754,12 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
 
   function fillText() {
     const signed = v => (v > 0 ? '+' : v < 0 ? '−' : '') + won(Math.abs(Math.round(v))) + '원';
-    $('pnl-all').textContent = signed(D.ret * INIT); tone($('pnl-all'), D.ret);   // 현재 자산 − 시작 원금 (양도차익과 달리 보유 종목 평가손익 포함)
     $('ret-pct').textContent = pct(D.ret); tone($('ret-pct'), D.ret);   // 전체 수익률 = 현재 자산 ÷ 시작 원금 − 1
     $('k-alpha').textContent = pct(D.alpha).replace('%', '%p'); tone($('k-alpha'), D.alpha);   // 11-05 차트 배지 대신 여기 숫자로 (누적 수익률 − 누적 KOSPI 수익률)
-    const rz = realized(D.trades), pl = rz.net;   // 양도차익 = 판 종목의 (매도금액 − 매도 수수료·세금) − (평단 × 수량 + 매수 수수료)
-    $('pnl-won').textContent = rz.n ? signed(pl) : '0원';
-    $('pnl-won').classList.toggle('neg', pl < 0); document.querySelector('.hero-card').classList.toggle('neg', pl < 0);   // 손실은 파랑 (국내 증시 관례)
-    const rtip = `<div class="t">누적 양도차익 (판 종목만, 매도 ${rz.n}건)</div>${row('매도금액', won(Math.round(rz.sell)) + '원')}${row('취득가액', won(Math.round(rz.cost)) + '원')}`
-      + `${row('수수료·세금', '−' + won(Math.round(rz.fees)) + '원')}${row('누적 양도차익', signed(pl), pl >= 0 ? 'up' : 'down')}`;
+    const rz = realized(D.trades), pl = rz.net, total = D.ret * INIT;   // 총 손익 = 현재 자산 − 시작 원금 (11-05 S.Lee 양도차익 대신). 양도차익 = 판 종목의 (매도금액 − 매도 수수료·세금) − (평단 × 수량 + 매수 수수료)
+    $('pnl-won').textContent = signed(total);
+    $('pnl-won').classList.toggle('neg', total < 0); document.querySelector('.hero-card').classList.toggle('neg', total < 0);   // 손실은 파랑 (국내 증시 관례)
+    const rtip = `<div class="t">총 손익 (현재 자산 − 시작 원금)</div>${row(`판 종목 양도차익 (매도 ${rz.n}건)`, signed(pl), pl >= 0 ? 'up' : 'down')}${row('보유 종목 평가손익', signed(total - pl), total - pl >= 0 ? 'up' : 'down')}${row('총 손익', signed(total), total >= 0 ? 'up' : 'down')}`;
     tipTarget($('realized'), rtip);
     $('k-week').textContent = pct(D.week); tone($('k-week'), D.week);
     $('k-mdd').textContent = pct(D.mdd); tone($('k-mdd'), D.mdd);
