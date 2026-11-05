@@ -1610,7 +1610,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       branch(ex, ey, a2 + (rnd() - .5) * .5, len * (.82 + rnd() * .2), depth - 1, out, w * .76);
       if (rnd() < .55) branch(ex, ey, a2 + (rnd() < .5 ? -1 : 1) * (.45 + rnd() * .7), len * (.6 + rnd() * .3), depth - 1, out, w * .6);
     }
-    const drift = o => { o.ph1 = rnd() * 6.28; o.ph2 = rnd() * 6.28; o.p1 = 5000 + rnd() * 5000; o.p2 = 6000 + rnd() * 6000; };
+    const drift = o => { o.w = [0, 1, 2].map(i => ({ px: rnd() * 6.28, py: rnd() * 6.28, fx: 6.283 / ((2500 + rnd() * 9000) * (1 + i * .6)), fy: 6.283 / ((2500 + rnd() * 9000) * (1 + i * .6)), a: (.35 + rnd() * .9) / (1 + i * .5) })); o.amp *= .6 + rnd() * 1.1; };
     function build() {   // 같은 seed 로 다시 만들어 폰·PC 전환에도 모양이 같음
       seed = 7;
       const prev = N;
@@ -1662,7 +1662,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       const R = Math.max(4, ...o.den.map(b => Math.hypot(b.ex, b.ey))) + 3, px = Math.ceil(R * 2 * scale);
       const c = document.createElement('canvas'); c.width = c.height = px;
       const g = c.getContext('2d'); g.setTransform(scale, 0, 0, scale, R * scale, R * scale); g.lineCap = 'round';
-      o.den.forEach(b => { g.strokeStyle = `rgba(225,222,222,${Math.min(.16, (.025 + .08 * b.w) * f)})`; g.lineWidth = b.w * lw; g.beginPath(); g.moveTo(b.x, b.y); g.quadraticCurveTo(b.cx, b.cy, b.ex, b.ey); g.stroke(); });
+      o.den.forEach(b => { g.strokeStyle = `rgba(230,228,228,${Math.min(.24, (.04 + .11 * b.w) * f)})`; g.lineWidth = b.w * lw; g.beginPath(); g.moveTo(b.x, b.y); g.quadraticCurveTo(b.cx, b.cy, b.ex, b.ey); g.stroke(); });
       o.img = c; o.R = R;
     }
     function fit() {
@@ -1685,17 +1685,18 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const stamp = (x, y, im, size, alpha) => { ctx.globalAlpha = alpha; ctx.drawImage(im, x - size / 2, y - size / 2, size, size); };
     function draw(dt) {
       if (!ready) { fit(); if (!ready) return; }
-      const sec = dt / 1000, blink = .62 + .38 * Math.sin(clock / 130);
+      const sec = dt / 1000;
+      const pop = n => n.fl == null ? 1 : 1 + 1.1 * Math.exp(-(clock - n.fl) / 450);   // 켜진 순간 번쩍, 약 1초에 걸쳐 가라앉음
       // 지점이 천천히 떠다님 (랜덤 위상, 6~12초 주기)
-      const move = o => { o.x = o.x0 + Math.sin(clock / o.p1 * 6.283 + o.ph1) * o.amp; o.y = o.y0 + Math.cos(clock / o.p2 * 6.283 + o.ph2) * o.amp; };
+      const move = o => { let dx = 0, dy = 0; for (const w of o.w) { dx += Math.sin(clock * w.fx + w.px) * w.a; dy += Math.sin(clock * w.fy + w.py) * w.a; } o.x = o.x0 + dx * o.amp; o.y = o.y0 + dy * o.amp; };
       Object.values(N).forEach(move); dots.forEach(move);
       ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1; ctx.clearRect(0, 0, cv.width, cv.height);
       ctx.setTransform(scale, 0, 0, scale, 0, 0); ctx.globalCompositeOperation = 'lighter'; ctx.lineCap = 'round';
       // 쉬는 망: 경로·그물·잔가지·지점 빛
-      ctx.strokeStyle = 'rgba(200,200,206,.1)'; E.forEach(e => e.strands.forEach(s => { ctx.lineWidth = s.w * lw; curve(ctx, s); }));
-      mesh.forEach(m => { ctx.lineWidth = (m.w ? .9 : .7) * lw; ctx.strokeStyle = m.w ? 'rgba(225,222,222,.06)' : 'rgba(225,222,222,.04)'; curve(ctx, m); });
+      ctx.strokeStyle = 'rgba(210,210,216,.15)'; E.forEach(e => e.strands.forEach(s => { ctx.lineWidth = s.w * lw; curve(ctx, s); }));
+      mesh.forEach(m => { ctx.lineWidth = (m.w ? .9 : .7) * lw; ctx.strokeStyle = m.w ? 'rgba(230,228,228,.09)' : 'rgba(230,228,228,.06)'; curve(ctx, m); });
       ctx.globalAlpha = 1; dots.forEach(d => ctx.drawImage(d.img, d.x - d.R, d.y - d.R, d.R * 2, d.R * 2)); Object.values(N).forEach(n => ctx.drawImage(n.img, n.x - n.R, n.y - n.R, n.R * 2, n.R * 2));
-      dots.forEach(d => stamp(d.x, d.y, SP.n, 12, .14)); Object.values(N).forEach(n => stamp(n.x, n.y, SP.w, n.size, .28));
+      dots.forEach(d => stamp(d.x, d.y, SP.n, 12, .22)); Object.values(N).forEach(n => stamp(n.x, n.y, SP.w, n.size, .4));
       E.forEach(e => {
         e.glow += ((e.on > 0 ? 1 : 0) - e.glow) * Math.min(1, sec * 6);
         if (e.glow < .02) return;
@@ -1707,20 +1708,21 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
         ctx.globalAlpha = p.c ? .25 : .55; ctx.strokeStyle = p.c ? 'rgb(205,205,210)' : 'rgb(255,120,104)'; ctx.lineWidth = 1.2 * lw; ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(x, y); ctx.stroke();
         stamp(x, y, SP[p.c || 'r'], p.size, p.c ? .5 : .95);
       }
-      Object.values(N).forEach(n => { if (!(n.glow > .05)) return; ctx.globalAlpha = 1; ctx.strokeStyle = `rgba(255,90,74,${.8 * n.glow * blink})`; n.den.forEach(b => { ctx.lineWidth = (b.w + .2) * lw; ctx.beginPath(); ctx.moveTo(n.x + b.x, n.y + b.y); ctx.quadraticCurveTo(n.x + b.cx, n.y + b.cy, n.x + b.ex, n.y + b.ey); ctx.stroke(); }); });
+      Object.values(N).forEach(n => { if (!(n.glow > .05)) return; ctx.globalAlpha = 1; ctx.strokeStyle = `rgba(255,90,74,${Math.min(1, .8 * n.glow * pop(n))})`; n.den.forEach(b => { ctx.lineWidth = (b.w + .2) * lw; ctx.beginPath(); ctx.moveTo(n.x + b.x, n.y + b.y); ctx.quadraticCurveTo(n.x + b.cx, n.y + b.cy, n.x + b.ex, n.y + b.ey); ctx.stroke(); }); });
       if (dt && clock > nextSpark) { nextSpark = clock + 900 + rnd() * 1400; bursts.push({ s: mesh[Math.floor(rnd() * mesh.length)], t: 0, life: 1600, size: 7, c: 'n' }); }
       Object.values(N).forEach(n => {
         const target = (n.on || 0) > 0 ? 1 : [...n.nb].some(o => o.on > 0) ? .35 : [...n.near].some(o => o.on > 0) ? .15 : 0;
         n.glow += (target - n.glow) * Math.min(1, sec * (target > n.glow ? 8 : 2.5));
+        if (n.on > 0 && !(n.lit > clock - 200)) n.fl = clock;   // 새로 켜질 때만 번쩍
         if (n.on > 0) n.lit = clock;
-        if (n.glow > .02) { stamp(n.x, n.y, SP.w, n.size, n.glow * .6); stamp(n.x, n.y, SP.r, n.size * 3.2, n.glow * blink); stamp(n.x, n.y, SP.r, n.size * 1.4, n.glow); stamp(n.x, n.y, SP.r, n.size * .7, n.glow); }
+        if (n.glow > .02) { stamp(n.x, n.y, SP.w, n.size, n.glow * .6); stamp(n.x, n.y, SP.r, n.size * 3.2 * (.8 + .2 * pop(n)), Math.min(1, n.glow * pop(n))); stamp(n.x, n.y, SP.r, n.size * 1.4, n.glow); stamp(n.x, n.y, SP.r, n.size * .7, n.glow); }
       });
       // 이름은 켜졌을 때만. 폰에서도 읽히게 화면 기준 12px 이상
       ctx.globalCompositeOperation = 'source-over'; ctx.textAlign = 'center';
       const fs = 12 * W / cssW, ln = n => fs * (1 + Math.min(.2, n.deg * .02));   // 화면 기준 12px, 연결 많으면 조금 크게
       Object.values(N).forEach(n => {
-        if (!(n.on > 0)) return;   // 이름은 켜져 있는 동안만, 빛과 같은 리듬으로 깜빡임
-        const f = ln(n); ctx.globalAlpha = Math.min(1, n.glow * 1.4) * (.55 + .45 * blink);
+        if (!(n.on > 0)) return;   // 이름은 켜져 있는 동안만
+        const f = ln(n); ctx.globalAlpha = Math.min(1, n.glow * 1.4);
         ctx.font = `500 ${f}px ${FONT}`; ctx.lineWidth = 4; ctx.lineJoin = 'round'; ctx.strokeStyle = 'rgba(10,10,12,.94)';
         const y = n.y + n.size * .42 + f * .8;
         ctx.strokeText(n.t, n.x, y); ctx.fillStyle = '#ffd2cc'; ctx.fillText(n.t, n.x, y);
@@ -1736,7 +1738,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       waiters.forEach(w => { if (clock >= w.at || w.track.dead) { waiters.delete(w); w.done(); } });
       if (dt) {
         const t0 = performance.now(); draw(dt); cost = cost * .9 + (performance.now() - t0) * .1;
-        if (cost > 40 && dprCap > 1.5) { dprCap -= .5; cost = 0; ready = false; fit(); }   // 한 프레임이 40ms 를 넘기면 해상도를 한 단계 낮춤
+        if (cost > 60 && dprCap > 2) { dprCap -= .5; cost = 0; ready = false; fit(); }   // 한 프레임이 60ms 를 넘기면 해상도를 한 단계 낮춤 (2배 밑으로는 안 내림)
       }
     })(last);
     if (window.IntersectionObserver) new IntersectionObserver(es => { visible = es[0].isIntersecting; }).observe(cv);
