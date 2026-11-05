@@ -1160,9 +1160,7 @@ window.TRADE_TIMES = ['09:45', '10:45', '11:45', '13:15', '14:15', '15:15'];
     const dc = DECISION, head = $('dec-head'), list = $('dec-list');
     if (!dc.time || (BRIEF.created && BRIEF.created > dc.time)) return briefingCard();
     $('dec-title').textContent = 'Live Decision';
-    const kst = new Date(Date.now() + 9 * 3600e3), nowHM = kst.toISOString().slice(11, 16), wd = kst.getUTCDay();
-    const nextTrade = wd >= 1 && wd <= 5 ? window.TRADE_TIMES.find(t => t > nowHM) : null;
-    $('dec-asof').textContent = nextTrade ? '다음 매매 ' + nextTrade : '';   // 판단 시각·갱신 여부는 빼고 다음 매매만
+    $('dec-asof').textContent = md(toD(dc.time)) + ' ' + dc.time.slice(11, 16);   // 이 판단을 한 시각 (11-05 다음 매매 시각 대신)
     const lt = dc.last_trade, tr = $('dec-trade');   // 오늘 마지막 매매 회차 결과: 샀다 / 팔았다 / 막혔다 / 관망
     tr.hidden = !lt;
     if (lt) {
