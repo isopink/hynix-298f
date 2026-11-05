@@ -1620,15 +1620,15 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       });
       Object.values(N).forEach(n => {
         n.den = [];
-        for (let i = 0, c = 4 + n.deg; i < c; i++) { let ang; do { ang = rnd() * Math.PI * 2; } while (ang > .6 && ang < 2.55); branch(n.x, n.y, ang, 16 + n.deg * 1.5 + rnd() * 16, Math.min(phone ? 5 : 6, 3 + Math.ceil(n.deg / 2)), n.den, Math.min(2, .9 + n.deg * .14)); }
+        for (let i = 0, c = 6 + n.deg; i < c; i++) { let ang; do { ang = rnd() * Math.PI * 2; } while (ang > .6 && ang < 2.55); branch(n.x, n.y, ang, 20 + n.deg * 1.5 + rnd() * 20, Math.min(phone ? 5 : 6, 3 + Math.ceil(n.deg / 2)), n.den, Math.min(2, .9 + n.deg * .14)); }
       });
       dots = [];
       let guard = 0;
-      while (dots.length < (phone ? 44 : 30) && guard++ < 4000) {   // 빈 자리와 모서리까지 작은 뉴런으로 채움
+      while (dots.length < (phone ? 90 : 60) && guard++ < 8000) {   // 빈 자리와 모서리까지 작은 뉴런으로 채움
         const x = -20 + rnd() * (W + 40), y = -20 + rnd() * (H + 40);
-        if (Object.values(N).every(n => Math.hypot(n.x - x, n.y - y) > 42) && dots.every(d => Math.hypot(d.x - x, d.y - y) > 40)) dots.push({ x, y, den: [] });
+        if (Object.values(N).every(n => Math.hypot(n.x - x, n.y - y) > 34) && dots.every(d => Math.hypot(d.x - x, d.y - y) > 30)) dots.push({ x, y, den: [] });
       }
-      dots.forEach(d => { for (let i = 0; i < 5; i++) branch(d.x, d.y, rnd() * Math.PI * 2, 14 + rnd() * 14, 4, d.den, .9); });
+      dots.forEach(d => { for (let i = 0; i < 6; i++) branch(d.x, d.y, rnd() * Math.PI * 2, 16 + rnd() * 16, 5, d.den, .9); });
       Object.values(N).forEach(n => { n.nb = new Set(); n.near = new Set(); });
       E.forEach(e => { e.a.nb.add(e.b); e.b.nb.add(e.a); });
       mesh = [];
@@ -1641,7 +1641,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
         });
       });
       dots.forEach(d => {
-        [...dots, ...Object.values(N)].filter(o => o !== d).sort((a, b) => Math.hypot(a.x - d.x, a.y - d.y) - Math.hypot(b.x - d.x, b.y - d.y)).slice(0, 3).forEach(o => {
+        [...dots, ...Object.values(N)].filter(o => o !== d).sort((a, b) => Math.hypot(a.x - d.x, a.y - d.y) - Math.hypot(b.x - d.x, b.y - d.y)).slice(0, 4).forEach(o => {
           const dx = o.x - d.x, dy = o.y - d.y, k = (rnd() - .5) * .5;
           mesh.push({ p0: [d.x, d.y], c1: [d.x + dx * .33 - dy * k, d.y + dy * .33 + dx * k], c2: [d.x + dx * .66 + dy * k, d.y + dy * .66 - dx * k], p3: [o.x, o.y] });
         });
