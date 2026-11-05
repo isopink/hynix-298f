@@ -132,4 +132,4 @@ reports/    보고서 PDF, drafts/ = 주간 회고 에이전트가 쓴 초안
 
 - 작성자: `S.Lee <2sm9908@gmail.com>`
 - 기능 단위로 나눠서 커밋 (포트폴리오로 작업 과정이 보이도록)
-- 전략 변경을 커밋하면 `reports/week1/changes.tsv` 에 한 줄 추가하고 `python reports/make_changelog.py` 로 `CHANGELOG.md`(팀 공유용, 전략만) 갱신
+- 전략 변경을 커밋하면 `reports/week1/changes.tsv` 에 한 줄 추가하고 `reports/changelog_plain.tsv` 에 비전공자용 쉬운 설명(분야 · 무엇을 · 왜) 한 줄, `python reports/make_changelog.py` 로 `CHANGELOG.md`(팀 공유용, 전략만) 갱신
