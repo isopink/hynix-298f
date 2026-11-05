@@ -1097,7 +1097,7 @@ window.TRADE_TIMES = ['09:45', '10:45', '11:45', '13:15', '14:15', '15:15'];
   function briefingCard() {
     const b = BRIEF, head = $('dec-head'), list = $('dec-list');
     $('dec-trade').hidden = true;
-    $('dec-title').textContent = '오늘의 시장 자료';
+    $('dec-title').textContent = 'Watch List';
     $('dec-asof').textContent = b.created ? md(toD(b.created)) + ' ' + b.created.slice(11, 16) : '';   // 수집 시각만
     if (!b.created) { head.innerHTML = ''; return none(list, '시장 자료를 기다리는 중이에요. (평일 08:30 수집)'); }
     list.classList.remove('empty');
