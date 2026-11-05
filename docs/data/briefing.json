@@ -81,7 +81,7 @@
     ]
   },
   "intraday": {
-    "time": "11:45",
+    "time": "12:00",
     "pool": 230,
     "analyzed_new": 5,
     "passed": 20,
@@ -102,95 +102,25 @@
       "news": [
         {
           "date": "11-05",
-          "title": "셀트리온 비만치료제, 위고비·마운자로 벽 넘을까",
+          "title": "셀트리온, 롯데바이오로직스와 CMO 협력 논의",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "3중 넘어 4중으로…셀트리온 비만 신약, 효능 차이 입증할까",
           "risk": false
         },
         {
           "date": "11-05",
           "title": "셀트리온, 브라질 의약품 포트폴리오 10종으로 확대… 중남미 공략 본격...",
           "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "[굿모닝! 5일 제약바이오 소식] 지씨셀·보령파마솔루션·셀트리온·동국...",
-          "risk": false
         }
       ],
-      "price": 215000,
-      "chg": 0.075,
-      "activity": 4.72,
-      "foreign_today": 35260000000,
-      "inst_today": 26015000000,
-      "exchange": null
-    },
-    {
-      "code": "035420",
-      "name": "NAVER",
-      "close": 172100,
-      "ret5": -0.0353,
-      "ret20": -0.1032,
-      "rsi14": 39.6,
-      "vol20": 0.417,
-      "foreign_net": 34034200750,
-      "inst_net": -51611345250,
-      "score": 0.879,
-      "news": [
-        {
-          "date": "11-05",
-          "title": "NAVER, AI 에이전트 프로덕트 기획 경력채용…서비스 사업화 인재 찾는다",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "[N2 증시 풍향계] 美 AI 규제 우려 삼전·닉스 급락 ‘쇼크’…NAVER·셀트...",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "마이데이터 산업 성장 기대…NAVER·NICE평가정보 '기세등등'",
-          "risk": false
-        }
-      ],
-      "price": 183650,
-      "chg": 0.0752,
-      "activity": 2.81,
-      "foreign_today": 18181350000,
-      "inst_today": 10284400000,
-      "exchange": null
-    },
-    {
-      "code": "035720",
-      "name": "카카오",
-      "close": 29450,
-      "ret5": -0.0151,
-      "ret20": -0.1222,
-      "rsi14": 35.7,
-      "vol20": 0.272,
-      "foreign_net": 4222456675,
-      "inst_net": 11246144775,
-      "score": 0.864,
-      "news": [
-        {
-          "date": "11-05",
-          "title": "\"2028년 AI 손익분기점 달성 순항\"…카카오, 에이전틱 AI·클라우드 전략...",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "[특징주] 카카오, 3분기 실적·자사주 소각 계획 발표 '상승'",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "카카오AI 출범 앞둔 정신아, AI 에이전트 전략 '수정'",
-          "risk": false
-        }
-      ],
-      "price": 32000,
-      "chg": 0.0997,
-      "activity": 5.42,
-      "foreign_today": 3264000000,
-      "inst_today": 2368000000,
+      "price": 214500,
+      "chg": 0.0725,
+      "activity": 4.49,
+      "foreign_today": 35178000000,
+      "inst_today": 25954500000,
       "exchange": null
     },
     {
@@ -203,7 +133,7 @@
       "vol20": 0.301,
       "foreign_net": -56327899900,
       "inst_net": 59042064425,
-      "score": 0.75,
+      "score": 0.79,
       "news": [
         {
           "date": "11-05",
@@ -211,11 +141,11 @@
           "risk": false
         }
       ],
-      "price": 32450,
-      "chg": 0.0692,
-      "activity": 1.67,
-      "foreign_today": 2823150000,
-      "inst_today": 4543000000,
+      "price": 32400,
+      "chg": 0.0675,
+      "activity": 1.63,
+      "foreign_today": 2818800000,
+      "inst_today": 4536000000,
       "exchange": null
     },
     {
@@ -228,7 +158,7 @@
       "vol20": 0.575,
       "foreign_net": 1168053400,
       "inst_net": 89060007775,
-      "score": 0.667,
+      "score": 0.694,
       "news": [
         {
           "date": "11-05",
@@ -246,11 +176,11 @@
           "risk": false
         }
       ],
-      "price": 30000,
-      "chg": 0.0135,
-      "activity": 2.45,
+      "price": 29950,
+      "chg": 0.0118,
+      "activity": 2.3,
       "foreign_today": 0,
-      "inst_today": 2040000000,
+      "inst_today": 2036600000,
       "exchange": null
     },
     {
@@ -263,7 +193,7 @@
       "vol20": 0.658,
       "foreign_net": -34495865250,
       "inst_net": 64637407000,
-      "score": 0.636,
+      "score": 0.661,
       "news": [
         {
           "date": "11-04",
@@ -281,11 +211,36 @@
           "risk": false
         }
       ],
-      "price": 365000,
-      "chg": 0.0282,
-      "activity": 1.96,
+      "price": 364500,
+      "chg": 0.0268,
+      "activity": 1.85,
       "foreign_today": 0,
-      "inst_today": 2920000000,
+      "inst_today": 2916000000,
+      "exchange": null
+    },
+    {
+      "code": "086790",
+      "name": "하나금융지주",
+      "close": 119200,
+      "ret5": 0.032,
+      "ret20": -0.0774,
+      "rsi14": 43.1,
+      "vol20": 0.282,
+      "foreign_net": -34944478850,
+      "inst_net": 38697479450,
+      "score": 0.645,
+      "news": [
+        {
+          "date": "11-04",
+          "title": "하나금융지주, 보통주 188만5706주 6일 소각 예정",
+          "risk": false
+        }
+      ],
+      "price": 122100,
+      "chg": 0.0427,
+      "activity": 1.13,
+      "foreign_today": 3663000000,
+      "inst_today": 2808300000,
       "exchange": null
     },
     {
@@ -298,21 +253,21 @@
       "vol20": 0.333,
       "foreign_net": -8556535000,
       "inst_net": 22696941275,
-      "score": 0.606,
+      "score": 0.629,
       "news": [
         {
           "date": "11-05",
-          "title": "KT, 기업 AI 전환 지원하는 ‘AX 비즈 포털’ 개설",
+          "title": "KT-삼성, 고속철 통신 개선",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "KT·서울대 ‘융합보안 계약학과’ 설립 협약 체결",
+          "title": "[Biz 포커스] KT-삼성, 고속철도 통신 품질 잡는다…AI 무선망 최적화 기...",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "[기업경쟁력]KT·삼성전자, AI로 고속철도 통신 끊김 줄였다…실증서 29...",
+          "title": "KT,서울대와 '융합보안 계약학과' 설립… \"산학협력으로 차세대 인재 육...",
           "risk": false
         }
       ],
@@ -330,7 +285,7 @@
       "vol20": 0.915,
       "foreign_net": 17644093900,
       "inst_net": 14865329300,
-      "score": 0.598,
+      "score": 0.621,
       "news": [
         {
           "date": "11-04",
@@ -348,36 +303,11 @@
           "risk": false
         }
       ],
-      "price": 65500,
-      "chg": 0.0,
-      "activity": 1.35,
-      "foreign_today": 3930000000,
+      "price": 65250,
+      "chg": -0.0038,
+      "activity": 1.28,
+      "foreign_today": 3915000000,
       "inst_today": 0,
-      "exchange": null
-    },
-    {
-      "code": "086790",
-      "name": "하나금융지주",
-      "close": 119200,
-      "ret5": 0.032,
-      "ret20": -0.0774,
-      "rsi14": 43.1,
-      "vol20": 0.282,
-      "foreign_net": -34944478850,
-      "inst_net": 38697479450,
-      "score": 0.591,
-      "news": [
-        {
-          "date": "11-04",
-          "title": "하나금융지주, 보통주 188만5706주 6일 소각 예정",
-          "risk": false
-        }
-      ],
-      "price": 122500,
-      "chg": 0.0461,
-      "activity": 1.17,
-      "foreign_today": 3675000000,
-      "inst_today": 2817500000,
       "exchange": null
     },
     {
@@ -390,7 +320,7 @@
       "vol20": 0.279,
       "foreign_net": -48818326000,
       "inst_net": 54420877600,
-      "score": 0.545,
+      "score": 0.556,
       "news": [
         {
           "date": "11-05",
@@ -408,11 +338,11 @@
           "risk": false
         }
       ],
-      "price": 158000,
-      "chg": 0.0429,
-      "activity": 1.18,
-      "foreign_today": 7584000000,
-      "inst_today": 3160000000,
+      "price": 157600,
+      "chg": 0.0403,
+      "activity": 1.12,
+      "foreign_today": 7564800000,
+      "inst_today": 3152000000,
       "exchange": null
     },
     {
@@ -425,7 +355,7 @@
       "vol20": 0.246,
       "foreign_net": -22209841000,
       "inst_net": 23560336700,
-      "score": 0.508,
+      "score": 0.54,
       "news": [
         {
           "date": "11-05",
@@ -434,12 +364,12 @@
         },
         {
           "date": "11-05",
-          "title": "KT&G 상상마당, 구미 로컬 브랜드 기획전 개최…굿즈 172종 선보여",
+          "title": "[잘먹잘살+]코웨이·KT&G·코오롱FnC·비욘드·교원라이프·에이피뷰티·...",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "KT&G 상상마당홍대에서 '윗 굼이' 기획전, 구미 지역 브랜드 소개",
+          "title": "KT&G 상상마당, 구미 로컬 브랜드 기획전 개최…굿즈 172종 선보여",
           "risk": false
         }
       ],
@@ -457,7 +387,7 @@
       "vol20": 0.543,
       "foreign_net": -183011000,
       "inst_net": 1391209200,
-      "score": 0.5,
+      "score": 0.524,
       "news": [
         {
           "date": "11-05",
@@ -480,38 +410,6 @@
       "exchange": null
     },
     {
-      "code": "004020",
-      "name": "현대제철",
-      "close": 29200,
-      "ret5": 0.0977,
-      "ret20": -0.0283,
-      "rsi14": 53.5,
-      "vol20": 0.653,
-      "foreign_net": -7113250,
-      "inst_net": 14875195900,
-      "score": 0.5,
-      "news": [
-        {
-          "date": "11-05",
-          "title": "대한중공업공사부터 70년 발자취 집대성…현대제철, '에이치 아카이브'...",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "현대제철, 사내 역사 기록 플랫폼 'H.ARCHIVE' 개설",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "현대제철, 회사 역사 담는 디지털 플랫폼 ‘에이치 아카이브’ 오픈",
-          "risk": false
-        }
-      ],
-      "foreign_today": 905200000,
-      "inst_today": 0,
-      "exchange": null
-    },
-    {
       "code": "323410",
       "name": "카카오뱅크",
       "close": 20150,
@@ -521,8 +419,13 @@
       "vol20": 0.242,
       "foreign_net": 9075318265,
       "inst_net": -1800833610,
-      "score": 0.485,
+      "score": 0.516,
       "news": [
+        {
+          "date": "11-05",
+          "title": "카카오뱅크, AI 전화로 송금 재확인…이체취소율 54% 증가",
+          "risk": false
+        },
         {
           "date": "11-05",
           "title": "교보증권 \"카카오뱅크 목표주가 하향 조정, 이자·수수료이익 성장은 안...",
@@ -532,15 +435,42 @@
           "date": "11-05",
           "title": "“원하는 시간·장소에서만 보인다” 카카오뱅크, ‘스텔스통장’ 출시",
           "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "카카오뱅크, 금융사기 예방 'AI 콜봇' 도입···의심 거래에 자동 전화",
-          "risk": false
         }
       ],
       "foreign_today": 1249300000,
       "inst_today": 80600000,
+      "exchange": null
+    },
+    {
+      "code": "004020",
+      "name": "현대제철",
+      "close": 29200,
+      "ret5": 0.0977,
+      "ret20": -0.0283,
+      "rsi14": 53.5,
+      "vol20": 0.653,
+      "foreign_net": -7113250,
+      "inst_net": 14875195900,
+      "score": 0.516,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "현대제철, 사내 지식부터 70년 역사까지…디지털 자산화 확대",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "대한중공업공사부터 70년 발자취 집대성…현대제철, '에이치 아카이브'...",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "현대제철, 사내 역사 기록 플랫폼 'H.ARCHIVE' 개설",
+          "risk": false
+        }
+      ],
+      "foreign_today": 905200000,
+      "inst_today": 0,
       "exchange": null
     },
     {
@@ -553,7 +483,7 @@
       "vol20": 0.827,
       "foreign_net": -41540468400,
       "inst_net": 68116800900,
-      "score": 0.455,
+      "score": 0.468,
       "news": [
         {
           "date": "11-04",
@@ -576,6 +506,60 @@
       "exchange": null
     },
     {
+      "code": "086450",
+      "name": "동국제약",
+      "close": 24500,
+      "ret5": 0.0251,
+      "ret20": 0.1187,
+      "rsi14": 58.6,
+      "vol20": 0.469,
+      "foreign_net": -1971006900,
+      "inst_net": 10321604175,
+      "score": 0.444,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "동국제약, 질염치료제 '지노멜라' 출격...\"블록버스터 도전장\"",
+          "risk": false
+        },
+        {
+          "date": "11-04",
+          "title": "[경력채용] 한미약품, 제일약품, 삼성바이오에피스, 동국제약",
+          "risk": false
+        },
+        {
+          "date": "11-03",
+          "title": "붙이는 패치 시대 '끝'…동국제약, 크림형 패치로 피부 고민 공략",
+          "risk": false
+        }
+      ],
+      "foreign_today": 1078000000,
+      "inst_today": 0,
+      "exchange": null
+    },
+    {
+      "code": "023530",
+      "name": "롯데쇼핑",
+      "close": 90900,
+      "ret5": 0.0886,
+      "ret20": -0.0901,
+      "rsi14": 48.5,
+      "vol20": 0.684,
+      "foreign_net": -3227196600,
+      "inst_net": 4571927700,
+      "score": 0.355,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "저PBR 롯데쇼핑, 자산보다 수익성에 주목...기업가치 재평가 가능할까",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 272700000,
+      "exchange": null
+    },
+    {
       "code": "489790",
       "name": "한화비전",
       "close": 47800,
@@ -585,7 +569,7 @@
       "vol20": 1.13,
       "foreign_net": -20705757000,
       "inst_net": 27169405150,
-      "score": 0.652,
+      "score": 0.677,
       "news": [
         {
           "date": "11-04",
@@ -607,7 +591,7 @@
       "vol20": 1.262,
       "foreign_net": -8327822450,
       "inst_net": 3094928250,
-      "score": 0.553,
+      "score": 0.573,
       "news": [
         {
           "date": "11-05",
@@ -639,7 +623,7 @@
       "vol20": 1.382,
       "foreign_net": -15849296990,
       "inst_net": 14299779995,
-      "score": 0.492,
+      "score": 0.508,
       "news": [
         {
           "date": "11-05",
