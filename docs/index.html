@@ -371,6 +371,12 @@ details.log summary { border-radius: 16px; }
           <div class="chart" id="ch-hero" style="min-height:210px"></div>
         </div>
       </div>
+      <div class="kx-flow">   <!-- 실시간 판단: 누적 수익률 카드 안 아래칸 -->
+        <div class="hd"><span class="eyebrow" id="dec-title">실시간 판단</span><span class="sub" id="dec-asof"></span></div>
+        <div class="dec-head m-hide" id="dec-head"></div>
+        <div class="dec-trade" id="dec-trade" hidden></div>
+        <div class="dec-list" id="dec-list"></div>
+      </div>
     </section>
 
     <!-- 포트폴리오: 접지 않고 늘 펼쳐 둠 (11-05) -->
@@ -381,13 +387,6 @@ details.log summary { border-radius: 16px; }
     <section class="card c6">
       <div class="hd"><span class="eyebrow">보유 종목 손익</span><span class="sub">수수료·세금 반영</span></div>
       <div class="chart" id="ch-pnl" style="min-height:240px"></div>
-    </section>
-    <!-- 실시간 판단: 포트폴리오 아래에 펼쳐 둠 (11-05) -->
-    <section class="card c12" id="dec-box">
-      <div class="hd"><span class="eyebrow" id="dec-title">실시간 판단</span><span class="sub" id="dec-asof"></span></div>
-      <div class="dec-head m-hide" id="dec-head"></div>
-      <div class="dec-trade" id="dec-trade" hidden></div>
-      <div class="dec-list" id="dec-list"></div>
     </section>
 
 
