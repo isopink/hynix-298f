@@ -76,6 +76,8 @@ def check(order, account, price, p=None, r=None):
                 bad.append((f"{label} 국면", f"오늘 국면 {regime} · {label}는 {'·'.join(etf['regimes'])} 국면에서만 매수"))
             if (n := C.buys_today(code)) >= etf.get("max_buys_per_day", 99):
                 bad.append((f"{label} 하루 매수", f"오늘 이미 {n}번 매수 · {label}는 하루 {etf['max_buys_per_day']}번만"))
+        if p["decision"].get("no_rebuy_same_day") and C.sold_today(code):
+            bad.append(("당일 재매수", "오늘 판 종목은 그날 다시 사지 않음"))
         inv = C.inverse(code, p)
         if inv:   # 인버스: 주식 상한 대신 인버스 한도
             inv_after = sum(h["value"] for h in account["holdings"] if C.inverse(h["code"], p) and h["code"] != code) + pos_after

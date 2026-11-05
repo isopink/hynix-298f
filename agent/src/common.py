@@ -205,6 +205,13 @@ def stock_value(holdings, p=None):
     return sum(h["value"] for h in holdings if not inverse(h["code"], p))
 
 
+def sold_today(code):
+    """오늘 이 종목을 판 적이 있는지 (체결 기록 기준). 판 종목은 그날 다시 사지 않음 (decision.no_rebuy_same_day)."""
+    t = today().isoformat()
+    return any(r["kind"] == "fill" and r.get("side") == "매도" and r.get("code") == code and r["time"].startswith(t)
+               for r in read_jsonl(JOURNAL))
+
+
 def buys_today(code):
     """오늘 이 종목을 산 횟수 (체결 기록 기준)."""
     t = today().isoformat()

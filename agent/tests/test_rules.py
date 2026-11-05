@@ -523,6 +523,20 @@ def test_falling_market_trend_and_wider_probe():
     assert C.probe_floor(p) == 0.53 and sizing.target_weight(0.55, p, R) == 0.025          # 기준 0.60 → 0.53~0.60 소액
 
 
+def test_no_rebuy_same_day():
+    """15분마다 매매: 오늘 판 종목은 그날 다시 사지 않음 (수량 0 + Hook 차단)."""
+    p = {**P, "decision": {**P["decision"], "no_rebuy_same_day": True}}
+    open(C.JOURNAL, "w").close()
+    C.journal("regime", regime="상승", cap=P["regime_cap"]["상승"])
+    assert sizing.plan_buy("005930", 0.80, 10_000, acc(), p, R)["qty"] > 0
+    C.journal("fill", code="005930", side="매도", qty=10, price=10_000)
+    plan = sizing.plan_buy("005930", 0.80, 10_000, acc(), p, R)
+    assert plan["qty"] == 0 and "재매수" in plan["limited_by"], plan
+    assert "당일 재매수" in [x for x, _ in risk.check({"code": "005930", "side": "매수", "qty": 10, "confidence": 0.8}, acc(), 10_000, p, R)]
+    assert "당일 재매수" not in [x for x, _ in risk.check({"code": "000660", "side": "매수", "qty": 10, "confidence": 0.8}, acc(), 10_000, p, R)]
+    assert C.trade_slot(datetime(2026, 11, 6, 10, 0, 5, tzinfo=C.KST), C.params())   # 모든 판단 회차가 매매
+
+
 if __name__ == "__main__":
     fails = 0
     for n, f in list(globals().items()):

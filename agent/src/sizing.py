@@ -60,6 +60,8 @@ def plan_buy(code, conf, price, account, p=None, r=None, regime=None):
             limits[f"{label}는 " + "·".join(etf["regimes"]) + " 국면만"] = 0
         if C.buys_today(code) >= etf.get("max_buys_per_day", 99):
             limits[f"{label}는 하루 {etf['max_buys_per_day']}번만"] = 0
+    if p["decision"].get("no_rebuy_same_day") and C.sold_today(code):   # 15분마다 매매하면서 팔고 바로 다시 사는 왕복(수수료 0.9%) 방지
+        limits["오늘 판 종목은 재매수 안 함"] = 0
     hv = C.high_vol(code, p)
     if hv:   # 변동성이 큰 종목은 작게만
         limits["고변동 종목 한도"] = total * hv["weight_cap"] - held_value
