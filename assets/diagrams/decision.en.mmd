@@ -4,7 +4,7 @@ flowchart TB
     G --> B["Bull sub-agent<br/>case for each candidate and holding"]
     B --> R["Bear sub-agent<br/>case against + rebuttal"]
     R --> L["Lead agent<br/>conviction per stock"]
-    L --> T{"Trading slot?<br/>09:45 · 10:45 · 11:45<br/>12:30 · 13:15 · 14:15 · 15:15"}
+    L --> T{"Trading slot?<br/>every 15-min slot since 11-05"}
     T -- "no (other slots)" --> V["Record view only<br/>'would buy / sell', no orders"]
     T -- yes --> C["Code adds to conviction<br/>+0.05 bear market (new buys)<br/>+0.05 RSI < 35 (buy) · +0.05 RSI ≥ 65 (sell)"]
     C --> Q{"Buy ≥ 0.62?<br/>Sell ≥ 0.55?"}
