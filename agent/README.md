@@ -8,7 +8,7 @@ The trading agent. **The agent proposes, the rules decide**: Claude Code reads t
 |---|---|---|
 | 08:30 | `prep` — account + data prep → `work/briefing.json` | no |
 | 08:30–15:20 | `monitor` — every 5 min, checks stop / take-profit / max holding days; launches an `exit` run when hit | only when triggered |
-| 09:30–15:15, every 15 min | `decide` — intraday re-screen → regime → bull ⇄ bear debate → lead agent decides → orders only in `params.schedule.trade_times` (09:45, 10:45, 11:45, 13:15, 14:15, 15:15); other slots run as `view` (same debate, no orders) | yes |
+| 09:30–15:15, every 15 min | `decide` — intraday re-screen → regime → bull ⇄ bear debate → lead agent decides → orders only in `params.schedule.trade_times` (09:45, 10:45, 11:45, 12:30, 13:15, 14:15, 15:15); other slots run as `view` (same debate, no orders) | yes |
 | 15:45 | `close` — record today's equity, publish to dashboard | no |
 | 16:00 | `tune` — agent proposes 0–2 threshold changes; `src/tuning.py` applies only those inside `config/tuning.json` and commits | yes |
 | Sat 10:00 | `review` — weekly review + report draft | yes |
