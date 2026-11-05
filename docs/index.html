@@ -1088,7 +1088,7 @@ window.TRADE_TIMES = ['09:45', '10:45', '11:45', '13:15', '14:15', '15:15'];
         agent = ['On', 'ok run', `${hm} ${trade ? '매매' : '판단 갱신'} 회차 실행 중 (보통 3~4분)`];   // 글자 없이 점만 깜빡임
       }
     }
-    el.innerHTML = `<span>${pill(watch, '시장 모니터링')}</span><span>${pill(agent, '에이전트')}</span>`;
+    el.innerHTML = `<span>${pill(watch, '모니터링')}</span><span>${pill(agent, '에이전트')}</span>`;
   }
 
   // ---------- 실시간 판단: docs/data/decision.json (가장 최근 정기 판단 1회분) ----------
