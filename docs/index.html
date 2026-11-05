@@ -231,6 +231,7 @@ td.k { color: var(--ink); white-space: nowrap; }
 .lim-row .now small { color: var(--muted); font-size: 12px; margin-left: 4px; }
 .lim-row .track { grid-column: 1 / -1; height: 6px; border-radius: 3px; background: rgba(255,255,255,.07); overflow: hidden; }
 .lim-row .track i { display: block; height: 100%; border-radius: 3px; }
+.live { display: block; width: 100%; max-width: 100%; aspect-ratio: 1000 / 620; margin-top: -4px; }   /* Live Status 캔버스. 폰은 코드가 세로로 늘림 */
 .kx-flow { margin-top: 14px; padding-top: 14px; border-top: 1px dashed rgba(255,255,255,.08); }   /* 카드 안 아래칸 (누적 수익률 → 실시간 판단, 실시간 KOSPI → 순매수) */
 .kx-flow .hd { margin-bottom: 8px; }
 .kx-flow .fl-kv .v { font-size: 17px; }
@@ -384,6 +385,12 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
         <div class="dec-list" id="dec-list"></div>
         <button type="button" class="dec-more" id="dec-more" hidden aria-controls="dec-list"></button>
       </div>
+    </section>
+
+    <!-- Live Status: 시스템 전체를 뉴런 망으로, 일하는 부분만 빨강 (11-05) -->
+    <section class="card c12">
+      <div class="hd"><h2 class="eyebrow">Live Status</h2><span class="sub" id="ls-sub"></span></div>
+      <canvas id="ch-live" class="live" role="img" aria-label="시스템 구성 요소를 뉴런 망으로 그린 그림. 지금 일하는 부분이 빨강으로 켜지고 데이터가 선을 따라 흐릅니다."></canvas>
     </section>
 
     <!-- 포트폴리오: 접지 않고 늘 펼쳐 둠 (11-05) -->
@@ -1502,6 +1509,213 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       tb.appendChild(tr);
     });
   }
+  // ---------- Live Status: 시스템 전체를 뉴런 망으로, 지금 일하는 부분만 빨강으로 (11-05) ----------
+  // 실제 신호로 움직임: 잔고 스냅샷·KOSPI 틱·수급이 새로 오면 그 경로가 흐르고, 새 판단(decision.json)이 오면 기록·게시 경로가 흐름.
+  // 판단 실행 자체는 밖에서 볼 수 없어 스케줄(매매 시각 + 약 14분)로 '실행 중'이라 보고 토론 경로를 돌림 → 부제에 (예상) 표시.
+  function liveStatus() {
+    const cv = $('ch-live'), sub = $('ls-sub'); if (!cv) return;
+    const ctx = cv.getContext('2d'), FONT = '"Noto Serif KR", serif', W = 1000;
+    // 지점 (x, y, 이름). 왼쪽 시장 → 가운데 데스크톱 → 오른쪽 클라우드·화면. 좌표는 1000 × 620 기준, 폰은 세로로 늘림
+    const BASE_N = {
+      kbal: [60, 70, 'Kiwoom Balance'], krank: [45, 170, 'Kiwoom Rank'], krx: [105, 255, 'KRX · pykrx'], news: [45, 330, 'Naver News'], kprice: [60, 405, 'Kiwoom Price'], korder: [85, 495, 'Kiwoom Order'],
+      snap: [245, 60, 'snapshot.py'], lsnap: [365, 110, 'last_snapshot'], mon: [485, 95, 'monitor'], intr: [220, 160, 'intraday.py'], prep: [250, 275, 'data_prep.py'], brief: [360, 210, 'briefing.json'],
+      sched: [300, 355, 'Task Scheduler'], run: [405, 305, 'run.py'], cl: [505, 235, 'Lead Agent'], reg: [410, 160, 'Regime'], bull: [590, 150, 'Bull'], bear: [620, 260, 'Bear'], web: [690, 195, 'WebSearch'],
+      mcp: [505, 350, 'MCP Server'], plan: [420, 410, 'plan_order'], hook: [305, 440, 'Risk Hook'], limits: [190, 375, 'risk_limits'], broker: [205, 505, 'broker.py'], params: [590, 395, 'params.json'], tune: [675, 435, 'tuning.py'], rev: [605, 480, 'Weekly Review'],
+      jrn: [410, 500, 'journal.jsonl'], logger: [515, 545, 'logger.py'], pub: [655, 555, 'Git Push'], sync: [355, 585, 'sync.py'],
+      sbs: [775, 70, 'snapshots'], kxt: [785, 165, 'kospi_ticks'], flw: [860, 225, 'investor_flow'], cron: [745, 285, 'pg_cron'], nav: [785, 365, 'Naver Finance'],
+      gh: [780, 495, 'GitHub'], pg: [885, 450, 'GitHub Pages'], lap: [810, 585, 'Laptop'], dash: [945, 275, 'Dashboard']
+    };
+    // 경로 = 출발-도착
+    const LINKS = 'kbal-snap snap-sbs sbs-dash nav-cron cron-kxt cron-flw kxt-dash flw-dash snap-lsnap lsnap-mon mon-run sched-run sched-snap sched-mon krank-intr krx-prep news-prep prep-brief intr-brief run-prep run-intr brief-cl run-cl cl-reg reg-cl cl-bull bull-web bull-bear bear-web bear-cl cl-mcp mcp-plan params-plan plan-mcp mcp-hook limits-hook hook-broker broker-korder kprice-broker mcp-jrn jrn-logger logger-pub pub-gh gh-pg pg-dash lap-gh gh-sync sync-run cl-tune tune-params cl-rev rev-pub params-pub'.split(' ');
+    let N, E, EDGE, dots, mesh, H = 620, ys = 1, scale = 1, phone = null;
+    let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647, r2 = () => (rnd() + rnd()) - 1;
+    const at = (s, t) => { const u = 1 - t, a = u * u * u, b = 3 * u * u * t, c = 3 * u * t * t, d = t * t * t; return [a * s.p0[0] + b * s.c1[0] + c * s.c2[0] + d * s.p3[0], a * s.p0[1] + b * s.c1[1] + c * s.c2[1] + d * s.p3[1]]; };
+    function branch(x, y, ang, len, depth, out, w) {
+      const a2 = ang + (rnd() - .5) * .8, ex = x + Math.cos(a2) * len, ey = y + Math.sin(a2) * len;
+      out.push({ x, y, cx: x + Math.cos(ang) * len * .55, cy: y + Math.sin(ang) * len * .55, ex, ey, w });
+      if (depth <= 0) return;
+      branch(ex, ey, a2 + (rnd() - .5) * .5, len * (.82 + rnd() * .2), depth - 1, out, w * .76);
+      if (rnd() < .55) branch(ex, ey, a2 + (rnd() < .5 ? -1 : 1) * (.45 + rnd() * .7), len * (.6 + rnd() * .3), depth - 1, out, w * .6);
+    }
+    function build() {   // 같은 seed 로 다시 만들어 폰·PC 전환에도 모양이 같음
+      seed = 7;
+      const prev = N;
+      N = {}; Object.keys(BASE_N).forEach(k => { const [x, y, t] = BASE_N[k]; N[k] = { x, y: y * ys, t, on: prev && prev[k] ? prev[k].on : 0, glow: 0 }; });
+      E = LINKS.map(id => { const [a, b] = id.split('-'); return { id, a: N[a], b: N[b], bow: (rnd() < .5 ? -1 : 1) * (10 + rnd() * 18), on: 0, glow: 0 }; });
+      EDGE = Object.fromEntries(E.map(e => [e.id, e]));
+      Object.values(N).forEach(n => { n.deg = 0; }); E.forEach(e => { e.a.deg++; e.b.deg++; });
+      Object.values(N).forEach(n => { n.size = 20 + n.deg * 5; });
+      E.forEach(e => {
+        const dx = e.b.x - e.a.x, dy = e.b.y - e.a.y, Ln = Math.hypot(dx, dy) || 1, nx = -dy / Ln, ny = dx / Ln;
+        e.strands = Array.from({ length: 2 }, () => {
+          const k1 = e.bow + r2() * 4, k2 = -e.bow * .55 + r2() * 4;
+          return { p0: [e.a.x, e.a.y], c1: [e.a.x + dx * .34 + nx * k1, e.a.y + dy * .34 + ny * k1], c2: [e.a.x + dx * .66 + nx * k2, e.a.y + dy * .66 + ny * k2], p3: [e.b.x, e.b.y], w: .8 + rnd() * .6 };
+        });
+      });
+      Object.values(N).forEach(n => {
+        n.den = [];
+        for (let i = 0, c = 3 + n.deg; i < c; i++) { let ang; do { ang = rnd() * Math.PI * 2; } while (ang > .6 && ang < 2.55); branch(n.x, n.y, ang, 10 + n.deg + rnd() * 10, Math.min(phone ? 4 : 6, 3 + Math.ceil(n.deg / 2)), n.den, Math.min(2, .9 + n.deg * .14)); }
+      });
+      dots = [];
+      let guard = 0;
+      while (dots.length < (phone ? 14 : 26) && guard++ < 2000) {
+        const x = 30 + rnd() * (W - 60), y = 20 + rnd() * (H - 40);
+        if (Object.values(N).every(n => Math.hypot(n.x - x, n.y - y) > 55) && dots.every(d => Math.hypot(d.x - x, d.y - y) > 45)) dots.push({ x, y, den: [] });
+      }
+      dots.forEach(d => { for (let i = 0; i < 4; i++) branch(d.x, d.y, rnd() * Math.PI * 2, 10 + rnd() * 10, 4, d.den, .9); });
+      mesh = [];
+      dots.forEach(d => {
+        [...dots, ...Object.values(N)].filter(o => o !== d).sort((a, b) => Math.hypot(a.x - d.x, a.y - d.y) - Math.hypot(b.x - d.x, b.y - d.y)).slice(0, 3).forEach(o => {
+          const dx = o.x - d.x, dy = o.y - d.y, k = (rnd() - .5) * .5;
+          mesh.push({ p0: [d.x, d.y], c1: [d.x + dx * .33 - dy * k, d.y + dy * .33 + dx * k], c2: [d.x + dx * .66 + dy * k, d.y + dy * .66 - dx * k], p3: [o.x, o.y] });
+        });
+      });
+    }
+    function sprite(rgb, size, soft) {
+      const c = document.createElement('canvas'); c.width = c.height = size;
+      const g = c.getContext('2d'), r = size / 2, gr = g.createRadialGradient(r, r, 0, r, r, r);
+      gr.addColorStop(0, 'rgba(255,255,255,1)'); gr.addColorStop(.12, `rgba(${rgb},.95)`); gr.addColorStop(.4, `rgba(${rgb},${soft ? .2 : .28})`); gr.addColorStop(1, `rgba(${rgb},0)`);
+      g.fillStyle = gr; g.fillRect(0, 0, size, size); return c;
+    }
+    const SP = { r: sprite('255,90,74', 64), n: sprite('205,205,210', 64), w: sprite('235,235,238', 128, true) };
+    const bg = document.createElement('canvas');
+    function fit() {
+      const r = cv.getBoundingClientRect(), dpr = Math.min(1.5, devicePixelRatio || 1);
+      if (r.width < 1) return;
+      const ph = r.width < 560;
+      if (ph !== phone) { phone = ph; ys = ph ? 1.55 : 1; H = Math.round(620 * ys); cv.style.aspectRatio = `${W} / ${H}`; build(); }
+      const cw = Math.round(r.width * dpr), ch = Math.round(cw * H / W);
+      if (cw === cv.width && ch === cv.height && bg.width === cw) return;
+      cv.width = cw; cv.height = ch; scale = cw / W;
+      bg.width = cw; bg.height = ch;
+      const g = bg.getContext('2d'); g.setTransform(scale, 0, 0, scale, 0, 0);
+      g.clearRect(0, 0, W, H);
+      g.globalCompositeOperation = 'lighter'; g.lineCap = 'round';
+      E.forEach(e => e.strands.forEach(s => { g.strokeStyle = 'rgba(200,200,206,.36)'; g.lineWidth = s.w; g.beginPath(); g.moveTo(...s.p0); g.bezierCurveTo(...s.c1, ...s.c2, ...s.p3); g.stroke(); }));
+      const twig = (list, f) => list.forEach(b => { g.strokeStyle = `rgba(225,222,222,${Math.min(.5, (.07 + .24 * b.w) * f)})`; g.lineWidth = b.w; g.beginPath(); g.moveTo(b.x, b.y); g.quadraticCurveTo(b.cx, b.cy, b.ex, b.ey); g.stroke(); });
+      Object.values(N).forEach(n => twig(n.den, 1)); dots.forEach(d => twig(d.den, .6));
+      g.lineWidth = .7; g.strokeStyle = 'rgba(225,222,222,.12)'; mesh.forEach(m => { g.beginPath(); g.moveTo(...m.p0); g.bezierCurveTo(...m.c1, ...m.c2, ...m.p3); g.stroke(); });
+      dots.forEach(d => { g.globalAlpha = .4; g.drawImage(SP.n, d.x - 6, d.y - 6, 12, 12); });
+      Object.values(N).forEach(n => { g.globalAlpha = .85; g.drawImage(SP.w, n.x - n.size / 2, n.y - n.size / 2, n.size, n.size); });
+      g.globalAlpha = 1; g.globalCompositeOperation = 'source-over';
+    }
+    fit(); addEventListener('resize', fit);
+    if (window.ResizeObserver) new ResizeObserver(fit).observe(cv);
+
+    // ---- 그리기 ----
+    let last = performance.now(), clock = 0, visible = true, nextSpark = 0;
+    const waiters = new Set(), bursts = [];
+    const stamp = (x, y, im, size, alpha) => { ctx.globalAlpha = alpha; ctx.drawImage(im, x - size / 2, y - size / 2, size, size); };
+    function draw(dt) {
+      if (!bg.width) { fit(); if (!bg.width) return; }
+      const sec = dt / 1000, blink = .62 + .38 * Math.sin(clock / 130);
+      ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1; ctx.clearRect(0, 0, cv.width, cv.height); ctx.drawImage(bg, 0, 0);
+      ctx.setTransform(scale, 0, 0, scale, 0, 0); ctx.globalCompositeOperation = 'lighter'; ctx.lineCap = 'round';
+      E.forEach(e => {
+        e.glow += ((e.on > 0 ? 1 : 0) - e.glow) * Math.min(1, sec * 6);
+        if (e.glow < .02) return;
+        e.strands.forEach(s => { ctx.globalAlpha = 1; ctx.strokeStyle = `rgba(255,90,74,${.6 * e.glow})`; ctx.lineWidth = s.w + .4; ctx.beginPath(); ctx.moveTo(...s.p0); ctx.bezierCurveTo(...s.c1, ...s.c2, ...s.p3); ctx.stroke(); });
+      });
+      for (let i = bursts.length - 1; i >= 0; i--) {
+        const p = bursts[i]; p.t += dt / p.life; if (p.t < 0) continue; if (p.t >= 1) { bursts.splice(i, 1); continue; }
+        const [x, y] = at(p.s, p.t), [tx, ty] = at(p.s, Math.max(0, p.t - .05));
+        ctx.globalAlpha = p.c ? .25 : .55; ctx.strokeStyle = p.c ? 'rgb(205,205,210)' : 'rgb(255,120,104)'; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(x, y); ctx.stroke();
+        stamp(x, y, SP[p.c || 'r'], p.size, p.c ? .5 : .95);
+      }
+      Object.values(N).forEach(n => { if (!(n.glow > .05)) return; ctx.globalAlpha = 1; ctx.strokeStyle = `rgba(255,90,74,${.8 * n.glow * blink})`; n.den.forEach(b => { ctx.lineWidth = b.w + .2; ctx.beginPath(); ctx.moveTo(b.x, b.y); ctx.quadraticCurveTo(b.cx, b.cy, b.ex, b.ey); ctx.stroke(); }); });
+      if (dt && clock > nextSpark) { nextSpark = clock + 900 + rnd() * 1400; bursts.push({ s: mesh[Math.floor(rnd() * mesh.length)], t: 0, life: 1600, size: 7, c: 'n' }); }
+      Object.values(N).forEach(n => {
+        n.glow += (((n.on || 0) > 0 ? 1 : 0) - n.glow) * Math.min(1, sec * 8);
+        if (n.glow > .02) { stamp(n.x, n.y, SP.r, n.size * 3.2, n.glow * blink); stamp(n.x, n.y, SP.r, n.size * 1.4, n.glow); stamp(n.x, n.y, SP.r, n.size * .7, n.glow); }
+      });
+      // 이름은 켜졌을 때만. 폰에서도 읽히게 화면 기준 12px 이상
+      ctx.globalCompositeOperation = 'source-over'; ctx.textAlign = 'center';
+      const fs = Math.max(12 / scale, 11 + Math.min(8, 0)), ln = n => Math.max(fs, Math.min(fs * 1.5, fs + n.deg * .35));
+      Object.values(N).forEach(n => {
+        if (n.glow < .05) return;
+        const f = ln(n); ctx.globalAlpha = Math.min(1, n.glow * 1.4);
+        ctx.font = `${n.deg >= 6 ? 700 : 600} ${f}px ${FONT}`; ctx.lineWidth = 6; ctx.lineJoin = 'round'; ctx.strokeStyle = 'rgba(10,10,12,.94)';
+        const y = n.y + n.size * .42 + f * .8;
+        ctx.strokeText(n.t, n.x, y); ctx.fillStyle = '#ffd2cc'; ctx.fillText(n.t, n.x, y);
+      });
+      ctx.globalAlpha = 1;
+    }
+    let odd = false;
+    (function tick(t) {
+      requestAnimationFrame(tick);
+      if ((odd = !odd)) return;   // 30fps 면 충분
+      const dt = visible && !document.hidden ? Math.min(t - last, 120) : 0;
+      clock += dt; last = t;
+      waiters.forEach(w => { if (clock >= w.at || w.track.dead) { waiters.delete(w); w.done(); } });
+      if (dt) draw(dt);
+    })(last);
+    if (window.IntersectionObserver) new IntersectionObserver(es => { visible = es[0].isIntersecting; }).observe(cv);
+
+    // ---- 움직임: 'a-b' = 선을 따라, 'a:ms' = 그 지점에서 처리, 배열 = 동시에 ----
+    const wait = (track, ms) => new Promise(done => waiters.add({ at: clock + ms, done, track }));
+    async function flow(track, id) {
+      const e = EDGE[id]; if (track.dead || !e) return;
+      const dur = Math.max(380, Math.hypot(e.b.x - e.a.x, e.b.y - e.a.y) * 2.4);
+      e.on++;
+      for (let i = 0; i < 8; i++) bursts.push({ s: e.strands[i % 2], t: -rnd() * .6, life: dur * .7, size: 9 + rnd() * 6 });
+      await wait(track, dur); e.on--;
+    }
+    async function hold(track, id, ms) { const n = N[id]; if (track.dead || !n) return; n.on = (n.on || 0) + 1; await wait(track, ms); n.on--; }
+    async function play(t, list) {
+      for (const x of list) {
+        if (t.dead) return;
+        if (Array.isArray(x)) await Promise.all(x.map(y => play(t, [y])));
+        else if (x.includes('-')) await flow(t, x);
+        else { const [id, ms] = x.split(':'); await hold(t, id, +ms || 400); }
+      }
+    }
+    const T = () => ({ dead: false });
+    const ORDER = ['mcp-plan', ['params-plan', 'plan:400'], 'plan-mcp', 'mcp-hook', ['limits-hook', 'hook:600'], 'hook-broker', ['kprice-broker', 'broker:400'], 'broker-korder', 'korder:600'];
+    const PUBLISH = ['mcp-jrn', 'jrn:400', 'jrn-logger', 'logger:400', 'logger-pub', 'pub:400', 'pub-gh', 'gh:400', 'gh-pg', 'pg:600', 'pg-dash', 'dash:800'];
+    const DEBATE = ['sched:400', 'sched-run', 'run:300', 'run-intr', 'krank-intr', 'intr:600', 'intr-brief', 'brief:400', 'brief-cl', 'cl:500', 'cl-reg', 'reg:900', 'reg-cl', 'cl-bull', 'bull:600', 'bull-web', 'web:600', 'bull-bear', 'bear:600', 'bear-web', 'web:500', 'bear-cl', 'cl:1500'];
+    const PREP = ['sched:400', 'sched-run', 'run:300', 'run-prep', ['krx-prep', 'news-prep'], 'prep:900', 'prep-brief', 'brief:600'];
+    const TUNE = ['sched:400', 'sched-run', 'run:300', 'run-cl', 'cl:800', 'cl-tune', 'tune:800', 'tune-params', 'params:600', 'params-pub', 'pub:400', 'pub-gh', 'gh:400'];
+
+    // ---- 실제 신호 ----
+    const seen = { snap: LIVE_AT, kx: null, fl: null, dec: null, trades: null, first: true };
+    let loop = null, loopKind = '';
+    function kst() { const k = new Date(Date.now() + 9 * 3600e3); return { wd: k.getUTCDay(), m: k.getUTCHours() * 60 + k.getUTCMinutes(), hm: k.toISOString().slice(11, 16) }; }
+    function window_() {   // 스케줄로 보는 '지금 돌고 있을 실행'
+      const { wd, m } = kst(); if (wd < 1 || wd > 5) return null;
+      if (m >= 510 && m < 516) return { kind: 'prep', text: '장 전 준비 중 (예상)' };
+      if (m >= 960 && m < 968) return { kind: 'tune', text: '기준값 조정 중 (예상)' };
+      const t = window.TRADE_TIMES.map(x => +x.slice(0, 2) * 60 + +x.slice(3)).find(x => m >= x && m < x + 14);
+      if (t != null) return { kind: 'decide', text: `${String(Math.floor(t / 60)).padStart(2, '0')}:${String(t % 60).padStart(2, '0')} 회차 판단 실행 중 (예상)` };
+      return null;
+    }
+    function nextTrade() { const { wd, m } = kst(); if (wd < 1 || wd > 5) return '평일 09:30'; return window.TRADE_TIMES.find(x => +x.slice(0, 2) * 60 + +x.slice(3) > m) || '내일 09:30'; }
+    async function runLoop(kind) {
+      const t = loop = T(), list = { prep: PREP, decide: DEBATE, tune: TUNE }[kind];
+      while (!t.dead) { await play(t, list); if (!t.dead) await wait(t, 2500); }
+    }
+    let monAt = 0;
+    function check() {
+      const w = window_();
+      const kind = w ? w.kind : '';
+      if (kind !== loopKind) { if (loop) loop.dead = true; loop = null; loopKind = kind; if (kind) runLoop(kind); }
+      if (sub) sub.textContent = w ? w.text : opsOpen() ? `감시 중, 다음 판단 ${nextTrade()}` : `장 마감, 다음 판단 ${nextTrade()}`;
+      if (LIVE_AT && LIVE_AT !== seen.snap) { seen.snap = LIVE_AT; play(T(), ['kbal:300', 'kbal-snap', 'snap:300', ['snap-sbs', 'snap-lsnap'], ['sbs:300', 'lsnap:300'], 'sbs-dash', 'dash:400']); }
+      const kx = KX && KX.length ? +KX[KX.length - 1].t : null;
+      if (kx && kx !== seen.kx) { const f = seen.kx == null; seen.kx = kx; if (!f) play(T(), ['nav:300', 'nav-cron', 'cron:300', 'cron-kxt', 'kxt:300', 'kxt-dash', 'dash:300']); }
+      const fl = FL && FL.length ? +FL[FL.length - 1].t : null;
+      if (fl && fl !== seen.fl) { const f = seen.fl == null; seen.fl = fl; if (!f) play(T(), ['nav:300', 'nav-cron', 'cron:300', 'cron-flw', 'flw:300', 'flw-dash', 'dash:300']); }
+      const nTr = D ? D.trades.length : null;
+      if (DECISION.time && DECISION.time !== seen.dec) {
+        const first = seen.dec == null, traded = seen.trades != null && nTr > seen.trades; seen.dec = DECISION.time;
+        if (!first) play(T(), ['cl:600', 'cl-mcp', 'mcp:400', ...(traded ? ORDER : []), ...PUBLISH]);
+      }
+      if (nTr != null) seen.trades = nTr;
+      // 장중 감시는 1분마다 잔고 파일을 읽음 (실제 주기와 같게)
+      if (opsOpen() && LIVE_AT && Date.now() - Date.parse(LIVE_AT) < 5 * 60e3 && clock - monAt > 60000) { monAt = clock; play(T(), ['lsnap-mon', 'mon:500']); }
+    }
+    check(); setInterval(check, 2000);
+  }
+  liveStatus();
 })();
 </script>
 <script>
