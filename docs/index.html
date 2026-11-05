@@ -621,13 +621,15 @@ window.TRADE_TIMES = ['09:45', '10:45', '11:45', '13:15', '14:15', '15:15'];
   }
   async function pollLive() {
     const url = (CFG.supabaseUrl || '').replace(/\/$/, ''), key = CFG.supabaseAnonKey || '';
-    const since = CFG.liveSince || START;
+    const since = CFG.liveSince || START, today = kstDate(new Date().toISOString());
     const h = { apikey: key, Authorization: 'Bearer ' + key };
     try {
       const json = n => fetch('data/' + n + '.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null).catch(() => null);
       const [, snaps, latest, st, dc, bf, tick] = await Promise.all([
         loadKD(),
-        fetch(`${url}/rest/v1/snapshots?select=ts,account,total,kospi&ts=gte.${since}T00:00:00%2B09:00&order=ts.asc&limit=10000`, { headers: h }).then(r => r.ok ? r.json() : []),
+        // 오늘 스냅샷만 (하루 최대 약 430개). 대회 시작부터 다 받으면 서버가 1,000개에서 잘라 오래된 것만 와서 11-05 10:28에 멈췄음.
+        // 지난 날은 에이전트가 마감(15:45) 때 쓴 equity.json 을 씀
+        fetch(`${url}/rest/v1/snapshots?select=ts,account,total,kospi&ts=gte.${today}T00:00:00%2B09:00&order=ts.asc&limit=1000`, { headers: h }).then(r => r.ok ? r.json() : []),
         fetch(`${url}/rest/v1/snapshots?select=ts,account,holdings&order=ts.desc&limit=20`, { headers: h }).then(r => r.ok ? r.json() : []),
         json('status'), json('decision'), json('briefing'),   // 에이전트가 실행할 때마다 push 하므로 페이지를 열어 둔 채로도 갱신
         fetch(`${url}/rest/v1/kospi_ticks?select=ts,price&order=ts.desc&limit=1`, { headers: h }).then(r => r.ok ? r.json() : []).catch(() => [])
@@ -639,7 +641,7 @@ window.TRADE_TIMES = ['09:45', '10:45', '11:45', '13:15', '14:15', '15:15'];
       const holdings = [];
       for (const acc of new Set(latest.map(x => x.account))) { const s = latest.find(x => x.account === acc); if (s) holdings.push(...(s.holdings || [])); }
       LIVE_AT = snaps[snaps.length - 1].ts; PRE = false;
-      const eqLive = liveEquity(snaps), tk = (tick || [])[0], lastRow = eqLive[eqLive.length - 1];
+      const eqLive = (BASE.equity || []).filter(r => r.date < today && r.date >= since).concat(liveEquity(snaps)), tk = (tick || [])[0], lastRow = eqLive[eqLive.length - 1];
       // 오늘 KOSPI 끝점은 실시간 KOSPI 카드와 같은 네이버 1분봉으로 (잔고 스냅샷의 키움 지수는 조금 늦음) → 누적 수익률 기준 통일
       if (tk && lastRow && kstDate(tk.ts) === lastRow.date) lastRow.kospi = +tk.price;
       D = derive({ ...BASE, equity: eqLive, holdings: holdings.length ? holdings : BASE.holdings });
