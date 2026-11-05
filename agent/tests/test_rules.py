@@ -471,6 +471,31 @@ def test_mcp_server_names_defined():
     assert not missing, missing
 
 
+def test_sync_catch_up_once_per_slot_and_code():
+    import sync
+    st, started = {}, []
+    sync.state, sync.save = (lambda: dict(st)), (lambda **kw: st.update(kw))
+    sync.start_task = lambda task: started.append(task) or True
+    sync.run_busy = lambda: False
+    head = ["aaaaaaa"]
+    sync.rev = lambda ref: head[0]
+    t = datetime(2026, 11, 5, 9, 47, tzinfo=C.KST)   # 목요일 09:47, 09:45 매매가 기록 없이 끝난 상황
+    orig = C.missed_trade
+    try:
+        C.missed_trade = lambda now=None, p=None, rows=None: "09:45"
+        assert sync.catch_up(t) and started == ["Hynix298-decide"]
+        assert not sync.catch_up(t) and len(started) == 1          # 같은 회차·같은 코드로는 한 번만
+        head[0] = "bbbbbbb"                                          # 수정 코드 반영 → 다시 한 번
+        assert sync.catch_up(t) and len(started) == 2
+        C.missed_trade = lambda now=None, p=None, rows=None: None   # 놓친 회차 없음
+        head[0] = "ccccccc"
+        assert not sync.catch_up(t)
+        C.missed_trade = lambda now=None, p=None, rows=None: "15:15"
+        assert not sync.catch_up(datetime(2026, 11, 5, 15, 30, tzinfo=C.KST))   # 장 끝난 뒤엔 안 함
+    finally:
+        C.missed_trade = orig
+
+
 if __name__ == "__main__":
     fails = 0
     for n, f in list(globals().items()):

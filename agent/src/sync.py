@@ -116,8 +116,8 @@ def processes(pattern):
     return [p["ProcessId"] for p in rows if pattern in (p.get("CommandLine") or "")]
 
 
-def in_window(win):
-    n = C.now()
+def in_window(win, now=None):
+    n = now or C.now()
     if n.weekday() >= 5:
         return False
     if win is None:
@@ -238,6 +238,27 @@ def single_instance():
     return f
 
 
+def catch_up(now=None):
+    """놓친 매매 회차를 다음 15분 회차까지 기다리지 않고 바로 보충 (11-05 09:45 사고 뒤 추가).
+    매매 회차가 실패·건너뜀으로 국면 기록 없이 끝났으면(C.missed_trade) 정기 판단 작업을 지금 한 번 더 띄움.
+    같은 회차·같은 코드로는 한 번만 시도 → 코드 버그로 계속 실패해도 1분마다 토큰을 쓰지 않음.
+    수정 코드가 반영되면(HEAD 가 바뀌면) 다시 한 번 시도 = '복구되자마자 매매'."""
+    n = now or C.now()
+    s = C.params()["schedule"]
+    times = s.get("trade_times") or []
+    if not times or not in_window((times[0], s.get("monitor_end", "15:20")), n):
+        return False
+    missed = C.missed_trade(n)
+    if not missed or run_busy():
+        return False
+    key = f"{n.date().isoformat()} {missed} {rev('HEAD')[:7]}"
+    if state().get("catch_up") == key:
+        return False
+    save(catch_up=key)
+    log(f"{missed} 매매 회차가 실행되지 않아 지금 보충 매매를 띄움 ({key})")
+    return start_task("Hynix298-decide")
+
+
 def loop():
     keep = single_instance()
     if not keep:
@@ -250,6 +271,7 @@ def loop():
                 log("sync.py 가 바뀌어 새 코드로 다시 시작")
                 return 10
             heal()
+            catch_up()
         except Exception as e:  # noqa: BLE001
             log(f"  ! 동기화 실패: {type(e).__name__}: {e}")
         time.sleep(INTERVAL)
