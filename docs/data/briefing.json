@@ -81,9 +81,9 @@
     ]
   },
   "intraday": {
-    "time": "14:30",
+    "time": "14:45",
     "pool": 230,
-    "analyzed_new": 13,
+    "analyzed_new": 4,
     "passed": 20,
     "kept_prep": false
   },
@@ -102,23 +102,23 @@
       "news": [
         {
           "date": "11-05",
-          "title": "셀트리온, 브라질서 바이오시밀러 3종 출시⋯현지 판매 제품 10종으로 확...",
+          "title": "셀트리온, 브라질서 후속 바이오시밀러 3종 출시",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "셀트리온, 브라질서 바이오시밀러 3종 출시...현지 포트폴리오 10종으로...",
+          "title": "셀트리온, 브라질서 '코이볼마·스토보클로' 출시…중남미 공략 본격화",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "셀트리온, 브라질서 바이오시밀러 3종 동시 출격…중남미 공략 가속",
+          "title": "셀트리온, 브라질서 바이오시밀러 3종 출시",
           "risk": false
         }
       ],
       "price": 214500,
       "chg": 0.0725,
-      "activity": 3.62,
+      "activity": 3.67,
       "foreign_today": 36679500000,
       "inst_today": 77863500000,
       "exchange": "KOSPI"
@@ -133,8 +133,13 @@
       "vol20": 0.742,
       "foreign_net": -58696055500,
       "inst_net": 74156028000,
-      "score": 0.95,
+      "score": 0.963,
       "news": [
+        {
+          "date": "11-05",
+          "title": "지씨씨엘, 한미약품 비만 신약 ‘에페’ 임상 3상 분석 지원",
+          "risk": false
+        },
         {
           "date": "11-05",
           "title": "지씨씨엘, 한미약품 비만 신약 ‘에페’ 임상 3상 참여…약동학 검사 맡...",
@@ -146,46 +151,11 @@
           "risk": false
         }
       ],
-      "price": 462500,
-      "chg": 0.0921,
-      "activity": 2.33,
+      "price": 465500,
+      "chg": 0.0992,
+      "activity": 2.37,
       "foreign_today": 0,
-      "inst_today": 15725000000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "035720",
-      "name": "카카오",
-      "close": 29450,
-      "ret5": -0.0151,
-      "ret20": -0.1222,
-      "rsi14": 35.7,
-      "vol20": 0.272,
-      "foreign_net": 4222456675,
-      "inst_net": 11246144775,
-      "score": 0.885,
-      "news": [
-        {
-          "date": "11-05",
-          "title": "카카오뱅크, 9일 '스텔스통장' 출시",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "카카오, 인적분할 한 달 연기…임시주총 내년 1월로",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "\"지방은행 격차 더 벌린다\"...질주하는 카카오뱅크",
-          "risk": false
-        }
-      ],
-      "price": 31950,
-      "chg": 0.0979,
-      "activity": 3.7,
-      "foreign_today": 5207850000,
-      "inst_today": 3035250000,
+      "inst_today": 15827000000,
       "exchange": "KOSPI"
     },
     {
@@ -198,7 +168,7 @@
       "vol20": 0.786,
       "foreign_net": -21046654725,
       "inst_net": 1518542300,
-      "score": 0.863,
+      "score": 0.824,
       "news": [
         {
           "date": "11-05",
@@ -216,11 +186,11 @@
           "risk": false
         }
       ],
-      "price": 48400,
-      "chg": 0.084,
-      "activity": 4.98,
+      "price": 47750,
+      "chg": 0.0694,
+      "activity": 4.83,
       "foreign_today": 0,
-      "inst_today": 3726800000,
+      "inst_today": 3676750000,
       "exchange": "KOSPI"
     },
     {
@@ -233,7 +203,7 @@
       "vol20": 0.301,
       "foreign_net": -56327899900,
       "inst_net": 59042064425,
-      "score": 0.777,
+      "score": 0.801,
       "news": [
         {
           "date": "11-05",
@@ -241,11 +211,11 @@
           "risk": false
         }
       ],
-      "price": 32000,
-      "chg": 0.0544,
+      "price": 32050,
+      "chg": 0.056,
       "activity": 1.35,
       "foreign_today": 0,
-      "inst_today": 18400000000,
+      "inst_today": 18428750000,
       "exchange": "KOSPI"
     },
     {
@@ -258,7 +228,7 @@
       "vol20": 0.575,
       "foreign_net": 1168053400,
       "inst_net": 89060007775,
-      "score": 0.712,
+      "score": 0.721,
       "news": [
         {
           "date": "11-05",
@@ -276,11 +246,11 @@
           "risk": false
         }
       ],
-      "price": 30350,
-      "chg": 0.0253,
-      "activity": 1.68,
-      "foreign_today": 940850000,
-      "inst_today": 4886350000,
+      "price": 30400,
+      "chg": 0.027,
+      "activity": 1.64,
+      "foreign_today": 942400000,
+      "inst_today": 4894400000,
       "exchange": "KOSPI"
     },
     {
@@ -293,7 +263,7 @@
       "vol20": 0.333,
       "foreign_net": -8556535000,
       "inst_net": 22696941275,
-      "score": 0.612,
+      "score": 0.625,
       "news": [
         {
           "date": "11-05",
@@ -302,12 +272,12 @@
         },
         {
           "date": "11-05",
-          "title": "[인터뷰] 하늘길도 AI가 교통정리?⋯KT가 'UAM 에이전트' 만든 이유",
+          "title": "아웃백, KT 멤버십 제휴 확대...전국 매장서 3만 원 할인",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "AI로 고속철도 통신 품질 개선…KT·삼성, 무선망 최적화 기술 실증",
+          "title": "KT, 기업용 AX 포털 개설… 맞춤형 AI 솔루션 추천",
           "risk": false
         }
       ],
@@ -325,7 +295,7 @@
       "vol20": 0.658,
       "foreign_net": -34495865250,
       "inst_net": 64637407000,
-      "score": 0.59,
+      "score": 0.603,
       "news": [
         {
           "date": "11-04",
@@ -343,11 +313,11 @@
           "risk": false
         }
       ],
-      "price": 361500,
-      "chg": 0.0183,
+      "price": 362000,
+      "chg": 0.0197,
       "activity": 1.51,
       "foreign_today": 0,
-      "inst_today": 6507000000,
+      "inst_today": 6516000000,
       "exchange": "KOSPI"
     },
     {
@@ -360,7 +330,7 @@
       "vol20": 0.184,
       "foreign_net": 178003700,
       "inst_net": 3751059850,
-      "score": 0.576,
+      "score": 0.581,
       "news": [
         {
           "date": "11-05",
@@ -392,7 +362,7 @@
       "vol20": 0.915,
       "foreign_net": 17644093900,
       "inst_net": 14865329300,
-      "score": 0.568,
+      "score": 0.574,
       "news": [
         {
           "date": "11-04",
@@ -410,11 +380,11 @@
           "risk": false
         }
       ],
-      "price": 65200,
-      "chg": -0.0046,
-      "activity": 0.94,
-      "foreign_today": 4955200000,
-      "inst_today": 4238000000,
+      "price": 64900,
+      "chg": -0.0092,
+      "activity": 0.93,
+      "foreign_today": 4932400000,
+      "inst_today": 4218500000,
       "exchange": "KOSPI"
     },
     {
@@ -427,8 +397,13 @@
       "vol20": 0.246,
       "foreign_net": -22209841000,
       "inst_net": 23560336700,
-      "score": 0.532,
+      "score": 0.566,
       "news": [
+        {
+          "date": "11-05",
+          "title": "KT&G, 구미 기획전 'WITH. GOOMI' 개최",
+          "risk": false
+        },
         {
           "date": "11-05",
           "title": "KT&G 상상마당, 구미 로컬 브랜드 12곳 모은 기획전 개최",
@@ -437,11 +412,6 @@
         {
           "date": "11-05",
           "title": "[위클리오늘] KT&G, 현대제철(11.05)",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "KT&G 상상마당, 서울 홍대서 경북 구미 캐릭터 활용 지역 기획전 열어",
           "risk": false
         }
       ],
@@ -459,7 +429,7 @@
       "vol20": 0.827,
       "foreign_net": -41540468400,
       "inst_net": 68116800900,
-      "score": 0.525,
+      "score": 0.529,
       "news": [
         {
           "date": "11-04",
@@ -491,7 +461,7 @@
       "vol20": 0.282,
       "foreign_net": -34944478850,
       "inst_net": 38697479450,
-      "score": 0.496,
+      "score": 0.507,
       "news": [
         {
           "date": "11-04",
@@ -501,7 +471,7 @@
       ],
       "price": 120700,
       "chg": 0.0307,
-      "activity": 0.86,
+      "activity": 0.87,
       "foreign_today": 0,
       "inst_today": 7121300000,
       "exchange": "KOSPI"
@@ -516,21 +486,21 @@
       "vol20": 0.242,
       "foreign_net": 9075318265,
       "inst_net": -1800833610,
-      "score": 0.46,
+      "score": 0.471,
       "news": [
         {
           "date": "11-05",
-          "title": "카카오뱅크, 9일 '스텔스통장' 출시",
+          "title": "'슈퍼뱅크 잭팟'으로 덮은 역대 최대 실적 착시…윤호영 카카오뱅크 6연...",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "\"지방은행 격차 더 벌린다\"...질주하는 카카오뱅크",
+          "title": "카카오뱅크, 금융사기 의심 거래에 AI가 먼저 전화…이체취소율 54% 증가",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "“아무 때나 못 봐요”…카카오뱅크가 내놓는 ‘비밀통장’",
+          "title": "카카오뱅크, 정해진 곳에서만 계좌 보인다…'스텔스통장' 출시",
           "risk": false
         }
       ],
@@ -548,21 +518,21 @@
       "vol20": 0.653,
       "foreign_net": -7113250,
       "inst_net": 14875195900,
-      "score": 0.453,
+      "score": 0.456,
       "news": [
         {
           "date": "11-05",
-          "title": "[위클리오늘] KT&G, 현대제철(11.05)",
+          "title": "현대제철, 디지털 수장고 'H.ARCHIVE' 오픈",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "1953년부터 쌓아온 철강의 역사…현대제철, 70년 기록 디지털로 잇는다",
+          "title": "현대제철, 70년 역사·임직원 헌신 담은 'H.ARCHIVE' 론칭",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "현대제철, 디지털 아카이브 ‘H.ARCHIVE’ 개설…70년 헤리티지 집대성",
+          "title": "현대제철, 70년 역사 담은 ‘H.ARCHIVE’ 개설…임직원 발자취 한곳에",
           "risk": false
         }
       ],
@@ -571,28 +541,35 @@
       "exchange": "KOSPI"
     },
     {
-      "code": "010060",
-      "name": "OCI홀딩스",
-      "close": 208000,
-      "ret5": 0.1473,
-      "ret20": -0.151,
-      "rsi14": 52.2,
-      "vol20": 1.174,
-      "foreign_net": -40252824550,
-      "inst_net": 44921083550,
-      "score": 0.583,
+      "code": "000100",
+      "name": "유한양행",
+      "close": 78600,
+      "ret5": 0.0103,
+      "ret20": 0.0288,
+      "rsi14": 50.8,
+      "vol20": 0.543,
+      "foreign_net": -183011000,
+      "inst_net": 1391209200,
+      "score": 0.449,
       "news": [
         {
           "date": "11-05",
-          "title": "iM證 \"OCI홀딩스, 우주로 향할 시간…목표가 30만원\"",
+          "title": "군포 구 유한양행 부지 정비사업 본격화",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "군포시, 옛 유한양행 부지 개발 탄력…주거·업무·상업 복합개발",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "군포시, 당정 공업지역 정비사업 본격화…옛 유한양행 부지 복합단지 조...",
           "risk": false
         }
       ],
-      "price": 206000,
-      "chg": 0.03,
-      "activity": 2.36,
       "foreign_today": 0,
-      "inst_today": 3296000000,
+      "inst_today": 3301200000,
       "exchange": "KOSPI"
     },
     {
@@ -605,7 +582,7 @@
       "vol20": 1.13,
       "foreign_net": -20705757000,
       "inst_net": 27169405150,
-      "score": 0.554,
+      "score": 0.559,
       "news": [
         {
           "date": "11-04",
@@ -627,7 +604,7 @@
       "vol20": 1.253,
       "foreign_net": -7161108700,
       "inst_net": 7424801750,
-      "score": 0.554,
+      "score": 0.559,
       "news": [
         {
           "date": "11-03",
@@ -638,6 +615,31 @@
       "foreign_today": 1223200000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
+    },
+    {
+      "code": "010060",
+      "name": "OCI홀딩스",
+      "close": 208000,
+      "ret5": 0.1473,
+      "ret20": -0.151,
+      "rsi14": 52.2,
+      "vol20": 1.174,
+      "foreign_net": -40252824550,
+      "inst_net": 44921083550,
+      "score": 0.544,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "iM證 \"OCI홀딩스, 우주로 향할 시간…목표가 30만원\"",
+          "risk": false
+        }
+      ],
+      "price": 203500,
+      "chg": 0.0175,
+      "activity": 2.31,
+      "foreign_today": 0,
+      "inst_today": 3256000000,
+      "exchange": "KOSPI"
     },
     {
       "code": "114800",
