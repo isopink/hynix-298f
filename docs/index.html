@@ -238,7 +238,6 @@ td.k { color: var(--ink); white-space: nowrap; }
 .cover::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, rgba(10,10,12,0) 30%, rgba(10,10,12,.55) 100%); pointer-events: none; }   /* 가장자리로 갈수록 어둡게, 글자가 가운데서 뜸 */
 .cover-text { position: absolute; inset: 0; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; pointer-events: none; padding: 0 24px; text-align: center; }
 .cover-title { margin: 0; font-size: clamp(34px, 7vw, 76px); font-weight: 500; letter-spacing: -1px; line-height: 1.1; color: var(--ink); text-shadow: 0 0 24px rgba(0,0,0,.9), 0 0 60px rgba(218,41,28,.25); text-wrap: balance; }
-.cover-hint { margin: 0; font-size: 13px; color: var(--muted); text-shadow: 0 0 12px rgba(0,0,0,.9); }
 body.covered { overflow: hidden; }
 .kx-flow { margin-top: 14px; padding-top: 14px; border-top: 1px dashed rgba(255,255,255,.08); }   /* 카드 안 아래칸 (누적 수익률 → 실시간 판단, 실시간 KOSPI → 순매수) */
 .kx-flow .hd { margin-bottom: 8px; }
@@ -341,7 +340,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
 <!-- 첫 화면 커버 (11-05): 뉴런 망이 자동으로 돌고 가운데 제목. 아무 곳이나 터치하면 사라지며 대시보드 -->
 <div class="cover" id="cover" role="button" tabindex="0" aria-label="The Sigma Engine. 터치하면 대시보드로 들어갑니다">
   <canvas id="ch-live" class="live" aria-hidden="true"></canvas>
-  <div class="cover-text"><h2 class="cover-title">The Sigma Engine</h2><p class="cover-hint">아무 곳이나 터치</p></div>
+  <div class="cover-text"><h2 class="cover-title">The Sigma Engine</h2></div>
 </div>
 <div class="wrap">
 
@@ -1607,7 +1606,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       const prev = N;
       // 가로 화면: 1000×620 배치를 세로로만 늘림. 세로 화면(H > 1.2W): 배치를 90도 돌려 세움
       const tall = H > W * 1.2;
-      N = {}; Object.keys(BASE_N).forEach(k => { const [bx, by, t] = BASE_N[k]; const x = tall ? by * (W / 620) : bx, y = tall ? bx * (H / 1000) : by * ys; N[k] = { x, y, t, on: prev && prev[k] ? prev[k].on : 0, glow: 0 }; });
+      N = {}; Object.keys(BASE_N).forEach(k => { const [bx, by, t] = BASE_N[k]; const x0 = tall ? by * (W / 620) : bx, y0 = tall ? bx * (H / 1000) : by * ys, x = W / 2 + (x0 - W / 2) * 1.22, y = H / 2 + (y0 - H / 2) * 1.22; N[k] = { x, y, t, on: prev && prev[k] ? prev[k].on : 0, glow: 0 }; });
       E = LINKS.map(id => { const [a, b] = id.split('-'); return { id, a: N[a], b: N[b], bow: (rnd() < .5 ? -1 : 1) * (10 + rnd() * 18), on: 0, glow: 0 }; });
       EDGE = Object.fromEntries(E.map(e => [e.id, e]));
       Object.values(N).forEach(n => { n.deg = 0; }); E.forEach(e => { e.a.deg++; e.b.deg++; });
@@ -1658,7 +1657,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const bg = document.createElement('canvas');
     function fit() {
       const r = cv.getBoundingClientRect(); if (r.width < 1) return;
-      const ph = r.width < 560, dpr = Math.min(ph && r.width * r.height < 250000 ? 3 : 2, devicePixelRatio || 1);   // 폰은 선명하게, 화면 전체일 땐 2배까지   // 폰은 화면 픽셀 그대로 그려 선명하게 (캔버스가 작아 비용 적음)
+      const ph = r.width < 560, dpr = Math.min(ph ? 3 : 2, devicePixelRatio || 1);   // 폰은 화면 픽셀 그대로 선명하게   // 폰은 화면 픽셀 그대로 그려 선명하게 (캔버스가 작아 비용 적음)
       const h = Math.max(300, Math.min(2600, Math.round(W * r.height / r.width)));   // 상자 비율대로 세로 길이 (1000 기준)
       if (ph !== phone || Math.abs(h - H) > 8) { phone = ph; lw = ph ? 1.6 : 1; H = h; ys = H / 620; build(); }
       const cw = Math.round(r.width * dpr), ch = Math.round(cw * H / W);
