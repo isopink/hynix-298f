@@ -1098,7 +1098,7 @@ window.TRADE_TIMES = ['09:45', '10:45', '11:45', '13:15', '14:15', '15:15'];
     const b = BRIEF, head = $('dec-head'), list = $('dec-list');
     $('dec-trade').hidden = true;
     $('dec-title').textContent = '오늘의 시장 자료';
-    $('dec-asof').textContent = b.created ? md(toD(b.created)) + ' ' + b.created.slice(11, 16) + ' 수집 · 판단 전' : '';
+    $('dec-asof').textContent = b.created ? md(toD(b.created)) + ' ' + b.created.slice(11, 16) : '';   // 수집 시각만
     if (!b.created) { head.innerHTML = ''; return none(list, '시장 자료를 기다리는 중이에요. (평일 08:30 수집)'); }
     list.classList.remove('empty');
     head.innerHTML = `<span class="why">${md(toD(b.asof))} 종가 · ${b.source === 'krx' ? '전 종목' : '대형주'} 중 ${b.universe || '—'}종목 분석 → 후보 ${(b.candidates || []).length}개</span>`;
