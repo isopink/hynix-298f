@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "11:00",
-    "pool": 222,
-    "analyzed_new": 13,
-    "passed": 11,
+    "time": "11:15",
+    "pool": 230,
+    "analyzed_new": 30,
+    "passed": 20,
     "kept_prep": false
   },
   "candidates": [
@@ -102,25 +102,150 @@
       "news": [
         {
           "date": "11-05",
-          "title": "셀트리온, 브라질서 바이오시밀러 3종 신규 출시…“시장 공략 가속”",
+          "title": "셀트리온, 브라질 바이오시밀러 판 키운다…신제품 3종 출격",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "셀트리온, 브라질서 자가면역·골질환 치료제 3종 출시",
+          "title": "\"중남미 핵심 시장 공략 박차\"…셀트리온, 브라질서 후속 바이오시밀러...",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "셀트리온, 브라질서 '코이볼마' 출시…제품군 10종으로 확대",
+          "title": "셀트리온, 브라질서 바이오시밀러 3종 출시… 중남미 핵심 시장 공략 속...",
           "risk": false
         }
       ],
-      "price": 214500,
-      "chg": 0.0725,
-      "activity": 5.3,
-      "foreign_today": 28314000000,
-      "inst_today": 11368500000,
+      "price": 215000,
+      "chg": 0.075,
+      "activity": 5.0,
+      "foreign_today": 35260000000,
+      "inst_today": 26015000000,
+      "exchange": null
+    },
+    {
+      "code": "035720",
+      "name": "카카오",
+      "close": 29450,
+      "ret5": -0.0151,
+      "ret20": -0.1222,
+      "rsi14": 35.7,
+      "vol20": 0.272,
+      "foreign_net": 4222456675,
+      "inst_net": 11246144775,
+      "score": 0.866,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "카카오, 2028년 AI 사업 손익분기점 목표…1500억 자사주 매입·소각",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "[컨콜]카카오, 3분기 영업익 2403억…AI 적자 640억으로 확대",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "본업 힘 키운 카카오, '실행형 AI' 승부…주가 부진에 1500억 자사주 소...",
+          "risk": false
+        }
+      ],
+      "price": 31900,
+      "chg": 0.0962,
+      "activity": 6.07,
+      "foreign_today": 3253800000,
+      "inst_today": 2360600000,
+      "exchange": null
+    },
+    {
+      "code": "035420",
+      "name": "NAVER",
+      "close": 172100,
+      "ret5": -0.0353,
+      "ret20": -0.1032,
+      "rsi14": 39.6,
+      "vol20": 0.417,
+      "foreign_net": 34034200750,
+      "inst_net": -51611345250,
+      "score": 0.866,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "NAVER, AI 에이전트 프로덕트 기획 경력채용…서비스 사업화 인재 찾는다",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "[N2 증시 풍향계] 美 AI 규제 우려 삼전·닉스 급락 ‘쇼크’…NAVER·셀트...",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "마이데이터 산업 성장 기대…NAVER·NICE평가정보 '기세등등'",
+          "risk": false
+        }
+      ],
+      "price": 183000,
+      "chg": 0.0714,
+      "activity": 3.08,
+      "foreign_today": 18117000000,
+      "inst_today": 10248000000,
+      "exchange": null
+    },
+    {
+      "code": "316140",
+      "name": "우리금융지주",
+      "close": 30800,
+      "ret5": 0.0353,
+      "ret20": -0.0792,
+      "rsi14": 43.4,
+      "vol20": 0.301,
+      "foreign_net": -56327899900,
+      "inst_net": 59042064425,
+      "score": 0.748,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "[특징주] 은행주 동반 강세…우리금융지주 5.9% 급등",
+          "risk": false
+        }
+      ],
+      "price": 32400,
+      "chg": 0.0675,
+      "activity": 1.68,
+      "foreign_today": 2818800000,
+      "inst_today": 4536000000,
+      "exchange": null
+    },
+    {
+      "code": "112610",
+      "name": "씨에스윈드",
+      "close": 44400,
+      "ret5": 0.1198,
+      "ret20": -0.2318,
+      "rsi14": 46.4,
+      "vol20": 0.786,
+      "foreign_net": -21046654725,
+      "inst_net": 1518542300,
+      "score": 0.646,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "씨에스윈드, 7,973억원 규모 미국 풍력타워 공급 계약 체결",
+          "risk": false
+        },
+        {
+          "date": "11-04",
+          "title": "씨에스윈드 5.66% 상승…풍력 수주 회복 기대 유입",
+          "risk": false
+        }
+      ],
+      "price": 48050,
+      "chg": 0.0761,
+      "activity": 4.85,
+      "foreign_today": 1009050000,
+      "inst_today": 480500000,
       "exchange": null
     },
     {
@@ -133,7 +258,7 @@
       "vol20": 0.575,
       "foreign_net": 1168053400,
       "inst_net": 89060007775,
-      "score": 0.75,
+      "score": 0.622,
       "news": [
         {
           "date": "11-05",
@@ -151,46 +276,43 @@
           "risk": false
         }
       ],
-      "price": 29950,
-      "chg": 0.0118,
-      "activity": 3.07,
+      "price": 30050,
+      "chg": 0.0152,
+      "activity": 2.85,
       "foreign_today": 0,
-      "inst_today": 3354400000,
+      "inst_today": 2043400000,
       "exchange": null
     },
     {
-      "code": "028050",
-      "name": "삼성E&A",
-      "close": 66900,
-      "ret5": 0.0552,
-      "ret20": 0.3923,
-      "rsi14": 72.5,
-      "vol20": 0.915,
-      "foreign_net": 17644093900,
-      "inst_net": 14865329300,
-      "score": 0.705,
+      "code": "030200",
+      "name": "KT",
+      "close": 49700,
+      "ret5": 0.0983,
+      "ret20": -0.0368,
+      "rsi14": 53.3,
+      "vol20": 0.333,
+      "foreign_net": -8556535000,
+      "inst_net": 22696941275,
+      "score": 0.598,
       "news": [
         {
-          "date": "11-04",
-          "title": "삼성E&A 6만4500원…수주 목표 상향에 4.71% 상승",
+          "date": "11-05",
+          "title": "KT-삼성전자, AI로 고속철도 통신 품질 개선 나선다",
           "risk": false
         },
         {
-          "date": "11-04",
-          "title": "삼성E&A, AI·모듈러 공법 앞세워 EPC 체질 혁신…KB證, 목표가 8만8000원...",
+          "date": "11-05",
+          "title": "KT, 기업 AX '길잡이' 플랫폼 내놨다… 진단부터 솔루션 추천까지 한 번...",
           "risk": false
         },
         {
-          "date": "11-04",
-          "title": "건설 섹터, '계룡건설' 추천...'GS건설' TOP PICK...'삼성E&A' 차선호주",
+          "date": "11-05",
+          "title": "KT·삼성전자, AI로 고속철도 무선망 개선...AI-RAN 기술 실증",
           "risk": false
         }
       ],
-      "price": 65500,
-      "chg": 0.0,
-      "activity": 1.68,
-      "foreign_today": 5371000000,
-      "inst_today": 65500000,
+      "foreign_today": 3677800000,
+      "inst_today": 1242500000,
       "exchange": null
     },
     {
@@ -203,7 +325,7 @@
       "vol20": 0.658,
       "foreign_net": -34495865250,
       "inst_net": 64637407000,
-      "score": 0.568,
+      "score": 0.575,
       "news": [
         {
           "date": "11-04",
@@ -221,65 +343,96 @@
           "risk": false
         }
       ],
-      "price": 359000,
-      "chg": 0.0113,
-      "activity": 2.31,
+      "price": 361500,
+      "chg": 0.0183,
+      "activity": 2.17,
       "foreign_today": 0,
-      "inst_today": 2154000000,
+      "inst_today": 2892000000,
       "exchange": null
     },
     {
-      "code": "004020",
-      "name": "현대제철",
-      "close": 29200,
-      "ret5": 0.0977,
-      "ret20": -0.0283,
-      "rsi14": 53.5,
-      "vol20": 0.653,
-      "foreign_net": -7113250,
-      "inst_net": 14875195900,
-      "score": 0.545,
+      "code": "086790",
+      "name": "하나금융지주",
+      "close": 119200,
+      "ret5": 0.032,
+      "ret20": -0.0774,
+      "rsi14": 43.1,
+      "vol20": 0.282,
+      "foreign_net": -34944478850,
+      "inst_net": 38697479450,
+      "score": 0.567,
       "news": [
         {
-          "date": "11-05",
-          "title": "현대제철, 70년 역사 디지털로 남긴다… 임직원이 직접 만드는 'H.ARCHIVE...",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "현대제철, 70년 역사 담은 'H아카이브' 개설…임직원 '동참'",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "美, 동국제강 후판 상계관세 1.89% 확정…현대제철 1.39%",
+          "date": "11-04",
+          "title": "하나금융지주, 보통주 188만5706주 6일 소각 예정",
           "risk": false
         }
       ],
-      "foreign_today": 613200000,
+      "price": 122100,
+      "chg": 0.0427,
+      "activity": 1.25,
+      "foreign_today": 3663000000,
+      "inst_today": 2808300000,
+      "exchange": null
+    },
+    {
+      "code": "028050",
+      "name": "삼성E&A",
+      "close": 66900,
+      "ret5": 0.0552,
+      "ret20": 0.3923,
+      "rsi14": 72.5,
+      "vol20": 0.915,
+      "foreign_net": 17644093900,
+      "inst_net": 14865329300,
+      "score": 0.567,
+      "news": [
+        {
+          "date": "11-04",
+          "title": "삼성E&A 6만4500원…수주 목표 상향에 4.71% 상승",
+          "risk": false
+        },
+        {
+          "date": "11-04",
+          "title": "삼성E&A, AI·모듈러 공법 앞세워 EPC 체질 혁신…KB證, 목표가 8만8000원...",
+          "risk": false
+        },
+        {
+          "date": "11-04",
+          "title": "건설 섹터, '계룡건설' 추천...'GS건설' TOP PICK...'삼성E&A' 차선호주",
+          "risk": false
+        }
+      ],
+      "price": 65400,
+      "chg": -0.0015,
+      "activity": 1.55,
+      "foreign_today": 3924000000,
       "inst_today": 0,
       "exchange": null
     },
     {
-      "code": "000810",
-      "name": "삼성화재",
-      "close": 663000,
-      "ret5": 0.0541,
-      "ret20": 0.0474,
-      "rsi14": 63.7,
-      "vol20": 0.331,
-      "foreign_net": -18933278500,
-      "inst_net": 29273326000,
-      "score": 0.409,
+      "code": "105560",
+      "name": "KB금융",
+      "close": 154700,
+      "ret5": 0.0059,
+      "ret20": -0.0759,
+      "rsi14": 41.6,
+      "vol20": 0.279,
+      "foreign_net": -48818326000,
+      "inst_net": 54420877600,
+      "score": 0.512,
       "news": [
         {
           "date": "11-05",
-          "title": "KB손해보험 스타즈, 평택 홈 개막전서 삼성화재에 1대 3 패배",
+          "title": "한국ESG평가원, KB금융 이재근 회장 선임 찬성 권고…이사회 독립성 호...",
           "risk": false
         }
       ],
-      "foreign_today": 0,
-      "inst_today": 663000000,
+      "price": 157700,
+      "chg": 0.0409,
+      "activity": 1.31,
+      "foreign_today": 7569600000,
+      "inst_today": 3154000000,
       "exchange": null
     },
     {
@@ -292,7 +445,7 @@
       "vol20": 0.246,
       "foreign_net": -22209841000,
       "inst_net": 23560336700,
-      "score": 0.273,
+      "score": 0.504,
       "news": [
         {
           "date": "11-05",
@@ -310,61 +463,189 @@
           "risk": false
         }
       ],
-      "foreign_today": 0,
-      "inst_today": 388200000,
+      "foreign_today": 3882000000,
+      "inst_today": 582300000,
       "exchange": null
     },
     {
-      "code": "005940",
-      "name": "NH투자증권",
-      "close": 24200,
-      "ret5": 0.0168,
-      "ret20": -0.0936,
-      "rsi14": 46.8,
-      "vol20": 0.388,
-      "foreign_net": -13205793325,
-      "inst_net": 17019902075,
-      "score": 0.205,
+      "code": "000100",
+      "name": "유한양행",
+      "close": 78600,
+      "ret5": 0.0103,
+      "ret20": 0.0288,
+      "rsi14": 50.8,
+      "vol20": 0.543,
+      "foreign_net": -183011000,
+      "inst_net": 1391209200,
+      "score": 0.496,
       "news": [
         {
           "date": "11-05",
-          "title": "NH투자증권, '사람 살리는 금융' 릴레이 캠페인 동참",
+          "title": "군포시, 당정 공업지역 정비사업 본격화…옛 유한양행 부지 복합단지 조...",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "신재욱·배광수 NH투자증권 대표, '사람 살리는 금융' 캠페인 동참",
+          "title": "군포시 당정동 옛 유한양행 부지, 도시혁신구역 결정안 조건부 가결",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "신재욱·배광수 NH투자증권 대표, 불법사금융 예방 릴레이 캠페인 동참",
+          "title": "옛 유한양행 부지 개발 가시화…군포 정비사업 국토부 심의 통과",
           "risk": false
         }
       ],
-      "foreign_today": 0,
-      "inst_today": 48400000,
+      "foreign_today": 3144000000,
+      "inst_today": 235800000,
       "exchange": null
     },
     {
-      "code": "091580",
-      "name": "상신이디피",
-      "close": 28250,
-      "ret5": 0.0386,
-      "ret20": 0.13,
-      "rsi14": 60.1,
-      "vol20": 1.219,
-      "foreign_net": -2114408400,
-      "inst_net": 2986282975,
-      "score": 0.659,
+      "code": "004020",
+      "name": "현대제철",
+      "close": 29200,
+      "ret5": 0.0977,
+      "ret20": -0.0283,
+      "rsi14": 53.5,
+      "vol20": 0.653,
+      "foreign_net": -7113250,
+      "inst_net": 14875195900,
+      "score": 0.488,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "현대제철, 사내 기록을 브랜드 자산으로…직원 참여형 플랫폼 개설",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "현대제철, 70년 역사 담은 디지털 아카이브 플랫폼 개설",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "현대제철, 70년 역사 디지털 보존…'H 아카이브' 개설",
+          "risk": false
+        }
+      ],
+      "foreign_today": 905200000,
+      "inst_today": 0,
+      "exchange": null
+    },
+    {
+      "code": "323410",
+      "name": "카카오뱅크",
+      "close": 20150,
+      "ret5": 0.0307,
+      "ret20": 0.005,
+      "rsi14": 51.7,
+      "vol20": 0.242,
+      "foreign_net": 9075318265,
+      "inst_net": -1800833610,
+      "score": 0.472,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "카카오뱅크, 'AI-Safety 콜봇' 개발…금융사기 예방 업무에 도입",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "카카오뱅크, 시간·장소 정해 계좌 숨기는 '스텔스통장' 출시",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "카카오뱅크, 금융사기 예방 'AI 콜봇' 도입…의심 거래 10만 건 안내",
+          "risk": false
+        }
+      ],
+      "foreign_today": 1249300000,
+      "inst_today": 80600000,
+      "exchange": null
+    },
+    {
+      "code": "489790",
+      "name": "한화비전",
+      "close": 47800,
+      "ret5": 0.1817,
+      "ret20": -0.0808,
+      "rsi14": 55.1,
+      "vol20": 1.13,
+      "foreign_net": -20705757000,
+      "inst_net": 27169405150,
+      "score": 0.638,
       "news": [
         {
           "date": "11-04",
-          "title": "상신이디피 23% 뛰어…원통형 배터리 부품 수요와 자금조달 변수",
+          "title": "AI 카메라 잘 팔린 한화비전… 영업익 80% 증가의 속사정",
           "risk": false
         }
       ],
-      "foreign_today": 734500000,
+      "foreign_today": 2294400000,
+      "inst_today": 0,
+      "exchange": null
+    },
+    {
+      "code": "059090",
+      "name": "미코",
+      "close": 22900,
+      "ret5": -0.1192,
+      "ret20": -0.0438,
+      "rsi14": 52.0,
+      "vol20": 1.262,
+      "foreign_net": -8327822450,
+      "inst_net": 3094928250,
+      "score": 0.543,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "'미코' 56살 오현경, 요즘 어떻게 지내나 봤더니 ‘방부제 미모’",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "'56세' 오현경, 군살 없이 선명한 11자 복근…여전한 '미코' 미모 [N샷]",
+          "risk": false
+        },
+        {
+          "date": "11-04",
+          "title": "미코 출신·연봉 2억...'돌싱모솔' 2기 돌싱녀들 스펙 역대급",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 1854900000,
+      "exchange": null
+    },
+    {
+      "code": "328130",
+      "name": "루닛",
+      "close": 14330,
+      "ret5": -0.0291,
+      "ret20": 0.2852,
+      "rsi14": 58.9,
+      "vol20": 1.382,
+      "foreign_net": -15849296990,
+      "inst_net": 14299779995,
+      "score": 0.457,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "루닛, 477억원 전환사채 발행…재무 부담 완화",
+          "risk": true
+        },
+        {
+          "date": "11-05",
+          "title": "루닛, 볼파라 인수 CB 갚으려 또 477억 CB…상장사 조달 꼬리 문다",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "루닛, SITC 2026서 AI 암 조직 분석 연구 2건 발표…난소암·방광암 바이...",
+          "risk": false
+        }
+      ],
+      "foreign_today": 1089080000,
       "inst_today": 0,
       "exchange": null
     },
