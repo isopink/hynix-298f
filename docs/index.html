@@ -246,12 +246,6 @@ td.k { color: var(--ink); white-space: nowrap; }
 .f-item .who b { font-weight: 500; } .f-item .who time { color: var(--muted); }
 .f-item p { margin: 0; color: var(--body); font-size: 13px; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere; }
 .f-empty { color: var(--muted); font-size: 13px; margin: 8px 0; }
-.recent { display: none; gap: 10px; }
-.recent .rc { border-top: 1px solid rgba(255,255,255,.08); padding-top: 12px; display: grid; gap: 6px; font-size: 13px; }
-.recent .rc .h { display: flex; justify-content: space-between; gap: 8px; }
-.recent .rc .h b { font-weight: 500; }
-.recent .rc p { margin: 0; color: var(--body); font-size: 12px; line-height: 1.55; }
-.recent .rc p span { color: var(--ink); }
 .foot { color: var(--muted); font-size: 11px; text-align: center; padding-top: 8px; }
 
 @media (max-width: 1100px) { .c3 { grid-column: span 6; } .c4, .c5, .c6, .c7, .c8 { grid-column: span 12; } }
@@ -260,7 +254,6 @@ td.k { color: var(--ink); white-space: nowrap; }
   .c3 .val { font-size: 20px; }
   .c3 .hd .sub { display: none; }
   .c3 .hd { flex-direction: column; gap: 4px; }
-  .recent { display: grid; }
   .grid { gap: 12px; }
   .card { padding: 16px; }
   .more-body { padding: 0 10px 10px; gap: 10px; }
@@ -452,16 +445,6 @@ details.log summary { border-radius: 16px; }
     <summary>Agent Black Box</summary>
     <div class="more-body">
       <div class="grid">
-        <section class="card c8">
-          <div class="hd m-hide"><span class="eyebrow">매매 타임라인</span></div>
-          <div class="chart m-hide" id="ch-timeline" style="min-height:200px"></div>
-          <div class="recent" id="recent"></div>
-        </section>
-        <section class="card c4">
-          <div class="hd"><span class="eyebrow">리스크 Hook 차단</span></div>
-          <div class="val" id="k-blocks">—</div>
-          <div class="chart" id="ch-blocks" style="min-height:110px"></div>
-        </section>
         <section class="card c6 m-hide">
           <div class="hd"><span class="eyebrow">확신도 vs 수익</span><span class="sub">원 크기 = 매수 금액 · 흐린 원 = 보유 중</span></div>
           <div class="chart" id="ch-scatter" style="min-height:240px"></div>
@@ -757,14 +740,13 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const closed = D.trades.filter(t => t.side === '매수' && t.status === '청산'), wins = closed.filter(t => t.outcome > 0).length;
     $('k-win').textContent = closed.length ? Math.round(wins / closed.length * 100) + '%' : '—';
     $('k-win-sub').textContent = '청산 ' + closed.length + '건 중 ' + wins + '건 수익';
-    $('k-blocks').textContent = D.risk.length + '건';
   }
 
   function drawAll() {
     if (!D) return;
     hero(); sparkLine($('sp-kospi'), D.eq.map(r => r.kospi), '#bdbdbd'); winDots($('sp-win'));
     sparkBars($('sp-week'), D.eq.slice(-5).map(r => r.day)); drawdown($('sp-dd'));
-    agentStatus(); decisionCard(); calendar(); donut(); pnl(); scatter(); timeline(); recent(); blocks(); tokens(); review(); limits(); alpha(); drawKospi(); drawFlow();
+    agentStatus(); decisionCard(); calendar(); donut(); pnl(); scatter(); tokens(); review(); limits(); alpha(); drawKospi(); drawFlow();
     animated = true;
   }
 
@@ -1396,64 +1378,6 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       .attr('fill', p => p.outcome >= 0 ? C.red : C.blue).attr('fill-opacity', p => p.status === '보유 중' ? .3 : .85)
       .attr('stroke', p => p.outcome >= 0 ? C.redHi : C.blue).attr('stroke-width', 1.25)
       .on('pointermove pointerdown', (ev, p) => showTip(ev, `<div class="t">${md(p.d)} · ${esc(p.name)}</div>${row('확신도', p.confidence.toFixed(2))}${row(p.status === '청산' ? '실현 수익' : '평가 수익', pct(p.outcome), p.outcome >= 0 ? 'up' : 'down')}${row('매수 금액', won(p.amount))}`)).on('pointerleave', hideTip);
-  }
-
-  function timeline() {
-    const el = $('ch-timeline'), { svg, W, H } = svgIn(el, 200);
-    const m = { l: 8, r: 8 }, mid = H / 2 - 6;
-    const x = d3.scaleUtc([toD(T0), toD(END)], [m.l + 48, W - m.r - 16]);
-    const rr = d3.scaleSqrt([0, d3.max(D.trades, t => t.amount) || 1], [0, 14]);
-    [['2026-11-02', '1주차'], ['2026-11-09', '2주차'], ['2026-11-16', '3주차'], ['2026-11-23', '4주차']].forEach(([d, l], i) => {
-      const x0 = x(toD(d)) - 6, x1 = x(d3.utcDay.offset(toD(d), 4)) + 6;
-      svg.append('rect').attr('x', x0).attr('y', 8).attr('width', x1 - x0).attr('height', H - 36).attr('rx', 8).attr('fill', 'rgba(255,255,255,.035)');
-      svg.append('text').attr('x', x0 + 6).attr('y', 22).attr('font-size', 11).attr('fill', C.muted).text(l);
-    });
-    svg.append('line').attr('x1', m.l + 40).attr('x2', W - m.r).attr('y1', mid).attr('y2', mid).attr('stroke', '#3a3a3a');
-    const today = x(D.last.d);
-    svg.append('line').attr('x1', today + 8).attr('x2', today + 8).attr('y1', 8).attr('y2', H - 28).attr('stroke', C.red).attr('stroke-dasharray', '2 3');
-    svg.append('text').attr('x', today + 12).attr('y', H - 32).attr('font-size', 11).attr('fill', C.redHi).text('오늘');
-    const seen = {};
-    const pts = D.trades.map(t => { const k = t.time.slice(0, 10) + t.side; const n = seen[k] = (seen[k] || 0) + 1; return { ...t, n }; });
-    const off = 26;
-    const g = svg.append('g').selectAll('g').data(pts).join('g').attr('transform', t => `translate(${x(t.d) + (t.n - 1) * 14},${t.side === '매수' ? mid - off - (t.n - 1) * 26 : mid + off + (t.n - 1) * 26})`);
-    g.append('line').attr('x1', 0).attr('x2', 0).attr('y1', 0).attr('y2', t => t.side === '매수' ? off + (t.n - 1) * 26 : -off - (t.n - 1) * 26).attr('stroke', '#3a3a3a');
-    g.append('circle').attr('r', t => Math.max(5, rr(t.amount))).attr('fill', t => t.side === '매수' ? C.red : C.blue).attr('fill-opacity', .85).attr('stroke', '#1c1c1c').attr('stroke-width', 2).attr('pointer-events', 'none');
-    g.append('circle').attr('r', t => Math.max(16, rr(t.amount) + 4)).attr('fill', 'transparent').style('cursor', 'pointer')
-      .on('pointermove pointerdown', (ev, t) => showTip(ev, `<div class="t">${esc(t.time.slice(5))}</div>${row(t.name + ' ' + t.side, won(t.qty) + '주 × ' + won(t.price))}${t.confidence ? row('확신도', t.confidence.toFixed(2)) : ''}<div class="why"><b>매수 측</b> ${esc(t.bull)}<br><b>매도 측</b> ${esc(t.bear)}<br><b>결정</b> ${esc(t.decision)}</div>`)).on('pointerleave', hideTip);
-    svg.append('text').attr('x', m.l).attr('y', mid - 8).attr('font-size', 11).attr('fill', C.redHi).text('매수 ▲');
-    svg.append('text').attr('x', m.l).attr('y', mid + 16).attr('font-size', 11).attr('fill', C.blue).text('매도 ▼');
-    ['2026-11-02', '2026-11-09', '2026-11-16', '2026-11-23'].forEach(d => svg.append('text').attr('x', x(toD(d))).attr('y', H - 8).attr('font-size', 11).attr('fill', C.muted).attr('text-anchor', 'middle').text(md(toD(d))));
-  }
-
-  function recent() {
-    const el = $('recent'); el.textContent = '';
-    if (!D.trades.length) return;
-    const head = document.createElement('div'); head.className = 'eyebrow'; head.textContent = '최근 거래 ' + Math.min(3, D.trades.length) + '건'; el.appendChild(head);
-    [...D.trades].sort((a, b) => a.time < b.time ? 1 : -1).slice(0, 3).forEach(t => {
-      const c = document.createElement('div'); c.className = 'rc';
-      const h = document.createElement('div'); h.className = 'h';
-      const l = document.createElement('b'); l.textContent = t.name + ' ' + t.side; l.className = t.side === '매수' ? 'up' : 'down';
-      const r = document.createElement('span'); r.className = 'sub'; r.textContent = t.time.slice(5) + (t.confidence ? ' · 확신도 ' + t.confidence.toFixed(2) : '');
-      h.append(l, r); c.appendChild(h);
-      [['매수 측', t.bull], ['매도 측', t.bear], ['결정', t.decision]].forEach(([k, v]) => {
-        const p = document.createElement('p'); const sp = document.createElement('span'); sp.textContent = k + ' '; p.append(sp, document.createTextNode(v)); c.appendChild(p);
-      });
-      el.appendChild(c);
-    });
-  }
-
-  function blocks() {
-    if (!D.risk.length) return none($('ch-blocks'), '차단된 주문이 없어요.');
-    const el = $('ch-blocks'), by = d3.rollups(D.risk, v => v.length, r => r.rule).sort((a, b) => b[1] - a[1]);
-    const bh = 30, H = Math.max(100, by.length * bh + 4), { svg, W } = svgIn(el, H);
-    const x = d3.scaleLinear([0, d3.max(by, b => b[1]) || 1], [0, W * .3]);
-    by.forEach(([rule, n], i) => {
-      const yy = i * bh + 2, items = D.risk.filter(r => r.rule === rule);
-      const gg = svg.append('g').style('cursor', 'default').on('pointermove pointerdown', ev => showTip(ev, items.map(r => `<div class="t">${esc(r.time.slice(5))} · ${esc(r.name)} ${esc(r.side)}</div><div style="margin-bottom:4px">${esc(r.detail)}</div>`).join(''))).on('pointerleave', hideTip);
-      gg.append('rect').attr('x', 0).attr('y', yy).attr('width', W).attr('height', bh - 4).attr('fill', 'transparent');
-      gg.append('rect').attr('x', 0).attr('y', yy + 6).attr('height', bh - 16).attr('rx', 2).attr('width', Math.max(4, x(n))).attr('fill', 'url(#gradRedH)');
-      gg.append('text').attr('x', x(n) + 10).attr('y', yy + (bh - 4) / 2).attr('dy', '.32em').attr('font-size', 12).attr('fill', C.body).text(rule);
-    });
   }
 
   function tokens() {
