@@ -586,7 +586,7 @@ def test_index_dip_buy_in_falling_market():
     try:
         C.now = lambda: at(15, 15)
         plan = sizing.plan_buy("069500", 0.65, 10_000, acc(), P, R, today_change=-0.052)
-        assert plan["qty"] > 0 and plan["index_dip"] and plan["target_weight"] == 0.07 and plan["max_days"] == 5, plan
+        assert plan["qty"] > 0 and plan["index_dip"] and plan["target_weight"] == P["index"]["dip_buy"]["weight"] and plan["max_days"] == 5, plan
         assert sizing.plan_buy("069500", 0.65, 10_000, acc(), P, R, today_change=-0.01)["qty"] == 0
         chk = lambda chg: [x for x, _ in risk.check({"code": "069500", "side": "매수", "qty": plan["qty"], "confidence": 0.65, "today_change": chg}, acc(), 10_000, P, R)]
         assert "지수 국면" not in chk(-0.052) and "지수 국면" in chk(-0.01)
@@ -594,6 +594,15 @@ def test_index_dip_buy_in_falling_market():
         assert sizing.plan_buy("069500", 0.65, 10_000, acc(), P, R, today_change=-0.052)["qty"] == 0
     finally:
         C.now = real
+
+
+def test_index_weight_cap_20pct():
+    """KODEX 200 은 종목당 10% 대신 지수 한도 20%까지 (확신도 0.80 이상이면 20%)."""
+    open(C.JOURNAL, "w").close()
+    C.journal("regime", regime="상승", cap=P["regime_cap"]["상승"])
+    p = {**P, "decision": {**P["decision"], "min_weight": 0.05, "max_weight": 0.10}}
+    assert sizing.plan_buy("069500", 0.85, 10_000, acc(), p, R)["target_weight"] == P["index"]["weight_cap"] == 0.20
+    assert sizing.plan_buy("005930", 0.85, 10_000, acc(), p, R)["target_weight"] == 0.10
 
 
 if __name__ == "__main__":

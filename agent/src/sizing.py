@@ -41,7 +41,9 @@ def plan_buy(code, conf, price, account, p=None, r=None, regime=None, today_chan
     cap, regime = equity_cap(p, r, account, regime)
     inv = C.inverse(code, p)
 
-    w = target_weight(conf, p, r, top=inv["weight_cap"] if inv else None)   # 인버스는 종목당 10% 대신 인버스 한도 20%까지
+    ix = C.index_etf(code, p)
+    top = inv["weight_cap"] if inv else ix.get("weight_cap") if ix else None   # 인버스·지수(11-05)는 종목당 10% 대신 자기 한도 20%까지
+    w = target_weight(conf, p, r, top=top)
     dp = C.dip(code, p)
     xd = C.index_dip(code, today_change, p)   # 급락일 지수 예외: 국면과 상관없이, 크기 7%
     if xd and conf >= C.buy_threshold(p) - 1e-9:
