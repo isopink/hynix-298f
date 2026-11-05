@@ -1737,7 +1737,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
         if (t.dead) return;
         if (Array.isArray(x)) await Promise.all(x.map(y => play(t, [y])));
         else if (x.includes('-')) await flow(t, x);
-        else { const [id, ms] = x.split(':'); await hold(t, id, +ms || 400); }
+        else { const [id, ms] = x.split(':'); await hold(t, id, (+ms || 400) * 2.2); }   // 지점이 켜져 있는 시간 (11-05 2.2배로)
       }
     }
     const T = () => ({ dead: false });
