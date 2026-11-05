@@ -144,11 +144,12 @@ details.log[open] > summary::after { content: "−"; }
 .st-line .who { display: inline-flex; align-items: center; gap: 6px; }
 .st-line b.on { color: var(--red-hi); }
 .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); flex: none; }
-.dot.ok { background: var(--red-hi); box-shadow: 0 0 0 3px rgba(255,90,74,.2); }   /* On = 빨강 */
-.dot.bad { background: var(--blue); box-shadow: 0 0 0 3px rgba(74,163,212,.2); }   /* 문제 있음 = 파랑 */
-.dot.run { animation: dot-run 1.2s ease-in-out infinite; }   /* 판단 실행 중 (시간으로 추정) */
-@keyframes dot-run { 50% { box-shadow: 0 0 0 6px rgba(255,90,74,0); opacity: .45; } }
-@media (prefers-reduced-motion: reduce) { .dot.run { animation: none; } }
+.dot.ok { background: #3ecf8e; box-shadow: 0 0 0 3px rgba(62,207,142,.2); }   /* 11-05 동작 중 = 초록 (글자 On/Off 대신 점 색) */
+.dot.bad { background: var(--red-hi); box-shadow: 0 0 0 3px rgba(255,90,74,.2); animation: dot-bad 1s ease-in-out infinite; }   /* 멈춤·문제 = 빨강 깜빡임 */
+.dot.run { animation: dot-run 1.2s ease-in-out infinite; }   /* 실행 중 = 초록 깜빡임 */
+@keyframes dot-run { 50% { box-shadow: 0 0 0 6px rgba(62,207,142,0); opacity: .45; } }
+@keyframes dot-bad { 50% { box-shadow: 0 0 0 6px rgba(255,90,74,0); opacity: .35; } }
+@media (prefers-reduced-motion: reduce) { .dot.run, .dot.bad { animation: none; } }
 .hero-card > .st-line { position: absolute; top: 20px; right: 20px; z-index: 1; flex-direction: column; align-items: flex-end; gap: 6px; }   /* 누적 수익률 카드 우상단, 시장 모니터링 위 · 에이전트 아래 */
 .hero-card > .st-line > span + span::before { content: none; }
 .hero-chart { padding-top: 44px; }   /* 우상단 상태줄과 차트 이름표가 겹치지 않게 */
@@ -277,6 +278,10 @@ td.k { color: var(--ink); white-space: nowrap; }
 @media (prefers-reduced-motion: no-preference) {
   .draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animation: draw 1.2s cubic-bezier(.2,.7,.2,1) forwards; }
   @keyframes draw { to { stroke-dashoffset: 0; } }
+  .h-in { opacity: 0; animation: h-in .6s ease var(--d, 0s) forwards; }   /* 11-05 대표 차트 첫 진입: 선이 그려진 뒤 색칠·끝점이 나타남 */
+  @keyframes h-in { to { opacity: 1; } }
+  .h-pulse { transform-box: fill-box; transform-origin: center; animation: h-pulse 2.4s ease-out infinite; }   /* 오늘 끝점 맥박 */
+  @keyframes h-pulse { 0% { transform: scale(1); opacity: .55; } 70%, 100% { transform: scale(3.4); opacity: 0; } }
 }
 
 /* ===== glass / gradient layer ===== */
@@ -1010,15 +1015,31 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     defs.append('clipPath').attr('id', 'cHeroUp').append('path').datum(rows).attr('d', d3.area().x(r => x(r.d)).y0(m.t - 20).y1(r => y(r.kret)));
     defs.append('clipPath').attr('id', 'cHeroDn').append('path').datum(rows).attr('d', d3.area().x(r => x(r.d)).y0(H).y1(r => y(r.kret)));
     const gap = d3.area().x(r => x(r.d)).y0(r => y(r.kret)).y1(r => y(r.ret));
-    svg.append('path').datum(rows).attr('clip-path', 'url(#cHeroUp)').attr('fill', 'rgba(255,74,54,.28)').attr('d', gap);
-    svg.append('path').datum(rows).attr('clip-path', 'url(#cHeroDn)').attr('fill', 'rgba(74,163,212,.28)').attr('d', gap);
-    svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', '#a8a8a8').attr('stroke-width', 0.6).attr('stroke-linejoin', 'round').attr('d', kLine);   // 11-05 1.75 → 0.6 (얇게)
-    const p = svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', col).attr('stroke-width', 0.6).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round').attr('d', d3.line().x(r => x(r.d)).y(r => y(r.ret)));   // 11-05 2.5 → 0.6
-    if (!animated) animate(p);
-    const L = rows[rows.length - 1];
-    svg.append('circle').attr('cx', x(L.d)).attr('cy', y(L.kret)).attr('r', 3.5).attr('fill', '#a8a8a8');   // KOSPI 끝점 (하루치일 땐 선 대신 이 점만 보임)
-    svg.append('circle').attr('cx', x(L.d)).attr('cy', y(L.ret)).attr('r', 10).attr('fill', col).attr('opacity', .2);
-    svg.append('circle').attr('cx', x(L.d)).attr('cy', y(L.ret)).attr('r', 4.5).attr('fill', col).attr('stroke', '#fff').attr('stroke-width', 1.5);
+    // 11-05 꾸밈: 격차 그라데이션 · 선 glow · 끝점 격차 막대+초과수익 배지 · 끝점 맥박 · 첫 진입 애니메이션
+    const fx = !animated, fade = (sel, d) => { if (fx) sel.classed('h-in', true).style('--d', d + 's'); return sel; };
+    const glow = defs.append('filter').attr('id', 'fHeroGlow').attr('filterUnits', 'userSpaceOnUse').attr('x', 0).attr('y', 0).attr('width', W).attr('height', H);
+    glow.append('feGaussianBlur').attr('stdDeviation', 2.2).attr('result', 'b');
+    const gm = glow.append('feMerge'); gm.append('feMergeNode').attr('in', 'b'); gm.append('feMergeNode').attr('in', 'SourceGraphic');
+    const grad = (id, c, a0, a1) => { const g = defs.append('linearGradient').attr('id', id).attr('x1', 0).attr('y1', 0).attr('x2', 0).attr('y2', 1);
+      g.append('stop').attr('offset', 0).attr('stop-color', c).attr('stop-opacity', a0); g.append('stop').attr('offset', 1).attr('stop-color', c).attr('stop-opacity', a1); return `url(#${id})`; };
+    fade(svg.append('path').datum(rows).attr('clip-path', 'url(#cHeroUp)').attr('fill', grad('gHeroUp', '#ff4a36', .42, .04)).attr('d', gap), .5);   // 위로 갈수록 진하게
+    fade(svg.append('path').datum(rows).attr('clip-path', 'url(#cHeroDn)').attr('fill', grad('gHeroDn', '#4aa3d4', .04, .42)).attr('d', gap), .5);   // 아래로 갈수록 진하게
+    const kp = svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', '#a8a8a8').attr('stroke-width', 0.6).attr('stroke-linejoin', 'round').attr('filter', 'url(#fHeroGlow)').attr('d', kLine);   // 11-05 1.75 → 0.6 (얇게)
+    const p = svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', col).attr('stroke-width', 0.6).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round').attr('filter', 'url(#fHeroGlow)').attr('d', d3.line().x(r => x(r.d)).y(r => y(r.ret)));   // 11-05 2.5 → 0.6
+    if (fx) { animate(kp); animate(p); }
+    const L = rows[rows.length - 1], ex = x(L.d), yR = y(L.ret), yK = y(L.kret);
+    if (Math.abs(yR - yK) >= 3) {   // 끝점 격차 막대 + 초과수익 배지 (막대 왼쪽, 격차 색칠 안)
+      const al = L.ret - L.kret, ac = al >= 0 ? colHi : '#4aa3d4', bg = svg.append('g');
+      bg.append('line').attr('x1', ex).attr('x2', ex).attr('y1', yR).attr('y2', yK).attr('stroke', ac).attr('stroke-width', 1).attr('stroke-dasharray', '2 2').attr('opacity', .8);
+      const txt = (al >= 0 ? '+' : '−') + (Math.abs(al) * 100).toFixed(1) + '%p', tw = textW(svg, txt, 11) + 14, bx = Math.max(m.l, ex - 8 - tw), by = (yR + yK) / 2;
+      bg.append('rect').attr('x', bx).attr('y', by - 10).attr('width', tw).attr('height', 20).attr('rx', 10).attr('fill', 'rgba(20,20,20,.78)').attr('stroke', ac).attr('stroke-opacity', .6);
+      bg.append('text').attr('x', bx + tw / 2).attr('y', by).attr('dy', '.35em').attr('text-anchor', 'middle').attr('font-size', 11).attr('font-weight', 600).attr('fill', ac).text(txt);
+      bg.append('title').text(`KOSPI 대비 초과수익 ${txt}`);
+      fade(bg, 1.1);
+    }
+    fade(svg.append('circle').attr('cx', ex).attr('cy', yK).attr('r', 3.5).attr('fill', '#a8a8a8'), 1);   // KOSPI 끝점 (하루치일 땐 선 대신 이 점만 보임)
+    svg.append('circle').attr('class', 'h-pulse').attr('cx', ex).attr('cy', yR).attr('r', 4.5).attr('fill', col);   // 맥박 (퍼졌다 사라짐)
+    fade(svg.append('circle').attr('cx', ex).attr('cy', yR).attr('r', 4.5).attr('fill', col).attr('stroke', '#fff').attr('stroke-width', 1.5), 1);
     if (!narrow) {
       const labs = [{ n: '피터 린치', v: L.ret, c: colHi, y: y(L.ret) }, { n: 'KOSPI', v: L.kret, c: '#9a9a9a', y: y(L.kret) }];
       if (Math.abs(labs[0].y - labs[1].y) < 18) { const mid = (labs[0].y + labs[1].y) / 2, s = labs[0].y <= labs[1].y ? 1 : -1; labs[0].y = mid - 9 * s; labs[1].y = mid + 9 * s; }
@@ -1087,7 +1108,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   // 에이전트 = 정기 판단. 마지막 실행이 실패했거나 예정 시각을 30분 넘기면 Off
   function agentStatus() {
     const st = STATUS, el = $('st-line');
-    const pill = ([state, cls, tip], name) => `<span class="who" title="${esc(tip)}"><i class="dot ${cls}"></i>${name} <b class="${state === 'On' ? 'on' : ''}">${state}</b></span>`;
+    const pill = ([state, cls, tip], name) => `<span class="who" title="${esc(state + ' · ' + tip)}" aria-label="${name} ${state}"><i class="dot ${cls}"></i>${name}</span>`;   // 11-05 글자 On/Off 빼고 점 색으로만 (초록 동작 · 빨강 깜빡임 멈춤 · 회색 장 마감);
     const age = LIVE_AT ? (Date.now() - Date.parse(LIVE_AT)) / 60e3 : Infinity;
     const watch = !opsOpen() ? ['Off', '', '장 마감 · 평일 08:30~15:35 동작']
       : age <= 12 ? ['On', 'ok run', `마지막 잔고 조회 ${Math.max(0, Math.round(age))}분 전`]
