@@ -1528,7 +1528,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     };
     // 경로 = 출발-도착
     const LINKS = 'kbal-snap snap-sbs sbs-dash nav-cron cron-kxt cron-flw kxt-dash flw-dash snap-lsnap lsnap-mon mon-run sched-run sched-snap sched-mon krank-intr krx-prep news-prep prep-brief intr-brief run-prep run-intr brief-cl run-cl cl-reg reg-cl cl-bull bull-web bull-bear bear-web bear-cl cl-mcp mcp-plan params-plan plan-mcp mcp-hook limits-hook hook-broker broker-korder kprice-broker mcp-jrn jrn-logger logger-pub pub-gh gh-pg pg-dash lap-gh gh-sync sync-run cl-tune tune-params cl-rev rev-pub params-pub'.split(' ');
-    let N, E, EDGE, dots, mesh, H = 620, ys = 1, scale = 1, phone = null;
+    let N, E, EDGE, dots, mesh, H = 620, ys = 1, scale = 1, phone = null, lw = 1;
     let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647, r2 = () => (rnd() + rnd()) - 1;
     const at = (s, t) => { const u = 1 - t, a = u * u * u, b = 3 * u * u * t, c = 3 * u * t * t, d = t * t * t; return [a * s.p0[0] + b * s.c1[0] + c * s.c2[0] + d * s.p3[0], a * s.p0[1] + b * s.c1[1] + c * s.c2[1] + d * s.p3[1]]; };
     function branch(x, y, ang, len, depth, out, w) {
@@ -1581,10 +1581,9 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const SP = { r: sprite('255,90,74', 64), n: sprite('205,205,210', 64), w: sprite('235,235,238', 128, true) };
     const bg = document.createElement('canvas');
     function fit() {
-      const r = cv.getBoundingClientRect(), dpr = Math.min(1.5, devicePixelRatio || 1);
-      if (r.width < 1) return;
-      const ph = r.width < 560;
-      if (ph !== phone) { phone = ph; ys = ph ? 1.55 : 1; H = Math.round(620 * ys); cv.style.aspectRatio = `${W} / ${H}`; build(); }
+      const r = cv.getBoundingClientRect(); if (r.width < 1) return;
+      const ph = r.width < 560, dpr = Math.min(ph ? 3 : 2, devicePixelRatio || 1);   // 폰은 화면 픽셀 그대로 그려 선명하게 (캔버스가 작아 비용 적음)
+      if (ph !== phone) { phone = ph; lw = ph ? 1.6 : 1; ys = ph ? 1.55 : 1; H = Math.round(620 * ys); cv.style.aspectRatio = `${W} / ${H}`; build(); }
       const cw = Math.round(r.width * dpr), ch = Math.round(cw * H / W);
       if (cw === cv.width && ch === cv.height && bg.width === cw) return;
       cv.width = cw; cv.height = ch; scale = cw / W;
@@ -1592,10 +1591,10 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       const g = bg.getContext('2d'); g.setTransform(scale, 0, 0, scale, 0, 0);
       g.clearRect(0, 0, W, H);
       g.globalCompositeOperation = 'lighter'; g.lineCap = 'round';
-      E.forEach(e => e.strands.forEach(s => { g.strokeStyle = 'rgba(200,200,206,.36)'; g.lineWidth = s.w; g.beginPath(); g.moveTo(...s.p0); g.bezierCurveTo(...s.c1, ...s.c2, ...s.p3); g.stroke(); }));
-      const twig = (list, f) => list.forEach(b => { g.strokeStyle = `rgba(225,222,222,${Math.min(.5, (.07 + .24 * b.w) * f)})`; g.lineWidth = b.w; g.beginPath(); g.moveTo(b.x, b.y); g.quadraticCurveTo(b.cx, b.cy, b.ex, b.ey); g.stroke(); });
+      E.forEach(e => e.strands.forEach(s => { g.strokeStyle = 'rgba(200,200,206,.36)'; g.lineWidth = s.w * lw; g.beginPath(); g.moveTo(...s.p0); g.bezierCurveTo(...s.c1, ...s.c2, ...s.p3); g.stroke(); }));
+      const twig = (list, f) => list.forEach(b => { g.strokeStyle = `rgba(225,222,222,${Math.min(.5, (.07 + .24 * b.w) * f)})`; g.lineWidth = b.w * lw; g.beginPath(); g.moveTo(b.x, b.y); g.quadraticCurveTo(b.cx, b.cy, b.ex, b.ey); g.stroke(); });
       Object.values(N).forEach(n => twig(n.den, 1)); dots.forEach(d => twig(d.den, .6));
-      g.lineWidth = .7; g.strokeStyle = 'rgba(225,222,222,.12)'; mesh.forEach(m => { g.beginPath(); g.moveTo(...m.p0); g.bezierCurveTo(...m.c1, ...m.c2, ...m.p3); g.stroke(); });
+      g.lineWidth = .7 * lw; g.strokeStyle = 'rgba(225,222,222,.12)'; mesh.forEach(m => { g.beginPath(); g.moveTo(...m.p0); g.bezierCurveTo(...m.c1, ...m.c2, ...m.p3); g.stroke(); });
       dots.forEach(d => { g.globalAlpha = .4; g.drawImage(SP.n, d.x - 6, d.y - 6, 12, 12); });
       Object.values(N).forEach(n => { g.globalAlpha = .85; g.drawImage(SP.w, n.x - n.size / 2, n.y - n.size / 2, n.size, n.size); });
       g.globalAlpha = 1; g.globalCompositeOperation = 'source-over';
@@ -1615,15 +1614,15 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       E.forEach(e => {
         e.glow += ((e.on > 0 ? 1 : 0) - e.glow) * Math.min(1, sec * 6);
         if (e.glow < .02) return;
-        e.strands.forEach(s => { ctx.globalAlpha = 1; ctx.strokeStyle = `rgba(255,90,74,${.6 * e.glow})`; ctx.lineWidth = s.w + .4; ctx.beginPath(); ctx.moveTo(...s.p0); ctx.bezierCurveTo(...s.c1, ...s.c2, ...s.p3); ctx.stroke(); });
+        e.strands.forEach(s => { ctx.globalAlpha = 1; ctx.strokeStyle = `rgba(255,90,74,${.6 * e.glow})`; ctx.lineWidth = (s.w + .4) * lw; ctx.beginPath(); ctx.moveTo(...s.p0); ctx.bezierCurveTo(...s.c1, ...s.c2, ...s.p3); ctx.stroke(); });
       });
       for (let i = bursts.length - 1; i >= 0; i--) {
         const p = bursts[i]; p.t += dt / p.life; if (p.t < 0) continue; if (p.t >= 1) { bursts.splice(i, 1); continue; }
         const [x, y] = at(p.s, p.t), [tx, ty] = at(p.s, Math.max(0, p.t - .05));
-        ctx.globalAlpha = p.c ? .25 : .55; ctx.strokeStyle = p.c ? 'rgb(205,205,210)' : 'rgb(255,120,104)'; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(x, y); ctx.stroke();
+        ctx.globalAlpha = p.c ? .25 : .55; ctx.strokeStyle = p.c ? 'rgb(205,205,210)' : 'rgb(255,120,104)'; ctx.lineWidth = 1.2 * lw; ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(x, y); ctx.stroke();
         stamp(x, y, SP[p.c || 'r'], p.size, p.c ? .5 : .95);
       }
-      Object.values(N).forEach(n => { if (!(n.glow > .05)) return; ctx.globalAlpha = 1; ctx.strokeStyle = `rgba(255,90,74,${.8 * n.glow * blink})`; n.den.forEach(b => { ctx.lineWidth = b.w + .2; ctx.beginPath(); ctx.moveTo(b.x, b.y); ctx.quadraticCurveTo(b.cx, b.cy, b.ex, b.ey); ctx.stroke(); }); });
+      Object.values(N).forEach(n => { if (!(n.glow > .05)) return; ctx.globalAlpha = 1; ctx.strokeStyle = `rgba(255,90,74,${.8 * n.glow * blink})`; n.den.forEach(b => { ctx.lineWidth = (b.w + .2) * lw; ctx.beginPath(); ctx.moveTo(b.x, b.y); ctx.quadraticCurveTo(b.cx, b.cy, b.ex, b.ey); ctx.stroke(); }); });
       if (dt && clock > nextSpark) { nextSpark = clock + 900 + rnd() * 1400; bursts.push({ s: mesh[Math.floor(rnd() * mesh.length)], t: 0, life: 1600, size: 7, c: 'n' }); }
       Object.values(N).forEach(n => {
         n.glow += (((n.on || 0) > 0 ? 1 : 0) - n.glow) * Math.min(1, sec * 8);
