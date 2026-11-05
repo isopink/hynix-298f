@@ -393,7 +393,16 @@ def market_of(code, p=None, markets=None):
     if market_etf(code, p)[0]:
         return "ETF"
     m = markets if markets is not None else (read_json(MARKETS, {}) or {})
-    return m.get(code)
+    if m.get(code):
+        return m[code]
+    # 08:30 준비가 쓴 시장 목록에 없으면(11-05 데스크톱 기록에 시장이 모두 빠져 있던 일) 저장소의 전 종목 목록으로
+    global _EXCH
+    if _EXCH is None:
+        _EXCH = read_json(os.path.join(DOCS_DATA, "exchange.json"), {}) or {}
+    return _EXCH.get(code)
+
+
+_EXCH = None
 
 
 def trend_ok(px, row, regime=None, p=None):
