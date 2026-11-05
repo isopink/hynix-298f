@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "10:15",
-    "pool": 220,
+    "time": "10:30",
+    "pool": 221,
     "analyzed_new": 30,
-    "passed": 10,
+    "passed": 11,
     "kept_prep": false
   },
   "candidates": [
@@ -102,25 +102,25 @@
       "news": [
         {
           "date": "11-05",
-          "title": "[N-제약Bio] 셀트리온, 브라질서 후속 바이오시밀러 3종 출시 外",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "셀트리온, 브라질서 바이오시밀러 3종 추가 출시",
+          "title": "셀트리온, 남미시장 공략 가속···브라질서 후속 바이오시밀러 3종 출...",
           "risk": false
         },
         {
           "date": "11-05",
           "title": "셀트리온, 브라질서 바이오시밀러 3종 출시…판매 제품 10종으로 확대",
           "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "셀트리온, 브라질서 바이오시밀러 3종 추가 출시",
+          "risk": false
         }
       ],
-      "price": 212500,
-      "chg": 0.0625,
-      "activity": 6.06,
-      "foreign_today": 28050000000,
-      "inst_today": 11262500000,
+      "price": 214500,
+      "chg": 0.0725,
+      "activity": 5.9,
+      "foreign_today": 28314000000,
+      "inst_today": 11368500000,
       "exchange": null
     },
     {
@@ -133,7 +133,7 @@
       "vol20": 0.407,
       "foreign_net": -9667948425,
       "inst_net": 57236651725,
-      "score": 0.842,
+      "score": 0.864,
       "news": [
         {
           "date": "11-05",
@@ -151,46 +151,11 @@
           "risk": false
         }
       ],
-      "price": 31450,
-      "chg": 0.0328,
-      "activity": 5.7,
-      "foreign_today": 4057050000,
-      "inst_today": 4560250000,
-      "exchange": null
-    },
-    {
-      "code": "128940",
-      "name": "한미약품",
-      "close": 426500,
-      "ret5": 0.1419,
-      "ret20": -0.1938,
-      "rsi14": 51.8,
-      "vol20": 0.742,
-      "foreign_net": -58696055500,
-      "inst_net": 74156028000,
-      "score": 0.658,
-      "news": [
-        {
-          "date": "11-05",
-          "title": "지씨씨엘, 한미약품 '에페' 임상 3상 약동학 분석…30개 기관 지원",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "한미약품, 美 간학회 임상 결과 발표 앞두고 9%대 강세[특징주]",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "[특징주] mRNA 관련주 장초반 강세…한미약품 10%대 급등, 올릭스·삼양...",
-          "risk": false
-        }
-      ],
-      "price": 461000,
-      "chg": 0.0885,
-      "activity": 4.31,
-      "foreign_today": 0,
-      "inst_today": 2305000000,
+      "price": 31350,
+      "chg": 0.0296,
+      "activity": 5.19,
+      "foreign_today": 4044150000,
+      "inst_today": 4545750000,
       "exchange": null
     },
     {
@@ -203,7 +168,7 @@
       "vol20": 0.575,
       "foreign_net": 1168053400,
       "inst_net": 89060007775,
-      "score": 0.553,
+      "score": 0.659,
       "news": [
         {
           "date": "11-05",
@@ -221,11 +186,11 @@
           "risk": false
         }
       ],
-      "price": 30000,
-      "chg": 0.0135,
-      "activity": 4.04,
+      "price": 29750,
+      "chg": 0.0051,
+      "activity": 3.66,
       "foreign_today": 0,
-      "inst_today": 3360000000,
+      "inst_today": 3332000000,
       "exchange": null
     },
     {
@@ -238,7 +203,7 @@
       "vol20": 0.915,
       "foreign_net": 17644093900,
       "inst_net": 14865329300,
-      "score": 0.474,
+      "score": 0.614,
       "news": [
         {
           "date": "11-04",
@@ -256,43 +221,11 @@
           "risk": false
         }
       ],
-      "price": 64400,
-      "chg": -0.0168,
-      "activity": 2.08,
-      "foreign_today": 5280800000,
-      "inst_today": 64400000,
-      "exchange": null
-    },
-    {
-      "code": "004020",
-      "name": "현대제철",
-      "close": 29200,
-      "ret5": 0.0977,
-      "ret20": -0.0283,
-      "rsi14": 53.5,
-      "vol20": 0.653,
-      "foreign_net": -7113250,
-      "inst_net": 14875195900,
-      "score": 0.395,
-      "news": [
-        {
-          "date": "11-05",
-          "title": "\"임직원이 직접 가꾸는 70년 유산\"…현대제철, 디지털 아카이브 'H.ARCHIV...",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "현대제철, 임직원 참여형 역사 보존 플랫폼 'H.ARCHIVE' 개설",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "현대제철, 70년 역사 동반 디지털 아카이브 플랫폼 개설",
-          "risk": false
-        }
-      ],
-      "foreign_today": 613200000,
-      "inst_today": 0,
+      "price": 64700,
+      "chg": -0.0122,
+      "activity": 1.95,
+      "foreign_today": 5305400000,
+      "inst_today": 64700000,
       "exchange": null
     },
     {
@@ -305,7 +238,7 @@
       "vol20": 0.658,
       "foreign_net": -34495865250,
       "inst_net": 64637407000,
-      "score": 0.289,
+      "score": 0.477,
       "news": [
         {
           "date": "11-04",
@@ -323,11 +256,107 @@
           "risk": false
         }
       ],
-      "price": 354000,
-      "chg": -0.0028,
-      "activity": 2.89,
+      "price": 357500,
+      "chg": 0.007,
+      "activity": 2.73,
       "foreign_today": 0,
-      "inst_today": 2124000000,
+      "inst_today": 2145000000,
+      "exchange": null
+    },
+    {
+      "code": "004020",
+      "name": "현대제철",
+      "close": 29200,
+      "ret5": 0.0977,
+      "ret20": -0.0283,
+      "rsi14": 53.5,
+      "vol20": 0.653,
+      "foreign_net": -7113250,
+      "inst_net": 14875195900,
+      "score": 0.477,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "현대제철, 임직원 참여형 기록 플랫폼 'H.ARCHIVE' 개설",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "현대제철 73년 발자취, 임직원이 직접 모아 디지털로 보관",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "현대제철, 임직원 참여형 역사 보존 플랫폼 'H.ARCHIVE' 개설",
+          "risk": false
+        }
+      ],
+      "foreign_today": 613200000,
+      "inst_today": 0,
+      "exchange": null
+    },
+    {
+      "code": "033780",
+      "name": "KT&G",
+      "close": 194100,
+      "ret5": 0.0374,
+      "ret20": 0.101,
+      "rsi14": 63.4,
+      "vol20": 0.246,
+      "foreign_net": -22209841000,
+      "inst_net": 23560336700,
+      "score": 0.25,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "구미 로컬 브랜드, 홍대로…KT&G 상상마당 '윗 굼이' 기획전",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "KT&G상상마당, 지역 브랜드 기획전 'WITH. GOOMI' 개최",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "KT&G 상상마당, 구미 로컬 브랜드 기획전 '윗 굼이' 개최",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 388200000,
+      "exchange": null
+    },
+    {
+      "code": "005940",
+      "name": "NH투자증권",
+      "close": 24200,
+      "ret5": 0.0168,
+      "ret20": -0.0936,
+      "rsi14": 46.8,
+      "vol20": 0.388,
+      "foreign_net": -13205793325,
+      "inst_net": 17019902075,
+      "score": 0.182,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "NH투자증권, 릴레이 캠페인 ‘사람 살리는 금융’ 동참",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "NH투자증권, 불법사금융 예방 릴레이 동참…토스증권 지목",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "신재욱·배광수 NH투자증권 대표 '사람 살리는 금융' 캠페인 릴레이 동...",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 48400000,
       "exchange": null
     },
     {
@@ -340,7 +369,7 @@
       "vol20": 1.219,
       "foreign_net": -2114408400,
       "inst_net": 2986282975,
-      "score": 0.526,
+      "score": 0.591,
       "news": [
         {
           "date": "11-04",
