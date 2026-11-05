@@ -164,6 +164,7 @@ details.log[open] > summary::after { content: "−"; }
 .dec-row .nm { color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .dec-row .nm .vl { display: block; margin-top: 2px; font-size: 11px; color: var(--muted); }   /* 20일 변동성 */
 .dec-row .nm .vl.hi { color: var(--red-hi); }
+.dec-row .nm .ex { margin-left: 6px; font-size: 10.5px; color: var(--muted); letter-spacing: .3px; }   /* 시장 (Kospi · Kosdaq · ETF) */
 .dec-row .act { justify-self: start; font-size: 12px; padding: 2px 10px; border-radius: 9999px; border: 1px solid rgba(255,255,255,.14); color: var(--body); white-space: nowrap; }
 .dec-row .act.buy { color: var(--red-hi); border-color: rgba(255,90,74,.45); }
 .dec-row .act.sell { color: #4aa3d4; border-color: rgba(74,163,212,.45); }
@@ -1104,9 +1105,11 @@ window.TRADE_TIMES = ['09:45', '10:45', '11:45', '13:15', '14:15', '15:15'];
     head.innerHTML = `<span class="why">${md(toD(b.asof))} 종가 · ${b.source === 'krx' ? '전 종목' : '대형주'} 중 ${b.universe || '—'}종목 분석 → 후보 ${(b.candidates || []).length}개</span>`;
     const cs = b.candidates || [];
     if (!cs.length) return none(list, '오늘은 조건을 통과한 후보가 없어요.');
+    cs.sort((a, b) => (+b.score || 0) - (+a.score || 0));   // 후보 점수 높은 순 (점수 없는 ETF 는 아래로)
     list.innerHTML = cs.map((c, i) => {
       const n = (c.news || [])[0], s = +c.score || 0;
-      return `<div class="dec-row" data-i="${i}"><span class="nm">${esc(c.name)}${volTag(c.vol20)}</span>`
+      const ex = c.exchange ? `<span class="ex">${c.exchange === 'KOSPI' ? 'Kospi' : c.exchange === 'KOSDAQ' ? 'Kosdaq' : esc(c.exchange)}</span>` : '';
+      return `<div class="dec-row" data-i="${i}"><span class="nm">${esc(c.name)}${ex}${volTag(c.vol20)}</span>`
         + `<span class="act ${c.ret5 > 0 ? 'buy' : c.ret5 < 0 ? 'sell' : ''}">${pct(c.ret5, 1)}</span>`
         + `<span class="cf"><i><b class="${s >= .6 ? 'hi' : ''}" style="width:${Math.round(s * 100)}%"></b></i>${s.toFixed(2)}</span>`
         + `<span class="why">${n ? (n.risk ? '<em>⚠</em> ' : '') + esc(n.title) : '최근 뉴스 없음'}</span></div>`;
