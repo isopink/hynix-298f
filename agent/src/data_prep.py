@@ -155,10 +155,11 @@ def universe_krx(p, asof):
     """전 종목 중 거래대금·이름 조건으로 1차 선별 (KRX 로그인 필요)."""
     s = p["screen"]
     quota = {k: v for k, v in (s.get("prefilter_by_market") or {}).items() if not k.startswith("_")}
-    out = []
+    out, markets = [], {}
     for m in s["markets"]:   # 11-04 시장별로 따로 상위 N (합쳐 뽑으면 코스피 대형주가 거의 다 차지해 코스닥이 빠짐)
         n = quota.get(m, s["prefilter_top"])
         df = stock.get_market_ohlcv(ymd(asof), market=m)
+        markets.update({c: m for c in df.index})   # 종목코드 → 시장 (대시보드 Watch List 표시용, 장중 재선별 종목도 여기서 찾음)
         df = df[(df["거래대금"] >= s["min_trading_value"]) & (df.index.str.endswith("0"))]  # 우선주 제외
         got = 0
         for code in df.sort_values("거래대금", ascending=False).index[: n * 2]:
@@ -169,6 +170,7 @@ def universe_krx(p, asof):
             got += 1
             if got >= n:
                 break
+    C.write_json(C.MARKETS, markets)
     return out
 
 

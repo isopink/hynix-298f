@@ -152,11 +152,13 @@ def briefing():
         return {}
     m = b.get("market", {})
     keep = ("code", "name", "close", "ret5", "ret20", "rsi14", "vol20", "foreign_net", "inst_net", "score", "news")
+    mk = C.read_json(C.MARKETS, {}) or {}
     live = ("price", "chg", "activity", "foreign_today", "inst_today")   # 장중 재선별(intraday.py)이 채운 값
     return {"created": b["created"], "asof": b["asof"], "universe": b.get("universe_size"), "source": b.get("source"),
             "market": {k: m.get(k) for k in ("source", "close", "ma20", "ma60", "ret5", "ret20", "rsi14", "rule_hint", "closes")},
             "intraday": b.get("intraday"),
-            "candidates": [{k: c.get(k) for k in keep + live if k in keep or c.get(k) is not None} for c in b.get("candidates", [])]}
+            "candidates": [{**{k: c.get(k) for k in keep + live if k in keep or c.get(k) is not None},
+                            "exchange": C.market_of(c["code"], markets=mk)} for c in b.get("candidates", [])]}   # KOSPI · KOSDAQ · ETF
 
 
 def run_items(run, nm):

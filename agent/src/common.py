@@ -23,6 +23,7 @@ JOURNAL = os.path.join(WORK, "journal.jsonl")  # 판단·체결·차단 기록 (
 ACCOUNT = os.path.join(WORK, "account.json")   # 마지막으로 조회한 계좌 상태 (Hook이 읽음)
 POSITIONS = os.path.join(WORK, "positions.json")  # 종목별 손절·익절·진입일
 BRIEFING = os.path.join(WORK, "briefing.json")
+MARKETS = os.path.join(WORK, "markets.json")      # 종목코드 → KOSPI | KOSDAQ (08:30 준비가 KRX 전 종목 시세에서 씀)
 RUNS = os.path.join(WORK, "runs.jsonl")
 
 
@@ -369,3 +370,11 @@ def intraday(b, r):
     return "\n".join(["", "", f"## 오늘 장중 ({C.now().strftime('%H:%M')} 현재가, 전일 종가 대비)",
                       f"위 지표는 전일 종가 기준입니다. 오늘 +{lim:.0%} 이상 오른 종목은 리스크 규칙상 매수할 수 없습니다 (추격 매수 금지).",
                       "", "| 코드 | 종목 | 현재가 | 오늘 등락 |", "|---|---|---|---|", *rows])
+
+
+def market_of(code, p=None, markets=None):
+    """'KOSPI' | 'KOSDAQ' | 'ETF' | None. 시장 ETF(인버스·KODEX 200)는 ETF, 나머지는 08:30 준비가 저장한 KRX 시장 목록."""
+    if market_etf(code, p)[0]:
+        return "ETF"
+    m = markets if markets is not None else (read_json(MARKETS, {}) or {})
+    return m.get(code)
