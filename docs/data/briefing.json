@@ -81,13 +81,48 @@
     ]
   },
   "intraday": {
-    "time": "10:00",
+    "time": "10:15",
     "pool": 220,
     "analyzed_new": 30,
-    "passed": 7,
+    "passed": 10,
     "kept_prep": false
   },
   "candidates": [
+    {
+      "code": "068270",
+      "name": "셀트리온",
+      "close": 202000,
+      "ret5": 0.0637,
+      "ret20": 0.1075,
+      "rsi14": 68.2,
+      "vol20": 0.36,
+      "foreign_net": -49595102900,
+      "inst_net": 118045154900,
+      "score": 1.0,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "[N-제약Bio] 셀트리온, 브라질서 후속 바이오시밀러 3종 출시 外",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "셀트리온, 브라질서 바이오시밀러 3종 추가 출시",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "셀트리온, 브라질서 바이오시밀러 3종 출시…판매 제품 10종으로 확대",
+          "risk": false
+        }
+      ],
+      "price": 212500,
+      "chg": 0.0625,
+      "activity": 6.06,
+      "foreign_today": 28050000000,
+      "inst_today": 11262500000,
+      "exchange": null
+    },
     {
       "code": "015760",
       "name": "한국전력",
@@ -98,7 +133,7 @@
       "vol20": 0.407,
       "foreign_net": -9667948425,
       "inst_net": 57236651725,
-      "score": 1.0,
+      "score": 0.842,
       "news": [
         {
           "date": "11-05",
@@ -116,11 +151,11 @@
           "risk": false
         }
       ],
-      "price": 31700,
-      "chg": 0.0411,
-      "activity": 6.63,
-      "foreign_today": 4089300000,
-      "inst_today": 4596500000,
+      "price": 31450,
+      "chg": 0.0328,
+      "activity": 5.7,
+      "foreign_today": 4057050000,
+      "inst_today": 4560250000,
       "exchange": null
     },
     {
@@ -133,8 +168,13 @@
       "vol20": 0.742,
       "foreign_net": -58696055500,
       "inst_net": 74156028000,
-      "score": 0.783,
+      "score": 0.658,
       "news": [
+        {
+          "date": "11-05",
+          "title": "지씨씨엘, 한미약품 '에페' 임상 3상 약동학 분석…30개 기관 지원",
+          "risk": false
+        },
         {
           "date": "11-05",
           "title": "한미약품, 美 간학회 임상 결과 발표 앞두고 9%대 강세[특징주]",
@@ -144,18 +184,13 @@
           "date": "11-05",
           "title": "[특징주] mRNA 관련주 장초반 강세…한미약품 10%대 급등, 올릭스·삼양...",
           "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "한미약품 비만 신약, 적응증 영토 확장...'살 빼기' 넘어 건선·대장암·...",
-          "risk": false
         }
       ],
-      "price": 457500,
-      "chg": 0.0803,
-      "activity": 5.0,
+      "price": 461000,
+      "chg": 0.0885,
+      "activity": 4.31,
       "foreign_today": 0,
-      "inst_today": 2287500000,
+      "inst_today": 2305000000,
       "exchange": null
     },
     {
@@ -168,7 +203,7 @@
       "vol20": 0.575,
       "foreign_net": 1168053400,
       "inst_net": 89060007775,
-      "score": 0.696,
+      "score": 0.553,
       "news": [
         {
           "date": "11-05",
@@ -186,11 +221,11 @@
           "risk": false
         }
       ],
-      "price": 30100,
-      "chg": 0.0169,
-      "activity": 4.65,
+      "price": 30000,
+      "chg": 0.0135,
+      "activity": 4.04,
       "foreign_today": 0,
-      "inst_today": 3371200000,
+      "inst_today": 3360000000,
       "exchange": null
     },
     {
@@ -203,7 +238,7 @@
       "vol20": 0.915,
       "foreign_net": 17644093900,
       "inst_net": 14865329300,
-      "score": 0.478,
+      "score": 0.474,
       "news": [
         {
           "date": "11-04",
@@ -221,11 +256,43 @@
           "risk": false
         }
       ],
-      "price": 65700,
-      "chg": 0.0031,
-      "activity": 2.32,
-      "foreign_today": 5387400000,
-      "inst_today": 65700000,
+      "price": 64400,
+      "chg": -0.0168,
+      "activity": 2.08,
+      "foreign_today": 5280800000,
+      "inst_today": 64400000,
+      "exchange": null
+    },
+    {
+      "code": "004020",
+      "name": "현대제철",
+      "close": 29200,
+      "ret5": 0.0977,
+      "ret20": -0.0283,
+      "rsi14": 53.5,
+      "vol20": 0.653,
+      "foreign_net": -7113250,
+      "inst_net": 14875195900,
+      "score": 0.395,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "\"임직원이 직접 가꾸는 70년 유산\"…현대제철, 디지털 아카이브 'H.ARCHIV...",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "현대제철, 임직원 참여형 역사 보존 플랫폼 'H.ARCHIVE' 개설",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "현대제철, 70년 역사 동반 디지털 아카이브 플랫폼 개설",
+          "risk": false
+        }
+      ],
+      "foreign_today": 613200000,
+      "inst_today": 0,
       "exchange": null
     },
     {
@@ -238,7 +305,7 @@
       "vol20": 0.658,
       "foreign_net": -34495865250,
       "inst_net": 64637407000,
-      "score": 0.304,
+      "score": 0.289,
       "news": [
         {
           "date": "11-04",
@@ -256,11 +323,33 @@
           "risk": false
         }
       ],
-      "price": 358500,
-      "chg": 0.0099,
-      "activity": 3.26,
+      "price": 354000,
+      "chg": -0.0028,
+      "activity": 2.89,
       "foreign_today": 0,
-      "inst_today": 2151000000,
+      "inst_today": 2124000000,
+      "exchange": null
+    },
+    {
+      "code": "091580",
+      "name": "상신이디피",
+      "close": 28250,
+      "ret5": 0.0386,
+      "ret20": 0.13,
+      "rsi14": 60.1,
+      "vol20": 1.219,
+      "foreign_net": -2114408400,
+      "inst_net": 2986282975,
+      "score": 0.526,
+      "news": [
+        {
+          "date": "11-04",
+          "title": "상신이디피 23% 뛰어…원통형 배터리 부품 수요와 자금조달 변수",
+          "risk": false
+        }
+      ],
+      "foreign_today": 734500000,
+      "inst_today": 0,
       "exchange": null
     },
     {
