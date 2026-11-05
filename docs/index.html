@@ -1515,6 +1515,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   function liveStatus() {
     const cv = $('ch-live'), sub = $('ls-sub'); if (!cv) return;
     const ctx = cv.getContext('2d'), FONT = '"Noto Serif KR", serif', W = 1000;
+    if (document.fonts && document.fonts.load) ['600', '700'].forEach(w => document.fonts.load(`${w} 16px "Noto Serif KR"`));   // 캔버스 글자가 대체 글꼴로 그려지지 않게 미리 받음
     // 지점 (x, y, 이름). 왼쪽 시장 → 가운데 데스크톱 → 오른쪽 클라우드·화면. 좌표는 1000 × 620 기준, 폰은 세로로 늘림
     const BASE_N = {
       kbal: [60, 70, '잔고 조회'], krank: [45, 170, '거래 순위'], krx: [105, 255, '시장 데이터'], news: [45, 330, '뉴스'], kprice: [60, 405, '현재가'], korder: [85, 495, '주문 전송'],
