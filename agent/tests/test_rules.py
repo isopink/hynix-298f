@@ -537,6 +537,30 @@ def test_no_rebuy_same_day():
     assert C.trade_slot(datetime(2026, 11, 6, 10, 0, 5, tzinfo=C.KST), C.params())   # 모든 판단 회차가 매매
 
 
+def test_dip_candidates_at_close_sized_7pct():
+    """📉급락 반등 후보: 15:10 이후에만, 거래대금 상위 안 −5% 이하, 매수 기준 넘으면 7%."""
+    import intraday
+    base = {"ma5": 10_000, "ma20": 9_500, "vol20": 0.4, "price": 9_000, "foreign_qty": -1, "inst_qty": -1}
+    rows = [{**base, "code": "000110", "name": "급락A", "chg": -0.09, "value_rank": 2},
+            {**base, "code": "000120", "name": "급락B", "chg": -0.06, "value_rank": 10},
+            {**base, "code": "000130", "name": "조금", "chg": -0.03, "value_rank": 3},
+            {**base, "code": "000140", "name": "소형", "chg": -0.12, "value_rank": 80},
+            {**base, "code": "000150", "name": "보유", "chg": -0.08, "value_rank": 5}]
+    at = lambda h, m: datetime(2026, 11, 5, h, m, tzinfo=C.KST)
+    assert intraday.dips(rows, [], {"000150"}, P, at(14, 45)) == []
+    out = intraday.dips(rows, [], {"000150"}, P, at(15, 15))
+    assert [x["name"] for x in out] == ["급락A", "급락B"] and all(x["dip"] for x in out)
+    C.write_json(C.BRIEFING, {"candidates": out, "holdings": []})
+    try:
+        C.journal("regime", regime="상승", cap=P["regime_cap"]["상승"])
+        plan = sizing.plan_buy("000110", 0.65, 10_000, acc(), P, R)
+        assert plan["dip"] and plan["target_weight"] == P["dip"]["weight"], plan
+        assert sizing.plan_buy("000110", 0.50, 10_000, acc(), P, R)["qty"] == 0       # 기준 미달이면 안 삼
+        assert not sizing.plan_buy("005930", 0.65, 10_000, acc(), P, R)["dip"]
+    finally:
+        os.remove(C.BRIEFING)
+
+
 if __name__ == "__main__":
     fails = 0
     for n, f in list(globals().items()):

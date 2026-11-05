@@ -169,6 +169,16 @@ def high_vol(code, p=None, briefing=None):
     return hv if v is not None and v > p["screen"].get("max_vol20", 9) else None
 
 
+def dip(code, p=None, briefing=None):
+    """15:15 급락 반등 후보(브리핑 후보에 dip 표시)면 params.dip 설정, 아니면 None."""
+    p = p or params()
+    dp = p.get("dip")
+    if not dp or not dp.get("enabled"):
+        return None
+    row = briefing_row(code, briefing) or {}
+    return dp if row.get("dip") else None
+
+
 def inverse(code, p=None):
     """인버스 ETF 면 params.inverse 설정, 아니면 None."""
     inv = (p or params()).get("inverse")

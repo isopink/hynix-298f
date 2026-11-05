@@ -372,6 +372,7 @@ def to_text(b):
         ma5 = f"{r['ma5']:,}" if r.get('ma5') else '-'
         kind = C.market_etf(r["code"])[1]
         tag = " 🔻인버스" if kind == "인버스" else " 📈지수" if kind == "지수" else " ⚡고변동" if r.get("high_vol") else ""
+        tag += " 📉급락" if r.get("dip") else ""
         return (f"| {r['code']} | {r['name']}{tag} | {r['close']:,} | {ma5} | {r['ma20']:,} | {r['ma60']:,} | {pct(r['ret5'])} | "
                 f"{pct(r['ret20'])} | {r['rsi14']} | {r['vol20'] * 100:.0f}% | {pct(r['mdd60'])} | "
                 f"{eok(r.get('foreign_net'))} | {eok(r.get('inst_net'))} | {r.get('score', '-')} |")
@@ -387,7 +388,7 @@ def to_text(b):
                 lines.append(f"| {r['code']} | {r['name']} | - | - | - | - | - | - |   ({'인버스' if r.get('inverse') else '지수추종' if r.get('index') else '08:30 후보로 채움'})")
                 continue
             act = r.get("activity")
-            lines.append(f"| {r['code']} | {r['name']} | {r.get('price', 0):,} | {pct(r.get('chg'))} | "
+            lines.append(f"| {r['code']} | {r['name']}{' 📉급락' if r.get('dip') else ''} | {r.get('price', 0):,} | {pct(r.get('chg'))} | "
                          f"{(r.get('value') or 0) / 1e8:,.0f}억 | {'-' if act is None else f'{act:.1f}배'} | "
                          f"{eok(r.get('foreign_today'))} | {eok(r.get('inst_today'))} |")
         lines.append("")

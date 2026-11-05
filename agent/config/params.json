@@ -43,6 +43,16 @@
     "take_profit_pct": 0.20
   },
 
+  "dip": {
+    "_note": "급락 반등 후보 (11-05, S.Lee). from 이후 회차(=15:15)에 거래대금 상위 top_value_rank 안에서 오늘 drop 이하로 빠진 종목을 낙폭 큰 순으로 max_candidates 개까지 후보에 📉급락 표시로 따로 넣음 (추세·수급 조건 면제). 살지는 bull/bear 토론·확신도 기준이 정함. 매수 기준을 넘으면 종목당 weight 로 삼 (소액 매수 구간이면 probe 크기). 손절·익절·보유일은 일반 종목과 같음. 검증: 코스피 시총 상위 50 · 3년 일봉에서 −5% 급락 종가 매수 → 비용 뺀 날짜별 평균 −0.4~−1.1%, 반등은 대부분 다음날 시가 갭이라 규칙 매수 대신 판단 재료로만 씀",
+    "enabled": true,
+    "from": "15:10",
+    "drop": -0.05,
+    "top_value_rank": 30,
+    "max_candidates": 3,
+    "weight": 0.07
+  },
+
   "inverse": {
     "_note": "인버스 ETF (11-04, 대회 운영진 허용 확인). 매일 후보에 따로 넣고, 오늘 국면(set_regime)이 regimes 중 하나일 때만 살 수 있음(코드·Hook 이 강제). 주식 비중 상한과 별도로 weight_cap 까지. 국면이 바뀌면 매도 판단. 11-04 오후: 짧게 치고 빠지기 — 하루 max_buys_per_day 번만 매수, 수수료(costs.fee_rate)·세금(sell_tax_rate, ETF 는 매도 세금 없음 — 11-04 키움 수익률 +1.51% 가 세금 0 계산과 일치)을 뺀 순익이 take_profit_net_pct 를 넘으면 익절 (익절가 = 평단 × 약 1.022). 보유 중인 인버스도 평단 기준으로 지금 규칙을 적용, max_hold_days 일 지나면 매도. 손절은 decision.stop_loss_pct 그대로. KOSPI 1분봉 시뮬레이션(11-02~04 하락 국면 15회)에서 폭을 1% 안쪽으로 좁히면 왕복 비용 약 0.9% 때문에 모든 조합이 손해",
     "enabled": true,

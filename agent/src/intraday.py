@@ -180,6 +180,33 @@ def fill_up(cands, prep, held, n):
     return out + [x for x in prep if etf(x) and x["code"] not in have and x["code"] not in held]
 
 
+def dips(rows, cands, held, p, now):
+    """📉급락 반등 후보 (params.dip, 11-05): from 이후 회차에만, 거래대금 상위 안에서 오늘 drop 이하로 빠진 종목.
+    추세·수급 조건은 면제(급락한 날이라 대개 못 넘음). 살지는 토론·확신도가 정하고 크기는 sizing 이 dip.weight 로."""
+    dp = p.get("dip") or {}
+    if not dp.get("enabled") or now.strftime("%H:%M") < dp.get("from", "15:10"):
+        return []
+    s, have = p["screen"], {c["code"] for c in cands}
+    out = []
+    for x in sorted(rows, key=lambda x: x.get("chg") or 0):
+        nm = x.get("name", "")
+        if (x.get("chg") is None or x["chg"] > dp["drop"] or x.get("value_rank", 999) > dp["top_value_rank"]
+                or x["code"] in held or not x["code"].endswith("0") or C.other_etf(nm, p)
+                or any(k in nm for k in s["exclude_name_keywords"])):
+            continue
+        if x["code"] in have:   # 이미 후보면 표시만
+            next(c for c in cands if c["code"] == x["code"])["dip"] = True
+            continue
+        px = x.get("price") or x.get("close") or 0
+        out.append({**x, "dip": True, "score": x.get("score", 0),
+                    "foreign_today": round((x.get("foreign_qty") or 0) * px), "inst_today": round((x.get("inst_qty") or 0) * px)})
+        if len(out) >= dp["max_candidates"]:
+            break
+    if out:
+        print("📉급락 후보: " + ", ".join(f"{x['name']}({x['chg']:+.1%})" for x in out))
+    return out
+
+
 def etf(x):
     return x.get("inverse") or x.get("index")
 
@@ -245,6 +272,7 @@ def run(dry=False):
         return
     prep = b.get("candidates_prep", b.get("candidates", []))
     cands = fill_up(cands, prep, held, it.get("min_candidates", 0))
+    cands += dips(rows, cands, held, p, n)
     old = {c["code"]: c for c in prep}
     need_news = [c for c in cands if c["code"] not in old]
     if need_news:

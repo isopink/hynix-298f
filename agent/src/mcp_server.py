@@ -96,6 +96,11 @@ def get_briefing() -> str:
     if (hv := p.get("high_vol")) and hv.get("enabled"):
         ctx.append(f"- ⚡고변동 종목 (20일 변동성 {p['screen']['max_vol20']:.0%} 초과): 후보에 최대 {hv['max_candidates']}개 따로 포함. "
                    f"종목당 {hv['weight_cap']:.0%} 이하만 (코드가 강제), 손절 {hv['stop_loss_pct']:.0%} · 익절 {hv['take_profit_pct']:+.0%}")
+    if (dp := p.get("dip")) and dp.get("enabled"):
+        ctx.append(f"- 📉급락 반등 후보: {dp['from']} 이후 회차(15:15)에만 거래대금 상위 {dp['top_value_rank']} 안에서 오늘 {dp['drop']:.0%} 이하로 빠진 종목을 "
+                   f"최대 {dp['max_candidates']}개 따로 넣음 (추세·수급 조건 면제). 다음날 반등은 과거 3년 기준 반반이고 계속 빠지면 손실이 큼 → "
+                   f"다른 종목과 같은 확신도 기준으로 판단하되, bull 은 급락 원인이 일시적인지(시장 동반 급락·과매도), bear 는 종목 고유 악재·추가 하락 근거를 볼 것. "
+                   f"매수 기준을 넘으면 종목당 {dp['weight']:.0%} (코드가 강제), 손절·익절·보유일은 일반 종목과 같음")
     if (inv := p.get("inverse")) and inv.get("enabled"):
         names = ", ".join(f"{n}({c})" for c, n in inv["codes"].items())
         ctx.append(f"- 🔻인버스 {names}: 시장이 내리면 오르는 ETF. 후보에 매일 따로 들어옴. 오늘 국면이 {'·'.join(inv['regimes'])}일 때만 매수 가능, "

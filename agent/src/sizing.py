@@ -42,6 +42,9 @@ def plan_buy(code, conf, price, account, p=None, r=None, regime=None):
     inv = C.inverse(code, p)
 
     w = target_weight(conf, p, r, top=inv["weight_cap"] if inv else None)   # 인버스는 종목당 10% 대신 인버스 한도 20%까지
+    dp = C.dip(code, p)
+    if dp and conf >= C.buy_threshold(p) - 1e-9:   # 📉급락 반등 후보: 매수 기준을 넘으면 정해진 크기(7%)로 (소액 매수 구간은 그대로 작게)
+        w = min(dp["weight"], r["max_weight_per_stock"])
     limits = {
         "확신도 비중": total * w * C.week_factor(p) - held_value,
         "국면 상한 여유": total * cap - stock_value,
@@ -77,7 +80,7 @@ def plan_buy(code, conf, price, account, p=None, r=None, regime=None):
         "stop": round(price * (1 + stop_pct)),
         "take": round(price * (1 + take_pct)),
         "max_days": max_days,
-        "high_vol": bool(hv), "inverse": bool(inv), "index": bool(C.index_etf(code, p)),
+        "high_vol": bool(hv), "dip": bool(dp), "inverse": bool(inv), "index": bool(C.index_etf(code, p)),
         "buy_threshold": C.buy_threshold(p),
         "probe": C.probe_floor(p) - 1e-9 <= conf < C.buy_threshold(p),   # 소액 매수 구간이면 True
     }
