@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "10:45",
+    "time": "11:00",
     "pool": 222,
-    "analyzed_new": 30,
-    "passed": 12,
+    "analyzed_new": 13,
+    "passed": 11,
     "kept_prep": false
   },
   "candidates": [
@@ -102,60 +102,25 @@
       "news": [
         {
           "date": "11-05",
-          "title": "셀트리온, 브라질에 코이볼마·스토보클로·오센벨트 출시",
+          "title": "셀트리온, 브라질서 바이오시밀러 3종 신규 출시…“시장 공략 가속”",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "셀트리온 주가, 11월 5일 장중 214,000원 7.00% 상승",
+          "title": "셀트리온, 브라질서 자가면역·골질환 치료제 3종 출시",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "셀트리온, 브라질서 바이오시밀러 3종 출시…판매 제품 10종으로 확대",
+          "title": "셀트리온, 브라질서 '코이볼마' 출시…제품군 10종으로 확대",
           "risk": false
         }
       ],
-      "price": 214000,
-      "chg": 0.07,
-      "activity": 5.52,
-      "foreign_today": 28248000000,
-      "inst_today": 11342000000,
-      "exchange": null
-    },
-    {
-      "code": "015760",
-      "name": "한국전력",
-      "close": 30600,
-      "ret5": 0.0681,
-      "ret20": 0.0116,
-      "rsi14": 57.8,
-      "vol20": 0.407,
-      "foreign_net": -9667948425,
-      "inst_net": 57236651725,
-      "score": 0.878,
-      "news": [
-        {
-          "date": "11-05",
-          "title": "한국전력, K-전력진단 기술 민간 사업화 속도..LS일렉트릭에 'SEDA' 기술...",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "인포시즈, 한국전력 '전력망 AI 전환 실증사업' 성과 공개…512개 질문 ...",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "한국전력, 'AI 전력설비 진단기술' 민간기업에 이전…상용화 속도",
-          "risk": false
-        }
-      ],
-      "price": 31450,
-      "chg": 0.0328,
-      "activity": 4.69,
-      "foreign_today": 4057050000,
-      "inst_today": 4560250000,
+      "price": 214500,
+      "chg": 0.0725,
+      "activity": 5.3,
+      "foreign_today": 28314000000,
+      "inst_today": 11368500000,
       "exchange": null
     },
     {
@@ -168,7 +133,7 @@
       "vol20": 0.575,
       "foreign_net": 1168053400,
       "inst_net": 89060007775,
-      "score": 0.673,
+      "score": 0.75,
       "news": [
         {
           "date": "11-05",
@@ -186,11 +151,11 @@
           "risk": false
         }
       ],
-      "price": 29600,
-      "chg": 0.0,
-      "activity": 3.27,
+      "price": 29950,
+      "chg": 0.0118,
+      "activity": 3.07,
       "foreign_today": 0,
-      "inst_today": 3315200000,
+      "inst_today": 3354400000,
       "exchange": null
     },
     {
@@ -203,7 +168,7 @@
       "vol20": 0.915,
       "foreign_net": 17644093900,
       "inst_net": 14865329300,
-      "score": 0.653,
+      "score": 0.705,
       "news": [
         {
           "date": "11-04",
@@ -223,7 +188,7 @@
       ],
       "price": 65500,
       "chg": 0.0,
-      "activity": 1.81,
+      "activity": 1.68,
       "foreign_today": 5371000000,
       "inst_today": 65500000,
       "exchange": null
@@ -238,7 +203,7 @@
       "vol20": 0.658,
       "foreign_net": -34495865250,
       "inst_net": 64637407000,
-      "score": 0.51,
+      "score": 0.568,
       "news": [
         {
           "date": "11-04",
@@ -256,11 +221,11 @@
           "risk": false
         }
       ],
-      "price": 358000,
-      "chg": 0.0085,
-      "activity": 2.51,
+      "price": 359000,
+      "chg": 0.0113,
+      "activity": 2.31,
       "foreign_today": 0,
-      "inst_today": 2148000000,
+      "inst_today": 2154000000,
       "exchange": null
     },
     {
@@ -273,21 +238,21 @@
       "vol20": 0.653,
       "foreign_net": -7113250,
       "inst_net": 14875195900,
-      "score": 0.49,
+      "score": 0.545,
       "news": [
         {
           "date": "11-05",
+          "title": "현대제철, 70년 역사 디지털로 남긴다… 임직원이 직접 만드는 'H.ARCHIVE...",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "현대제철, 70년 역사 담은 'H아카이브' 개설…임직원 '동참'",
+          "risk": false
+        },
+        {
+          "date": "11-05",
           "title": "美, 동국제강 후판 상계관세 1.89% 확정…현대제철 1.39%",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "현대제철, 임직원 참여형 역사 보존 플랫폼 'H.ARCHIVE' 개설",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "현대제철, 임직원 참여형 기록 플랫폼 'H.ARCHIVE' 개설",
           "risk": false
         }
       ],
@@ -305,7 +270,7 @@
       "vol20": 0.331,
       "foreign_net": -18933278500,
       "inst_net": 29273326000,
-      "score": 0.367,
+      "score": 0.409,
       "news": [
         {
           "date": "11-05",
@@ -327,7 +292,7 @@
       "vol20": 0.246,
       "foreign_net": -22209841000,
       "inst_net": 23560336700,
-      "score": 0.245,
+      "score": 0.273,
       "news": [
         {
           "date": "11-05",
@@ -336,12 +301,12 @@
         },
         {
           "date": "11-05",
-          "title": "KT&G 전자담배 '릴', 기술 탈취 법적분쟁…3천억원 분쟁조정 이어 전면전",
+          "title": "KT&G 상상마당, 구미 로컬 브랜드 기획전 개최…굿즈 172종 선보여",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "KT&G 상상마당, 구미시 로컬 브랜드 기획전 ‘윗 굼이’ 개최",
+          "title": "KT&G 상상마당홍대에서 '윗 굼이' 기획전, 구미 지역 브랜드 소개",
           "risk": false
         }
       ],
@@ -359,21 +324,21 @@
       "vol20": 0.388,
       "foreign_net": -13205793325,
       "inst_net": 17019902075,
-      "score": 0.184,
+      "score": 0.205,
       "news": [
         {
           "date": "11-05",
-          "title": "NH투자증권, 불법사금융 피해 예방 '사람 살리는 금융' 캠페인 동참",
+          "title": "NH투자증권, '사람 살리는 금융' 릴레이 캠페인 동참",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "NH투자증권, 릴레이 캠페인 ‘사람 살리는 금융’ 동참",
+          "title": "신재욱·배광수 NH투자증권 대표, '사람 살리는 금융' 캠페인 동참",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "NH투자증권, 불법사금융 예방 릴레이 동참…토스증권 지목",
+          "title": "신재욱·배광수 NH투자증권 대표, 불법사금융 예방 릴레이 캠페인 동참",
           "risk": false
         }
       ],
@@ -391,7 +356,7 @@
       "vol20": 1.219,
       "foreign_net": -2114408400,
       "inst_net": 2986282975,
-      "score": 0.612,
+      "score": 0.659,
       "news": [
         {
           "date": "11-04",
