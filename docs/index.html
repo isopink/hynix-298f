@@ -1667,9 +1667,9 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const wait = (track, ms) => new Promise(done => waiters.add({ at: clock + ms, done, track }));
     async function flow(track, id) {
       const e = EDGE[id]; if (track.dead || !e) return;
-      const dur = Math.max(380, Math.hypot(e.b.x - e.a.x, e.b.y - e.a.y) * 2.4);
+      const dur = Math.max(800, Math.hypot(e.b.x - e.a.x, e.b.y - e.a.y) * 5);   // 데이터가 선을 지나는 시간 (11-05 느리게)
       e.on++;
-      for (let i = 0; i < 8; i++) bursts.push({ s: e.strands[i % 2], t: -rnd() * .6, life: dur * .7, size: 9 + rnd() * 6 });
+      for (let i = 0; i < 8; i++) bursts.push({ s: e.strands[i % 2], t: -rnd() * .5, life: dur * .8, size: 9 + rnd() * 6 });
       await wait(track, dur); e.on--;
     }
     async function hold(track, id, ms) { const n = N[id]; if (track.dead || !n) return; n.on = (n.on || 0) + 1; await wait(track, ms); n.on--; }
