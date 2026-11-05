@@ -1565,7 +1565,17 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
         if (Object.values(N).every(n => Math.hypot(n.x - x, n.y - y) > 48) && dots.every(d => Math.hypot(d.x - x, d.y - y) > 45)) dots.push({ x, y, den: [] });
       }
       dots.forEach(d => { for (let i = 0; i < 4; i++) branch(d.x, d.y, rnd() * Math.PI * 2, 10 + rnd() * 10, 4, d.den, .9); });
+      Object.values(N).forEach(n => { n.nb = new Set(); n.near = new Set(); });
+      E.forEach(e => { e.a.nb.add(e.b); e.b.nb.add(e.a); });
       mesh = [];
+      const all = Object.values(N);
+      all.forEach(n => {   // 가까운 지점 3개와 가는 선으로 (이미 경로가 있으면 건너뜀)
+        all.filter(o => o !== n && !n.nb.has(o)).sort((a, b) => Math.hypot(a.x - n.x, a.y - n.y) - Math.hypot(b.x - n.x, b.y - n.y)).slice(0, 3).forEach(o => {
+          if (o.near.has(n)) return; n.near.add(o); o.near.add(n);
+          const dx = o.x - n.x, dy = o.y - n.y, k = (rnd() - .5) * .4;
+          mesh.push({ p0: [n.x, n.y], c1: [n.x + dx * .33 - dy * k, n.y + dy * .33 + dx * k], c2: [n.x + dx * .66 + dy * k, n.y + dy * .66 - dx * k], p3: [o.x, o.y], w: 1 });
+        });
+      });
       dots.forEach(d => {
         [...dots, ...Object.values(N)].filter(o => o !== d).sort((a, b) => Math.hypot(a.x - d.x, a.y - d.y) - Math.hypot(b.x - d.x, b.y - d.y)).slice(0, 3).forEach(o => {
           const dx = o.x - d.x, dy = o.y - d.y, k = (rnd() - .5) * .5;
@@ -1595,7 +1605,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       E.forEach(e => e.strands.forEach(s => { g.strokeStyle = 'rgba(200,200,206,.36)'; g.lineWidth = s.w * lw; g.beginPath(); g.moveTo(...s.p0); g.bezierCurveTo(...s.c1, ...s.c2, ...s.p3); g.stroke(); }));
       const twig = (list, f) => list.forEach(b => { g.strokeStyle = `rgba(225,222,222,${Math.min(.5, (.07 + .24 * b.w) * f)})`; g.lineWidth = b.w * lw; g.beginPath(); g.moveTo(b.x, b.y); g.quadraticCurveTo(b.cx, b.cy, b.ex, b.ey); g.stroke(); });
       Object.values(N).forEach(n => twig(n.den, 1)); dots.forEach(d => twig(d.den, .6));
-      g.lineWidth = .7 * lw; g.strokeStyle = 'rgba(225,222,222,.12)'; mesh.forEach(m => { g.beginPath(); g.moveTo(...m.p0); g.bezierCurveTo(...m.c1, ...m.c2, ...m.p3); g.stroke(); });
+      mesh.forEach(m => { g.lineWidth = (m.w ? .9 : .7) * lw; g.strokeStyle = m.w ? 'rgba(225,222,222,.2)' : 'rgba(225,222,222,.12)'; g.beginPath(); g.moveTo(...m.p0); g.bezierCurveTo(...m.c1, ...m.c2, ...m.p3); g.stroke(); });
       dots.forEach(d => { g.globalAlpha = .4; g.drawImage(SP.n, d.x - 6, d.y - 6, 12, 12); });
       Object.values(N).forEach(n => { g.globalAlpha = .85; g.drawImage(SP.w, n.x - n.size / 2, n.y - n.size / 2, n.size, n.size); });
       g.globalAlpha = 1; g.globalCompositeOperation = 'source-over';
@@ -1626,14 +1636,15 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       Object.values(N).forEach(n => { if (!(n.glow > .05)) return; ctx.globalAlpha = 1; ctx.strokeStyle = `rgba(255,90,74,${.8 * n.glow * blink})`; n.den.forEach(b => { ctx.lineWidth = (b.w + .2) * lw; ctx.beginPath(); ctx.moveTo(b.x, b.y); ctx.quadraticCurveTo(b.cx, b.cy, b.ex, b.ey); ctx.stroke(); }); });
       if (dt && clock > nextSpark) { nextSpark = clock + 900 + rnd() * 1400; bursts.push({ s: mesh[Math.floor(rnd() * mesh.length)], t: 0, life: 1600, size: 7, c: 'n' }); }
       Object.values(N).forEach(n => {
-        n.glow += (((n.on || 0) > 0 ? 1 : 0) - n.glow) * Math.min(1, sec * 8);
+        const target = (n.on || 0) > 0 ? 1 : [...n.nb].some(o => o.on > 0) ? .35 : [...n.near].some(o => o.on > 0) ? .15 : 0;
+        n.glow += (target - n.glow) * Math.min(1, sec * 8);
         if (n.glow > .02) { stamp(n.x, n.y, SP.r, n.size * 3.2, n.glow * blink); stamp(n.x, n.y, SP.r, n.size * 1.4, n.glow); stamp(n.x, n.y, SP.r, n.size * .7, n.glow); }
       });
       // 이름은 켜졌을 때만. 폰에서도 읽히게 화면 기준 12px 이상
       ctx.globalCompositeOperation = 'source-over'; ctx.textAlign = 'center';
       const fs = Math.max(11 / scale, 11), ln = n => Math.min(fs * 1.25, fs + n.deg * .15);
       Object.values(N).forEach(n => {
-        if (n.glow < .05) return;
+        if (!(n.on > 0) && n.glow < .6) return;   // 이름은 직접 켜진 지점만
         const f = ln(n); ctx.globalAlpha = Math.min(1, n.glow * 1.4);
         ctx.font = `500 ${f}px ${FONT}`; ctx.lineWidth = 4; ctx.lineJoin = 'round'; ctx.strokeStyle = 'rgba(10,10,12,.94)';
         const y = n.y + n.size * .42 + f * .8;
