@@ -156,6 +156,10 @@ details.log[open] > summary::after { content: "−"; }
 @media (max-width: 640px) { .hero-chart { padding-top: 0; } .hero-card > .st-line { position: static; flex-direction: row; gap: 4px 14px; } }   /* 폰: 상태 표시를 위 한 줄로 (KOSPI 대비와 겹침 방지) */
 .dec-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; margin-bottom: 6px; font-size: 13px; color: var(--body); }
 .dec-head b { color: var(--ink); font-weight: 600; }
+.dec-more { display: flex; width: 100%; justify-content: center; align-items: center; gap: 6px; margin-top: 2px; padding: 11px 0 2px; border: 0; border-top: 1px solid rgba(255,255,255,.06); background: none; font: inherit; font-size: 12.5px; color: var(--muted); cursor: pointer; }   /* 11-05 Live Decision 접기 */
+.dec-row[hidden], .dec-more[hidden] { display: none; }
+.dec-more:hover { color: var(--ink); } .dec-more:focus-visible { outline: 2px solid #f6e500; outline-offset: 2px; border-radius: 6px; }
+.dec-more::after { content: "+"; font-size: 15px; line-height: 1; } .dec-more[aria-expanded="true"]::after { content: "−"; }
 /* 오늘 마지막 매매 회차 결과 한 줄 (샀다 / 팔았다 / 막혔다 / 관망) */
 .dec-trade { margin: 2px 0 8px; padding: 8px 12px; border-radius: 10px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); font-size: 13px; color: var(--body); line-height: 1.6; }
 .dec-trade .t { color: var(--ink); font-weight: 600; margin-right: 6px; }
@@ -382,6 +386,7 @@ details.log summary { border-radius: 16px; }
         <div class="dec-head m-hide" id="dec-head"></div>
         <div class="dec-trade" id="dec-trade" hidden></div>
         <div class="dec-list" id="dec-list"></div>
+        <button type="button" class="dec-more" id="dec-more" hidden aria-controls="dec-list"></button>
       </div>
     </section>
 
@@ -1124,6 +1129,26 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   // ---------- 에이전트 상태: docs/data/status.json (에이전트가 실행할 때마다 덮어씀) ----------
   // 시장 모니터링 = PC 의 잔고 루프 (장중 5분마다 스냅샷). 장중에 12분 넘게 새 스냅샷이 없으면 PC·루프가 멈춘 것
   // 에이전트 = 정기 판단. 마지막 실행이 실패했거나 예정 시각을 30분 넘기면 Off
+  // ---------- Live Decision 접기 (11-05): 위 5종목만 보이고, 버튼으로 전체 펼치기. 펼침 상태는 이 브라우저에 기억 ----------
+  const FOLD_N = 5;
+  let decOpen = false;
+  try { decOpen = localStorage.getItem('decOpen') === '1'; } catch (e) { /* 저장소 막힌 브라우저는 늘 접힌 채로 시작 */ }
+  function foldDec() {
+    const list = $('dec-list'), btn = $('dec-more'), rows = [...list.children].filter(e => e.classList.contains('dec-row'));
+    const extra = rows.length - FOLD_N;
+    rows.forEach((r, i) => { r.hidden = !decOpen && i >= FOLD_N; });
+    btn.hidden = extra <= 0;
+    btn.setAttribute('aria-expanded', decOpen);
+    btn.textContent = decOpen ? '접기' : `전체 ${rows.length}종목 보기`;
+  }
+  $('dec-more').addEventListener('click', () => {
+    decOpen = !decOpen;
+    try { localStorage.setItem('decOpen', decOpen ? '1' : '0'); } catch (e) { /* 무시 */ }
+    foldDec();
+    if (!decOpen) $('dec-title').scrollIntoView({ block: 'nearest' });
+  });
+  new MutationObserver(foldDec).observe($('dec-list'), { childList: true });   // 목록을 다시 그릴 때마다 접힘 상태 적용
+
   function agentStatus() {
     const st = STATUS, el = $('st-line');
     const pill = ([state, cls, tip], name) => `<span class="who" title="${esc(state + ' · ' + tip)}" aria-label="${name} ${state}"><i class="dot ${cls}"></i>${name}</span>`;   // 11-05 글자 On/Off 빼고 점 색으로만 (초록 동작 · 빨강 깜빡임 멈춤 · 회색 장 마감);
