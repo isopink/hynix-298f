@@ -240,7 +240,7 @@ def place_order(code: str, side: str, qty: int, confidence: float, bull: str, be
     elif not held:
         meta.pop(code, None)
     C.write_json(C.POSITIONS, meta)
-    C.journal("fill", code=code, name=name, side=side, qty=res["qty"], price=res["price"],
+    C.journal("fill", code=code, name=name, side=side, qty=res["qty"], ordered=qty, price=res["price"],
               amount=res["qty"] * res["price"], confidence=adj, confidence_raw=confidence, boost=note, regime=regime,
               bull=bull, bear=bear, decision=decision, order_no=res.get("order_no"),
               filled=res.get("filled", True), rule_exit=rule_exit)

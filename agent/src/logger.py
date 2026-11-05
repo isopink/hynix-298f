@@ -33,7 +33,8 @@ def names():
 def trades(rows):
     out_ = [{"id": i + 1, "time": r["time"], "code": r["code"], "name": r["name"], "side": r["side"],
              "qty": r["qty"], "price": r["price"], "amount": r["amount"], "confidence": r["confidence"],
-             "regime": r.get("regime"), "bull": r["bull"], "bear": r["bear"], "decision": r["decision"]}
+             "regime": r.get("regime"), "bull": r["bull"], "bear": r["bear"], "decision": r["decision"],
+             "ordered": r.get("ordered")}
             for i, r in enumerate(x for x in rows if x["kind"] == "fill")]
     return reconcile(out_)
 
@@ -48,10 +49,22 @@ def reconcile(ts):
     for code in {t["code"] for t in ts}:
         mine = [t for t in ts if t["code"] == code]
         diff = held.get(code, 0) - sum(t["qty"] if t["side"] == "매수" else -t["qty"] for t in mine)
+        # 11-05: 덜 체결된 채 기록된 주문(qty < ordered)부터 채움. 예전엔 마지막 체결에 몰아 붙여 HMM 15:21 매도가 76주로 보였음
+        for t in mine:
+            if not diff or not t.get("ordered") or t["qty"] >= t["ordered"]:
+                continue
+            sign = 1 if t["side"] == "매수" else -1
+            add = min(t["ordered"] - t["qty"], diff * sign) if diff * sign > 0 else 0
+            if add:
+                t["qty"] += add
+                t["amount"] = t["qty"] * t["price"]
+                diff -= add * sign
         last = mine[-1]
         q = last["qty"] + (diff if last["side"] == "매수" else -diff)
         if diff and q > 0:
             last["qty"], last["amount"] = q, q * last["price"]
+    for t in ts:
+        t.pop("ordered", None)
     return ts
 
 
