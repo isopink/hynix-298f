@@ -508,12 +508,12 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   window.addEventListener('scroll', () => { if (lastPointer !== 'mouse') tip.hidden = true; }, { passive: true });
   const hideTip = () => { if (lastPointer === 'mouse') tip.hidden = true; };      // 터치는 탭한 말풍선을 고정
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-  // 20일 변동성(연율화) 꼬리표. 100% 넘으면 ⚡고변동 (agent params.screen.max_vol20 기준과 같음)
+  // 20일 변동성(연율화) 꼬리표. 100% 넘으면 '고변동' (agent params.screen.max_vol20 기준과 같음)
   // 시장 꼬리표 (KOSPI · KOSDAQ · ETF)
   let EXCH = {};   // 종목코드 → KOSPI · KOSDAQ · ETF 예비값 (docs/data/exchange.json). 에이전트 기록에 exchange 가 있으면 그게 우선
   fetch('data/exchange.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : {}).then(m => { EXCH = m || {}; if (D) decisionCard(); }).catch(() => {});
   const exTag = x => x ? `<span class="ex">${x === 'KOSPI' ? 'Kospi' : x === 'KOSDAQ' ? 'Kosdaq' : esc(x)}</span>` : '';
-  const volTag = v => v == null || isNaN(+v) ? '' : `<span class="vl${+v > 1 ? ' hi' : ''}">${+v > 1 ? '⚡' : ''}변동성 ${Math.round(+v * 100)}%</span>`;
+  const volTag = v => v == null || isNaN(+v) ? '' : `<span class="vl${+v > 1 ? ' hi' : ''}">${+v > 1 ? '고변동' : '변동성'} ${Math.round(+v * 100)}%</span>`;
   const row = (a, b, cls) => `<div class="r"><span>${esc(a)}</span><span class="${cls || ''}">${esc(b)}</span></div>`;
 
   const none = (el, msg) => { el.innerHTML = ''; el.classList.add('empty'); const p = document.createElement('p'); p.className = 'f-empty'; p.textContent = msg; el.appendChild(p); };
@@ -1182,7 +1182,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       return `<div class="dec-row" data-i="${i}"><span class="nm">${esc(c.name)}${exTag(c.exchange || EXCH[c.code])}${volTag(c.vol20)}</span>`
         + `<span class="act ${c.ret5 > 0 ? 'buy' : c.ret5 < 0 ? 'sell' : ''}">${pct(c.ret5, 1)}</span>`
         + `<span class="cf"><i><b class="${s >= .6 ? 'hi' : ''}" style="width:${Math.round(s * 100)}%"></b></i>${s.toFixed(2)}</span>`
-        + `<span class="why">${n ? (n.risk ? '<em>⚠</em> ' : '') + esc(n.title) : '최근 뉴스 없음'}</span></div>`;
+        + `<span class="why">${n ? (n.risk ? '<em>악재</em> ' : '') + esc(n.title) : '최근 뉴스 없음'}</span></div>`;
     }).join('');
     list.querySelectorAll('.dec-row').forEach(el => {
       const c = cs[+el.dataset.i];
@@ -1190,7 +1190,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
         + row('종가', won(c.close) + '원') + row('5일 · 20일', pct(c.ret5, 1) + ' · ' + pct(c.ret20, 1))
         + row('RSI · 변동성', Math.round(c.rsi14) + ' · ' + Math.round(c.vol20 * 100) + '%')
         + row('외국인 · 기관 5일', eok(c.foreign_net) + ' · ' + eok(c.inst_net))
-        + (c.news || []).map(n => `<p class="tp">${n.risk ? '<span class="up">⚠</span> ' : ''}${esc(n.date)} ${esc(n.title)}</p>`).join('');
+        + (c.news || []).map(n => `<p class="tp">${n.risk ? '<span class="up">악재</span> ' : ''}${esc(n.date)} ${esc(n.title)}</p>`).join('');
       el.addEventListener('mousemove', ev => showTip(ev, html));
       el.addEventListener('mouseleave', hideTip);
       el.addEventListener('click', ev => showTip(ev, html));
