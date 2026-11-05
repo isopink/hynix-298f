@@ -97,7 +97,7 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
 .tk-item { font-size: 13px; color: var(--body); padding-right: 32px; }
 .tk-item b { color: var(--red-hi); font-weight: 600; margin-right: 6px; }
 @keyframes tk { to { transform: translateX(-50%); } }
-@media (prefers-reduced-motion: reduce) { .tk-track { animation: none; } }
+.ticker:hover .tk-track, .ticker:focus-visible .tk-track { animation-play-state: paused; }   /* 움직임 줄이기 설정이어도 흐름, 올리면 멈춤 (11-05 S.Lee) */
 .cheer { position: relative; margin-left: auto; align-self: center; display: flex; align-items: center; gap: 8px; }
 .pop { position: absolute; right: 0; top: calc(100% + 10px); z-index: 50; width: min(380px, calc(100vw - 32px)); max-height: min(72vh, 600px); overflow-y: auto; box-shadow: 0 18px 48px rgba(0,0,0,.55); }
 .pop[hidden] { display: none !important; }
