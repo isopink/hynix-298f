@@ -1592,44 +1592,47 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     };
     // 경로 = 출발-도착
     const LINKS = 'kbal-snap snap-rpc rpc-sbs sbs-dash nav-cron cron-kxt cron-flw cron-kxd kxt-dash kxd-dash flw-dash snap-lsnap lsnap-mon mon-exitr exitr-run sched-run sched-snap sched-mon sched-close lock-run krank-intr krxl-krx krx-ind ind-prep newsapi-news news-prep prep-screen screen-brief intr-brief run-prep run-intr brief-cl run-cl cl-reg reg-cl cl-bull bull-web bull-bear bear-web bear-cl cl-boost boost-cl cl-mcp mcp-plan params-plan norebuy-plan etf-plan probe-plan partial-plan plan-mcp mcp-hook limits-hook hook-block block-jrn hook-broker rate-broker mode-broker broker-korder kprice-broker mcp-jrn jrn-logger dbf-logger logger-eqf logger-hdf logger-trf logger-stf eqf-pub hdf-pub trf-pub stf-pub close-logger pub-gh gh-pg pg-dash lap-gh gh-sync sync-run cl-tune tunerules-tune tune-params tune-chg chg-gh cl-rev rev-drafts drafts-pub params-pub'.split(' ');
-    let N, E, EDGE, dots, mesh, H = 620, ys = 1, scale = 1, phone = null, lw = 1, cssW = 1000;
+    let N, E, EDGE, dots, mesh, H = 620, ys = 1, scale = 1, phone = null, lw = 1, cssW = 1000, ready = false, dprCap = 3, cost = 0;
     let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647, r2 = () => (rnd() + rnd()) - 1;
-    const at = (s, t) => { const u = 1 - t, a = u * u * u, b = 3 * u * u * t, c = 3 * u * t * t, d = t * t * t; return [a * s.p0[0] + b * s.c1[0] + c * s.c2[0] + d * s.p3[0], a * s.p0[1] + b * s.c1[1] + c * s.c2[1] + d * s.p3[1]]; };
-    function branch(x, y, ang, len, depth, out, w) {
+    // 선의 네 점은 매 프레임 지금 위치로 계산 (지점이 천천히 떠다니므로)
+    const geo = s => {
+      const ax = s.a.x, ay = s.a.y, dx = s.b.x - ax, dy = s.b.y - ay;
+      if (s.k != null) return [[ax, ay], [ax + dx * .33 - dy * s.k, ay + dy * .33 + dx * s.k], [ax + dx * .66 + dy * s.k, ay + dy * .66 - dx * s.k], [s.b.x, s.b.y]];
+      const Ln = Math.hypot(dx, dy) || 1, nx = -dy / Ln, ny = dx / Ln;
+      return [[ax, ay], [ax + dx * .34 + nx * s.k1, ay + dy * .34 + ny * s.k1], [ax + dx * .66 + nx * s.k2, ay + dy * .66 + ny * s.k2], [s.b.x, s.b.y]];
+    };
+    const at = (s, t) => { const [p0, c1, c2, p3] = geo(s), u = 1 - t, a = u * u * u, b = 3 * u * u * t, c = 3 * u * t * t, d = t * t * t; return [a * p0[0] + b * c1[0] + c * c2[0] + d * p3[0], a * p0[1] + b * c1[1] + c * c2[1] + d * p3[1]]; };
+    const curve = (g, s) => { const [p0, c1, c2, p3] = geo(s); g.beginPath(); g.moveTo(...p0); g.bezierCurveTo(...c1, ...c2, ...p3); g.stroke(); };
+    function branch(x, y, ang, len, depth, out, w) {   // 지점 기준 상대 좌표
       const a2 = ang + (rnd() - .5) * .8, ex = x + Math.cos(a2) * len, ey = y + Math.sin(a2) * len;
       out.push({ x, y, cx: x + Math.cos(ang) * len * .55, cy: y + Math.sin(ang) * len * .55, ex, ey, w });
       if (depth <= 0) return;
       branch(ex, ey, a2 + (rnd() - .5) * .5, len * (.82 + rnd() * .2), depth - 1, out, w * .76);
       if (rnd() < .55) branch(ex, ey, a2 + (rnd() < .5 ? -1 : 1) * (.45 + rnd() * .7), len * (.6 + rnd() * .3), depth - 1, out, w * .6);
     }
+    const drift = o => { o.ph1 = rnd() * 6.28; o.ph2 = rnd() * 6.28; o.p1 = 5000 + rnd() * 5000; o.p2 = 6000 + rnd() * 6000; };
     function build() {   // 같은 seed 로 다시 만들어 폰·PC 전환에도 모양이 같음
       seed = 7;
       const prev = N;
       // 가로 화면: 1000×620 배치를 세로로만 늘림. 세로 화면(H > 1.2W): 배치를 90도 돌려 세움
       const tall = H > W * 1.2;
-      N = {}; Object.keys(BASE_N).forEach(k => { const [bx, by, t] = BASE_N[k]; const x0 = tall ? by * (W / 620) : bx, y0 = tall ? bx * (H / 1000) : by * ys, x = W / 2 + (x0 - W / 2) * (tall ? 1.3 : 1.22), y = H / 2 + (y0 - H / 2) * (tall ? 1.3 : 1.22); N[k] = { x, y, t, on: prev && prev[k] ? prev[k].on : 0, glow: 0 }; });
+      N = {}; Object.keys(BASE_N).forEach(k => { const [bx, by, t] = BASE_N[k]; const x0 = tall ? by * (W / 620) : bx, y0 = tall ? bx * (H / 1000) : by * ys, x = W / 2 + (x0 - W / 2) * (tall ? 1.3 : 1.22), y = H / 2 + (y0 - H / 2) * (tall ? 1.3 : 1.22); N[k] = { x, y, x0: x, y0: y, t, on: prev && prev[k] ? prev[k].on : 0, glow: 0, amp: 14 }; drift(N[k]); });
       E = LINKS.map(id => { const [a, b] = id.split('-'); return { id, a: N[a], b: N[b], bow: (rnd() < .5 ? -1 : 1) * (10 + rnd() * 18), on: 0, glow: 0 }; });
       EDGE = Object.fromEntries(E.map(e => [e.id, e]));
       Object.values(N).forEach(n => { n.deg = 0; }); E.forEach(e => { e.a.deg++; e.b.deg++; });
       Object.values(N).forEach(n => { n.size = 20 + n.deg * 5; });
-      E.forEach(e => {
-        const dx = e.b.x - e.a.x, dy = e.b.y - e.a.y, Ln = Math.hypot(dx, dy) || 1, nx = -dy / Ln, ny = dx / Ln;
-        e.strands = Array.from({ length: 2 }, () => {
-          const k1 = e.bow + r2() * 4, k2 = -e.bow * .55 + r2() * 4;
-          return { p0: [e.a.x, e.a.y], c1: [e.a.x + dx * .34 + nx * k1, e.a.y + dy * .34 + ny * k1], c2: [e.a.x + dx * .66 + nx * k2, e.a.y + dy * .66 + ny * k2], p3: [e.b.x, e.b.y], w: .8 + rnd() * .6 };
-        });
-      });
+      E.forEach(e => { e.strands = Array.from({ length: 2 }, () => ({ a: e.a, b: e.b, k1: e.bow + r2() * 4, k2: -e.bow * .55 + r2() * 4, w: .8 + rnd() * .6 })); });
       Object.values(N).forEach(n => {
         n.den = [];
-        for (let i = 0, c = 6 + n.deg; i < c; i++) { let ang; do { ang = rnd() * Math.PI * 2; } while (ang > .6 && ang < 2.55); branch(n.x, n.y, ang, 20 + n.deg * 1.5 + rnd() * 20, Math.min(phone ? 5 : 6, 3 + Math.ceil(n.deg / 2)), n.den, Math.min(2, .9 + n.deg * .14)); }
+        for (let i = 0, c = 6 + n.deg; i < c; i++) { let ang; do { ang = rnd() * Math.PI * 2; } while (ang > .6 && ang < 2.55); branch(0, 0, ang, 20 + n.deg * 1.5 + rnd() * 20, Math.min(phone ? 5 : 6, 3 + Math.ceil(n.deg / 2)), n.den, Math.min(2, .9 + n.deg * .14)); }
       });
       dots = [];
       let guard = 0;
       while (dots.length < (phone ? 90 : 60) && guard++ < 8000) {   // 빈 자리와 모서리까지 작은 뉴런으로 채움
         const x = -20 + rnd() * (W + 40), y = -20 + rnd() * (H + 40);
-        if (Object.values(N).every(n => Math.hypot(n.x - x, n.y - y) > 34) && dots.every(d => Math.hypot(d.x - x, d.y - y) > 30)) dots.push({ x, y, den: [] });
+        if (Object.values(N).every(n => Math.hypot(n.x - x, n.y - y) > 34) && dots.every(d => Math.hypot(d.x - x, d.y - y) > 30)) { const d = { x, y, x0: x, y0: y, den: [], amp: 18 }; drift(d); dots.push(d); }
       }
-      dots.forEach(d => { for (let i = 0; i < 6; i++) branch(d.x, d.y, rnd() * Math.PI * 2, 16 + rnd() * 16, 5, d.den, .9); });
+      dots.forEach(d => { for (let i = 0; i < 6; i++) branch(0, 0, rnd() * Math.PI * 2, 16 + rnd() * 16, 5, d.den, .9); });
       Object.values(N).forEach(n => { n.nb = new Set(); n.near = new Set(); });
       E.forEach(e => { e.a.nb.add(e.b); e.b.nb.add(e.a); });
       mesh = [];
@@ -1637,16 +1640,15 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       all.forEach(n => {   // 가까운 지점 3개와 가는 선으로 (이미 경로가 있으면 건너뜀)
         all.filter(o => o !== n && !n.nb.has(o)).sort((a, b) => Math.hypot(a.x - n.x, a.y - n.y) - Math.hypot(b.x - n.x, b.y - n.y)).slice(0, 3).forEach(o => {
           if (o.near.has(n)) return; n.near.add(o); o.near.add(n);
-          const dx = o.x - n.x, dy = o.y - n.y, k = (rnd() - .5) * .4;
-          mesh.push({ p0: [n.x, n.y], c1: [n.x + dx * .33 - dy * k, n.y + dy * .33 + dx * k], c2: [n.x + dx * .66 + dy * k, n.y + dy * .66 - dx * k], p3: [o.x, o.y], w: 1 });
+          mesh.push({ a: n, b: o, k: (rnd() - .5) * .4, w: 1 });
         });
       });
       dots.forEach(d => {
         [...dots, ...Object.values(N)].filter(o => o !== d).sort((a, b) => Math.hypot(a.x - d.x, a.y - d.y) - Math.hypot(b.x - d.x, b.y - d.y)).slice(0, 4).forEach(o => {
-          const dx = o.x - d.x, dy = o.y - d.y, k = (rnd() - .5) * .5;
-          mesh.push({ p0: [d.x, d.y], c1: [d.x + dx * .33 - dy * k, d.y + dy * .33 + dx * k], c2: [d.x + dx * .66 + dy * k, d.y + dy * .66 - dx * k], p3: [o.x, o.y] });
+          mesh.push({ a: d, b: o, k: (rnd() - .5) * .5 });
         });
       });
+      ready = false;
     }
     function sprite(rgb, size, soft) {
       const c = document.createElement('canvas'); c.width = c.height = size;
@@ -1655,26 +1657,24 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       g.fillStyle = gr; g.fillRect(0, 0, size, size); return c;
     }
     const SP = { r: sprite('255,90,74', 64), n: sprite('205,205,210', 64), w: sprite('235,235,238', 128, true) };
-    const bg = document.createElement('canvas');
+    // 잔가지는 지점마다 그림 한 장으로 미리 그려 두고(화면 배율 기준), 매 프레임 지점을 따라 옮겨 찍음
+    function bake(o, f) {
+      const R = Math.max(4, ...o.den.map(b => Math.hypot(b.ex, b.ey))) + 3, px = Math.ceil(R * 2 * scale);
+      const c = document.createElement('canvas'); c.width = c.height = px;
+      const g = c.getContext('2d'); g.setTransform(scale, 0, 0, scale, R * scale, R * scale); g.lineCap = 'round';
+      o.den.forEach(b => { g.strokeStyle = `rgba(225,222,222,${Math.min(.16, (.025 + .08 * b.w) * f)})`; g.lineWidth = b.w * lw; g.beginPath(); g.moveTo(b.x, b.y); g.quadraticCurveTo(b.cx, b.cy, b.ex, b.ey); g.stroke(); });
+      o.img = c; o.R = R;
+    }
     function fit() {
       const r = cv.getBoundingClientRect(); if (r.width < 1) return;
-      const ph = r.width < 560, dpr = Math.min(3, devicePixelRatio || 1);   // 화면 픽셀 그대로 선명하게 (최대 3배)   // 폰은 화면 픽셀 그대로 그려 선명하게 (캔버스가 작아 비용 적음)
+      const ph = r.width < 560, dpr = Math.min(dprCap, devicePixelRatio || 1);   // 화면 픽셀 그대로 선명하게 (최대 3배, 느린 기기는 자동으로 낮춤)
       const h = Math.max(300, Math.min(2600, Math.round(W * r.height / r.width)));   // 상자 비율대로 세로 길이 (1000 기준)
       if (ph !== phone || Math.abs(h - H) > 8) { phone = ph; lw = ph ? 1.6 : 1; H = h; ys = H / 620; build(); }
       const cw = Math.round(r.width * dpr), ch = Math.round(cw * H / W);
-      if (cw === cv.width && ch === cv.height && bg.width === cw) return;
+      if (cw === cv.width && ch === cv.height && ready) return;
       cv.width = cw; cv.height = ch; scale = cw / W; cssW = r.width;
-      bg.width = cw; bg.height = ch;
-      const g = bg.getContext('2d'); g.setTransform(scale, 0, 0, scale, 0, 0);
-      g.clearRect(0, 0, W, H);
-      g.globalCompositeOperation = 'lighter'; g.lineCap = 'round';
-      E.forEach(e => e.strands.forEach(s => { g.strokeStyle = 'rgba(200,200,206,.1)'; g.lineWidth = s.w * lw; g.beginPath(); g.moveTo(...s.p0); g.bezierCurveTo(...s.c1, ...s.c2, ...s.p3); g.stroke(); }));
-      const twig = (list, f) => list.forEach(b => { g.strokeStyle = `rgba(225,222,222,${Math.min(.16, (.025 + .08 * b.w) * f)})`; g.lineWidth = b.w * lw; g.beginPath(); g.moveTo(b.x, b.y); g.quadraticCurveTo(b.cx, b.cy, b.ex, b.ey); g.stroke(); });
-      Object.values(N).forEach(n => twig(n.den, 1)); dots.forEach(d => twig(d.den, .6));
-      mesh.forEach(m => { g.lineWidth = (m.w ? .9 : .7) * lw; g.strokeStyle = m.w ? 'rgba(225,222,222,.06)' : 'rgba(225,222,222,.04)'; g.beginPath(); g.moveTo(...m.p0); g.bezierCurveTo(...m.c1, ...m.c2, ...m.p3); g.stroke(); });
-      dots.forEach(d => { g.globalAlpha = .14; g.drawImage(SP.n, d.x - 6, d.y - 6, 12, 12); });
-      Object.values(N).forEach(n => { g.globalAlpha = .28; g.drawImage(SP.w, n.x - n.size / 2, n.y - n.size / 2, n.size, n.size); });
-      g.globalAlpha = 1; g.globalCompositeOperation = 'source-over';
+      Object.values(N).forEach(n => bake(n, 1)); dots.forEach(d => bake(d, .6));
+      ready = true;
     }
     fit(); addEventListener('resize', fit);
     if (window.ResizeObserver) new ResizeObserver(fit).observe(cv);
@@ -1684,14 +1684,22 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const waiters = new Set(), bursts = [];
     const stamp = (x, y, im, size, alpha) => { ctx.globalAlpha = alpha; ctx.drawImage(im, x - size / 2, y - size / 2, size, size); };
     function draw(dt) {
-      if (!bg.width) { fit(); if (!bg.width) return; }
+      if (!ready) { fit(); if (!ready) return; }
       const sec = dt / 1000, blink = .62 + .38 * Math.sin(clock / 130);
-      ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1; ctx.clearRect(0, 0, cv.width, cv.height); ctx.drawImage(bg, 0, 0);
+      // 지점이 천천히 떠다님 (랜덤 위상, 6~12초 주기)
+      const move = o => { o.x = o.x0 + Math.sin(clock / o.p1 * 6.283 + o.ph1) * o.amp; o.y = o.y0 + Math.cos(clock / o.p2 * 6.283 + o.ph2) * o.amp; };
+      Object.values(N).forEach(move); dots.forEach(move);
+      ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1; ctx.clearRect(0, 0, cv.width, cv.height);
       ctx.setTransform(scale, 0, 0, scale, 0, 0); ctx.globalCompositeOperation = 'lighter'; ctx.lineCap = 'round';
+      // 쉬는 망: 경로·그물·잔가지·지점 빛
+      ctx.strokeStyle = 'rgba(200,200,206,.1)'; E.forEach(e => e.strands.forEach(s => { ctx.lineWidth = s.w * lw; curve(ctx, s); }));
+      mesh.forEach(m => { ctx.lineWidth = (m.w ? .9 : .7) * lw; ctx.strokeStyle = m.w ? 'rgba(225,222,222,.06)' : 'rgba(225,222,222,.04)'; curve(ctx, m); });
+      ctx.globalAlpha = 1; dots.forEach(d => ctx.drawImage(d.img, d.x - d.R, d.y - d.R, d.R * 2, d.R * 2)); Object.values(N).forEach(n => ctx.drawImage(n.img, n.x - n.R, n.y - n.R, n.R * 2, n.R * 2));
+      dots.forEach(d => stamp(d.x, d.y, SP.n, 12, .14)); Object.values(N).forEach(n => stamp(n.x, n.y, SP.w, n.size, .28));
       E.forEach(e => {
         e.glow += ((e.on > 0 ? 1 : 0) - e.glow) * Math.min(1, sec * 6);
         if (e.glow < .02) return;
-        e.strands.forEach(s => { ctx.globalAlpha = 1; ctx.strokeStyle = `rgba(255,90,74,${.6 * e.glow})`; ctx.lineWidth = (s.w + .4) * lw; ctx.beginPath(); ctx.moveTo(...s.p0); ctx.bezierCurveTo(...s.c1, ...s.c2, ...s.p3); ctx.stroke(); });
+        e.strands.forEach(s => { ctx.globalAlpha = 1; ctx.strokeStyle = `rgba(255,90,74,${.6 * e.glow})`; ctx.lineWidth = (s.w + .4) * lw; curve(ctx, s); });
       });
       for (let i = bursts.length - 1; i >= 0; i--) {
         const p = bursts[i]; p.t += dt / p.life; if (p.t < 0) continue; if (p.t >= 1) { bursts.splice(i, 1); continue; }
@@ -1699,7 +1707,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
         ctx.globalAlpha = p.c ? .25 : .55; ctx.strokeStyle = p.c ? 'rgb(205,205,210)' : 'rgb(255,120,104)'; ctx.lineWidth = 1.2 * lw; ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(x, y); ctx.stroke();
         stamp(x, y, SP[p.c || 'r'], p.size, p.c ? .5 : .95);
       }
-      Object.values(N).forEach(n => { if (!(n.glow > .05)) return; ctx.globalAlpha = 1; ctx.strokeStyle = `rgba(255,90,74,${.8 * n.glow * blink})`; n.den.forEach(b => { ctx.lineWidth = (b.w + .2) * lw; ctx.beginPath(); ctx.moveTo(b.x, b.y); ctx.quadraticCurveTo(b.cx, b.cy, b.ex, b.ey); ctx.stroke(); }); });
+      Object.values(N).forEach(n => { if (!(n.glow > .05)) return; ctx.globalAlpha = 1; ctx.strokeStyle = `rgba(255,90,74,${.8 * n.glow * blink})`; n.den.forEach(b => { ctx.lineWidth = (b.w + .2) * lw; ctx.beginPath(); ctx.moveTo(n.x + b.x, n.y + b.y); ctx.quadraticCurveTo(n.x + b.cx, n.y + b.cy, n.x + b.ex, n.y + b.ey); ctx.stroke(); }); });
       if (dt && clock > nextSpark) { nextSpark = clock + 900 + rnd() * 1400; bursts.push({ s: mesh[Math.floor(rnd() * mesh.length)], t: 0, life: 1600, size: 7, c: 'n' }); }
       Object.values(N).forEach(n => {
         const target = (n.on || 0) > 0 ? 1 : [...n.nb].some(o => o.on > 0) ? .35 : [...n.near].some(o => o.on > 0) ? .15 : 0;
@@ -1726,7 +1734,10 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       const dt = visible && !document.hidden ? Math.min(t - last, 120) : 0;
       clock += dt; last = t;
       waiters.forEach(w => { if (clock >= w.at || w.track.dead) { waiters.delete(w); w.done(); } });
-      if (dt) draw(dt);
+      if (dt) {
+        const t0 = performance.now(); draw(dt); cost = cost * .9 + (performance.now() - t0) * .1;
+        if (cost > 40 && dprCap > 1.5) { dprCap -= .5; cost = 0; ready = false; fit(); }   // 한 프레임이 40ms 를 넘기면 해상도를 한 단계 낮춤
+      }
     })(last);
     if (window.IntersectionObserver) new IntersectionObserver(es => { visible = es[0].isIntersecting; }).observe(cv);
 
