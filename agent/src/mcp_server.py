@@ -107,7 +107,8 @@ def get_briefing() -> str:
         ctx.append(f"- 🔻인버스 {names}: 시장이 내리면 오르는 ETF. 후보에 매일 따로 들어옴. 오늘 국면이 {'·'.join(inv['regimes'])}일 때만 매수 가능, "
                    f"주식 비중 상한과 별도로 {inv['weight_cap']:.0%}까지, 하루 {inv.get('max_buys_per_day', '-')}번만 매수 (코드가 강제). "
                    f"짧게 치고 빠짐: 수수료·세금 뺀 순익 {inv['take_profit_net_pct']:+.1%}(평단 대비 {C.gross_take(inv['take_profit_net_pct'], p, inv.get('sell_tax_rate')):+.2%})에 익절 · 최대 보유 {inv.get('max_hold_days', p['decision']['max_hold_days'])}거래일. "
-                   f"보유 중인데 국면이 바뀌면 매도 확신도를 높게 볼 것")
+                   f"보유 중인데 국면이 바뀌면 매도 확신도를 높게 볼 것. "
+                   f"단 인버스가 오늘 {inv.get('no_chase_change', 0):+.0%} 이상 오른 날(시장 급락)은 신규 매수 금지 (코드가 강제)")
     if (ix := p.get("index")) and ix.get("enabled"):
         names = ", ".join(f"{n}({c})" for c, n in ix["codes"].items())
         ctx.append(f"- 📈지수 {names}: 시장을 그대로 따라가는 ETF (인버스와 짝). 후보에 매일 따로 들어옴. 오늘 국면이 {'·'.join(ix['regimes'])}일 때만 매수 가능, "
@@ -117,7 +118,7 @@ def get_briefing() -> str:
         if (xd := ix.get("dip_buy")) and xd.get("enabled"):
             ctx.append(f"  - 📈급락일 예외: 오늘 지수 ETF 가 {xd['drop']:.0%} 이하로 빠졌으면 {xd['from']} 이후 회차에는 하락 국면이어도 매수 가능 (코드가 확인). "
                        f"**확신도 기준 없이 반드시 매수** (plan_order → place_order). 크기 = 하락 폭별 최대 " + " · ".join(f"{a:.0%} 이하 {w:.0%}" for a, w in xd['tiers']) + f" × 확신도 비례(보정 후 {p['decision']['full_size_confidence']:.2f} 이상이면 전부). 이렇게 산 건 수수료 뺀 순익 {xd.get('take_profit_net_pct', 0):+.0%}에 익절, 최대 보유 {xd['max_hold_days']}거래일. "
-                       f"과거 3년 KODEX 200 −3% 이하 날 종가 매수는 83%가 익절됐음. bull = 과매도·투매 근거, bear = 다음날 추가 급락 근거(해외 악재 지속, 외국인 대량 순매도)")
+                       f"과거 3년 KODEX 200 −3% 이하 날 종가 매수는 83%가 익절됐지만 −3~−4% 구간은 평균 손실이라 기준을 −4%로 올렸음. bull = 과매도·투매 근거, bear = 다음날 추가 급락 근거(해외 악재 지속, 외국인 대량 순매도)")
     if rb := p.get("rsi_boost"):
         buy = [f"{x['name']}({n})" for x in b.get("candidates", []) + b.get("holdings", [])
                for _, n in [C.conf_boost(x["code"], "매수", 0, p, b, regime="")] if n]

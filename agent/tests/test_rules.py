@@ -578,10 +578,10 @@ def test_partial_sell_by_confidence():
 
 
 def test_index_dip_buy_in_falling_market():
-    """급락일 지수 예외: KODEX 200 이 −3% 이하면 15:00 이후엔 하락 국면이어도 매수 (7%), 그 전·덜 빠진 날은 막힘."""
+    """급락일 지수 예외: KODEX 200 이 −4% 이하면 15:00 이후엔 하락 국면이어도 매수 (7%), 그 전·덜 빠진 날은 막힘."""
     at = lambda h, m: datetime(2026, 11, 5, h, m, tzinfo=C.KST)
     assert C.index_dip("069500", -0.052, P, at(15, 15)) and not C.index_dip("069500", -0.052, P, at(14, 45))
-    assert not C.index_dip("069500", -0.02, P, at(15, 15)) and not C.index_dip("005930", -0.06, P, at(15, 15))
+    assert not C.index_dip("069500", -0.035, P, at(15, 15)) and not C.index_dip("005930", -0.06, P, at(15, 15))
     real = C.now
     try:
         C.now = lambda: at(15, 15)
@@ -608,10 +608,10 @@ def test_index_weight_cap_20pct():
 
 
 def test_index_dip_tiers_and_limit_exception():
-    """급락일 지수 예외: −3% 15% · −4% 25% · −5% 35%, 이 매수만 종목당 20%·1회 주문 한도 예외."""
+    """급락일 지수 예외: −4% 10% · −5% 15%, 이 매수만 종목당 20%·1회 주문 한도 예외."""
     at = datetime(2026, 11, 5, 15, 15, tzinfo=C.KST)
     w = lambda chg: (C.index_dip("069500", chg, P, at) or {}).get("weight")
-    assert (w(-0.031), w(-0.045), w(-0.052), w(-0.02)) == (0.05, 0.10, 0.15, None)
+    assert (w(-0.035), w(-0.045), w(-0.052), w(-0.02)) == (None, 0.10, 0.15, None)
     open(C.JOURNAL, "w").close()
     C.journal("regime", regime="하락", cap=P["regime_cap"]["하락"])
     real = C.now
@@ -624,8 +624,8 @@ def test_index_dip_tiers_and_limit_exception():
         assert "확신도" not in [x for x, _ in risk.check({"code": "069500", "side": "매수", "qty": low["qty"], "confidence": 0.40, "today_change": -0.052}, acc(), 10_000, P, R)]                       # 35% (20%·1,000만 원 한도 예외)
         ok = [x for x, _ in risk.check({"code": "069500", "side": "매수", "qty": plan["qty"], "confidence": 0.85, "today_change": -0.052}, acc(), 10_000, P, R)]
         assert "종목 한도" not in ok and "1회 주문 한도" not in ok, ok
-        big = [x for x, _ in risk.check({"code": "069500", "side": "매수", "qty": plan["qty"], "confidence": 0.85, "today_change": -0.031}, acc(), 10_000, P, R)]
-        assert "수량 계산 초과" in big   # −3% 날(5%)엔 같은 수량이 계산값 초과
+        big = [x for x, _ in risk.check({"code": "069500", "side": "매수", "qty": plan["qty"], "confidence": 0.85, "today_change": -0.045}, acc(), 10_000, P, R)]
+        assert "수량 계산 초과" in big   # −4% 날(10%)엔 같은 수량이 계산값 초과
     finally:
         C.now = real
 
@@ -707,6 +707,19 @@ def test_index_dip_ignores_daily_loss_limit():
         assert "일일 손실 한도" in bad, bad
     finally:
         C.now, risk.daily_pnl = real, real_dp
+
+def test_inverse_no_chase_on_crash_day():
+    """시장 급락일(인버스 +4% 이상)엔 하락 국면이어도 인버스 신규 매수 금지, 그보다 덜 오른 날은 그대로."""
+    assert C.inverse_chase("114800", 0.04, P) and not C.inverse_chase("114800", 0.039, P)
+    assert not C.inverse_chase("114800", None, P) and not C.inverse_chase("069500", 0.05, P)
+    open(C.JOURNAL, "w").close()
+    C.journal("regime", regime="하락", cap=P["regime_cap"]["하락"])
+    assert sizing.plan_buy("114800", 0.70, 1_000, acc(), P, R, today_change=0.05)["qty"] == 0
+    ok = sizing.plan_buy("114800", 0.70, 1_000, acc(), P, R, today_change=0.02)
+    assert ok["qty"] > 0, ok
+    chk = lambda chg: [x for x, _ in risk.check({"code": "114800", "side": "매수", "qty": ok["qty"], "confidence": 0.70, "today_change": chg}, acc(), 1_000, P, R)]
+    assert "인버스 추격" in chk(0.05) and "인버스 추격" not in chk(0.02)
+
 
 def test_index_dip_requires_selling_inverse_first():
     """11-06 S.Lee: 인버스를 들고 있으면 급락일 KODEX 200 은 0주·Hook 차단. 인버스를 팔고 나면 정상."""

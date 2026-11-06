@@ -199,6 +199,12 @@ def other_etf(name, p=None):
     return "ETN" in nm.upper() or any(nm.upper().startswith(x.upper()) for x in pre)
 
 
+def inverse_chase(code, chg, p=None):
+    """인버스가 오늘 no_chase_change 이상 올랐으면(시장 급락) True (11-06: 급락 뒤 인버스 추격 금지). 등락률을 모르면 False."""
+    inv = inverse(code, p or params())
+    return bool(inv and inv.get("no_chase_change") is not None and chg is not None and chg >= inv["no_chase_change"] - 1e-12)
+
+
 def index_dip(code, chg, p=None, t=None):
     """급락일 지수 예외 (params.index.dip_buy, 11-05): KODEX 200 이 오늘 drop 이하이고 from 이후면 설정, 아니면 None."""
     p = p or params()
@@ -206,7 +212,7 @@ def index_dip(code, chg, p=None, t=None):
     if not dd.get("enabled") or chg is None or chg > dd["drop"] or (t or now()).strftime("%H:%M") < dd["from"]:
         return None
     tiers = dd.get("tiers") or [[dd["drop"], dd.get("weight", 0)]]
-    w = max((wt for lim, wt in tiers if chg <= lim + 1e-12), default=0)   # 11-05 하락 폭이 클수록 크게 (−3% 15 · −4% 25 · −5% 35%)
+    w = max((wt for lim, wt in tiers if chg <= lim + 1e-12), default=0)   # 11-05 하락 폭이 클수록 크게 (11-06 −4% 10 · −5% 15%)
     return {**dd, "weight": w}
 
 

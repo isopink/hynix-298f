@@ -77,6 +77,8 @@ def check(order, account, price, p=None, r=None):
                 bad.append((f"{label} 국면", f"오늘 국면 {regime} · {label}는 {'·'.join(etf['regimes'])} 국면에서만 매수"))
             if (n := C.buys_today(code)) >= etf.get("max_buys_per_day", 99):
                 bad.append((f"{label} 하루 매수", f"오늘 이미 {n}번 매수 · {label}는 하루 {etf['max_buys_per_day']}번만"))
+        if C.inverse_chase(code, order.get("today_change"), p):   # 11-06 S.Lee: 시장 급락일엔 인버스 신규 매수 금지
+            bad.append(("인버스 추격", f"오늘 인버스 {order['today_change']:+.1%} · {p['inverse']['no_chase_change']:+.0%} 이상 오른 날은 신규 매수 금지"))
         if p["decision"].get("no_rebuy_same_day") and C.sold_today(code):
             bad.append(("당일 재매수", "오늘 판 종목은 그날 다시 사지 않음"))
         if held:   # 보유 종목 추가 매수 (11-05): 손실 중 물타기 금지, 소액 매수 구간으로는 추가 안 함

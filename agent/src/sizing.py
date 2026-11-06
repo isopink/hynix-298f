@@ -70,6 +70,8 @@ def plan_buy(code, conf, price, account, p=None, r=None, regime=None, today_chan
                        for h in account["holdings"] if C.inverse(h["code"], p))
         limits["인버스 한도"] = total * inv["weight_cap"] - inv_held
     etf, label = C.market_etf(code, p)
+    if C.inverse_chase(code, today_change, p):   # 11-06 S.Lee: 시장 급락일엔 인버스 신규 매수 금지
+        limits["급락일 인버스 추격 금지"] = 0
     if etf:   # 시장 ETF(인버스·지수): 정해진 국면에서만, 하루 정해진 횟수만
         if regime not in etf["regimes"] and not xd:
             limits[f"{label}는 " + "·".join(etf["regimes"]) + " 국면만"] = 0
