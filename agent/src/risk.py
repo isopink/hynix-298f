@@ -68,7 +68,7 @@ def check(order, account, price, p=None, r=None):
         if cash_after < total * r["min_cash_ratio"]:
             bad.append(("최소 현금", f"매수 후 현금 {cash_after / total:.1%} < {r['min_cash_ratio']:.0%}"))
         dp = daily_pnl(account)
-        if dp <= r["daily_loss_limit"]:
+        if dp <= r["daily_loss_limit"] and not xd:   # 11-06 S.Lee: 급락일 지수 예외 매수는 일일 손실 한도의 예외 (폭락일 반등 매수)
             bad.append(("일일 손실 한도", f"오늘 {dp:.1%} ≤ {r['daily_loss_limit']:.0%}, 신규 매수 중단"))
         cap, regime = sizing.equity_cap(p, r, account)
         etf, label = C.market_etf(code, p)

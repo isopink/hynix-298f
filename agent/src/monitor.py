@@ -25,6 +25,9 @@ def holdings():
     return broker.get().account()["holdings"]
 
 
+STOP_FROM = 910   # 손절은 09:10 부터 (익절·보유일은 장 전부터 그대로)
+
+
 def triggers(hs):
     """{code: (매수 건 키, 사유)}. 키는 진입일·손절가·익절가로 만들어 다시 사거나 더 사면 새 건으로 봄."""
     meta = C.position_meta(hs)
@@ -34,7 +37,11 @@ def triggers(hs):
         if not m:
             continue
         key = f"{h['code']}@{m.get('entry_date')}/{m.get('stop')}/{m.get('take')}"
+        n = C.now()
         if m.get("stop") and h["price"] <= m["stop"]:
+            if n.hour * 100 + n.minute < STOP_FROM:   # 11-06 S.Lee: 장 전·장 초반 10분 투매 구간엔 손절 보류 (KODEX 200 이 시가 −8.6% 에 손절된 일)
+                print(f"  손절 보류 ({STOP_FROM // 100}:{STOP_FROM % 100:02d} 전): {h['name']} 현재가 {h['price']:,} ≤ 손절가 {m['stop']:,}", flush=True)
+                continue
             hit[h["code"]] = (key, f"{h['name']} 현재가 {h['price']:,} ≤ 손절가 {m['stop']:,}")
         elif m.get("take") and h["price"] >= m["take"]:
             hit[h["code"]] = (key, f"{h['name']} 현재가 {h['price']:,} ≥ 익절가 {m['take']:,}")
