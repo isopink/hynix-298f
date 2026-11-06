@@ -676,6 +676,38 @@ def test_index_dip_hold_no_judgment_sell():
         os.remove(C.POSITIONS)
         C.POSITIONS = old_pos
 
+def test_stop_held_until_0910():
+    """11-06 S.Lee: 손절은 09:10 부터 (장 전·장 초반 투매 구간 보류). 익절은 장 전부터 그대로."""
+    import monitor
+    old = (C.POSITIONS, C.now)
+    try:
+        C.POSITIONS = os.path.join(tmp, "positions.json")
+        C.write_json(C.POSITIONS, {"A": {"name": "A", "entry_date": C.today().isoformat()}, "B": {"name": "B", "entry_date": C.today().isoformat()}})
+        hs = [{**pos("A", 10, 10_000), "price": 9_000}, {**pos("B", 10, 10_000), "price": 12_000}]   # A 손절(−10%), B 익절(+20%)
+        for hm, want in [((8, 40), {"B"}), ((9, 5), {"B"}), ((9, 10), {"A", "B"})]:
+            C.now = lambda hm=hm: datetime(2026, 11, 6, *hm, tzinfo=C.KST)
+            assert set(monitor.triggers(hs)) == want, (hm, monitor.triggers(hs))
+    finally:
+        os.remove(C.POSITIONS)
+        C.POSITIONS, C.now = old
+
+
+def test_index_dip_ignores_daily_loss_limit():
+    """11-06 S.Lee: 급락일 지수 예외 매수는 일일 손실 한도(−3%)에 막히지 않음. 다른 매수는 그대로 막힘."""
+    at = datetime(2026, 11, 6, 15, 15, tzinfo=C.KST)
+    real, real_dp = C.now, risk.daily_pnl
+    try:
+        C.now, risk.daily_pnl = (lambda: at), (lambda a: -0.05)
+        open(C.JOURNAL, "w").close()
+        C.journal("regime", regime="하락", cap=P["regime_cap"]["하락"])
+        plan = sizing.plan_buy("069500", 0.85, 10_000, acc(), P, R, today_change=-0.06)
+        bad = [x for x, _ in risk.check({"code": "069500", "side": "매수", "qty": plan["qty"], "confidence": 0.85, "today_change": -0.06}, acc(), 10_000, P, R)]
+        assert "일일 손실 한도" not in bad, bad
+        bad = [x for x, _ in risk.check({"code": "005930", "side": "매수", "qty": 10, "confidence": 0.85}, acc(), 10_000, P, R)]
+        assert "일일 손실 한도" in bad, bad
+    finally:
+        C.now, risk.daily_pnl = real, real_dp
+
 def test_partial_sell_once_a_day():
     """11-05 HMM: 15분마다 절반씩 팔던 문제 → 분할은 하루 1번, 그 뒤엔 0.65 이상·규칙 매도만 전량."""
     a = acc(holdings=[pos("011200", 111, 10_000)])
