@@ -1683,11 +1683,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       mesh.forEach(m => { ctx.lineWidth = (m.w ? .9 : .7) * lw; ctx.strokeStyle = m.w ? 'rgba(230,228,228,.09)' : 'rgba(230,228,228,.06)'; curve(ctx, m); });
       ctx.globalAlpha = 1; dots.forEach(d => ctx.drawImage(d.img, d.x - d.R, d.y - d.R, d.R * 2, d.R * 2)); Object.values(N).forEach(n => ctx.drawImage(n.img, n.x - n.R, n.y - n.R, n.R * 2, n.R * 2));
       dots.forEach(d => stamp(d.x, d.y, SP.n, 12, .22)); Object.values(N).forEach(n => stamp(n.x, n.y, SP.w, n.size, .4));
-      E.forEach(e => {
-        e.glow += ((e.on > 0 ? 1 : 0) - e.glow) * Math.min(1, sec * 6);
-        if (e.glow < .02) return;
-        e.strands.forEach(s => { ctx.globalAlpha = 1; ctx.strokeStyle = `rgba(255,90,74,${.6 * e.glow})`; ctx.lineWidth = (s.w + .4) * lw; curve(ctx, s); });
-      });
+      // 11-06 S.Lee: 데이터가 흐를 때 경로를 붉게 칠하지 않고, 움직이는 점만 보여 줌
       for (let i = bursts.length - 1; i >= 0; i--) {
         const p = bursts[i]; p.t += dt / p.life; if (p.t < 0) continue; if (p.t >= 1) { bursts.splice(i, 1); continue; }
         const [x, y] = at(p.s, p.t), [tx, ty] = at(p.s, Math.max(0, p.t - .05));
