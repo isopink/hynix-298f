@@ -81,147 +81,13 @@
     ]
   },
   "intraday": {
-    "time": "13:00",
-    "pool": 240,
-    "analyzed_new": 2,
-    "passed": 19,
+    "time": "13:15",
+    "pool": 254,
+    "analyzed_new": 30,
+    "passed": 11,
     "kept_prep": false
   },
   "candidates": [
-    {
-      "code": "028050",
-      "name": "삼성E&A",
-      "close": 64800,
-      "ret5": 0.0351,
-      "ret20": 0.3292,
-      "rsi14": 67.2,
-      "vol20": 0.931,
-      "foreign_net": -41290385000,
-      "inst_net": 41663565700,
-      "score": 1.0,
-      "news": [
-        {
-          "date": "11-06",
-          "title": "[건설 CEO 성적표] [삼성E&A] 남궁홍 대표, 연임 첫해 수주·영업익 '결실...",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "삼성E&A, '아디펙 2026' 참가…'임팩트 챔피언' 선정",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "삼성E&A, 아부다비 '아디펙 2026'서 에너지 기술 선보여…'임팩트 챔피언...",
-          "risk": false
-        }
-      ],
-      "price": 61500,
-      "chg": -0.0435,
-      "activity": 1.06,
-      "foreign_today": 8179500000,
-      "inst_today": 1968000000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "030200",
-      "name": "KT",
-      "close": 51500,
-      "ret5": 0.1232,
-      "ret20": 0.0078,
-      "rsi14": 60.4,
-      "vol20": 0.357,
-      "foreign_net": -10341050025,
-      "inst_net": 34011615850,
-      "score": 0.785,
-      "news": [
-        {
-          "date": "11-06",
-          "title": "KT, '제21회 부산불꽃축제' 특별 소통 대책…5G 슬라이싱으로 통신·안전...",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "KT가 그저 대견한 조범현 경일대 총감독 “현장은 언제나 설레는 곳”",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "KT, 부산불꽃축제 무선망 보강…5G로 안전관제 지원",
-          "risk": false
-        }
-      ],
-      "foreign_today": 4738000000,
-      "inst_today": 2678000000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "032640",
-      "name": "LG유플러스",
-      "close": 15940,
-      "ret5": 0.1386,
-      "ret20": 0.1016,
-      "rsi14": 68.1,
-      "vol20": 0.388,
-      "foreign_net": -26939614825,
-      "inst_net": 50135848275,
-      "score": 0.677,
-      "news": [
-        {
-          "date": "11-06",
-          "title": "LG, 브랜드 가치 향상 '잰걸음'...LG전자·LG유플러스 '앞장'",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "SKT·KT·LG유플러스 '부산불꽃축제' 통신 품질 대결 '점화'",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "플랜티넷 자회사 ‘모아진’, LG유플러스 제휴 가입자 20만명 돌파",
-          "risk": false
-        }
-      ],
-      "foreign_today": 0,
-      "inst_today": 541960000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "012330",
-      "name": "현대모비스",
-      "close": 363500,
-      "ret5": 0.0239,
-      "ret20": -0.0215,
-      "rsi14": 51.1,
-      "vol20": 0.652,
-      "foreign_net": -49256342750,
-      "inst_net": 90823582500,
-      "score": 0.677,
-      "news": [
-        {
-          "date": "11-06",
-          "title": "연승 끊겼어도 다시 달린다!…삼성, 현대모비스 꺾고 11경기 만에 10승 ...",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "프로농구 삼성, 현대모비스 잡고 11경기 만에 10승",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "꼴찌 이미지 벗은 삼성, 벌써 10승... 현대모비스 81-76 제압 '다시 승리...",
-          "risk": false
-        }
-      ],
-      "price": 356000,
-      "chg": -0.022,
-      "activity": 0.92,
-      "foreign_today": 0,
-      "inst_today": 1424000000,
-      "exchange": "KOSPI"
-    },
     {
       "code": "175330",
       "name": "JB금융지주",
@@ -232,10 +98,42 @@
       "vol20": 0.405,
       "foreign_net": -1285190625,
       "inst_net": 2848469450,
-      "score": 0.634,
+      "score": 0.868,
       "news": [],
       "foreign_today": 0,
-      "inst_today": 515850000,
+      "inst_today": 1629000000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "326030",
+      "name": "SK바이오팜",
+      "close": 91200,
+      "ret5": 0.1648,
+      "ret20": 0.2112,
+      "rsi14": 76.0,
+      "vol20": 0.568,
+      "foreign_net": -13011050200,
+      "inst_net": 56816398150,
+      "score": 0.868,
+      "news": [
+        {
+          "date": "11-06",
+          "title": "SK바이오팜, 세노바메이트 성장에도 예상 주당순익 조정…목표가 하향-...",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "[모닝 리포트] \"SK바이오팜, 실적 기대치 웃돌아…신약 기대감에\"",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "SK바이오팜, 엑스코프리 실적 성장 지속-하나투자證",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 1003200000,
       "exchange": "KOSPI"
     },
     {
@@ -248,90 +146,10 @@
       "vol20": 0.346,
       "foreign_net": -77847544350,
       "inst_net": 94902336075,
-      "score": 0.581,
+      "score": 0.789,
       "news": [],
       "foreign_today": 0,
-      "inst_today": 1896850000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "161390",
-      "name": "한국타이어앤테크놀로지",
-      "close": 64100,
-      "ret5": 0.1246,
-      "ret20": 0.063,
-      "rsi14": 62.7,
-      "vol20": 0.487,
-      "foreign_net": -2748968800,
-      "inst_net": 14572441050,
-      "score": 0.538,
-      "news": [],
-      "foreign_today": 0,
-      "inst_today": 256400000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "021240",
-      "name": "코웨이",
-      "close": 111200,
-      "ret5": 0.0807,
-      "ret20": 0.0999,
-      "rsi14": 64.1,
-      "vol20": 0.325,
-      "foreign_net": -13813331000,
-      "inst_net": 16145558650,
-      "score": 0.495,
-      "news": [
-        {
-          "date": "11-06",
-          "title": "코웨이, 3Q 매출액 1.4조...전년동기比 13.7%↑",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "[2026 3분기 실적] 코웨이, 영업익 2608억…전년비 7.3% ↑",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "코웨이, 분기 최대 영업익에도 순이익 감소",
-          "risk": false
-        }
-      ],
-      "foreign_today": 0,
-      "inst_today": 222400000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "001450",
-      "name": "현대해상",
-      "close": 44350,
-      "ret5": 0.0219,
-      "ret20": -0.077,
-      "rsi14": 49.6,
-      "vol20": 0.418,
-      "foreign_net": 8185349000,
-      "inst_net": -8063610575,
-      "score": 0.484,
-      "news": [
-        {
-          "date": "11-06",
-          "title": "손해보험사 빅5 중에서 현대해상만 민원 감소해",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "[소비자 분쟁] 5대 손보사, 민원 2.5만건…현대해상 나홀로 감소",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "이석현 현대해상 대표, 미국 재보험 시장 뚫는다...웨이포인트 '맞손'",
-          "risk": false
-        }
-      ],
-      "foreign_today": 0,
-      "inst_today": 266100000,
+      "inst_today": 4822500000,
       "exchange": "KOSPI"
     },
     {
@@ -344,112 +162,42 @@
       "vol20": 0.26,
       "foreign_net": 9727405555,
       "inst_net": 4610992475,
-      "score": 0.441,
+      "score": 0.658,
       "news": [
+        {
+          "date": "11-06",
+          "title": "11월 6일 카카오뱅크 AI 퀴즈 오전 8시 정답은 ‘제설’",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "카카오뱅크, 젊은층 전유물 옛말…50대 65% 이용",
+          "risk": false
+        },
         {
           "date": "11-06",
           "title": "카카오뱅크, AI 콜봇 도입…금융사기 의심 거래 이체취소율 54%↑",
           "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "정답 딱 '두 글자'…카카오뱅크 AI 이모지 퀴즈 정답 (11월 6일)",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "최대 실적 카카오뱅크…ROE 15% 달성까지 과제 산적",
-          "risk": false
         }
       ],
       "foreign_today": 0,
-      "inst_today": 145250000,
+      "inst_today": 788500000,
       "exchange": "KOSPI"
     },
     {
-      "code": "004020",
-      "name": "현대제철",
-      "close": 29000,
-      "ret5": 0.1006,
-      "ret20": 0.0229,
-      "rsi14": 52.5,
-      "vol20": 0.619,
-      "foreign_net": -329359625,
-      "inst_net": 18073219625,
-      "score": 0.398,
-      "news": [
-        {
-          "date": "11-06",
-          "title": "현대제철, 사내 역사 기록 플랫폼 'H.ARCHIVE' 개설…70년 발자취 보존",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "판가 올린 포스코·현대제철 ‘숨통’…원료탄 급등에 4분기 시험대",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "현대제철, 디지털 아카이브 플랫폼 'H.ARCHIVE' 개설",
-          "risk": false
-        }
-      ],
+      "code": "161390",
+      "name": "한국타이어앤테크놀로지",
+      "close": 64100,
+      "ret5": 0.1246,
+      "ret20": 0.063,
+      "rsi14": 62.7,
+      "vol20": 0.487,
+      "foreign_net": -2748968800,
+      "inst_net": 14572441050,
+      "score": 0.579,
+      "news": [],
       "foreign_today": 0,
-      "inst_today": 87000000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "086450",
-      "name": "동국제약",
-      "close": 24500,
-      "ret5": 0.0316,
-      "ret20": 0.0699,
-      "rsi14": 58.6,
-      "vol20": 0.445,
-      "foreign_net": -1389446625,
-      "inst_net": 9162721950,
-      "score": 0.29,
-      "news": [
-        {
-          "date": "11-06",
-          "title": "한미사이언스·동국제약·유한양행, 약국·온라인서 건강 관리 수요 공...",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "동국제약 센텔리안24, 영국·체코 등 유럽 유통망 확대",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "동국제약 센텔리안24, 영국 거점으로 유럽 진출",
-          "risk": false
-        }
-      ],
-      "foreign_today": 0,
-      "inst_today": 73500000,
-      "exchange": "KOSDAQ"
-    },
-    {
-      "code": "034220",
-      "name": "LG디스플레이",
-      "close": 7460,
-      "ret5": 0.004,
-      "ret20": -0.0969,
-      "rsi14": 43.2,
-      "vol20": 0.394,
-      "foreign_net": 1772447860,
-      "inst_net": 2438029420,
-      "score": 0.226,
-      "news": [
-        {
-          "date": "11-06",
-          "title": "LG디스플레이, 4세대 탠덤 WOLED 앞세워 中 프리미엄 게이밍 모니터 시장...",
-          "risk": false
-        }
-      ],
-      "foreign_today": 0,
-      "inst_today": 67140000,
+      "inst_today": 576900000,
       "exchange": "KOSPI"
     },
     {
@@ -462,7 +210,7 @@
       "vol20": 0.837,
       "foreign_net": -18097403575,
       "inst_net": 15329505750,
-      "score": 0.161,
+      "score": 0.158,
       "news": [
         {
           "date": "11-05",
@@ -476,108 +224,100 @@
         }
       ],
       "foreign_today": 0,
-      "inst_today": 332500000,
+      "inst_today": 712500000,
       "exchange": "KOSPI"
     },
     {
-      "code": "008830",
-      "name": "대동기어",
-      "close": 6500,
-      "ret5": 0.1797,
-      "ret20": 0.0317,
-      "rsi14": 59.8,
-      "vol20": 1.06,
-      "foreign_net": -5204568960,
-      "inst_net": -190548385,
-      "score": 0.957,
+      "code": "180640",
+      "name": "한진칼",
+      "close": 182700,
+      "ret5": 0.4651,
+      "ret20": 0.383,
+      "rsi14": 78.9,
+      "vol20": 1.058,
+      "foreign_net": -21700241050,
+      "inst_net": 22160192500,
+      "score": 1.0,
       "news": [
         {
           "date": "11-06",
-          "title": "대동기어 회전율 88%…금양그린파워·대명에너지도 50% 넘어",
+          "title": "한진칼 경영권 산업은행에 달려",
           "risk": false
         },
         {
-          "date": "11-05",
-          "title": "한진칼우 회전율 126%…대동기어·대명에너지 거래 집중",
+          "date": "11-06",
+          "title": "[한진칼 지분 경쟁] '시한부' 최대주주 호반…조원태 반격 시간문제",
           "risk": false
         },
         {
-          "date": "11-05",
-          "title": "대동기어 주가, 11월 5일 장중 6,900원 10.93% 상승",
+          "date": "11-06",
+          "title": "\"한진칼 최대주주 전쟁\" 통합 대한항공 출범 영향은?",
           "risk": false
         }
       ],
-      "price": 6840,
-      "chg": 0.0364,
-      "activity": 6.97,
-      "foreign_today": 232560000,
-      "inst_today": 0,
-      "exchange": "KOSDAQ"
+      "price": 205000,
+      "chg": 0.0767,
+      "activity": 6.4,
+      "foreign_today": 6970000000,
+      "inst_today": 615000000,
+      "exchange": "KOSPI"
     },
     {
-      "code": "030530",
-      "name": "원익홀딩스",
-      "close": 26550,
-      "ret5": -0.0701,
-      "ret20": -0.0813,
-      "rsi14": 50.1,
-      "vol20": 1.285,
-      "foreign_net": 18241113425,
-      "inst_net": 7570233575,
-      "score": 0.828,
+      "code": "328130",
+      "name": "루닛",
+      "close": 14710,
+      "ret5": -0.0278,
+      "ret20": 0.3181,
+      "rsi14": 60.6,
+      "vol20": 1.381,
+      "foreign_net": -8283680650,
+      "inst_net": 15223649475,
+      "score": 0.789,
       "news": [
         {
           "date": "11-06",
-          "title": "[속보] 원익홀딩스, 정적 VI 발동가 25,800원…해제 후 집계가는 24,550원",
+          "title": "루닛, 의료 특화 AI '러닝유닛 2.0' 공개…병원 현장 실증 완료",
           "risk": false
         },
         {
-          "date": "11-05",
-          "title": "원익홀딩스 주가 3만원선 아래로 '털썩'…이틀째 약세, 코스닥도 4%대 급...",
+          "date": "11-06",
+          "title": "\"원내 서버서 진료 보조부터 원무까지\"…루닛, 오픈소스 의료 AI '러닝유...",
           "risk": false
         },
         {
-          "date": "11-04",
-          "title": "원익홀딩스 주가, 11월 4일 30,100원 2,250원 하락",
+          "date": "11-06",
+          "title": "루닛, 병원 업무부터 암 바이오마커까지…'의료 AI' 전방위 확장",
           "risk": false
         }
       ],
-      "price": 28400,
-      "chg": 0.0538,
-      "activity": 2.3,
-      "foreign_today": 1050800000,
-      "inst_today": 0,
+      "foreign_today": 867890000,
+      "inst_today": 1014990000,
       "exchange": "KOSDAQ"
     },
     {
-      "code": "053800",
-      "name": "안랩",
-      "close": 97500,
-      "ret5": -0.0152,
-      "ret20": 0.2695,
-      "rsi14": 53.8,
-      "vol20": 1.574,
-      "foreign_net": -7062631750,
-      "inst_net": -4827086750,
-      "score": 0.731,
+      "code": "232680",
+      "name": "라온로보틱스",
+      "close": 11160,
+      "ret5": 0.1885,
+      "ret20": 0.0295,
+      "rsi14": 54.3,
+      "vol20": 1.372,
+      "foreign_net": -1460741580,
+      "inst_net": 2625158595,
+      "score": 0.658,
       "news": [
         {
-          "date": "11-05",
-          "title": "[아시아AI대상]안랩, AI 네이티브 보안으로 위협 분석부터 대응까지",
+          "date": "11-06",
+          "title": "[지분View] 라온로보틱스, 신공장 추진 속 감사 지분 확대",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "[포토] 안랩, 아시아AI대상 '아시아경제대표상' 수상",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "[OT 보안 인사이트 2026] 안랩 \"5차 산업혁명 시대, OT 보안 현 주소는\"",
+          "title": "[모닝 리포트] 라온로보틱스, 3분기 매출·영업익 '사상 최대'…이송로...",
           "risk": false
         }
       ],
-      "foreign_today": 5265000000,
+      "foreign_today": 502200000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
