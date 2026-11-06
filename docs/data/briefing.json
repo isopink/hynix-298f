@@ -81,48 +81,13 @@
     ]
   },
   "intraday": {
-    "time": "10:00",
+    "time": "10:15",
     "pool": 218,
     "analyzed_new": 30,
-    "passed": 9,
+    "passed": 12,
     "kept_prep": false
   },
   "candidates": [
-    {
-      "code": "128940",
-      "name": "한미약품",
-      "close": 465000,
-      "ret5": 0.1757,
-      "ret20": -0.1292,
-      "rsi14": 60.1,
-      "vol20": 0.821,
-      "foreign_net": -52059546000,
-      "inst_net": 108084585250,
-      "score": 1.0,
-      "news": [
-        {
-          "date": "11-06",
-          "title": "한미약품, MSD 기술수출 MASH 신약 2b상 기대 상회-NH투자證",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "한미약품 '에페' 1000억 매출 방정식…효능·가격·공급망에 답 있다",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "지씨씨엘, 한미약품 '에페' 개발에 약동학 분석 및 센트럴랩 서비스 통...",
-          "risk": false
-        }
-      ],
-      "price": 469500,
-      "chg": 0.0097,
-      "activity": 4.16,
-      "foreign_today": 0,
-      "inst_today": 2817000000,
-      "exchange": "KOSPI"
-    },
     {
       "code": "028050",
       "name": "삼성E&A",
@@ -133,7 +98,7 @@
       "vol20": 0.931,
       "foreign_net": -41290385000,
       "inst_net": 41663565700,
-      "score": 0.838,
+      "score": 1.0,
       "news": [
         {
           "date": "11-06",
@@ -151,10 +116,10 @@
           "risk": false
         }
       ],
-      "price": 59400,
-      "chg": -0.0762,
+      "price": 61000,
+      "chg": -0.0513,
       "activity": 1.77,
-      "foreign_today": 3445200000,
+      "foreign_today": 3538000000,
       "inst_today": 0,
       "exchange": "KOSPI"
     },
@@ -168,26 +133,93 @@
       "vol20": 0.357,
       "foreign_net": -10341050025,
       "inst_net": 34011615850,
-      "score": 0.784,
+      "score": 0.804,
       "news": [
         {
           "date": "11-06",
-          "title": "KT, 부산불꽃축제 통신 대책 가동... 임시기지국 19곳 운영",
+          "title": "KT, 부산불꽃축제 통신망 보강…\"5G 기술로 인파 안전관제 지원\"",
           "risk": false
         },
         {
           "date": "11-06",
-          "title": "KT, 부산불꽃축제 특별 대책…5G SA 활용",
+          "title": "이제 ‘라팍’이다→최대 변수 ‘홈런’…경기당 삼성 1.17개-KT 1.14개, 누...",
           "risk": false
         },
         {
           "date": "11-06",
-          "title": "KT, 부산불꽃축제 통신 대책 가동…임시기지국 19곳·무선 CCTV 지원",
+          "title": "KT, 5G SA 기술로 부산불꽃축제 통신·안전 지원",
           "risk": false
         }
       ],
       "foreign_today": 1236000000,
       "inst_today": 360500000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "012330",
+      "name": "현대모비스",
+      "close": 363500,
+      "ret5": 0.0239,
+      "ret20": -0.0215,
+      "rsi14": 51.1,
+      "vol20": 0.652,
+      "foreign_net": -49256342750,
+      "inst_net": 90823582500,
+      "score": 0.667,
+      "news": [
+        {
+          "date": "11-06",
+          "title": "연승 끊겼어도 다시 달린다!…삼성, 현대모비스 꺾고 11경기 만에 10승 ...",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "프로농구 삼성, 현대모비스 잡고 11경기 만에 10승",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "꼴찌 이미지 벗은 삼성, 벌써 10승... 현대모비스 81-76 제압 '다시 승리...",
+          "risk": false
+        }
+      ],
+      "price": 347500,
+      "chg": -0.0453,
+      "activity": 1.24,
+      "foreign_today": 0,
+      "inst_today": 695000000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "033780",
+      "name": "KT&G",
+      "close": 196900,
+      "ret5": 0.0192,
+      "ret20": 0.1018,
+      "rsi14": 66.8,
+      "vol20": 0.247,
+      "foreign_net": -32738600400,
+      "inst_net": 48809085800,
+      "score": 0.627,
+      "news": [
+        {
+          "date": "11-06",
+          "title": "코스피, 급락에도 KT&G는 웃었다...최대 실적에 ‘5조 환원’ [주가동향...",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "\"KT&G, 4분기 주춤? 상관없다…실적 꺾여도 배당금 매년 두 자릿수 쏜다...",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "\"주주환원 5조 풀고 배당 두 자릿수 성장\"…키움證, KT&G 목표가 26만400...",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 393800000,
       "exchange": "KOSPI"
     },
     {
@@ -200,7 +232,7 @@
       "vol20": 0.346,
       "foreign_net": -77847544350,
       "inst_net": 94902336075,
-      "score": 0.486,
+      "score": 0.549,
       "news": [],
       "foreign_today": 0,
       "inst_today": 482250000,
@@ -216,7 +248,7 @@
       "vol20": 0.26,
       "foreign_net": 9727405555,
       "inst_net": 4610992475,
-      "score": 0.459,
+      "score": 0.529,
       "news": [
         {
           "date": "11-06",
@@ -239,6 +271,60 @@
       "exchange": "KOSPI"
     },
     {
+      "code": "032640",
+      "name": "LG유플러스",
+      "close": 15940,
+      "ret5": 0.1386,
+      "ret20": 0.1016,
+      "rsi14": 68.1,
+      "vol20": 0.388,
+      "foreign_net": -26939614825,
+      "inst_net": 50135848275,
+      "score": 0.471,
+      "news": [
+        {
+          "date": "11-06",
+          "title": "플랜티넷 자회사 ‘모아진’, LG유플러스 제휴 가입자 20만명 돌파",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 31880000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "001450",
+      "name": "현대해상",
+      "close": 44350,
+      "ret5": 0.0219,
+      "ret20": -0.077,
+      "rsi14": 49.6,
+      "vol20": 0.418,
+      "foreign_net": 8185349000,
+      "inst_net": -8063610575,
+      "score": 0.431,
+      "news": [
+        {
+          "date": "11-06",
+          "title": "손해보험사 빅5 중에서 현대해상만 민원 감소해",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "[소비자 분쟁] 5대 손보사, 민원 2.5만건…현대해상 나홀로 감소",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "이석현 현대해상 대표, 미국 재보험 시장 뚫는다...웨이포인트 '맞손'",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 44350000,
+      "exchange": "KOSPI"
+    },
+    {
       "code": "034220",
       "name": "LG디스플레이",
       "close": 7460,
@@ -248,7 +334,7 @@
       "vol20": 0.394,
       "foreign_net": 1772447860,
       "inst_net": 2438029420,
-      "score": 0.27,
+      "score": 0.275,
       "news": [
         {
           "date": "11-06",
@@ -270,7 +356,7 @@
       "vol20": 1.574,
       "foreign_net": -7062631750,
       "inst_net": -4827086750,
-      "score": 0.676,
+      "score": 0.745,
       "news": [
         {
           "date": "11-05",
@@ -302,7 +388,7 @@
       "vol20": 1.438,
       "foreign_net": -3522036175,
       "inst_net": -2855454100,
-      "score": 0.351,
+      "score": 0.373,
       "news": [
         {
           "date": "11-03",
