@@ -81,9 +81,9 @@
     ]
   },
   "intraday": {
-    "time": "14:30",
-    "pool": 241,
-    "analyzed_new": 12,
+    "time": "14:45",
+    "pool": 240,
+    "analyzed_new": 1,
     "passed": 20,
     "kept_prep": false
   },
@@ -106,11 +106,41 @@
           "risk": false
         }
       ],
-      "price": 221500,
-      "chg": 0.0805,
-      "activity": 1.86,
+      "price": 223000,
+      "chg": 0.0878,
+      "activity": 2.04,
       "foreign_today": 0,
-      "inst_today": 3987000000,
+      "inst_today": 4014000000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "017670",
+      "name": "SK텔레콤",
+      "close": 78000,
+      "ret5": 0.0196,
+      "ret20": -0.1024,
+      "rsi14": 46.5,
+      "vol20": 0.5,
+      "foreign_net": 1679503400,
+      "inst_net": 30924302900,
+      "score": 0.927,
+      "news": [
+        {
+          "date": "11-06",
+          "title": "[AI 딥다이브] SK텔레콤, ‘에이닷’ 추천 가을 명소에 T 멤버십 혜택 더...",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "SK텔레콤·KT, 3G 가입 문닫았다…알뜰폰 13만 회선이 폐지 변수",
+          "risk": false
+        }
+      ],
+      "price": 79900,
+      "chg": 0.031,
+      "activity": 1.99,
+      "foreign_today": 6392000000,
+      "inst_today": 11026200000,
       "exchange": "KOSPI"
     },
     {
@@ -123,7 +153,7 @@
       "vol20": 0.931,
       "foreign_net": -41290385000,
       "inst_net": 41663565700,
-      "score": 0.902,
+      "score": 0.878,
       "news": [
         {
           "date": "11-06",
@@ -141,41 +171,11 @@
           "risk": false
         }
       ],
-      "price": 61400,
-      "chg": -0.0451,
-      "activity": 0.95,
-      "foreign_today": 5341800000,
-      "inst_today": 14367600000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "017670",
-      "name": "SK텔레콤",
-      "close": 78000,
-      "ret5": 0.0196,
-      "ret20": -0.1024,
-      "rsi14": 46.5,
-      "vol20": 0.5,
-      "foreign_net": 1679503400,
-      "inst_net": 30924302900,
-      "score": 0.878,
-      "news": [
-        {
-          "date": "11-06",
-          "title": "[AI 딥다이브] SK텔레콤, ‘에이닷’ 추천 가을 명소에 T 멤버십 혜택 더...",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "SK텔레콤·KT, 3G 가입 문닫았다…알뜰폰 13만 회선이 폐지 변수",
-          "risk": false
-        }
-      ],
-      "price": 78800,
-      "chg": 0.0168,
-      "activity": 1.78,
-      "foreign_today": 6304000000,
-      "inst_today": 10874400000,
+      "price": 61600,
+      "chg": -0.042,
+      "activity": 0.94,
+      "foreign_today": 5359200000,
+      "inst_today": 14414400000,
       "exchange": "KOSPI"
     },
     {
@@ -188,7 +188,7 @@
       "vol20": 0.388,
       "foreign_net": -26939614825,
       "inst_net": 50135848275,
-      "score": 0.817,
+      "score": 0.805,
       "news": [
         {
           "date": "11-06",
@@ -220,21 +220,16 @@
       "vol20": 0.357,
       "foreign_net": -10341050025,
       "inst_net": 34011615850,
-      "score": 0.817,
+      "score": 0.793,
       "news": [
         {
           "date": "11-06",
+          "title": "KT, 부산불꽃축제 특별 소통 대책 가동…네트워크 슬라이싱 첫 투입",
+          "risk": false
+        },
+        {
+          "date": "11-06",
           "title": "[AI프리뷰] 6일 대구 삼성-KT KS 3차전, '가을 무패' 소형준과 'PO MVP' 후...",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "‘11연승 끝’ 41일 만에 패배 충격, KT ‘선발- 박영현-힐리어드만 야구...",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "KT, 불꽃축제 통신망을 안전 인프라로… 5G 기술력 시험대",
           "risk": false
         }
       ],
@@ -252,7 +247,7 @@
       "vol20": 0.568,
       "foreign_net": -13011050200,
       "inst_net": 56816398150,
-      "score": 0.793,
+      "score": 0.78,
       "news": [
         {
           "date": "11-06",
@@ -284,7 +279,7 @@
       "vol20": 0.461,
       "foreign_net": 30377634525,
       "inst_net": 29272324000,
-      "score": 0.732,
+      "score": 0.744,
       "news": [
         {
           "date": "11-06",
@@ -302,11 +297,11 @@
           "risk": false
         }
       ],
-      "price": 32600,
-      "chg": 0.0124,
-      "activity": 2.25,
+      "price": 32750,
+      "chg": 0.0171,
+      "activity": 2.24,
       "foreign_today": 0,
-      "inst_today": 1858200000,
+      "inst_today": 1866750000,
       "exchange": "KOSPI"
     },
     {
@@ -337,57 +332,11 @@
           "risk": false
         }
       ],
-      "price": 75600,
-      "chg": 0.0413,
-      "activity": 1.15,
+      "price": 75900,
+      "chg": 0.0455,
+      "activity": 1.2,
       "foreign_today": 0,
-      "inst_today": 3704400000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "175330",
-      "name": "JB금융지주",
-      "close": 27150,
-      "ret5": 0.0462,
-      "ret20": -0.0338,
-      "rsi14": 52.0,
-      "vol20": 0.405,
-      "foreign_net": -1285190625,
-      "inst_net": 2848469450,
-      "score": 0.646,
-      "news": [],
-      "foreign_today": 0,
-      "inst_today": 2117700000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "112610",
-      "name": "씨에스윈드",
-      "close": 47500,
-      "ret5": 0.2402,
-      "ret20": -0.1652,
-      "rsi14": 53.0,
-      "vol20": 0.837,
-      "foreign_net": -18097403575,
-      "inst_net": 15329505750,
-      "score": 0.561,
-      "news": [
-        {
-          "date": "11-05",
-          "title": "[특징주] 씨에스윈드, 미국 베스타스와 797억원 공급계약",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "씨에스윈드, 797억원 규모 미국 풍력타워 공급 계약 체결",
-          "risk": false
-        }
-      ],
-      "price": 48400,
-      "chg": 0.02,
-      "activity": 2.33,
-      "foreign_today": 0,
-      "inst_today": 1936000000,
+      "inst_today": 3719100000,
       "exchange": "KOSPI"
     },
     {
@@ -400,10 +349,59 @@
       "vol20": 0.346,
       "foreign_net": -77847544350,
       "inst_net": 94902336075,
-      "score": 0.537,
+      "score": 0.683,
+      "news": [],
+      "price": 31850,
+      "chg": -0.0031,
+      "activity": 1.0,
+      "foreign_today": 0,
+      "inst_today": 6210750000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "112610",
+      "name": "씨에스윈드",
+      "close": 47500,
+      "ret5": 0.2402,
+      "ret20": -0.1652,
+      "rsi14": 53.0,
+      "vol20": 0.837,
+      "foreign_net": -18097403575,
+      "inst_net": 15329505750,
+      "score": 0.646,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "[특징주] 씨에스윈드, 미국 베스타스와 797억원 공급계약",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "씨에스윈드, 797억원 규모 미국 풍력타워 공급 계약 체결",
+          "risk": false
+        }
+      ],
+      "price": 49800,
+      "chg": 0.0495,
+      "activity": 2.42,
+      "foreign_today": 0,
+      "inst_today": 1992000000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "175330",
+      "name": "JB금융지주",
+      "close": 27150,
+      "ret5": 0.0462,
+      "ret20": -0.0338,
+      "rsi14": 52.0,
+      "vol20": 0.405,
+      "foreign_net": -1285190625,
+      "inst_net": 2848469450,
+      "score": 0.634,
       "news": [],
       "foreign_today": 0,
-      "inst_today": 6269250000,
+      "inst_today": 2117700000,
       "exchange": "KOSPI"
     },
     {
@@ -416,7 +414,7 @@
       "vol20": 0.26,
       "foreign_net": 9727405555,
       "inst_net": 4610992475,
-      "score": 0.512,
+      "score": 0.5,
       "news": [
         {
           "date": "11-06",
@@ -448,7 +446,7 @@
       "vol20": 0.619,
       "foreign_net": -329359625,
       "inst_net": 18073219625,
-      "score": 0.512,
+      "score": 0.463,
       "news": [
         {
           "date": "11-06",
@@ -480,7 +478,7 @@
       "vol20": 0.652,
       "foreign_net": -49256342750,
       "inst_net": 90823582500,
-      "score": 0.476,
+      "score": 0.427,
       "news": [
         {
           "date": "11-06",
@@ -515,21 +513,21 @@
       "vol20": 0.558,
       "foreign_net": -5841206300,
       "inst_net": 16866173400,
-      "score": 0.378,
+      "score": 0.366,
       "news": [
         {
           "date": "11-06",
-          "title": "유한양행, 2008년부터 헌혈 2600명 참여…올 하반기 60명 동참",
+          "title": "유한양행, 액상 스틱 제형 ‘콘드로이친1200 골드스틱’ 출시",
           "risk": false
         },
         {
           "date": "11-06",
-          "title": "유한양행, 하반기 헌혈 캠페인…헌혈증은 소아암 환아에 기부",
+          "title": "유한양행, 공식몰 버들장터서 신제품 론칭 기획전…최대 63% 할인",
           "risk": false
         },
         {
           "date": "11-06",
-          "title": "유한양행, 공식몰 '버들장터' 신제품 기획전…최대 63% 할인",
+          "title": "유한양행, 사내 헌혈 캠페인···헌혈증, 소아암 환아에 기부",
           "risk": false
         }
       ],
@@ -547,7 +545,7 @@
       "vol20": 1.381,
       "foreign_net": -8283680650,
       "inst_net": 15223649475,
-      "score": 0.768,
+      "score": 0.756,
       "news": [
         {
           "date": "11-06",
@@ -597,11 +595,11 @@
           "risk": false
         }
       ],
-      "price": 205000,
-      "chg": 0.0049,
+      "price": 206000,
+      "chg": 0.0098,
       "activity": 1.82,
       "foreign_today": 0,
-      "inst_today": 5125000000,
+      "inst_today": 5150000000,
       "exchange": "KOSPI"
     },
     {
@@ -614,7 +612,7 @@
       "vol20": 1.06,
       "foreign_net": -2579757825,
       "inst_net": 18088976450,
-      "score": 0.646,
+      "score": 0.634,
       "news": [
         {
           "date": "11-06",
