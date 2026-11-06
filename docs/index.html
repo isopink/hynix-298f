@@ -1,28 +1,28 @@
 <!doctype html>
-<!-- Sigma Six · Designed by S.Lee -->
+<!-- Sigma Engine · Designed by S.Lee -->
 <html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Sigma Six</title>
+<title>Sigma Engine</title>
 <meta name="author" content="S.Lee">
 <meta name="description" content="Autonomous Stock Trading Agent">
-<meta property="og:title" content="Sigma Six">
+<meta property="og:title" content="Sigma Engine">
 <meta property="og:description" content="Autonomous Stock Trading Agent">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://isopink.github.io/hynix-298f/">
-<meta property="og:site_name" content="Sigma Six">
+<meta property="og:site_name" content="Sigma Engine">
 <meta property="og:image" content="https://isopink.github.io/hynix-298f/og.png?v=6">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="298 로고 · Sigma Six">
+<meta property="og:image:alt" content="298 로고 · Sigma Engine">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://isopink.github.io/hynix-298f/og.png?v=6">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="theme-color" content="#0d0d10">
-<meta name="twitter:title" content="Sigma Six">
+<meta name="twitter:title" content="Sigma Engine">
 <meta name="twitter:description" content="Autonomous Stock Trading Agent">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&display=swap">
@@ -349,7 +349,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
   <header class="top">
     <div class="brand">
       <div>
-        <h1>Sigma Six <span class="tagline">목표 : 시장을 이기기</span></h1>
+        <h1>Sigma Engine <span class="tagline">목표 : 시장을 이기기</span></h1>
         <div class="chips sched m-hide" id="sched" aria-label="평일 정기 매매 판단 시각"></div>
       </div>
     </div>
@@ -448,11 +448,11 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
           <div class="lim" id="ch-lim"></div>
         </section>
         <section class="card c6 m-hide">
-          <div class="hd"><h2 class="eyebrow">일별 초과수익</h2><span class="sub">Sigma Six − KOSPI (%p)</span></div>
+          <div class="hd"><h2 class="eyebrow">일별 초과수익</h2><span class="sub">Sigma Engine − KOSPI (%p)</span></div>
           <div class="chart" id="ch-alpha" style="min-height:200px"></div>
         </section>
         <section class="card c12">
-          <div class="hd"><h2 class="eyebrow">수익률 캘린더</h2><span class="sub cal-sub">큰 숫자 Sigma Six, 작은 숫자 KOSPI</span></div>
+          <div class="hd"><h2 class="eyebrow">수익률 캘린더</h2><span class="sub cal-sub">큰 숫자 Sigma Engine, 작은 숫자 KOSPI</span></div>
           <div class="cal" id="ch-cal"></div>
         </section>
       </div>
@@ -1035,7 +1035,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     el.innerHTML = rows.map(r => `<div class="lim-row"><span>${r.n}</span><span class="now">${r.now}<small>${r.lim}, ${Math.round(Math.min(r.u, 9.99) * 100)}%</small></span>
       <div class="track"><i style="width:${Math.min(1, r.u) * 100}%;background:${col(r.u)}"></i></div></div>`).join('');
   }
-  // ---------- 일별 초과수익: 날짜별 (Sigma Six 일수익 − KOSPI 일수익) ----------
+  // ---------- 일별 초과수익: 날짜별 (Sigma Engine 일수익 − KOSPI 일수익) ----------
   function alpha() {
     const el = $('ch-alpha'), rows = D.eq.map(r => ({ d: r.d, v: r.day - r.kday, day: r.day, kday: r.kday }));
     if (!rows.length) return none(el, '첫 마감 기록을 기다리는 중이에요.');
@@ -1048,7 +1048,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     svg.append('g').selectAll('text').data(y.ticks(4)).join('text').attr('x', m.l - 8).attr('y', y).attr('dy', '.32em').attr('text-anchor', 'end').attr('font-size', 10).attr('fill', C.muted).text(tf);
     svg.append('g').selectAll('rect').data(rows).join('rect').attr('x', r => x(+r.d) + off).attr('width', bw)
       .attr('y', r => y(Math.max(0, r.v))).attr('height', r => Math.max(1, Math.abs(y(r.v) - y(0)))).attr('fill', r => r.v >= 0 ? C.red : C.blue).attr('opacity', .9)
-      .call(tipMark, r => `<div class="t">${md(r.d)}</div>${row('초과', tf(r.v) + '%p', r.v >= 0 ? 'up' : 'down')}${row('Sigma Six', pct(r.day), r.day >= 0 ? 'up' : 'down')}${row('KOSPI', pct(r.kday))}`)
+      .call(tipMark, r => `<div class="t">${md(r.d)}</div>${row('초과', tf(r.v) + '%p', r.v >= 0 ? 'up' : 'down')}${row('Sigma Engine', pct(r.day), r.day >= 0 ? 'up' : 'down')}${row('KOSPI', pct(r.kday))}`)
       .on('pointerleave', hideTip);
     if (lab) svg.append('g').selectAll('text').data(rows).join('text').attr('x', r => x(+r.d) + x.bandwidth() / 2).attr('y', r => r.v >= 0 ? y(r.v) - 5 : y(r.v) + 13)
       .attr('text-anchor', 'middle').attr('font-size', 11).attr('fill', r => r.v >= 0 ? C.redHi : C.blue).text(r => tf(r.v));
@@ -1065,7 +1065,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const neg = D.ret < 0, col = neg ? C.blue : C.red, colHi = neg ? '#7cc4ea' : C.redHi;   // 수익률 양수 빨강 · 음수 파랑
     const lo = Math.min(0, d3.min(rows, r => Math.min(r.ret, r.kret))), hi = Math.max(0, d3.max(rows, r => Math.max(r.ret, r.kret)));
     const y0 = d3.scaleLinear([lo, hi], [0, 1]).nice(4), ticks = y0.ticks(4), tstep = ticks.length > 1 ? ticks[1] - ticks[0] : .01, tf = v => (v > 0 ? '+' : '') + (v * 100).toFixed(tstep < .0099 ? 1 : 0) + '%';
-    const lw = Math.max(textW(svg, 'Sigma Six ' + pct(D.ret), 12), textW(svg, 'KOSPI ' + pct(D.kret), 12));
+    const lw = Math.max(textW(svg, 'Sigma Engine ' + pct(D.ret), 12), textW(svg, 'KOSPI ' + pct(D.kret), 12));
     const m = { t: narrow ? 30 : 10, r: narrow ? 8 : lw + 18, b: 28, l: d3.max(ticks, v => textW(svg, tf(v))) + 10 };   // 휴대폰은 위쪽에 범례 자리
     // 11-06 S.Lee: 가로축 = 11/2 ~ 마지막 기록일 거래일(주말 뺌). 첫날이 맨 왼쪽, 최신 날짜가 맨 오른쪽 — 날이 늘면 칸이 좁아짐
     const last = rows[rows.length - 1].d, DAYS = d3.utcDays(toD(START), d3.utcDay.offset(last, 1)).filter(d => d.getUTCDay() % 6 !== 0);
@@ -1109,14 +1109,14 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     svg.append('circle').attr('class', 'h-pulse').attr('cx', ex).attr('cy', yR).attr('r', 4.5).attr('fill', col);   // 맥박 (퍼졌다 사라짐)
     fade(svg.append('circle').attr('cx', ex).attr('cy', yR).attr('r', 4.5).attr('fill', col).attr('stroke', '#fff').attr('stroke-width', 1.5), 1);
     if (!narrow) {
-      const labs = [{ n: 'Sigma Six', v: L.ret, c: colHi, y: y(L.ret) }, { n: 'KOSPI', v: L.kret, c: '#9a9a9a', y: y(L.kret) }];
+      const labs = [{ n: 'Sigma Engine', v: L.ret, c: colHi, y: y(L.ret) }, { n: 'KOSPI', v: L.kret, c: '#9a9a9a', y: y(L.kret) }];
       if (Math.abs(labs[0].y - labs[1].y) < 18) { const mid = (labs[0].y + labs[1].y) / 2, s = labs[0].y <= labs[1].y ? 1 : -1; labs[0].y = mid - 9 * s; labs[1].y = mid + 9 * s; }
       labs.forEach(l => { const t = svg.append('text').attr('x', x(L.d) + 12).attr('y', l.y).attr('dy', '.32em').attr('font-size', 12).attr('fill', l.c); t.append('tspan').attr('font-weight', 600).text(l.n); t.append('tspan').attr('dx', 6).text(pct(l.v)); });
     } else {   // 휴대폰: 오른쪽 이름표 대신 위쪽 한 줄 범례
       const g = svg.append('g').attr('transform', `translate(${m.l},12)`);
       g.append('line').attr('x1', 0).attr('x2', 14).attr('y1', 0).attr('y2', 0).attr('stroke', col).attr('stroke-width', 1.5);
       const t1 = g.append('text').attr('x', 20).attr('dy', '.32em').attr('font-size', 12).attr('fill', colHi);
-      t1.append('tspan').attr('font-weight', 600).text('Sigma Six'); t1.append('tspan').attr('dx', 5).text(pct(L.ret));
+      t1.append('tspan').attr('font-weight', 600).text('Sigma Engine'); t1.append('tspan').attr('dx', 5).text(pct(L.ret));
       const x2 = 20 + t1.node().getComputedTextLength() + 18;
       g.append('line').attr('x1', x2).attr('x2', x2 + 14).attr('y1', 0).attr('y2', 0).attr('stroke', '#a8a8a8').attr('stroke-width', 1.5);
       const t2 = g.append('text').attr('x', x2 + 20).attr('dy', '.32em').attr('font-size', 12).attr('fill', '#9a9a9a');
@@ -1126,7 +1126,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const dot = svg.append('circle').attr('r', 4).attr('fill', '#141414').attr('stroke', colHi).attr('stroke-width', 2).attr('opacity', 0);
     const bis = (rs, i) => d3.minIndex(rs, r => Math.abs(idx(r) - i));   // 마우스 위치와 가장 가까운 거래일
     const off = () => { rule.attr('opacity', 0); dot.attr('opacity', 0); };
-    const pick = r => { rule.attr('x1', x(r.d)).attr('x2', x(r.d)).attr('opacity', 1); dot.attr('cx', x(r.d)).attr('cy', y(r.ret)).attr('opacity', 1); return `<div class="t">${md(r.d)}${r.regime ? ' · ' + esc(r.regime) + ' 국면' : ''}</div>${row('Sigma Six', pct(r.ret), r.ret >= 0 ? 'up' : 'down')}${row('KOSPI', pct(r.kret))}${row('총자산', won(r.total))}`; };
+    const pick = r => { rule.attr('x1', x(r.d)).attr('x2', x(r.d)).attr('opacity', 1); dot.attr('cx', x(r.d)).attr('cy', y(r.ret)).attr('opacity', 1); return `<div class="t">${md(r.d)}${r.regime ? ' · ' + esc(r.regime) + ' 국면' : ''}</div>${row('Sigma Engine', pct(r.ret), r.ret >= 0 ? 'up' : 'down')}${row('KOSPI', pct(r.kret))}${row('총자산', won(r.total))}`; };
     svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r).attr('height', H - m.t - m.b).attr('fill', 'transparent')
       .on('pointermove pointerdown', ev => showTip(ev, pick(rows[bis(rows, xi.invert(d3.pointer(ev)[0]))])))
       .on('pointerleave', () => { hideTip(); off(); })
@@ -1340,7 +1340,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
         c.style.background = `linear-gradient(135deg, rgba(${rgb},${(a + .06).toFixed(3)}), rgba(${rgb},${(a * .35).toFixed(3)}))`;
         c.style.borderColor = `rgba(${rgb},${(.2 + a).toFixed(3)})`;
         const vl = document.createElement('span'); vl.className = 'v ' + (v.day >= 0 ? 'up' : 'down'); vl.textContent = pct(v.day); c.appendChild(vl);
-        tipTarget(c, `<div class="t">${md(dt)}</div>${row('Sigma Six', pct(v.day), v.day >= 0 ? 'up' : 'down')}${row('KOSPI', pct(v.kday))}${row('초과', pct(v.day - v.kday), v.day - v.kday >= 0 ? 'up' : 'down')}`);
+        tipTarget(c, `<div class="t">${md(dt)}</div>${row('Sigma Engine', pct(v.day), v.day >= 0 ? 'up' : 'down')}${row('KOSPI', pct(v.kday))}${row('초과', pct(v.day - v.kday), v.day - v.kday >= 0 ? 'up' : 'down')}`);
       }
     }
   }
