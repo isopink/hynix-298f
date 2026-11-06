@@ -267,7 +267,7 @@ def record_decision(code: str, action: str, confidence: float, bull: str, bear: 
 @quiet
 def submit_review(week: int, period: str, suggestion: str, report_markdown: str) -> dict:
     """주간 회고 결과. suggestion = 기준값 조정 제안 한 줄 (리스크 한도는 제안 불가), report_markdown = 주간 보고서 초안."""
-    mid = C.now().weekday() == 2   # 11-06 S.Lee: 수요일 중간 회고는 따로 (토요일 초안을 덮지 않음)
+    mid = C.now().weekday() == 2   # 11-06 S.Lee: 수요일 중간 회고는 따로 (금요일 초안을 덮지 않음)
     path = os.path.join(C.ROOT, "reports", "drafts", f"week{week}{'-mid' if mid else ''}.md")
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:

@@ -112,7 +112,7 @@ def system():
 
 
 def reviews(rows):
-    key = lambda x: (x["week"], bool(x.get("mid")))   # 11-06 수요일 중간 회고 · 토요일 주간 회고를 따로
+    key = lambda x: (x["week"], bool(x.get("mid")))   # 11-06 수요일 중간 회고 · 금요일 주간 회고를 따로
     res = {}
     for r in rows:
         if r["kind"] == "review":
