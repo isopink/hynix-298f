@@ -16,13 +16,12 @@ $tasks = @(
   @{ Name = "Hynix298-decide";   Time = "09:30"; Days = $wk;  Cmd = "`"$agent\run.bat`" decide"; Every = 15; For = "05:46" },
   @{ Name = "Hynix298-close";    Time = "15:45"; Days = $wk;  Cmd = "`"$agent\run.bat`" close" },
   @{ Name = "Hynix298-tune";     Time = "16:00"; Days = $wk;  Cmd = "`"$agent\run.bat`" tune" },
-  @{ Name = "Hynix298-review";   Time = "10:00"; Days = "SAT"; Cmd = "`"$agent\run.bat`" review" },
-  # 11-06 S.Lee: 수요일 장 마감 기록 뒤 중간 회고. 16:00 기준값 조정이 끝나길 기다렸다 이 제안을 바로 검토 → 목요일 장부터 반영
-  @{ Name = "Hynix298-review-mid"; Time = "15:50"; Days = "WED"; Cmd = "`"$agent\run.bat`" review" }
+  # 11-06 S.Lee: 주간 회고 수·금 15:50 (토 10:00 에서 옮김). 16:00 기준값 조정이 회고를 기다렸다 그 제안을 바로 검토 → 목·월요일 장부터 반영
+  @{ Name = "Hynix298-review";   Time = "15:50"; Days = "WED,FRI"; Cmd = "`"$agent\run.bat`" review" }
 )
 
 # 예전 정기 판단 작업 (하루 3번) 정리
-foreach ($old in "Hynix298-decide-am", "Hynix298-decide-mid", "Hynix298-decide-pm") { schtasks /Delete /TN $old /F 2>$null | Out-Null }
+foreach ($old in "Hynix298-decide-am", "Hynix298-decide-mid", "Hynix298-decide-pm", "Hynix298-review-mid") { schtasks /Delete /TN $old /F 2>$null | Out-Null }
 
 foreach ($t in $tasks) {
   schtasks /Delete /TN $t.Name /F 2>$null | Out-Null

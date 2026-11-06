@@ -1479,8 +1479,8 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   function review() {
     const el = $('ch-review'); el.innerHTML = ''; el.classList.remove('empty');
     tuningLog(el);
-    const h = document.createElement('div'); h.className = 'eyebrow'; h.style.marginTop = '18px'; h.textContent = '주간 회고 (수요일 · 토요일)'; el.appendChild(h);
-    if (!D.reviews.length) { const p = document.createElement('p'); p.className = 'f-empty'; p.style.margin = '8px 0 0'; p.textContent = '첫 주간 회고는 11/7(토)에 올라와요.'; el.appendChild(p); return; }
+    const h = document.createElement('div'); h.className = 'eyebrow'; h.style.marginTop = '18px'; h.textContent = '주간 회고 (수요일 · 금요일)'; el.appendChild(h);
+    if (!D.reviews.length) { const p = document.createElement('p'); p.className = 'f-empty'; p.style.margin = '8px 0 0'; p.textContent = '첫 주간 회고는 11/6(금) 장 마감 뒤에 올라와요.'; el.appendChild(p); return; }
     const wrap = document.createElement('div'); wrap.style.cssText = 'display:grid;gap:14px;margin-top:12px';
     D.reviews.forEach(r => {
       const it = document.createElement('div'); it.style.cssText = 'display:grid;grid-template-columns:56px 1fr auto;gap:10px;align-items:start;font-size:12px;line-height:1.5';

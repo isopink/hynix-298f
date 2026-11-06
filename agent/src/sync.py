@@ -174,14 +174,16 @@ def ensure_schedule():
 
 
 def ensure_review_mid():
-    """11-06 S.Lee: 수요일 15:50 중간 회고 작업을 한 번 등록 (setup_tasks.ps1 을 다시 안 돌려도 되게). 16:00 기준값 조정이 끝나길 기다렸다 이 제안을 바로 검토 → 목요일 장부터 반영."""
-    if os.name != "nt" or state().get("review_mid") == "WED 15:50":
+    """11-06 S.Lee: 주간 회고를 수·금 15:50 으로 (토 10:00 에서 옮김). 같은 날 16:00 기준값 조정이 회고를 기다렸다 그 제안을 바로 검토
+    → 목요일·월요일 장부터 반영. setup_tasks.ps1 을 다시 안 돌려도 되게 sync 가 한 번 등록."""
+    if os.name != "nt" or state().get("review_mid") == "WED,FRI 15:50":
         return
-    save(review_mid="WED 15:50")
+    save(review_mid="WED,FRI 15:50")
+    subprocess.run(["schtasks", "/Delete", "/TN", "Hynix298-review-mid", "/F"], capture_output=True, input="", timeout=60)   # 잠깐 쓰던 수요일 전용 작업
     bat = os.path.join(C.AGENT, "run.bat")
-    r = subprocess.run(["schtasks", "/Create", "/TN", "Hynix298-review-mid", "/TR", f'"{bat}" review', "/SC", "WEEKLY", "/D", "WED", "/ST", "15:50", "/F"],
+    r = subprocess.run(["schtasks", "/Create", "/TN", "Hynix298-review", "/TR", f'"{bat}" review', "/SC", "WEEKLY", "/D", "WED,FRI", "/ST", "15:50", "/F"],
                        capture_output=True, text=True, encoding="mbcs", errors="replace", input="", timeout=60)
-    log("수요일 15:50 중간 회고 작업 등록" if r.returncode == 0 else f"  ! 중간 회고 작업 등록 실패 (setup_tasks.ps1 을 다시 실행할 것): {(r.stderr or r.stdout).strip()[:200]}")
+    log("주간 회고 작업을 수·금 15:50 으로 등록" if r.returncode == 0 else f"  ! 중간 회고 작업 등록 실패 (setup_tasks.ps1 을 다시 실행할 것): {(r.stderr or r.stdout).strip()[:200]}")
 
 
 _last_heal = {}

@@ -5,7 +5,7 @@
   python run.py decide                09:30~15:15 15분마다  정기 판단 (trade_times 회차만 주문, 나머지는 view)
   python run.py exit --codes A,B      장중 감시가 손절·익절 조건을 보면 호출 (매도만)
   python run.py close                 15:45  계좌 조회 + 오늘 자산을 equity 에 기록
-  python run.py review                수 15:50 · 토 10:00  주간 회고 (보고서 초안 + 조정 제안, 11-06 수요일 중간 회고 추가 → 16:00 조정이 기다렸다 바로 검토)
+  python run.py review                수·금 15:50  주간 회고 (보고서 초안 + 조정 제안. 11-06 토 10:00 → 수 중간·금 주간, 16:00 조정이 기다렸다 바로 검토)
   python run.py tune                  평일 16:00     기준값 자동 조정 (src/tuning.py 가 검사 후 params.json 반영)
   python run.py monitor               08:30~15:20  손절·익절 감시 루프 (src/monitor.py)
   python run.py sync                  로그온부터 계속  push 된 코드를 1분 안에 받아 반영 (src/sync.py)
@@ -243,7 +243,7 @@ def main():
         start = p["competition"]["start"]
         prompt = PROMPTS[kind].format(time=C.stamp(), codes=a.codes, why=a.why, next_trade=C.next_trade_time() or "내일",
                                       week=C.competition_week(p=p),
-                                      period=("이번 주 월~수 (수요일 중간 회고)" if C.now().weekday() == 2 else f"{start} 이후 이번 주"))   # 11-06 S.Lee: 수·토 두 번
+                                      period=("이번 주 월~수 (수요일 중간 회고)" if C.now().weekday() == 2 else f"{start} 이후 이번 주 (금요일 주간 회고)"))   # 11-06 S.Lee: 수·금 두 번
         claude(kind, prompt, dry)
         publish(f"Agent {kind} {C.stamp()}")
     finally:
