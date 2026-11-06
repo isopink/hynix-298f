@@ -81,13 +81,48 @@
     ]
   },
   "intraday": {
-    "time": "11:00",
-    "pool": 218,
-    "analyzed_new": 5,
-    "passed": 12,
+    "time": "11:15",
+    "pool": 240,
+    "analyzed_new": 30,
+    "passed": 16,
     "kept_prep": false
   },
   "candidates": [
+    {
+      "code": "068270",
+      "name": "셀트리온",
+      "close": 215000,
+      "ret5": 0.128,
+      "ret20": 0.1774,
+      "rsi14": 76.7,
+      "vol20": 0.416,
+      "foreign_net": -34655045950,
+      "inst_net": 336098397300,
+      "score": 1.0,
+      "news": [
+        {
+          "date": "11-06",
+          "title": "[바이오시밀러 산업 전망] 미국·중남미 시장 공략 확대…셀트리온·삼...",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "[CEO&뉴스] 바이오시밀러로 키운 셀트리온, 서정진 회장의 다음 승부수...",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "글로벌 시밀러 판매 호조에…셀트리온, 롯데바이오와 생산위탁 손 잡나",
+          "risk": false
+        }
+      ],
+      "price": 211500,
+      "chg": -0.0163,
+      "activity": 2.1,
+      "foreign_today": 0,
+      "inst_today": 6556500000,
+      "exchange": "KOSPI"
+    },
     {
       "code": "028050",
       "name": "삼성E&A",
@@ -98,7 +133,7 @@
       "vol20": 0.931,
       "foreign_net": -41290385000,
       "inst_net": 41663565700,
-      "score": 1.0,
+      "score": 0.975,
       "news": [
         {
           "date": "11-06",
@@ -116,11 +151,11 @@
           "risk": false
         }
       ],
-      "price": 61000,
-      "chg": -0.0513,
-      "activity": 1.52,
-      "foreign_today": 3538000000,
-      "inst_today": 0,
+      "price": 61100,
+      "chg": -0.0498,
+      "activity": 1.42,
+      "foreign_today": 8126300000,
+      "inst_today": 1955200000,
       "exchange": "KOSPI"
     },
     {
@@ -133,26 +168,101 @@
       "vol20": 0.357,
       "foreign_net": -10341050025,
       "inst_net": 34011615850,
-      "score": 0.816,
+      "score": 0.835,
       "news": [
         {
           "date": "11-06",
-          "title": "KT, 부산불꽃축제 통신망 보강…5G SA로 안전관제 지원",
+          "title": "'박영현 의존도 어쩌나' 비상 걸린 KT 불펜, '원태인 공백' 삼성 대안은...",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "KT, 부산불꽃축제 통신망 점검…5G SA로 안전관제 지원",
           "risk": false
         },
         {
           "date": "11-06",
           "title": "KT, 부산 광안리 '불꽃축제' 앞두고 네트워크 집중 관리",
           "risk": false
+        }
+      ],
+      "foreign_today": 4738000000,
+      "inst_today": 2678000000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "271560",
+      "name": "오리온",
+      "close": 121300,
+      "ret5": 0.0716,
+      "ret20": 0.1433,
+      "rsi14": 71.0,
+      "vol20": 0.219,
+      "foreign_net": -4793765300,
+      "inst_net": 11913421700,
+      "score": 0.785,
+      "news": [
+        {
+          "date": "11-06",
+          "title": "오리온, 중국·러시아서 잘 버네…주주에게 얼마 돌려줄까",
+          "risk": false
         },
         {
           "date": "11-06",
-          "title": "\"가을엔 무적이라더니 KT만 만나면 흔들?\"…삼성 후라도, 한국시리즈 3차...",
+          "title": "아트박스, 오리온과 '포카칩 황치즈맛 게왹이 에디션' 프로모션",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "하나증권 \"AI 투심 위축에 필수소비재 순환매 기대감, 관련주 KT&G 오리온...",
           "risk": false
         }
       ],
-      "foreign_today": 1236000000,
-      "inst_today": 360500000,
+      "foreign_today": 0,
+      "inst_today": 1091700000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "032640",
+      "name": "LG유플러스",
+      "close": 15940,
+      "ret5": 0.1386,
+      "ret20": 0.1016,
+      "rsi14": 68.1,
+      "vol20": 0.388,
+      "foreign_net": -26939614825,
+      "inst_net": 50135848275,
+      "score": 0.62,
+      "news": [
+        {
+          "date": "11-06",
+          "title": "SKT·KT·LG유플러스 '부산불꽃축제' 통신 품질 대결 '점화'",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "플랜티넷 자회사 ‘모아진’, LG유플러스 제휴 가입자 20만명 돌파",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 541960000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "175330",
+      "name": "JB금융지주",
+      "close": 27150,
+      "ret5": 0.0462,
+      "ret20": -0.0338,
+      "rsi14": 52.0,
+      "vol20": 0.405,
+      "foreign_net": -1285190625,
+      "inst_net": 2848469450,
+      "score": 0.595,
+      "news": [],
+      "foreign_today": 0,
+      "inst_today": 515850000,
       "exchange": "KOSPI"
     },
     {
@@ -165,7 +275,7 @@
       "vol20": 0.652,
       "foreign_net": -49256342750,
       "inst_net": 90823582500,
-      "score": 0.694,
+      "score": 0.595,
       "news": [
         {
           "date": "11-06",
@@ -183,11 +293,11 @@
           "risk": false
         }
       ],
-      "price": 347500,
-      "chg": -0.0453,
-      "activity": 1.13,
+      "price": 350000,
+      "chg": -0.0385,
+      "activity": 1.11,
       "foreign_today": 0,
-      "inst_today": 695000000,
+      "inst_today": 1400000000,
       "exchange": "KOSPI"
     },
     {
@@ -200,69 +310,10 @@
       "vol20": 0.346,
       "foreign_net": -77847544350,
       "inst_net": 94902336075,
-      "score": 0.571,
+      "score": 0.532,
       "news": [],
       "foreign_today": 0,
-      "inst_today": 482250000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "323410",
-      "name": "카카오뱅크",
-      "close": 20750,
-      "ret5": 0.0608,
-      "ret20": 0.0448,
-      "rsi14": 59.9,
-      "vol20": 0.26,
-      "foreign_net": 9727405555,
-      "inst_net": 4610992475,
-      "score": 0.531,
-      "news": [
-        {
-          "date": "11-06",
-          "title": "카카오뱅크, AI 콜봇 도입…금융사기 의심 거래 이체취소율 54%↑",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "정답 딱 '두 글자'…카카오뱅크 AI 이모지 퀴즈 정답 (11월 6일)",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "최대 실적 카카오뱅크…ROE 15% 달성까지 과제 산적",
-          "risk": false
-        }
-      ],
-      "foreign_today": 0,
-      "inst_today": 62250000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "032640",
-      "name": "LG유플러스",
-      "close": 15940,
-      "ret5": 0.1386,
-      "ret20": 0.1016,
-      "rsi14": 68.1,
-      "vol20": 0.388,
-      "foreign_net": -26939614825,
-      "inst_net": 50135848275,
-      "score": 0.469,
-      "news": [
-        {
-          "date": "11-06",
-          "title": "SKT·KT·LG유플러스 '부산불꽃축제' 통신 품질 대결 '점화'",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "플랜티넷 자회사 ‘모아진’, LG유플러스 제휴 가입자 20만명 돌파",
-          "risk": false
-        }
-      ],
-      "foreign_today": 0,
-      "inst_today": 31880000,
+      "inst_today": 1896850000,
       "exchange": "KOSPI"
     },
     {
@@ -275,7 +326,7 @@
       "vol20": 0.418,
       "foreign_net": 8185349000,
       "inst_net": -8063610575,
-      "score": 0.449,
+      "score": 0.443,
       "news": [
         {
           "date": "11-06",
@@ -294,7 +345,39 @@
         }
       ],
       "foreign_today": 0,
-      "inst_today": 44350000,
+      "inst_today": 266100000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "323410",
+      "name": "카카오뱅크",
+      "close": 20750,
+      "ret5": 0.0608,
+      "ret20": 0.0448,
+      "rsi14": 59.9,
+      "vol20": 0.26,
+      "foreign_net": 9727405555,
+      "inst_net": 4610992475,
+      "score": 0.418,
+      "news": [
+        {
+          "date": "11-06",
+          "title": "카카오뱅크, AI 콜봇 도입…금융사기 의심 거래 이체취소율 54%↑",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "정답 딱 '두 글자'…카카오뱅크 AI 이모지 퀴즈 정답 (11월 6일)",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "최대 실적 카카오뱅크…ROE 15% 달성까지 과제 산적",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 145250000,
       "exchange": "KOSPI"
     },
     {
@@ -307,7 +390,7 @@
       "vol20": 0.394,
       "foreign_net": 1772447860,
       "inst_net": 2438029420,
-      "score": 0.286,
+      "score": 0.228,
       "news": [
         {
           "date": "11-06",
@@ -316,35 +399,105 @@
         }
       ],
       "foreign_today": 0,
-      "inst_today": 29840000,
+      "inst_today": 67140000,
       "exchange": "KOSPI"
     },
     {
-      "code": "232680",
-      "name": "라온로보틱스",
-      "close": 11160,
-      "ret5": 0.1885,
-      "ret20": 0.0295,
-      "rsi14": 54.3,
-      "vol20": 1.372,
-      "foreign_net": -1460741580,
-      "inst_net": 2625158595,
-      "score": 0.776,
+      "code": "112610",
+      "name": "씨에스윈드",
+      "close": 47500,
+      "ret5": 0.2402,
+      "ret20": -0.1652,
+      "rsi14": 53.0,
+      "vol20": 0.837,
+      "foreign_net": -18097403575,
+      "inst_net": 15329505750,
+      "score": 0.101,
       "news": [
         {
-          "date": "11-06",
-          "title": "[지분View] 라온로보틱스, 신공장 추진 속 감사 지분 확대",
+          "date": "11-05",
+          "title": "[특징주] 씨에스윈드, 미국 베스타스와 797억원 공급계약",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "[모닝 리포트] 라온로보틱스, 3분기 매출·영업익 '사상 최대'…이송로...",
+          "title": "씨에스윈드, 797억원 규모 미국 풍력타워 공급 계약 체결",
           "risk": false
         }
       ],
-      "foreign_today": 312480000,
+      "foreign_today": 0,
+      "inst_today": 332500000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "008830",
+      "name": "대동기어",
+      "close": 6500,
+      "ret5": 0.1797,
+      "ret20": 0.0317,
+      "rsi14": 59.8,
+      "vol20": 1.06,
+      "foreign_net": -5204568960,
+      "inst_net": -190548385,
+      "score": 0.975,
+      "news": [
+        {
+          "date": "11-06",
+          "title": "대동기어 회전율 88%…금양그린파워·대명에너지도 50% 넘어",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "한진칼우 회전율 126%…대동기어·대명에너지 거래 집중",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "대동기어 주가, 11월 5일 장중 6,900원 10.93% 상승",
+          "risk": false
+        }
+      ],
+      "price": 6700,
+      "chg": 0.0152,
+      "activity": 10.81,
+      "foreign_today": 227800000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
+    },
+    {
+      "code": "180640",
+      "name": "한진칼",
+      "close": 182700,
+      "ret5": 0.4651,
+      "ret20": 0.383,
+      "rsi14": 78.9,
+      "vol20": 1.058,
+      "foreign_net": -21700241050,
+      "inst_net": 22160192500,
+      "score": 0.962,
+      "news": [
+        {
+          "date": "11-06",
+          "title": "한진칼 경영권 산업은행에 달려",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "[한진칼 지분 경쟁] '시한부' 최대주주 호반…조원태 반격 시간문제",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "\"한진칼 최대주주 전쟁\" 통합 대한항공 출범 영향은?",
+          "risk": false
+        }
+      ],
+      "price": 191900,
+      "chg": 0.0079,
+      "activity": 4.6,
+      "foreign_today": 5565100000,
+      "inst_today": 0,
+      "exchange": "KOSPI"
     },
     {
       "code": "053800",
@@ -356,7 +509,7 @@
       "vol20": 1.574,
       "foreign_net": -7062631750,
       "inst_net": -4827086750,
-      "score": 0.755,
+      "score": 0.772,
       "news": [
         {
           "date": "11-05",
@@ -374,35 +527,8 @@
           "risk": false
         }
       ],
-      "foreign_today": 2535000000,
+      "foreign_today": 5265000000,
       "inst_today": 0,
-      "exchange": "KOSDAQ"
-    },
-    {
-      "code": "263860",
-      "name": "지니언스",
-      "close": 23250,
-      "ret5": -0.0719,
-      "ret20": 0.0087,
-      "rsi14": 51.6,
-      "vol20": 1.438,
-      "foreign_net": -3522036175,
-      "inst_net": -2855454100,
-      "score": 0.388,
-      "news": [
-        {
-          "date": "11-03",
-          "title": "'사이버 보안 위기'에 정부 '차르' 기구 검토도, '보안주' 지니언스·라...",
-          "risk": false
-        },
-        {
-          "date": "11-03",
-          "title": "지니언스 5.28% 상승…제로트러스트·EDR 수요가 성장축",
-          "risk": false
-        }
-      ],
-      "foreign_today": 0,
-      "inst_today": 69750000,
       "exchange": "KOSDAQ"
     },
     {
