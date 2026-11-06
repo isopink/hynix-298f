@@ -136,6 +136,9 @@ def get_briefing() -> str:
         ctx.append(f"- 시장 하락 보정 (코드가 적용): set_regime 으로 기록한 국면이 {'·'.join(mb['regimes'])} 이면 "
                    f"신규 매수 확신도 +{mb['add']:.2f} (악재 뉴스 ⚠ 제외). 국면을 이유로 스스로 확신도를 올리거나 내리지 않음")
     b["market"]["live"] = data_prep.live_market(b)   # 장중이면 지금 KOSPI 반영 힌트도 같이
+    ls = (C.read_json(tuning.LESSONS, {}) or {}).get("lessons") or []
+    if ls:   # 11-06 S.Lee: 지난 판단 채점에서 나온 교훈 (맞은 판단 유지 · 틀린 판단 조정)
+        ctx += ["", "## 지난 판단 점검에서 배운 점 (기준값 조정 실행이 결과로 채점해 남김, 확신도에 반영할 것)"] + [f"- {x}" for x in ls]
     return data_prep.to_text(b) + "\n".join(ctx) + intraday(b, r) + C.prior_judgments()
 
 
@@ -286,10 +289,15 @@ def get_tuning_context() -> dict:
 
 @mcp.tool()
 @quiet
-def apply_tuning(changes: list[dict], summary: str) -> dict:
+def apply_tuning(changes: list[dict], summary: str, lessons: list[str] = None) -> dict:
     """기준값 조정 제출 (조정 실행에서 한 번만). changes = [{"key": "decision.buy_min_confidence", "to": 0.55, "reason": "숫자 근거 1~2문장"}],
     바꿀 게 없으면 changes=[] 로 '유지' 를 제출. summary = 이번 판단 요약 1~2문장 (대시보드에 공개).
+    lessons = decision_outcomes 점검에서 얻은 교훈 2~5줄 (예: "외국인 3일 연속 순매수 종목을 관망했다가 +4% 놓침 → 이런 경우 확신도를 낮추지 말 것").
+    다음 판단부터 브리핑에 실려 총괄·bull·bear 가 참고함 (기준값과 따로, 판단 자체를 고치는 용도).
     서버가 허용 키·범위·변경폭·개수·쿨다운·기준값 일관성을 검사해 통과한 것만 반영하고, 거절 사유를 돌려줍니다."""
+    if lessons:   # 11-06 S.Lee: 맞은 판단은 유지, 틀린 판단은 다음부터 바꾸도록
+        C.write_json(tuning.LESSONS, {"time": C.stamp(), "lessons": [str(x)[:200] for x in lessons][:6]})
+        C.journal("lessons", lessons=[str(x)[:200] for x in lessons][:6])
     return tuning.apply(changes, summary)
 
 

@@ -112,11 +112,84 @@ def context():
         "blocks_by_rule": dict(Counter(x["rule"] for x in rows if x["kind"] == "block")),
         "costs_note": "키움 모의서버 실제 비용은 매수·매도 수수료 각 0.35%, 매도 세금 0.2% (왕복 약 0.9%). 보유 중 return_after_costs 는 이를 반영한 값",
         "last_weekly_review": {"time": review["time"], "suggestion": review["suggestion"]} if review else None,
-        "tuning_history": history(rows)[-5:],
+        "decision_outcomes": outcomes(rows),
+        "lessons_now": (C.read_json(LESSONS, {}) or {}).get("lessons", []),
+        "tuning_history": history(rows)[-12:],
         "cooldown_keys": cd,
         "max_changes_per_run": rl["max_changes_per_run"],
         "tunable": {k: {**v, "current": get_value(p, k), "cooldown": k in cd} for k, v in rl["keys"].items()},
     }
+
+
+LESSONS = os.path.join(C.WORK, "lessons.json")   # 11-06 조정 실행이 남긴 '판단 점검 교훈' → 다음 판단 브리핑에 실림
+
+
+def outcomes(rows):
+    """11-06 S.Lee: 지난 판단이 맞았는지 결과로 채점. 판단한 날 종가(체결은 체결가) → 지금 가격.
+    관망했는데 +2% 넘게 오름 = 놓침(조정) · 내림 = 관망 맞음(유지) / 보유했는데 −3% 넘게 내림 = 안 판 게 손해(조정)
+    매수했는데 오름 = 맞음(유지) · 내림 = 틀림(조정) / 매도했는데 내림 = 맞음(유지) · +2% 넘게 오름 = 너무 일찍 팖(조정).
+    오늘 판단은 결과를 볼 시간이 없어 다음 날부터 채점."""
+    today = C.today().isoformat()
+    q = C.read_json(os.path.join(C.WORK, "quotes.json"), {}) or {}
+    prep = {x["code"]: x for x in (C.read_json(os.path.join(C.WORK, "prep_rows.json"), []) or [])}
+    b = C.read_json(C.BRIEFING, {}) or {}
+    asof = b.get("asof")
+    acc = C.read_json(C.ACCOUNT, {}) or {}
+    held = {h["code"]: h.get("price") for h in acc.get("holdings", [])}
+    cand = {c["code"]: c for c in b.get("candidates", [])}
+
+    def now_px(code):
+        x = q.get(code)
+        if x and x.get("price") and date.fromtimestamp(x.get("ts", 0)).isoformat() == today:
+            return x["price"]
+        if held.get(code):
+            return held[code]
+        if (c := cand.get(code)) and c.get("price"):
+            return c["price"]
+        r = prep.get(code)
+        return (r.get("closes") or [None])[-1] if r else None
+
+    def close_on(code, d):
+        r, cl = prep.get(code), (prep.get(code) or {}).get("closes") or []
+        if not r or not asof or d > asof:
+            return None
+        n = C.business_days(d, date.fromisoformat(asof))
+        return cl[-1 - n] if 0 <= n < len(cl) else None
+
+    last = {}
+    for x in rows:   # 하루 마지막 판단만 (같은 날 15분마다 같은 판단이 반복되므로)
+        if x["time"][:10] >= today:
+            continue
+        if x["kind"] == "decision" and x.get("mode") == "decide" and x.get("action") in ("관망", "보유"):
+            last[(x["code"], x["time"][:10], x["action"])] = x
+        elif x["kind"] == "fill":
+            last[(x["code"], x["time"][:10], x["side"])] = x
+    res = []
+    for (code, d, act), x in last.items():
+        p0 = x.get("price") if act in ("매수", "매도") else (x.get("price") or close_on(code, d))
+        p1 = now_px(code)
+        if not p0 or not p1:
+            continue
+        ret = p1 / p0 - 1
+        if act == "관망":
+            v = "놓침 (조정)" if ret >= .02 else "맞음 (유지)" if ret <= 0 else "중립"
+        elif act == "보유":
+            v = "안 판 게 손해 (조정)" if ret <= -.03 else "맞음 (유지)"
+        elif act == "매수":
+            v = "맞음 (유지)" if ret > 0 else "틀림 (조정)"
+        else:
+            v = "맞음 (유지)" if ret < 0 else "너무 일찍 팖 (조정)" if ret >= .02 else "중립"
+        conf = x.get("confidence_adj", x.get("confidence"))
+        res.append({"date": d, "code": code, "name": x.get("name"), "action": act, "confidence": conf, "ret_since": round(ret, 4), "verdict": v,
+                    "bull": (x.get("bull") or "")[:140], "bear": (x.get("bear") or "")[:140]})
+    summary = defaultdict(Counter)
+    for r_ in res:
+        summary[r_["action"]][r_["verdict"]] += 1
+    wrong = sorted([r_ for r_ in res if "조정" in r_["verdict"]], key=lambda r_: -abs(r_["ret_since"]))
+    right = sorted([r_ for r_ in res if "유지" in r_["verdict"]], key=lambda r_: -abs(r_["ret_since"]))
+    return {"note": "판단한 날 종가(체결은 체결가) → 지금 가격. 오늘 판단은 내일부터 채점. 조정 = 판단을 바꿔야 할 사례, 유지 = 맞은 판단",
+            "summary": {k: dict(v) for k, v in summary.items()},
+            "adjust": wrong[:10], "keep": right[:6]}
 
 
 def watch_confidence(rows, p):

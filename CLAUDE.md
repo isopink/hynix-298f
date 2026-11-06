@@ -78,7 +78,7 @@ reports/    보고서 PDF, drafts/ = 주간 회고 에이전트가 쓴 초안
 6. 리스크 검증 Hook (PreToolUse, 주문 도구 직전): 현금·종목 한도·일일 손실 → 위반 시 차단
 7. 주문 실행 (키움 REST API / MCP) → 판단 근거·체결 결과 기록 → `docs/data/*.json`
 8. 주간 회고 서브에이전트: 기준값 조정 제안 + 주간 보고서 초안 (리스크 한도는 수정 불가)
-9. 기준값 자동 조정 (평일 매일, `run.py tune`, 11-02 추가 · 11-03 화·수·목 → 매일): 에이전트가 `get_tuning_context`로 성과를 보고 `apply_tuning`으로 0~2개 제안 → `src/tuning.py`가 `config/tuning.json` 규칙(허용 키·범위·1회 변경폭·쿨다운·일관성)으로 검사해 통과분만 `params.json`에 쓰고 커밋. 이력은 `docs/data/tuning.json` → 대시보드 Feedback Loop. 사람 검토 없이 반영되므로 계획서 대비 변경점으로 1주차 보고서에 기록
+9. 기준값 자동 조정 (평일 매일, `run.py tune`, 11-02 추가 · 11-03 화·수·목 → 매일): 에이전트가 `get_tuning_context`로 성과를 보고 `apply_tuning`으로 0~2개 제안 → `src/tuning.py`가 `config/tuning.json` 규칙(허용 키·범위·1회 변경폭·쿨다운·일관성)으로 검사해 통과분만 `params.json`에 쓰고 커밋. 이력은 `docs/data/tuning.json` → 대시보드 Feedback Loop. 사람 검토 없이 반영되므로 계획서 대비 변경점으로 1주차 보고서에 기록. **11-06 S.Lee: 조정 전에 판단을 결과로 채점** (`tuning.outcomes`: 관망→올랐으면 놓침·내렸으면 맞음 / 보유→더 내렸으면 손해 / 매수→오르면 맞음·내리면 틀림 / 매도→내리면 맞음·오르면 일찍 팖). 맞은 판단은 유지, 틀린 판단은 기준값 + 교훈(`apply_tuning(lessons)` → `work/lessons.json` → 다음 판단 브리핑)으로 조정. 수·금 회고는 앞선 조정들을 총괄 분석
 
 ### 대시보드 데이터 형식 (에이전트가 맞춰서 써야 함)
 
