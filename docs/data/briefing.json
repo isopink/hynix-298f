@@ -81,8 +81,8 @@
     ]
   },
   "intraday": {
-    "time": "12:15",
-    "pool": 240,
+    "time": "12:30",
+    "pool": 241,
     "analyzed_new": 2,
     "passed": 19,
     "kept_prep": false
@@ -116,11 +116,11 @@
           "risk": false
         }
       ],
-      "price": 61900,
-      "chg": -0.0373,
-      "activity": 1.2,
-      "foreign_today": 8232700000,
-      "inst_today": 1980800000,
+      "price": 61400,
+      "chg": -0.0451,
+      "activity": 1.15,
+      "foreign_today": 8166200000,
+      "inst_today": 1964800000,
       "exchange": "KOSPI"
     },
     {
@@ -137,12 +137,12 @@
       "news": [
         {
           "date": "11-06",
-          "title": "KT, 부산불꽃축제 무선망 보강…5G로 안전관제 지원",
+          "title": "KT가 그저 대견한 조범현 경일대 총감독 “현장은 언제나 설레는 곳”",
           "risk": false
         },
         {
           "date": "11-06",
-          "title": "KT, 부산불꽃축제 앞두고 특별 소통 대책 가동",
+          "title": "KT, 부산불꽃축제 무선망 보강…5G로 안전관제 지원",
           "risk": false
         },
         {
@@ -153,33 +153,6 @@
       ],
       "foreign_today": 4738000000,
       "inst_today": 2678000000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "032640",
-      "name": "LG유플러스",
-      "close": 15940,
-      "ret5": 0.1386,
-      "ret20": 0.1016,
-      "rsi14": 68.1,
-      "vol20": 0.388,
-      "foreign_net": -26939614825,
-      "inst_net": 50135848275,
-      "score": 0.688,
-      "news": [
-        {
-          "date": "11-06",
-          "title": "SKT·KT·LG유플러스 '부산불꽃축제' 통신 품질 대결 '점화'",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "플랜티넷 자회사 ‘모아진’, LG유플러스 제휴 가입자 20만명 돌파",
-          "risk": false
-        }
-      ],
-      "foreign_today": 0,
-      "inst_today": 541960000,
       "exchange": "KOSPI"
     },
     {
@@ -210,11 +183,43 @@
           "risk": false
         }
       ],
-      "price": 359500,
-      "chg": -0.0124,
-      "activity": 1.02,
+      "price": 357500,
+      "chg": -0.0179,
+      "activity": 0.99,
       "foreign_today": 0,
-      "inst_today": 1438000000,
+      "inst_today": 1430000000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "032640",
+      "name": "LG유플러스",
+      "close": 15940,
+      "ret5": 0.1386,
+      "ret20": 0.1016,
+      "rsi14": 68.1,
+      "vol20": 0.388,
+      "foreign_net": -26939614825,
+      "inst_net": 50135848275,
+      "score": 0.677,
+      "news": [
+        {
+          "date": "11-06",
+          "title": "LG, 브랜드 가치 향상 '잰걸음'...LG전자·LG유플러스 '앞장'",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "SKT·KT·LG유플러스 '부산불꽃축제' 통신 품질 대결 '점화'",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "플랜티넷 자회사 ‘모아진’, LG유플러스 제휴 가입자 20만명 돌파",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 541960000,
       "exchange": "KOSPI"
     },
     {
@@ -279,17 +284,17 @@
       "news": [
         {
           "date": "11-06",
+          "title": "코웨이, 분기 최대 영업익에도 순이익 감소",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "코웨이, 3분기 영업이익 2608억원…전년 대비 7.3% 증가",
+          "risk": false
+        },
+        {
+          "date": "11-06",
           "title": "코웨이, 3분기 매출 1조 4,261억원…전년比 13.7% 증가",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "코웨이, 해외 매출 분기 6000억 원 눈앞…3분기 영업이익 2608억 원",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "해외 사업 견인…코웨이, 3분기 영업익 2608억원 ‘분기 최대’",
           "risk": false
         }
       ],
@@ -502,10 +507,10 @@
           "risk": false
         }
       ],
-      "price": 6830,
-      "chg": 0.0348,
-      "activity": 8.15,
-      "foreign_today": 232220000,
+      "price": 6890,
+      "chg": 0.0439,
+      "activity": 7.85,
+      "foreign_today": 234260000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -519,7 +524,7 @@
       "vol20": 1.285,
       "foreign_net": 18241113425,
       "inst_net": 7570233575,
-      "score": 0.806,
+      "score": 0.817,
       "news": [
         {
           "date": "11-06",
@@ -537,10 +542,10 @@
           "risk": false
         }
       ],
-      "price": 28250,
-      "chg": 0.0482,
-      "activity": 2.63,
-      "foreign_today": 1045250000,
+      "price": 28350,
+      "chg": 0.0519,
+      "activity": 2.52,
+      "foreign_today": 1048950000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
