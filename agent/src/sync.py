@@ -173,6 +173,17 @@ def ensure_schedule():
         log(f"  ! 정기 판단 간격 변경 실패 (setup_tasks.ps1 을 다시 실행할 것): {(r.stderr or r.stdout).strip()[:200]}")
 
 
+def ensure_review_mid():
+    """11-06 S.Lee: 수요일 16:30 중간 회고 작업을 한 번 등록 (setup_tasks.ps1 을 다시 안 돌려도 되게)."""
+    if os.name != "nt" or state().get("review_mid") == "WED 16:30":
+        return
+    save(review_mid="WED 16:30")
+    bat = os.path.join(C.AGENT, "run.bat")
+    r = subprocess.run(["schtasks", "/Create", "/TN", "Hynix298-review-mid", "/TR", f'"{bat}" review', "/SC", "WEEKLY", "/D", "WED", "/ST", "16:30", "/F"],
+                       capture_output=True, text=True, encoding="mbcs", errors="replace", input="", timeout=60)
+    log("수요일 16:30 중간 회고 작업 등록" if r.returncode == 0 else f"  ! 중간 회고 작업 등록 실패 (setup_tasks.ps1 을 다시 실행할 것): {(r.stderr or r.stdout).strip()[:200]}")
+
+
 _last_heal = {}
 
 
@@ -298,6 +309,7 @@ def loop():
                 return 10
             heal()
             ensure_schedule()
+            ensure_review_mid()
             catch_up()
         except Exception as e:  # noqa: BLE001
             log(f"  ! 동기화 실패: {type(e).__name__}: {e}")

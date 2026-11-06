@@ -112,19 +112,20 @@ def system():
 
 
 def reviews(rows):
+    key = lambda x: (x["week"], bool(x.get("mid")))   # 11-06 수요일 중간 회고 · 토요일 주간 회고를 따로
     res = {}
     for r in rows:
         if r["kind"] == "review":
-            res[r["week"]] = {"week": r["week"], "period": r["period"], "suggestion": r["suggestion"],
-                              "status": r.get("status", "검토 중")}
-    old = {x["week"]: x for x in (C.read_json(os.path.join(C.DOCS_DATA, "reviews.json"), []) or [])}
-    times = {r["week"]: r["time"] for r in rows if r["kind"] == "review"}
+            res[key(r)] = {"week": r["week"], "mid": bool(r.get("mid")), "period": r["period"], "suggestion": r["suggestion"],
+                           "status": r.get("status", "검토 중")}
+    old = {key(x): x for x in (C.read_json(os.path.join(C.DOCS_DATA, "reviews.json"), []) or [])}
+    times = {key(r): r["time"] for r in rows if r["kind"] == "review"}
     for w, x in res.items():
         # 회고 뒤 조정 실행에서 값이 하나라도 바뀌었으면 반영. 사람이 "반영"으로 바꿔 둔 상태도 유지
         if any(r["kind"] == "tune" and r["time"] > times[w] and r.get("applied") for r in rows) or \
                 (w in old and old[w].get("status") == "반영"):
             x["status"] = "반영"
-    return [res[w] for w in sorted(res)]
+    return [res[w] for w in sorted(res, key=lambda k: (k[0], not k[1]))]   # 같은 주는 수요일 중간 회고가 먼저
 
 
 def tuning(rows):
