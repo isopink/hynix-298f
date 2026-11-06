@@ -81,7 +81,7 @@
     ]
   },
   "intraday": {
-    "time": "12:00",
+    "time": "12:15",
     "pool": 240,
     "analyzed_new": 2,
     "passed": 19,
@@ -116,11 +116,11 @@
           "risk": false
         }
       ],
-      "price": 62300,
-      "chg": -0.0311,
-      "activity": 1.27,
-      "foreign_today": 8285900000,
-      "inst_today": 1993600000,
+      "price": 61900,
+      "chg": -0.0373,
+      "activity": 1.2,
+      "foreign_today": 8232700000,
+      "inst_today": 1980800000,
       "exchange": "KOSPI"
     },
     {
@@ -133,26 +133,53 @@
       "vol20": 0.357,
       "foreign_net": -10341050025,
       "inst_net": 34011615850,
-      "score": 0.806,
+      "score": 0.785,
       "news": [
         {
           "date": "11-06",
-          "title": "SK텔레콤·KT, 3G 가입 문닫았다…알뜰폰 13만 회선이 폐지 변수",
+          "title": "KT, 부산불꽃축제 무선망 보강…5G로 안전관제 지원",
           "risk": false
         },
         {
           "date": "11-06",
-          "title": "KT, 부산불꽃축제 통신 대책 가동…5G SA 슬라이싱으로 안전관제까지",
+          "title": "KT, 부산불꽃축제 앞두고 특별 소통 대책 가동",
           "risk": false
         },
         {
           "date": "11-06",
-          "title": "'KS 접전'이라고? KT는 믿는다, '138억+우승 반지 8개' FA 트리오",
+          "title": "KT, '부산불꽃축제' 안정적 통신 서비스 위한 특별 대책 가동",
           "risk": false
         }
       ],
       "foreign_today": 4738000000,
       "inst_today": 2678000000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "032640",
+      "name": "LG유플러스",
+      "close": 15940,
+      "ret5": 0.1386,
+      "ret20": 0.1016,
+      "rsi14": 68.1,
+      "vol20": 0.388,
+      "foreign_net": -26939614825,
+      "inst_net": 50135848275,
+      "score": 0.688,
+      "news": [
+        {
+          "date": "11-06",
+          "title": "SKT·KT·LG유플러스 '부산불꽃축제' 통신 품질 대결 '점화'",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "플랜티넷 자회사 ‘모아진’, LG유플러스 제휴 가입자 20만명 돌파",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 541960000,
       "exchange": "KOSPI"
     },
     {
@@ -183,38 +210,11 @@
           "risk": false
         }
       ],
-      "price": 358500,
-      "chg": -0.0151,
-      "activity": 1.04,
+      "price": 359500,
+      "chg": -0.0124,
+      "activity": 1.02,
       "foreign_today": 0,
-      "inst_today": 1434000000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "032640",
-      "name": "LG유플러스",
-      "close": 15940,
-      "ret5": 0.1386,
-      "ret20": 0.1016,
-      "rsi14": 68.1,
-      "vol20": 0.388,
-      "foreign_net": -26939614825,
-      "inst_net": 50135848275,
-      "score": 0.677,
-      "news": [
-        {
-          "date": "11-06",
-          "title": "SKT·KT·LG유플러스 '부산불꽃축제' 통신 품질 대결 '점화'",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "플랜티넷 자회사 ‘모아진’, LG유플러스 제휴 가입자 20만명 돌파",
-          "risk": false
-        }
-      ],
-      "foreign_today": 0,
-      "inst_today": 541960000,
+      "inst_today": 1438000000,
       "exchange": "KOSPI"
     },
     {
@@ -279,17 +279,17 @@
       "news": [
         {
           "date": "11-06",
+          "title": "코웨이, 3분기 매출 1조 4,261억원…전년比 13.7% 증가",
+          "risk": false
+        },
+        {
+          "date": "11-06",
           "title": "코웨이, 해외 매출 분기 6000억 원 눈앞…3분기 영업이익 2608억 원",
           "risk": false
         },
         {
           "date": "11-06",
           "title": "해외 사업 견인…코웨이, 3분기 영업익 2608억원 ‘분기 최대’",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "\"K-렌탈 글로벌 영토 넓혔다\"…코웨이, 3분기 매출 1.4조 '역대급 실적'",
           "risk": false
         }
       ],
@@ -407,17 +407,17 @@
       "news": [
         {
           "date": "11-06",
+          "title": "[동국제약=종합] 센텔리안24 해외 유통 확대 ··· 신제품도 출시",
+          "risk": false
+        },
+        {
+          "date": "11-06",
           "title": "동국제약 센텔리안24, 영국·체코 등 유럽 유통망 확대",
           "risk": false
         },
         {
           "date": "11-06",
           "title": "'누적매출 1조' 동국제약 센텔리안24, 美·日넘어 유럽으로 무대 확장",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "[민주 약국] 동아제약·메타비아·동국제약",
           "risk": false
         }
       ],
@@ -457,7 +457,7 @@
       "vol20": 0.837,
       "foreign_net": -18097403575,
       "inst_net": 15329505750,
-      "score": 0.14,
+      "score": 0.151,
       "news": [
         {
           "date": "11-05",
@@ -484,7 +484,7 @@
       "vol20": 1.06,
       "foreign_net": -5204568960,
       "inst_net": -190548385,
-      "score": 0.978,
+      "score": 0.957,
       "news": [
         {
           "date": "11-06",
@@ -502,47 +502,12 @@
           "risk": false
         }
       ],
-      "price": 6860,
-      "chg": 0.0394,
-      "activity": 8.69,
-      "foreign_today": 233240000,
+      "price": 6830,
+      "chg": 0.0348,
+      "activity": 8.15,
+      "foreign_today": 232220000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
-    },
-    {
-      "code": "180640",
-      "name": "한진칼",
-      "close": 182700,
-      "ret5": 0.4651,
-      "ret20": 0.383,
-      "rsi14": 78.9,
-      "vol20": 1.058,
-      "foreign_net": -21700241050,
-      "inst_net": 22160192500,
-      "score": 0.903,
-      "news": [
-        {
-          "date": "11-06",
-          "title": "한진칼 경영권 산업은행에 달려",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "[한진칼 지분 경쟁] '시한부' 최대주주 호반…조원태 반격 시간문제",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "\"한진칼 최대주주 전쟁\" 통합 대한항공 출범 영향은?",
-          "risk": false
-        }
-      ],
-      "price": 207500,
-      "chg": 0.0898,
-      "activity": 5.47,
-      "foreign_today": 6017500000,
-      "inst_today": 0,
-      "exchange": "KOSPI"
     },
     {
       "code": "030530",
@@ -554,7 +519,7 @@
       "vol20": 1.285,
       "foreign_net": 18241113425,
       "inst_net": 7570233575,
-      "score": 0.828,
+      "score": 0.806,
       "news": [
         {
           "date": "11-06",
@@ -572,10 +537,42 @@
           "risk": false
         }
       ],
-      "price": 28600,
-      "chg": 0.0612,
-      "activity": 2.75,
-      "foreign_today": 1058200000,
+      "price": 28250,
+      "chg": 0.0482,
+      "activity": 2.63,
+      "foreign_today": 1045250000,
+      "inst_today": 0,
+      "exchange": "KOSDAQ"
+    },
+    {
+      "code": "053800",
+      "name": "안랩",
+      "close": 97500,
+      "ret5": -0.0152,
+      "ret20": 0.2695,
+      "rsi14": 53.8,
+      "vol20": 1.574,
+      "foreign_net": -7062631750,
+      "inst_net": -4827086750,
+      "score": 0.731,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "[아시아AI대상]안랩, AI 네이티브 보안으로 위협 분석부터 대응까지",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "[포토] 안랩, 아시아AI대상 '아시아경제대표상' 수상",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "[OT 보안 인사이트 2026] 안랩 \"5차 산업혁명 시대, OT 보안 현 주소는\"",
+          "risk": false
+        }
+      ],
+      "foreign_today": 5265000000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
