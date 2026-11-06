@@ -26,6 +26,7 @@ P["decision"]["sell_min_confidence"] = 0.60
 P["decision"]["min_weight"], P["decision"]["max_weight"] = 0.10, 0.20   # 수량 계산 테스트는 예전 크기(10~20%)로 고정
 P["regime_cap"]["하락"] = 0.50                    # 국면 상한 테스트는 하락 50% 기준으로 고정
 P["decision"]["probe"] = {**P["decision"].get("probe", {}), "enabled": False}   # 기존 테스트는 소액 매수 구간 없이 (아래 전용 테스트에서 켬)
+P["index"].update(regimes=["상승", "횡보"], trade_from=None, no_stop=False)   # 기존 지수 테스트는 11-06 전 규칙으로 (새 규칙은 아래 전용 테스트에서 실제 설정으로)
 
 
 def acc(cash=50_000_000, holdings=()):
@@ -770,6 +771,37 @@ def test_new_weights_and_dip_buy_off():
     assert sizing.target_weight(lo - 1e-6, q, R) <= d["probe"]["weight"] + 1e-9 <= d["min_weight"] + 1e-9   # 소액 매수 위 끝이 정식 매수 아래 끝과 이어짐
     assert not q["index"]["dip_buy"]["enabled"]
     assert C.index_dip("069500", -0.08, q, datetime(2026, 11, 6, 15, 15, tzinfo=C.KST)) is None
+
+def test_index_debate_after_1500_no_stop():
+    """11-06 S.Lee: KODEX 200 은 국면 제한 없이 토론으로, 매수·판단 매도는 15:00 이후만, 손절가 없음 (실제 설정)."""
+    import monitor
+    q = C.params()
+    q["competition"]["start"], q["week_factor"]["1"] = C.today().isoformat(), 1.0
+    ix, real, old_pos, real_p = "069500", C.now, C.POSITIONS, C.params
+    try:
+        C.POSITIONS = os.path.join(tmp, "positions.json")
+        open(C.JOURNAL, "w").close()
+        C.now = lambda: datetime(2026, 11, 6, 14, 45, tzinfo=C.KST)
+        C.journal("regime", regime="하락", cap=q["regime_cap"]["하락"])
+        plan = sizing.plan_buy(ix, 0.85, 40_000, acc(), q, R)
+        assert plan["qty"] == 0 and "15:00 이후" in plan["limited_by"] and plan["stop"] is None, plan
+        assert "지수 시간" in [x for x, _ in risk.check({"code": ix, "side": "매수", "qty": 10, "confidence": 0.85}, acc(), 40_000, q, R)]
+        a = acc(holdings=[{**pos(ix, 100, 40_000), "name": "KODEX 200"}])
+        assert sizing.plan_sell(ix, 0.90, 40_000, a, q)["qty"] == 0
+        assert sizing.plan_sell(ix, 0.30, 40_000, a, q, rule_exit=True)["qty"] == 100   # 익절·보유일 규칙 매도는 시간 무관
+        C.now = lambda: datetime(2026, 11, 6, 15, 15, tzinfo=C.KST)
+        plan = sizing.plan_buy(ix, 0.85, 40_000, acc(), q, R)
+        assert plan["qty"] > 0, plan   # 하락 국면이어도 토론·확신도로
+        assert sizing.plan_sell(ix, 0.90, 40_000, a, q)["qty"] == 100
+        C.write_json(C.POSITIONS, {ix: {"name": "KODEX 200", "entry_date": C.today().isoformat()}})
+        hs = [{**pos(ix, 100, 40_000), "name": "KODEX 200", "price": 30_000}]   # −25% 여도
+        assert C.position_meta(hs, q)[ix]["stop"] is None
+        C.params = lambda: q
+        assert ix not in monitor.triggers(hs)
+    finally:
+        C.now, C.params, C.POSITIONS = real, real_p, old_pos
+        if os.path.exists(os.path.join(tmp, "positions.json")):
+            os.remove(os.path.join(tmp, "positions.json"))
 
 def test_partial_sell_once_a_day():
     """11-05 HMM: 15분마다 절반씩 팔던 문제 → 분할은 하루 1번, 그 뒤엔 0.65 이상·규칙 매도만 전량."""

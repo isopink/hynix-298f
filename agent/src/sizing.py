@@ -77,6 +77,8 @@ def plan_buy(code, conf, price, account, p=None, r=None, regime=None, today_chan
             limits[f"{label}는 " + "·".join(etf["regimes"]) + " 국면만"] = 0
         if C.buys_today(code) >= etf.get("max_buys_per_day", 99):
             limits[f"{label}는 하루 {etf['max_buys_per_day']}번만"] = 0
+        if (f := C.etf_wait(code, p)):   # 11-06 S.Lee: KODEX 200 은 15:00 이후만
+            limits[f"{label}는 {f} 이후만 매매"] = 0
     if held:   # 11-05 보유 종목 추가 매수: 정식 매수 기준 이상 + 평단 이상(이익 중)일 때만, 목표 비중까지
         ao = p["decision"].get("add_on") or {}
         if not ao.get("enabled"):
@@ -102,7 +104,7 @@ def plan_buy(code, conf, price, account, p=None, r=None, regime=None, today_chan
         "side": "매수", "code": code, "qty": qty, "price": price, "amount": qty * price,
         "confidence": conf, "target_weight": round(w, 4), "regime": regime, "equity_cap": cap,
         "limited_by": binding if qty else (binding if w else "확신도 기준 미달"),
-        "stop": round(price * (1 + stop_pct)),
+        "stop": None if C.no_stop(code, p) else round(price * (1 + stop_pct)),
         "take": round(price * (1 + take_pct)),
         "max_days": max_days,
         "high_vol": bool(hv), "dip": bool(dp), "index_dip": bool(xd), "inverse": bool(inv), "index": bool(C.index_etf(code, p)),
@@ -132,9 +134,13 @@ def plan_sell(code, conf, price, account, p=None, rule_exit=False):
     hold = not rule_exit and have and C.dip_held(code)   # 11-06 급락일 예외 매수분은 규칙 매도만 (반등을 기다리는 매수라 확신도로 중간에 팔지 않음)
     if hold:
         qty = 0
+    wait = not rule_exit and have and C.etf_wait(code, p)   # 11-06 KODEX 200 판단 매도도 15:00 이후만
+    if wait:
+        qty = 0
     return {"side": "매도", "code": code, "qty": qty, "price": price, "amount": qty * price, "held_qty": have,
             "confidence": conf, "partial": part, "rule_exit": rule_exit,
-            "limited_by": ("급락일 예외 매수분 (익절·손절·보유일 규칙 매도만)" if hold
+            "limited_by": (f"{wait} 이후에만 판단 매도" if wait
+                           else "급락일 예외 매수분 (익절·손절·보유일 규칙 매도만)" if hold
                            else "오늘 이미 분할 매도함 (나머지는 확신도 %.2f 이상이거나 손절·익절·보유일 때 전량)" % p["decision"]["partial_sell"]["full_at"] if again
                            else "분할 매도 (확신도 %.2f < 전량 기준 %.2f)" % (conf, p["decision"]["partial_sell"]["full_at"]) if part
                            else "보유 수량" if have else "보유하지 않은 종목")}

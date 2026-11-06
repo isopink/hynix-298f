@@ -221,6 +221,17 @@ def dip_held(code):
     return bool(((read_json(POSITIONS, {}) or {}).get(code) or {}).get("index_dip"))
 
 
+def etf_wait(code, p=None, t=None):
+    """11-06 S.Lee: KODEX 200 은 trade_from(15:00) 이후에만 매수·판단 매도. 아직이면 그 시각 문자열, 아니면 None."""
+    f = (index_etf(code, p or params()) or {}).get("trade_from")
+    return f if f and (t or now()).strftime("%H:%M") < f else None
+
+
+def no_stop(code, p=None):
+    """11-06 S.Lee: KODEX 200 은 손절가 없음 (1분 감시가 떨어졌다고 팔지 않음, 매도는 토론·익절·보유일로)."""
+    return bool((index_etf(code, p or params()) or {}).get("no_stop"))
+
+
 def inverse_held(account, p=None):
     """인버스를 들고 있는지 (11-06: 급락일 KODEX 200 매수 전 인버스 전량 매도)."""
     p = p or params()
@@ -294,7 +305,7 @@ def position_meta(holdings, p=None):
             if m.get("index_dip"):   # 급락일 예외로 산 지수 ETF 는 익절 폭·보유일·손절 폭이 따로
                 tp, md = dip_exit(h["code"], p, tp, md)
                 sl = dip_stop(h["code"], p, sl)
-            meta[h["code"]] = {**m, "stop": round(h["avg_price"] * (1 + sl)), "take": math.ceil(h["avg_price"] * (1 + tp) - 1e-9), "max_days": md}
+            meta[h["code"]] = {**m, "stop": None if no_stop(h["code"], p) else round(h["avg_price"] * (1 + sl)), "take": math.ceil(h["avg_price"] * (1 + tp) - 1e-9), "max_days": md}
     return meta
 
 

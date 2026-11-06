@@ -111,10 +111,12 @@ def get_briefing() -> str:
                    f"단 인버스가 오늘 {inv.get('no_chase_change', 0):+.0%} 이상 오른 날(시장 급락)은 신규 매수 금지 (코드가 강제)")
     if (ix := p.get("index")) and ix.get("enabled"):
         names = ", ".join(f"{n}({c})" for c, n in ix["codes"].items())
-        ctx.append(f"- 📈지수 {names}: 시장을 그대로 따라가는 ETF (인버스와 짝). 후보에 매일 따로 들어옴. 오늘 국면이 {'·'.join(ix['regimes'])}일 때만 매수 가능, "
+        ctx.append(f"- 📈지수 {names}: 시장을 그대로 따라가는 ETF (인버스와 짝). 후보에 매일 따로 들어옴. 국면 제한 없이 매수 측 ⇄ 매도 측 토론과 확신도 기준으로 결정 (11-06), "
+                   f"매수·판단 매도는 {ix.get('trade_from', '09:00')} 이후 회차에서만 (그 전엔 plan_order 가 qty 0 → record_decision 보유/관망). "
+                   f"{'손절가 없음: 떨어졌다는 이유로 rule_exit 매도하지 말 것. ' if ix.get('no_stop') else ''}"
                    f"주식 비중 상한 안에서 종목당 {ix.get('weight_cap', 0.1):.0%}까지(확신도에 따라), 하루 {ix.get('max_buys_per_day', '-')}번만 매수 (코드가 강제). "
                    f"인버스와 같이 짧게 치고 빠짐: 순익 {ix['take_profit_net_pct']:+.1%}(평단 대비 {C.gross_take(ix['take_profit_net_pct'], p, ix.get('sell_tax_rate')):+.2%})에 익절 · 최대 보유 {ix.get('max_hold_days', p['decision']['max_hold_days'])}거래일. "
-                   f"보유 중인데 국면이 하락으로 바뀌면 매도 확신도를 높게 볼 것")
+                   f"bull = 상승·반등 근거, bear = 하락 지속 근거 (시장 방향으로 토론)")
         if (xd := ix.get("dip_buy")) and xd.get("enabled"):
             ctx.append(f"  - 📈급락일 예외: 오늘 지수 ETF 가 {xd['drop']:.0%} 이하로 빠졌으면 {xd['from']} 이후 회차에는 하락 국면이어도 매수 가능 (코드가 확인). "
                        f"**확신도 기준 없이 반드시 매수** (plan_order → place_order). 크기 = 하락 폭별 최대 " + " · ".join(f"{a:.0%} 이하 {w:.0%}" for a, w in xd['tiers']) + f" × 확신도 비례(보정 후 {p['decision']['full_size_confidence']:.2f} 이상이면 전부). 이렇게 산 건 수수료 뺀 순익 {xd.get('take_profit_net_pct', 0):+.0%}에 익절, 최대 보유 {xd['max_hold_days']}거래일. "

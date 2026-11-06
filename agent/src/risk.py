@@ -75,6 +75,8 @@ def check(order, account, price, p=None, r=None):
         if etf:   # 시장 ETF(인버스·지수): 정해진 국면에서만, 하루 정해진 횟수만
             if regime not in etf["regimes"] and not C.index_dip(code, order.get("today_change"), p):   # 급락일 지수 예외는 국면 무관
                 bad.append((f"{label} 국면", f"오늘 국면 {regime} · {label}는 {'·'.join(etf['regimes'])} 국면에서만 매수"))
+            if (f := C.etf_wait(code, p)):   # 11-06 S.Lee
+                bad.append((f"{label} 시간", f"{label}는 {f} 이후에만 매수"))
             if (n := C.buys_today(code)) >= etf.get("max_buys_per_day", 99):
                 bad.append((f"{label} 하루 매수", f"오늘 이미 {n}번 매수 · {label}는 하루 {etf['max_buys_per_day']}번만"))
         if C.inverse_chase(code, order.get("today_change"), p):   # 11-06 S.Lee: 시장 급락일엔 인버스 신규 매수 금지
@@ -108,6 +110,8 @@ def check(order, account, price, p=None, r=None):
             bad.append(("보유 수량", f"매도 {qty}주 > 보유 {have}주 (공매도 불가)"))
         if run_mode != "exit" and conf < p["decision"]["sell_min_confidence"] and not order.get("rule_exit"):
             bad.append(("확신도", f"{conf:.2f} < 매도 기준 {p['decision']['sell_min_confidence']:.2f}"))
+        if run_mode != "exit" and not order.get("rule_exit") and (f := C.etf_wait(code, p)):   # 11-06 S.Lee: KODEX 200 판단 매도도 15:00 이후만
+            bad.append(("지수 시간", f"KODEX 200 판단 매도는 {f} 이후에만"))
         if run_mode != "exit" and not order.get("rule_exit") and C.dip_held(code):   # 11-06 급락일 예외 매수분은 판단 매도 금지
             bad.append(("급락일 예외 보유", "급락일 예외로 산 지수 ETF 는 익절·손절·보유일 규칙 매도만"))
         cap_q, part = sizing.sell_qty(have, conf, p, order.get("rule_exit") or run_mode == "exit")
