@@ -588,7 +588,7 @@ def test_index_dip_buy_in_falling_market():
         open(C.JOURNAL, "w").close()   # 국면 기록은 고정한 시계로 남겨야 '오늘 국면'으로 읽힘 (실제 날짜가 바뀌면 깨지던 것)
         C.journal("regime", regime="하락", cap=P["regime_cap"]["하락"])
         plan = sizing.plan_buy("069500", 0.85, 10_000, acc(), P, R, today_change=-0.052)
-        assert plan["qty"] > 0 and plan["index_dip"] and plan["target_weight"] == 0.35 and plan["max_days"] == 5, plan
+        assert plan["qty"] > 0 and plan["index_dip"] and plan["target_weight"] == 0.15 and plan["max_days"] == 5, plan
         assert sizing.plan_buy("069500", 0.65, 10_000, acc(), P, R, today_change=-0.01)["qty"] == 0
         chk = lambda chg: [x for x, _ in risk.check({"code": "069500", "side": "매수", "qty": plan["qty"], "confidence": 0.85, "today_change": chg}, acc(), 10_000, P, R)]
         assert "지수 국면" not in chk(-0.052) and "지수 국면" in chk(-0.01)
@@ -611,21 +611,21 @@ def test_index_dip_tiers_and_limit_exception():
     """급락일 지수 예외: −3% 15% · −4% 25% · −5% 35%, 이 매수만 종목당 20%·1회 주문 한도 예외."""
     at = datetime(2026, 11, 5, 15, 15, tzinfo=C.KST)
     w = lambda chg: (C.index_dip("069500", chg, P, at) or {}).get("weight")
-    assert (w(-0.031), w(-0.045), w(-0.052), w(-0.02)) == (0.15, 0.25, 0.35, None)
+    assert (w(-0.031), w(-0.045), w(-0.052), w(-0.02)) == (0.05, 0.10, 0.15, None)
     open(C.JOURNAL, "w").close()
     C.journal("regime", regime="하락", cap=P["regime_cap"]["하락"])
     real = C.now
     try:
         C.now = lambda: at
         plan = sizing.plan_buy("069500", 0.85, 10_000, acc(), P, R, today_change=-0.052)
-        assert plan["qty"] * 10_000 > 50_000_000 * 0.30, plan
+        assert plan["qty"] * 10_000 > 50_000_000 * 0.12, plan   # 15%
         low = sizing.plan_buy("069500", 0.40, 10_000, acc(), P, R, today_change=-0.052)
-        assert low["qty"] > 0 and abs(low["target_weight"] - 0.35 * 0.40 / 0.80) < 1e-9, low   # 확신도 낮아도 매수, 크기만 비례
+        assert low["qty"] > 0 and abs(low["target_weight"] - 0.15 * 0.40 / 0.80) < 1e-9, low   # 확신도 낮아도 매수, 크기만 비례
         assert "확신도" not in [x for x, _ in risk.check({"code": "069500", "side": "매수", "qty": low["qty"], "confidence": 0.40, "today_change": -0.052}, acc(), 10_000, P, R)]                       # 35% (20%·1,000만 원 한도 예외)
         ok = [x for x, _ in risk.check({"code": "069500", "side": "매수", "qty": plan["qty"], "confidence": 0.85, "today_change": -0.052}, acc(), 10_000, P, R)]
         assert "종목 한도" not in ok and "1회 주문 한도" not in ok, ok
         big = [x for x, _ in risk.check({"code": "069500", "side": "매수", "qty": plan["qty"], "confidence": 0.85, "today_change": -0.031}, acc(), 10_000, P, R)]
-        assert "종목 한도" in big                                                     # −3% 날엔 같은 수량이 한도 초과
+        assert "수량 계산 초과" in big   # −3% 날(5%)엔 같은 수량이 계산값 초과
     finally:
         C.now = real
 
