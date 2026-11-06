@@ -708,6 +708,24 @@ def test_index_dip_ignores_daily_loss_limit():
     finally:
         C.now, risk.daily_pnl = real, real_dp
 
+def test_index_dip_requires_selling_inverse_first():
+    """11-06 S.Lee: 인버스를 들고 있으면 급락일 KODEX 200 은 0주·Hook 차단. 인버스를 팔고 나면 정상."""
+    at = datetime(2026, 11, 6, 15, 15, tzinfo=C.KST)
+    real = C.now
+    try:
+        C.now = lambda: at
+        open(C.JOURNAL, "w").close()
+        C.journal("regime", regime="하락", cap=P["regime_cap"]["하락"])
+        a = acc(cash=45_000_000, holdings=[pos("114800", 1000, 5_000)])
+        plan = sizing.plan_buy("069500", 0.85, 10_000, a, P, R, today_change=-0.06)
+        assert plan["qty"] == 0 and plan["limited_by"] == "인버스 먼저 전량 매도", plan
+        bad = [x for x, _ in risk.check({"code": "069500", "side": "매수", "qty": 100, "confidence": 0.85, "today_change": -0.06}, a, 10_000, P, R)]
+        assert "인버스 보유" in bad, bad
+        plan = sizing.plan_buy("069500", 0.85, 10_000, acc(), P, R, today_change=-0.06)
+        assert plan["qty"] > 0, plan
+    finally:
+        C.now = real
+
 def test_partial_sell_once_a_day():
     """11-05 HMM: 15분마다 절반씩 팔던 문제 → 분할은 하루 1번, 그 뒤엔 0.65 이상·규칙 매도만 전량."""
     a = acc(holdings=[pos("011200", 111, 10_000)])

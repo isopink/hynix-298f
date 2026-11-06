@@ -215,6 +215,12 @@ def dip_held(code):
     return bool(((read_json(POSITIONS, {}) or {}).get(code) or {}).get("index_dip"))
 
 
+def inverse_held(account, p=None):
+    """인버스를 들고 있는지 (11-06: 급락일 KODEX 200 매수 전 인버스 전량 매도)."""
+    p = p or params()
+    return any(inverse(h["code"], p) and h.get("qty", 0) > 0 for h in account.get("holdings", []))
+
+
 def dip_stop(code, p=None, sl=None):
     """급락일 예외로 산 지수 ETF 의 손절 폭 (11-06 S.Lee: 반도체 −12% 다음날 시가 −8.6% → −7% 손절이 바닥에서 걸려 −15% 로 넓힘). 설정이 없으면 받은 값."""
     dd = ((index_etf(code, p or params()) or {}).get("dip_buy")) or {}

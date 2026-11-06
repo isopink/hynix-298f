@@ -55,6 +55,7 @@ def plan_buy(code, conf, price, account, p=None, r=None, regime=None, today_chan
     if dp and conf >= C.buy_threshold(p) - 1e-9:   # 📉급락 반등 후보: 매수 기준을 넘으면 정해진 크기(7%)로 (소액 매수 구간은 그대로 작게)
         w = min(dp["weight"], r["max_weight_per_stock"])
     limits = {
+        "인버스 먼저 전량 매도": 0 if xd and C.inverse_held(account, p) else float("inf"),   # 11-06 S.Lee: 반대 방향을 함께 들지 않음
         "확신도 비중": total * w * C.week_factor(p) - held_value,
         "국면 상한 여유": total * cap - stock_value,
         "최소 현금 유지": cash - total * r["min_cash_ratio"],

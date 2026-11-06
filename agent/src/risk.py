@@ -86,6 +86,8 @@ def check(order, account, price, p=None, r=None):
                 bad.append(("추가 매수", f"현재가 {price:,.0f}원 < 평단 {held['avg_price']:,.0f}원, 손실 중 물타기 금지"))
             elif conf < C.buy_threshold(p) - 1e-9 and not xd:
                 bad.append(("추가 매수", f"확신도 {conf:.2f} < 매수 기준 {C.buy_threshold(p):.2f}, 소액 매수 구간으로는 추가 매수 안 함"))
+        if xd and C.inverse_held(account, p):   # 11-06 S.Lee: 급락일 KODEX 200 매수 전 인버스 전량 매도
+            bad.append(("인버스 보유", "급락일 KODEX 200 매수 전에 KODEX 인버스를 먼저 전량 매도"))
         inv = C.inverse(code, p)
         if inv:   # 인버스: 주식 상한 대신 인버스 한도
             inv_after = sum(h["value"] for h in account["holdings"] if C.inverse(h["code"], p) and h["code"] != code) + pos_after
