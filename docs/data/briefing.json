@@ -81,7 +81,7 @@
     ]
   },
   "intraday": {
-    "time": "12:45",
+    "time": "13:00",
     "pool": 240,
     "analyzed_new": 2,
     "passed": 19,
@@ -116,11 +116,11 @@
           "risk": false
         }
       ],
-      "price": 61700,
-      "chg": -0.0404,
-      "activity": 1.11,
-      "foreign_today": 8206100000,
-      "inst_today": 1974400000,
+      "price": 61500,
+      "chg": -0.0435,
+      "activity": 1.06,
+      "foreign_today": 8179500000,
+      "inst_today": 1968000000,
       "exchange": "KOSPI"
     },
     {
@@ -165,7 +165,7 @@
       "vol20": 0.388,
       "foreign_net": -26939614825,
       "inst_net": 50135848275,
-      "score": 0.688,
+      "score": 0.677,
       "news": [
         {
           "date": "11-06",
@@ -215,11 +215,11 @@
           "risk": false
         }
       ],
-      "price": 355500,
-      "chg": -0.0234,
-      "activity": 0.95,
+      "price": 356000,
+      "chg": -0.022,
+      "activity": 0.92,
       "foreign_today": 0,
-      "inst_today": 1422000000,
+      "inst_today": 1424000000,
       "exchange": "KOSPI"
     },
     {
@@ -284,17 +284,17 @@
       "news": [
         {
           "date": "11-06",
+          "title": "코웨이, 3Q 매출액 1.4조...전년동기比 13.7%↑",
+          "risk": false
+        },
+        {
+          "date": "11-06",
           "title": "[2026 3분기 실적] 코웨이, 영업익 2608억…전년비 7.3% ↑",
           "risk": false
         },
         {
           "date": "11-06",
           "title": "코웨이, 분기 최대 영업익에도 순이익 감소",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "코웨이, 3분기 영업이익 2608억원…전년 대비 7.3% 증가",
           "risk": false
         }
       ],
@@ -507,10 +507,10 @@
           "risk": false
         }
       ],
-      "price": 6800,
-      "chg": 0.0303,
-      "activity": 7.32,
-      "foreign_today": 231200000,
+      "price": 6840,
+      "chg": 0.0364,
+      "activity": 6.97,
+      "foreign_today": 232560000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -524,7 +524,7 @@
       "vol20": 1.285,
       "foreign_net": 18241113425,
       "inst_net": 7570233575,
-      "score": 0.806,
+      "score": 0.828,
       "news": [
         {
           "date": "11-06",
@@ -542,10 +542,10 @@
           "risk": false
         }
       ],
-      "price": 28150,
-      "chg": 0.0445,
-      "activity": 2.39,
-      "foreign_today": 1041550000,
+      "price": 28400,
+      "chg": 0.0538,
+      "activity": 2.3,
+      "foreign_today": 1050800000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
