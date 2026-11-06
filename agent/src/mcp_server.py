@@ -236,6 +236,7 @@ def place_order(code: str, side: str, qty: int, confidence: float, bull: str, be
         sl, tp, md = C.exit_levels(code)   # 고변동 종목은 손절·익절 폭이 넓음
         if C.index_dip(code, qi["change"]):   # 급락일 지수 예외로 산 건 익절 폭·보유일이 따로
             (tp, md), m["index_dip"] = C.dip_exit(code, None, tp, md), True
+            sl = C.dip_stop(code, None, sl)
         m.update(stop=round(res["price"] * (1 + sl)), take=round(res["price"] * (1 + tp)), max_days=md)
         meta[code] = m
     elif not held:

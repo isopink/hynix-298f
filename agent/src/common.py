@@ -215,6 +215,12 @@ def dip_held(code):
     return bool(((read_json(POSITIONS, {}) or {}).get(code) or {}).get("index_dip"))
 
 
+def dip_stop(code, p=None, sl=None):
+    """급락일 예외로 산 지수 ETF 의 손절 폭 (11-06 S.Lee: 반도체 −12% 다음날 시가 −8.6% → −7% 손절이 바닥에서 걸려 −15% 로 넓힘). 설정이 없으면 받은 값."""
+    dd = ((index_etf(code, p or params()) or {}).get("dip_buy")) or {}
+    return dd.get("stop_loss_pct", sl)
+
+
 def dip_exit(code, p=None, tp=None, md=None):
     """급락일 예외로 산 지수 ETF 의 (익절 %, 최대 보유일). 설정이 없으면 받은 값 그대로."""
     p = p or params()
@@ -273,8 +279,9 @@ def position_meta(holdings, p=None):
         m = meta.get(h["code"])
         if m and h.get("avg_price"):
             sl, tp, md = exit_levels(h["code"], p)
-            if m.get("index_dip"):   # 급락일 예외로 산 지수 ETF 는 익절 폭·보유일이 따로
+            if m.get("index_dip"):   # 급락일 예외로 산 지수 ETF 는 익절 폭·보유일·손절 폭이 따로
                 tp, md = dip_exit(h["code"], p, tp, md)
+                sl = dip_stop(h["code"], p, sl)
             meta[h["code"]] = {**m, "stop": round(h["avg_price"] * (1 + sl)), "take": math.ceil(h["avg_price"] * (1 + tp) - 1e-9), "max_days": md}
     return meta
 

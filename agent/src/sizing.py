@@ -92,6 +92,7 @@ def plan_buy(code, conf, price, account, p=None, r=None, regime=None, today_chan
     stop_pct, take_pct, max_days = C.exit_levels(code, p)
     if xd:   # 급락일 지수 예외: 익절 순익 +3% · 최대 5일
         take_pct, max_days = C.dip_exit(code, p, take_pct, max_days)
+        stop_pct = C.dip_stop(code, p, stop_pct)
     return {
         "side": "매수", "code": code, "qty": qty, "price": price, "amount": qty * price,
         "confidence": conf, "target_weight": round(w, 4), "regime": regime, "equity_cap": cap,
