@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "10:30",
-    "pool": 219,
-    "analyzed_new": 30,
-    "passed": 12,
+    "time": "10:45",
+    "pool": 220,
+    "analyzed_new": 27,
+    "passed": 11,
     "kept_prep": false
   },
   "candidates": [
@@ -116,10 +116,10 @@
           "risk": false
         }
       ],
-      "price": 59800,
-      "chg": -0.07,
-      "activity": 1.72,
-      "foreign_today": 3468400000,
+      "price": 60700,
+      "chg": -0.056,
+      "activity": 1.59,
+      "foreign_today": 3520600000,
       "inst_today": 0,
       "exchange": "KOSPI"
     },
@@ -133,49 +133,27 @@
       "vol20": 0.357,
       "foreign_net": -10341050025,
       "inst_net": 34011615850,
-      "score": 0.872,
+      "score": 0.841,
       "news": [
         {
           "date": "11-06",
-          "title": "우상호 지사, 원주에 KT·드론기업 등 미래산업 거점으로",
+          "title": "KT, 부산불꽃축제 통신망 특별 관리…임시기지국 19곳 운영",
           "risk": false
         },
         {
           "date": "11-06",
-          "title": "KT, 부산불꽃축제 특별 소통 대책 가동…'통신·안전 지원'",
+          "title": "선발 이후 박영현까지 가는 길 '험난'…KT, 불펜 불안에 '고민'[KS]",
           "risk": false
         },
         {
           "date": "11-06",
-          "title": "[양자보안특허]③ 한국 양자보안 특허 어디까지 왔나…SKT·KT·삼성·LG 동...",
+          "title": "임원인사 앞둔 KT그룹, 자회사 스카이라이프에 또 홍보수석 낙하산 올까...",
           "risk": false
         }
       ],
       "foreign_today": 1236000000,
       "inst_today": 360500000,
       "exchange": "KOSPI"
-    },
-    {
-      "code": "035900",
-      "name": "JYP Ent.",
-      "close": 39500,
-      "ret5": 0.0233,
-      "ret20": 0.0207,
-      "rsi14": 52.6,
-      "vol20": 0.784,
-      "foreign_net": 5263187625,
-      "inst_net": 4035326500,
-      "score": 0.745,
-      "news": [
-        {
-          "date": "11-05",
-          "title": "JYP Ent., 11일 오후 4시 3분기 실적 컨퍼런스콜",
-          "risk": false
-        }
-      ],
-      "foreign_today": 1066500000,
-      "inst_today": 0,
-      "exchange": "KOSDAQ"
     },
     {
       "code": "316140",
@@ -187,7 +165,7 @@
       "vol20": 0.346,
       "foreign_net": -77847544350,
       "inst_net": 94902336075,
-      "score": 0.596,
+      "score": 0.591,
       "news": [],
       "foreign_today": 0,
       "inst_today": 482250000,
@@ -203,7 +181,7 @@
       "vol20": 0.26,
       "foreign_net": 9727405555,
       "inst_net": 4610992475,
-      "score": 0.574,
+      "score": 0.568,
       "news": [
         {
           "date": "11-06",
@@ -235,7 +213,7 @@
       "vol20": 0.388,
       "foreign_net": -26939614825,
       "inst_net": 50135848275,
-      "score": 0.511,
+      "score": 0.5,
       "news": [
         {
           "date": "11-06",
@@ -257,7 +235,7 @@
       "vol20": 0.418,
       "foreign_net": 8185349000,
       "inst_net": -8063610575,
-      "score": 0.468,
+      "score": 0.477,
       "news": [
         {
           "date": "11-06",
@@ -289,7 +267,7 @@
       "vol20": 0.394,
       "foreign_net": 1772447860,
       "inst_net": 2438029420,
-      "score": 0.298,
+      "score": 0.295,
       "news": [
         {
           "date": "11-06",
@@ -311,7 +289,7 @@
       "vol20": 1.372,
       "foreign_net": -1460741580,
       "inst_net": 2625158595,
-      "score": 0.787,
+      "score": 0.795,
       "news": [
         {
           "date": "11-05",
@@ -333,7 +311,7 @@
       "vol20": 1.574,
       "foreign_net": -7062631750,
       "inst_net": -4827086750,
-      "score": 0.766,
+      "score": 0.773,
       "news": [
         {
           "date": "11-05",
@@ -365,7 +343,7 @@
       "vol20": 1.438,
       "foreign_net": -3522036175,
       "inst_net": -2855454100,
-      "score": 0.404,
+      "score": 0.409,
       "news": [
         {
           "date": "11-03",
