@@ -81,48 +81,13 @@
     ]
   },
   "intraday": {
-    "time": "14:00",
-    "pool": 243,
-    "analyzed_new": 2,
+    "time": "14:15",
+    "pool": 242,
+    "analyzed_new": 1,
     "passed": 20,
     "kept_prep": false
   },
   "candidates": [
-    {
-      "code": "028050",
-      "name": "삼성E&A",
-      "close": 64800,
-      "ret5": 0.0351,
-      "ret20": 0.3292,
-      "rsi14": 67.2,
-      "vol20": 0.931,
-      "foreign_net": -41290385000,
-      "inst_net": 41663565700,
-      "score": 1.0,
-      "news": [
-        {
-          "date": "11-06",
-          "title": "[건설 CEO 성적표] [삼성E&A] 남궁홍 대표, 연임 첫해 수주·영업익 '결실...",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "삼성E&A, '아디펙 2026' 참가…'임팩트 챔피언' 선정",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "삼성E&A, 아부다비 '아디펙 2026'서 에너지 기술 선보여…'임팩트 챔피언...",
-          "risk": false
-        }
-      ],
-      "price": 61900,
-      "chg": -0.0373,
-      "activity": 0.99,
-      "foreign_today": 6066200000,
-      "inst_today": 8170800000,
-      "exchange": "KOSPI"
-    },
     {
       "code": "017670",
       "name": "SK텔레콤",
@@ -146,11 +111,46 @@
           "risk": false
         }
       ],
-      "price": 78500,
-      "chg": 0.0129,
-      "activity": 1.44,
-      "foreign_today": 4474500000,
-      "inst_today": 7928500000,
+      "price": 78100,
+      "chg": 0.0077,
+      "activity": 1.63,
+      "foreign_today": 4451700000,
+      "inst_today": 7888100000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "028050",
+      "name": "삼성E&A",
+      "close": 64800,
+      "ret5": 0.0351,
+      "ret20": 0.3292,
+      "rsi14": 67.2,
+      "vol20": 0.931,
+      "foreign_net": -41290385000,
+      "inst_net": 41663565700,
+      "score": 0.975,
+      "news": [
+        {
+          "date": "11-06",
+          "title": "[건설 CEO 성적표] [삼성E&A] 남궁홍 대표, 연임 첫해 수주·영업익 '결실...",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "삼성E&A, '아디펙 2026' 참가…'임팩트 챔피언' 선정",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "삼성E&A, 아부다비 '아디펙 2026'서 에너지 기술 선보여…'임팩트 챔피언...",
+          "risk": false
+        }
+      ],
+      "price": 61300,
+      "chg": -0.0467,
+      "activity": 0.96,
+      "foreign_today": 6007400000,
+      "inst_today": 8091600000,
       "exchange": "KOSPI"
     },
     {
@@ -163,8 +163,13 @@
       "vol20": 0.357,
       "foreign_net": -10341050025,
       "inst_net": 34011615850,
-      "score": 0.916,
+      "score": 0.901,
       "news": [
+        {
+          "date": "11-06",
+          "title": "[AI프리뷰] 6일 대구 삼성-KT KS 3차전, '가을 무패' 소형준과 'PO MVP' 후...",
+          "risk": false
+        },
         {
           "date": "11-06",
           "title": "‘11연승 끝’ 41일 만에 패배 충격, KT ‘선발- 박영현-힐리어드만 야구...",
@@ -173,11 +178,6 @@
         {
           "date": "11-06",
           "title": "KT, 불꽃축제 통신망을 안전 인프라로… 5G 기술력 시험대",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "KT, 광안리에 임시기지국 19곳 설치",
           "risk": false
         }
       ],
@@ -195,7 +195,7 @@
       "vol20": 0.388,
       "foreign_net": -26939614825,
       "inst_net": 50135848275,
-      "score": 0.88,
+      "score": 0.864,
       "news": [
         {
           "date": "11-06",
@@ -227,7 +227,7 @@
       "vol20": 0.568,
       "foreign_net": -13011050200,
       "inst_net": 56816398150,
-      "score": 0.831,
+      "score": 0.827,
       "news": [
         {
           "date": "11-06",
@@ -250,6 +250,41 @@
       "exchange": "KOSPI"
     },
     {
+      "code": "064400",
+      "name": "LG씨엔에스",
+      "close": 72800,
+      "ret5": -0.0643,
+      "ret20": 0.052,
+      "rsi14": 50.6,
+      "vol20": 0.797,
+      "foreign_net": -21698978600,
+      "inst_net": 42743801650,
+      "score": 0.778,
+      "news": [
+        {
+          "date": "11-04",
+          "title": "LG씨엔에스 7만3600원 약보합…AI·클라우드 성장성 점검",
+          "risk": false
+        },
+        {
+          "date": "11-04",
+          "title": "LG씨엔에스, 교보증권 주관 4일 기관 IR",
+          "risk": false
+        },
+        {
+          "date": "11-03",
+          "title": "LG씨엔에스 주가, 11월 3일 애프터마켓 73,900원 5.26% 하락",
+          "risk": false
+        }
+      ],
+      "price": 75100,
+      "chg": 0.0344,
+      "activity": 1.1,
+      "foreign_today": 0,
+      "inst_today": 2403200000,
+      "exchange": "KOSPI"
+    },
+    {
       "code": "035720",
       "name": "카카오",
       "close": 32400,
@@ -259,7 +294,7 @@
       "vol20": 0.461,
       "foreign_net": 30377634525,
       "inst_net": 29272324000,
-      "score": 0.783,
+      "score": 0.728,
       "news": [
         {
           "date": "11-06",
@@ -277,11 +312,11 @@
           "risk": false
         }
       ],
-      "price": 32950,
-      "chg": 0.0233,
-      "activity": 2.23,
+      "price": 32550,
+      "chg": 0.0109,
+      "activity": 2.24,
       "foreign_today": 0,
-      "inst_today": 1186200000,
+      "inst_today": 1171800000,
       "exchange": "KOSPI"
     },
     {
@@ -294,7 +329,7 @@
       "vol20": 0.405,
       "foreign_net": -1285190625,
       "inst_net": 2848469450,
-      "score": 0.735,
+      "score": 0.704,
       "news": [],
       "foreign_today": 0,
       "inst_today": 1629000000,
@@ -310,7 +345,7 @@
       "vol20": 0.346,
       "foreign_net": -77847544350,
       "inst_net": 94902336075,
-      "score": 0.675,
+      "score": 0.642,
       "news": [],
       "foreign_today": 0,
       "inst_today": 4822500000,
@@ -326,7 +361,7 @@
       "vol20": 0.26,
       "foreign_net": 9727405555,
       "inst_net": 4610992475,
-      "score": 0.627,
+      "score": 0.593,
       "news": [
         {
           "date": "11-06",
@@ -349,6 +384,36 @@
       "exchange": "KOSPI"
     },
     {
+      "code": "112610",
+      "name": "씨에스윈드",
+      "close": 47500,
+      "ret5": 0.2402,
+      "ret20": -0.1652,
+      "rsi14": 53.0,
+      "vol20": 0.837,
+      "foreign_net": -18097403575,
+      "inst_net": 15329505750,
+      "score": 0.543,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "[특징주] 씨에스윈드, 미국 베스타스와 797억원 공급계약",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "씨에스윈드, 797억원 규모 미국 풍력타워 공급 계약 체결",
+          "risk": false
+        }
+      ],
+      "price": 50300,
+      "chg": 0.0601,
+      "activity": 2.32,
+      "foreign_today": 0,
+      "inst_today": 754500000,
+      "exchange": "KOSPI"
+    },
+    {
       "code": "161390",
       "name": "한국타이어앤테크놀로지",
       "close": 64100,
@@ -358,8 +423,19 @@
       "vol20": 0.487,
       "foreign_net": -2748968800,
       "inst_net": 14572441050,
-      "score": 0.518,
-      "news": [],
+      "score": 0.506,
+      "news": [
+        {
+          "date": "11-06",
+          "title": "한국타이어앤테크놀로지 3분기 영업이익 5988억, 전년比 2.2%↑…매출 1....",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "한국타이어앤테크놀로지, 3분기 영업익 5988억…전년비 2.2% ↑",
+          "risk": false
+        }
+      ],
       "foreign_today": 0,
       "inst_today": 576900000,
       "exchange": "KOSPI"
@@ -374,7 +450,7 @@
       "vol20": 0.619,
       "foreign_net": -329359625,
       "inst_net": 18073219625,
-      "score": 0.506,
+      "score": 0.481,
       "news": [
         {
           "date": "11-06",
@@ -406,7 +482,7 @@
       "vol20": 0.602,
       "foreign_net": 8624573600,
       "inst_net": 7644551450,
-      "score": 0.494,
+      "score": 0.481,
       "news": [
         {
           "date": "11-03",
@@ -419,38 +495,6 @@
       "exchange": "KOSPI"
     },
     {
-      "code": "064400",
-      "name": "LG씨엔에스",
-      "close": 72800,
-      "ret5": -0.0643,
-      "ret20": 0.052,
-      "rsi14": 50.6,
-      "vol20": 0.797,
-      "foreign_net": -21698978600,
-      "inst_net": 42743801650,
-      "score": 0.458,
-      "news": [
-        {
-          "date": "11-04",
-          "title": "LG씨엔에스 7만3600원 약보합…AI·클라우드 성장성 점검",
-          "risk": false
-        },
-        {
-          "date": "11-04",
-          "title": "LG씨엔에스, 교보증권 주관 4일 기관 IR",
-          "risk": false
-        },
-        {
-          "date": "11-03",
-          "title": "LG씨엔에스 주가, 11월 3일 애프터마켓 73,900원 5.26% 하락",
-          "risk": false
-        }
-      ],
-      "foreign_today": 0,
-      "inst_today": 2329600000,
-      "exchange": "KOSPI"
-    },
-    {
       "code": "000100",
       "name": "유한양행",
       "close": 82000,
@@ -460,53 +504,26 @@
       "vol20": 0.558,
       "foreign_net": -5841206300,
       "inst_net": 16866173400,
-      "score": 0.422,
+      "score": 0.383,
       "news": [
         {
           "date": "11-06",
-          "title": "유한양행, 헌혈로 혈액 수급난 해소 동참…소아암 환아 지원",
+          "title": "유한양행, 전 사업장서 하반기 헌혈 캠페인…소아암 환아에 헌혈증 기부",
           "risk": false
         },
         {
           "date": "11-06",
-          "title": "[제약 레이더] 한미약품, 바이오벤처 투자 연결…유한양행 헌혈·동아제...",
+          "title": "유한양행, 하반기 헌혈 캠페인 실시…임직원 60명 참여",
           "risk": false
         },
         {
           "date": "11-06",
-          "title": "유한양행, 러닝·구강관리 신제품 출시…'버들장터' 최대 63% 할인",
+          "title": "유한양행, 버들장터서 신제품 최대 63% 할인…10일까지 기획전",
           "risk": false
         }
       ],
       "foreign_today": 0,
       "inst_today": 738000000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "112610",
-      "name": "씨에스윈드",
-      "close": 47500,
-      "ret5": 0.2402,
-      "ret20": -0.1652,
-      "rsi14": 53.0,
-      "vol20": 0.837,
-      "foreign_net": -18097403575,
-      "inst_net": 15329505750,
-      "score": 0.072,
-      "news": [
-        {
-          "date": "11-05",
-          "title": "[특징주] 씨에스윈드, 미국 베스타스와 797억원 공급계약",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "씨에스윈드, 797억원 규모 미국 풍력타워 공급 계약 체결",
-          "risk": false
-        }
-      ],
-      "foreign_today": 0,
-      "inst_today": 712500000,
       "exchange": "KOSPI"
     },
     {
@@ -519,7 +536,7 @@
       "vol20": 1.17,
       "foreign_net": -62911431150,
       "inst_net": 74463643850,
-      "score": 0.916,
+      "score": 0.877,
       "news": [
         {
           "date": "11-05",
@@ -537,11 +554,11 @@
           "risk": false
         }
       ],
-      "price": 209500,
-      "chg": 0.027,
+      "price": 208000,
+      "chg": 0.0196,
       "activity": 1.82,
       "foreign_today": 0,
-      "inst_today": 3352000000,
+      "inst_today": 3328000000,
       "exchange": "KOSPI"
     },
     {
@@ -554,7 +571,7 @@
       "vol20": 1.381,
       "foreign_net": -8283680650,
       "inst_net": 15223649475,
-      "score": 0.855,
+      "score": 0.852,
       "news": [
         {
           "date": "11-06",
@@ -577,36 +594,36 @@
       "exchange": "KOSDAQ"
     },
     {
-      "code": "053800",
-      "name": "안랩",
-      "close": 97500,
-      "ret5": -0.0152,
-      "ret20": 0.2695,
-      "rsi14": 53.8,
-      "vol20": 1.574,
-      "foreign_net": -7062631750,
-      "inst_net": -4827086750,
-      "score": 0.735,
+      "code": "008930",
+      "name": "한미사이언스",
+      "close": 52300,
+      "ret5": 0.2263,
+      "ret20": -0.21,
+      "rsi14": 61.3,
+      "vol20": 1.06,
+      "foreign_net": -2579757825,
+      "inst_net": 18088976450,
+      "score": 0.716,
       "news": [
         {
-          "date": "11-05",
-          "title": "[아시아AI대상]안랩, AI 네이티브 보안으로 위협 분석부터 대응까지",
+          "date": "11-06",
+          "title": "한미사이언스·동국제약·유한양행, 약국·온라인서 건강 관리 수요 공...",
           "risk": false
         },
         {
-          "date": "11-05",
-          "title": "[포토] 안랩, 아시아AI대상 '아시아경제대표상' 수상",
+          "date": "11-06",
+          "title": "한미사이언스, 케어미 영양식 3종으로 확대…약국 유통 강화",
           "risk": false
         },
         {
-          "date": "11-05",
-          "title": "[OT 보안 인사이트 2026] 안랩 \"5차 산업혁명 시대, OT 보안 현 주소는\"",
+          "date": "11-06",
+          "title": "한미사이언스, 약국 판매 영양식 3종으로 확대…식이섬유·고단백 추가",
           "risk": false
         }
       ],
-      "foreign_today": 4680000000,
-      "inst_today": 0,
-      "exchange": "KOSDAQ"
+      "foreign_today": 0,
+      "inst_today": 3713300000,
+      "exchange": "KOSPI"
     },
     {
       "code": "114800",
