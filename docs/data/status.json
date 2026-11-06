@@ -8,12 +8,12 @@
   "sync": {
     "ok": true,
     "error": null,
-    "head": "68df0e9",
-    "checked_at": "2026-11-06 15:23",
+    "head": "49a1dde",
+    "checked_at": "2026-11-06 15:45",
     "rejected": null,
-    "applied_at": "2026-11-06 14:36",
+    "applied_at": "2026-11-06 15:40",
     "catch_up": "2026-11-05 12:30 9576864",
     "decide_schedule": "09:30|15|0005:46",
-    "review_mid": "WED 16:30"
+    "review_mid": "WED,FRI 15:50"
   }
 }
