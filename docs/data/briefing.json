@@ -81,9 +81,9 @@
     ]
   },
   "intraday": {
-    "time": "13:30",
+    "time": "13:45",
     "pool": 242,
-    "analyzed_new": 18,
+    "analyzed_new": 1,
     "passed": 19,
     "kept_prep": false
   },
@@ -116,11 +116,11 @@
           "risk": false
         }
       ],
-      "price": 61100,
-      "chg": -0.0498,
-      "activity": 1.01,
-      "foreign_today": 5987800000,
-      "inst_today": 8065200000,
+      "price": 62100,
+      "chg": -0.0342,
+      "activity": 1.0,
+      "foreign_today": 6085800000,
+      "inst_today": 8197200000,
       "exchange": "KOSPI"
     },
     {
@@ -137,17 +137,17 @@
       "news": [
         {
           "date": "11-06",
+          "title": "‘11연승 끝’ 41일 만에 패배 충격, KT ‘선발- 박영현-힐리어드만 야구...",
+          "risk": false
+        },
+        {
+          "date": "11-06",
           "title": "KT, 불꽃축제 통신망을 안전 인프라로… 5G 기술력 시험대",
           "risk": false
         },
         {
           "date": "11-06",
           "title": "KT, 광안리에 임시기지국 19곳 설치",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "120만명 몰릴 부산불꽃축제, 통신 먹통 막아라…KT '비상체제'",
           "risk": false
         }
       ],
@@ -197,7 +197,7 @@
       "vol20": 0.568,
       "foreign_net": -13011050200,
       "inst_net": 56816398150,
-      "score": 0.837,
+      "score": 0.825,
       "news": [
         {
           "date": "11-06",
@@ -220,22 +220,6 @@
       "exchange": "KOSPI"
     },
     {
-      "code": "175330",
-      "name": "JB금융지주",
-      "close": 27150,
-      "ret5": 0.0462,
-      "ret20": -0.0338,
-      "rsi14": 52.0,
-      "vol20": 0.405,
-      "foreign_net": -1285190625,
-      "inst_net": 2848469450,
-      "score": 0.75,
-      "news": [],
-      "foreign_today": 0,
-      "inst_today": 1629000000,
-      "exchange": "KOSPI"
-    },
-    {
       "code": "035720",
       "name": "카카오",
       "close": 32400,
@@ -245,7 +229,7 @@
       "vol20": 0.461,
       "foreign_net": 30377634525,
       "inst_net": 29272324000,
-      "score": 0.737,
+      "score": 0.75,
       "news": [
         {
           "date": "11-06",
@@ -263,11 +247,27 @@
           "risk": false
         }
       ],
-      "price": 32550,
-      "chg": 0.0109,
+      "price": 32850,
+      "chg": 0.0202,
       "activity": 2.23,
       "foreign_today": 0,
-      "inst_today": 1171800000,
+      "inst_today": 1182600000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "175330",
+      "name": "JB금융지주",
+      "close": 27150,
+      "ret5": 0.0462,
+      "ret20": -0.0338,
+      "rsi14": 52.0,
+      "vol20": 0.405,
+      "foreign_net": -1285190625,
+      "inst_net": 2848469450,
+      "score": 0.737,
+      "news": [],
+      "foreign_today": 0,
+      "inst_today": 1629000000,
       "exchange": "KOSPI"
     },
     {
@@ -280,7 +280,7 @@
       "vol20": 0.346,
       "foreign_net": -77847544350,
       "inst_net": 94902336075,
-      "score": 0.688,
+      "score": 0.675,
       "news": [],
       "foreign_today": 0,
       "inst_today": 4822500000,
@@ -296,7 +296,7 @@
       "vol20": 0.26,
       "foreign_net": 9727405555,
       "inst_net": 4610992475,
-      "score": 0.637,
+      "score": 0.625,
       "news": [
         {
           "date": "11-06",
@@ -328,7 +328,7 @@
       "vol20": 0.487,
       "foreign_net": -2748968800,
       "inst_net": 14572441050,
-      "score": 0.525,
+      "score": 0.512,
       "news": [],
       "foreign_today": 0,
       "inst_today": 576900000,
@@ -344,7 +344,7 @@
       "vol20": 0.619,
       "foreign_net": -329359625,
       "inst_net": 18073219625,
-      "score": 0.512,
+      "score": 0.5,
       "news": [
         {
           "date": "11-06",
@@ -398,7 +398,7 @@
       "vol20": 0.797,
       "foreign_net": -21698978600,
       "inst_net": 42743801650,
-      "score": 0.45,
+      "score": 0.437,
       "news": [
         {
           "date": "11-04",
@@ -430,8 +430,13 @@
       "vol20": 0.558,
       "foreign_net": -5841206300,
       "inst_net": 16866173400,
-      "score": 0.425,
+      "score": 0.412,
       "news": [
+        {
+          "date": "11-06",
+          "title": "[제약 레이더] 한미약품, 바이오벤처 투자 연결…유한양행 헌혈·동아제...",
+          "risk": false
+        },
         {
           "date": "11-06",
           "title": "유한양행, 러닝·구강관리 신제품 출시…'버들장터' 최대 63% 할인",
@@ -440,11 +445,6 @@
         {
           "date": "11-06",
           "title": "유한양행, 공식몰 '버들장터'서 신제품 4종 기획전…최대 63% 할인",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "\"러닝·구강케어 신제품 라인업 확충\"…유한양행 버들장터, 론칭 기념 할...",
           "risk": false
         }
       ],
@@ -462,7 +462,7 @@
       "vol20": 0.837,
       "foreign_net": -18097403575,
       "inst_net": 15329505750,
-      "score": 0.075,
+      "score": 0.062,
       "news": [
         {
           "date": "11-05",
@@ -489,7 +489,7 @@
       "vol20": 1.06,
       "foreign_net": -5204568960,
       "inst_net": -190548385,
-      "score": 0.975,
+      "score": 0.987,
       "news": [
         {
           "date": "11-06",
@@ -507,43 +507,11 @@
           "risk": false
         }
       ],
-      "price": 6710,
-      "chg": 0.0167,
-      "activity": 6.23,
-      "foreign_today": 422730000,
+      "price": 6850,
+      "chg": 0.0379,
+      "activity": 6.08,
+      "foreign_today": 431550000,
       "inst_today": 0,
-      "exchange": "KOSDAQ"
-    },
-    {
-      "code": "328130",
-      "name": "루닛",
-      "close": 14710,
-      "ret5": -0.0278,
-      "ret20": 0.3181,
-      "rsi14": 60.6,
-      "vol20": 1.381,
-      "foreign_net": -8283680650,
-      "inst_net": 15223649475,
-      "score": 0.862,
-      "news": [
-        {
-          "date": "11-06",
-          "title": "루닛, 의료 특화 AI '러닝유닛 2.0' 공개…병원 현장 실증 완료",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "\"원내 서버서 진료 보조부터 원무까지\"…루닛, 오픈소스 의료 AI '러닝유...",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "루닛, 병원 업무부터 암 바이오마커까지…'의료 AI' 전방위 확장",
-          "risk": false
-        }
-      ],
-      "foreign_today": 2588960000,
-      "inst_today": 1014990000,
       "exchange": "KOSDAQ"
     },
     {
@@ -556,7 +524,7 @@
       "vol20": 1.17,
       "foreign_net": -62911431150,
       "inst_net": 74463643850,
-      "score": 0.787,
+      "score": 0.887,
       "news": [
         {
           "date": "11-05",
@@ -574,12 +542,44 @@
           "risk": false
         }
       ],
-      "price": 202500,
-      "chg": -0.0074,
-      "activity": 1.64,
+      "price": 209250,
+      "chg": 0.0257,
+      "activity": 1.73,
       "foreign_today": 0,
-      "inst_today": 3240000000,
+      "inst_today": 3348000000,
       "exchange": "KOSPI"
+    },
+    {
+      "code": "328130",
+      "name": "루닛",
+      "close": 14710,
+      "ret5": -0.0278,
+      "ret20": 0.3181,
+      "rsi14": 60.6,
+      "vol20": 1.381,
+      "foreign_net": -8283680650,
+      "inst_net": 15223649475,
+      "score": 0.862,
+      "news": [
+        {
+          "date": "11-06",
+          "title": "루닛, 300억 파라미터 의료 AI 공개…9개 병원서 성능 검증",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "루닛, 의료 특화 AI '러닝유닛 2.0' 공개…병원 현장 실증 완료",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "\"원내 서버서 진료 보조부터 원무까지\"…루닛, 오픈소스 의료 AI '러닝유...",
+          "risk": false
+        }
+      ],
+      "foreign_today": 2588960000,
+      "inst_today": 1014990000,
+      "exchange": "KOSDAQ"
     },
     {
       "code": "114800",
