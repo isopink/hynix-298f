@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "13:45",
-    "pool": 242,
-    "analyzed_new": 1,
-    "passed": 19,
+    "time": "14:00",
+    "pool": 243,
+    "analyzed_new": 2,
+    "passed": 20,
     "kept_prep": false
   },
   "candidates": [
@@ -116,11 +116,41 @@
           "risk": false
         }
       ],
-      "price": 62100,
-      "chg": -0.0342,
-      "activity": 1.0,
-      "foreign_today": 6085800000,
-      "inst_today": 8197200000,
+      "price": 61900,
+      "chg": -0.0373,
+      "activity": 0.99,
+      "foreign_today": 6066200000,
+      "inst_today": 8170800000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "017670",
+      "name": "SK텔레콤",
+      "close": 78000,
+      "ret5": 0.0196,
+      "ret20": -0.1024,
+      "rsi14": 46.5,
+      "vol20": 0.5,
+      "foreign_net": 1679503400,
+      "inst_net": 30924302900,
+      "score": 1.0,
+      "news": [
+        {
+          "date": "11-06",
+          "title": "[AI 딥다이브] SK텔레콤, ‘에이닷’ 추천 가을 명소에 T 멤버십 혜택 더...",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "SK텔레콤·KT, 3G 가입 문닫았다…알뜰폰 13만 회선이 폐지 변수",
+          "risk": false
+        }
+      ],
+      "price": 78500,
+      "chg": 0.0129,
+      "activity": 1.44,
+      "foreign_today": 4474500000,
+      "inst_today": 7928500000,
       "exchange": "KOSPI"
     },
     {
@@ -133,7 +163,7 @@
       "vol20": 0.357,
       "foreign_net": -10341050025,
       "inst_net": 34011615850,
-      "score": 0.9,
+      "score": 0.916,
       "news": [
         {
           "date": "11-06",
@@ -165,7 +195,7 @@
       "vol20": 0.388,
       "foreign_net": -26939614825,
       "inst_net": 50135848275,
-      "score": 0.887,
+      "score": 0.88,
       "news": [
         {
           "date": "11-06",
@@ -197,7 +227,7 @@
       "vol20": 0.568,
       "foreign_net": -13011050200,
       "inst_net": 56816398150,
-      "score": 0.825,
+      "score": 0.831,
       "news": [
         {
           "date": "11-06",
@@ -229,7 +259,7 @@
       "vol20": 0.461,
       "foreign_net": 30377634525,
       "inst_net": 29272324000,
-      "score": 0.75,
+      "score": 0.783,
       "news": [
         {
           "date": "11-06",
@@ -247,11 +277,11 @@
           "risk": false
         }
       ],
-      "price": 32850,
-      "chg": 0.0202,
+      "price": 32950,
+      "chg": 0.0233,
       "activity": 2.23,
       "foreign_today": 0,
-      "inst_today": 1182600000,
+      "inst_today": 1186200000,
       "exchange": "KOSPI"
     },
     {
@@ -264,7 +294,7 @@
       "vol20": 0.405,
       "foreign_net": -1285190625,
       "inst_net": 2848469450,
-      "score": 0.737,
+      "score": 0.735,
       "news": [],
       "foreign_today": 0,
       "inst_today": 1629000000,
@@ -296,16 +326,16 @@
       "vol20": 0.26,
       "foreign_net": 9727405555,
       "inst_net": 4610992475,
-      "score": 0.625,
+      "score": 0.627,
       "news": [
         {
           "date": "11-06",
-          "title": "11월 6일 카카오뱅크 AI 퀴즈 오전 8시 정답은 ‘제설’",
+          "title": "카카오뱅크, 젊은층 전유물 옛말…50대 65% 이용",
           "risk": false
         },
         {
           "date": "11-06",
-          "title": "카카오뱅크, 젊은층 전유물 옛말…50대 65% 이용",
+          "title": "11월 6일 카카오뱅크 AI 퀴즈 오전 8시 정답은 ‘제설’",
           "risk": false
         },
         {
@@ -328,7 +358,7 @@
       "vol20": 0.487,
       "foreign_net": -2748968800,
       "inst_net": 14572441050,
-      "score": 0.512,
+      "score": 0.518,
       "news": [],
       "foreign_today": 0,
       "inst_today": 576900000,
@@ -344,7 +374,7 @@
       "vol20": 0.619,
       "foreign_net": -329359625,
       "inst_net": 18073219625,
-      "score": 0.5,
+      "score": 0.506,
       "news": [
         {
           "date": "11-06",
@@ -376,7 +406,7 @@
       "vol20": 0.602,
       "foreign_net": 8624573600,
       "inst_net": 7644551450,
-      "score": 0.5,
+      "score": 0.494,
       "news": [
         {
           "date": "11-03",
@@ -398,7 +428,7 @@
       "vol20": 0.797,
       "foreign_net": -21698978600,
       "inst_net": 42743801650,
-      "score": 0.437,
+      "score": 0.458,
       "news": [
         {
           "date": "11-04",
@@ -430,8 +460,13 @@
       "vol20": 0.558,
       "foreign_net": -5841206300,
       "inst_net": 16866173400,
-      "score": 0.412,
+      "score": 0.422,
       "news": [
+        {
+          "date": "11-06",
+          "title": "유한양행, 헌혈로 혈액 수급난 해소 동참…소아암 환아 지원",
+          "risk": false
+        },
         {
           "date": "11-06",
           "title": "[제약 레이더] 한미약품, 바이오벤처 투자 연결…유한양행 헌혈·동아제...",
@@ -440,11 +475,6 @@
         {
           "date": "11-06",
           "title": "유한양행, 러닝·구강관리 신제품 출시…'버들장터' 최대 63% 할인",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "유한양행, 공식몰 '버들장터'서 신제품 4종 기획전…최대 63% 할인",
           "risk": false
         }
       ],
@@ -462,7 +492,7 @@
       "vol20": 0.837,
       "foreign_net": -18097403575,
       "inst_net": 15329505750,
-      "score": 0.062,
+      "score": 0.072,
       "news": [
         {
           "date": "11-05",
@@ -480,41 +510,6 @@
       "exchange": "KOSPI"
     },
     {
-      "code": "008830",
-      "name": "대동기어",
-      "close": 6500,
-      "ret5": 0.1797,
-      "ret20": 0.0317,
-      "rsi14": 59.8,
-      "vol20": 1.06,
-      "foreign_net": -5204568960,
-      "inst_net": -190548385,
-      "score": 0.987,
-      "news": [
-        {
-          "date": "11-06",
-          "title": "대동기어 회전율 88%…금양그린파워·대명에너지도 50% 넘어",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "한진칼우 회전율 126%…대동기어·대명에너지 거래 집중",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "대동기어 주가, 11월 5일 장중 6,900원 10.93% 상승",
-          "risk": false
-        }
-      ],
-      "price": 6850,
-      "chg": 0.0379,
-      "activity": 6.08,
-      "foreign_today": 431550000,
-      "inst_today": 0,
-      "exchange": "KOSDAQ"
-    },
-    {
       "code": "010060",
       "name": "OCI홀딩스",
       "close": 206500,
@@ -524,7 +519,7 @@
       "vol20": 1.17,
       "foreign_net": -62911431150,
       "inst_net": 74463643850,
-      "score": 0.887,
+      "score": 0.916,
       "news": [
         {
           "date": "11-05",
@@ -542,11 +537,11 @@
           "risk": false
         }
       ],
-      "price": 209250,
-      "chg": 0.0257,
-      "activity": 1.73,
+      "price": 209500,
+      "chg": 0.027,
+      "activity": 1.82,
       "foreign_today": 0,
-      "inst_today": 3348000000,
+      "inst_today": 3352000000,
       "exchange": "KOSPI"
     },
     {
@@ -559,7 +554,7 @@
       "vol20": 1.381,
       "foreign_net": -8283680650,
       "inst_net": 15223649475,
-      "score": 0.862,
+      "score": 0.855,
       "news": [
         {
           "date": "11-06",
@@ -579,6 +574,38 @@
       ],
       "foreign_today": 2588960000,
       "inst_today": 1014990000,
+      "exchange": "KOSDAQ"
+    },
+    {
+      "code": "053800",
+      "name": "안랩",
+      "close": 97500,
+      "ret5": -0.0152,
+      "ret20": 0.2695,
+      "rsi14": 53.8,
+      "vol20": 1.574,
+      "foreign_net": -7062631750,
+      "inst_net": -4827086750,
+      "score": 0.735,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "[아시아AI대상]안랩, AI 네이티브 보안으로 위협 분석부터 대응까지",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "[포토] 안랩, 아시아AI대상 '아시아경제대표상' 수상",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "[OT 보안 인사이트 2026] 안랩 \"5차 산업혁명 시대, OT 보안 현 주소는\"",
+          "risk": false
+        }
+      ],
+      "foreign_today": 4680000000,
+      "inst_today": 0,
       "exchange": "KOSDAQ"
     },
     {
