@@ -81,8 +81,8 @@
     ]
   },
   "intraday": {
-    "time": "12:30",
-    "pool": 241,
+    "time": "12:45",
+    "pool": 240,
     "analyzed_new": 2,
     "passed": 19,
     "kept_prep": false
@@ -116,11 +116,11 @@
           "risk": false
         }
       ],
-      "price": 61400,
-      "chg": -0.0451,
-      "activity": 1.15,
-      "foreign_today": 8166200000,
-      "inst_today": 1964800000,
+      "price": 61700,
+      "chg": -0.0404,
+      "activity": 1.11,
+      "foreign_today": 8206100000,
+      "inst_today": 1974400000,
       "exchange": "KOSPI"
     },
     {
@@ -137,6 +137,11 @@
       "news": [
         {
           "date": "11-06",
+          "title": "KT, '제21회 부산불꽃축제' 특별 소통 대책…5G 슬라이싱으로 통신·안전...",
+          "risk": false
+        },
+        {
+          "date": "11-06",
           "title": "KT가 그저 대견한 조범현 경일대 총감독 “현장은 언제나 설레는 곳”",
           "risk": false
         },
@@ -144,50 +149,10 @@
           "date": "11-06",
           "title": "KT, 부산불꽃축제 무선망 보강…5G로 안전관제 지원",
           "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "KT, '부산불꽃축제' 안정적 통신 서비스 위한 특별 대책 가동",
-          "risk": false
         }
       ],
       "foreign_today": 4738000000,
       "inst_today": 2678000000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "012330",
-      "name": "현대모비스",
-      "close": 363500,
-      "ret5": 0.0239,
-      "ret20": -0.0215,
-      "rsi14": 51.1,
-      "vol20": 0.652,
-      "foreign_net": -49256342750,
-      "inst_net": 90823582500,
-      "score": 0.688,
-      "news": [
-        {
-          "date": "11-06",
-          "title": "연승 끊겼어도 다시 달린다!…삼성, 현대모비스 꺾고 11경기 만에 10승 ...",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "프로농구 삼성, 현대모비스 잡고 11경기 만에 10승",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "꼴찌 이미지 벗은 삼성, 벌써 10승... 현대모비스 81-76 제압 '다시 승리...",
-          "risk": false
-        }
-      ],
-      "price": 357500,
-      "chg": -0.0179,
-      "activity": 0.99,
-      "foreign_today": 0,
-      "inst_today": 1430000000,
       "exchange": "KOSPI"
     },
     {
@@ -200,7 +165,7 @@
       "vol20": 0.388,
       "foreign_net": -26939614825,
       "inst_net": 50135848275,
-      "score": 0.677,
+      "score": 0.688,
       "news": [
         {
           "date": "11-06",
@@ -220,6 +185,41 @@
       ],
       "foreign_today": 0,
       "inst_today": 541960000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "012330",
+      "name": "현대모비스",
+      "close": 363500,
+      "ret5": 0.0239,
+      "ret20": -0.0215,
+      "rsi14": 51.1,
+      "vol20": 0.652,
+      "foreign_net": -49256342750,
+      "inst_net": 90823582500,
+      "score": 0.677,
+      "news": [
+        {
+          "date": "11-06",
+          "title": "연승 끊겼어도 다시 달린다!…삼성, 현대모비스 꺾고 11경기 만에 10승 ...",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "프로농구 삼성, 현대모비스 잡고 11경기 만에 10승",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "꼴찌 이미지 벗은 삼성, 벌써 10승... 현대모비스 81-76 제압 '다시 승리...",
+          "risk": false
+        }
+      ],
+      "price": 355500,
+      "chg": -0.0234,
+      "activity": 0.95,
+      "foreign_today": 0,
+      "inst_today": 1422000000,
       "exchange": "KOSPI"
     },
     {
@@ -284,17 +284,17 @@
       "news": [
         {
           "date": "11-06",
+          "title": "[2026 3분기 실적] 코웨이, 영업익 2608억…전년비 7.3% ↑",
+          "risk": false
+        },
+        {
+          "date": "11-06",
           "title": "코웨이, 분기 최대 영업익에도 순이익 감소",
           "risk": false
         },
         {
           "date": "11-06",
           "title": "코웨이, 3분기 영업이익 2608억원…전년 대비 7.3% 증가",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "코웨이, 3분기 매출 1조 4,261억원…전년比 13.7% 증가",
           "risk": false
         }
       ],
@@ -412,7 +412,7 @@
       "news": [
         {
           "date": "11-06",
-          "title": "[동국제약=종합] 센텔리안24 해외 유통 확대 ··· 신제품도 출시",
+          "title": "한미사이언스·동국제약·유한양행, 약국·온라인서 건강 관리 수요 공...",
           "risk": false
         },
         {
@@ -422,7 +422,7 @@
         },
         {
           "date": "11-06",
-          "title": "'누적매출 1조' 동국제약 센텔리안24, 美·日넘어 유럽으로 무대 확장",
+          "title": "동국제약 센텔리안24, 영국 거점으로 유럽 진출",
           "risk": false
         }
       ],
@@ -462,7 +462,7 @@
       "vol20": 0.837,
       "foreign_net": -18097403575,
       "inst_net": 15329505750,
-      "score": 0.151,
+      "score": 0.161,
       "news": [
         {
           "date": "11-05",
@@ -507,10 +507,10 @@
           "risk": false
         }
       ],
-      "price": 6890,
-      "chg": 0.0439,
-      "activity": 7.85,
-      "foreign_today": 234260000,
+      "price": 6800,
+      "chg": 0.0303,
+      "activity": 7.32,
+      "foreign_today": 231200000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -524,7 +524,7 @@
       "vol20": 1.285,
       "foreign_net": 18241113425,
       "inst_net": 7570233575,
-      "score": 0.817,
+      "score": 0.806,
       "news": [
         {
           "date": "11-06",
@@ -542,10 +542,10 @@
           "risk": false
         }
       ],
-      "price": 28350,
-      "chg": 0.0519,
-      "activity": 2.52,
-      "foreign_today": 1048950000,
+      "price": 28150,
+      "chg": 0.0445,
+      "activity": 2.39,
+      "foreign_today": 1041550000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
