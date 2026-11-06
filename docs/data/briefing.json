@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "15:00",
-    "pool": 240,
+    "time": "15:15",
+    "pool": 241,
     "analyzed_new": 1,
-    "passed": 20,
+    "passed": 23,
     "kept_prep": false
   },
   "candidates": [
@@ -106,11 +106,11 @@
           "risk": false
         }
       ],
-      "price": 222500,
-      "chg": 0.0854,
-      "activity": 2.22,
+      "price": 218000,
+      "chg": 0.0634,
+      "activity": 2.46,
       "foreign_today": 0,
-      "inst_today": 4005000000,
+      "inst_today": 3924000000,
       "exchange": "KOSPI"
     },
     {
@@ -123,7 +123,7 @@
       "vol20": 0.5,
       "foreign_net": 1679503400,
       "inst_net": 30924302900,
-      "score": 0.889,
+      "score": 0.896,
       "news": [
         {
           "date": "11-06",
@@ -136,11 +136,11 @@
           "risk": false
         }
       ],
-      "price": 78900,
-      "chg": 0.0181,
-      "activity": 2.14,
-      "foreign_today": 6312000000,
-      "inst_today": 10888200000,
+      "price": 77800,
+      "chg": 0.0039,
+      "activity": 2.2,
+      "foreign_today": 6224000000,
+      "inst_today": 10736400000,
       "exchange": "KOSPI"
     },
     {
@@ -153,7 +153,7 @@
       "vol20": 0.931,
       "foreign_net": -41290385000,
       "inst_net": 41663565700,
-      "score": 0.852,
+      "score": 0.844,
       "news": [
         {
           "date": "11-06",
@@ -171,11 +171,11 @@
           "risk": false
         }
       ],
-      "price": 61100,
-      "chg": -0.0498,
-      "activity": 0.93,
-      "foreign_today": 5315700000,
-      "inst_today": 14297400000,
+      "price": 60200,
+      "chg": -0.0638,
+      "activity": 0.92,
+      "foreign_today": 5237400000,
+      "inst_today": 14086800000,
       "exchange": "KOSPI"
     },
     {
@@ -188,8 +188,13 @@
       "vol20": 0.388,
       "foreign_net": -26939614825,
       "inst_net": 50135848275,
-      "score": 0.79,
+      "score": 0.818,
       "news": [
+        {
+          "date": "11-06",
+          "title": "플랜티넷 '모아진, 누적 가입 20만 명 돌파에 LG유플러스 구독 혜택 확대",
+          "risk": false
+        },
         {
           "date": "11-06",
           "title": "LG유플러스, AIDC 전기엔지니어 경력채용…대형 IDC 구축 맡는다",
@@ -198,11 +203,6 @@
         {
           "date": "11-06",
           "title": "LG, 브랜드 가치 향상 '잰걸음'...LG전자·LG유플러스 '앞장'",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "SKT·KT·LG유플러스 '부산불꽃축제' 통신 품질 대결 '점화'",
           "risk": false
         }
       ],
@@ -220,7 +220,7 @@
       "vol20": 0.568,
       "foreign_net": -13011050200,
       "inst_net": 56816398150,
-      "score": 0.765,
+      "score": 0.779,
       "news": [
         {
           "date": "11-06",
@@ -243,60 +243,6 @@
       "exchange": "KOSPI"
     },
     {
-      "code": "316140",
-      "name": "우리금융지주",
-      "close": 32150,
-      "ret5": 0.0321,
-      "ret20": -0.0374,
-      "rsi14": 53.0,
-      "vol20": 0.346,
-      "foreign_net": -77847544350,
-      "inst_net": 94902336075,
-      "score": 0.691,
-      "news": [],
-      "price": 31700,
-      "chg": -0.0078,
-      "activity": 1.0,
-      "foreign_today": 0,
-      "inst_today": 6181500000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "064400",
-      "name": "LG씨엔에스",
-      "close": 72800,
-      "ret5": -0.0643,
-      "ret20": 0.052,
-      "rsi14": 50.6,
-      "vol20": 0.797,
-      "foreign_net": -21698978600,
-      "inst_net": 42743801650,
-      "score": 0.679,
-      "news": [
-        {
-          "date": "11-04",
-          "title": "LG씨엔에스 7만3600원 약보합…AI·클라우드 성장성 점검",
-          "risk": false
-        },
-        {
-          "date": "11-04",
-          "title": "LG씨엔에스, 교보증권 주관 4일 기관 IR",
-          "risk": false
-        },
-        {
-          "date": "11-03",
-          "title": "LG씨엔에스 주가, 11월 3일 애프터마켓 73,900원 5.26% 하락",
-          "risk": false
-        }
-      ],
-      "price": 75500,
-      "chg": 0.0399,
-      "activity": 1.22,
-      "foreign_today": 0,
-      "inst_today": 3699500000,
-      "exchange": "KOSPI"
-    },
-    {
       "code": "035720",
       "name": "카카오",
       "close": 32400,
@@ -306,7 +252,7 @@
       "vol20": 0.461,
       "foreign_net": 30377634525,
       "inst_net": 29272324000,
-      "score": 0.667,
+      "score": 0.675,
       "news": [
         {
           "date": "11-06",
@@ -324,11 +270,46 @@
           "risk": false
         }
       ],
-      "price": 32400,
-      "chg": 0.0062,
-      "activity": 2.2,
+      "price": 32250,
+      "chg": 0.0016,
+      "activity": 2.22,
       "foreign_today": 0,
-      "inst_today": 1846800000,
+      "inst_today": 1838250000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "064400",
+      "name": "LG씨엔에스",
+      "close": 72800,
+      "ret5": -0.0643,
+      "ret20": 0.052,
+      "rsi14": 50.6,
+      "vol20": 0.797,
+      "foreign_net": -21698978600,
+      "inst_net": 42743801650,
+      "score": 0.649,
+      "news": [
+        {
+          "date": "11-04",
+          "title": "LG씨엔에스 7만3600원 약보합…AI·클라우드 성장성 점검",
+          "risk": false
+        },
+        {
+          "date": "11-04",
+          "title": "LG씨엔에스, 교보증권 주관 4일 기관 IR",
+          "risk": false
+        },
+        {
+          "date": "11-03",
+          "title": "LG씨엔에스 주가, 11월 3일 애프터마켓 73,900원 5.26% 하락",
+          "risk": false
+        }
+      ],
+      "price": 73900,
+      "chg": 0.0179,
+      "activity": 1.23,
+      "foreign_today": 0,
+      "inst_today": 3621100000,
       "exchange": "KOSPI"
     },
     {
@@ -341,7 +322,7 @@
       "vol20": 0.405,
       "foreign_net": -1285190625,
       "inst_net": 2848469450,
-      "score": 0.642,
+      "score": 0.636,
       "news": [],
       "foreign_today": 0,
       "inst_today": 2117700000,
@@ -357,7 +338,7 @@
       "vol20": 0.837,
       "foreign_net": -18097403575,
       "inst_net": 15329505750,
-      "score": 0.63,
+      "score": 0.597,
       "news": [
         {
           "date": "11-05",
@@ -370,11 +351,27 @@
           "risk": false
         }
       ],
-      "price": 49250,
-      "chg": 0.0379,
-      "activity": 2.4,
+      "price": 48800,
+      "chg": 0.0285,
+      "activity": 2.39,
       "foreign_today": 0,
-      "inst_today": 1970000000,
+      "inst_today": 1952000000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "316140",
+      "name": "우리금융지주",
+      "close": 32150,
+      "ret5": 0.0321,
+      "ret20": -0.0374,
+      "rsi14": 53.0,
+      "vol20": 0.346,
+      "foreign_net": -77847544350,
+      "inst_net": 94902336075,
+      "score": 0.545,
+      "news": [],
+      "foreign_today": 0,
+      "inst_today": 6269250000,
       "exchange": "KOSPI"
     },
     {
@@ -387,8 +384,13 @@
       "vol20": 0.26,
       "foreign_net": 9727405555,
       "inst_net": 4610992475,
-      "score": 0.494,
+      "score": 0.532,
       "news": [
+        {
+          "date": "11-06",
+          "title": "카드업 진출 노리는 카카오뱅크…롯데카드 인수 가능성 주목",
+          "risk": false
+        },
         {
           "date": "11-06",
           "title": "11월 6일 카카오뱅크 AI 퀴즈 오전 8시 정답은 ‘제설’",
@@ -414,7 +416,7 @@
       "vol20": 0.619,
       "foreign_net": -329359625,
       "inst_net": 18073219625,
-      "score": 0.457,
+      "score": 0.494,
       "news": [
         {
           "date": "11-06",
@@ -446,7 +448,7 @@
       "vol20": 0.652,
       "foreign_net": -49256342750,
       "inst_net": 90823582500,
-      "score": 0.407,
+      "score": 0.442,
       "news": [
         {
           "date": "11-06",
@@ -464,11 +466,11 @@
           "risk": false
         }
       ],
-      "price": 354500,
-      "chg": -0.0261,
-      "activity": 0.89,
+      "price": 349000,
+      "chg": -0.0412,
+      "activity": 0.88,
       "foreign_today": 0,
-      "inst_today": 3545000000,
+      "inst_today": 3490000000,
       "exchange": "KOSPI"
     },
     {
@@ -481,21 +483,21 @@
       "vol20": 0.558,
       "foreign_net": -5841206300,
       "inst_net": 16866173400,
-      "score": 0.358,
+      "score": 0.39,
       "news": [
         {
           "date": "11-06",
-          "title": "﻿유한양행, 공식몰 버들장터서 신제품 할인 기획전",
+          "title": "유한양행, ‘버들장터’서 신제품 최대 63% 할인",
           "risk": false
         },
         {
           "date": "11-06",
-          "title": "[오늘 뭐했니?] 유한양행",
+          "title": "유한양행, 공식몰 '버들장터'서 러닝·구강케어 신제품 기획전 진행",
           "risk": false
         },
         {
           "date": "11-06",
-          "title": "유한양행 '페노웰' 첫 제네릭 허가…다산제약, 특허회피 이어 시장 진입...",
+          "title": "[제약 브리핑] 차병원·동아제약·동국제약·유한양행",
           "risk": false
         }
       ],
@@ -513,14 +515,8 @@
       "vol20": 0.487,
       "foreign_net": -2748968800,
       "inst_net": 14572441050,
-      "score": 0.346,
-      "news": [
-        {
-          "date": "11-06",
-          "title": "한국타이어앤테크놀로지, 3Q 매출 5조4650억 '분기 기준 최대'…영업익...",
-          "risk": false
-        }
-      ],
+      "score": 0.377,
+      "news": [],
       "foreign_today": 0,
       "inst_today": 705100000,
       "exchange": "KOSPI"
@@ -535,8 +531,13 @@
       "vol20": 1.381,
       "foreign_net": -8283680650,
       "inst_net": 15223649475,
-      "score": 0.741,
+      "score": 0.766,
       "news": [
+        {
+          "date": "11-06",
+          "title": "루닛 의료 AI 영역 확장…진료부터 보험 청구까지",
+          "risk": false
+        },
         {
           "date": "11-06",
           "title": "루닛·SK바이오팜, 'AI 특화 파운데이션 모델 프로젝트' 성과 공개",
@@ -546,51 +547,11 @@
           "date": "11-06",
           "title": "루닛, 300억 파라미터 의료 AI 공개…9개 병원서 성능 검증",
           "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "루닛, 의료 특화 AI '러닝유닛 2.0' 공개…병원 현장 실증 완료",
-          "risk": false
         }
       ],
       "foreign_today": 3015550000,
       "inst_today": 1485710000,
       "exchange": "KOSDAQ"
-    },
-    {
-      "code": "010060",
-      "name": "OCI홀딩스",
-      "close": 206500,
-      "ret5": 0.1634,
-      "ret20": -0.1305,
-      "rsi14": 51.7,
-      "vol20": 1.17,
-      "foreign_net": -62911431150,
-      "inst_net": 74463643850,
-      "score": 0.728,
-      "news": [
-        {
-          "date": "11-05",
-          "title": "OCI홀딩스 폴리실리콘 사업, 美 블루웨이브도 힘 보탤까",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "OCI홀딩스 미국의 탈중국 수혜 더해 우주용 태양광도 눈독, 이우현 현지...",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "OCI홀딩스 주가, 11월 5일 204,000원 2.00% 상승 기록",
-          "risk": false
-        }
-      ],
-      "price": 203500,
-      "chg": -0.0025,
-      "activity": 1.79,
-      "foreign_today": 0,
-      "inst_today": 5087500000,
-      "exchange": "KOSPI"
     },
     {
       "code": "008930",
@@ -602,7 +563,7 @@
       "vol20": 1.06,
       "foreign_net": -2579757825,
       "inst_net": 18088976450,
-      "score": 0.63,
+      "score": 0.649,
       "news": [
         {
           "date": "11-06",
@@ -623,6 +584,38 @@
       "foreign_today": 0,
       "inst_today": 4654700000,
       "exchange": "KOSPI"
+    },
+    {
+      "code": "008830",
+      "name": "대동기어",
+      "close": 6500,
+      "ret5": 0.1797,
+      "ret20": 0.0317,
+      "rsi14": 59.8,
+      "vol20": 1.06,
+      "foreign_net": -5204568960,
+      "inst_net": -190548385,
+      "score": 0.545,
+      "news": [
+        {
+          "date": "11-06",
+          "title": "대동기어 회전율 88%…금양그린파워·대명에너지도 50% 넘어",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "한진칼우 회전율 126%…대동기어·대명에너지 거래 집중",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "대동기어 주가, 11월 5일 장중 6,900원 10.93% 상승",
+          "risk": false
+        }
+      ],
+      "foreign_today": 487500000,
+      "inst_today": 0,
+      "exchange": "KOSDAQ"
     },
     {
       "code": "114800",
@@ -657,6 +650,82 @@
       "score": null,
       "news": [],
       "exchange": "ETF"
+    },
+    {
+      "code": "402340",
+      "name": "SK스퀘어",
+      "close": 804000,
+      "ret5": -0.1563,
+      "ret20": -0.2923,
+      "rsi14": 41.4,
+      "vol20": 1.177,
+      "foreign_net": -153288094000,
+      "inst_net": 44586987000,
+      "score": 0,
+      "news": [],
+      "price": 716000,
+      "chg": -0.115,
+      "foreign_today": 0,
+      "inst_today": 0,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "000660",
+      "name": "SK하이닉스",
+      "close": 1262000,
+      "ret5": -0.1675,
+      "ret20": -0.2641,
+      "rsi14": 39.0,
+      "vol20": 1.05,
+      "foreign_net": -3933776234000,
+      "inst_net": 366362378500,
+      "score": 0,
+      "news": [
+        {
+          "date": "11-06",
+          "title": "[현장] 국회 입법박람회에 선 SK하이닉스·현대차, 기술 체험에 입법 제...",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "[이슈진단] SK하이닉스, 산업보건 10년의 진화…반도체 안전관리 패러다...",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "SK하이닉스, 산업보건 선진화 10년 성과 공유…안전한 근무환경 조성",
+          "risk": false
+        }
+      ],
+      "price": 1128000,
+      "chg": -0.1076,
+      "foreign_today": 0,
+      "inst_today": 108288000000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "009150",
+      "name": "삼성전기",
+      "close": 950000,
+      "ret5": -0.259,
+      "ret20": -0.4088,
+      "rsi14": 33.0,
+      "vol20": 1.142,
+      "foreign_net": -946071405500,
+      "inst_net": -263412689500,
+      "score": 0,
+      "news": [
+        {
+          "date": "11-06",
+          "title": "삼성전기 MLCC 품귀…1년치 주문 밀렸다",
+          "risk": false
+        }
+      ],
+      "price": 859000,
+      "chg": -0.09,
+      "foreign_today": 79028000000,
+      "inst_today": 14603000000,
+      "exchange": "KOSPI"
     }
   ]
 }
