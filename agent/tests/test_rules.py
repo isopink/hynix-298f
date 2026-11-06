@@ -577,6 +577,23 @@ def test_partial_sell_by_confidence():
     assert "분할 매도" not in chk(29, 0.70) and "분할 매도" not in chk(29, 0.40, True)
 
 
+
+def dip_on(f):
+    """급락일 KODEX 200 예외는 11-06 폐기(enabled=false). 코드는 남아 있어 켠 상태로 시험."""
+    def g():
+        dd = P["index"]["dip_buy"]
+        old, dd["enabled"] = dd["enabled"], True
+        real = C.params
+        C.params = lambda: P
+        try:
+            f()
+        finally:
+            dd["enabled"], C.params = old, real
+    g.__name__ = f.__name__
+    return g
+
+
+@dip_on
 def test_index_dip_buy_in_falling_market():
     """급락일 지수 예외: KODEX 200 이 −4% 이하면 15:00 이후엔 하락 국면이어도 매수 (7%), 그 전·덜 빠진 날은 막힘."""
     at = lambda h, m: datetime(2026, 11, 5, h, m, tzinfo=C.KST)
@@ -607,6 +624,7 @@ def test_index_weight_cap_20pct():
     assert sizing.plan_buy("005930", 0.85, 10_000, acc(), p, R)["target_weight"] == 0.10
 
 
+@dip_on
 def test_index_dip_tiers_and_limit_exception():
     """급락일 지수 예외: −4% 10% · −5% 15%, 이 매수만 종목당 20%·1회 주문 한도 예외."""
     at = datetime(2026, 11, 5, 15, 15, tzinfo=C.KST)
@@ -637,6 +655,7 @@ def test_probe_weight_scales_with_confidence():
     assert tw(0.53) == 0.02 and tw(0.565) == 0.035 and tw(0.599) > 0.049 and tw(0.52) == 0
 
 
+@dip_on
 def test_index_dip_exit_levels():
     """급락일 예외로 산 KODEX 200: 익절 순익 +3% (ETF 매도세 없음 → 평단 대비 약 +3.7%), 최대 5일. 기록된 포지션에도 적용."""
     at = datetime(2026, 11, 5, 15, 15, tzinfo=C.KST)
@@ -692,6 +711,7 @@ def test_stop_held_until_0910():
         C.POSITIONS, C.now = old
 
 
+@dip_on
 def test_index_dip_ignores_daily_loss_limit():
     """11-06 S.Lee: 급락일 지수 예외 매수는 일일 손실 한도(−3%)에 막히지 않음. 다른 매수는 그대로 막힘."""
     at = datetime(2026, 11, 6, 15, 15, tzinfo=C.KST)
@@ -721,6 +741,7 @@ def test_inverse_no_chase_on_crash_day():
     assert "인버스 추격" in chk(0.05) and "인버스 추격" not in chk(0.02)
 
 
+@dip_on
 def test_index_dip_requires_selling_inverse_first():
     """11-06 S.Lee: 인버스를 들고 있으면 급락일 KODEX 200 은 0주·Hook 차단. 인버스를 팔고 나면 정상."""
     at = datetime(2026, 11, 6, 15, 15, tzinfo=C.KST)
@@ -738,6 +759,17 @@ def test_index_dip_requires_selling_inverse_first():
         assert plan["qty"] > 0, plan
     finally:
         C.now = real
+
+def test_new_weights_and_dip_buy_off():
+    """11-06 S.Lee: 종목당 8~12% · 소액 매수 4~8% (실제 설정으로 계산 확인) · 급락일 KODEX 200 예외 폐기."""
+    q = C.params()   # 테스트용으로 고친 P 말고 실제 설정
+    d = q["decision"]
+    lo, hi = C.buy_threshold(q), d["full_size_confidence"]   # 값은 자동 조정으로 바뀔 수 있어 설정과 계산이 맞는지만 봄
+    assert abs(sizing.target_weight(lo, q, R) - d["min_weight"]) < 1e-9 and abs(sizing.target_weight(hi, q, R) - d["max_weight"]) < 1e-9
+    assert abs(sizing.target_weight(C.probe_floor(q), q, R) - d["probe"]["weight_min"]) < 1e-9
+    assert sizing.target_weight(lo - 1e-6, q, R) <= d["probe"]["weight"] + 1e-9 <= d["min_weight"] + 1e-9   # 소액 매수 위 끝이 정식 매수 아래 끝과 이어짐
+    assert not q["index"]["dip_buy"]["enabled"]
+    assert C.index_dip("069500", -0.08, q, datetime(2026, 11, 6, 15, 15, tzinfo=C.KST)) is None
 
 def test_partial_sell_once_a_day():
     """11-05 HMM: 15분마다 절반씩 팔던 문제 → 분할은 하루 1번, 그 뒤엔 0.65 이상·규칙 매도만 전량."""
