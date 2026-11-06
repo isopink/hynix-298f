@@ -1606,7 +1606,8 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       E = LINKS.map(id => { const [a, b] = id.split('-'); return { id, a: N[a], b: N[b], bow: (rnd() < .5 ? -1 : 1) * (10 + rnd() * 18), on: 0, glow: 0 }; });
       EDGE = Object.fromEntries(E.map(e => [e.id, e]));
       Object.values(N).forEach(n => { n.deg = 0; }); E.forEach(e => { e.a.deg++; e.b.deg++; });
-      Object.values(N).forEach(n => { n.size = 20 + n.deg * 5; });
+      const maxDeg = Math.max(...Object.values(N).map(n => n.deg));
+      Object.values(N).forEach(n => { n.size = 20 + n.deg * 5; n.int = .35 + .65 * Math.sqrt(n.deg / maxDeg); });   // 11-06 S.Lee: 많이 연결된 뉴런일수록 더 진하게 켜짐
       E.forEach(e => { e.strands = Array.from({ length: 2 }, () => ({ a: e.a, b: e.b, k1: e.bow + r2() * 4, k2: -e.bow * .55 + r2() * 4, w: .8 + rnd() * .6 })); });
       Object.values(N).forEach(n => {
         n.den = [];
@@ -1686,10 +1687,10 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1; ctx.clearRect(0, 0, cv.width, cv.height);
       ctx.setTransform(scale, 0, 0, scale, 0, 0); ctx.globalCompositeOperation = 'lighter'; ctx.lineCap = 'round';
       // 쉬는 망: 경로·그물·잔가지·지점 빛
-      ctx.strokeStyle = 'rgba(210,210,216,.15)'; E.forEach(e => e.strands.forEach(s => { ctx.lineWidth = s.w * lw; curve(ctx, s); }));
-      mesh.forEach(m => { ctx.lineWidth = (m.w ? .9 : .7) * lw; ctx.strokeStyle = m.w ? 'rgba(230,228,228,.09)' : 'rgba(230,228,228,.06)'; curve(ctx, m); });
-      ctx.globalAlpha = 1; dots.forEach(d => ctx.drawImage(d.img, d.x - d.R, d.y - d.R, d.R * 2, d.R * 2)); Object.values(N).forEach(n => ctx.drawImage(n.img, n.x - n.R, n.y - n.R, n.R * 2, n.R * 2));
-      dots.forEach(d => stamp(d.x, d.y, SP.n, 12, .22)); Object.values(N).forEach(n => stamp(n.x, n.y, SP.w, n.size, .4));
+      ctx.strokeStyle = 'rgba(210,210,216,.10)'; E.forEach(e => e.strands.forEach(s => { ctx.lineWidth = s.w * lw; curve(ctx, s); }));
+      mesh.forEach(m => { ctx.lineWidth = (m.w ? .9 : .7) * lw; ctx.strokeStyle = m.w ? 'rgba(230,228,228,.065)' : 'rgba(230,228,228,.042)'; curve(ctx, m); });
+      ctx.globalAlpha = .75; dots.forEach(d => ctx.drawImage(d.img, d.x - d.R, d.y - d.R, d.R * 2, d.R * 2)); Object.values(N).forEach(n => ctx.drawImage(n.img, n.x - n.R, n.y - n.R, n.R * 2, n.R * 2)); ctx.globalAlpha = 1;
+      dots.forEach(d => stamp(d.x, d.y, SP.n, 12, .15)); Object.values(N).forEach(n => stamp(n.x, n.y, SP.w, n.size, .28));   // 11-06 전체적으로 더 흐리게
       // 11-06 S.Lee: 데이터가 흐를 때 경로를 붉게 칠하지 않고, 움직이는 점만 보여 줌
       for (let i = bursts.length - 1; i >= 0; i--) {
         const p = bursts[i]; p.t += dt / p.life; if (p.t < 0) continue; if (p.t >= 1) { if (p.to) p.to.fl = clock; bursts.splice(i, 1); continue; }
@@ -1699,18 +1700,18 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       }
       dots.forEach(d => {   // 갈라진 데이터가 닿은 작은 뉴런: 한 번 번쩍이고 가라앉음
         if (d.fl == null) return; const k = Math.exp(-(clock - d.fl) / 520); if (k < .03) return;
-        ctx.globalAlpha = 1; ctx.strokeStyle = `rgba(255,90,74,${.7 * k})`;
+        ctx.globalAlpha = 1; ctx.strokeStyle = `rgba(255,90,74,${.5 * k})`;
         d.den.forEach(b => { ctx.lineWidth = (b.w + .1) * lw; ctx.beginPath(); ctx.moveTo(d.x + b.x, d.y + b.y); ctx.quadraticCurveTo(d.x + b.cx, d.y + b.cy, d.x + b.ex, d.y + b.ey); ctx.stroke(); });
-        stamp(d.x, d.y, SP.r, 40 * (.8 + .4 * k), k); stamp(d.x, d.y, SP.r, 14, k);
+        stamp(d.x, d.y, SP.r, 34 * (.8 + .4 * k), .7 * k); stamp(d.x, d.y, SP.r, 12, .7 * k);
       });
-      Object.values(N).forEach(n => { if (!(n.glow > .05)) return; ctx.globalAlpha = 1; ctx.strokeStyle = `rgba(255,90,74,${Math.min(1, .8 * n.glow * pop(n))})`; n.den.forEach(b => { ctx.lineWidth = (b.w + .2) * lw; ctx.beginPath(); ctx.moveTo(n.x + b.x, n.y + b.y); ctx.quadraticCurveTo(n.x + b.cx, n.y + b.cy, n.x + b.ex, n.y + b.ey); ctx.stroke(); }); });
+      Object.values(N).forEach(n => { if (!(n.glow > .05)) return; ctx.globalAlpha = 1; ctx.strokeStyle = `rgba(255,90,74,${Math.min(1, .7 * n.int * n.glow * pop(n))})`; n.den.forEach(b => { ctx.lineWidth = (b.w + .2) * lw; ctx.beginPath(); ctx.moveTo(n.x + b.x, n.y + b.y); ctx.quadraticCurveTo(n.x + b.cx, n.y + b.cy, n.x + b.ex, n.y + b.ey); ctx.stroke(); }); });
       if (dt && clock > nextSpark) { nextSpark = clock + 900 + rnd() * 1400; bursts.push({ s: mesh[Math.floor(rnd() * mesh.length)], t: 0, life: 1600, size: 7, c: 'n' }); }
       Object.values(N).forEach(n => {
         const target = (n.on || 0) > 0 ? 1 : [...n.nb].some(o => o.on > 0) ? .35 : [...n.near].some(o => o.on > 0) ? .15 : 0;
         n.glow += (target - n.glow) * Math.min(1, sec * (target > n.glow ? 8 : 2.5));
         if (n.on > 0 && !(n.lit > clock - 200)) n.fl = clock;   // 새로 켜질 때만 번쩍
         if (n.on > 0) n.lit = clock;
-        if (n.glow > .02) { stamp(n.x, n.y, SP.w, n.size, n.glow * .6); stamp(n.x, n.y, SP.r, n.size * 3.2 * (.8 + .2 * pop(n)), Math.min(1, n.glow * pop(n))); stamp(n.x, n.y, SP.r, n.size * 1.4, n.glow); stamp(n.x, n.y, SP.r, n.size * .7, n.glow); }
+        if (n.glow > .02) { const g = n.glow * n.int * .85; stamp(n.x, n.y, SP.w, n.size, g * .5); stamp(n.x, n.y, SP.r, n.size * 3.2 * (.8 + .2 * pop(n)), Math.min(1, g * pop(n))); stamp(n.x, n.y, SP.r, n.size * 1.4, g); stamp(n.x, n.y, SP.r, n.size * .7, g); }
       });
       // 이름은 켜졌을 때만. 폰에서도 읽히게 화면 기준 12px 이상
       ctx.globalCompositeOperation = 'source-over'; ctx.textAlign = 'center';
@@ -1747,6 +1748,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       for (let i = 0; i < 6; i++) bursts.push({ s: e.strands[i % 2], t: -rnd() * .5, life: dur * .8, size: 9 + rnd() * 6 });
       (e.twigs || []).forEach(w => { for (let i = 0; i < 2; i++) { const life = Math.max(600, dur * .5); bursts.push({ s: w, t: -(dur * .8 * (.5 + rnd() * .4)) / life, life, size: 7 + rnd() * 4, to: w.b }); } });   // 가운데서 갈라져 작은 뉴런으로
       await wait(track, dur); e.on--;
+      if (!track.dead && !(e.b.on > 0)) (async () => { e.b.on = (e.b.on || 0) + 1; await wait(track, 1100); e.b.on--; })();   // 11-06 데이터가 닿은 뉴런은 따로 켜는 단계가 없어도 잠깐 켜짐
     }
     async function hold(track, id, ms) { const n = N[id]; if (track.dead || !n) return; n.on = (n.on || 0) + 1; await wait(track, ms); n.on--; }
     async function play(t, list) {
