@@ -81,48 +81,13 @@
     ]
   },
   "intraday": {
-    "time": "11:15",
+    "time": "11:30",
     "pool": 240,
     "analyzed_new": 30,
-    "passed": 16,
+    "passed": 17,
     "kept_prep": false
   },
   "candidates": [
-    {
-      "code": "068270",
-      "name": "셀트리온",
-      "close": 215000,
-      "ret5": 0.128,
-      "ret20": 0.1774,
-      "rsi14": 76.7,
-      "vol20": 0.416,
-      "foreign_net": -34655045950,
-      "inst_net": 336098397300,
-      "score": 1.0,
-      "news": [
-        {
-          "date": "11-06",
-          "title": "[바이오시밀러 산업 전망] 미국·중남미 시장 공략 확대…셀트리온·삼...",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "[CEO&뉴스] 바이오시밀러로 키운 셀트리온, 서정진 회장의 다음 승부수...",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "글로벌 시밀러 판매 호조에…셀트리온, 롯데바이오와 생산위탁 손 잡나",
-          "risk": false
-        }
-      ],
-      "price": 211500,
-      "chg": -0.0163,
-      "activity": 2.1,
-      "foreign_today": 0,
-      "inst_today": 6556500000,
-      "exchange": "KOSPI"
-    },
     {
       "code": "028050",
       "name": "삼성E&A",
@@ -133,7 +98,7 @@
       "vol20": 0.931,
       "foreign_net": -41290385000,
       "inst_net": 41663565700,
-      "score": 0.975,
+      "score": 1.0,
       "news": [
         {
           "date": "11-06",
@@ -151,11 +116,11 @@
           "risk": false
         }
       ],
-      "price": 61100,
-      "chg": -0.0498,
-      "activity": 1.42,
-      "foreign_today": 8126300000,
-      "inst_today": 1955200000,
+      "price": 61500,
+      "chg": -0.0435,
+      "activity": 1.35,
+      "foreign_today": 8179500000,
+      "inst_today": 1968000000,
       "exchange": "KOSPI"
     },
     {
@@ -168,58 +133,26 @@
       "vol20": 0.357,
       "foreign_net": -10341050025,
       "inst_net": 34011615850,
-      "score": 0.835,
+      "score": 0.807,
       "news": [
         {
           "date": "11-06",
-          "title": "'박영현 의존도 어쩌나' 비상 걸린 KT 불펜, '원태인 공백' 삼성 대안은...",
+          "title": "'KS 접전'이라고? KT는 믿는다, '138억+우승 반지 8개' FA 트리오",
           "risk": false
         },
         {
           "date": "11-06",
-          "title": "KT, 부산불꽃축제 통신망 점검…5G SA로 안전관제 지원",
+          "title": "KT, 부산불꽃축제 통신망 특별대책 가동 … 임시기지국 19곳·무선 CCTV 1...",
           "risk": false
         },
         {
           "date": "11-06",
-          "title": "KT, 부산 광안리 '불꽃축제' 앞두고 네트워크 집중 관리",
+          "title": "KT, 부산불꽃축제 특별 소통 대책 가동",
           "risk": false
         }
       ],
       "foreign_today": 4738000000,
       "inst_today": 2678000000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "271560",
-      "name": "오리온",
-      "close": 121300,
-      "ret5": 0.0716,
-      "ret20": 0.1433,
-      "rsi14": 71.0,
-      "vol20": 0.219,
-      "foreign_net": -4793765300,
-      "inst_net": 11913421700,
-      "score": 0.785,
-      "news": [
-        {
-          "date": "11-06",
-          "title": "오리온, 중국·러시아서 잘 버네…주주에게 얼마 돌려줄까",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "아트박스, 오리온과 '포카칩 황치즈맛 게왹이 에디션' 프로모션",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "하나증권 \"AI 투심 위축에 필수소비재 순환매 기대감, 관련주 KT&G 오리온...",
-          "risk": false
-        }
-      ],
-      "foreign_today": 0,
-      "inst_today": 1091700000,
       "exchange": "KOSPI"
     },
     {
@@ -232,7 +165,7 @@
       "vol20": 0.388,
       "foreign_net": -26939614825,
       "inst_net": 50135848275,
-      "score": 0.62,
+      "score": 0.67,
       "news": [
         {
           "date": "11-06",
@@ -259,7 +192,7 @@
       "vol20": 0.405,
       "foreign_net": -1285190625,
       "inst_net": 2848469450,
-      "score": 0.595,
+      "score": 0.636,
       "news": [],
       "foreign_today": 0,
       "inst_today": 515850000,
@@ -275,7 +208,7 @@
       "vol20": 0.652,
       "foreign_net": -49256342750,
       "inst_net": 90823582500,
-      "score": 0.595,
+      "score": 0.636,
       "news": [
         {
           "date": "11-06",
@@ -293,11 +226,11 @@
           "risk": false
         }
       ],
-      "price": 350000,
-      "chg": -0.0385,
-      "activity": 1.11,
+      "price": 351500,
+      "chg": -0.0343,
+      "activity": 1.08,
       "foreign_today": 0,
-      "inst_today": 1400000000,
+      "inst_today": 1406000000,
       "exchange": "KOSPI"
     },
     {
@@ -310,10 +243,26 @@
       "vol20": 0.346,
       "foreign_net": -77847544350,
       "inst_net": 94902336075,
-      "score": 0.532,
+      "score": 0.58,
       "news": [],
       "foreign_today": 0,
       "inst_today": 1896850000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "161390",
+      "name": "한국타이어앤테크놀로지",
+      "close": 64100,
+      "ret5": 0.1246,
+      "ret20": 0.063,
+      "rsi14": 62.7,
+      "vol20": 0.487,
+      "foreign_net": -2748968800,
+      "inst_net": 14572441050,
+      "score": 0.523,
+      "news": [],
+      "foreign_today": 0,
+      "inst_today": 256400000,
       "exchange": "KOSPI"
     },
     {
@@ -326,7 +275,7 @@
       "vol20": 0.418,
       "foreign_net": 8185349000,
       "inst_net": -8063610575,
-      "score": 0.443,
+      "score": 0.489,
       "news": [
         {
           "date": "11-06",
@@ -358,7 +307,7 @@
       "vol20": 0.26,
       "foreign_net": 9727405555,
       "inst_net": 4610992475,
-      "score": 0.418,
+      "score": 0.455,
       "news": [
         {
           "date": "11-06",
@@ -381,6 +330,70 @@
       "exchange": "KOSPI"
     },
     {
+      "code": "004020",
+      "name": "현대제철",
+      "close": 29000,
+      "ret5": 0.1006,
+      "ret20": 0.0229,
+      "rsi14": 52.5,
+      "vol20": 0.619,
+      "foreign_net": -329359625,
+      "inst_net": 18073219625,
+      "score": 0.409,
+      "news": [
+        {
+          "date": "11-06",
+          "title": "현대제철, 사내 역사 기록 플랫폼 'H.ARCHIVE' 개설…70년 발자취 보존",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "판가 올린 포스코·현대제철 ‘숨통’…원료탄 급등에 4분기 시험대",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "현대제철, 디지털 아카이브 플랫폼 'H.ARCHIVE' 개설",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 87000000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "086450",
+      "name": "동국제약",
+      "close": 24500,
+      "ret5": 0.0316,
+      "ret20": 0.0699,
+      "rsi14": 58.6,
+      "vol20": 0.445,
+      "foreign_net": -1389446625,
+      "inst_net": 9162721950,
+      "score": 0.307,
+      "news": [
+        {
+          "date": "11-06",
+          "title": "[민주 약국] 동아제약·메타비아·동국제약",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "동국제약 센텔리안24, 영국 부츠 입점…유럽 시장 공략 확대",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "동국제약 센텔리안24, 영국 거점으로 유럽 주요 시장 유통망 확대",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 73500000,
+      "exchange": "KOSDAQ"
+    },
+    {
       "code": "034220",
       "name": "LG디스플레이",
       "close": 7460,
@@ -390,7 +403,7 @@
       "vol20": 0.394,
       "foreign_net": 1772447860,
       "inst_net": 2438029420,
-      "score": 0.228,
+      "score": 0.227,
       "news": [
         {
           "date": "11-06",
@@ -412,7 +425,7 @@
       "vol20": 0.837,
       "foreign_net": -18097403575,
       "inst_net": 15329505750,
-      "score": 0.101,
+      "score": 0.159,
       "news": [
         {
           "date": "11-05",
@@ -439,7 +452,7 @@
       "vol20": 1.06,
       "foreign_net": -5204568960,
       "inst_net": -190548385,
-      "score": 0.975,
+      "score": 0.977,
       "news": [
         {
           "date": "11-06",
@@ -457,10 +470,10 @@
           "risk": false
         }
       ],
-      "price": 6700,
-      "chg": 0.0152,
-      "activity": 10.81,
-      "foreign_today": 227800000,
+      "price": 6730,
+      "chg": 0.0197,
+      "activity": 9.93,
+      "foreign_today": 228820000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -474,7 +487,7 @@
       "vol20": 1.058,
       "foreign_net": -21700241050,
       "inst_net": 22160192500,
-      "score": 0.962,
+      "score": 0.909,
       "news": [
         {
           "date": "11-06",
@@ -492,42 +505,45 @@
           "risk": false
         }
       ],
-      "price": 191900,
-      "chg": 0.0079,
-      "activity": 4.6,
-      "foreign_today": 5565100000,
+      "price": 193000,
+      "chg": 0.0137,
+      "activity": 4.35,
+      "foreign_today": 5597000000,
       "inst_today": 0,
       "exchange": "KOSPI"
     },
     {
-      "code": "053800",
-      "name": "안랩",
-      "close": 97500,
-      "ret5": -0.0152,
-      "ret20": 0.2695,
-      "rsi14": 53.8,
-      "vol20": 1.574,
-      "foreign_net": -7062631750,
-      "inst_net": -4827086750,
-      "score": 0.772,
+      "code": "030530",
+      "name": "원익홀딩스",
+      "close": 26550,
+      "ret5": -0.0701,
+      "ret20": -0.0813,
+      "rsi14": 50.1,
+      "vol20": 1.285,
+      "foreign_net": 18241113425,
+      "inst_net": 7570233575,
+      "score": 0.83,
       "news": [
         {
-          "date": "11-05",
-          "title": "[아시아AI대상]안랩, AI 네이티브 보안으로 위협 분석부터 대응까지",
+          "date": "11-06",
+          "title": "[속보] 원익홀딩스, 정적 VI 발동가 25,800원…해제 후 집계가는 24,550원",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "[포토] 안랩, 아시아AI대상 '아시아경제대표상' 수상",
+          "title": "원익홀딩스 주가 3만원선 아래로 '털썩'…이틀째 약세, 코스닥도 4%대 급...",
           "risk": false
         },
         {
-          "date": "11-05",
-          "title": "[OT 보안 인사이트 2026] 안랩 \"5차 산업혁명 시대, OT 보안 현 주소는\"",
+          "date": "11-04",
+          "title": "원익홀딩스 주가, 11월 4일 30,100원 2,250원 하락",
           "risk": false
         }
       ],
-      "foreign_today": 5265000000,
+      "price": 28500,
+      "chg": 0.0575,
+      "activity": 2.62,
+      "foreign_today": 1054500000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
