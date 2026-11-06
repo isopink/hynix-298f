@@ -77,7 +77,7 @@ def plan_buy(code, conf, price, account, p=None, r=None, regime=None, today_chan
             limits[f"{label}는 " + "·".join(etf["regimes"]) + " 국면만"] = 0
         if C.buys_today(code) >= etf.get("max_buys_per_day", 99):
             limits[f"{label}는 하루 {etf['max_buys_per_day']}번만"] = 0
-        if (f := C.etf_wait(code, p)):   # 11-06 S.Lee: KODEX 200 은 15:00 이후만
+        if (f := C.etf_wait(code, p)):   # 11-06 S.Lee: KODEX 200 15:00 · 인버스 10:00 이후만
             limits[f"{label}는 {f} 이후만 매매"] = 0
     if held:   # 11-05 보유 종목 추가 매수: 정식 매수 기준 이상 + 평단 이상(이익 중)일 때만, 목표 비중까지
         ao = p["decision"].get("add_on") or {}
@@ -134,7 +134,7 @@ def plan_sell(code, conf, price, account, p=None, rule_exit=False):
     hold = not rule_exit and have and C.dip_held(code)   # 11-06 급락일 예외 매수분은 규칙 매도만 (반등을 기다리는 매수라 확신도로 중간에 팔지 않음)
     if hold:
         qty = 0
-    wait = not rule_exit and have and C.etf_wait(code, p)   # 11-06 KODEX 200 판단 매도도 15:00 이후만
+    wait = not rule_exit and have and C.etf_wait(code, p)   # 11-06 시장 ETF 판단 매도도 trade_from 이후만
     if wait:
         qty = 0
     return {"side": "매도", "code": code, "qty": qty, "price": price, "amount": qty * price, "held_qty": have,

@@ -26,7 +26,9 @@ P["decision"]["sell_min_confidence"] = 0.60
 P["decision"]["min_weight"], P["decision"]["max_weight"] = 0.10, 0.20   # 수량 계산 테스트는 예전 크기(10~20%)로 고정
 P["regime_cap"]["하락"] = 0.50                    # 국면 상한 테스트는 하락 50% 기준으로 고정
 P["decision"]["probe"] = {**P["decision"].get("probe", {}), "enabled": False}   # 기존 테스트는 소액 매수 구간 없이 (아래 전용 테스트에서 켬)
-P["index"].update(regimes=["상승", "횡보"], trade_from=None, no_stop=False)   # 기존 지수 테스트는 11-06 전 규칙으로 (새 규칙은 아래 전용 테스트에서 실제 설정으로)
+P["index"].update(regimes=["상승", "횡보"], trade_from=None, no_stop=False)
+P["inverse"].update(regimes=["하락"], trade_from=None)
+P["inverse"].pop("stop_loss_pct", None)   # 기존 지수 테스트는 11-06 전 규칙으로 (새 규칙은 아래 전용 테스트에서 실제 설정으로)
 
 
 def acc(cash=50_000_000, holdings=()):
@@ -314,7 +316,7 @@ def test_inverse_quick_exit_and_one_buy_a_day():
 
 
 def test_monitor_retries_same_position_after_cooldown():
-    """감시: 같은 매수 건은 실행 뒤 10분 안엔 다시 안 띄움, 지나면 다시 (하루 1번 제한 없음). 장 전엔 한 번만."""
+    """감시: 같은 매수 건은 실행 뒤 10분 안엔 다시 안 띄움, 지나면 다시 (하루 1번 제한 없음). 09:30 전엔 안 띄움 (11-06)."""
     import monitor
     old = (C.POSITIONS, monitor.STATE, monitor.holdings, monitor.subprocess.run, monitor.time.time, C.now)
     calls, clock = [], {"t": 1_000_000.0, "now": datetime(2026, 11, 4, 10, 0, tzinfo=C.KST)}
@@ -336,9 +338,11 @@ def test_monitor_retries_same_position_after_cooldown():
         os.remove(monitor.STATE); calls.clear()
         clock["now"] = datetime(2026, 11, 4, 8, 40, tzinfo=C.KST)
         monitor.check_once(); clock["t"] += 15 * 60; monitor.check_once()
-        assert len(calls) == 1                                                 # 장 전엔 한 번만
+        assert len(calls) == 0                                                 # 11-06 09:30 전엔 매도 실행 안 띄움
         clock["now"] = datetime(2026, 11, 4, 9, 6, tzinfo=C.KST)
-        monitor.check_once(); assert len(calls) == 2                           # 09:05 뒤 남아 있으면 다시
+        monitor.check_once(); assert len(calls) == 0
+        clock["now"] = datetime(2026, 11, 4, 9, 30, tzinfo=C.KST)
+        monitor.check_once(); assert len(calls) == 1                           # 09:30 부터
     finally:
         C.POSITIONS, monitor.STATE, monitor.holdings, monitor.subprocess.run, monitor.time.time, C.now = old
 
@@ -696,15 +700,15 @@ def test_index_dip_hold_no_judgment_sell():
         os.remove(C.POSITIONS)
         C.POSITIONS = old_pos
 
-def test_stop_held_until_0910():
-    """11-06 S.Lee: 손절은 09:10 부터 (장 전·장 초반 투매 구간 보류). 익절은 장 전부터 그대로."""
+def test_exits_held_until_0930():
+    """11-06 S.Lee: 09:30 전엔 손절·익절·보유일에 걸려도 매도 보류 (장 전·장 초반 투매 구간)."""
     import monitor
     old = (C.POSITIONS, C.now)
     try:
         C.POSITIONS = os.path.join(tmp, "positions.json")
         C.write_json(C.POSITIONS, {"A": {"name": "A", "entry_date": C.today().isoformat()}, "B": {"name": "B", "entry_date": C.today().isoformat()}})
         hs = [{**pos("A", 10, 10_000), "price": 9_000}, {**pos("B", 10, 10_000), "price": 12_000}]   # A 손절(−10%), B 익절(+20%)
-        for hm, want in [((8, 40), {"B"}), ((9, 5), {"B"}), ((9, 10), {"A", "B"})]:
+        for hm, want in [((8, 40), set()), ((9, 10), set()), ((9, 29), set()), ((9, 30), {"A", "B"})]:   # 11-06 09:30 전엔 전부 보류
             C.now = lambda hm=hm: datetime(2026, 11, 6, *hm, tzinfo=C.KST)
             assert set(monitor.triggers(hs)) == want, (hm, monitor.triggers(hs))
     finally:
@@ -802,6 +806,27 @@ def test_index_debate_after_1500_no_stop():
         C.now, C.params, C.POSITIONS = real, real_p, old_pos
         if os.path.exists(os.path.join(tmp, "positions.json")):
             os.remove(os.path.join(tmp, "positions.json"))
+
+def test_inverse_debate_after_1000_stop3():
+    """11-06 S.Lee: 인버스는 국면 제한 없이 토론으로, 매수·판단 매도는 10:00 이후만, 손절 −3% (실제 설정)."""
+    q = C.params()
+    q["competition"]["start"], q["week_factor"]["1"] = C.today().isoformat(), 1.0
+    iv, real = "114800", C.now
+    try:
+        open(C.JOURNAL, "w").close()
+        C.now = lambda: datetime(2026, 11, 6, 9, 45, tzinfo=C.KST)
+        C.journal("regime", regime="상승", cap=q["regime_cap"]["상승"])
+        plan = sizing.plan_buy(iv, 0.85, 5_000, acc(), q, R, today_change=0.01)
+        assert plan["qty"] == 0 and "10:00 이후" in plan["limited_by"], plan
+        a = acc(holdings=[{**pos(iv, 1000, 5_000), "name": "KODEX 인버스"}])
+        assert sizing.plan_sell(iv, 0.90, 5_000, a, q)["qty"] == 0
+        C.now = lambda: datetime(2026, 11, 6, 10, 0, tzinfo=C.KST)
+        plan = sizing.plan_buy(iv, 0.85, 5_000, acc(), q, R, today_change=0.01)
+        assert plan["qty"] > 0 and plan["stop"] == round(5_000 * 0.97), plan   # 상승 국면이어도 토론으로
+        assert C.exit_levels(iv, q)[0] == -0.03
+        assert sizing.plan_buy(iv, 0.85, 5_000, acc(), q, R, today_change=0.05)["qty"] == 0   # +4% 넘게 오른 날 추격 금지
+    finally:
+        C.now = real
 
 def test_partial_sell_once_a_day():
     """11-05 HMM: 15분마다 절반씩 팔던 문제 → 분할은 하루 1번, 그 뒤엔 0.65 이상·규칙 매도만 전량."""

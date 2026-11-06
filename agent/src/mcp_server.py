@@ -104,10 +104,10 @@ def get_briefing() -> str:
                    f"매수 기준을 넘으면 종목당 {dp['weight']:.0%} (코드가 강제), 손절·익절·보유일은 일반 종목과 같음")
     if (inv := p.get("inverse")) and inv.get("enabled"):
         names = ", ".join(f"{n}({c})" for c, n in inv["codes"].items())
-        ctx.append(f"- 🔻인버스 {names}: 시장이 내리면 오르는 ETF. 후보에 매일 따로 들어옴. 오늘 국면이 {'·'.join(inv['regimes'])}일 때만 매수 가능, "
+        ctx.append(f"- 🔻인버스 {names}: 시장이 내리면 오르는 ETF. 후보에 매일 따로 들어옴. 국면 제한 없이 매수 측 ⇄ 매도 측 토론과 확신도 기준으로 결정 (11-06), "
+                   f"매수·판단 매도는 {inv.get('trade_from', '09:00')} 이후 회차에서만 (그 전엔 plan_order 가 qty 0 → record_decision 보유/관망), "
                    f"주식 비중 상한과 별도로 {inv['weight_cap']:.0%}까지, 하루 {inv.get('max_buys_per_day', '-')}번만 매수 (코드가 강제). "
-                   f"짧게 치고 빠짐: 수수료·세금 뺀 순익 {inv['take_profit_net_pct']:+.1%}(평단 대비 {C.gross_take(inv['take_profit_net_pct'], p, inv.get('sell_tax_rate')):+.2%})에 익절 · 최대 보유 {inv.get('max_hold_days', p['decision']['max_hold_days'])}거래일. "
-                   f"보유 중인데 국면이 바뀌면 매도 확신도를 높게 볼 것. "
+                   f"짧게 치고 빠짐: 수수료·세금 뺀 순익 {inv['take_profit_net_pct']:+.1%}(평단 대비 {C.gross_take(inv['take_profit_net_pct'], p, inv.get('sell_tax_rate')):+.2%})에 익절 · 손절 {inv.get('stop_loss_pct', p['decision']['stop_loss_pct']):.0%} · 최대 보유 {inv.get('max_hold_days', p['decision']['max_hold_days'])}거래일. "
                    f"단 인버스가 오늘 {inv.get('no_chase_change', 0):+.0%} 이상 오른 날(시장 급락)은 신규 매수 금지 (코드가 강제)")
     if (ix := p.get("index")) and ix.get("enabled"):
         names = ", ".join(f"{n}({c})" for c, n in ix["codes"].items())

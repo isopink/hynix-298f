@@ -25,7 +25,7 @@ def holdings():
     return broker.get().account()["holdings"]
 
 
-STOP_FROM = 910   # 손절은 09:10 부터 (익절·보유일은 장 전부터 그대로)
+TRADE_FROM = 930   # 11-06 S.Lee: 09:30 전엔 손절·익절·보유일에 걸려도 매도하지 않음 (09:10 손절 보류에서 넓힘)
 
 
 def triggers(hs):
@@ -37,16 +37,17 @@ def triggers(hs):
         if not m:
             continue
         key = f"{h['code']}@{m.get('entry_date')}/{m.get('stop')}/{m.get('take')}"
-        n = C.now()
         if m.get("stop") and h["price"] <= m["stop"]:
-            if n.hour * 100 + n.minute < STOP_FROM:   # 11-06 S.Lee: 장 전·장 초반 10분 투매 구간엔 손절 보류 (KODEX 200 이 시가 −8.6% 에 손절된 일)
-                print(f"  손절 보류 ({STOP_FROM // 100}:{STOP_FROM % 100:02d} 전): {h['name']} 현재가 {h['price']:,} ≤ 손절가 {m['stop']:,}", flush=True)
-                continue
             hit[h["code"]] = (key, f"{h['name']} 현재가 {h['price']:,} ≤ 손절가 {m['stop']:,}")
         elif m.get("take") and h["price"] >= m["take"]:
             hit[h["code"]] = (key, f"{h['name']} 현재가 {h['price']:,} ≥ 익절가 {m['take']:,}")
         elif m.get("entry_date") and C.business_days(m["entry_date"], C.today()) >= m.get("max_days", 99):
             hit[h["code"]] = (key, f"{h['name']} 보유 {C.business_days(m['entry_date'], C.today())}일 ≥ 최대 {m['max_days']}일")
+    n = C.now()
+    if hit and n.hour * 100 + n.minute < TRADE_FROM:   # 장 전·장 초반 투매 구간 (11-06 KODEX 200 이 시가 −8.6% 에 손절된 일)
+        for _, why in hit.values():
+            print(f"  매도 보류 ({TRADE_FROM // 100}:{TRADE_FROM % 100:02d} 전): {why}", flush=True)
+        return {}
     return hit
 
 

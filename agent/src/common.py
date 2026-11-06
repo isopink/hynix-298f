@@ -222,8 +222,8 @@ def dip_held(code):
 
 
 def etf_wait(code, p=None, t=None):
-    """11-06 S.Lee: KODEX 200 은 trade_from(15:00) 이후에만 매수·판단 매도. 아직이면 그 시각 문자열, 아니면 None."""
-    f = (index_etf(code, p or params()) or {}).get("trade_from")
+    """11-06 S.Lee: 시장 ETF 는 trade_from 이후에만 매수·판단 매도 (KODEX 200 15:00 · 인버스 10:00). 아직이면 그 시각 문자열, 아니면 None."""
+    f = (market_etf(code, p or params())[0] or {}).get("trade_from")
     return f if f and (t or now()).strftime("%H:%M") < f else None
 
 
@@ -314,7 +314,7 @@ def exit_levels(code, p=None, briefing=None):
     p = p or params()
     d, hv = p["decision"], high_vol(code, p, briefing)
     if etf := market_etf(code, p)[0]:
-        return d["stop_loss_pct"], gross_take(etf["take_profit_net_pct"], p, etf.get("sell_tax_rate")), etf.get("max_hold_days", d["max_hold_days"])
+        return etf.get("stop_loss_pct", d["stop_loss_pct"]), gross_take(etf["take_profit_net_pct"], p, etf.get("sell_tax_rate")), etf.get("max_hold_days", d["max_hold_days"])
     if hv:
         return hv["stop_loss_pct"], hv["take_profit_pct"], d["max_hold_days"]
     return d["stop_loss_pct"], d["take_profit_pct"], d["max_hold_days"]

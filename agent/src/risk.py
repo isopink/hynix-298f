@@ -110,8 +110,8 @@ def check(order, account, price, p=None, r=None):
             bad.append(("보유 수량", f"매도 {qty}주 > 보유 {have}주 (공매도 불가)"))
         if run_mode != "exit" and conf < p["decision"]["sell_min_confidence"] and not order.get("rule_exit"):
             bad.append(("확신도", f"{conf:.2f} < 매도 기준 {p['decision']['sell_min_confidence']:.2f}"))
-        if run_mode != "exit" and not order.get("rule_exit") and (f := C.etf_wait(code, p)):   # 11-06 S.Lee: KODEX 200 판단 매도도 15:00 이후만
-            bad.append(("지수 시간", f"KODEX 200 판단 매도는 {f} 이후에만"))
+        if run_mode != "exit" and not order.get("rule_exit") and (f := C.etf_wait(code, p)):   # 11-06 S.Lee: 시장 ETF 판단 매도도 trade_from 이후만
+            bad.append((f"{C.market_etf(code, p)[1]} 시간", f"{C.market_etf(code, p)[1]} 판단 매도는 {f} 이후에만"))
         if run_mode != "exit" and not order.get("rule_exit") and C.dip_held(code):   # 11-06 급락일 예외 매수분은 판단 매도 금지
             bad.append(("급락일 예외 보유", "급락일 예외로 산 지수 ETF 는 익절·손절·보유일 규칙 매도만"))
         cap_q, part = sizing.sell_qty(have, conf, p, order.get("rule_exit") or run_mode == "exit")
