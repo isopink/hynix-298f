@@ -5,7 +5,7 @@
   python run.py decide                09:30~15:15 15분마다  정기 판단 (trade_times 회차만 주문, 나머지는 view)
   python run.py exit --codes A,B      장중 감시가 손절·익절 조건을 보면 호출 (매도만)
   python run.py close                 15:45  계좌 조회 + 오늘 자산을 equity 에 기록
-  python run.py review                수 16:30 · 토 10:00  주간 회고 (보고서 초안 + 조정 제안, 11-06 수요일 중간 회고 추가)
+  python run.py review                수 15:50 · 토 10:00  주간 회고 (보고서 초안 + 조정 제안, 11-06 수요일 중간 회고 추가 → 16:00 조정이 기다렸다 바로 검토)
   python run.py tune                  평일 16:00     기준값 자동 조정 (src/tuning.py 가 검사 후 params.json 반영)
   python run.py monitor               08:30~15:20  손절·익절 감시 루프 (src/monitor.py)
   python run.py sync                  로그온부터 계속  push 된 코드를 1분 안에 받아 반영 (src/sync.py)
@@ -210,6 +210,12 @@ def main():
 
     trading = kind == "decide" and (C.trade_slot() or C.missed_trade())
     got = acquire()
+    if not got and kind == "tune":   # 11-06 S.Lee: 수요일은 15:50 중간 회고가 끝나길 기다렸다가 그 제안까지 보고 조정 (목요일 장부터 반영)
+        log("앞 실행(중간 회고 등)이 진행 중이라 기준값 조정을 최대 40분 기다림")
+        for _ in range(40 * 4):
+            time.sleep(15)
+            if (got := acquire()):
+                break
     if not got and trading:   # 매매 회차는 앞 실행이 끝날 때까지 기다림 (다음 회차 1분 전까지: 10분 간격이면 최대 9분)
         wait = max(1, C.interval_min() - 1)
         log(f"앞 실행이 진행 중이라 매매 회차를 최대 {wait}분 기다림")

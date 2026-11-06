@@ -17,8 +17,8 @@ $tasks = @(
   @{ Name = "Hynix298-close";    Time = "15:45"; Days = $wk;  Cmd = "`"$agent\run.bat`" close" },
   @{ Name = "Hynix298-tune";     Time = "16:00"; Days = $wk;  Cmd = "`"$agent\run.bat`" tune" },
   @{ Name = "Hynix298-review";   Time = "10:00"; Days = "SAT"; Cmd = "`"$agent\run.bat`" review" },
-  # 11-06 S.Lee: 수요일 장 마감·기준값 조정 뒤 중간 회고 (제안은 목요일 16:00 자동 조정이 검토)
-  @{ Name = "Hynix298-review-mid"; Time = "16:30"; Days = "WED"; Cmd = "`"$agent\run.bat`" review" }
+  # 11-06 S.Lee: 수요일 장 마감 기록 뒤 중간 회고. 16:00 기준값 조정이 끝나길 기다렸다 이 제안을 바로 검토 → 목요일 장부터 반영
+  @{ Name = "Hynix298-review-mid"; Time = "15:50"; Days = "WED"; Cmd = "`"$agent\run.bat`" review" }
 )
 
 # 예전 정기 판단 작업 (하루 3번) 정리
