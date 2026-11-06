@@ -81,8 +81,8 @@
     ]
   },
   "intraday": {
-    "time": "10:15",
-    "pool": 218,
+    "time": "10:30",
+    "pool": 219,
     "analyzed_new": 30,
     "passed": 12,
     "kept_prep": false
@@ -116,10 +116,10 @@
           "risk": false
         }
       ],
-      "price": 61000,
-      "chg": -0.0513,
-      "activity": 1.77,
-      "foreign_today": 3538000000,
+      "price": 59800,
+      "chg": -0.07,
+      "activity": 1.72,
+      "foreign_today": 3468400000,
       "inst_today": 0,
       "exchange": "KOSPI"
     },
@@ -133,21 +133,21 @@
       "vol20": 0.357,
       "foreign_net": -10341050025,
       "inst_net": 34011615850,
-      "score": 0.804,
+      "score": 0.872,
       "news": [
         {
           "date": "11-06",
-          "title": "KT, 부산불꽃축제 통신망 보강…\"5G 기술로 인파 안전관제 지원\"",
+          "title": "우상호 지사, 원주에 KT·드론기업 등 미래산업 거점으로",
           "risk": false
         },
         {
           "date": "11-06",
-          "title": "이제 ‘라팍’이다→최대 변수 ‘홈런’…경기당 삼성 1.17개-KT 1.14개, 누...",
+          "title": "KT, 부산불꽃축제 특별 소통 대책 가동…'통신·안전 지원'",
           "risk": false
         },
         {
           "date": "11-06",
-          "title": "KT, 5G SA 기술로 부산불꽃축제 통신·안전 지원",
+          "title": "[양자보안특허]③ 한국 양자보안 특허 어디까지 왔나…SKT·KT·삼성·LG 동...",
           "risk": false
         }
       ],
@@ -156,71 +156,26 @@
       "exchange": "KOSPI"
     },
     {
-      "code": "012330",
-      "name": "현대모비스",
-      "close": 363500,
-      "ret5": 0.0239,
-      "ret20": -0.0215,
-      "rsi14": 51.1,
-      "vol20": 0.652,
-      "foreign_net": -49256342750,
-      "inst_net": 90823582500,
-      "score": 0.667,
+      "code": "035900",
+      "name": "JYP Ent.",
+      "close": 39500,
+      "ret5": 0.0233,
+      "ret20": 0.0207,
+      "rsi14": 52.6,
+      "vol20": 0.784,
+      "foreign_net": 5263187625,
+      "inst_net": 4035326500,
+      "score": 0.745,
       "news": [
         {
-          "date": "11-06",
-          "title": "연승 끊겼어도 다시 달린다!…삼성, 현대모비스 꺾고 11경기 만에 10승 ...",
-          "risk": false
-        },
-        {
           "date": "11-05",
-          "title": "프로농구 삼성, 현대모비스 잡고 11경기 만에 10승",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "꼴찌 이미지 벗은 삼성, 벌써 10승... 현대모비스 81-76 제압 '다시 승리...",
+          "title": "JYP Ent., 11일 오후 4시 3분기 실적 컨퍼런스콜",
           "risk": false
         }
       ],
-      "price": 347500,
-      "chg": -0.0453,
-      "activity": 1.24,
-      "foreign_today": 0,
-      "inst_today": 695000000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "033780",
-      "name": "KT&G",
-      "close": 196900,
-      "ret5": 0.0192,
-      "ret20": 0.1018,
-      "rsi14": 66.8,
-      "vol20": 0.247,
-      "foreign_net": -32738600400,
-      "inst_net": 48809085800,
-      "score": 0.627,
-      "news": [
-        {
-          "date": "11-06",
-          "title": "코스피, 급락에도 KT&G는 웃었다...최대 실적에 ‘5조 환원’ [주가동향...",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "\"KT&G, 4분기 주춤? 상관없다…실적 꺾여도 배당금 매년 두 자릿수 쏜다...",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "\"주주환원 5조 풀고 배당 두 자릿수 성장\"…키움證, KT&G 목표가 26만400...",
-          "risk": false
-        }
-      ],
-      "foreign_today": 0,
-      "inst_today": 393800000,
-      "exchange": "KOSPI"
+      "foreign_today": 1066500000,
+      "inst_today": 0,
+      "exchange": "KOSDAQ"
     },
     {
       "code": "316140",
@@ -232,7 +187,7 @@
       "vol20": 0.346,
       "foreign_net": -77847544350,
       "inst_net": 94902336075,
-      "score": 0.549,
+      "score": 0.596,
       "news": [],
       "foreign_today": 0,
       "inst_today": 482250000,
@@ -248,7 +203,7 @@
       "vol20": 0.26,
       "foreign_net": 9727405555,
       "inst_net": 4610992475,
-      "score": 0.529,
+      "score": 0.574,
       "news": [
         {
           "date": "11-06",
@@ -280,7 +235,7 @@
       "vol20": 0.388,
       "foreign_net": -26939614825,
       "inst_net": 50135848275,
-      "score": 0.471,
+      "score": 0.511,
       "news": [
         {
           "date": "11-06",
@@ -302,7 +257,7 @@
       "vol20": 0.418,
       "foreign_net": 8185349000,
       "inst_net": -8063610575,
-      "score": 0.431,
+      "score": 0.468,
       "news": [
         {
           "date": "11-06",
@@ -334,7 +289,7 @@
       "vol20": 0.394,
       "foreign_net": 1772447860,
       "inst_net": 2438029420,
-      "score": 0.275,
+      "score": 0.298,
       "news": [
         {
           "date": "11-06",
@@ -347,6 +302,28 @@
       "exchange": "KOSPI"
     },
     {
+      "code": "232680",
+      "name": "라온로보틱스",
+      "close": 11160,
+      "ret5": 0.1885,
+      "ret20": 0.0295,
+      "rsi14": 54.3,
+      "vol20": 1.372,
+      "foreign_net": -1460741580,
+      "inst_net": 2625158595,
+      "score": 0.787,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "[모닝 리포트] 라온로보틱스, 3분기 매출·영업익 '사상 최대'…이송로...",
+          "risk": false
+        }
+      ],
+      "foreign_today": 312480000,
+      "inst_today": 0,
+      "exchange": "KOSDAQ"
+    },
+    {
       "code": "053800",
       "name": "안랩",
       "close": 97500,
@@ -356,7 +333,7 @@
       "vol20": 1.574,
       "foreign_net": -7062631750,
       "inst_net": -4827086750,
-      "score": 0.745,
+      "score": 0.766,
       "news": [
         {
           "date": "11-05",
@@ -388,7 +365,7 @@
       "vol20": 1.438,
       "foreign_net": -3522036175,
       "inst_net": -2855454100,
-      "score": 0.373,
+      "score": 0.404,
       "news": [
         {
           "date": "11-03",
