@@ -789,6 +789,19 @@ def test_add_on_buy_only_when_in_profit():
     assert "추가 매수" in chk(9_500, 0.85) and "추가 매수" not in chk(10_500, 0.85) and "추가 매수" in chk(10_500, 0.57, p)
 
 
+def test_inverse_min_weight_in_falling_market():
+    """11-06 하락 국면 인버스: 소액 구간 확신도여도 최소 10%, 확신도 높으면 20%까지."""
+    open(C.JOURNAL, "w").close()
+    C.journal("regime", regime="하락", cap=P["regime_cap"]["하락"])
+    p = {**P, "decision": {**P["decision"], "probe": {"enabled": True, "band": 0.07, "weight_min": 0.02, "weight": 0.05}}}
+    lo = sizing.plan_buy("114800", 0.56, 1_000, acc(), p, R)
+    assert abs(lo["target_weight"] - 0.10) < 1e-9 and lo["qty"] > 0, lo
+    assert sizing.plan_buy("114800", 0.85, 1_000, acc(), p, R)["target_weight"] == 0.20
+    assert sizing.plan_buy("114800", 0.40, 1_000, acc(), p, R)["qty"] == 0          # 소액 하한 미만은 그대로 0
+    ok = [x for x, _ in risk.check({"code": "114800", "side": "매수", "qty": lo["qty"], "confidence": 0.56}, acc(), 1_000, p, R)]
+    assert "수량 계산 초과" not in ok and "확신도" not in ok, ok
+
+
 if __name__ == "__main__":
     fails = 0
     for n, f in list(globals().items()):

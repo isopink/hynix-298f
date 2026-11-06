@@ -61,6 +61,8 @@
     "codes": {"114800": "KODEX 인버스"},
     "regimes": ["하락"],
     "weight_cap": 0.20,
+    "min_weight": 0.10,
+    "_min_weight_note": "11-06 S.Lee: 하락 국면에서 보정 후 확신도가 소액 매수 하한 이상이면 인버스는 최소 이 비중 (소액 2%로만 사던 문제). 상한은 weight_cap",
     "max_buys_per_day": 1,
     "take_profit_net_pct": 0.015,
     "sell_tax_rate": 0.0,

@@ -48,6 +48,8 @@ def plan_buy(code, conf, price, account, p=None, r=None, regime=None, today_chan
     ix = C.index_etf(code, p)
     top = inv["weight_cap"] if inv else ix.get("weight_cap") if ix else None   # 인버스·지수(11-05)는 종목당 10% 대신 자기 한도 20%까지
     w = target_weight(conf, p, r, top=top)
+    if inv and w > 0 and inv.get("min_weight"):   # 11-06 하락 국면 인버스 최소 10% (소액 2%로만 들어가던 문제). 국면 제한은 아래에서 따로
+        w = max(w, min(inv["min_weight"], inv["weight_cap"]))
     dp = C.dip(code, p)
     xd = C.index_dip(code, today_change, p)   # 급락일 지수 예외: 국면과 상관없이, 하락 폭별 크기 (종목당 20% 예외)
     if xd:   # 11-05 S.Lee: 급락일엔 확신도 기준 없이 무조건 매수, 크기 = 하락 폭별 비중 × 확신도 비례 (0.80 이상이면 전부)
