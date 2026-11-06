@@ -685,11 +685,14 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   function liveEquity(snaps) {
     const byDay = d3.groups(snaps, s => kstDate(s.ts)).sort((a, b) => a[0] < b[0] ? -1 : 1);
     const json = new Map((BASE.equity || []).map(r => [r.date, r]));
-    const acc = new Map(); let regime = null, cap = null;
+    // 오늘 줄은 15:45 마감 전까지 equity.json 에 없으므로 직전 마감 값에서 시작하고, 오늘 판단이 있으면 그 값을 씀
+    const first = byDay.length ? byDay[0][0] : '', prior = (BASE.equity || []).filter(r => r.date < first).pop() || {};
+    const acc = new Map(); let regime = prior.regime ?? null, cap = prior.cap ?? null;
     return byDay.map(([date, rows]) => {
       let k = null;
       for (const s of rows) { acc.set(s.account, +s.total); if (s.kospi != null) k = +s.kospi; }
       const j = json.get(date); if (j) { regime = j.regime ?? regime; cap = j.cap ?? cap; k = k ?? j.kospi; }
+      if (DECISION.time && DECISION.time.slice(0, 10) === date) { regime = DECISION.regime ?? regime; cap = DECISION.cap ?? cap; }
       return { date, total: d3.sum([...acc.values()]) || INIT, kospi: k, regime, cap };   // 빈 KOSPI 는 derive 에서 채움
     });
   }
