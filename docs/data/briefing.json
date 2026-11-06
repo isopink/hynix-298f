@@ -81,80 +81,214 @@
     ]
   },
   "intraday": {
-    "time": "09:45",
-    "pool": 165,
+    "time": "10:00",
+    "pool": 218,
     "analyzed_new": 30,
-    "passed": 6,
+    "passed": 9,
     "kept_prep": false
   },
   "candidates": [
     {
-      "code": "389260",
-      "name": "대명에너지",
-      "close": 14090,
-      "ret5": 0.3627,
-      "ret20": 0.0414,
-      "rsi14": 65.5,
-      "vol20": 1.097,
-      "foreign_net": -1212057320,
-      "inst_net": 57848610,
+      "code": "128940",
+      "name": "한미약품",
+      "close": 465000,
+      "ret5": 0.1757,
+      "ret20": -0.1292,
+      "rsi14": 60.1,
+      "vol20": 0.821,
+      "foreign_net": -52059546000,
+      "inst_net": 108084585250,
       "score": 1.0,
       "news": [
         {
           "date": "11-06",
-          "title": "대동기어 회전율 88%…금양그린파워·대명에너지도 50% 넘어",
+          "title": "한미약품, MSD 기술수출 MASH 신약 2b상 기대 상회-NH투자證",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "한미약품 '에페' 1000억 매출 방정식…효능·가격·공급망에 답 있다",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "대명에너지 주가, 11월 5일 14,140원 2.84% 상승",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "한진칼우 회전율 126%…대동기어·대명에너지 거래 집중",
+          "title": "지씨씨엘, 한미약품 '에페' 개발에 약동학 분석 및 센트럴랩 서비스 통...",
           "risk": false
         }
       ],
-      "price": 15000,
-      "chg": 0.0608,
-      "activity": 28.52,
-      "foreign_today": 585000000,
-      "inst_today": 0,
-      "exchange": "KOSDAQ"
+      "price": 469500,
+      "chg": 0.0097,
+      "activity": 4.16,
+      "foreign_today": 0,
+      "inst_today": 2817000000,
+      "exchange": "KOSPI"
     },
     {
-      "code": "008830",
-      "name": "대동기어",
-      "close": 6500,
-      "ret5": 0.1797,
-      "ret20": 0.0317,
-      "rsi14": 59.8,
-      "vol20": 1.06,
-      "foreign_net": -5204568960,
-      "inst_net": -190548385,
-      "score": 0.667,
+      "code": "028050",
+      "name": "삼성E&A",
+      "close": 64800,
+      "ret5": 0.0351,
+      "ret20": 0.3292,
+      "rsi14": 67.2,
+      "vol20": 0.931,
+      "foreign_net": -41290385000,
+      "inst_net": 41663565700,
+      "score": 0.838,
       "news": [
         {
           "date": "11-06",
-          "title": "대동기어 회전율 88%…금양그린파워·대명에너지도 50% 넘어",
+          "title": "[건설 CEO 성적표] [삼성E&A] 남궁홍 대표, 연임 첫해 수주·영업익 '결실...",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "한진칼우 회전율 126%…대동기어·대명에너지 거래 집중",
+          "title": "삼성E&A, '아디펙 2026' 참가…'임팩트 챔피언' 선정",
           "risk": false
         },
         {
           "date": "11-05",
-          "title": "대동기어 주가, 11월 5일 장중 6,900원 10.93% 상승",
+          "title": "삼성E&A, 아부다비 '아디펙 2026'서 에너지 기술 선보여…'임팩트 챔피언...",
           "risk": false
         }
       ],
-      "price": 6650,
-      "chg": 0.0076,
-      "activity": 17.02,
-      "foreign_today": 152950000,
+      "price": 59400,
+      "chg": -0.0762,
+      "activity": 1.77,
+      "foreign_today": 3445200000,
+      "inst_today": 0,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "030200",
+      "name": "KT",
+      "close": 51500,
+      "ret5": 0.1232,
+      "ret20": 0.0078,
+      "rsi14": 60.4,
+      "vol20": 0.357,
+      "foreign_net": -10341050025,
+      "inst_net": 34011615850,
+      "score": 0.784,
+      "news": [
+        {
+          "date": "11-06",
+          "title": "KT, 부산불꽃축제 통신 대책 가동... 임시기지국 19곳 운영",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "KT, 부산불꽃축제 특별 대책…5G SA 활용",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "KT, 부산불꽃축제 통신 대책 가동…임시기지국 19곳·무선 CCTV 지원",
+          "risk": false
+        }
+      ],
+      "foreign_today": 1236000000,
+      "inst_today": 360500000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "316140",
+      "name": "우리금융지주",
+      "close": 32150,
+      "ret5": 0.0321,
+      "ret20": -0.0374,
+      "rsi14": 53.0,
+      "vol20": 0.346,
+      "foreign_net": -77847544350,
+      "inst_net": 94902336075,
+      "score": 0.486,
+      "news": [],
+      "foreign_today": 0,
+      "inst_today": 482250000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "323410",
+      "name": "카카오뱅크",
+      "close": 20750,
+      "ret5": 0.0608,
+      "ret20": 0.0448,
+      "rsi14": 59.9,
+      "vol20": 0.26,
+      "foreign_net": 9727405555,
+      "inst_net": 4610992475,
+      "score": 0.459,
+      "news": [
+        {
+          "date": "11-06",
+          "title": "카카오뱅크, AI 콜봇 도입…금융사기 의심 거래 이체취소율 54%↑",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "정답 딱 '두 글자'…카카오뱅크 AI 이모지 퀴즈 정답 (11월 6일)",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "최대 실적 카카오뱅크…ROE 15% 달성까지 과제 산적",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 62250000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "034220",
+      "name": "LG디스플레이",
+      "close": 7460,
+      "ret5": 0.004,
+      "ret20": -0.0969,
+      "rsi14": 43.2,
+      "vol20": 0.394,
+      "foreign_net": 1772447860,
+      "inst_net": 2438029420,
+      "score": 0.27,
+      "news": [
+        {
+          "date": "11-06",
+          "title": "LG디스플레이, 4세대 탠덤 WOLED 앞세워 中 프리미엄 게이밍 모니터 시장...",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 29840000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "053800",
+      "name": "안랩",
+      "close": 97500,
+      "ret5": -0.0152,
+      "ret20": 0.2695,
+      "rsi14": 53.8,
+      "vol20": 1.574,
+      "foreign_net": -7062631750,
+      "inst_net": -4827086750,
+      "score": 0.676,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "[아시아AI대상]안랩, AI 네이티브 보안으로 위협 분석부터 대응까지",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "[포토] 안랩, 아시아AI대상 '아시아경제대표상' 수상",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "[OT 보안 인사이트 2026] 안랩 \"5차 산업혁명 시대, OT 보안 현 주소는\"",
+          "risk": false
+        }
+      ],
+      "foreign_today": 2535000000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -168,7 +302,7 @@
       "vol20": 1.438,
       "foreign_net": -3522036175,
       "inst_net": -2855454100,
-      "score": 0.583,
+      "score": 0.351,
       "news": [
         {
           "date": "11-03",
@@ -181,69 +315,9 @@
           "risk": false
         }
       ],
-      "foreign_today": 767250000,
-      "inst_today": 0,
+      "foreign_today": 0,
+      "inst_today": 69750000,
       "exchange": "KOSDAQ"
-    },
-    {
-      "code": "326030",
-      "name": "SK바이오팜",
-      "close": 91200,
-      "ret5": 0.1648,
-      "ret20": 0.2112,
-      "rsi14": 76.0,
-      "vol20": 0.568,
-      "foreign_net": -13011050200,
-      "inst_net": 56816398150,
-      "score": 1.0,
-      "news": [
-        {
-          "date": "11-06",
-          "title": "SK바이오팜, 세노바메이트 성장에도 예상 주당순익 조정…목표가 하향-...",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "[모닝 리포트] \"SK바이오팜, 실적 기대치 웃돌아…신약 기대감에\"",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "SK바이오팜, 엑스코프리 실적 성장 지속-하나투자證",
-          "risk": false
-        }
-      ],
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "068270",
-      "name": "셀트리온",
-      "close": 215000,
-      "ret5": 0.128,
-      "ret20": 0.1774,
-      "rsi14": 76.7,
-      "vol20": 0.416,
-      "foreign_net": -34655045950,
-      "inst_net": 336098397300,
-      "score": 0.894,
-      "news": [
-        {
-          "date": "11-06",
-          "title": "[바이오시밀러 산업 전망] 미국·중남미 시장 공략 확대…셀트리온·삼...",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "[CEO&뉴스] 바이오시밀러로 키운 셀트리온, 서정진 회장의 다음 승부수...",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "글로벌 시밀러 판매 호조에…셀트리온, 롯데바이오와 생산위탁 손 잡나",
-          "risk": false
-        }
-      ],
-      "exchange": "KOSPI"
     },
     {
       "code": "069500",
