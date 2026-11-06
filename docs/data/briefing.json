@@ -81,41 +81,36 @@
     ]
   },
   "intraday": {
-    "time": "14:15",
-    "pool": 242,
-    "analyzed_new": 1,
+    "time": "14:30",
+    "pool": 241,
+    "analyzed_new": 12,
     "passed": 20,
     "kept_prep": false
   },
   "candidates": [
     {
-      "code": "017670",
-      "name": "SK텔레콤",
-      "close": 78000,
-      "ret5": 0.0196,
-      "ret20": -0.1024,
-      "rsi14": 46.5,
-      "vol20": 0.5,
-      "foreign_net": 1679503400,
-      "inst_net": 30924302900,
+      "code": "018260",
+      "name": "삼성에스디에스",
+      "close": 205000,
+      "ret5": 0.0024,
+      "ret20": -0.0097,
+      "rsi14": 47.1,
+      "vol20": 0.602,
+      "foreign_net": 8624573600,
+      "inst_net": 7644551450,
       "score": 1.0,
       "news": [
         {
-          "date": "11-06",
-          "title": "[AI 딥다이브] SK텔레콤, ‘에이닷’ 추천 가을 명소에 T 멤버십 혜택 더...",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "SK텔레콤·KT, 3G 가입 문닫았다…알뜰폰 13만 회선이 폐지 변수",
+          "date": "11-03",
+          "title": "[오늘의 IR] LG에너지솔루션ㆍ하이브ㆍ삼성에스디에스 등",
           "risk": false
         }
       ],
-      "price": 78100,
-      "chg": 0.0077,
-      "activity": 1.63,
-      "foreign_today": 4451700000,
-      "inst_today": 7888100000,
+      "price": 221500,
+      "chg": 0.0805,
+      "activity": 1.86,
+      "foreign_today": 0,
+      "inst_today": 3987000000,
       "exchange": "KOSPI"
     },
     {
@@ -128,7 +123,7 @@
       "vol20": 0.931,
       "foreign_net": -41290385000,
       "inst_net": 41663565700,
-      "score": 0.975,
+      "score": 0.902,
       "news": [
         {
           "date": "11-06",
@@ -146,43 +141,41 @@
           "risk": false
         }
       ],
-      "price": 61300,
-      "chg": -0.0467,
-      "activity": 0.96,
-      "foreign_today": 6007400000,
-      "inst_today": 8091600000,
+      "price": 61400,
+      "chg": -0.0451,
+      "activity": 0.95,
+      "foreign_today": 5341800000,
+      "inst_today": 14367600000,
       "exchange": "KOSPI"
     },
     {
-      "code": "030200",
-      "name": "KT",
-      "close": 51500,
-      "ret5": 0.1232,
-      "ret20": 0.0078,
-      "rsi14": 60.4,
-      "vol20": 0.357,
-      "foreign_net": -10341050025,
-      "inst_net": 34011615850,
-      "score": 0.901,
+      "code": "017670",
+      "name": "SK텔레콤",
+      "close": 78000,
+      "ret5": 0.0196,
+      "ret20": -0.1024,
+      "rsi14": 46.5,
+      "vol20": 0.5,
+      "foreign_net": 1679503400,
+      "inst_net": 30924302900,
+      "score": 0.878,
       "news": [
         {
           "date": "11-06",
-          "title": "[AI프리뷰] 6일 대구 삼성-KT KS 3차전, '가을 무패' 소형준과 'PO MVP' 후...",
+          "title": "[AI 딥다이브] SK텔레콤, ‘에이닷’ 추천 가을 명소에 T 멤버십 혜택 더...",
           "risk": false
         },
         {
           "date": "11-06",
-          "title": "‘11연승 끝’ 41일 만에 패배 충격, KT ‘선발- 박영현-힐리어드만 야구...",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "KT, 불꽃축제 통신망을 안전 인프라로… 5G 기술력 시험대",
+          "title": "SK텔레콤·KT, 3G 가입 문닫았다…알뜰폰 13만 회선이 폐지 변수",
           "risk": false
         }
       ],
-      "foreign_today": 6798000000,
-      "inst_today": 9527500000,
+      "price": 78800,
+      "chg": 0.0168,
+      "activity": 1.78,
+      "foreign_today": 6304000000,
+      "inst_today": 10874400000,
       "exchange": "KOSPI"
     },
     {
@@ -195,7 +188,7 @@
       "vol20": 0.388,
       "foreign_net": -26939614825,
       "inst_net": 50135848275,
-      "score": 0.864,
+      "score": 0.817,
       "news": [
         {
           "date": "11-06",
@@ -214,7 +207,39 @@
         }
       ],
       "foreign_today": 0,
-      "inst_today": 3267700000,
+      "inst_today": 4734180000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "030200",
+      "name": "KT",
+      "close": 51500,
+      "ret5": 0.1232,
+      "ret20": 0.0078,
+      "rsi14": 60.4,
+      "vol20": 0.357,
+      "foreign_net": -10341050025,
+      "inst_net": 34011615850,
+      "score": 0.817,
+      "news": [
+        {
+          "date": "11-06",
+          "title": "[AI프리뷰] 6일 대구 삼성-KT KS 3차전, '가을 무패' 소형준과 'PO MVP' 후...",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "‘11연승 끝’ 41일 만에 패배 충격, KT ‘선발- 박영현-힐리어드만 야구...",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "KT, 불꽃축제 통신망을 안전 인프라로… 5G 기술력 시험대",
+          "risk": false
+        }
+      ],
+      "foreign_today": 9836500000,
+      "inst_today": 11639000000,
       "exchange": "KOSPI"
     },
     {
@@ -227,7 +252,7 @@
       "vol20": 0.568,
       "foreign_net": -13011050200,
       "inst_net": 56816398150,
-      "score": 0.827,
+      "score": 0.793,
       "news": [
         {
           "date": "11-06",
@@ -246,42 +271,7 @@
         }
       ],
       "foreign_today": 0,
-      "inst_today": 1003200000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "064400",
-      "name": "LG씨엔에스",
-      "close": 72800,
-      "ret5": -0.0643,
-      "ret20": 0.052,
-      "rsi14": 50.6,
-      "vol20": 0.797,
-      "foreign_net": -21698978600,
-      "inst_net": 42743801650,
-      "score": 0.778,
-      "news": [
-        {
-          "date": "11-04",
-          "title": "LG씨엔에스 7만3600원 약보합…AI·클라우드 성장성 점검",
-          "risk": false
-        },
-        {
-          "date": "11-04",
-          "title": "LG씨엔에스, 교보증권 주관 4일 기관 IR",
-          "risk": false
-        },
-        {
-          "date": "11-03",
-          "title": "LG씨엔에스 주가, 11월 3일 애프터마켓 73,900원 5.26% 하락",
-          "risk": false
-        }
-      ],
-      "price": 75100,
-      "chg": 0.0344,
-      "activity": 1.1,
-      "foreign_today": 0,
-      "inst_today": 2403200000,
+      "inst_today": 1732800000,
       "exchange": "KOSPI"
     },
     {
@@ -294,7 +284,7 @@
       "vol20": 0.461,
       "foreign_net": 30377634525,
       "inst_net": 29272324000,
-      "score": 0.728,
+      "score": 0.732,
       "news": [
         {
           "date": "11-06",
@@ -312,11 +302,46 @@
           "risk": false
         }
       ],
-      "price": 32550,
-      "chg": 0.0109,
-      "activity": 2.24,
+      "price": 32600,
+      "chg": 0.0124,
+      "activity": 2.25,
       "foreign_today": 0,
-      "inst_today": 1171800000,
+      "inst_today": 1858200000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "064400",
+      "name": "LG씨엔에스",
+      "close": 72800,
+      "ret5": -0.0643,
+      "ret20": 0.052,
+      "rsi14": 50.6,
+      "vol20": 0.797,
+      "foreign_net": -21698978600,
+      "inst_net": 42743801650,
+      "score": 0.707,
+      "news": [
+        {
+          "date": "11-04",
+          "title": "LG씨엔에스 7만3600원 약보합…AI·클라우드 성장성 점검",
+          "risk": false
+        },
+        {
+          "date": "11-04",
+          "title": "LG씨엔에스, 교보증권 주관 4일 기관 IR",
+          "risk": false
+        },
+        {
+          "date": "11-03",
+          "title": "LG씨엔에스 주가, 11월 3일 애프터마켓 73,900원 5.26% 하락",
+          "risk": false
+        }
+      ],
+      "price": 75600,
+      "chg": 0.0413,
+      "activity": 1.15,
+      "foreign_today": 0,
+      "inst_today": 3704400000,
       "exchange": "KOSPI"
     },
     {
@@ -329,58 +354,10 @@
       "vol20": 0.405,
       "foreign_net": -1285190625,
       "inst_net": 2848469450,
-      "score": 0.704,
+      "score": 0.646,
       "news": [],
       "foreign_today": 0,
-      "inst_today": 1629000000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "316140",
-      "name": "우리금융지주",
-      "close": 32150,
-      "ret5": 0.0321,
-      "ret20": -0.0374,
-      "rsi14": 53.0,
-      "vol20": 0.346,
-      "foreign_net": -77847544350,
-      "inst_net": 94902336075,
-      "score": 0.642,
-      "news": [],
-      "foreign_today": 0,
-      "inst_today": 4822500000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "323410",
-      "name": "카카오뱅크",
-      "close": 20750,
-      "ret5": 0.0608,
-      "ret20": 0.0448,
-      "rsi14": 59.9,
-      "vol20": 0.26,
-      "foreign_net": 9727405555,
-      "inst_net": 4610992475,
-      "score": 0.593,
-      "news": [
-        {
-          "date": "11-06",
-          "title": "카카오뱅크, 젊은층 전유물 옛말…50대 65% 이용",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "11월 6일 카카오뱅크 AI 퀴즈 오전 8시 정답은 ‘제설’",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "카카오뱅크, AI 콜봇 도입…금융사기 의심 거래 이체취소율 54%↑",
-          "risk": false
-        }
-      ],
-      "foreign_today": 0,
-      "inst_today": 788500000,
+      "inst_today": 2117700000,
       "exchange": "KOSPI"
     },
     {
@@ -393,7 +370,7 @@
       "vol20": 0.837,
       "foreign_net": -18097403575,
       "inst_net": 15329505750,
-      "score": 0.543,
+      "score": 0.561,
       "news": [
         {
           "date": "11-05",
@@ -406,38 +383,59 @@
           "risk": false
         }
       ],
-      "price": 50300,
-      "chg": 0.0601,
-      "activity": 2.32,
+      "price": 48400,
+      "chg": 0.02,
+      "activity": 2.33,
       "foreign_today": 0,
-      "inst_today": 754500000,
+      "inst_today": 1936000000,
       "exchange": "KOSPI"
     },
     {
-      "code": "161390",
-      "name": "한국타이어앤테크놀로지",
-      "close": 64100,
-      "ret5": 0.1246,
-      "ret20": 0.063,
-      "rsi14": 62.7,
-      "vol20": 0.487,
-      "foreign_net": -2748968800,
-      "inst_net": 14572441050,
-      "score": 0.506,
+      "code": "316140",
+      "name": "우리금융지주",
+      "close": 32150,
+      "ret5": 0.0321,
+      "ret20": -0.0374,
+      "rsi14": 53.0,
+      "vol20": 0.346,
+      "foreign_net": -77847544350,
+      "inst_net": 94902336075,
+      "score": 0.537,
+      "news": [],
+      "foreign_today": 0,
+      "inst_today": 6269250000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "323410",
+      "name": "카카오뱅크",
+      "close": 20750,
+      "ret5": 0.0608,
+      "ret20": 0.0448,
+      "rsi14": 59.9,
+      "vol20": 0.26,
+      "foreign_net": 9727405555,
+      "inst_net": 4610992475,
+      "score": 0.512,
       "news": [
         {
           "date": "11-06",
-          "title": "한국타이어앤테크놀로지 3분기 영업이익 5988억, 전년比 2.2%↑…매출 1....",
+          "title": "11월 6일 카카오뱅크 AI 퀴즈 오전 8시 정답은 ‘제설’",
           "risk": false
         },
         {
           "date": "11-06",
-          "title": "한국타이어앤테크놀로지, 3분기 영업익 5988억…전년비 2.2% ↑",
+          "title": "카카오뱅크, 젊은층 전유물 옛말…50대 65% 이용",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "카카오뱅크, AI 콜봇 도입…금융사기 의심 거래 이체취소율 54%↑",
           "risk": false
         }
       ],
       "foreign_today": 0,
-      "inst_today": 576900000,
+      "inst_today": 975250000,
       "exchange": "KOSPI"
     },
     {
@@ -450,7 +448,7 @@
       "vol20": 0.619,
       "foreign_net": -329359625,
       "inst_net": 18073219625,
-      "score": 0.481,
+      "score": 0.512,
       "news": [
         {
           "date": "11-06",
@@ -469,29 +467,42 @@
         }
       ],
       "foreign_today": 0,
-      "inst_today": 435000000,
+      "inst_today": 754000000,
       "exchange": "KOSPI"
     },
     {
-      "code": "018260",
-      "name": "삼성에스디에스",
-      "close": 205000,
-      "ret5": 0.0024,
-      "ret20": -0.0097,
-      "rsi14": 47.1,
-      "vol20": 0.602,
-      "foreign_net": 8624573600,
-      "inst_net": 7644551450,
-      "score": 0.481,
+      "code": "012330",
+      "name": "현대모비스",
+      "close": 363500,
+      "ret5": 0.0239,
+      "ret20": -0.0215,
+      "rsi14": 51.1,
+      "vol20": 0.652,
+      "foreign_net": -49256342750,
+      "inst_net": 90823582500,
+      "score": 0.476,
       "news": [
         {
-          "date": "11-03",
-          "title": "[오늘의 IR] LG에너지솔루션ㆍ하이브ㆍ삼성에스디에스 등",
+          "date": "11-06",
+          "title": "연승 끊겼어도 다시 달린다!…삼성, 현대모비스 꺾고 11경기 만에 10승 ...",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "프로농구 삼성, 현대모비스 잡고 11경기 만에 10승",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "꼴찌 이미지 벗은 삼성, 벌써 10승... 현대모비스 81-76 제압 '다시 승리...",
           "risk": false
         }
       ],
+      "price": 358000,
+      "chg": -0.0165,
+      "activity": 0.89,
       "foreign_today": 0,
-      "inst_today": 2050000000,
+      "inst_today": 3580000000,
       "exchange": "KOSPI"
     },
     {
@@ -504,61 +515,26 @@
       "vol20": 0.558,
       "foreign_net": -5841206300,
       "inst_net": 16866173400,
-      "score": 0.383,
+      "score": 0.378,
       "news": [
         {
           "date": "11-06",
-          "title": "유한양행, 전 사업장서 하반기 헌혈 캠페인…소아암 환아에 헌혈증 기부",
+          "title": "유한양행, 2008년부터 헌혈 2600명 참여…올 하반기 60명 동참",
           "risk": false
         },
         {
           "date": "11-06",
-          "title": "유한양행, 하반기 헌혈 캠페인 실시…임직원 60명 참여",
+          "title": "유한양행, 하반기 헌혈 캠페인…헌혈증은 소아암 환아에 기부",
           "risk": false
         },
         {
           "date": "11-06",
-          "title": "유한양행, 버들장터서 신제품 최대 63% 할인…10일까지 기획전",
+          "title": "유한양행, 공식몰 '버들장터' 신제품 기획전…최대 63% 할인",
           "risk": false
         }
       ],
       "foreign_today": 0,
-      "inst_today": 738000000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "010060",
-      "name": "OCI홀딩스",
-      "close": 206500,
-      "ret5": 0.1634,
-      "ret20": -0.1305,
-      "rsi14": 51.7,
-      "vol20": 1.17,
-      "foreign_net": -62911431150,
-      "inst_net": 74463643850,
-      "score": 0.877,
-      "news": [
-        {
-          "date": "11-05",
-          "title": "OCI홀딩스 폴리실리콘 사업, 美 블루웨이브도 힘 보탤까",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "OCI홀딩스 미국의 탈중국 수혜 더해 우주용 태양광도 눈독, 이우현 현지...",
-          "risk": false
-        },
-        {
-          "date": "11-05",
-          "title": "OCI홀딩스 주가, 11월 5일 204,000원 2.00% 상승 기록",
-          "risk": false
-        }
-      ],
-      "price": 208000,
-      "chg": 0.0196,
-      "activity": 1.82,
-      "foreign_today": 0,
-      "inst_today": 3328000000,
+      "inst_today": 1066000000,
       "exchange": "KOSPI"
     },
     {
@@ -571,7 +547,7 @@
       "vol20": 1.381,
       "foreign_net": -8283680650,
       "inst_net": 15223649475,
-      "score": 0.852,
+      "score": 0.768,
       "news": [
         {
           "date": "11-06",
@@ -589,9 +565,44 @@
           "risk": false
         }
       ],
-      "foreign_today": 2588960000,
-      "inst_today": 1014990000,
+      "foreign_today": 3015550000,
+      "inst_today": 1485710000,
       "exchange": "KOSDAQ"
+    },
+    {
+      "code": "010060",
+      "name": "OCI홀딩스",
+      "close": 206500,
+      "ret5": 0.1634,
+      "ret20": -0.1305,
+      "rsi14": 51.7,
+      "vol20": 1.17,
+      "foreign_net": -62911431150,
+      "inst_net": 74463643850,
+      "score": 0.756,
+      "news": [
+        {
+          "date": "11-05",
+          "title": "OCI홀딩스 폴리실리콘 사업, 美 블루웨이브도 힘 보탤까",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "OCI홀딩스 미국의 탈중국 수혜 더해 우주용 태양광도 눈독, 이우현 현지...",
+          "risk": false
+        },
+        {
+          "date": "11-05",
+          "title": "OCI홀딩스 주가, 11월 5일 204,000원 2.00% 상승 기록",
+          "risk": false
+        }
+      ],
+      "price": 205000,
+      "chg": 0.0049,
+      "activity": 1.82,
+      "foreign_today": 0,
+      "inst_today": 5125000000,
+      "exchange": "KOSPI"
     },
     {
       "code": "008930",
@@ -603,7 +614,7 @@
       "vol20": 1.06,
       "foreign_net": -2579757825,
       "inst_net": 18088976450,
-      "score": 0.716,
+      "score": 0.646,
       "news": [
         {
           "date": "11-06",
@@ -622,7 +633,7 @@
         }
       ],
       "foreign_today": 0,
-      "inst_today": 3713300000,
+      "inst_today": 4654700000,
       "exchange": "KOSPI"
     },
     {
