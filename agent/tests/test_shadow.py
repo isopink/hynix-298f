@@ -70,6 +70,9 @@ def test_shadow_seed_quotes_rank_and_isolation():
         assert r["ok"] and C.read_json(broker.MOCK_ACCOUNT)["positions"]["005930"]["qty"] == 5
         broker.get()                                                  # 두 번째부터는 다시 복사하지 않음
         assert C.read_json(broker.MOCK_ACCOUNT)["positions"]["005930"]["qty"] == 5
+        shadow.EQUITY = os.path.join(own, "shadow_equity.jsonl")
+        row = shadow.record_equity("test")                            # 대시보드용 자산 기록 (그림자 · 실제 같은 시각)
+        assert row["real_total"] == 49_000_000 and row["total"] > 0 and row["holdings"][0]["qty"] == 5
         assert _digest(real) == before                                # 실제 저장소 파일은 그대로
     finally:
         for k, v in old.items():

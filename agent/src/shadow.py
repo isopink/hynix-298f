@@ -107,3 +107,20 @@ def real_struggling(window_min=60):
         if not r.get("ok", True):
             return f"실제 시스템 {r.get('time')} {r.get('kind')} 실패 ({str(r.get('note', ''))[:60]}) 뒤 {window_min}분 쉼"
     return None
+
+
+EQUITY = os.path.join(C.WORK, "shadow_equity.jsonl")   # 실제 시스템 logger 가 읽어 docs/data/shadow.json 으로 올림
+
+
+def record_equity(note=""):
+    """그림자(가상 계좌)와 실제 계좌의 총자산을 같은 시각에 한 줄씩 남김."""
+    import broker
+    acc = broker.get().account()
+    real = C.read_json(_real("agent", "work", "account.json")) or {}
+    snap = C.read_json(_real("live", "last_snapshot.json")) or {}
+    real_total = snap.get("total") if time.time() - snap.get("epoch", 0) <= QUOTE_MAX_AGE else real.get("total")
+    row = {"time": C.stamp(), "total": acc.get("total"), "cash": acc.get("cash"), "real_total": real_total,
+           "holdings": [{"code": h["code"], "name": h["name"], "qty": h["qty"], "value": h.get("value"), "pnl_pct": h.get("pnl_pct")}
+                        for h in acc.get("holdings", [])], "note": note[:40]}
+    C.append_jsonl(EQUITY, row)
+    return row

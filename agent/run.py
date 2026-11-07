@@ -464,6 +464,12 @@ def run_proposals(review_id, dry=False, no_ai=False, revision=None):
 def publish(msg):
     """docs/data 를 갱신하고, GIT_PUSH=1 이면 커밋·푸시해서 대시보드에 반영."""
     py("logger.py")
+    import shadow
+    if shadow.active():   # 11-08 그림자: 실제 시스템이 대시보드에 올릴 수 있게 자산 기록을 남김 (실제 logger 가 읽음)
+        try:
+            shadow.record_equity(msg)
+        except Exception as e:  # noqa: BLE001
+            log(f"  ! 그림자 자산 기록 실패: {e}")
     if os.environ.get("GIT_PUSH") != "1":
         return
     paths = ["docs/data", "reports/drafts", "agent/config/params.json"]   # params.json = 조정 실행이 바꾼 기준값
