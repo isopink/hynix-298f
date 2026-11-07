@@ -1597,10 +1597,20 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       gh: [458, 245, 'Version Control'],
       pg: [475, 496, 'Static Hosting'],
       lap: [333, 95, 'Strategy Research'],
-      dash: [664, 474, 'Performance Monitoring']
+      dash: [664, 474, 'Performance Monitoring'],
+      // 11-08 S.Lee: 온톨로지 뉴런 (기본 옅은 초록, 신호가 오면 초록으로 빛남)
+      ofact: [270, 60, 'Fact Claims', 1],
+      ohyp: [130, 60, 'Hypothesis Registry', 1],
+      otrace: [860, 60, 'Execution Trace', 1],
+      oprem: [860, 130, 'Premise Ledger', 1],
+      oeval: [130, 390, 'Premise Evaluation', 1],
+      ocase: [130, 480, 'Case Library', 1],
+      olesson: [200, 510, 'Lesson Registry', 1],
+      opol: [130, 560, 'Policy Validation', 1]
     };
     // 경로 = 출발-도착
-    const LINKS = 'kbal-snap snap-rpc rpc-sbs sbs-dash nav-cron cron-kxt cron-flw cron-kxd kxt-dash kxd-dash flw-dash snap-lsnap lsnap-mon mon-exitr exitr-run sched-run sched-snap sched-mon sched-close lock-run krank-intr krxl-krx krx-ind ind-prep newsapi-news news-prep prep-screen screen-brief intr-brief run-prep run-intr brief-cl run-cl cl-reg reg-cl cl-bull bull-web bull-bear bear-web bear-cl cl-boost boost-cl cl-mcp mcp-plan params-plan norebuy-plan etf-plan probe-plan partial-plan plan-mcp mcp-hook limits-hook hook-block block-jrn hook-broker rate-broker mode-broker broker-korder kprice-broker mcp-jrn jrn-logger dbf-logger logger-eqf logger-hdf logger-trf logger-stf eqf-pub hdf-pub trf-pub stf-pub close-logger pub-gh gh-pg pg-dash lap-gh gh-sync sync-run cl-tune tunerules-tune tune-params tune-chg chg-gh cl-rev rev-drafts drafts-pub params-pub'.split(' ');
+    const LINKS = ('kbal-snap snap-rpc rpc-sbs sbs-dash nav-cron cron-kxt cron-flw cron-kxd kxt-dash kxd-dash flw-dash snap-lsnap lsnap-mon mon-exitr exitr-run sched-run sched-snap sched-mon sched-close lock-run krank-intr krxl-krx krx-ind ind-prep newsapi-news news-prep prep-screen screen-brief intr-brief run-prep run-intr brief-cl run-cl cl-reg reg-cl cl-bull bull-web bull-bear bear-web bear-cl cl-boost boost-cl cl-mcp mcp-plan params-plan norebuy-plan etf-plan probe-plan partial-plan plan-mcp mcp-hook limits-hook hook-block block-jrn hook-broker rate-broker mode-broker broker-korder kprice-broker mcp-jrn jrn-logger dbf-logger logger-eqf logger-hdf logger-trf logger-stf eqf-pub hdf-pub trf-pub stf-pub close-logger pub-gh gh-pg pg-dash lap-gh gh-sync sync-run cl-tune tunerules-tune tune-params tune-chg chg-gh cl-rev rev-drafts drafts-pub params-pub' +
+      ' bull-ofact bear-ofact ofact-ohyp ofact-oprem cl-oprem mcp-otrace otrace-oprem jrn-oeval ohyp-oeval oeval-ocase ocase-olesson olesson-opol opol-tune olesson-brief').split(' ');
     let N, E, EDGE, dots, mesh, H = 620, ys = 1, scale = 1, phone = null, lw = 1, cssW = 1000, ready = false, dprCap = 3, cost = 0;
     let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647, r2 = () => (rnd() + rnd()) - 1;
     // 선의 네 점은 매 프레임 지금 위치로 계산 (지점이 천천히 떠다니므로)
@@ -1625,7 +1635,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       const prev = N;
       // 가로 화면: 1000×620 배치를 세로로만 늘림. 세로 화면(H > 1.2W): 배치를 90도 돌려 세움
       const tall = H > W * 1.2;
-      N = {}; Object.keys(BASE_N).forEach(k => { const [bx, by, t] = BASE_N[k]; const x0 = tall ? by * (W / 620) : bx, y0 = tall ? bx * (H / 1000) : by * ys, x = W / 2 + (x0 - W / 2) * (tall ? 1.3 : 1.22), y = H / 2 + (y0 - H / 2) * (tall ? 1.3 : 1.22); N[k] = { x, y, x0: x, y0: y, t, on: prev && prev[k] ? prev[k].on : 0, glow: 0, amp: 14 }; drift(N[k]); });
+      N = {}; Object.keys(BASE_N).forEach(k => { const [bx, by, t, ont] = BASE_N[k]; const x0 = tall ? by * (W / 620) : bx, y0 = tall ? bx * (H / 1000) : by * ys, x = W / 2 + (x0 - W / 2) * (tall ? 1.3 : 1.22), y = H / 2 + (y0 - H / 2) * (tall ? 1.3 : 1.22); N[k] = { x, y, x0: x, y0: y, t, ont: !!ont, on: prev && prev[k] ? prev[k].on : 0, glow: 0, amp: 14 }; drift(N[k]); });
       E = LINKS.map(id => { const [a, b] = id.split('-'); return { id, a: N[a], b: N[b], bow: (rnd() < .5 ? -1 : 1) * (10 + rnd() * 18), on: 0, glow: 0 }; });
       EDGE = Object.fromEntries(E.map(e => [e.id, e]));
       Object.values(N).forEach(n => { n.deg = 0; }); E.forEach(e => { e.a.deg++; e.b.deg++; });
@@ -1673,13 +1683,14 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       gr.addColorStop(0, 'rgba(255,255,255,1)'); gr.addColorStop(.12, `rgba(${rgb},.95)`); gr.addColorStop(.4, `rgba(${rgb},${soft ? .2 : .28})`); gr.addColorStop(1, `rgba(${rgb},0)`);
       g.fillStyle = gr; g.fillRect(0, 0, size, size); return c;
     }
-    const SP = { r: sprite('255,90,74', 64), n: sprite('205,205,210', 64), w: sprite('235,235,238', 128, true) };
+    const SP = { r: sprite('255,90,74', 64), n: sprite('205,205,210', 64), w: sprite('235,235,238', 128, true),
+                 g: sprite('62,207,142', 64), gw: sprite('150,225,185', 128, true) };   // 11-08 온톨로지: 빛나는 초록 · 쉬는 옅은 초록
     // 잔가지는 지점마다 그림 한 장으로 미리 그려 두고(화면 배율 기준), 매 프레임 지점을 따라 옮겨 찍음
     function bake(o, f) {
       const R = Math.max(4, ...o.den.map(b => Math.hypot(b.ex, b.ey))) + 3, px = Math.ceil(R * 2 * scale);
       const c = document.createElement('canvas'); c.width = c.height = px;
       const g = c.getContext('2d'); g.setTransform(scale, 0, 0, scale, R * scale, R * scale); g.lineCap = 'round';
-      o.den.forEach(b => { g.strokeStyle = `rgba(230,228,228,${Math.min(.24, (.04 + .11 * b.w) * f)})`; g.lineWidth = b.w * lw; g.beginPath(); g.moveTo(b.x, b.y); g.quadraticCurveTo(b.cx, b.cy, b.ex, b.ey); g.stroke(); });
+      o.den.forEach(b => { g.strokeStyle = o.ont ? `rgba(140,225,180,${Math.min(.42, (.1 + .18 * b.w) * f)})` : `rgba(230,228,228,${Math.min(.24, (.04 + .11 * b.w) * f)})`; g.lineWidth = b.w * lw; g.beginPath(); g.moveTo(b.x, b.y); g.quadraticCurveTo(b.cx, b.cy, b.ex, b.ey); g.stroke(); });
       o.img = c; o.R = R;
     }
     function fit() {
@@ -1713,28 +1724,28 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       ctx.strokeStyle = 'rgba(210,210,216,.15)'; E.forEach(e => e.strands.forEach(s => { ctx.lineWidth = s.w * lw; curve(ctx, s); }));
       mesh.forEach(m => { ctx.lineWidth = (m.w ? .9 : .7) * lw; ctx.strokeStyle = m.w ? 'rgba(230,228,228,.09)' : 'rgba(230,228,228,.06)'; curve(ctx, m); });
       ctx.globalAlpha = 1; dots.forEach(d => ctx.drawImage(d.img, d.x - d.R, d.y - d.R, d.R * 2, d.R * 2)); Object.values(N).forEach(n => ctx.drawImage(n.img, n.x - n.R, n.y - n.R, n.R * 2, n.R * 2)); ctx.globalAlpha = 1;
-      dots.forEach(d => stamp(d.x, d.y, SP.n, 12, .22)); Object.values(N).forEach(n => stamp(n.x, n.y, SP.w, n.size, .4));
+      dots.forEach(d => stamp(d.x, d.y, SP.n, 12, .22)); Object.values(N).forEach(n => stamp(n.x, n.y, n.ont ? SP.gw : SP.w, n.size, n.ont ? .7 : .4));
       // 11-06 S.Lee: 데이터가 흐를 때 경로를 붉게 칠하지 않고, 움직이는 점만 보여 줌
       for (let i = bursts.length - 1; i >= 0; i--) {
-        const p = bursts[i]; p.t += dt / p.life; if (p.t < 0) continue; if (p.t >= 1) { if (p.to) p.to.fl = clock; bursts.splice(i, 1); continue; }
+        const p = bursts[i]; p.t += dt / p.life; if (p.t < 0) continue; if (p.t >= 1) { if (p.to) { p.to.fl = clock; p.to.fg = !!p.g; } bursts.splice(i, 1); continue; }
         const [x, y] = at(p.s, p.t), [tx, ty] = at(p.s, Math.max(0, p.t - .05));
-        ctx.globalAlpha = p.c ? .25 : .55; ctx.strokeStyle = p.c ? 'rgb(205,205,210)' : 'rgb(255,120,104)'; ctx.lineWidth = 1.2 * lw; ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(x, y); ctx.stroke();
-        stamp(x, y, SP[p.c || 'r'], p.size, p.c ? .5 : .95);
+        ctx.globalAlpha = p.c ? .25 : .55; ctx.strokeStyle = p.c ? 'rgb(205,205,210)' : p.g ? 'rgb(110,230,170)' : 'rgb(255,120,104)'; ctx.lineWidth = 1.2 * lw; ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(x, y); ctx.stroke();
+        stamp(x, y, SP[p.c || (p.g ? 'g' : 'r')], p.size, p.c ? .5 : .95);
       }
       dots.forEach(d => {   // 갈라진 데이터가 닿은 작은 뉴런: 한 번 번쩍이고 가라앉음
         if (d.fl == null) return; const k = Math.exp(-(clock - d.fl) / 520); if (k < .03) return;
-        ctx.globalAlpha = 1; ctx.strokeStyle = `rgba(255,90,74,${.7 * k})`;
+        ctx.globalAlpha = 1; ctx.strokeStyle = d.fg ? `rgba(62,207,142,${.7 * k})` : `rgba(255,90,74,${.7 * k})`;
         d.den.forEach(b => { ctx.lineWidth = (b.w + .1) * lw; ctx.beginPath(); ctx.moveTo(d.x + b.x, d.y + b.y); ctx.quadraticCurveTo(d.x + b.cx, d.y + b.cy, d.x + b.ex, d.y + b.ey); ctx.stroke(); });
-        stamp(d.x, d.y, SP.r, 40 * (.8 + .4 * k), k); stamp(d.x, d.y, SP.r, 14, k);
+        const sp = d.fg ? SP.g : SP.r; stamp(d.x, d.y, sp, 40 * (.8 + .4 * k), k); stamp(d.x, d.y, sp, 14, k);
       });
-      Object.values(N).forEach(n => { if (!(n.glow > .05)) return; ctx.globalAlpha = 1; ctx.strokeStyle = `rgba(255,90,74,${Math.min(1, .8 * n.int * n.glow * pop(n))})`; n.den.forEach(b => { ctx.lineWidth = (b.w + .2) * lw; ctx.beginPath(); ctx.moveTo(n.x + b.x, n.y + b.y); ctx.quadraticCurveTo(n.x + b.cx, n.y + b.cy, n.x + b.ex, n.y + b.ey); ctx.stroke(); }); });
+      Object.values(N).forEach(n => { if (!(n.glow > .05)) return; ctx.globalAlpha = 1; ctx.strokeStyle = `rgba(${n.ont ? '62,207,142' : '255,90,74'},${Math.min(1, .8 * n.int * n.glow * pop(n))})`; n.den.forEach(b => { ctx.lineWidth = (b.w + .2) * lw; ctx.beginPath(); ctx.moveTo(n.x + b.x, n.y + b.y); ctx.quadraticCurveTo(n.x + b.cx, n.y + b.cy, n.x + b.ex, n.y + b.ey); ctx.stroke(); }); });
       if (dt && clock > nextSpark) { nextSpark = clock + 900 + rnd() * 1400; bursts.push({ s: mesh[Math.floor(rnd() * mesh.length)], t: 0, life: 1600, size: 7, c: 'n' }); }
       Object.values(N).forEach(n => {
         const target = (n.on || 0) > 0 ? 1 : [...n.nb].some(o => o.on > 0) ? .35 : [...n.near].some(o => o.on > 0) ? .15 : 0;
         n.glow += (target - n.glow) * Math.min(1, sec * (target > n.glow ? 8 : 2.5));
         if (n.on > 0 && !(n.lit > clock - 200)) n.fl = clock;   // 새로 켜질 때만 번쩍
         if (n.on > 0) n.lit = clock;
-        if (n.glow > .02) { const g = n.glow * n.int; stamp(n.x, n.y, SP.w, n.size, g * .6); stamp(n.x, n.y, SP.r, n.size * 3.2 * (.8 + .2 * pop(n)), Math.min(1, g * pop(n))); stamp(n.x, n.y, SP.r, n.size * 1.4, g); stamp(n.x, n.y, SP.r, n.size * .7, g); }
+        if (n.glow > .02) { const g = n.glow * n.int, c = n.ont ? SP.g : SP.r; stamp(n.x, n.y, SP.w, n.size, g * .6); stamp(n.x, n.y, c, n.size * 3.2 * (.8 + .2 * pop(n)), Math.min(1, g * pop(n))); stamp(n.x, n.y, c, n.size * 1.4, g); stamp(n.x, n.y, c, n.size * .7, g); }
       });
       // 이름은 켜졌을 때만. 폰에서도 읽히게 화면 기준 12px 이상
       ctx.globalCompositeOperation = 'source-over'; ctx.textAlign = 'center';
@@ -1744,7 +1755,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
         const f = ln(n); ctx.globalAlpha = Math.min(1, n.glow * 1.4);
         ctx.font = `500 ${f}px ${FONT}`; ctx.lineWidth = 4; ctx.lineJoin = 'round'; ctx.strokeStyle = 'rgba(10,10,12,.94)';
         const y = n.y + n.size * .42 + f * .8;
-        ctx.strokeText(n.t, n.x, y); ctx.fillStyle = '#ffd2cc'; ctx.fillText(n.t, n.x, y);
+        ctx.strokeText(n.t, n.x, y); ctx.fillStyle = n.ont ? '#c8f5dc' : '#ffd2cc'; ctx.fillText(n.t, n.x, y);
       });
       ctx.globalAlpha = 1;
     }
@@ -1768,8 +1779,9 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       const e = EDGE[id]; if (track.dead || !e) return;
       const dur = Math.max(800, Math.hypot(e.b.x - e.a.x, e.b.y - e.a.y) * 5);   // 데이터가 선을 지나는 시간 (11-05 느리게)
       e.on++;
-      for (let i = 0; i < 6; i++) bursts.push({ s: e.strands[i % 2], t: -rnd() * .5, life: dur * .8, size: 9 + rnd() * 6 });
-      (e.twigs || []).forEach(w => { for (let i = 0; i < 2; i++) { const life = Math.max(600, dur * .5); bursts.push({ s: w, t: -(dur * .8 * (.5 + rnd() * .4)) / life, life, size: 7 + rnd() * 4, to: w.b }); } });   // 가운데서 갈라져 작은 뉴런으로
+      const g = e.a.ont || e.b.ont;   // 온톨로지로 들어가거나 나오는 데이터는 초록
+      for (let i = 0; i < 6; i++) bursts.push({ s: e.strands[i % 2], t: -rnd() * .5, life: dur * .8, size: 9 + rnd() * 6, g });
+      (e.twigs || []).forEach(w => { for (let i = 0; i < 2; i++) { const life = Math.max(600, dur * .5); bursts.push({ s: w, t: -(dur * .8 * (.5 + rnd() * .4)) / life, life, size: 7 + rnd() * 4, to: w.b, g }); } });   // 가운데서 갈라져 작은 뉴런으로
       await wait(track, dur); e.on--;
       if (!track.dead && !(e.b.on > 0)) (async () => { e.b.on = (e.b.on || 0) + 1; await wait(track, 1100); e.b.on--; })();   // 11-06 데이터가 닿은 뉴런은 따로 켜는 단계가 없어도 잠깐 켜짐
     }
@@ -1792,12 +1804,16 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const TUNE = [...START, 'run-cl', 'cl:800', 'cl-tune', ['tunerules-tune', 'tune:800'], 'tune-params', 'params:600', ['params-pub', 'tune-chg'], ['pub:400', 'chg:300'], ['pub-gh', 'chg-gh'], 'gh:400'];
     const CLOSE = ['sched:400', 'sched-close', 'close:600', 'close-logger', 'logger:400', 'logger-eqf', 'eqf:300', 'eqf-pub', 'pub:400', 'pub-gh', 'gh:400', 'gh-pg', 'pg:500', 'pg-dash', 'dash:600'];
     const REVIEW = [...START, 'run-cl', 'cl:800', 'cl-rev', 'rev:900', 'rev-drafts', 'drafts:500', 'drafts-pub', 'pub:400', 'pub-gh', 'gh:400'];
+    // 11-08 온톨로지: 판단 근거를 사실·가설·전제로 남기고(판단 직후), 마감 뒤 전제를 채점해 사례·교훈·정책 검증으로
+    const ONTO = [['bull-ofact', 'bear-ofact'], 'ofact:500', ['ofact-ohyp', 'ofact-oprem'], ['ohyp:400', 'oprem:500'], 'cl-oprem', 'oprem:400'];
+    const TRACE = ['mcp-otrace', 'otrace:400', 'otrace-oprem', 'oprem:400'];
+    const LEARN = [['jrn-oeval', 'ohyp-oeval'], 'oeval:600', 'oeval-ocase', 'ocase:500', 'ocase-olesson', 'olesson:600', ['olesson-opol', 'olesson-brief'], ['opol:500', 'brief:400'], 'opol-tune', 'tune:600'];
     const EXIT = ['mon-exitr', 'exitr:500', 'exitr-run', 'run:300', 'run-cl', 'cl:600', 'cl-mcp', 'mcp:400'];
 
     // ---- 자동 시나리오 (커버는 실시간 신호 없이 돌아감): 준비 → 판단 → 손절·익절 → 마감 → 조정 → 회고 → 코드 반영, 잔고·시세는 뒤에서 계속 ----
     const NUMBERS = ['kbal:300', 'kbal-snap', 'snap:300', ['snap-rpc', 'snap-lsnap'], ['rpc:300', 'lsnap:300'], 'rpc-sbs', 'sbs:300', 'sbs-dash', 'dash:400'];
     const KOSPI = ['nav:300', 'nav-cron', 'cron:300', ['cron-kxt', 'cron-kxd', 'cron-flw'], ['kxt:300', 'kxd:300', 'flw:300'], ['kxt-dash', 'kxd-dash', 'flw-dash'], 'dash:300'];
-    const SHOW = [PREP, [...DEBATE, 'cl-mcp', 'mcp:400', ...ORDER, ...BLOCK, 'dbf:300', ...PUBLISH], ['lsnap-mon', 'mon:500', ...EXIT, ...ORDER, ...PUBLISH], CLOSE, TUNE, REVIEW, ['lap:500', 'lap-gh', 'gh:500', 'gh-sync', 'sync:1000', 'sync-run', 'run:500']];
+    const SHOW = [PREP, [...DEBATE, ...ONTO, 'cl-mcp', 'mcp:400', ...ORDER, ...TRACE, ...BLOCK, 'dbf:300', ...PUBLISH], ['lsnap-mon', 'mon:500', ...EXIT, ...ORDER, ...PUBLISH], CLOSE, LEARN, TUNE, REVIEW, ['lap:500', 'lap-gh', 'gh:500', 'gh-sync', 'sync:1000', 'sync-run', 'run:500']];
     (async () => { const t = T(); for (;;) { await play(t, NUMBERS); await wait(t, 2500); await play(t, KOSPI); await wait(t, 5000); } })();
     (async () => { const t = T(); for (;;) for (const list of SHOW) { await play(t, list); await wait(t, 1500); } })();
     return { stop() { visible = false; } };
