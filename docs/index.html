@@ -1598,15 +1598,15 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       pg: [475, 496, 'Static Hosting'],
       lap: [333, 95, 'Strategy Research'],
       dash: [664, 474, 'Performance Monitoring'],
-      // 11-08 S.Lee: 온톨로지 뉴런 (기본 옅은 초록, 신호가 오면 초록으로 빛남)
-      ofact: [270, 60, 'Fact Claims', 1],
-      ohyp: [130, 60, 'Hypothesis Registry', 1],
-      otrace: [860, 60, 'Execution Trace', 1],
-      oprem: [860, 130, 'Premise Ledger', 1],
-      oeval: [130, 390, 'Premise Evaluation', 1],
-      ocase: [130, 480, 'Case Library', 1],
-      olesson: [200, 510, 'Lesson Registry', 1],
-      opol: [130, 560, 'Policy Validation', 1]
+      // 11-08 S.Lee: 온톨로지 뉴런 (기본 옅은 초록, 신호가 오면 초록으로 빛남). Allocation Decision(총괄) 둘레에 배치
+      ofact: [554, 319, 'Fact Claims', 1],
+      ohyp: [538, 268, 'Hypothesis Registry', 1],
+      otrace: [597, 380, 'Execution Trace', 1],
+      oprem: [436, 321, 'Premise Ledger', 1],
+      oeval: [420, 381, 'Premise Evaluation', 1],
+      ocase: [494, 266, 'Case Library', 1],
+      olesson: [426, 276, 'Lesson Registry', 1],
+      opol: [506, 354, 'Policy Validation', 1]
     };
     // 경로 = 출발-도착
     const LINKS = ('kbal-snap snap-rpc rpc-sbs sbs-dash nav-cron cron-kxt cron-flw cron-kxd kxt-dash kxd-dash flw-dash snap-lsnap lsnap-mon mon-exitr exitr-run sched-run sched-snap sched-mon sched-close lock-run krank-intr krxl-krx krx-ind ind-prep newsapi-news news-prep prep-screen screen-brief intr-brief run-prep run-intr brief-cl run-cl cl-reg reg-cl cl-bull bull-web bull-bear bear-web bear-cl cl-boost boost-cl cl-mcp mcp-plan params-plan norebuy-plan etf-plan probe-plan partial-plan plan-mcp mcp-hook limits-hook hook-block block-jrn hook-broker rate-broker mode-broker broker-korder kprice-broker mcp-jrn jrn-logger dbf-logger logger-eqf logger-hdf logger-trf logger-stf eqf-pub hdf-pub trf-pub stf-pub close-logger pub-gh gh-pg pg-dash lap-gh gh-sync sync-run cl-tune tunerules-tune tune-params tune-chg chg-gh cl-rev rev-drafts drafts-pub params-pub' +
