@@ -462,5 +462,33 @@ class KiwoomBroker:
                 "execution_confirmation": "balance_inference", "execution_observations": observations}
 
 
+class ShadowBroker(MockBroker):
+    """11-08 그림자 운영: 가상 계좌 + 실제 시스템이 받은 순위 원문·현재가 재사용 (키움을 새로 부르지 않음). src/shadow.py"""
+    name = "mock"
+    replays_rank = True
+
+    def __init__(self):
+        import shadow
+        self.shadow = shadow
+        shadow.seed(MOCK_ACCOUNT)
+        super().__init__()
+
+    def _call(self, path, api_id, body):   # intraday.fetch 가 순위 API 를 부르는 자리
+        return self.shadow.rank_response(api_id, body)
+
+    def quote(self, code):
+        p = cached_quote(code, 60)
+        if p:
+            return p
+        px, chg, src = self.shadow.real_quote(code)
+        if px:
+            cache_quote(code, px, chg, src, None)
+            return px
+        return super().quote(code)
+
+
 def get():
-    return KiwoomBroker() if C.mode() == "live" else MockBroker()
+    if C.mode() == "live":
+        return KiwoomBroker()
+    import shadow
+    return ShadowBroker() if shadow.active() else MockBroker()

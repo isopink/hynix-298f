@@ -640,6 +640,10 @@ def main():
         finally:
             score_close("close", dry, max_symbols=a.max_symbols)
         return
+    import shadow
+    if shadow.active() and kind in PROMPTS and (why := shadow.real_struggling()):   # 11-08 그림자는 실제 매매를 방해하지 않음
+        log(f"그림자 실행 건너뜀: {why}")
+        return
     if kind not in PROMPTS:
         sys.exit(f"알 수 없는 실행: {kind}\n{__doc__}")
     if kind == "tune":

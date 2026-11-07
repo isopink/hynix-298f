@@ -254,7 +254,7 @@ def _run(dry=False, attempt=None):
     if not dry and (not (900 <= n.hour * 100 + n.minute <= 1530) or n.weekday() >= 5):
         return print("장중이 아니라 08:30 후보를 그대로 씀")
     brk = broker.get()
-    if brk.name != "live":
+    if brk.name != "live" and not getattr(brk, "replays_rank", False):   # 그림자 운영은 실제 시스템의 순위 원문을 다시 씀
         return print("mock 모드: 순위 API 가 없어 08:30 후보를 그대로 씀")
 
     raw = {}
@@ -387,7 +387,7 @@ def live_rsi():
     if not (900 <= n.hour * 100 + n.minute <= 1530) or n.weekday() >= 5:
         return print("장중이 아니라 장중 RSI 생략 (전일 RSI 사용)")
     brk = broker.get()
-    if brk.name != "live":
+    if brk.name != "live" and not getattr(brk, "replays_rank", False):
         return print("mock 모드: 장중 RSI 생략")
     b = C.read_json(C.BRIEFING)
     if not b:
