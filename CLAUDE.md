@@ -98,7 +98,7 @@ reports/    보고서 PDF, drafts/ = 주간 회고 에이전트가 쓴 초안
 
 - 글꼴은 전부 Noto Serif KR (고딕으로 바꾸지 말 것)
 - 다크 캔버스 + 유리 질감 카드(반투명, blur, 16px radius) + 은은한 빨강/파랑 그라데이션 배경
-- 빨강 `#da291c`/`#ff5a4a` = 수익·강조, 파랑 `#4aa3d4` = 손실 (국내 증시 관례), 나머지는 무채색
+- 빨강 `#da291c`/`#ff5a4a` = 수익·강조, 파랑 `#4aa3d4` = 손실 (국내 증시 관례), 나머지는 무채색. 예외: 누적 수익률 차트의 온톨로지 그림자 선만 초록 `#3ecf8e` (11-08 S.Lee)
 - 흐린 글씨는 `#8c8c8c` 이상 (대비 4.5:1 유지), 축 글씨 11px 이상
 - 글은 최소화, 상세는 툴팁(마우스 오버 + 터치 시 고정 + 키보드 Tab·Esc). HTML 요소는 `tipTarget`, 막대·점·도넛은 `tipMark`, 연속 차트는 `tipAxis`(← → 로 시점 이동). 폰의 판단 행은 말풍선 대신 탭하면 행 아래로 펼침
 - 화면 이름은 Sigma Engine으로 통일 (11-06 Sigma Six에서 바꿈). 큰 숫자는 총 손익(현재 자산 − 시작 원금), 양도차익·평가손익은 툴팁
@@ -135,7 +135,7 @@ reports/    보고서 PDF, drafts/ = 주간 회고 에이전트가 쓴 초안
 - [x] `setup_tasks.ps1`로 작업 스케줄러 등록, `GIT_PUSH=1` (11-02 데스크톱, 작업 10개)
 - [x] 에이전트를 데스크톱으로 옮기기 (`agent/MOVE_PC.md`). 11-02 밤 이전, 노트북 작업은 해제. 노트북 push → 데스크톱 반영 확인
 - [ ] 장중 push 때 sync 가 monitor 를 실제로 재시작하는지 확인 (임시 저장소로는 확인함). 하루 이상 문제없으면 노트북 `C:\dev\uostock-ai-trader` 삭제
-- [ ] 그림자 운영 (11-08 S.Lee): 온톨로지 버전([sigma-six-ontology](https://github.com/kyaa468-ui/sigma-six-ontology))을 브랜치 `shadow/ontology` 로 실제 옆에서 가상 계좌로 15분마다 (3분 늦게). 데스크톱에 `agent/shadow/setup_shadow.ps1` 한 번 실행 → `C:\dev\hynix-shadow`, 작업 `Hynix298S-*`. 키움 새 호출 없음, 실제가 1시간 안에 실패하면 쉼. 비교 `agent/shadow/compare.py`. main 에는 합치지 않음. 대시보드 카드 Ontology Shadow: 그림자가 회차마다 `work/shadow_equity.jsonl`(그림자·실제 자산 같은 시각)을 남기면 실제 logger 가 `../hynix-shadow`(또는 SHADOW_DIR)에서 읽어 `docs/data/shadow.json` 으로 올림, 파일이 없으면 카드 숨김
+- [ ] 그림자 운영 (11-08 S.Lee): 온톨로지 버전([sigma-six-ontology](https://github.com/kyaa468-ui/sigma-six-ontology))을 브랜치 `shadow/ontology` 로 실제 옆에서 가상 계좌로 15분마다 (3분 늦게). 데스크톱에 `agent/shadow/setup_shadow.ps1` 한 번 실행 → `C:\dev\hynix-shadow`, 작업 `Hynix298S-*`. 키움 새 호출 없음, 실제가 1시간 안에 실패하면 쉼. 비교 `agent/shadow/compare.py`. main 에는 합치지 않음. 대시보드: 그림자가 회차마다 `work/shadow_equity.jsonl`(그림자·실제 자산 같은 시각)을 남기면 실제 logger 가 `../hynix-shadow`(또는 SHADOW_DIR)에서 읽어 `docs/data/shadow.json`(daily = 날짜별 그림자 자산)으로 올림 → 누적 수익률 차트에 초록 Ontology 선, 파일이 없으면 안 그림
 - [ ] 대회 후 README 결과·회고 섹션 채우기
 
 ## 커밋

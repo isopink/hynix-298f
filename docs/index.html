@@ -57,11 +57,6 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
 .card .hd { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
 .card .val { font-size: 28px; font-weight: 500; letter-spacing: -0.5px; line-height: 1; }
 .card .sub { font-size: 12px; color: var(--muted); }
-.sh-top { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 6px 0 10px; }
-.sh-top .val { font-size: 22px; margin-top: 4px; }
-.sh-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 10px; font-size: 12px; color: var(--muted); }
-.sh-stats b { display: block; font-weight: 500; font-size: 14px; color: #f5f5f5; margin-top: 2px; }
-@media (max-width: 640px) { .sh-top .val { font-size: 18px; } .sh-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .c12 { grid-column: span 12; } .c6 { grid-column: span 6; } .c8 { grid-column: span 8; } .c7 { grid-column: span 7; } .c5 { grid-column: span 5; } .c4 { grid-column: span 4; } .c3 { grid-column: span 3; }
 .up { color: var(--red-hi); } .down { color: var(--blue); }
 .chart { width: 100%; flex: 1; min-height: 56px; }
@@ -416,17 +411,6 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
       </div>
     </section>
 
-    <!-- 11-08 온톨로지 그림자 운영: 같은 출발 계좌에서 온톨로지 버전(가상 계좌)과 지금 방식을 나란히. data/shadow.json 이 있을 때만 -->
-    <section class="card c12" id="sh-card" hidden>
-      <div class="hd"><h2 class="eyebrow">Ontology Shadow</h2><span class="sub" id="sh-asof"></span></div>
-      <div class="sh-top">
-        <div><div class="sub">온톨로지 (가상)</div><div class="val" id="sh-ret">—</div></div>
-        <div><div class="sub">지금 방식 (실제)</div><div class="val" id="sh-live">—</div></div>
-        <div><div class="sub">차이</div><div class="val" id="sh-diff">—</div></div>
-      </div>
-      <div class="chart" id="ch-shadow" style="min-height:190px"></div>
-      <div class="sh-stats" id="sh-stats"></div>
-    </section>
 
 
   </div>
@@ -845,7 +829,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     if (!D) return;
     hero(); sparkLine($('sp-kospi'), D.eq.map(r => r.kospi), '#bdbdbd'); winDots($('sp-win'));
     sparkBars($('sp-week'), D.eq.slice(-5).map(r => r.day)); drawdown($('sp-dd'));
-    agentStatus(); decisionCard(); calendar(); donut(); pnl(); scatter(); tokens(); review(); limits(); alpha(); drawKospi(); drawFlow(); shadowCard();
+    agentStatus(); decisionCard(); calendar(); donut(); pnl(); scatter(); tokens(); review(); limits(); alpha(); drawKospi(); drawFlow();
     animated = true;
   }
 
@@ -1034,49 +1018,9 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   }
 
 
-  // ---------- 11-08 온톨로지 그림자 운영 (data/shadow.json, 실제 logger 가 그림자 폴더에서 읽어 올림) ----------
+  // ---------- 11-08 온톨로지 그림자 운영 (data/shadow.json, 실제 logger 가 그림자 폴더에서 읽어 올림) → 누적 수익률 차트에 초록 선 ----------
   let SHADOW = null;
-  fetch('data/shadow.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null).catch(() => null).then(v => { SHADOW = v; if (D) shadowCard(); });
-  function shadowCard() {
-    const card = $('sh-card'), S = SHADOW;
-    if (!S || !S.series || !S.series.length) { card.hidden = true; return; }
-    card.hidden = false;
-    const n = S.now || {}, diff = n.shadow != null && n.live != null ? n.shadow - n.live : null;
-    $('sh-asof').textContent = `${md(toD(S.start))} 같은 계좌로 시작 · ${S.updated.slice(5).replace('-', '/')} 기준`;
-    [['sh-ret', n.shadow], ['sh-live', n.live], ['sh-diff', diff]].forEach(([id, v]) => { $(id).textContent = v == null ? '—' : pct(v); tone($(id), v || 0); });
-    tipTarget($('sh-ret'), `<div class="t">온톨로지 버전</div>${row('가상 계좌 자산', n.shadow_total ? won(n.shadow_total) + '원' : '—')}${(S.holdings || []).slice(0, 6).map(h => row(h.name, (h.pnl_pct != null ? pct(h.pnl_pct, 1) : '') + ' · ' + h.qty + '주', h.pnl_pct > 0 ? 'up' : h.pnl_pct < 0 ? 'down' : '')).join('')}`);
-    tipTarget($('sh-live'), `<div class="t">지금 방식</div>${row('실제 계좌 자산', n.live_total ? won(n.live_total) + '원' : '—')}`);
-    const a = (S.stats || {}).shadow || {}, b = (S.stats || {}).live || {}, f = v => v == null ? '—' : v;
-    $('sh-stats').innerHTML = [['체결', `${f(b.fills)} / ${f(a.fills)}`], ['관망', `${f(b.watch)} / ${f(a.watch)}`],
-      ['판단 1회', `${b.avg_min == null ? '—' : b.avg_min + '분'} / ${a.avg_min == null ? '—' : a.avg_min + '분'}`], ['토큰', `${f(b.tokens_k)}k / ${f(a.tokens_k)}k`]]
-      .map(([k, v]) => `<div>${k} <span class="sub">지금 / 온톨</span><b>${esc(v)}</b></div>`).join('');
-    const el = $('ch-shadow'), rows = S.series.map(r => ({ ...r, t: new Date(r.time.replace(' ', 'T') + ':00+09:00') }));
-    const { svg, W, H } = svgIn(el, 190), m = { l: 44, r: 12, t: 10, b: 22 };
-    const vals = rows.flatMap(r => [r.shadow, r.live]).filter(v => v != null).concat([0]);
-    const y = d3.scaleLinear(d3.extent(vals), [H - m.b, m.t]).nice(4);
-    // 거래 시간만 이어 붙임 (밤·주말은 건너뜀): 회차 순서를 가로축으로
-    const x = d3.scaleLinear([0, Math.max(1, rows.length - 1)], [m.l, W - m.r]);
-    svg.append('g').selectAll('line').data(y.ticks(4)).join('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y).attr('y2', y).attr('stroke', C.grid);
-    svg.append('g').selectAll('text').data(y.ticks(4)).join('text').attr('x', m.l - 8).attr('y', y).attr('dy', '.32em').attr('text-anchor', 'end').attr('font-size', 11).attr('fill', C.muted).text(v => pct(v, 1));
-    svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(0)).attr('y2', y(0)).attr('stroke', '#8a8a8a').attr('stroke-dasharray', '3 4');
-    const days = []; rows.forEach((r, i) => { if (!i || r.time.slice(0, 10) !== rows[i - 1].time.slice(0, 10)) days.push(i); });
-    const per = Math.max(1, Math.ceil(days.length / (W < 520 ? 4 : 7)));
-    days.filter((_, k) => k % per === 0).forEach(i => svg.append('text').attr('x', x(i)).attr('y', H - 6).attr('text-anchor', i ? 'middle' : 'start').attr('font-size', 11).attr('fill', C.muted).text(md(toD(rows[i].time.slice(0, 10)))));
-    const line = k => d3.line().defined(r => r[k] != null).x((_, i) => x(i)).y(r => y(r[k]));
-    svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', '#9a9a9a').attr('stroke-width', 1.3).attr('d', line('live'));
-    svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', C.redHi).attr('stroke-width', 1.6).attr('d', line('shadow'));
-    const L = rows[rows.length - 1];
-    if (L.shadow != null) svg.append('circle').attr('cx', x(rows.length - 1)).attr('cy', y(L.shadow)).attr('r', 3.5).attr('fill', C.redHi).attr('stroke', '#fff').attr('stroke-width', 1.2);
-    svg.append('text').attr('x', m.l + 4).attr('y', m.t + 10).attr('font-size', 11).attr('fill', C.redHi).text('온톨로지');
-    svg.append('text').attr('x', m.l + 64).attr('y', m.t + 10).attr('font-size', 11).attr('fill', '#9a9a9a').text('지금 방식');
-    const rule = svg.append('line').attr('y1', m.t).attr('y2', H - m.b).attr('stroke', '#444').attr('opacity', 0);
-    const pick = r => { const i = rows.indexOf(r); rule.attr('x1', x(i)).attr('x2', x(i)).attr('opacity', 1);
-      return `<div class="t">${r.time.slice(5).replace('-', '/')}</div>${row('온톨로지', r.shadow == null ? '—' : pct(r.shadow), r.shadow > 0 ? 'up' : r.shadow < 0 ? 'down' : '')}${row('지금 방식', r.live == null ? '—' : pct(r.live), r.live > 0 ? 'up' : r.live < 0 ? 'down' : '')}`; };
-    svg.append('rect').attr('x', m.l).attr('y', 0).attr('width', W - m.l - m.r).attr('height', H - m.b).attr('fill', 'transparent')
-      .on('pointermove pointerdown', ev => showTip(ev, pick(rows[Math.max(0, Math.min(rows.length - 1, Math.round(x.invert(d3.pointer(ev)[0]))))])))
-      .on('pointerleave', () => { hideTip(); rule.attr('opacity', 0); })
-      .call(tipAxis, rows, pick, () => rule.attr('opacity', 0), rule.node(), '온톨로지 그림자 운영, 좌우 화살표로 회차 이동');
-  }
+  fetch('data/shadow.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null).catch(() => null).then(v => { SHADOW = v; if (D) hero(); });
 
   // ---------- 리스크 한도: agent/config/risk_limits.json 과 같은 값 (대회 내내 고정, 바뀌면 여기도 고칠 것) ----------
   const RL = { daily: -0.03, total: -0.10, minCash: 0.10, maxPos: 20, maxW: 0.20 };
@@ -1123,11 +1067,16 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   function hero() {
     const el = $('ch-hero'), { svg, W, H } = svgIn(el, el.clientWidth < 520 ? (D.eq.length > 1 ? 250 : 170) : 280), rows = D.eq;   // 휴대폰에선 낮게, 하루치(점 하나)면 조금 더 낮게
     const narrow = W < 520;
+    // 11-08 S.Lee: 온톨로지 그림자 운영(가상 계좌, 시작일에 실제 계좌 복사)을 초록 선으로. 시작 전날 실제 점에서 갈라져 나옴
+    const ONT = '#3ecf8e', sh = (SHADOW && SHADOW.daily || []).map(r => ({ d: toD(r.date), ret: r.total / INIT - 1, total: r.total }));
+    const lastD = rows[rows.length - 1].d; while (sh.length && sh[sh.length - 1].d > lastD) sh.pop();   // 실제 기록보다 앞선 날은 그리지 않음
+    if (sh.length) { const b = rows.filter(r => r.d < sh[0].d).pop(); if (b) sh.unshift({ d: b.d, ret: b.ret, total: b.total, seed: true }); }
+    const shAt = d => sh.find(r => +r.d === +d && !r.seed);
     const neg = D.ret < 0, col = neg ? C.blue : C.red, colHi = neg ? '#7cc4ea' : C.redHi;   // 수익률 양수 빨강 · 음수 파랑
-    const lo = Math.min(0, d3.min(rows, r => Math.min(r.ret, r.kret))), hi = Math.max(0, d3.max(rows, r => Math.max(r.ret, r.kret)));
+    const lo = Math.min(0, d3.min(rows, r => Math.min(r.ret, r.kret)), d3.min(sh, r => r.ret) ?? 0), hi = Math.max(0, d3.max(rows, r => Math.max(r.ret, r.kret)), d3.max(sh, r => r.ret) ?? 0);
     const y0 = d3.scaleLinear([lo, hi], [0, 1]).nice(4), ticks = y0.ticks(4), tstep = ticks.length > 1 ? ticks[1] - ticks[0] : .01, tf = v => (v > 0 ? '+' : '') + (v * 100).toFixed(tstep < .0099 ? 1 : 0) + '%';
-    const lw = Math.max(textW(svg, 'Sigma Engine ' + pct(D.ret), 12), textW(svg, 'KOSPI ' + pct(D.kret), 12));
-    const m = { t: narrow ? 30 : 10, r: narrow ? 8 : lw + 18, b: 28, l: d3.max(ticks, v => textW(svg, tf(v))) + 10 };   // 휴대폰은 위쪽에 범례 자리
+    const lw = Math.max(textW(svg, 'Sigma Engine ' + pct(D.ret), 12), textW(svg, 'KOSPI ' + pct(D.kret), 12), sh.length ? textW(svg, 'Ontology ' + pct(sh[sh.length - 1].ret), 12) : 0);
+    const m = { t: narrow ? (sh.length > 1 ? 44 : 30) : 10, r: narrow ? 8 : lw + 18, b: 28, l: d3.max(ticks, v => textW(svg, tf(v))) + 10 };   // 휴대폰은 위쪽에 범례 자리
     // 11-06 S.Lee: 가로축 = 11/2 ~ 마지막 기록일 거래일(주말 뺌). 첫날이 맨 왼쪽, 최신 날짜가 맨 오른쪽 — 날이 늘면 칸이 좁아짐
     const last = rows[rows.length - 1].d, DAYS = d3.utcDays(toD(START), d3.utcDay.offset(last, 1)).filter(d => d.getUTCDay() % 6 !== 0);
     const di = new Map(DAYS.map((d, i) => [+d, i])), idx = r => di.get(+r.d) ?? d3.bisectLeft(DAYS, r.d);
@@ -1157,6 +1106,12 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const kp = svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', '#a8a8a8').attr('stroke-width', 0.6).attr('stroke-linejoin', 'round').attr('filter', 'url(#fHeroGlow)').attr('d', kLine);   // 11-05 1.75 → 0.6 (얇게)
     const p = svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', col).attr('stroke-width', 0.6).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round').attr('filter', 'url(#fHeroGlow)').attr('d', d3.line().curve(cv).x(r => x(r.d)).y(r => y(r.ret)));   // 11-05 2.5 → 0.6
     if (fx) { animate(kp); animate(p); }
+    if (sh.length > 1) {   // 온톨로지 그림자 (초록)
+      const op = svg.append('path').datum(sh).attr('fill', 'none').attr('stroke', ONT).attr('stroke-width', 0.9).attr('stroke-linejoin', 'round').attr('filter', 'url(#fHeroGlow)').attr('d', d3.line().curve(cv).x(r => x(r.d)).y(r => y(r.ret)));
+      if (fx) animate(op);
+      const SL = sh[sh.length - 1];
+      fade(svg.append('circle').attr('cx', x(SL.d)).attr('cy', y(SL.ret)).attr('r', 3.5).attr('fill', ONT).attr('stroke', '#fff').attr('stroke-width', 1.2), 1);
+    }
     const dots = rows.slice(0, -1);   // C: 거래일마다 작은 점 (마지막 날은 끝점이 대신)
     fade(svg.append('g').selectAll('circle').data(dots).join('circle').attr('cx', r => x(r.d)).attr('cy', r => y(r.kret)).attr('r', 2).attr('fill', '#141414').attr('stroke', '#a8a8a8').attr('stroke-width', 1), .9);
     fade(svg.append('g').selectAll('circle').data(dots).join('circle').attr('cx', r => x(r.d)).attr('cy', r => y(r.ret)).attr('r', 2.2).attr('fill', '#141414').attr('stroke', col).attr('stroke-width', 1.2), .9);
@@ -1171,7 +1126,8 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     fade(svg.append('circle').attr('cx', ex).attr('cy', yR).attr('r', 4.5).attr('fill', col).attr('stroke', '#fff').attr('stroke-width', 1.5), 1);
     if (!narrow) {
       const labs = [{ n: 'Sigma Engine', v: L.ret, c: colHi, y: y(L.ret) }, { n: 'KOSPI', v: L.kret, c: '#9a9a9a', y: y(L.kret) }];
-      if (Math.abs(labs[0].y - labs[1].y) < 18) { const mid = (labs[0].y + labs[1].y) / 2, s = labs[0].y <= labs[1].y ? 1 : -1; labs[0].y = mid - 9 * s; labs[1].y = mid + 9 * s; }
+      if (sh.length > 1) labs.push({ n: 'Ontology', v: sh[sh.length - 1].ret, c: ONT, y: y(sh[sh.length - 1].ret) });
+      labs.sort((a, b) => a.y - b.y).forEach((l, i, a) => { if (i && l.y - a[i - 1].y < 18) l.y = a[i - 1].y + 18; });   // 이름표가 겹치면 아래로 밀어 냄
       labs.forEach(l => { const t = svg.append('text').attr('x', x(L.d) + 12).attr('y', l.y).attr('dy', '.32em').attr('font-size', 12).attr('fill', l.c); t.append('tspan').attr('font-weight', 600).text(l.n); t.append('tspan').attr('dx', 6).text(pct(l.v)); });
     } else {   // 휴대폰: 오른쪽 이름표 대신 위쪽 한 줄 범례
       const g = svg.append('g').attr('transform', `translate(${m.l},12)`);
@@ -1182,12 +1138,18 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       g.append('line').attr('x1', x2).attr('x2', x2 + 14).attr('y1', 0).attr('y2', 0).attr('stroke', '#a8a8a8').attr('stroke-width', 1.5);
       const t2 = g.append('text').attr('x', x2 + 20).attr('dy', '.32em').attr('font-size', 12).attr('fill', '#9a9a9a');
       t2.append('tspan').attr('font-weight', 600).text('KOSPI'); t2.append('tspan').attr('dx', 5).text(pct(L.kret));
+      if (sh.length > 1) {   // 온톨로지는 범례 둘째 줄
+        const g2 = svg.append('g').attr('transform', `translate(${m.l},28)`), v = sh[sh.length - 1].ret;
+        g2.append('line').attr('x1', 0).attr('x2', 14).attr('y1', 0).attr('y2', 0).attr('stroke', ONT).attr('stroke-width', 1.5);
+        const t3 = g2.append('text').attr('x', 20).attr('dy', '.32em').attr('font-size', 12).attr('fill', ONT);
+        t3.append('tspan').attr('font-weight', 600).text('Ontology'); t3.append('tspan').attr('dx', 5).text(pct(v));
+      }
     }
     const rule = svg.append('line').attr('y1', m.t).attr('y2', H - m.b).attr('stroke', '#444').attr('opacity', 0);
     const dot = svg.append('circle').attr('r', 4).attr('fill', '#141414').attr('stroke', colHi).attr('stroke-width', 2).attr('opacity', 0);
     const bis = (rs, i) => d3.minIndex(rs, r => Math.abs(idx(r) - i));   // 마우스 위치와 가장 가까운 거래일
     const off = () => { rule.attr('opacity', 0); dot.attr('opacity', 0); };
-    const pick = r => { rule.attr('x1', x(r.d)).attr('x2', x(r.d)).attr('opacity', 1); dot.attr('cx', x(r.d)).attr('cy', y(r.ret)).attr('opacity', 1); return `<div class="t">${md(r.d)}${r.regime ? ' · ' + esc(r.regime) + ' 국면' : ''}</div>${row('Sigma Engine', pct(r.ret), r.ret >= 0 ? 'up' : 'down')}${row('KOSPI', pct(r.kret))}${row('총자산', won(r.total))}`; };
+    const pick = r => { rule.attr('x1', x(r.d)).attr('x2', x(r.d)).attr('opacity', 1); dot.attr('cx', x(r.d)).attr('cy', y(r.ret)).attr('opacity', 1); return `<div class="t">${md(r.d)}${r.regime ? ' · ' + esc(r.regime) + ' 국면' : ''}</div>${row('Sigma Engine', pct(r.ret), r.ret >= 0 ? 'up' : 'down')}${row('KOSPI', pct(r.kret))}${shAt(r.d) ? row('Ontology (가상)', pct(shAt(r.d).ret)) : ''}${row('총자산', won(r.total))}`; };
     svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r).attr('height', H - m.t - m.b).attr('fill', 'transparent')
       .on('pointermove pointerdown', ev => showTip(ev, pick(rows[bis(rows, xi.invert(d3.pointer(ev)[0]))])))
       .on('pointerleave', () => { hideTip(); off(); })

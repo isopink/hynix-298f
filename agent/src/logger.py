@@ -296,7 +296,12 @@ def shadow(rows):
     last = eq[-1]
     pick = eq[-400:]
     ret = lambda v: round(v / base - 1, 5) if v and base else None   # noqa: E731
+    daily = {}
+    for e in eq:   # 날짜별 마지막 기록 = 그날 그림자 자산 (누적 수익률 차트 초록 선)
+        if e.get("total"):
+            daily[e["time"][:10]] = e["total"]
     return {"updated": last["time"], "start": start, "base": base,
+            "daily": [{"date": d, "total": v} for d, v in sorted(daily.items())],
             "series": [{"time": e["time"], "shadow": ret(e.get("total")), "live": ret(e.get("real_total"))} for e in pick],
             "now": {"shadow": ret(last.get("total")), "live": ret(last.get("real_total")),
                     "shadow_total": last.get("total"), "live_total": last.get("real_total")},
