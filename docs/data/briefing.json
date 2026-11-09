@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "11:30",
+    "time": "11:45",
     "pool": 409,
     "analyzed_new": 30,
-    "passed": 18,
+    "passed": 20,
     "kept_prep": false
   },
   "candidates": [
@@ -98,7 +98,7 @@
       "vol20": 0.469,
       "foreign_net": -6880633700,
       "inst_net": 74240426800,
-      "score": 0.892,
+      "score": 0.905,
       "news": [
         {
           "date": "11-08",
@@ -118,7 +118,7 @@
       ],
       "price": 58400,
       "chg": 0.0,
-      "activity": 5.1,
+      "activity": 4.74,
       "foreign_today": 1051200000,
       "inst_today": 0,
       "exchange": "KOSPI"
@@ -133,7 +133,7 @@
       "vol20": 0.888,
       "foreign_net": 1436621025,
       "inst_net": 20425868350,
-      "score": 0.878,
+      "score": 0.881,
       "news": [
         {
           "date": "11-09",
@@ -151,11 +151,11 @@
           "risk": false
         }
       ],
-      "price": 31050,
-      "chg": 0.0437,
-      "activity": 3.01,
-      "foreign_today": 1987200000,
-      "inst_today": 2484000000,
+      "price": 31250,
+      "chg": 0.0504,
+      "activity": 2.95,
+      "foreign_today": 2000000000,
+      "inst_today": 2500000000,
       "exchange": "KOSPI"
     },
     {
@@ -168,7 +168,7 @@
       "vol20": 0.792,
       "foreign_net": -20437500850,
       "inst_net": 51491335800,
-      "score": 0.689,
+      "score": 0.726,
       "news": [
         {
           "date": "11-07",
@@ -181,11 +181,11 @@
           "risk": false
         }
       ],
-      "price": 79400,
-      "chg": 0.0715,
-      "activity": 2.44,
-      "foreign_today": 3334800000,
-      "inst_today": 476400000,
+      "price": 79300,
+      "chg": 0.0702,
+      "activity": 2.37,
+      "foreign_today": 3330600000,
+      "inst_today": 475800000,
       "exchange": "KOSPI"
     },
     {
@@ -198,8 +198,13 @@
       "vol20": 0.56,
       "foreign_net": -19235375950,
       "inst_net": 64455133600,
-      "score": 0.662,
+      "score": 0.667,
       "news": [
+        {
+          "date": "11-09",
+          "title": "SK바이오팜, 미국 거점 'SK라이프사이언스 링스' 입주 기업 31곳 선정",
+          "risk": false
+        },
         {
           "date": "11-09",
           "title": "SK바이오팜 3분기 이익 65.9% 증가…IBK 목표가 하향",
@@ -208,11 +213,6 @@
         {
           "date": "11-08",
           "title": "엑스코프리 \"쾌속질주\", 오파칼림 \"동력확충\"...SK바이오팜, 올 3분기 영...",
-          "risk": false
-        },
-        {
-          "date": "11-08",
-          "title": "SK바이오팜 엑스코프리, 日 최대 연매출 165억엔 전망…13일 약가 등재",
           "risk": false
         }
       ],
@@ -230,13 +230,13 @@
       "vol20": 0.491,
       "foreign_net": -22121547500,
       "inst_net": 56405917100,
-      "score": 0.581,
+      "score": 0.595,
       "news": [],
-      "price": 77800,
-      "chg": 0.0013,
-      "activity": 1.53,
-      "foreign_today": 4045600000,
-      "inst_today": 778000000,
+      "price": 77600,
+      "chg": -0.0013,
+      "activity": 1.46,
+      "foreign_today": 4035200000,
+      "inst_today": 776000000,
       "exchange": "KOSPI"
     },
     {
@@ -249,8 +249,13 @@
       "vol20": 0.402,
       "foreign_net": -43204631710,
       "inst_net": 74782934530,
-      "score": 0.473,
+      "score": 0.5,
       "news": [
+        {
+          "date": "11-09",
+          "title": "LG유플러스, 서울대·KAIST·연세대와 한국어 특화 음성 AI 개발",
+          "risk": false
+        },
         {
           "date": "11-09",
           "title": "[위클리오늘] 이동통신 소식_LG유플러스, KT(11.9)",
@@ -259,11 +264,6 @@
         {
           "date": "11-09",
           "title": "LG유플러스, 서울대·KAIST·연세대와 한국형 음성AI 개발 나선다",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "LG유플러스, 한국어 대화 특화 '차세대 음성 AI' 개발…산학협력 강화",
           "risk": false
         }
       ],
@@ -281,8 +281,13 @@
       "vol20": 0.843,
       "foreign_net": -27562520175,
       "inst_net": 30133908725,
-      "score": 0.351,
+      "score": 0.369,
       "news": [
+        {
+          "date": "11-09",
+          "title": "\"씨에스윈드, 美 법인 생산성 개선\"",
+          "risk": false
+        },
         {
           "date": "11-09",
           "title": "씨에스윈드, 美 데이터센터 '청정에너지 착공 의무' 직수혜…\"주정부 규...",
@@ -292,16 +297,11 @@
           "date": "11-09",
           "title": "\"씨에스윈드, 美 풍력 프로젝트 규제 완화 기대\"-하나",
           "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "씨에스윈드, 타워 영업이익 83% 증가…미국 생산성 개선 효과-키움",
-          "risk": false
         }
       ],
       "price": 49800,
       "chg": 0.0143,
-      "activity": 2.37,
+      "activity": 2.24,
       "foreign_today": 0,
       "inst_today": 1693200000,
       "exchange": "KOSPI"
@@ -316,7 +316,7 @@
       "vol20": 0.957,
       "foreign_net": -76658998800,
       "inst_net": 63121010150,
-      "score": 0.338,
+      "score": 0.345,
       "news": [
         {
           "date": "11-09",
@@ -334,11 +334,11 @@
           "risk": false
         }
       ],
-      "price": 62450,
-      "chg": 0.0322,
-      "activity": 0.83,
-      "foreign_today": 2872700000,
-      "inst_today": 312250000,
+      "price": 62200,
+      "chg": 0.0281,
+      "activity": 0.78,
+      "foreign_today": 2861200000,
+      "inst_today": 311000000,
       "exchange": "KOSPI"
     },
     {
@@ -351,7 +351,7 @@
       "vol20": 0.738,
       "foreign_net": -7484986975,
       "inst_net": 26975170300,
-      "score": 0.297,
+      "score": 0.321,
       "news": [
         {
           "date": "11-09",
@@ -374,38 +374,6 @@
       "exchange": "KOSPI"
     },
     {
-      "code": "004020",
-      "name": "현대제철",
-      "close": 28300,
-      "ret5": 0.1098,
-      "ret20": 0.0089,
-      "rsi14": 48.9,
-      "vol20": 0.625,
-      "foreign_net": 652431450,
-      "inst_net": 21161016850,
-      "score": 0.257,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "인하대학교 황용우 교수팀, 현대제철과 철강 탄소발자국 평가 기준 고도...",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "현대제철 노사, 당진제철소 임직원 가족과 늦가을 목장길 트레킹",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "\"주주가치 제고는 언제쯤\"… 현대제철, 결국 '저PBR' 낙인까지",
-          "risk": false
-        }
-      ],
-      "foreign_today": 339600000,
-      "inst_today": 113200000,
-      "exchange": "KOSPI"
-    },
-    {
       "code": "175330",
       "name": "JB금융지주",
       "close": 27100,
@@ -415,10 +383,42 @@
       "vol20": 0.404,
       "foreign_net": -5748052750,
       "inst_net": 7853604175,
-      "score": 0.243,
+      "score": 0.298,
       "news": [],
       "foreign_today": 0,
       "inst_today": 325200000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "004020",
+      "name": "현대제철",
+      "close": 28300,
+      "ret5": 0.1098,
+      "ret20": 0.0089,
+      "rsi14": 48.9,
+      "vol20": 0.625,
+      "foreign_net": 652431450,
+      "inst_net": 21161016850,
+      "score": 0.298,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "현대제철 노사, 가족과 함께 건강한 동행…130여 명 트레킹",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "인하대학교 황용우 교수팀, 현대제철과 철강 탄소발자국 평가 기준 고도...",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "현대제철 노사, 당진제철소 임직원 가족과 늦가을 목장길 트레킹",
+          "risk": false
+        }
+      ],
+      "foreign_today": 339600000,
+      "inst_today": 113200000,
       "exchange": "KOSPI"
     },
     {
@@ -431,7 +431,7 @@
       "vol20": 0.592,
       "foreign_net": -8231059200,
       "inst_net": 53595627900,
-      "score": 0.203,
+      "score": 0.262,
       "news": [
         {
           "date": "11-09",
@@ -451,6 +451,38 @@
       ],
       "foreign_today": 0,
       "inst_today": 586500000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "323410",
+      "name": "카카오뱅크",
+      "close": 20550,
+      "ret5": 0.0389,
+      "ret20": 0.0528,
+      "rsi14": 56.4,
+      "vol20": 0.254,
+      "foreign_net": 5502551950,
+      "inst_net": 9691482340,
+      "score": 0.214,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "카카오뱅크, '눈치보고 주말 혜택받기'…1000번째로 버튼 누르면 경품",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "카카오뱅크, 7000명 참여 'Save Race 2026' 개최…16억5000만원 기부",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "카카오뱅크, '눈치보고 주말 혜택받기' 출시…1000번째 순번에 경품",
+          "risk": false
+        }
+      ],
+      "foreign_today": 287700000,
+      "inst_today": 0,
       "exchange": "KOSPI"
     },
     {
@@ -481,11 +513,11 @@
           "risk": false
         }
       ],
-      "price": 59100,
-      "chg": 0.0745,
-      "activity": 4.43,
+      "price": 59400,
+      "chg": 0.08,
+      "activity": 4.1,
       "foreign_today": 0,
-      "inst_today": 886500000,
+      "inst_today": 891000000,
       "exchange": "KOSDAQ"
     },
     {
@@ -498,7 +530,7 @@
       "vol20": 1.387,
       "foreign_net": -6381603720,
       "inst_net": 16519823935,
-      "score": 0.743,
+      "score": 0.75,
       "news": [
         {
           "date": "11-09",
@@ -516,11 +548,11 @@
           "risk": false
         }
       ],
-      "price": 16570,
-      "chg": 0.0725,
-      "activity": 2.88,
+      "price": 16490,
+      "chg": 0.0673,
+      "activity": 2.67,
       "foreign_today": 0,
-      "inst_today": 1391880000,
+      "inst_today": 1385160000,
       "exchange": "KOSDAQ"
     },
     {
@@ -533,7 +565,7 @@
       "vol20": 1.105,
       "foreign_net": -1315515485,
       "inst_net": 73370470,
-      "score": 0.459,
+      "score": 0.452,
       "news": [
         {
           "date": "11-09",
@@ -551,11 +583,36 @@
           "risk": false
         }
       ],
-      "price": 14220,
-      "chg": 0.038,
-      "activity": 2.48,
-      "foreign_today": 583020000,
+      "price": 14170,
+      "chg": 0.0343,
+      "activity": 2.28,
+      "foreign_today": 580970000,
       "inst_today": 0,
+      "exchange": "KOSDAQ"
+    },
+    {
+      "code": "119850",
+      "name": "지엔씨에너지",
+      "close": 35250,
+      "ret5": 0.119,
+      "ret20": -0.2664,
+      "rsi14": 42.4,
+      "vol20": 1.141,
+      "foreign_net": -11979305150,
+      "inst_net": 12404586800,
+      "score": 0.44,
+      "news": [
+        {
+          "date": "11-06",
+          "title": "JP모건 시큐리티즈, 지엔씨에너지 5.07% 보유 보고",
+          "risk": false
+        }
+      ],
+      "price": 38000,
+      "chg": 0.0765,
+      "activity": 3.3,
+      "foreign_today": 0,
+      "inst_today": 380000000,
       "exchange": "KOSDAQ"
     },
     {
@@ -568,7 +625,7 @@
       "vol20": 1.052,
       "foreign_net": -3890551700,
       "inst_net": -186177575,
-      "score": 0.257,
+      "score": 0.298,
       "news": [
         {
           "date": "11-06",
@@ -581,10 +638,10 @@
           "risk": false
         }
       ],
-      "price": 6550,
-      "chg": -0.0267,
-      "activity": 1.62,
-      "foreign_today": 393000000,
+      "price": 6560,
+      "chg": -0.0253,
+      "activity": 1.54,
+      "foreign_today": 393600000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
