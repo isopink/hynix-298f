@@ -180,20 +180,56 @@ def shadow_texts(dc, journal, n=140):
                     it[k] = str(r[k])[:n]
 
 
-def push_shadow(env):
-    """11-09 온톨로지 그림자 운영의 1분 자산·상태를 같이 올림 (supabase/shadow.sql). 그림자가 없거나 3분 넘게 묵었으면 건너뜀.
+def _rj(path, default=None):
+    try:
+        with open(path, encoding="utf-8") as f:
+            return json.load(f)
+    except (OSError, ValueError):
+        return default
+
+
+def shadow_now(snap):
+    """11-09 그림자(SiON) 가상 계좌를 지금 가격으로 평가. 그림자 감시 루프가 멈춰도 여기서 1분마다 계산하므로 대시보드가 멈추지 않음.
+    가격: 실제 잔고(방금 받은 키움 kt00018) → 실제·그림자 quotes.json(15분 안) → 평단. 키움 새 호출 없음."""
+    work = os.path.dirname(SHADOW_LIVE)
+    shadow_root = os.path.dirname(os.path.dirname(work))
+    m = _rj(os.path.join(work, "mock_account.json"))
+    if not m or "positions" not in m:
+        return None
+    px = {h["code"]: h["price"] for h in snap.get("holdings", []) if h.get("price")}
+    now = time.time()
+    for q in (os.path.join(os.path.dirname(HERE), "agent", "work", "quotes.json"), os.path.join(work, "quotes.json")):
+        for c, v in (_rj(q, {}) or {}).items():
+            if c not in px and v.get("price") and now - v.get("ts", 0) <= 15 * 60:
+                px[c] = v["price"]
+    hs = []
+    for c, p in m["positions"].items():
+        if not p.get("qty"):
+            continue
+        avg = p.get("avg_price") or 0
+        price = px.get(c) or avg
+        hs.append({"code": c, "name": p.get("name", c), "qty": p["qty"], "price": price, "value": price * p["qty"],
+                   "pnl_pct": round(price / avg - 1, 4) if avg else None})
+    st = _rj(os.path.join(shadow_root, "docs", "data", "status.json"), {}) or {}
+    status = {k: st.get(k) for k in ("last_run", "last_ok", "next_run", "runs_today", "failures_today", "note")}
+    dc = _rj(os.path.join(shadow_root, "docs", "data", "decision.json"), {}) or {}
+    seeded = str(m.get("seeded_at", ""))[:16].replace("T", " ")
+    if dc.get("time") and dc["time"] >= seeded:
+        status["decision"] = {"time": dc["time"], "regime": dc.get("regime"),
+                              "items": [{k: x.get(k) for k in ("code", "name", "action", "qty", "confidence", "decision")} for x in dc.get("items", [])]}
+        shadow_texts(status["decision"], os.path.join(work, "journal.jsonl"))
+    return {"total": round(m.get("cash", 0) + sum(h["value"] for h in hs)), "cash": round(m.get("cash", 0)), "holdings": hs, "status": status}
+
+
+def push_shadow(env, snap):
+    """11-09 온톨로지 그림자 운영의 1분 자산·상태·최근 판단을 같이 올림 (supabase/shadow.sql). 그림자가 없으면 건너뜀.
     실패해도 실제 잔고 업로드에는 영향 없음."""
     try:
-        with open(SHADOW_LIVE, encoding="utf-8") as f:
-            x = json.load(f)
-    except (OSError, ValueError):
-        return
-    if time.time() - x.get("epoch", 0) > 180 or not x.get("total"):
-        return
-    try:
-        shadow_texts(x.get("status", {}).get("decision"), os.path.join(os.path.dirname(SHADOW_LIVE), "journal.jsonl"))
+        x = shadow_now(snap)
     except Exception as e:  # noqa: BLE001
-        print(f"  (그림자 판단 문장 건너뜀: {str(e)[:80]})")
+        return print(f"  (그림자 계산 건너뜀: {str(e)[:120]})")
+    if not x or not x.get("total"):
+        return
     try:
         key = env["SUPABASE_ANON_KEY"]
         post_json(env["SUPABASE_URL"].rstrip("/") + "/rest/v1/rpc/push_shadow", {
@@ -228,7 +264,7 @@ def run_once(env, dry=False):
             sys.exit(f".env 에 {k} 값이 비어 있습니다.")
     push(env, snap, kospi)
     print("  → 대시보드에 올림")
-    push_shadow(env)
+    push_shadow(env, snap)
 
 
 def main():
