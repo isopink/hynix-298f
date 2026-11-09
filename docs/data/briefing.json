@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "11:15",
+    "time": "11:30",
     "pool": 409,
     "analyzed_new": 30,
-    "passed": 19,
+    "passed": 18,
     "kept_prep": false
   },
   "candidates": [
@@ -98,7 +98,7 @@
       "vol20": 0.469,
       "foreign_net": -6880633700,
       "inst_net": 74240426800,
-      "score": 0.908,
+      "score": 0.892,
       "news": [
         {
           "date": "11-08",
@@ -118,7 +118,7 @@
       ],
       "price": 58400,
       "chg": 0.0,
-      "activity": 5.54,
+      "activity": 5.1,
       "foreign_today": 1051200000,
       "inst_today": 0,
       "exchange": "KOSPI"
@@ -133,7 +133,7 @@
       "vol20": 0.888,
       "foreign_net": 1436621025,
       "inst_net": 20425868350,
-      "score": 0.895,
+      "score": 0.878,
       "news": [
         {
           "date": "11-09",
@@ -153,7 +153,7 @@
       ],
       "price": 31050,
       "chg": 0.0437,
-      "activity": 3.22,
+      "activity": 3.01,
       "foreign_today": 1987200000,
       "inst_today": 2484000000,
       "exchange": "KOSPI"
@@ -168,7 +168,7 @@
       "vol20": 0.792,
       "foreign_net": -20437500850,
       "inst_net": 51491335800,
-      "score": 0.671,
+      "score": 0.689,
       "news": [
         {
           "date": "11-07",
@@ -181,11 +181,11 @@
           "risk": false
         }
       ],
-      "price": 79100,
-      "chg": 0.0675,
-      "activity": 2.43,
-      "foreign_today": 3322200000,
-      "inst_today": 474600000,
+      "price": 79400,
+      "chg": 0.0715,
+      "activity": 2.44,
+      "foreign_today": 3334800000,
+      "inst_today": 476400000,
       "exchange": "KOSPI"
     },
     {
@@ -198,7 +198,7 @@
       "vol20": 0.56,
       "foreign_net": -19235375950,
       "inst_net": 64455133600,
-      "score": 0.671,
+      "score": 0.662,
       "news": [
         {
           "date": "11-09",
@@ -230,13 +230,13 @@
       "vol20": 0.491,
       "foreign_net": -22121547500,
       "inst_net": 56405917100,
-      "score": 0.592,
+      "score": 0.581,
       "news": [],
-      "price": 77900,
-      "chg": 0.0026,
-      "activity": 1.61,
-      "foreign_today": 4050800000,
-      "inst_today": 779000000,
+      "price": 77800,
+      "chg": 0.0013,
+      "activity": 1.53,
+      "foreign_today": 4045600000,
+      "inst_today": 778000000,
       "exchange": "KOSPI"
     },
     {
@@ -249,7 +249,7 @@
       "vol20": 0.402,
       "foreign_net": -43204631710,
       "inst_net": 74782934530,
-      "score": 0.487,
+      "score": 0.473,
       "news": [
         {
           "date": "11-09",
@@ -281,7 +281,7 @@
       "vol20": 0.843,
       "foreign_net": -27562520175,
       "inst_net": 30133908725,
-      "score": 0.368,
+      "score": 0.351,
       "news": [
         {
           "date": "11-09",
@@ -299,11 +299,11 @@
           "risk": false
         }
       ],
-      "price": 49100,
-      "chg": 0.0,
-      "activity": 2.48,
+      "price": 49800,
+      "chg": 0.0143,
+      "activity": 2.37,
       "foreign_today": 0,
-      "inst_today": 1669400000,
+      "inst_today": 1693200000,
       "exchange": "KOSPI"
     },
     {
@@ -316,7 +316,7 @@
       "vol20": 0.957,
       "foreign_net": -76658998800,
       "inst_net": 63121010150,
-      "score": 0.368,
+      "score": 0.338,
       "news": [
         {
           "date": "11-09",
@@ -334,11 +334,11 @@
           "risk": false
         }
       ],
-      "price": 62700,
-      "chg": 0.0364,
-      "activity": 0.9,
-      "foreign_today": 2884200000,
-      "inst_today": 313500000,
+      "price": 62450,
+      "chg": 0.0322,
+      "activity": 0.83,
+      "foreign_today": 2872700000,
+      "inst_today": 312250000,
       "exchange": "KOSPI"
     },
     {
@@ -351,7 +351,7 @@
       "vol20": 0.738,
       "foreign_net": -7484986975,
       "inst_net": 26975170300,
-      "score": 0.303,
+      "score": 0.297,
       "news": [
         {
           "date": "11-09",
@@ -383,7 +383,7 @@
       "vol20": 0.625,
       "foreign_net": 652431450,
       "inst_net": 21161016850,
-      "score": 0.276,
+      "score": 0.257,
       "news": [
         {
           "date": "11-09",
@@ -415,7 +415,7 @@
       "vol20": 0.404,
       "foreign_net": -5748052750,
       "inst_net": 7853604175,
-      "score": 0.263,
+      "score": 0.243,
       "news": [],
       "foreign_today": 0,
       "inst_today": 325200000,
@@ -431,7 +431,7 @@
       "vol20": 0.592,
       "foreign_net": -8231059200,
       "inst_net": 53595627900,
-      "score": 0.224,
+      "score": 0.203,
       "news": [
         {
           "date": "11-09",
@@ -481,11 +481,11 @@
           "risk": false
         }
       ],
-      "price": 59600,
-      "chg": 0.0836,
-      "activity": 4.84,
+      "price": 59100,
+      "chg": 0.0745,
+      "activity": 4.43,
       "foreign_today": 0,
-      "inst_today": 894000000,
+      "inst_today": 886500000,
       "exchange": "KOSDAQ"
     },
     {
@@ -498,7 +498,7 @@
       "vol20": 1.387,
       "foreign_net": -6381603720,
       "inst_net": 16519823935,
-      "score": 0.75,
+      "score": 0.743,
       "news": [
         {
           "date": "11-09",
@@ -516,11 +516,11 @@
           "risk": false
         }
       ],
-      "price": 16490,
-      "chg": 0.0673,
-      "activity": 3.1,
+      "price": 16570,
+      "chg": 0.0725,
+      "activity": 2.88,
       "foreign_today": 0,
-      "inst_today": 1385160000,
+      "inst_today": 1391880000,
       "exchange": "KOSDAQ"
     },
     {
@@ -533,7 +533,7 @@
       "vol20": 1.105,
       "foreign_net": -1315515485,
       "inst_net": 73370470,
-      "score": 0.461,
+      "score": 0.459,
       "news": [
         {
           "date": "11-09",
@@ -551,47 +551,12 @@
           "risk": false
         }
       ],
-      "price": 14190,
-      "chg": 0.0358,
-      "activity": 2.71,
-      "foreign_today": 581790000,
+      "price": 14220,
+      "chg": 0.038,
+      "activity": 2.48,
+      "foreign_today": 583020000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
-    },
-    {
-      "code": "180640",
-      "name": "한진칼",
-      "close": 196700,
-      "ret5": 0.6005,
-      "ret20": 0.5154,
-      "rsi14": 82.1,
-      "vol20": 1.068,
-      "foreign_net": -23144745850,
-      "inst_net": 30167917550,
-      "score": 0.447,
-      "news": [
-        {
-          "date": "11-08",
-          "title": "[공시] 한진칼우 '매매거래정지 예고', 미래나노텍·성창기업지주 '공매...",
-          "risk": true
-        },
-        {
-          "date": "11-09",
-          "title": "[증시키워드] 코스피 폭락 속 한진칼 경영권 분쟁에 관심↑",
-          "risk": false
-        },
-        {
-          "date": "11-08",
-          "title": "한진칼 흔드는 호반의 자본력, 어디까지 가나",
-          "risk": false
-        }
-      ],
-      "price": 215000,
-      "chg": 0.0964,
-      "activity": 4.86,
-      "foreign_today": 0,
-      "inst_today": 215000000,
-      "exchange": "KOSPI"
     },
     {
       "code": "008830",
@@ -603,7 +568,7 @@
       "vol20": 1.052,
       "foreign_net": -3890551700,
       "inst_net": -186177575,
-      "score": 0.263,
+      "score": 0.257,
       "news": [
         {
           "date": "11-06",
@@ -616,10 +581,10 @@
           "risk": false
         }
       ],
-      "price": 6480,
-      "chg": -0.0371,
-      "activity": 1.74,
-      "foreign_today": 388800000,
+      "price": 6550,
+      "chg": -0.0267,
+      "activity": 1.62,
+      "foreign_today": 393000000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
