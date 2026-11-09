@@ -1362,12 +1362,12 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const sMap = new Map(((sd && sd.items) || []).map(x => [x.code, { ...x, ...(sFull.get(x.code) || {}) }]));
     const cmp = !!sd, colhead = $('dec-colhead');
     colhead.hidden = !cmp;
-    // 11-09 회차(15분 단위)로 표시. 기록 시각은 판단이 끝난 시각이라 엔진마다 다름. SiON 이 아직 이번 회차를 판단 중이면 그렇게 표시
+    // 11-09 회차(15분 단위)만 표시. 기록 시각은 판단이 끝난 시각이라 엔진마다 다름 (툴팁)
     const slot = t => { const m = +t.slice(11, 13) * 60 + +t.slice(14, 16), q = Math.floor(m / 15) * 15; return String(Math.floor(q / 60)).padStart(2, '0') + ':' + String(q % 60).padStart(2, '0'); };
     if (cmp) {
-      const a = slot(dc.time), b = slot(sd.time), lag = b < a;
+      const a = slot(dc.time), b = slot(sd.time);
       colhead.innerHTML = `<span>종목</span><span title="판단 기록 ${esc(dc.time.slice(11, 16))}">Sigma Engine ${a} 회차</span>`
-        + `<span class="on" title="판단 기록 ${esc(sd.time.slice(11, 16))}">SiON Engine ${b} 회차${lag ? ' · ' + a + ' 판단 중' : ''}</span><span class="why-h">근거 (Sigma)</span>`;
+        + `<span class="on" title="판단 기록 ${esc(sd.time.slice(11, 16))}">SiON Engine ${b} 회차</span><span class="why-h">근거 (Sigma)</span>`;
     }
     const rows = items.map(d => ({ code: d.code, name: d.name, a: d, b: sMap.get(d.code) }));
     if (cmp) for (const [code, x] of sMap) if (!items.some(d => d.code === code)) rows.push({ code, name: x.name, a: null, b: x });   // SiON 만 본 종목은 아래에
