@@ -1086,7 +1086,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const neg = D.ret < 0, col = neg ? C.blue : C.red, colHi = neg ? '#7cc4ea' : C.redHi;   // 수익률 양수 빨강 · 음수 파랑
     const lo = Math.min(0, d3.min(rows, r => Math.min(r.ret, r.kret)), d3.min(sh, r => r.ret) ?? 0), hi = Math.max(0, d3.max(rows, r => Math.max(r.ret, r.kret)), d3.max(sh, r => r.ret) ?? 0);
     const y0 = d3.scaleLinear([lo, hi], [0, 1]).nice(4), ticks = y0.ticks(4), tstep = ticks.length > 1 ? ticks[1] - ticks[0] : .01, tf = v => (v > 0 ? '+' : '') + (v * 100).toFixed(tstep < .0099 ? 1 : 0) + '%';
-    const lw = Math.max(textW(svg, 'Sigma Engine ' + pct(D.ret), 12), textW(svg, 'KOSPI ' + pct(D.kret), 12), sh.length ? textW(svg, 'Ontology ' + pct(sh[sh.length - 1].ret), 12) : 0);
+    const lw = Math.max(textW(svg, 'Sigma Engine ' + pct(D.ret), 12), textW(svg, 'KOSPI ' + pct(D.kret), 12), sh.length ? textW(svg, 'SiON Engine ' + pct(sh[sh.length - 1].ret), 12) : 0);
     const m = { t: narrow ? (sh.length > 1 ? 44 : 30) : 10, r: narrow ? 8 : lw + 18, b: 28, l: d3.max(ticks, v => textW(svg, tf(v))) + 10 };   // 휴대폰은 위쪽에 범례 자리
     // 11-06 S.Lee: 가로축 = 11/2 ~ 마지막 기록일 거래일(주말 뺌). 첫날이 맨 왼쪽, 최신 날짜가 맨 오른쪽 — 날이 늘면 칸이 좁아짐
     const last = rows[rows.length - 1].d, DAYS = d3.utcDays(toD(START), d3.utcDay.offset(last, 1)).filter(d => d.getUTCDay() % 6 !== 0);
@@ -1137,7 +1137,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     fade(svg.append('circle').attr('cx', ex).attr('cy', yR).attr('r', 4.5).attr('fill', col).attr('stroke', '#fff').attr('stroke-width', 1.5), 1);
     if (!narrow) {
       const labs = [{ n: 'Sigma Engine', v: L.ret, c: colHi, y: y(L.ret) }, { n: 'KOSPI', v: L.kret, c: '#9a9a9a', y: y(L.kret) }];
-      if (sh.length > 1) labs.push({ n: 'Ontology', v: sh[sh.length - 1].ret, c: ONT, y: y(sh[sh.length - 1].ret) });
+      if (sh.length > 1) labs.push({ n: 'SiON Engine', v: sh[sh.length - 1].ret, c: ONT, y: y(sh[sh.length - 1].ret) });
       labs.sort((a, b) => a.y - b.y).forEach((l, i, a) => { if (i && l.y - a[i - 1].y < 18) l.y = a[i - 1].y + 18; });   // 이름표가 겹치면 아래로 밀어 냄
       labs.forEach(l => { const t = svg.append('text').attr('x', x(L.d) + 12).attr('y', l.y).attr('dy', '.32em').attr('font-size', 12).attr('fill', l.c); t.append('tspan').attr('font-weight', 600).text(l.n); t.append('tspan').attr('dx', 6).text(pct(l.v)); });
     } else {   // 휴대폰: 오른쪽 이름표 대신 위쪽 한 줄 범례
@@ -1153,14 +1153,14 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
         const g2 = svg.append('g').attr('transform', `translate(${m.l},28)`), v = sh[sh.length - 1].ret;
         g2.append('line').attr('x1', 0).attr('x2', 14).attr('y1', 0).attr('y2', 0).attr('stroke', ONT).attr('stroke-width', 1.5);
         const t3 = g2.append('text').attr('x', 20).attr('dy', '.32em').attr('font-size', 12).attr('fill', ONT);
-        t3.append('tspan').attr('font-weight', 600).text('Ontology'); t3.append('tspan').attr('dx', 5).text(pct(v));
+        t3.append('tspan').attr('font-weight', 600).text('SiON Engine'); t3.append('tspan').attr('dx', 5).text(pct(v));
       }
     }
     const rule = svg.append('line').attr('y1', m.t).attr('y2', H - m.b).attr('stroke', '#444').attr('opacity', 0);
     const dot = svg.append('circle').attr('r', 4).attr('fill', '#141414').attr('stroke', colHi).attr('stroke-width', 2).attr('opacity', 0);
     const bis = (rs, i) => d3.minIndex(rs, r => Math.abs(idx(r) - i));   // 마우스 위치와 가장 가까운 거래일
     const off = () => { rule.attr('opacity', 0); dot.attr('opacity', 0); };
-    const pick = r => { rule.attr('x1', x(r.d)).attr('x2', x(r.d)).attr('opacity', 1); dot.attr('cx', x(r.d)).attr('cy', y(r.ret)).attr('opacity', 1); return `<div class="t">${md(r.d)}${r.regime ? ' · ' + esc(r.regime) + ' 국면' : ''}</div>${row('Sigma Engine', pct(r.ret), r.ret >= 0 ? 'up' : 'down')}${row('KOSPI', pct(r.kret))}${shAt(r.d) ? row('Ontology (가상)', pct(shAt(r.d).ret)) : ''}${row('총자산', won(r.total))}`; };
+    const pick = r => { rule.attr('x1', x(r.d)).attr('x2', x(r.d)).attr('opacity', 1); dot.attr('cx', x(r.d)).attr('cy', y(r.ret)).attr('opacity', 1); return `<div class="t">${md(r.d)}${r.regime ? ' · ' + esc(r.regime) + ' 국면' : ''}</div>${row('Sigma Engine', pct(r.ret), r.ret >= 0 ? 'up' : 'down')}${row('KOSPI', pct(r.kret))}${shAt(r.d) ? row('SiON Engine (가상)', pct(shAt(r.d).ret)) : ''}${row('총자산', won(r.total))}`; };
     svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r).attr('height', H - m.t - m.b).attr('fill', 'transparent')
       .on('pointermove pointerdown', ev => showTip(ev, pick(rows[bis(rows, xi.invert(d3.pointer(ev)[0]))])))
       .on('pointerleave', () => { hideTip(); off(); })
@@ -1258,7 +1258,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     // 11-09 온톨로지 그림자 운영: Supabase 1분 기록의 상태(없으면 shadow.json) · 실제보다 3분 늦게 돎. 그림자가 아예 없으면 표시 안 함
     const sst = (SHADOW_LIVE && SHADOW_LIVE.status && SHADOW_LIVE.status.last_run !== undefined) ? SHADOW_LIVE.status : SHADOW && SHADOW.status;
     const onto = (SHADOW || SHADOW_LIVE) ? judge(sst, 3, '첫 판단 대기 · 평일 09:33부터 15분마다') : null;
-    el.innerHTML = `<span>${pill(watch, '모니터링')}</span><span>${pill(agent, '에이전트')}</span>` + (onto ? `<span>${pill(onto, '온톨로지')}</span>` : '');
+    el.innerHTML = `<span>${pill(watch, '모니터링')}</span><span>${pill(agent, '에이전트')}</span>` + (onto ? `<span>${pill(onto, 'SiON Engine')}</span>` : '');
   }
 
   // ---------- 실시간 판단: docs/data/decision.json (가장 최근 정기 판단 1회분) ----------
