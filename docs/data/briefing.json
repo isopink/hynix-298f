@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "09:30",
-    "pool": 336,
+    "time": "09:45",
+    "pool": 340,
     "analyzed_new": 30,
-    "passed": 9,
+    "passed": 8,
     "kept_prep": false
   },
   "candidates": [
@@ -116,10 +116,10 @@
           "risk": false
         }
       ],
-      "price": 58500,
-      "chg": 0.0017,
-      "activity": 20.34,
-      "foreign_today": 1053000000,
+      "price": 58400,
+      "chg": 0.0,
+      "activity": 14.06,
+      "foreign_today": 1051200000,
       "inst_today": 0,
       "exchange": "KOSPI"
     },
@@ -133,21 +133,21 @@
       "vol20": 0.402,
       "foreign_net": -43204631710,
       "inst_net": 74782934530,
-      "score": 0.424,
+      "score": 0.357,
       "news": [
         {
           "date": "11-09",
+          "title": "LG유플러스, 서울대·KAIST·연세대와 손잡고 한국어 음성 AI 개발",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "LG유플러스, 서울대·카이스트·연세대와 한국어 특화 '음성 AI 기술' 개...",
+          "risk": false
+        },
+        {
+          "date": "11-09",
           "title": "LG유플러스, 서울대·KAIST·연세대와 한국어 특화 음성 AI 개발",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "LG유플러스, 한국어 음성 AI 키운다…서울대·KAIST·연세대와 맞손",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "LG유플러스-서울대·KAIST·연세대 맞손...한국어 특화 음성 AI 만든다",
           "risk": false
         }
       ],
@@ -165,7 +165,7 @@
       "vol20": 0.957,
       "foreign_net": -76658998800,
       "inst_net": 63121010150,
-      "score": 0.303,
+      "score": 0.25,
       "news": [
         {
           "date": "11-09",
@@ -183,53 +183,12 @@
           "risk": false
         }
       ],
-      "price": 60900,
-      "chg": 0.0066,
-      "activity": 1.27,
-      "foreign_today": 426300000,
+      "price": 61100,
+      "chg": 0.0099,
+      "activity": 1.08,
+      "foreign_today": 427700000,
       "inst_today": 0,
       "exchange": "KOSPI"
-    },
-    {
-      "code": "316140",
-      "name": "우리금융지주",
-      "close": 31700,
-      "ret5": 0.0309,
-      "ret20": -0.0216,
-      "rsi14": 50.0,
-      "vol20": 0.333,
-      "foreign_net": -92233316150,
-      "inst_net": 110972108825,
-      "score": 0.242,
-      "news": [
-        {
-          "date": "11-06",
-          "title": "증시 급락에 주목 받는 경기방어주, SKT·KT&G·우리금융지주 실적 안정...",
-          "risk": false
-        }
-      ],
-      "foreign_today": 285300000,
-      "inst_today": 0,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "443670",
-      "name": "에스피소프트",
-      "close": 4410,
-      "ret5": -0.0764,
-      "ret20": -0.1082,
-      "rsi14": 48.9,
-      "vol20": 1.449,
-      "foreign_net": 33414656,
-      "inst_net": 22535130,
-      "score": 0.727,
-      "news": [],
-      "price": 4960,
-      "chg": 0.1234,
-      "activity": 9.65,
-      "foreign_today": 148800000,
-      "inst_today": 0,
-      "exchange": "KOSDAQ"
     },
     {
       "code": "389260",
@@ -241,7 +200,7 @@
       "vol20": 1.105,
       "foreign_net": -1315515485,
       "inst_net": 73370470,
-      "score": 0.667,
+      "score": 0.643,
       "news": [
         {
           "date": "11-06",
@@ -259,10 +218,35 @@
           "risk": false
         }
       ],
-      "price": 14500,
-      "chg": 0.0584,
-      "activity": 8.7,
-      "foreign_today": 420500000,
+      "price": 14300,
+      "chg": 0.0438,
+      "activity": 6.58,
+      "foreign_today": 414700000,
+      "inst_today": 0,
+      "exchange": "KOSDAQ"
+    },
+    {
+      "code": "443670",
+      "name": "에스피소프트",
+      "close": 4410,
+      "ret5": -0.0764,
+      "ret20": -0.1082,
+      "rsi14": 48.9,
+      "vol20": 1.449,
+      "foreign_net": 33414656,
+      "inst_net": 22535130,
+      "score": 0.607,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "딥페이크 범죄 막는 AI 보안株 휘파람…에스피소프트·파수AI 노려라",
+          "risk": false
+        }
+      ],
+      "price": 4885,
+      "chg": 0.1065,
+      "activity": 7.89,
+      "foreign_today": 146550000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -276,7 +260,7 @@
       "vol20": 1.052,
       "foreign_net": -3890551700,
       "inst_net": -186177575,
-      "score": 0.455,
+      "score": 0.464,
       "news": [
         {
           "date": "11-06",
@@ -289,10 +273,10 @@
           "risk": false
         }
       ],
-      "price": 6380,
-      "chg": -0.052,
-      "activity": 3.45,
-      "foreign_today": 261580000,
+      "price": 6490,
+      "chg": -0.0357,
+      "activity": 2.72,
+      "foreign_today": 266090000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },

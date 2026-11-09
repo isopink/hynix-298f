@@ -1,0 +1,281 @@
+{
+  "updated": "2026-11-09 09:44",
+  "start": "2026-11-09",
+  "base": 48960657,
+  "daily": [
+    {
+      "date": "2026-11-09",
+      "total": 48899381
+    }
+  ],
+  "series": [
+    {
+      "time": "2026-11-09 09:44",
+      "shadow": -0.00125,
+      "live": -0.00206
+    }
+  ],
+  "now": {
+    "shadow": -0.00125,
+    "live": -0.00206,
+    "shadow_total": 48899381,
+    "live_total": 48859705
+  },
+  "stats": {
+    "shadow": {
+      "fills": 1,
+      "buys": 1,
+      "sells": 0,
+      "watch": 7,
+      "runs": 1,
+      "failures": 0,
+      "avg_min": 9.8,
+      "tokens_k": 120
+    },
+    "live": {
+      "fills": 5,
+      "buys": 2,
+      "sells": 3,
+      "watch": 16,
+      "runs": 2,
+      "failures": 0,
+      "avg_min": 5.0,
+      "tokens_k": 152
+    }
+  },
+  "holdings": [
+    {
+      "code": "028050",
+      "name": "삼성E&A",
+      "qty": 59,
+      "value": 3593100,
+      "pnl_pct": 0.0
+    },
+    {
+      "code": "003490",
+      "name": "대한항공",
+      "qty": 69,
+      "value": 2014800,
+      "pnl_pct": -0.0058
+    },
+    {
+      "code": "128940",
+      "name": "한미약품",
+      "qty": 4,
+      "value": 1904000,
+      "pnl_pct": -0.001
+    },
+    {
+      "code": "030200",
+      "name": "KT",
+      "qty": 36,
+      "value": 1890000,
+      "pnl_pct": -0.0223
+    },
+    {
+      "code": "207940",
+      "name": "삼성바이오로직스",
+      "qty": 1,
+      "value": 1521000,
+      "pnl_pct": 0.0526
+    },
+    {
+      "code": "068270",
+      "name": "셀트리온",
+      "qty": 6,
+      "value": 1269000,
+      "pnl_pct": -0.0027
+    },
+    {
+      "code": "035420",
+      "name": "NAVER",
+      "qty": 6,
+      "value": 1132200,
+      "pnl_pct": 0.0283
+    },
+    {
+      "code": "033780",
+      "name": "KT&G",
+      "qty": 6,
+      "value": 1112400,
+      "pnl_pct": -0.0492
+    }
+  ],
+  "status": {
+    "last_run": "2026-11-09 09:34",
+    "last_ok": true,
+    "next_run": "2026-11-09 09:45",
+    "runs_today": 1,
+    "failures_today": 0,
+    "note": "실행 상태 요약 · 원문 비공개"
+  },
+  "decision": {
+    "time": "2026-11-09 09:41",
+    "regime": "하락",
+    "items": [
+      {
+        "code": "028050",
+        "name": "삼성E&A",
+        "action": "매수",
+        "qty": 59,
+        "confidence": 0.61,
+        "bull": "상세 주장 비공개",
+        "bear": "상세 주장 비공개",
+        "decision": "판단 원문은 로컬 상세에서 확인"
+      },
+      {
+        "code": "207940",
+        "name": "삼성바이오로직스",
+        "action": "보유",
+        "confidence": 0.52,
+        "bull": "상세 주장 비공개",
+        "bear": "상세 주장 비공개",
+        "decision": "판단 원문은 로컬 상세에서 확인"
+      },
+      {
+        "code": "015760",
+        "name": "한국전력",
+        "action": "보유",
+        "confidence": 0.52,
+        "bull": "상세 주장 비공개",
+        "bear": "상세 주장 비공개",
+        "decision": "판단 원문은 로컬 상세에서 확인"
+      },
+      {
+        "code": "033780",
+        "name": "KT&G",
+        "action": "보유",
+        "confidence": 0.5,
+        "bull": "상세 주장 비공개",
+        "bear": "상세 주장 비공개",
+        "decision": "판단 원문은 로컬 상세에서 확인"
+      },
+      {
+        "code": "032640",
+        "name": "LG유플러스",
+        "action": "관망",
+        "confidence": 0.48,
+        "bull": "상세 주장 비공개",
+        "bear": "상세 주장 비공개",
+        "decision": "판단 원문은 로컬 상세에서 확인"
+      },
+      {
+        "code": "069500",
+        "name": "KODEX 200",
+        "action": "관망",
+        "confidence": 0.48,
+        "bull": "상세 주장 비공개",
+        "bear": "상세 주장 비공개",
+        "decision": "판단 원문은 로컬 상세에서 확인"
+      },
+      {
+        "code": "068270",
+        "name": "셀트리온",
+        "action": "보유",
+        "confidence": 0.48,
+        "bull": "상세 주장 비공개",
+        "bear": "상세 주장 비공개",
+        "decision": "판단 원문은 로컬 상세에서 확인"
+      },
+      {
+        "code": "128940",
+        "name": "한미약품",
+        "action": "보유",
+        "confidence": 0.47,
+        "bull": "상세 주장 비공개",
+        "bear": "상세 주장 비공개",
+        "decision": "판단 원문은 로컬 상세에서 확인"
+      },
+      {
+        "code": "030200",
+        "name": "KT",
+        "action": "보유",
+        "confidence": 0.47,
+        "bull": "상세 주장 비공개",
+        "bear": "상세 주장 비공개",
+        "decision": "판단 원문은 로컬 상세에서 확인"
+      },
+      {
+        "code": "271560",
+        "name": "오리온",
+        "action": "보유",
+        "confidence": 0.47,
+        "bull": "상세 주장 비공개",
+        "bear": "상세 주장 비공개",
+        "decision": "판단 원문은 로컬 상세에서 확인"
+      },
+      {
+        "code": "089860",
+        "name": "롯데렌탈",
+        "action": "관망",
+        "confidence": 0.45,
+        "bull": "상세 주장 비공개",
+        "bear": "상세 주장 비공개",
+        "decision": "판단 원문은 로컬 상세에서 확인"
+      },
+      {
+        "code": "114800",
+        "name": "KODEX 인버스",
+        "action": "관망",
+        "confidence": 0.45,
+        "bull": "상세 주장 비공개",
+        "bear": "상세 주장 비공개",
+        "decision": "판단 원문은 로컬 상세에서 확인"
+      },
+      {
+        "code": "443670",
+        "name": "에스피소프트",
+        "action": "관망",
+        "confidence": 0.4,
+        "bull": "상세 주장 비공개",
+        "bear": "상세 주장 비공개",
+        "decision": "판단 원문은 로컬 상세에서 확인"
+      },
+      {
+        "code": "008830",
+        "name": "대동기어",
+        "action": "관망",
+        "confidence": 0.4,
+        "bull": "상세 주장 비공개",
+        "bear": "상세 주장 비공개",
+        "decision": "판단 원문은 로컬 상세에서 확인"
+      },
+      {
+        "code": "389260",
+        "name": "대명에너지",
+        "action": "관망",
+        "confidence": 0.38,
+        "bull": "상세 주장 비공개",
+        "bear": "상세 주장 비공개",
+        "decision": "판단 원문은 로컬 상세에서 확인"
+      },
+      {
+        "code": "003490",
+        "name": "대한항공",
+        "action": "보유",
+        "confidence": 0.35,
+        "bull": "상세 주장 비공개",
+        "bear": "상세 주장 비공개",
+        "decision": "판단 원문은 로컬 상세에서 확인"
+      },
+      {
+        "code": "035900",
+        "name": "JYP Ent.",
+        "action": "보유",
+        "confidence": 0.35,
+        "bull": "상세 주장 비공개",
+        "bear": "상세 주장 비공개",
+        "decision": "판단 원문은 로컬 상세에서 확인"
+      },
+      {
+        "code": "035420",
+        "name": "NAVER",
+        "action": "보유",
+        "confidence": 0.3,
+        "bull": "상세 주장 비공개",
+        "bear": "상세 주장 비공개",
+        "decision": "판단 원문은 로컬 상세에서 확인"
+      }
+    ]
+  }
+}
