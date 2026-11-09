@@ -8,7 +8,7 @@
   },
 
   "decision": {
-    "buy_min_confidence": 0.62,
+    "buy_min_confidence": 0.67,
     "sell_min_confidence": 0.55,
     "full_size_confidence": 0.80,
     "min_weight": 0.08,

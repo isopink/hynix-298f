@@ -1,17 +1,17 @@
 {
-  "last_run": "2026-11-09 15:15",
+  "last_run": "2026-11-09 16:00",
   "last_ok": true,
   "next_run": "2026-11-10 09:30",
-  "runs_today": 24,
+  "runs_today": 25,
   "failures_today": 2,
-  "note": "하락 / 매수 0건 / 매도 0건 / 관망 22건",
+  "note": "기준값 조정 / 반영 1건 / 거절 0건",
   "sync": {
     "ok": true,
     "error": null,
-    "head": "1692c3b",
-    "checked_at": "2026-11-09 15:44",
+    "head": "88825f6",
+    "checked_at": "2026-11-09 16:00",
     "rejected": null,
-    "applied_at": "2026-11-09 14:09",
+    "applied_at": "2026-11-09 15:53",
     "catch_up": "2026-11-05 12:30 9576864",
     "decide_schedule": "09:30|15|0005:46",
     "review_mid": "WED,FRI 15:50"
