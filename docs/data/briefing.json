@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "09:45",
-    "pool": 340,
+    "time": "10:00",
+    "pool": 371,
     "analyzed_new": 30,
-    "passed": 8,
+    "passed": 16,
     "kept_prep": false
   },
   "candidates": [
@@ -98,7 +98,7 @@
       "vol20": 0.469,
       "foreign_net": -6880633700,
       "inst_net": 74240426800,
-      "score": 1.0,
+      "score": 0.973,
       "news": [
         {
           "date": "11-08",
@@ -118,9 +118,125 @@
       ],
       "price": 58400,
       "chg": 0.0,
-      "activity": 14.06,
+      "activity": 10.96,
       "foreign_today": 1051200000,
       "inst_today": 0,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "006360",
+      "name": "GS건설",
+      "close": 29800,
+      "ret5": 0.1641,
+      "ret20": -0.0629,
+      "rsi14": 49.2,
+      "vol20": 0.888,
+      "foreign_net": 1436621025,
+      "inst_net": 20425868350,
+      "score": 0.644,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "GS건설, '목동윤슬자이' 분양 호응…목동 재건축 시장 공략",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "“목동 주거 눈높이 맞췄다”… GS건설 ‘목동윤슬자이’, 맞춤형 상품...",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "GS건설, 연제갤러리자이 9~11일 정당계약…1순위 667건 접수",
+          "risk": false
+        }
+      ],
+      "price": 30950,
+      "chg": 0.0403,
+      "activity": 4.68,
+      "foreign_today": 928500000,
+      "inst_today": 340450000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "018260",
+      "name": "삼성에스디에스",
+      "close": 215000,
+      "ret5": 0.075,
+      "ret20": 0.0964,
+      "rsi14": 53.4,
+      "vol20": 0.591,
+      "foreign_net": 190562600,
+      "inst_net": 45355817350,
+      "score": 0.534,
+      "news": [
+        {
+          "date": "11-07",
+          "title": "11월1주차 삼성에스디에스 주가 21만 5천원 상승 마감",
+          "risk": false
+        },
+        {
+          "date": "11-07",
+          "title": "삼성SDI·삼성에스디에스·SK가스[하나證 주간추천주]",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 3440000000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "035720",
+      "name": "카카오",
+      "close": 32000,
+      "ret5": 0.0959,
+      "ret20": -0.0123,
+      "rsi14": 53.9,
+      "vol20": 0.46,
+      "foreign_net": 26399005875,
+      "inst_net": 25956034400,
+      "score": 0.521,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "엔비디아 동맹 기대했던 카카오모빌리티·포티투닷, 매디슨 황 방한 취...",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "카카오뱅크 AI 이모지 퀴즈 정답(11월9일)",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "캐피탈 이어 카드·증권 검토…카카오뱅크, 사업 확장",
+          "risk": false
+        }
+      ],
+      "price": 32450,
+      "chg": 0.0046,
+      "activity": 2.79,
+      "foreign_today": 2109250000,
+      "inst_today": 0,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "017670",
+      "name": "SK텔레콤",
+      "close": 77300,
+      "ret5": 0.039,
+      "ret20": -0.0819,
+      "rsi14": 45.2,
+      "vol20": 0.491,
+      "foreign_net": -22121547500,
+      "inst_net": 56405917100,
+      "score": 0.384,
+      "news": [],
+      "price": 77700,
+      "chg": 0.0,
+      "activity": 2.04,
+      "foreign_today": 1709400000,
+      "inst_today": 155400000,
       "exchange": "KOSPI"
     },
     {
@@ -133,26 +249,58 @@
       "vol20": 0.402,
       "foreign_net": -43204631710,
       "inst_net": 74782934530,
-      "score": 0.357,
+      "score": 0.315,
       "news": [
         {
           "date": "11-09",
-          "title": "LG유플러스, 서울대·KAIST·연세대와 손잡고 한국어 음성 AI 개발",
+          "title": "LG유플러스, 3개 대학과 한국어 음성 AI 개발…대화 맥락∙말투 연구",
           "risk": false
         },
         {
           "date": "11-09",
-          "title": "LG유플러스, 서울대·카이스트·연세대와 한국어 특화 '음성 AI 기술' 개...",
+          "title": "LG유플러스, 서울대·KAIST·연세대와 한국어 음성 AI 'K-보이스 엔진' 개...",
           "risk": false
         },
         {
           "date": "11-09",
-          "title": "LG유플러스, 서울대·KAIST·연세대와 한국어 특화 음성 AI 개발",
+          "title": "LG유플러스, 서울대·KAIST·연세대와 손잡고 한국형 음성 AI 개발한다",
           "risk": false
         }
       ],
-      "foreign_today": 264320000,
-      "inst_today": 0,
+      "foreign_today": 346920000,
+      "inst_today": 132160000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "008930",
+      "name": "한미사이언스",
+      "close": 53700,
+      "ret5": 0.268,
+      "ret20": 0.0327,
+      "rsi14": 63.3,
+      "vol20": 0.738,
+      "foreign_net": -7484986975,
+      "inst_net": 26975170300,
+      "score": 0.301,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "비만약 상업화·기술수출 겹호재…한미사이언스 성장성 부각 [Why 바이오...",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "신약 상업화·기술수출 확대 기대감…한미사이언스 7% 급등",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "한미사이언스, 신약 팔릴수록 지주사도 웃는다…'특허수익 확대' 기대",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 590700000,
       "exchange": "KOSPI"
     },
     {
@@ -165,7 +313,7 @@
       "vol20": 0.957,
       "foreign_net": -76658998800,
       "inst_net": 63121010150,
-      "score": 0.25,
+      "score": 0.301,
       "news": [
         {
           "date": "11-09",
@@ -183,12 +331,117 @@
           "risk": false
         }
       ],
-      "price": 61100,
-      "chg": 0.0099,
-      "activity": 1.08,
-      "foreign_today": 427700000,
+      "price": 62850,
+      "chg": 0.0388,
+      "activity": 1.26,
+      "foreign_today": 1822650000,
       "inst_today": 0,
       "exchange": "KOSPI"
+    },
+    {
+      "code": "112610",
+      "name": "씨에스윈드",
+      "close": 48800,
+      "ret5": 0.2927,
+      "ret20": -0.1191,
+      "rsi14": 55.5,
+      "vol20": 0.843,
+      "foreign_net": -27562520175,
+      "inst_net": 30133908725,
+      "score": 0.178,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "씨에스윈드, 美 데이터센터 '청정에너지 착공 의무' 직수혜…\"주정부 규...",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "\"씨에스윈드, 美 풍력 프로젝트 규제 완화 기대\"-하나",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "씨에스윈드, 타워 영업이익 83% 증가…미국 생산성 개선 효과-키움",
+          "risk": false
+        }
+      ],
+      "price": 51300,
+      "chg": 0.0448,
+      "activity": 3.35,
+      "foreign_today": 0,
+      "inst_today": 461700000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "468530",
+      "name": "프로티나",
+      "close": 53600,
+      "ret5": 0.0094,
+      "ret20": 0.1978,
+      "rsi14": 60.3,
+      "vol20": 1.371,
+      "foreign_net": -2097260775,
+      "inst_net": 7682858150,
+      "score": 1.0,
+      "news": [
+        {
+          "date": "11-07",
+          "title": "엔젠바이오 上…자금조달에 희비 엇갈린 프로티나·애드바이오텍[바이...",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "[애프터마켓 리뷰] 프로티나, 365억원 조달해 AI 바이오파운드리 구축",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "[더벨]프로티나, IPO 1년 만의 변심 '청사진 변화' 신사업에 무게",
+          "risk": false
+        }
+      ],
+      "price": 58600,
+      "chg": 0.0655,
+      "activity": 9.45,
+      "foreign_today": 0,
+      "inst_today": 820400000,
+      "exchange": "KOSDAQ"
+    },
+    {
+      "code": "328130",
+      "name": "루닛",
+      "close": 15470,
+      "ret5": 0.0045,
+      "ret20": 0.369,
+      "rsi14": 63.9,
+      "vol20": 1.387,
+      "foreign_net": -6381603720,
+      "inst_net": 16519823935,
+      "score": 0.658,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "루닛, 서밋 협업 기대 속 수익성 시험대…연말 손익분기 가능성은",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "[헬스 HOT 뉴스] 루닛, 의료 특화 AI '러닝유닛 2.0' 공개…\"9개 병원서 ...",
+          "risk": false
+        },
+        {
+          "date": "11-08",
+          "title": "루닛, 의료 AI ‘러닝유닛 2.0’ 오픈소스로 공개",
+          "risk": false
+        }
+      ],
+      "price": 16790,
+      "chg": 0.0867,
+      "activity": 4.99,
+      "foreign_today": 0,
+      "inst_today": 856290000,
+      "exchange": "KOSDAQ"
     },
     {
       "code": "389260",
@@ -200,8 +453,13 @@
       "vol20": 1.105,
       "foreign_net": -1315515485,
       "inst_net": 73370470,
-      "score": 0.643,
+      "score": 0.616,
       "news": [
+        {
+          "date": "11-09",
+          "title": "미국 민주당 압승 '블루 쓰나미'…한화솔루션·SK이터닉스·대명에너지...",
+          "risk": false
+        },
         {
           "date": "11-06",
           "title": "대명에너지 주가, 11월 6일 13,700원 3.11% 하락",
@@ -211,17 +469,12 @@
           "date": "11-06",
           "title": "코스피 8% 폭락에도 대명에너지·금양그린파워·강원에너지 ‘빨간불’...",
           "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "대동기어 회전율 88%…금양그린파워·대명에너지도 50% 넘어",
-          "risk": false
         }
       ],
-      "price": 14300,
-      "chg": 0.0438,
-      "activity": 6.58,
-      "foreign_today": 414700000,
+      "price": 14360,
+      "chg": 0.0482,
+      "activity": 5.19,
+      "foreign_today": 789800000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -235,7 +488,7 @@
       "vol20": 1.449,
       "foreign_net": 33414656,
       "inst_net": 22535130,
-      "score": 0.607,
+      "score": 0.534,
       "news": [
         {
           "date": "11-09",
@@ -243,41 +496,36 @@
           "risk": false
         }
       ],
-      "price": 4885,
-      "chg": 0.1065,
-      "activity": 7.89,
-      "foreign_today": 146550000,
+      "price": 4905,
+      "chg": 0.111,
+      "activity": 6.27,
+      "foreign_today": 161865000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
     {
-      "code": "008830",
-      "name": "대동기어",
-      "close": 6540,
-      "ret5": 0.2505,
-      "ret20": 0.0721,
-      "rsi14": 60.3,
-      "vol20": 1.052,
-      "foreign_net": -3890551700,
-      "inst_net": -186177575,
-      "score": 0.464,
+      "code": "119850",
+      "name": "지엔씨에너지",
+      "close": 35250,
+      "ret5": 0.119,
+      "ret20": -0.2664,
+      "rsi14": 42.4,
+      "vol20": 1.141,
+      "foreign_net": -11979305150,
+      "inst_net": 12404586800,
+      "score": 0.507,
       "news": [
         {
           "date": "11-06",
-          "title": "대동기어 주가, 11월 6일 애프터마켓 6,750원 2.27% 상승",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "대동기어 회전율 88%…금양그린파워·대명에너지도 50% 넘어",
+          "title": "JP모건 시큐리티즈, 지엔씨에너지 5.07% 보유 보고",
           "risk": false
         }
       ],
-      "price": 6490,
-      "chg": -0.0357,
-      "activity": 2.72,
-      "foreign_today": 266090000,
-      "inst_today": 0,
+      "price": 38150,
+      "chg": 0.0807,
+      "activity": 6.65,
+      "foreign_today": 0,
+      "inst_today": 381500000,
       "exchange": "KOSDAQ"
     },
     {

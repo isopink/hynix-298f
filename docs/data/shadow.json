@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-09 09:44",
+  "updated": "2026-11-09 09:55",
   "start": "2026-11-09",
   "base": 48960657,
   "daily": [
     {
       "date": "2026-11-09",
-      "total": 48899381
+      "total": 48981250
     }
   ],
   "series": [
@@ -13,34 +13,39 @@
       "time": "2026-11-09 09:44",
       "shadow": -0.00125,
       "live": -0.00206
+    },
+    {
+      "time": "2026-11-09 09:55",
+      "shadow": 0.00042,
+      "live": -0.00035
     }
   ],
   "now": {
-    "shadow": -0.00125,
-    "live": -0.00206,
-    "shadow_total": 48899381,
-    "live_total": 48859705
+    "shadow": 0.00042,
+    "live": -0.00035,
+    "shadow_total": 48981250,
+    "live_total": 48943645
   },
   "stats": {
     "shadow": {
-      "fills": 1,
-      "buys": 1,
-      "sells": 0,
-      "watch": 7,
-      "runs": 1,
-      "failures": 0,
-      "avg_min": 9.8,
-      "tokens_k": 120
-    },
-    "live": {
-      "fills": 5,
-      "buys": 2,
-      "sells": 3,
-      "watch": 16,
+      "fills": 4,
+      "buys": 3,
+      "sells": 1,
+      "watch": 14,
       "runs": 2,
       "failures": 0,
-      "avg_min": 5.0,
-      "tokens_k": 152
+      "avg_min": 0.0,
+      "tokens_k": 479
+    },
+    "live": {
+      "fills": 8,
+      "buys": 4,
+      "sells": 4,
+      "watch": 30,
+      "runs": 3,
+      "failures": 0,
+      "avg_min": 5.7,
+      "tokens_k": 247
     }
   },
   "holdings": [
@@ -48,86 +53,77 @@
       "code": "028050",
       "name": "삼성E&A",
       "qty": 59,
-      "value": 3593100,
-      "pnl_pct": 0.0
+      "value": 3604900,
+      "pnl_pct": 0.0033
     },
     {
       "code": "003490",
       "name": "대한항공",
       "qty": 69,
-      "value": 2014800,
-      "pnl_pct": -0.0058
+      "value": 2018250,
+      "pnl_pct": -0.0041
+    },
+    {
+      "code": "316140",
+      "name": "우리금융지주",
+      "qty": 62,
+      "value": 1940600,
+      "pnl_pct": 0.0016
     },
     {
       "code": "128940",
       "name": "한미약품",
       "qty": 4,
-      "value": 1904000,
-      "pnl_pct": -0.001
+      "value": 1936000,
+      "pnl_pct": 0.0157
     },
     {
       "code": "030200",
       "name": "KT",
       "qty": 36,
-      "value": 1890000,
-      "pnl_pct": -0.0223
+      "value": 1893600,
+      "pnl_pct": -0.0204
     },
     {
       "code": "207940",
       "name": "삼성바이오로직스",
       "qty": 1,
-      "value": 1521000,
-      "pnl_pct": 0.0526
+      "value": 1530000,
+      "pnl_pct": 0.0588
     },
     {
       "code": "068270",
       "name": "셀트리온",
       "qty": 6,
-      "value": 1269000,
-      "pnl_pct": -0.0027
+      "value": 1275000,
+      "pnl_pct": 0.002
     },
     {
       "code": "035420",
       "name": "NAVER",
       "qty": 6,
-      "value": 1132200,
-      "pnl_pct": 0.0283
-    },
-    {
-      "code": "033780",
-      "name": "KT&G",
-      "qty": 6,
-      "value": 1112400,
-      "pnl_pct": -0.0492
+      "value": 1137600,
+      "pnl_pct": 0.0332
     }
   ],
   "status": {
-    "last_run": "2026-11-09 09:34",
+    "last_run": "2026-11-09 09:45",
     "last_ok": true,
-    "next_run": "2026-11-09 09:45",
-    "runs_today": 1,
+    "next_run": "2026-11-09 10:00",
+    "runs_today": 2,
     "failures_today": 0,
     "note": "실행 상태 요약 · 원문 비공개"
   },
   "decision": {
-    "time": "2026-11-09 09:41",
+    "time": "2026-11-09 09:51",
     "regime": "하락",
     "items": [
       {
-        "code": "028050",
-        "name": "삼성E&A",
+        "code": "316140",
+        "name": "우리금융지주",
         "action": "매수",
-        "qty": 59,
-        "confidence": 0.61,
-        "bull": "상세 주장 비공개",
-        "bear": "상세 주장 비공개",
-        "decision": "판단 원문은 로컬 상세에서 확인"
-      },
-      {
-        "code": "207940",
-        "name": "삼성바이오로직스",
-        "action": "보유",
-        "confidence": 0.52,
+        "qty": 62,
+        "confidence": 0.55,
         "bull": "상세 주장 비공개",
         "bear": "상세 주장 비공개",
         "decision": "판단 원문은 로컬 상세에서 확인"
@@ -135,6 +131,15 @@
       {
         "code": "015760",
         "name": "한국전력",
+        "action": "보유",
+        "confidence": 0.52,
+        "bull": "상세 주장 비공개",
+        "bear": "상세 주장 비공개",
+        "decision": "판단 원문은 로컬 상세에서 확인"
+      },
+      {
+        "code": "207940",
+        "name": "삼성바이오로직스",
         "action": "보유",
         "confidence": 0.52,
         "bull": "상세 주장 비공개",
@@ -178,8 +183,8 @@
         "decision": "판단 원문은 로컬 상세에서 확인"
       },
       {
-        "code": "128940",
-        "name": "한미약품",
+        "code": "030200",
+        "name": "KT",
         "action": "보유",
         "confidence": 0.47,
         "bull": "상세 주장 비공개",
@@ -187,8 +192,8 @@
         "decision": "판단 원문은 로컬 상세에서 확인"
       },
       {
-        "code": "030200",
-        "name": "KT",
+        "code": "128940",
+        "name": "한미약품",
         "action": "보유",
         "confidence": 0.47,
         "bull": "상세 주장 비공개",
@@ -235,6 +240,15 @@
         "code": "008830",
         "name": "대동기어",
         "action": "관망",
+        "confidence": 0.4,
+        "bull": "상세 주장 비공개",
+        "bear": "상세 주장 비공개",
+        "decision": "판단 원문은 로컬 상세에서 확인"
+      },
+      {
+        "code": "028050",
+        "name": "삼성E&A",
+        "action": "보유",
         "confidence": 0.4,
         "bull": "상세 주장 비공개",
         "bear": "상세 주장 비공개",
