@@ -1075,10 +1075,10 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const narrow = W < 520;
     // 11-08 S.Lee: 온톨로지 그림자 운영(가상 계좌, 시작일에 실제 계좌 복사)을 초록 선으로. 시작 전날 실제 점에서 갈라져 나옴
     const ONT = '#3ecf8e', sh = (SHADOW && SHADOW.daily || []).map(r => ({ d: toD(r.date), ret: r.total / INIT - 1, total: r.total }));
-    if (SHADOW_LIVE && SHADOW_LIVE.total && sh.length) {   // 11-09 장중 실시간: 오늘 점을 Supabase 1분 자산으로 (하루 기록보다 새것이면)
+    if (SHADOW_LIVE && SHADOW_LIVE.total) {   // shadow.json 이 아직 없어도(첫 회차 전) 1분 자산만으로 오늘 점을 그림   // 11-09 장중 실시간: 오늘 점을 Supabase 1분 자산으로 (하루 기록보다 새것이면)
       const ld = toD(new Date(Date.parse(SHADOW_LIVE.ts) + 9 * 3600e3).toISOString().slice(0, 10)), lr = { d: ld, ret: SHADOW_LIVE.total / INIT - 1, total: SHADOW_LIVE.total };
       const i = sh.findIndex(r => +r.d === +ld);
-      if (i >= 0) sh[i] = lr; else if (ld > sh[sh.length - 1].d) sh.push(lr);
+      if (i >= 0) sh[i] = lr; else if (!sh.length || ld > sh[sh.length - 1].d) sh.push(lr);
     }
     const lastD = rows[rows.length - 1].d; while (sh.length && sh[sh.length - 1].d > lastD) sh.pop();   // 실제 기록보다 앞선 날은 그리지 않음
     if (sh.length) { const b = rows.filter(r => r.d < sh[0].d).pop(); if (b) sh.unshift({ d: b.d, ret: b.ret, total: b.total, seed: true }); }
