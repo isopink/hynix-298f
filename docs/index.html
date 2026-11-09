@@ -246,6 +246,7 @@ details.log[open] > summary::after { content: "−"; }
 .tr-tbl .r { grid-template-columns: 74px 44px minmax(0, 1.4fr) 54px 1fr !important; }
 @media (max-width: 640px) {
   .hero .side.eng-sum { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; }
+  .hero .side.eng-sum .eng { text-align: center; } .hero .side.eng-sum .eng-h { justify-content: center; }   /* 11-10 S.Lee: 폰은 가운데 정렬 */
   .hero .side.eng-sum > div:first-child { grid-column: auto; }
   .eng + .eng { padding-top: 0; border-top: 0; padding-left: 14px; border-left: 1px solid rgba(255,255,255,.07); }
   .hero .side.eng-sum .eng .big.won { font-size: 24px; letter-spacing: -.5px; white-space: nowrap; }
