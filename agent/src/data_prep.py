@@ -304,7 +304,7 @@ def screen(rows, p, login, regime=None):
     df["score"] = (score / score.max()).round(3) if score.max() > 0 else 0.0
     df = df.drop(columns=["trend_gap"]).sort_values("score", ascending=False)
     hv_n = (p.get("high_vol") or {}).get("max_candidates", 0)
-    return (df[~df["high_vol"]].head(s["max_candidates"]).to_dict("records")
+    return (C.market_quota(df[~df["high_vol"]].to_dict("records"), p)   # 11-09 코스피 10 + 코스닥 5 (시장 안 점수순)
             + df[df["high_vol"]].head(hv_n).to_dict("records"))
 
 

@@ -164,9 +164,40 @@ def high_vol(code, p=None, briefing=None):
     hv = p.get("high_vol")
     if not hv or not hv.get("enabled"):
         return None
+    if hv.get("kosdaq_all") and market_of(code, p) == "KOSDAQ":   # 11-09 코스닥은 변동성과 관계없이 고변동 규칙 (5%, -12%, +20%)
+        return hv
     row = briefing_row(code, briefing) or {}
     v = row.get("vol20")
     return hv if v is not None and v > p["screen"].get("max_vol20", 9) else None
+
+
+def buy_day_limit(code, r=None, p=None, market=None):
+    """오늘 이 이상 오른 종목은 매수 금지 (추격 매수). 코스닥은 risk_limits.max_buy_day_change_kosdaq (11-09 +15%), 나머지 +10%."""
+    r = r or risk_limits()
+    base = r.get("max_buy_day_change", 0.10)
+    if (market or market_of(code, p)) == "KOSDAQ":
+        return r.get("max_buy_day_change_kosdaq", base)
+    return base
+
+
+def market_quota(rows, p=None):
+    """점수순 일반 후보 → 시장별 몫 (11-09: 코스닥 screen.market_quota.KOSDAQ 개, 나머지 코스피). 한쪽이 모자라면 다른 쪽 점수순으로 채움."""
+    p = p or params()
+    n = p["screen"]["max_candidates"]
+    q = {k: v for k, v in (p["screen"].get("market_quota") or {}).items() if not k.startswith("_")}
+    if not q:
+        return list(rows)[:n]
+    mk = lambda x: x.get("market") or market_of(x["code"], p) or "KOSPI"   # noqa: E731
+    want = {m: q.get(m, 0) for m in q}
+    want.setdefault("KOSPI", n - sum(want.values()))
+    out, used = [], set()
+    for m, k in want.items():
+        picked = [x for x in rows if mk(x) == m][:max(0, k)]
+        out += picked
+        used |= {x["code"] for x in picked}
+    out += [x for x in rows if x["code"] not in used][: n - len(out)]   # 모자란 몫은 남은 종목 점수순
+    order = {x["code"]: i for i, x in enumerate(rows)}
+    return sorted(out, key=lambda x: order[x["code"]])
 
 
 def dip(code, p=None, briefing=None):

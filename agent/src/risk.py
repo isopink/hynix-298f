@@ -49,7 +49,7 @@ def check(order, account, price, p=None, r=None):
             bad.append(("실행 종류", "손절·익절 실행에서는 매수 금지"))
         if conf < C.probe_floor(p) - 1e-9 and not C.index_dip(code, order.get("today_change"), p):   # 소액 매수 구간까지 허용. 급락일 지수 예외는 확신도 기준 없음 (크기만 비례)
             bad.append(("확신도", f"{conf:.2f} < 매수 기준 {C.buy_threshold(p):.2f} (소액 매수 {C.probe_floor(p):.2f})"))
-        chg, lim = order.get("today_change"), r.get("max_buy_day_change", 0.10)
+        chg, lim = order.get("today_change"), C.buy_day_limit(code, r, p)   # 코스닥 +15% (11-09)
         if chg is not None and chg >= lim:
             bad.append(("추격 매수", f"오늘 {chg:+.1%} ≥ +{lim:.0%}, 급등한 날은 매수 금지"))
         amount = qty * price

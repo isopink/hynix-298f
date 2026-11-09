@@ -2,7 +2,7 @@
 장중 후보 갱신: 정기 판단(09:30~15:00, 30분마다) 직전에 '오늘 장중 수급이 활발한 종목'으로 후보를 다시 뽑습니다.
 08:30 준비는 전일 거래대금·전일까지의 수급으로 후보를 골랐는데, 그러면 오늘 돈이 몰리는 종목을 놓칩니다.
 
-1. 키움 순위 API (판단 1회당 3번, 1.1초 간격)
+1. 키움 순위 API (판단 1회당 코스피·코스닥 따로 3번씩 6번, 1.1초 간격. 11-09)
    - ka10032 거래대금 상위 (오늘 누적)
    - ka10065 장중 투자자별 매매 상위 (외국인 순매수 · 기관계 순매수)
 2. 후보 풀 = 위 세 목록의 합집합 → 일봉 지표(08:30 준비 결과 재사용, 없는 종목만 pykrx로 계산)
@@ -39,36 +39,41 @@ def first_list(res, key):
 
 
 def fetch(brk, num):
-    """키움 순위 API 3번 → {code: {name, price, chg, value, foreign_qty, inst_qty}}. 원문은 work/rank_raw/ 에 남김."""
-    calls = [
-        ("value", "ka10032", {"mrkt_tp": "000", "mang_stk_incls": "0", "stex_tp": "1"}, "trde_prica_upper"),
-        ("foreign", "ka10065", {"trde_tp": "1", "mrkt_tp": "000", "orgn_tp": "9000"}, "opmr_invsr_trde_upper"),
-        ("inst", "ka10065", {"trde_tp": "1", "mrkt_tp": "000", "orgn_tp": "9999"}, "opmr_invsr_trde_upper"),
-    ]
+    """키움 순위 API 6번 (코스피·코스닥 따로 3번씩, 11-09 박문화 코스닥 확대안) → {code: {name, market, price, chg, value, foreign_qty, inst_qty}}.
+    전체 시장으로 받으면 금액 기준 순위를 코스피 대형주가 다 차지해 코스닥이 풀에 거의 못 들어옴. 순위(*_rank)는 시장 안 순위.
+    원문은 work/rank_raw/{tag}_{시장}.json 에 남김 (그림자 운영이 같은 원문을 재사용)."""
     raw_dir = os.path.join(C.WORK, "rank_raw")
     os.makedirs(raw_dir, exist_ok=True)
-    pool, lists = {}, {}
-    for tag, api, body, key in calls:
-        res = brk._call(RANK_PATH, api, body)
-        C.write_json(os.path.join(raw_dir, f"{tag}.json"), {"time": C.stamp(), "api": api, "body": body, "response": res})
-        lists[tag] = first_list(res, key)
-    for i, x in enumerate(lists["value"]):
-        c = code6(x.get("stk_cd"))
-        if not c:
-            continue
-        price = abs(num(x.get("cur_prc")))
-        qty = abs(num(x.get("now_trde_qty")))
-        pool[c] = {"code": c, "name": str(x.get("stk_nm", "")).strip(), "price": price,
-                   "chg": round(num(x.get("flu_rt"), True) / 100, 4), "value": price * qty, "value_rank": i + 1}
-    for tag in ("foreign", "inst"):
-        for i, x in enumerate(lists[tag]):
+    pool, sizes = {}, {}
+    for market, mt in (("KOSPI", "001"), ("KOSDAQ", "101")):
+        calls = [
+            ("value", "ka10032", {"mrkt_tp": mt, "mang_stk_incls": "0", "stex_tp": "1"}, "trde_prica_upper"),
+            ("foreign", "ka10065", {"trde_tp": "1", "mrkt_tp": mt, "orgn_tp": "9000"}, "opmr_invsr_trde_upper"),
+            ("inst", "ka10065", {"trde_tp": "1", "mrkt_tp": mt, "orgn_tp": "9999"}, "opmr_invsr_trde_upper"),
+        ]
+        lists = {}
+        for tag, api, body, key in calls:
+            res = brk._call(RANK_PATH, api, body)
+            C.write_json(os.path.join(raw_dir, f"{tag}_{market}.json"), {"time": C.stamp(), "api": api, "body": body, "response": res})
+            lists[tag] = first_list(res, key)
+            sizes[tag] = sizes.get(tag, 0) + len(lists[tag])
+        for i, x in enumerate(lists["value"]):
             c = code6(x.get("stk_cd"))
             if not c:
                 continue
-            r = pool.setdefault(c, {"code": c, "name": str(x.get("stk_nm", "")).strip()})
-            r[f"{tag}_qty"] = num(x.get("netslmt") or (num(x.get("buy_qty")) - num(x.get("sel_qty"))))
-            r[f"{tag}_rank"] = i + 1
-    return pool, {k: len(v) for k, v in lists.items()}
+            price = abs(num(x.get("cur_prc")))
+            qty = abs(num(x.get("now_trde_qty")))
+            pool[c] = {"code": c, "name": str(x.get("stk_nm", "")).strip(), "market": market, "price": price,
+                       "chg": round(num(x.get("flu_rt"), True) / 100, 4), "value": price * qty, "value_rank": i + 1}
+        for tag in ("foreign", "inst"):   # 수급은 그 시장 안의 순매수 상위로 판단 (코스닥은 코스닥 안에서)
+            for i, x in enumerate(lists[tag]):
+                c = code6(x.get("stk_cd"))
+                if not c:
+                    continue
+                r = pool.setdefault(c, {"code": c, "name": str(x.get("stk_nm", "")).strip(), "market": market})
+                r[f"{tag}_qty"] = num(x.get("netslmt") or (num(x.get("buy_qty")) - num(x.get("sel_qty"))))
+                r[f"{tag}_rank"] = i + 1
+    return pool, sizes
 
 
 def num(s, as_float=False):
@@ -102,7 +107,6 @@ def rank_pct(vals):
 def screen(rows, p, r, frac, regime=None):
     """rows: 일봉 지표 + 장중 값(price, chg, value, foreign_qty, inst_qty)이 합쳐진 종목들 → 점수순 후보."""
     s, it = p["screen"], p["screen"].get("intraday", {})
-    lim = r.get("max_buy_day_change", 0.10)
     ok = []
     for x in rows:
         nm, px = x.get("name", ""), x.get("price") or x.get("close")
@@ -114,7 +118,7 @@ def screen(rows, p, r, frac, regime=None):
         x["high_vol"] = x.get("vol20", 0) > s.get("max_vol20", 9)
         if x["high_vol"] and not (hv.get("enabled") and x["vol20"] <= hv.get("max_vol20", 0)):
             continue
-        if (x.get("chg") or 0) >= lim:              # 어차피 리스크 규칙이 막는 추격 매수
+        if (x.get("chg") or 0) >= C.buy_day_limit(x["code"], r, p, x.get("market")):   # 어차피 리스크 규칙이 막는 추격 매수 (코스닥 +15%, 11-09)
             continue
         if not C.trend_ok(px, x, regime, p):          # 단기 상승 추세 (지금 가격 기준). 하락 국면이면 20일선 위만
             continue
@@ -145,7 +149,7 @@ def screen(rows, p, r, frac, regime=None):
         x.pop("trend_gap", None)
     ok.sort(key=lambda x: -x["score"])
     hv_n = (p.get("high_vol") or {}).get("max_candidates", 0)   # 고변동 종목은 따로 몇 개만 (작게 사는 몫)
-    return [x for x in ok if not x["high_vol"]][: s["max_candidates"]] + [x for x in ok if x["high_vol"]][:hv_n]
+    return C.market_quota([x for x in ok if not x["high_vol"]], p) + [x for x in ok if x["high_vol"]][:hv_n]
 
 
 def ensure_inverse(b, p, held):
