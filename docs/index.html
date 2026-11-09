@@ -200,6 +200,9 @@ details.log[open] > summary::after { content: "−"; }
 .dec-row .pair { display: flex; align-items: center; gap: 8px; min-width: 0; }
 .dec-row .pair .cf { flex: 1; min-width: 0; }
 .dec-row .pair .na { font-size: 12px; color: var(--muted); }
+.dec-row .why.two { display: flex; flex-direction: column; gap: 3px; }
+.dec-row .why.two > span { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dec-row .why.two .s { color: #3ecf8e; opacity: .85; }
 @media (max-width: 640px) {
   .dec-list .dec-row.cmp, .dec-colhead { grid-template-columns: minmax(0, 1fr) 96px 96px; gap: 6px 8px; }
   .dec-row.cmp .pair { flex-direction: column; align-items: flex-start; gap: 3px; }
@@ -1367,7 +1370,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     if (cmp) {
       const a = slot(dc.time), b = slot(sd.time);
       colhead.innerHTML = `<span>종목</span><span title="판단 기록 ${esc(dc.time.slice(11, 16))}">Sigma Engine ${a} 회차</span>`
-        + `<span class="on" title="판단 기록 ${esc(sd.time.slice(11, 16))}">SiON Engine ${b} 회차</span><span class="why-h">근거 (Sigma)</span>`;
+        + `<span class="on" title="판단 기록 ${esc(sd.time.slice(11, 16))}">SiON Engine ${b} 회차</span><span class="why-h">근거</span>`;
     }
     const rows = items.map(d => ({ code: d.code, name: d.name, a: d, b: sMap.get(d.code) }));
     if (cmp) for (const [code, x] of sMap) if (!items.some(d => d.code === code)) rows.push({ code, name: x.name, a: null, b: x });   // SiON 만 본 종목은 아래에
@@ -1381,9 +1384,11 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       const nm = `<span class="nm">${esc(r.name)}${exTag(exch)}${volTag(vol)}</span>`;
       const why = `<span class="why">${r.a && r.a.blocked ? '<em>차단</em> · ' : ''}${esc((r.a || r.b).decision || '')}</span>`;
       if (!cmp) return `<div class="dec-row${quiet ? ' quiet' : ''}" data-i="${i}">${nm}${pill(d)}${why}</div>`;
+      const w2 = `<span class="why two">${r.a ? `<span>${r.a.blocked ? '<em>차단</em> · ' : ''}${esc(r.a.decision || '')}</span>` : ''}`   // 11-09 근거 두 줄: Sigma · SiON(초록)
+        + `${r.b && r.b.decision ? `<span class="s">${esc(r.b.decision)}</span>` : ''}</span>`;
       return `<div class="dec-row cmp${quiet ? ' quiet' : ''}" data-i="${i}">${nm}`
         + `<span class="pair">${r.a ? pill(r.a) : '<span class="na">판단 없음</span>'}</span>`
-        + `<span class="pair">${r.b ? pill(r.b) : '<span class="na">판단 없음</span>'}</span>${why}</div>`;
+        + `<span class="pair">${r.b ? pill(r.b) : '<span class="na">판단 없음</span>'}</span>${w2}</div>`;
     }).join('');
     const side = (label, d) => !d ? `<p class="tp"><b>${label}</b> 이 종목은 판단하지 않음</p>`
       : `<p class="tp"><b>${label}</b> ${esc(d.action)}${d.qty ? ' ' + won(d.qty) + '주' : ''}, 확신도 ${(+d.confidence).toFixed(2)}</p>`
