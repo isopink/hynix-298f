@@ -420,7 +420,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
       <div class="hd"><h2 class="eyebrow">Portfolio</h2><span class="sub">빨간 호 = 국면 상한</span></div>
       <div class="chart" id="ch-donut" style="min-height:240px"></div>
       <div class="kx-flow">   <!-- 보유 종목 손익: 포트폴리오 카드 안 아래칸 (11-05) -->
-        <div class="hd"><h3 class="eyebrow">Holdings P&amp;L</h3><span class="sub">수수료·세금 반영</span></div>
+        <div class="hd"><h3 class="eyebrow">Holdings P&amp;L</h3><span class="sub" id="pnl-sub">수수료·세금 반영</span></div>
         <div class="chart" id="ch-pnl" style="min-height:200px"></div>
       </div>
     </section>
@@ -743,7 +743,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
         json('status'), json('decision'), json('briefing'),   // 에이전트가 실행할 때마다 push 하므로 페이지를 열어 둔 채로도 갱신
         fetch(`${url}/rest/v1/kospi_ticks?select=ts,price&order=ts.desc&limit=1`, { headers: h }).then(r => r.ok ? r.json() : []).catch(() => []),
         // 11-09 온톨로지 그림자 운영의 1분 자산·상태 (supabase/shadow.sql). 표가 없으면 빈 목록
-        fetch(`${url}/rest/v1/shadow_snapshots?select=ts,total,status&order=ts.desc&limit=1`, { headers: h }).then(r => r.ok ? r.json() : []).catch(() => [])
+        fetch(`${url}/rest/v1/shadow_snapshots?select=ts,total,status,holdings&order=ts.desc&limit=1`, { headers: h }).then(r => r.ok ? r.json() : []).catch(() => [])
       ]);
       SHADOW_LIVE = shl && shl[0] || SHADOW_LIVE;
       if (st && !Array.isArray(st)) STATUS = st;
@@ -1039,7 +1039,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   let SHADOW = null, SHADOW_LIVE = null;   // SHADOW_LIVE = Supabase shadow_snapshots 최신 1건 {ts, total, status}
   // 11-09 S.Lee: 장중에도 겹쳐 보이게 1분마다 다시 받음 (그림자 기록이 바뀌었을 때만 다시 그림). 오늘 점 = 그림자의 가장 최근 회차 자산
   const loadShadow = () => fetch('data/shadow.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null).catch(() => null)
-    .then(v => { if (v && SHADOW && v.updated === SHADOW.updated) return; SHADOW = v || SHADOW; if (D && SHADOW) { hero(); agentStatus(); decisionCard(); } });
+    .then(v => { if (v && SHADOW && v.updated === SHADOW.updated) return; SHADOW = v || SHADOW; if (D && SHADOW) { hero(); agentStatus(); decisionCard(); pnl(); } });
   loadShadow(); setInterval(() => { if (!document.hidden) loadShadow(); }, 60000);
 
   // ---------- 리스크 한도: agent/config/risk_limits.json 과 같은 값 (대회 내내 고정, 바뀌면 여기도 고칠 것) ----------
@@ -1461,30 +1461,44 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   const pnlMode = 'net';   // 11-04 순수(가격 변동만) 토글 없앰 → 키움 수익률(수수료·세금 반영)만
 
   function pnl() {
-    if (!D.hold.length) return none($('ch-pnl'), '보유 종목이 없어요.');
+    // 11-09 S.Lee: SiON Engine(온톨로지 그림자) 보유 손익을 초록 반투명 막대로 겹쳐 그림. Supabase 1분 기록 → 없으면 shadow.json
+    const sh = (SHADOW_LIVE && SHADOW_LIVE.holdings && SHADOW_LIVE.holdings.length ? SHADOW_LIVE.holdings : SHADOW && SHADOW.holdings) || [];
+    const sNet = g => (1 + g) * (1 - 0.0035 - 0.002) / (1 + 0.0035) - 1;   // 그림자 기록은 가격 변동만 → 키움과 같은 수수료 0.35%·세금 0.2% 반영 (params.costs)
+    const sHold = new Map(sh.filter(h => h.qty && h.pnl_pct != null && h.price).map(h => [h.code, { ...h, avg: h.price / (1 + h.pnl_pct), sv: sNet(+h.pnl_pct) }]));
+    $('pnl-sub').innerHTML = sHold.size ? '수수료·세금 반영 · <span style="color:#3ecf8e">초록 SiON Engine</span>' : '수수료·세금 반영';
+    if (!D.hold.length && !sHold.size) return none($('ch-pnl'), '보유 종목이 없어요.');
     const gross = r => r.price / r.avg_price - 1, cost = r => r.avg_price * r.qty;
     const val = r => pnlMode === 'gross' ? gross(r) : r.pnl;
-    const sumCost = d3.sum(D.hold, cost);
+    const sumCost = d3.sum(D.hold, cost), sCost = d3.sum([...sHold.values()], h => h.avg * h.qty);
     const total = { name: '합계', total: true,
-      v: pnlMode === 'gross' ? d3.sum(D.hold, r => r.price * r.qty) / sumCost - 1 : d3.sum(D.hold, r => cost(r) * r.pnl) / sumCost };
-    const rows = [...D.hold].map(r => ({ ...r, v: val(r) })).sort((a, b) => b.v - a.v).concat(D.hold.length > 1 ? [total] : []), bh = 22, gap = 22;
+      v: !D.hold.length ? null : pnlMode === 'gross' ? d3.sum(D.hold, r => r.price * r.qty) / sumCost - 1 : d3.sum(D.hold, r => cost(r) * r.pnl) / sumCost,
+      s: sHold.size ? d3.sum([...sHold.values()], h => h.avg * h.qty * h.sv) / sCost : null };
+    const mine = D.hold.map(r => ({ ...r, v: val(r), s: sHold.has(r.code) ? sHold.get(r.code).sv : null }));
+    const only = [...sHold.values()].filter(h => !D.hold.some(r => r.code === h.code)).map(h => ({ code: h.code, name: h.name, v: null, s: h.sv, sOnly: true }));
+    const key = r => r.v ?? r.s;
+    const rows = mine.concat(only).sort((a, b) => key(b) - key(a)).concat(D.hold.length + sHold.size > 1 ? [total] : []), bh = 22, gap = 22;
     const H = Math.max(220, rows.length * (bh + gap) + 20), { svg, W } = svgIn($('ch-pnl'), H);
     const lw = d3.max(rows, r => textW(svg, r.name, 12)) + 12, vw = 54;
-    const mx = d3.max(rows, r => Math.abs(r.v)) || .01;
+    const mx = d3.max(rows, r => Math.max(Math.abs(r.v ?? 0), Math.abs(r.s ?? 0))) || .01;
     const x = d3.scaleLinear([-mx, mx], [lw, W - vw]);
     svg.append('line').attr('x1', x(0)).attr('x2', x(0)).attr('y1', 4).attr('y2', H - 4).attr('stroke', '#3a3a3a');
     const top = (H - rows.length * (bh + gap) + gap) / 2;
     rows.forEach((r, i) => {
-      const yy = top + i * (bh + gap), up = r.v >= 0;
+      const yy = top + i * (bh + gap), up = (r.v ?? 0) >= 0;
       if (r.total) svg.append('line').attr('x1', 0).attr('x2', W).attr('y1', yy - gap / 2).attr('y2', yy - gap / 2).attr('stroke', 'rgba(255,255,255,.08)');
-      svg.append('text').attr('x', 0).attr('y', yy + bh / 2).attr('dy', '.32em').attr('font-size', 12).attr('fill', r.total ? C.ink : C.body).attr('font-weight', r.total ? 500 : null).text(r.name);
-      svg.append('rect').attr('x', Math.min(x(0), x(r.v))).attr('y', yy + 3).attr('height', bh - 6).attr('rx', 2).attr('width', Math.max(2, Math.abs(x(r.v) - x(0)))).attr('fill', up ? GR.redH : GR.blueH).attr('opacity', r.total ? .7 : null);
-      svg.append('text').attr('x', W).attr('y', yy + bh / 2).attr('dy', '.32em').attr('text-anchor', 'end').attr('font-size', 12).attr('font-weight', 500).attr('fill', up ? C.redHi : C.blue).text(pct(r.v));
+      svg.append('text').attr('x', 0).attr('y', yy + bh / 2).attr('dy', '.32em').attr('font-size', 12).attr('fill', r.total ? C.ink : r.sOnly ? '#3ecf8e' : C.body).attr('font-weight', r.total ? 500 : null).text(r.name);
+      if (r.v != null) svg.append('rect').attr('x', Math.min(x(0), x(r.v))).attr('y', yy + 3).attr('height', bh - 6).attr('rx', 2).attr('width', Math.max(2, Math.abs(x(r.v) - x(0)))).attr('fill', up ? GR.redH : GR.blueH).attr('opacity', r.total ? .7 : null);
+      if (r.s != null) svg.append('rect').attr('x', Math.min(x(0), x(r.s))).attr('y', yy).attr('height', bh).attr('rx', 2).attr('width', Math.max(2, Math.abs(x(r.s) - x(0))))   // SiON: 초록 반투명, 조금 크게 겹침
+        .attr('fill', '#3ecf8e').attr('fill-opacity', .22).attr('stroke', '#3ecf8e').attr('stroke-opacity', .55).attr('stroke-width', 1);
+      const lv = r.v ?? r.s, lc = r.v == null ? '#3ecf8e' : up ? C.redHi : C.blue;
+      svg.append('text').attr('x', W).attr('y', yy + bh / 2).attr('dy', '.32em').attr('text-anchor', 'end').attr('font-size', 12).attr('font-weight', 500).attr('fill', lc).text(pct(lv));
+      const sRow = r.s != null ? row('SiON Engine (가상)', pct(r.s), r.s >= 0 ? 'up' : 'down') : '';
       const tip = r.total
-        ? `<div class="t">보유 합계</div>${row('매입금액', won(Math.round(sumCost)))}${row('순수', pct(d3.sum(D.hold, h => h.price * h.qty) / sumCost - 1))}${row('수수료·세금 반영', pct(d3.sum(D.hold, h => cost(h) * h.pnl) / sumCost))}`
+        ? `<div class="t">보유 합계</div>${D.hold.length ? row('매입금액', won(Math.round(sumCost))) + row('순수', pct(d3.sum(D.hold, h => h.price * h.qty) / sumCost - 1)) + row('수수료·세금 반영', pct(d3.sum(D.hold, h => cost(h) * h.pnl) / sumCost)) : ''}${sRow}`
+        : r.sOnly ? `<div class="t">${esc(r.name)}</div><p class="tp">Sigma Engine 은 보유하지 않음</p>${row('SiON 평단', won(Math.round(sHold.get(r.code).avg)))}${row('현재가', won(+sHold.get(r.code).price))}${sRow}`
         : `<div class="t">${esc(r.name)}</div>${row('평단', won(+r.avg_price))}${row('현재가', won(+r.price))}`
           + `${row('수수료·세금 반영', pct(r.pnl), r.pnl >= 0 ? 'up' : 'down')}`
-          + `${row('손익 (반영)', (r.pnl > 0 ? '+' : r.pnl < 0 ? '−' : '') + won(Math.abs(Math.round(cost(r) * r.pnl))) + '원', r.pnl >= 0 ? 'up' : 'down')}${r.stop ? row('손절 / 익절', won(+r.stop) + ' / ' + won(+r.take)) : ''}${r.held_days != null ? row('보유일', r.held_days + ' / ' + r.max_days + '일') : ''}`;
+          + `${row('손익 (반영)', (r.pnl > 0 ? '+' : r.pnl < 0 ? '−' : '') + won(Math.abs(Math.round(cost(r) * r.pnl))) + '원', r.pnl >= 0 ? 'up' : 'down')}${r.stop ? row('손절 / 익절', won(+r.stop) + ' / ' + won(+r.take)) : ''}${r.held_days != null ? row('보유일', r.held_days + ' / ' + r.max_days + '일') : ''}${sRow}`;
       svg.append('rect').attr('x', 0).attr('y', yy - 4).attr('width', W).attr('height', bh + 8).attr('fill', 'transparent')
         .call(tipMark, () => tip);
     });
