@@ -860,10 +860,14 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     document.addEventListener('visibilitychange', () => { if (!document.hidden) pollLive(); });   // 휴대폰에서 다른 앱 갔다 오면 바로 갱신
   }
 
+  // 11-10 S.Lee: 대회 게시판 기준으로 맞춤. 키움 모의 잔고는 매매마다 수수료를 대회 집계보다 약 0.1%p 더 떼어
+  // (11-05 +0.09%p · 11-06 +0.16%p · 11-09 +0.21%p 차이가 누적 매매대금의 약 0.1%와 일치) → 그날까지의 누적 매매대금 × 0.1% 를 더해 보여줌
+  const OFFICIAL_ADJ = 0.001;
+  const adjUpTo = (trades, date) => OFFICIAL_ADJ * d3.sum(trades.filter(t => String(t.time).slice(0, 10) <= date), t => +t.amount || (+t.qty * +t.price) || 0);
   function derive(d) {
     // KOSPI: 기록값 → 없으면 kospi_daily 종가 → 그래도 없으면 전날 값
     let kp = null;
-    const eq = d.equity.map(r => { const k = +(r.kospi ?? KD.get(r.date)) || kp; kp = k; return { ...r, d: toD(r.date), total: +r.total, kospi: k }; });
+    const eq = d.equity.map(r => { const k = +(r.kospi ?? KD.get(r.date)) || kp; kp = k; return { ...r, d: toD(r.date), total: +r.total + adjUpTo(d.trades, r.date), kiwoom: +r.total, kospi: k }; });
     // KOSPI 기준 = 대회 시작일 시가 (config.js kospiStart). 첫날 값을 기준으로 하면 첫날 등락이 빠짐. 없으면 첫 기록값
     const k0 = +CFG.kospiStart || (eq.find(r => r.kospi) || {}).kospi;
     let peak = INIT;   // 고점은 시작 원금부터 (첫날 손실도 낙폭으로 잡음)
@@ -922,7 +926,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const rz = realized(D.trades), pl = rz.net, total = D.ret * INIT;   // 총 손익 = 현재 자산 − 시작 원금 (11-05 S.Lee 양도차익 대신). 양도차익 = 판 종목의 (매도금액 − 매도 수수료·세금) − (평단 × 수량 + 매수 수수료)
     $('pnl-won').textContent = signed(total);
     $('pnl-won').classList.toggle('neg', total < 0); document.querySelector('.hero-card').classList.toggle('neg', total < 0);   // 손실은 파랑 (국내 증시 관례)
-    const rtip = `<div class="t">총 손익 (현재 자산 − 시작 원금)</div>${row(`판 종목 양도차익 (매도 ${rz.n}건)`, signed(pl), pl >= 0 ? 'up' : 'down')}${row('보유 종목 평가손익', signed(total - pl), total - pl >= 0 ? 'up' : 'down')}${row('총 손익', signed(total), total >= 0 ? 'up' : 'down')}`;
+    const rtip = `<div class="t">총 손익 (현재 자산 − 시작 원금)</div>${row(`판 종목 양도차익 (매도 ${rz.n}건)`, signed(pl), pl >= 0 ? 'up' : 'down')}${row('보유 종목 평가손익', signed(total - pl), total - pl >= 0 ? 'up' : 'down')}${row('총 손익', signed(total), total >= 0 ? 'up' : 'down')}<p class="tp">대회 게시판 기준 (키움 모의 잔고 ${won(Math.round(D.last.kiwoom || D.last.total))}원 + 누적 매매대금의 0.1% 수수료 차이)</p>`;
     tipTarget($('realized'), rtip);
     $('k-week').textContent = pct(D.week); tone($('k-week'), D.week);
     $('k-mdd').textContent = pct(D.mdd); tone($('k-mdd'), D.mdd);
@@ -1195,9 +1199,11 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const el = $('ch-hero'), { svg, W, H } = svgIn(el, el.clientWidth < 520 ? (D.eq.length > 1 ? 250 : 170) : 280), rows = D.eq;   // 휴대폰에선 낮게, 하루치(점 하나)면 조금 더 낮게
     const narrow = W < 520;
     // 11-08 S.Lee: 온톨로지 그림자 운영(가상 계좌, 시작일에 실제 계좌 복사)을 초록 선으로. 시작 전날 실제 점에서 갈라져 나옴
-    const ONT = '#3ecf8e', sh = (SHADOW && SHADOW.daily || []).map(r => ({ d: toD(r.date), ret: r.total / INIT - 1, total: r.total }));
+    const sAdj = date => sionAdj(date);   // 11-10 대회 기준 보정 (Sigma 와 같은 방식)
+    const ONT = '#3ecf8e', sh = (SHADOW && SHADOW.daily || []).map(r => ({ d: toD(r.date), ret: (r.total + sAdj(r.date)) / INIT - 1, total: r.total + sAdj(r.date) }));
     if (SHADOW_LIVE && SHADOW_LIVE.total) {   // shadow.json 이 아직 없어도(첫 회차 전) 1분 자산만으로 오늘 점을 그림   // 11-09 장중 실시간: 오늘 점을 Supabase 1분 자산으로 (하루 기록보다 새것이면)
-      const ld = toD(new Date(Date.parse(SHADOW_LIVE.ts) + 9 * 3600e3).toISOString().slice(0, 10)), lr = { d: ld, ret: SHADOW_LIVE.total / INIT - 1, total: SHADOW_LIVE.total };
+      const lds = new Date(Date.parse(SHADOW_LIVE.ts) + 9 * 3600e3).toISOString().slice(0, 10), lt = SHADOW_LIVE.total + sAdj(lds);
+      const ld = toD(lds), lr = { d: ld, ret: lt / INIT - 1, total: lt };
       const i = sh.findIndex(r => +r.d === +ld);
       if (i >= 0) sh[i] = lr; else if (!sh.length || ld > sh[sh.length - 1].d) sh.push(lr);
     }
@@ -1580,9 +1586,16 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   const pnlMode = 'net';   // 11-04 순수(가격 변동만) 토글 없앰 → 키움 수익률(수수료·세금 반영)만
 
   // ---------- 11-09 SiON Engine 계좌 (Supabase 1분 기록 → 없으면 shadow.json) ----------
+  // SiON 대회 기준 보정: 시작 시점까지는 복사해 온 실제 계좌의 보정분 + 그 뒤 SiON 가상 체결 매매대금 × 0.1%
+  function sionAdj(date) {
+    const st = (SHADOW_LIVE && SHADOW_LIVE.status) || {}, since = (st.seeded_at || (SHADOW && SHADOW.start) || '').slice(0, 10);
+    const tr = st.trades || (SHADOW && SHADOW.trades) || [];
+    const realBefore = since && D ? adjUpTo(D.trades.filter(t => String(t.time).slice(0, 10) < since), since) : 0;
+    return realBefore + adjUpTo(tr.filter(t => !since || String(t.time).slice(0, 10) >= since), date);
+  }
   function sionCard() {
     const card = $('sion-card'), L = SHADOW_LIVE, S = SHADOW;
-    const total = L && L.total || S && S.now && S.now.shadow_total;
+    const raw = L && L.total || S && S.now && S.now.shadow_total, total = raw ? raw + sionAdj(kstDate(new Date().toISOString())) : raw;
     if (!total) { card.hidden = true; $('eng-tabs').hidden = true; $('eng-sion').hidden = true; return; }
     card.hidden = ENG !== 'sion';
     const st = (L && L.status) || {}, seed = st.seed_total || (S && S.base) || INIT, since = (st.seeded_at || (S && S.start) || '').slice(0, 10);
@@ -1591,7 +1604,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const trades = st.trades || (S && S.trades) || [];
     const fee = g => (1 + g) * (1 - 0.0035 - 0.002) / (1 + 0.0035) - 1;   // Sigma 와 같은 기준 (키움 수수료 0.35%·세금 0.2%)
     const stock = d3.sum(hs, h => h.value || h.price * h.qty), cash = (L && L.cash) ?? (total - stock);
-    const pnlAll = total - INIT, pnlSeed = total - seed, sigma = D && D.last ? D.last.total : null;
+    const pnlAll = total - INIT, pnlSeed = total - (seed + sionAdj('0000')), sigma = D && D.last ? D.last.total : null;
     const cls = v => v > 0 ? 'up' : v < 0 ? 'down' : '';
     const sw = v => (v > 0 ? '+' : v < 0 ? '−' : '') + won(Math.abs(Math.round(v))) + '원';
     // 11-09 S.Lee: SiON 포트폴리오 (도넛 · 보유 손익) 를 Sigma 와 따로
@@ -2145,7 +2158,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   const tk = document.getElementById('ticker'), tkTrack = document.getElementById('tk-track');
   let tkKey = '';
   function ticker() {
-    tk.hidden = !pool.length;
+    tk.hidden = true; return;   // 11-10 S.Lee: 상단 응원 띠 없앰 (게시판 글은 Supabase 에 그대로 남음)
     const rows = pool.slice(0, 20), key = rows.map(r => r.id).join();
     if (!rows.length || key === tkKey) return;
     tkKey = key; tkTrack.textContent = '';
