@@ -445,7 +445,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
     <div class="brand">
       <div>
         <h1>Sigma Engine <span class="tagline st-top" id="st-top" aria-label="실행 상태"></span></h1>   <!-- 11-10 S.Lee: 목표 문구 자리에 상태 3개 (모니터링 · 에이전트 · 온톨로지) -->
-        <div class="chips sched m-hide" id="sched" aria-label="평일 정기 매매 판단 시각"></div>
+        <div class="chips sched" id="sched" aria-label="실시간 KOSPI와 평일 정기 매매 시각"><span class="chip kx-chip" id="kx-chip" hidden></span></div>   <!-- 11-10 S.Lee: 맨 앞 KOSPI 칩 (폰은 이것만) -->
       </div>
     </div>
     <div class="cheer">
@@ -536,7 +536,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
 
 
   <!-- 실시간 KOSPI: 접는 섹션 (11-05). 펼칠 때 다시 그림 -->
-  <details class="log more" id="kx-box">
+  <details class="log more m-hide" id="kx-box">   <!-- 11-10 S.Lee: 폰에선 숨김 (머리글 칩으로 대신) -->
     <summary>Live KOSPI</summary>
     <div class="more-body">
       <div class="grid">
@@ -1086,6 +1086,10 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     $('kx-val').textContent = f2(L.v);
     $('kx-chg').textContent = (chg >= 0 ? '▲ ' : '▼ ') + f2(Math.abs(L.v - prev)) + ' (' + pct(chg) + ')'; tone($('kx-chg'), chg);
     $('kx-rsi').textContent = lastR == null ? '' : 'RSI ' + Math.round(lastR); tone($('kx-rsi'), lastR == null ? 0 : lastR >= 70 ? 1 : lastR <= 30 ? -1 : 0);
+    // 11-10 머리글 칩: 지수 · 등락률 · RSI 만
+    const kc = $('kx-chip'); kc.hidden = false;
+    kc.innerHTML = `KOSPI <b>${f2(L.v)}</b> <span id="kc-chg">${pct(chg)}</span>` + (lastR == null ? '' : ` <span id="kc-rsi">RSI ${Math.round(lastR)}</span>`);
+    tone($('kc-chg'), chg); if (lastR != null) tone($('kc-rsi'), lastR >= 70 ? 1 : lastR <= 30 ? -1 : 0);
     $('kx-asof').textContent = md(toD(kstDate(L.t.toISOString()))) + ' ' + hm(L.t) + (marketOpen() ? ' 기준' : ' 장 마감');
     // 세 칸: 가격 · 거래량 · RSI (같은 시간축)
     const narrow = el.clientWidth < 520, gap = 12;
@@ -2195,8 +2199,9 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const now = k.getUTCHours() * 60 + k.getUTCMinutes(), tt = SCHED.trades;
     const n = tt.map(toM).find(m => m > now);
     const next = day >= 1 && day <= 5 && n != null ? hm(n) : null;
-    sched.textContent = '';
-    const add = (html, live) => { const c = document.createElement('span'); c.className = 'chip' + (live ? ' live' : ''); c.innerHTML = html; sched.appendChild(c); return c; };
+    const kc = document.getElementById('kx-chip');
+    sched.textContent = ''; if (kc) sched.appendChild(kc);
+    const add = (html, live) => { const c = document.createElement('span'); c.className = 'chip m-hide' + (live ? ' live' : ''); c.innerHTML = html; sched.appendChild(c); return c; };
     add('평일 매매');
     add(`<b>${tt[0]}~${tt[tt.length - 1]}</b> ${SCHED.judge}분마다`);   // 11-05 모든 판단 회차가 매매
     if (next) add(`다음 매매 <b>${next}</b>`, true);
