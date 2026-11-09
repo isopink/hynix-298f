@@ -1434,10 +1434,11 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   function donut() {
     const parts = D.hold.map(h => ({ name: h.name, v: h.value, pnl: h.pnl })).sort((a, b) => b.v - a.v).concat([{ name: '현금', v: D.cash }]);
     const el = $('ch-donut'), below = el.clientWidth < 340, ring = el.clientWidth < 520 ? 200 : 240;   // 좁은 폰은 범례를 도넛 아래로
-    const { svg, W, H: H0 } = svgIn(el, ring + (below ? parts.length * 22 + 8 : 0)), H = below ? ring : H0;
+    const side = !below && el.clientWidth >= 340, legH = parts.length * 22 + 10;   // 11-09 범례가 도넛보다 길면 카드 높이를 늘려 제목과 안 겹치게
+    const { svg, W, H: H0 } = svgIn(el, below ? ring + legH - 2 : Math.max(ring, side ? legH : 0)), H = below ? ring : H0;
     const tot = d3.sum(parts, p => p.v);
     const shades = ['#da291c', '#ff7a6e', '#bdbdbd', '#7a7a7a', '#4a4a4a', '#3a3a3a'];
-    const color = (p, i) => p.name === '현금' ? 'rgba(255,255,255,.08)' : shades[i];
+    const color = (p, i) => p.name === '현금' ? 'rgba(255,255,255,.08)' : shades[i] || ['#5e5e5e', '#525252', '#464646'][i % 3];   // 7번째부터는 회색 (예전엔 검정으로 빠짐)
     const legendW = W >= 340 ? 150 : 0;
     const R = Math.min((W - legendW) / 2, H / 2) - 14, cx = legendW ? (W - legendW) / 2 : W / 2, cy = H / 2;
     const g = svg.append('g').attr('transform', `translate(${cx},${cy})`);
@@ -1453,7 +1454,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     g.append('text').attr('text-anchor', 'middle').attr('dy', '1.4em').attr('font-size', 11).attr('fill', C.muted).text(D.cap ? '주식 / 상한 ' + (D.cap * 100).toFixed(1) + '%' : '주식 비중');
     if (legendW || below) {
       const lw2 = legendW || Math.min(W, 260);
-      const lg = svg.append('g').attr('transform', below ? `translate(${(W - lw2) / 2},${ring + 14})` : `translate(${W - legendW + 8},${cy - (parts.length - 1) * 11})`);
+      const lg = svg.append('g').attr('transform', below ? `translate(${(W - lw2) / 2},${ring + 14})` : `translate(${W - legendW + 8},${Math.max(14, cy - (parts.length - 1) * 11)})`);
       parts.forEach((p, i) => {
         const r = lg.append('g').attr('transform', `translate(0,${i * 22})`);
         r.append('rect').attr('width', 8).attr('height', 8).attr('y', -6).attr('fill', color(p, i)).attr('stroke', p.name === '현금' ? '#555' : 'none');
