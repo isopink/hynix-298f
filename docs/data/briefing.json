@@ -80,7 +80,13 @@
       5059.69
     ]
   },
-  "intraday": null,
+  "intraday": {
+    "time": "09:30",
+    "pool": 336,
+    "analyzed_new": 30,
+    "passed": 9,
+    "kept_prep": false
+  },
   "candidates": [
     {
       "code": "089860",
@@ -110,31 +116,43 @@
           "risk": false
         }
       ],
+      "price": 58500,
+      "chg": 0.0017,
+      "activity": 20.34,
+      "foreign_today": 1053000000,
+      "inst_today": 0,
       "exchange": "KOSPI"
     },
     {
-      "code": "018260",
-      "name": "삼성에스디에스",
-      "close": 215000,
-      "ret5": 0.075,
-      "ret20": 0.0964,
-      "rsi14": 53.4,
-      "vol20": 0.591,
-      "foreign_net": 190562600,
-      "inst_net": 45355817350,
-      "score": 0.743,
+      "code": "032640",
+      "name": "LG유플러스",
+      "close": 16520,
+      "ret5": 0.1667,
+      "ret20": 0.1448,
+      "rsi14": 72.8,
+      "vol20": 0.402,
+      "foreign_net": -43204631710,
+      "inst_net": 74782934530,
+      "score": 0.424,
       "news": [
         {
-          "date": "11-07",
-          "title": "11월1주차 삼성에스디에스 주가 21만 5천원 상승 마감",
+          "date": "11-09",
+          "title": "LG유플러스, 서울대·KAIST·연세대와 한국어 특화 음성 AI 개발",
           "risk": false
         },
         {
-          "date": "11-07",
-          "title": "삼성SDI·삼성에스디에스·SK가스[하나證 주간추천주]",
+          "date": "11-09",
+          "title": "LG유플러스, 한국어 음성 AI 키운다…서울대·KAIST·연세대와 맞손",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "LG유플러스-서울대·KAIST·연세대 맞손...한국어 특화 음성 AI 만든다",
           "risk": false
         }
       ],
+      "foreign_today": 264320000,
+      "inst_today": 0,
       "exchange": "KOSPI"
     },
     {
@@ -147,7 +165,7 @@
       "vol20": 0.957,
       "foreign_net": -76658998800,
       "inst_net": 63121010150,
-      "score": 0.714,
+      "score": 0.303,
       "news": [
         {
           "date": "11-09",
@@ -165,6 +183,11 @@
           "risk": false
         }
       ],
+      "price": 60900,
+      "chg": 0.0066,
+      "activity": 1.27,
+      "foreign_today": 426300000,
+      "inst_today": 0,
       "exchange": "KOSPI"
     },
     {
@@ -177,7 +200,7 @@
       "vol20": 0.333,
       "foreign_net": -92233316150,
       "inst_net": 110972108825,
-      "score": 0.571,
+      "score": 0.242,
       "news": [
         {
           "date": "11-06",
@@ -185,195 +208,92 @@
           "risk": false
         }
       ],
+      "foreign_today": 285300000,
+      "inst_today": 0,
       "exchange": "KOSPI"
     },
     {
-      "code": "064400",
-      "name": "LG씨엔에스",
-      "close": 73700,
-      "ret5": 0.0351,
-      "ret20": 0.0886,
-      "rsi14": 51.8,
-      "vol20": 0.792,
-      "foreign_net": -20437500850,
-      "inst_net": 51491335800,
-      "score": 0.571,
+      "code": "443670",
+      "name": "에스피소프트",
+      "close": 4410,
+      "ret5": -0.0764,
+      "ret20": -0.1082,
+      "rsi14": 48.9,
+      "vol20": 1.449,
+      "foreign_net": 33414656,
+      "inst_net": 22535130,
+      "score": 0.727,
+      "news": [],
+      "price": 4960,
+      "chg": 0.1234,
+      "activity": 9.65,
+      "foreign_today": 148800000,
+      "inst_today": 0,
+      "exchange": "KOSDAQ"
+    },
+    {
+      "code": "389260",
+      "name": "대명에너지",
+      "close": 13630,
+      "ret5": 0.3522,
+      "ret20": 0.0089,
+      "rsi14": 61.3,
+      "vol20": 1.105,
+      "foreign_net": -1315515485,
+      "inst_net": 73370470,
+      "score": 0.667,
       "news": [
         {
-          "date": "11-07",
-          "title": "11월 첫째 주 LG씨엔에스 주가 변동성 장세 연출",
+          "date": "11-06",
+          "title": "대명에너지 주가, 11월 6일 13,700원 3.11% 하락",
           "risk": false
         },
         {
           "date": "11-06",
-          "title": "LG씨엔에스 3.03% 올라 7만4800원…AI·클라우드 성장 주목",
+          "title": "코스피 8% 폭락에도 대명에너지·금양그린파워·강원에너지 ‘빨간불’...",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "대동기어 회전율 88%…금양그린파워·대명에너지도 50% 넘어",
           "risk": false
         }
       ],
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "035720",
-      "name": "카카오",
-      "close": 32000,
-      "ret5": 0.0959,
-      "ret20": -0.0123,
-      "rsi14": 53.9,
-      "vol20": 0.46,
-      "foreign_net": 26399005875,
-      "inst_net": 25956034400,
-      "score": 0.571,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "엔비디아 동맹 기대했던 카카오모빌리티·포티투닷, 매디슨 황 방한 취...",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "카카오뱅크 AI 이모지 퀴즈 정답(11월9일)",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "캐피탈 이어 카드·증권 검토…카카오뱅크, 사업 확장",
-          "risk": false
-        }
-      ],
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "012330",
-      "name": "현대모비스",
-      "close": 353500,
-      "ret5": 0.0712,
-      "ret20": -0.0181,
-      "rsi14": 47.4,
-      "vol20": 0.65,
-      "foreign_net": -59378796250,
-      "inst_net": 103057140500,
-      "score": 0.514,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "현대모비스, 11월 자동차부품 상장기업 브랜드평판 1위…한국타이어 2위",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "현대모비스, 자동차부품 브랜드평판 1위…한국타이어·한온시스템 順",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "[ 브랜드평판] 현대모비스, 자동차부품 상장기업 11월 1위... 한국타이어...",
-          "risk": false
-        }
-      ],
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "017670",
-      "name": "SK텔레콤",
-      "close": 77300,
-      "ret5": 0.039,
-      "ret20": -0.0819,
-      "rsi14": 45.2,
-      "vol20": 0.491,
-      "foreign_net": -22121547500,
-      "inst_net": 56405917100,
-      "score": 0.314,
-      "news": [],
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "328130",
-      "name": "루닛",
-      "close": 15470,
-      "ret5": 0.0045,
-      "ret20": 0.369,
-      "rsi14": 63.9,
-      "vol20": 1.387,
-      "foreign_net": -6381603720,
-      "inst_net": 16519823935,
-      "score": 0.886,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "루닛, 서밋 협업 기대 속 수익성 시험대…연말 손익분기 가능성은",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "[헬스 HOT 뉴스] 루닛, 의료 특화 AI '러닝유닛 2.0' 공개…\"9개 병원서 ...",
-          "risk": false
-        },
-        {
-          "date": "11-08",
-          "title": "루닛, 의료 AI ‘러닝유닛 2.0’ 오픈소스로 공개",
-          "risk": false
-        }
-      ],
+      "price": 14500,
+      "chg": 0.0584,
+      "activity": 8.7,
+      "foreign_today": 420500000,
+      "inst_today": 0,
       "exchange": "KOSDAQ"
     },
     {
-      "code": "180640",
-      "name": "한진칼",
-      "close": 196700,
-      "ret5": 0.6005,
-      "ret20": 0.5154,
-      "rsi14": 82.1,
-      "vol20": 1.068,
-      "foreign_net": -23144745850,
-      "inst_net": 30167917550,
-      "score": 0.743,
+      "code": "008830",
+      "name": "대동기어",
+      "close": 6540,
+      "ret5": 0.2505,
+      "ret20": 0.0721,
+      "rsi14": 60.3,
+      "vol20": 1.052,
+      "foreign_net": -3890551700,
+      "inst_net": -186177575,
+      "score": 0.455,
       "news": [
         {
-          "date": "11-08",
-          "title": "[공시] 한진칼우 '매매거래정지 예고', 미래나노텍·성창기업지주 '공매...",
-          "risk": true
-        },
-        {
-          "date": "11-09",
-          "title": "[증시키워드] 코스피 폭락 속 한진칼 경영권 분쟁에 관심↑",
+          "date": "11-06",
+          "title": "대동기어 주가, 11월 6일 애프터마켓 6,750원 2.27% 상승",
           "risk": false
         },
         {
-          "date": "11-08",
-          "title": "한진칼 흔드는 호반의 자본력, 어디까지 가나",
+          "date": "11-06",
+          "title": "대동기어 회전율 88%…금양그린파워·대명에너지도 50% 넘어",
           "risk": false
         }
       ],
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "053800",
-      "name": "안랩",
-      "close": 101500,
-      "ret5": -0.1618,
-      "ret20": 0.3497,
-      "rsi14": 55.8,
-      "vol20": 1.569,
-      "foreign_net": -12096541150,
-      "inst_net": 55323050,
-      "score": 0.6,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "안랩, 하반기 공채 실시…전 직군 두 자릿수 모집",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "안랩, 하반기 공채 규모 확대…AI·보안 인재 확보",
-          "risk": false
-        },
-        {
-          "date": "11-08",
-          "title": "이재명 '사이버보안 차르' 추진에 시장 판 커진다, 안랩·SK쉴더스 보안...",
-          "risk": false
-        }
-      ],
+      "price": 6380,
+      "chg": -0.052,
+      "activity": 3.45,
+      "foreign_today": 261580000,
+      "inst_today": 0,
       "exchange": "KOSDAQ"
     },
     {
