@@ -690,7 +690,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   // 20일 변동성(연율화) 꼬리표. 100% 넘으면 '고변동' (agent params.screen.max_vol20 기준과 같음)
   // 시장 꼬리표 (KOSPI · KOSDAQ · ETF)
   let EXCH = {};   // 종목코드 → KOSPI · KOSDAQ · ETF 예비값 (docs/data/exchange.json). 에이전트 기록에 exchange 가 있으면 그게 우선
-  fetch('data/exchange.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : {}).then(m => { EXCH = m || {}; if (D) decisionCard(); }).catch(() => {});
+  fetch('data/exchange.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : {}).then(m => { EXCH = m || {}; if (D) { decisionCard(); limits(); } }).catch(() => {});   // 11-10 코스닥 비중 줄도 시장 목록이 온 뒤 다시
   const exTag = x => x ? `<span class="ex">${x === 'KOSPI' ? 'Kospi' : x === 'KOSDAQ' ? 'Kosdaq' : esc(x)}</span>` : '';
   const volTag = v => v == null || isNaN(+v) ? '' : `<span class="vl${+v > 1 ? ' hi' : ''}">${+v > 1 ? '고변동' : '변동성'} ${Math.round(+v * 100)}%</span>`;
   const row = (a, b, cls) => `<div class="r"><span>${esc(a)}</span><span class="${cls || ''}">${esc(b)}</span></div>`;
@@ -1151,10 +1151,13 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const el = $('ch-lim'), tot = D.last.total, sw = tot ? D.stock / tot : 0, cash = 1 - sw;
     const top = D.hold.reduce((a, h) => (!a || h.value > a.value ? h : a), null), tw = top && tot ? top.value / tot : 0;
     const p1 = v => (v * 100).toFixed(1) + '%';
+    // 11-10 박문화 코스닥 확대안: 코스닥 합산 상한은 없지만(국면 상한·종목당 5% 만) 비중을 매일 보이게. 막대 = 국면 상한 중 코스닥이 차지한 몫
+    const kq = D.hold.filter(h => (h.exchange || EXCH[h.code]) === 'KOSDAQ'), kw = tot ? d3.sum(kq, h => h.value) / tot : 0;
     const rows = [
       { n: '오늘 손실', now: pct(D.last.day), lim: '한도 ' + pct(RL.daily), u: Math.max(0, -D.last.day) / -RL.daily },
       { n: '누적 손실', now: pct(D.ret), lim: '한도 ' + pct(RL.total), u: Math.max(0, -D.ret) / -RL.total },
       D.cap ? { n: `주식 비중 (${esc(D.last.regime || '')} 국면 상한)`, now: p1(sw), lim: '상한 ' + p1(D.cap), u: sw / D.cap } : null,
+      { n: `코스닥 비중 (${kq.length}종목 · 합산 상한 없음)`, now: p1(kw), lim: D.cap ? '국면 상한 ' + p1(D.cap) + ' 안' : '종목당 5%', u: D.cap ? kw / D.cap : 0 },
       { n: '현금 비중', now: p1(cash), lim: '최소 ' + p1(RL.minCash), u: sw / (1 - RL.minCash) },   // 최소 현금을 남기고 쓸 수 있는 몫 중 얼마나 썼나
       { n: '보유 종목 수', now: D.hold.length + '개', lim: '최대 ' + RL.maxPos + '개', u: D.hold.length / RL.maxPos },
       { n: '종목당 최대 비중' + (top ? ` (${esc(top.name)})` : ''), now: p1(tw), lim: '한도 ' + p1(RL.maxW), u: tw / RL.maxW }
