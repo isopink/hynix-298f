@@ -81,8 +81,8 @@
     ]
   },
   "intraday": {
-    "time": "10:15",
-    "pool": 371,
+    "time": "10:30",
+    "pool": 372,
     "analyzed_new": 30,
     "passed": 15,
     "kept_prep": false
@@ -98,7 +98,7 @@
       "vol20": 0.469,
       "foreign_net": -6880633700,
       "inst_net": 74240426800,
-      "score": 0.985,
+      "score": 0.94,
       "news": [
         {
           "date": "11-08",
@@ -116,10 +116,10 @@
           "risk": false
         }
       ],
-      "price": 58400,
-      "chg": 0.0,
-      "activity": 9.03,
-      "foreign_today": 1051200000,
+      "price": 58500,
+      "chg": 0.0017,
+      "activity": 7.69,
+      "foreign_today": 1053000000,
       "inst_today": 0,
       "exchange": "KOSPI"
     },
@@ -133,8 +133,13 @@
       "vol20": 0.888,
       "foreign_net": 1436621025,
       "inst_net": 20425868350,
-      "score": 0.6,
+      "score": 0.582,
       "news": [
+        {
+          "date": "11-09",
+          "title": "‘목동윤슬자이’ 분양 성과…GS건설, 목동 주거시장서 브랜드 입지 확...",
+          "risk": false
+        },
         {
           "date": "11-09",
           "title": "[건설 Pick] 삼성물산·GS건설·대우건설, 대규모 수주와 친환경 자원순...",
@@ -144,18 +149,13 @@
           "date": "11-09",
           "title": "GS건설, '목동윤슬자이' 분양 호응…목동 재건축 시장 공략",
           "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "“목동 주거 눈높이 맞췄다”… GS건설 ‘목동윤슬자이’, 맞춤형 상품...",
-          "risk": false
         }
       ],
-      "price": 30500,
-      "chg": 0.0252,
-      "activity": 4.26,
-      "foreign_today": 915000000,
-      "inst_today": 335500000,
+      "price": 30550,
+      "chg": 0.0269,
+      "activity": 3.87,
+      "foreign_today": 916500000,
+      "inst_today": 336050000,
       "exchange": "KOSPI"
     },
     {
@@ -168,13 +168,13 @@
       "vol20": 0.491,
       "foreign_net": -22121547500,
       "inst_net": 56405917100,
-      "score": 0.415,
+      "score": 0.403,
       "news": [],
-      "price": 78100,
-      "chg": 0.0051,
-      "activity": 1.96,
-      "foreign_today": 1718200000,
-      "inst_today": 156200000,
+      "price": 77900,
+      "chg": 0.0026,
+      "activity": 1.84,
+      "foreign_today": 1713800000,
+      "inst_today": 155800000,
       "exchange": "KOSPI"
     },
     {
@@ -187,8 +187,13 @@
       "vol20": 0.625,
       "foreign_net": 652431450,
       "inst_net": 21161016850,
-      "score": 0.369,
+      "score": 0.358,
       "news": [
+        {
+          "date": "11-09",
+          "title": "인하대학교 황용우 교수팀, 현대제철과 철강 탄소발자국 평가 기준 고도...",
+          "risk": false
+        },
         {
           "date": "11-09",
           "title": "현대제철 노사, 당진제철소 임직원 가족과 늦가을 목장길 트레킹",
@@ -197,11 +202,6 @@
         {
           "date": "11-09",
           "title": "\"주주가치 제고는 언제쯤\"… 현대제철, 결국 '저PBR' 낙인까지",
-          "risk": false
-        },
-        {
-          "date": "11-08",
-          "title": "美, 한국산 후판 상계관세 최종 확정…동국제강 1.89%·현대제철 1.39%",
           "risk": false
         }
       ],
@@ -219,7 +219,7 @@
       "vol20": 0.738,
       "foreign_net": -7484986975,
       "inst_net": 26975170300,
-      "score": 0.338,
+      "score": 0.328,
       "news": [
         {
           "date": "11-09",
@@ -251,21 +251,21 @@
       "vol20": 0.402,
       "foreign_net": -43204631710,
       "inst_net": 74782934530,
-      "score": 0.323,
+      "score": 0.313,
       "news": [
         {
           "date": "11-09",
-          "title": "LG유플러스, 서울대·KAIST·연세대와 한국어 특화 음성 AI 개발 착수",
+          "title": "LG유플러스, 3개 대학과 ‘K-보이스 AI 얼라이언스’ 출범…해외 의존도...",
           "risk": false
         },
         {
           "date": "11-09",
-          "title": "LG유플러스, 서울대·KAIST·연세대와 ‘K-보이스 얼라이언스’ 출범",
+          "title": "LG유플러스-서울대·KAIST·연세대, 'K-보이스 AI 얼라이언스' 출범…한...",
           "risk": false
         },
         {
           "date": "11-09",
-          "title": "LG유플러스, 사람처럼 자연스럽게 대화…서울대·KAIST·연세대 협력",
+          "title": "LG유플러스, 국내 대학과 한국어 특화 ‘K-보이스 엔진’ 개발",
           "risk": false
         }
       ],
@@ -283,7 +283,7 @@
       "vol20": 0.957,
       "foreign_net": -76658998800,
       "inst_net": 63121010150,
-      "score": 0.292,
+      "score": 0.269,
       "news": [
         {
           "date": "11-09",
@@ -301,10 +301,10 @@
           "risk": false
         }
       ],
-      "price": 62400,
-      "chg": 0.0314,
-      "activity": 1.24,
-      "foreign_today": 1809600000,
+      "price": 61600,
+      "chg": 0.0182,
+      "activity": 1.13,
+      "foreign_today": 1786400000,
       "inst_today": 0,
       "exchange": "KOSPI"
     },
@@ -318,7 +318,7 @@
       "vol20": 0.843,
       "foreign_net": -27562520175,
       "inst_net": 30133908725,
-      "score": 0.154,
+      "score": 0.149,
       "news": [
         {
           "date": "11-09",
@@ -336,11 +336,11 @@
           "risk": false
         }
       ],
-      "price": 49950,
-      "chg": 0.0173,
-      "activity": 3.2,
+      "price": 49800,
+      "chg": 0.0143,
+      "activity": 2.94,
       "foreign_today": 0,
-      "inst_today": 449550000,
+      "inst_today": 448200000,
       "exchange": "KOSPI"
     },
     {
@@ -371,11 +371,11 @@
           "risk": false
         }
       ],
-      "price": 58900,
-      "chg": 0.0709,
-      "activity": 7.95,
+      "price": 59400,
+      "chg": 0.08,
+      "activity": 6.87,
       "foreign_today": 0,
-      "inst_today": 824600000,
+      "inst_today": 831600000,
       "exchange": "KOSDAQ"
     },
     {
@@ -388,7 +388,7 @@
       "vol20": 1.387,
       "foreign_net": -6381603720,
       "inst_net": 16519823935,
-      "score": 0.646,
+      "score": 0.612,
       "news": [
         {
           "date": "11-09",
@@ -406,11 +406,11 @@
           "risk": false
         }
       ],
-      "price": 16330,
-      "chg": 0.057,
-      "activity": 4.62,
+      "price": 16220,
+      "chg": 0.0498,
+      "activity": 4.12,
       "foreign_today": 0,
-      "inst_today": 832830000,
+      "inst_today": 827220000,
       "exchange": "KOSDAQ"
     },
     {
@@ -423,7 +423,7 @@
       "vol20": 1.105,
       "foreign_net": -1315515485,
       "inst_net": 73370470,
-      "score": 0.6,
+      "score": 0.597,
       "news": [
         {
           "date": "11-09",
@@ -441,10 +441,10 @@
           "risk": false
         }
       ],
-      "price": 14210,
-      "chg": 0.0372,
-      "activity": 4.47,
-      "foreign_today": 781550000,
+      "price": 14250,
+      "chg": 0.0401,
+      "activity": 3.89,
+      "foreign_today": 783750000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -458,7 +458,7 @@
       "vol20": 1.449,
       "foreign_net": 33414656,
       "inst_net": 22535130,
-      "score": 0.554,
+      "score": 0.552,
       "news": [
         {
           "date": "11-09",
@@ -466,10 +466,10 @@
           "risk": false
         }
       ],
-      "price": 4835,
-      "chg": 0.0951,
-      "activity": 5.23,
-      "foreign_today": 159555000,
+      "price": 4885,
+      "chg": 0.1065,
+      "activity": 4.64,
+      "foreign_today": 161205000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -483,7 +483,7 @@
       "vol20": 1.068,
       "foreign_net": -23144745850,
       "inst_net": 30167917550,
-      "score": 0.4,
+      "score": 0.388,
       "news": [
         {
           "date": "11-08",
@@ -501,11 +501,11 @@
           "risk": false
         }
       ],
-      "price": 213000,
-      "chg": 0.0862,
-      "activity": 7.47,
+      "price": 212000,
+      "chg": 0.0811,
+      "activity": 6.38,
       "foreign_today": 0,
-      "inst_today": 426000000,
+      "inst_today": 424000000,
       "exchange": "KOSPI"
     },
     {
