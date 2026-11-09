@@ -314,6 +314,15 @@ details.log summary:focus-visible { outline: 2px solid #f6e500; outline-offset: 
 table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 960px; }
 th { text-align: left; font-size: 11px; font-weight: 600; color: var(--muted); padding: 8px 12px 8px 0; border-bottom: 1px solid var(--line); white-space: nowrap; }
 td { padding: 10px 12px 10px 0; border-bottom: 1px solid #222; vertical-align: top; color: var(--body); line-height: 1.5; }
+.pf-tbl-wrap { margin: 14px auto 0; max-width: 720px; }
+.pf-tbl { width: 100%; min-width: 0; border-collapse: collapse; font-size: 13px; }
+.pf-tbl th { font-size: 11px; font-weight: 400; color: var(--muted); padding: 0 4px 8px; text-align: center; border-bottom: 1px solid rgba(255,255,255,.1); }
+.pf-tbl td { text-align: center; padding: 7px 4px; color: var(--ink); border-bottom: 1px solid rgba(255,255,255,.05); font-variant-numeric: tabular-nums; }
+.pf-tbl td.nm { color: var(--body); white-space: nowrap; }
+.pf-tbl td.sum { font-size: 18px; font-weight: 500; vertical-align: middle; border-left: 1px solid rgba(255,255,255,.05); }
+.pf-tbl td.up { color: var(--red-hi, #ff5a4a); } .pf-tbl td.down { color: #4aa3d4; }
+.pf-tbl tr.cash td { color: var(--muted); border-bottom: 0; }
+.pf-tbl .sw { display: inline-block; width: 8px; height: 8px; margin-right: 6px; vertical-align: 1px; }
 td.k { color: var(--ink); white-space: nowrap; }
 
 .cm { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 16px; }
@@ -519,7 +528,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
       <div class="hd"><h2 class="eyebrow">포트폴리오</h2><span class="sub" id="sig-sub"></span></div>
       <div class="sion-kpi" id="sig-kpi"></div>
       <div class="pf-one">   <!-- 11-10 S.Lee: 보유 손익 막대 없앰 → 종목별 손익은 범례 옆, 합계 손익은 도넛 가운데 -->
-        <div class="hd"><h3 class="eyebrow">비중 · 손익</h3><span class="sub">빨간 호 = 국면 상한 · 손익은 수수료·세금 반영</span></div><div class="chart" id="ch-donut" style="min-height:220px"></div>
+        <div class="hd"><h3 class="eyebrow">비중 · 손익</h3><span class="sub">빨간 호 = 국면 상한 · 수익률은 수수료·세금 반영</span></div><div class="chart" id="ch-donut" style="min-height:220px"></div>
         <div class="chart" id="ch-pnl" hidden></div>
       </div>
       <details class="kx-flow tr-box"><summary class="hd"><h3 class="eyebrow">최근 체결</h3><span class="sub">실제 계좌</span></summary><div class="sion-tbl tr-tbl" id="sig-trades"></div></details>
@@ -529,7 +538,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
       <div class="hd"><h2 class="eyebrow">포트폴리오</h2><span class="sub" id="sion-sub"></span></div>
       <div class="sion-kpi" id="sion-kpi"></div>
       <div class="pf-one">   <!-- 11-10 S.Lee: 보유 손익 막대 없앰 → 종목별 손익은 범례 옆, 합계 손익은 도넛 가운데 -->
-        <div class="hd"><h3 class="eyebrow">비중 · 손익</h3><span class="sub">빨간 호 = 국면 상한 · 손익은 수수료·세금 반영</span></div><div class="chart" id="ch-sion-donut" style="min-height:220px"></div>
+        <div class="hd"><h3 class="eyebrow">비중 · 손익</h3><span class="sub">빨간 호 = 국면 상한 · 수익률은 수수료·세금 반영</span></div><div class="chart" id="ch-sion-donut" style="min-height:220px"></div>
         <div class="chart" id="ch-sion-pnl" hidden></div>
       </div>
       <details class="kx-flow tr-box"><summary class="hd"><h3 class="eyebrow">최근 체결</h3><span class="sub">가상 체결</span></summary><div class="sion-tbl tr-tbl" id="sion-trades"></div></details>
@@ -1568,14 +1577,12 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     drawDonut($('ch-donut'), parts, D.cap, ['#da291c', '#ff7a6e', '#bdbdbd', '#7a7a7a', '#4a4a4a', '#3a3a3a'], C.red, { v: tv });
   }
   // 11-09 Sigma · SiON 포트폴리오 공용 도넛. parts = [{name, v, pnl?}] (마지막이 현금), cap = 국면 상한(없으면 호 없음)
-  function drawDonut(el, parts, cap, shades, capColor, center) {   // center = {v: 합계 손익} → 가운데 글 대신 합계 손익, 범례에 종목별 손익 (11-10)
-    const below = el.clientWidth < 340, ring = el.clientWidth < 520 ? 200 : 240;   // 좁은 폰은 범례를 도넛 아래로
-    const side = !below && el.clientWidth >= 340, legH = parts.length * 22 + 10;   // 11-09 범례가 도넛보다 길면 카드 높이를 늘려 제목과 안 겹치게
-    const { svg, W, H: H0 } = svgIn(el, below ? ring + legH - 2 : Math.max(ring, side ? legH : 0)), H = below ? ring : H0;
+  function drawDonut(el, parts, cap, shades, capColor, center) {   // 11-10 S.Lee: 가운데 = 주식 비중 / 국면 상한, 종목은 도넛 아래 표 (종목명 · 비중 · 수익률 · 합산 수익률)
+    const ring = el.clientWidth < 520 ? 210 : 240;
+    const { svg, W, H } = svgIn(el, ring);
     const tot = d3.sum(parts, p => p.v), stock = d3.sum(parts.filter(p => p.name !== '현금'), p => p.v);
     const color = (p, i) => p.name === '현금' ? 'rgba(255,255,255,.08)' : shades[i] || ['#5e5e5e', '#525252', '#464646'][i % 3];   // 7번째부터는 회색
-    const legendW = W >= 340 ? (center ? 230 : 150) : 0;
-    const R = Math.min((W - legendW) / 2, H / 2) - 14, cx = legendW ? (W - legendW) / 2 : W / 2, cy = H / 2;
+    const R = Math.min(W, H) / 2 - 14, cx = W / 2, cy = H / 2;
     const g = svg.append('g').attr('transform', `translate(${cx},${cy})`);
     const pie = d3.pie().sort(null).value(p => p.v).padAngle(.012);
     g.selectAll('path.s').data(pie(parts)).join('path').attr('class', 's').attr('d', d3.arc().innerRadius(R * .66).outerRadius(R).cornerRadius(3)).attr('fill', (a, i) => color(a.data, i))
@@ -1585,25 +1592,17 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       g.append('path').attr('d', d3.arc()({ innerRadius: R + 5, outerRadius: R + 7, startAngle: 0, endAngle: capA })).attr('fill', capColor);
       g.append('line').attr('x1', (R + 2) * Math.sin(capA)).attr('y1', -(R + 2) * Math.cos(capA)).attr('x2', (R + 11) * Math.sin(capA)).attr('y2', -(R + 11) * Math.cos(capA)).attr('stroke', capColor).attr('stroke-width', 2);
     }
-    if (center && center.v != null) {
-      g.append('text').attr('text-anchor', 'middle').attr('dy', '-.1em').attr('font-size', 26).attr('font-weight', 500).attr('fill', center.v >= 0 ? C.redHi : C.blue).text(pct(center.v));
-      g.append('text').attr('text-anchor', 'middle').attr('dy', '1.4em').attr('font-size', 11).attr('fill', C.muted).text('보유 종목 손익');
-    } else {
-      g.append('text').attr('text-anchor', 'middle').attr('dy', '-.1em').attr('font-size', 24).attr('font-weight', 500).attr('fill', C.ink).text((stock / tot * 100).toFixed(1) + '%');
-      g.append('text').attr('text-anchor', 'middle').attr('dy', '1.4em').attr('font-size', 11).attr('fill', C.muted).text(cap ? '주식 / 상한 ' + (cap * 100).toFixed(1) + '%' : '주식 비중');
-    }
-    if (legendW || below) {
-      const lw2 = legendW || Math.min(W, center ? 300 : 260);
-      const lg = svg.append('g').attr('transform', below ? `translate(${(W - lw2) / 2},${ring + 14})` : `translate(${W - legendW + 8},${Math.max(14, cy - (parts.length - 1) * 11)})`);
-      parts.forEach((p, i) => {
-        const r = lg.append('g').attr('transform', `translate(0,${i * 22})`);
-        r.append('rect').attr('width', 8).attr('height', 8).attr('y', -6).attr('fill', color(p, i)).attr('stroke', p.name === '현금' ? '#555' : 'none');
-        r.append('text').attr('x', 14).attr('font-size', 11).attr('fill', C.body).text(p.name.length > (below ? 12 : center ? 10 : 7) ? p.name.slice(0, below ? 12 : center ? 10 : 7) + '…' : p.name);
-        const wx = center ? (legendW || lw2) - 78 : (legendW || lw2) - 12;
-        r.append('text').attr('x', wx).attr('text-anchor', 'end').attr('font-size', 11).attr('fill', C.ink).text((p.v / tot * 100).toFixed(1) + '%');
-        if (center && p.pnl != null) r.append('text').attr('x', (legendW || lw2) - 12).attr('text-anchor', 'end').attr('font-size', 11).attr('font-weight', 500).attr('fill', p.pnl >= 0 ? C.redHi : C.blue).text(pct(p.pnl));
-      });
-    }
+    g.append('text').attr('text-anchor', 'middle').attr('dy', '-.1em').attr('font-size', 24).attr('font-weight', 500).attr('fill', C.ink).text((stock / tot * 100).toFixed(1) + '%');
+    g.append('text').attr('text-anchor', 'middle').attr('dy', '1.4em').attr('font-size', 11).attr('fill', C.muted).text(cap ? '주식 / 상한 ' + (cap * 100).toFixed(1) + '%' : '주식 비중');
+    const tone2 = v => v == null ? '' : v >= 0 ? 'up' : 'down';
+    const st = parts.filter(p => p.name !== '현금'), cashP = parts.find(p => p.name === '현금');
+    const sw = (p, i) => `<i class="sw" style="background:${color(p, i)}${p.name === '현금' ? ';border:1px solid #555' : ''}"></i>`;
+    const tv = center && center.v != null ? `<td class="sum ${tone2(center.v)}" rowspan="${st.length}">${pct(center.v)}</td>` : `<td rowspan="${st.length}"></td>`;
+    const rows = st.map((p, i) => `<tr><td class="nm">${sw(p, i)}${esc(p.name)}</td><td>${(p.v / tot * 100).toFixed(1)}%</td><td class="${tone2(p.pnl)}">${p.pnl != null ? pct(p.pnl) : '—'}</td>${i ? '' : tv}</tr>`).join('');
+    const cashR = cashP ? `<tr class="cash"><td class="nm">${sw(cashP, parts.indexOf(cashP))}현금</td><td>${(cashP.v / tot * 100).toFixed(1)}%</td><td></td><td></td></tr>` : '';
+    const box = document.createElement('div'); box.className = 'pf-tbl-wrap';
+    box.innerHTML = `<table class="pf-tbl"><thead><tr><th>종목명</th><th>비중</th><th>수익률</th><th>합산 수익률</th></tr></thead><tbody>${rows}${cashR}</tbody></table>`;
+    el.appendChild(box);
   }
 
   // 순수 = 평단 대비 가격 변동, 수수료·세금 반영 = 키움 수익률(prft_rt: 매수 수수료와 매도 시 낼 수수료·세금까지 뺀 값, 약 0.9%p 낮음)
