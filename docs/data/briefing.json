@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "10:30",
-    "pool": 372,
+    "time": "10:45",
+    "pool": 373,
     "analyzed_new": 30,
-    "passed": 15,
+    "passed": 16,
     "kept_prep": false
   },
   "candidates": [
@@ -98,7 +98,7 @@
       "vol20": 0.469,
       "foreign_net": -6880633700,
       "inst_net": 74240426800,
-      "score": 0.94,
+      "score": 0.931,
       "news": [
         {
           "date": "11-08",
@@ -116,10 +116,10 @@
           "risk": false
         }
       ],
-      "price": 58500,
-      "chg": 0.0017,
-      "activity": 7.69,
-      "foreign_today": 1053000000,
+      "price": 58400,
+      "chg": 0.0,
+      "activity": 6.78,
+      "foreign_today": 1051200000,
       "inst_today": 0,
       "exchange": "KOSPI"
     },
@@ -133,7 +133,7 @@
       "vol20": 0.888,
       "foreign_net": 1436621025,
       "inst_net": 20425868350,
-      "score": 0.582,
+      "score": 0.653,
       "news": [
         {
           "date": "11-09",
@@ -151,11 +151,11 @@
           "risk": false
         }
       ],
-      "price": 30550,
-      "chg": 0.0269,
-      "activity": 3.87,
-      "foreign_today": 916500000,
-      "inst_today": 336050000,
+      "price": 30900,
+      "chg": 0.0387,
+      "activity": 3.66,
+      "foreign_today": 927000000,
+      "inst_today": 339900000,
       "exchange": "KOSPI"
     },
     {
@@ -168,13 +168,13 @@
       "vol20": 0.491,
       "foreign_net": -22121547500,
       "inst_net": 56405917100,
-      "score": 0.403,
+      "score": 0.431,
       "news": [],
-      "price": 77900,
-      "chg": 0.0026,
-      "activity": 1.84,
-      "foreign_today": 1713800000,
-      "inst_today": 155800000,
+      "price": 77500,
+      "chg": -0.0026,
+      "activity": 1.76,
+      "foreign_today": 1705000000,
+      "inst_today": 155000000,
       "exchange": "KOSPI"
     },
     {
@@ -187,7 +187,7 @@
       "vol20": 0.625,
       "foreign_net": 652431450,
       "inst_net": 21161016850,
-      "score": 0.358,
+      "score": 0.375,
       "news": [
         {
           "date": "11-09",
@@ -210,6 +210,38 @@
       "exchange": "KOSPI"
     },
     {
+      "code": "032640",
+      "name": "LG유플러스",
+      "close": 16520,
+      "ret5": 0.1667,
+      "ret20": 0.1448,
+      "rsi14": 72.8,
+      "vol20": 0.402,
+      "foreign_net": -43204631710,
+      "inst_net": 74782934530,
+      "score": 0.347,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "LG유플러스, 서울대∙KAIST∙연세대와 한국어 음성 AI 개발 나선다",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "LG유플러스, 수능 시즌 멤버십 혜택 확대…50여개 제휴 쿠폰 제공",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "LG유플러스, 서울대·KAIST·연세대와 한국어 특화 음성 AI 개발",
+          "risk": false
+        }
+      ],
+      "foreign_today": 346920000,
+      "inst_today": 132160000,
+      "exchange": "KOSPI"
+    },
+    {
       "code": "008930",
       "name": "한미사이언스",
       "close": 53700,
@@ -219,7 +251,7 @@
       "vol20": 0.738,
       "foreign_net": -7484986975,
       "inst_net": 26975170300,
-      "score": 0.328,
+      "score": 0.333,
       "news": [
         {
           "date": "11-09",
@@ -242,38 +274,6 @@
       "exchange": "KOSPI"
     },
     {
-      "code": "032640",
-      "name": "LG유플러스",
-      "close": 16520,
-      "ret5": 0.1667,
-      "ret20": 0.1448,
-      "rsi14": 72.8,
-      "vol20": 0.402,
-      "foreign_net": -43204631710,
-      "inst_net": 74782934530,
-      "score": 0.313,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "LG유플러스, 3개 대학과 ‘K-보이스 AI 얼라이언스’ 출범…해외 의존도...",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "LG유플러스-서울대·KAIST·연세대, 'K-보이스 AI 얼라이언스' 출범…한...",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "LG유플러스, 국내 대학과 한국어 특화 ‘K-보이스 엔진’ 개발",
-          "risk": false
-        }
-      ],
-      "foreign_today": 346920000,
-      "inst_today": 132160000,
-      "exchange": "KOSPI"
-    },
-    {
       "code": "028050",
       "name": "삼성E&A",
       "close": 61300,
@@ -283,7 +283,7 @@
       "vol20": 0.957,
       "foreign_net": -76658998800,
       "inst_net": 63121010150,
-      "score": 0.269,
+      "score": 0.292,
       "news": [
         {
           "date": "11-09",
@@ -301,11 +301,43 @@
           "risk": false
         }
       ],
-      "price": 61600,
-      "chg": 0.0182,
-      "activity": 1.13,
-      "foreign_today": 1786400000,
+      "price": 62500,
+      "chg": 0.0331,
+      "activity": 1.05,
+      "foreign_today": 1812500000,
       "inst_today": 0,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "086280",
+      "name": "현대글로비스",
+      "close": 195500,
+      "ret5": 0.0783,
+      "ret20": 0.0671,
+      "rsi14": 53.3,
+      "vol20": 0.592,
+      "foreign_net": -8231059200,
+      "inst_net": 53595627900,
+      "score": 0.25,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "[오늘의 IR] 두산ㆍ현대글로비스ㆍCJ프레시웨이 등",
+          "risk": false
+        },
+        {
+          "date": "11-08",
+          "title": "현대글로비스, 12일 유안타 Corporate Day 참석",
+          "risk": false
+        },
+        {
+          "date": "11-08",
+          "title": "현대글로비스, 중국차 운송 목표 51만대로 상향…'선박 확보' 공세",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 391000000,
       "exchange": "KOSPI"
     },
     {
@@ -318,7 +350,7 @@
       "vol20": 0.843,
       "foreign_net": -27562520175,
       "inst_net": 30133908725,
-      "score": 0.149,
+      "score": 0.167,
       "news": [
         {
           "date": "11-09",
@@ -332,15 +364,15 @@
         },
         {
           "date": "11-09",
-          "title": "NH證 \"씨에스윈드, 美 인허가 개혁이 주가 변수\"",
+          "title": "씨에스윈드, 타워 영업이익 83% 증가…미국 생산성 개선 효과-키움",
           "risk": false
         }
       ],
-      "price": 49800,
-      "chg": 0.0143,
-      "activity": 2.94,
+      "price": 49900,
+      "chg": 0.0163,
+      "activity": 2.74,
       "foreign_today": 0,
-      "inst_today": 448200000,
+      "inst_today": 449100000,
       "exchange": "KOSPI"
     },
     {
@@ -373,7 +405,7 @@
       ],
       "price": 59400,
       "chg": 0.08,
-      "activity": 6.87,
+      "activity": 6.01,
       "foreign_today": 0,
       "inst_today": 831600000,
       "exchange": "KOSDAQ"
@@ -388,7 +420,7 @@
       "vol20": 1.387,
       "foreign_net": -6381603720,
       "inst_net": 16519823935,
-      "score": 0.612,
+      "score": 0.653,
       "news": [
         {
           "date": "11-09",
@@ -406,11 +438,11 @@
           "risk": false
         }
       ],
-      "price": 16220,
-      "chg": 0.0498,
-      "activity": 4.12,
+      "price": 16420,
+      "chg": 0.0628,
+      "activity": 3.71,
       "foreign_today": 0,
-      "inst_today": 827220000,
+      "inst_today": 837420000,
       "exchange": "KOSDAQ"
     },
     {
@@ -423,7 +455,7 @@
       "vol20": 1.105,
       "foreign_net": -1315515485,
       "inst_net": 73370470,
-      "score": 0.597,
+      "score": 0.569,
       "news": [
         {
           "date": "11-09",
@@ -441,10 +473,10 @@
           "risk": false
         }
       ],
-      "price": 14250,
-      "chg": 0.0401,
-      "activity": 3.89,
-      "foreign_today": 783750000,
+      "price": 14200,
+      "chg": 0.0365,
+      "activity": 3.38,
+      "foreign_today": 781000000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -458,7 +490,7 @@
       "vol20": 1.449,
       "foreign_net": 33414656,
       "inst_net": 22535130,
-      "score": 0.552,
+      "score": 0.556,
       "news": [
         {
           "date": "11-09",
@@ -466,10 +498,10 @@
           "risk": false
         }
       ],
-      "price": 4885,
-      "chg": 0.1065,
-      "activity": 4.64,
-      "foreign_today": 161205000,
+      "price": 4915,
+      "chg": 0.1133,
+      "activity": 4.06,
+      "foreign_today": 162195000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -483,7 +515,7 @@
       "vol20": 1.068,
       "foreign_net": -23144745850,
       "inst_net": 30167917550,
-      "score": 0.388,
+      "score": 0.389,
       "news": [
         {
           "date": "11-08",
@@ -501,11 +533,11 @@
           "risk": false
         }
       ],
-      "price": 212000,
-      "chg": 0.0811,
-      "activity": 6.38,
+      "price": 211000,
+      "chg": 0.076,
+      "activity": 5.62,
       "foreign_today": 0,
-      "inst_today": 424000000,
+      "inst_today": 422000000,
       "exchange": "KOSPI"
     },
     {
