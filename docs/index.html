@@ -465,12 +465,12 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
           <div class="eng" id="eng-sigma">
             <div class="eng-h"><span class="eyebrow">Sigma Engine</span><span class="st-line" id="st-line"></span></div>
             <div id="realized"><div class="big won" id="pnl-won">—</div></div>
-            <div class="eng-kv"><span>수익률 <b id="ret-pct">—</b></span><span>KOSPI 대비 <b id="k-alpha">—</b></span></div>
+            <div class="eng-kv"><span hidden>수익률 <b id="ret-pct">—</b></span><span>KOSPI 대비 <b id="k-alpha">—</b></span></div>
           </div>
           <div class="eng sion" id="eng-sion" hidden>
             <div class="eng-h"><span class="eyebrow on">SiON Engine</span><span class="st-line" id="st-sion"></span></div>
             <div id="s-realized"><div class="big won" id="s-pnl-won">—</div></div>
-            <div class="eng-kv"><span>수익률 <b id="s-ret">—</b></span><span>Sigma 대비 <b id="s-vs">—</b></span></div>
+            <div class="eng-kv"><span hidden>수익률 <b id="s-ret">—</b></span><span>Sigma 대비 <b id="s-vs">—</b></span></div>
           </div>
         </div>
         <div class="hero-chart" style="display:flex;flex-direction:column;gap:10px;min-width:0">
@@ -925,9 +925,9 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     $('ret-pct').textContent = pct(D.ret); tone($('ret-pct'), D.ret);   // 전체 수익률 = 현재 자산 ÷ 시작 원금 − 1
     $('k-alpha').textContent = pct(D.alpha).replace('%', '%p'); tone($('k-alpha'), D.alpha);   // 11-05 차트 배지 대신 여기 숫자로 (누적 수익률 − 누적 KOSPI 수익률)
     const rz = realized(D.trades), pl = rz.net, total = D.ret * INIT;   // 총 손익 = 현재 자산 − 시작 원금 (11-05 S.Lee 양도차익 대신). 양도차익 = 판 종목의 (매도금액 − 매도 수수료·세금) − (평단 × 수량 + 매수 수수료)
-    $('pnl-won').textContent = signed(total);
+    $('pnl-won').textContent = pct(D.ret);   // 11-10 S.Lee: 금액 대신 수익률 (금액은 툴팁)
     $('pnl-won').classList.toggle('neg', total < 0); document.querySelector('.hero-card').classList.toggle('neg', total < 0);   // 손실은 파랑 (국내 증시 관례)
-    const rtip = `<div class="t">총 손익 (현재 자산 − 시작 원금)</div>${row(`판 종목 양도차익 (매도 ${rz.n}건)`, signed(pl), pl >= 0 ? 'up' : 'down')}${row('보유 종목 평가손익', signed(total - pl), total - pl >= 0 ? 'up' : 'down')}${row('총 손익', signed(total), total >= 0 ? 'up' : 'down')}<p class="tp">대회 게시판 기준 (키움 모의 잔고 ${won(Math.round(D.last.kiwoom || D.last.total))}원 + 누적 매매대금의 0.1% 수수료 차이)</p>`;
+    const rtip = `<div class="t">수익률 ${pct(D.ret)} · 총 손익 ${signed(total)}</div>${row(`판 종목 양도차익 (매도 ${rz.n}건)`, signed(pl), pl >= 0 ? 'up' : 'down')}${row('보유 종목 평가손익', signed(total - pl), total - pl >= 0 ? 'up' : 'down')}${row('총 손익', signed(total), total >= 0 ? 'up' : 'down')}<p class="tp">대회 게시판 기준 (키움 모의 잔고 ${won(Math.round(D.last.kiwoom || D.last.total))}원 + 누적 매매대금의 0.1% 수수료 차이)</p>`;
     tipTarget($('realized'), rtip);
     $('k-week').textContent = pct(D.week); tone($('k-week'), D.week);
     $('k-mdd').textContent = pct(D.mdd); tone($('k-mdd'), D.mdd);
@@ -1621,10 +1621,10 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     pfKpi($('sion-kpi'), total, stock, sCap, hs.length, trades);
     // 11-10 맨 위 SiON 요약 (총 손익 · 수익률 · Sigma 대비)
     $('eng-sion').hidden = false;
-    const sv = $('s-pnl-won'); sv.textContent = sw(pnlAll); sv.classList.toggle('neg', pnlAll < 0);
+    const sv = $('s-pnl-won'); sv.textContent = pct(total / INIT - 1); sv.classList.toggle('neg', pnlAll < 0);   // 11-10 금액 대신 수익률
     $('s-ret').textContent = pct(total / INIT - 1); tone($('s-ret'), total / INIT - 1);
-    if (sigma) { $('s-vs').textContent = sw(total - sigma); tone($('s-vs'), total - sigma); }
-    tipTarget($('s-realized'), `<div class="t">SiON Engine 총 손익 (가상)</div>${row('총자산', won(Math.round(total)) + '원')}${row(since ? md(toD(since)) + ' 이후' : '시작 이후', sw(pnlSeed), pnlSeed >= 0 ? 'up' : 'down')}${sigma ? row('Sigma 대비', sw(total - sigma), total - sigma >= 0 ? 'up' : 'down') : ''}`);
+    if (sigma) { const dv = (total - sigma) / INIT; $('s-vs').textContent = pct(dv).replace('%', '%p'); tone($('s-vs'), dv); }
+    tipTarget($('s-realized'), `<div class="t">SiON Engine 수익률 (가상)</div>${row('총 손익', sw(pnlAll), pnlAll >= 0 ? 'up' : 'down')}${row('총자산', won(Math.round(total)) + '원')}${row(since ? md(toD(since)) + ' 이후' : '시작 이후', sw(pnlSeed), pnlSeed >= 0 ? 'up' : 'down')}${sigma ? row('Sigma 대비', sw(total - sigma), total - sigma >= 0 ? 'up' : 'down') : ''}`);
     $('eng-tabs').hidden = false;
     $('sion-trades').innerHTML = !trades.length ? '<div class="empty">아직 가상 체결이 없어요.</div>'
       : `<div class="r h"><span>시각</span><span>구분</span><span>종목</span><span class="num">수량</span><span class="num">가격</span></div>` + trades.slice(0, 12).map((t, i) =>
