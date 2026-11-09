@@ -281,6 +281,14 @@ def _stats(rows, runs, start):
             "tokens_k": round(sum(r.get("tokens", 0) or 0 for r in runs) / 1000)}
 
 
+def _shadow_decision(d, start):
+    dc = C.read_json(os.path.join(d, "docs", "data", "decision.json"), {}) or {}
+    if not dc.get("time") or dc["time"][:10] < start:   # 그림자 시작 전 기록(저장소에 딸려 온 실제 판단)은 빼기
+        return None
+    keep = ("code", "name", "action", "qty", "confidence", "bull", "bear", "decision", "blocked")
+    return {"time": dc["time"], "regime": dc.get("regime"), "items": [{k: x.get(k) for k in keep if x.get(k) is not None} for x in dc.get("items", [])]}
+
+
 def shadow(rows):
     """그림자 운영 비교 → docs/data/shadow.json. 그림자 폴더가 없으면 None (파일을 만들지 않음, 대시보드 카드도 숨음)."""
     d = shadow_dir()
@@ -308,7 +316,8 @@ def shadow(rows):
             "stats": {"shadow": _stats(C.read_jsonl(os.path.join(w, "journal.jsonl")), C.read_jsonl(os.path.join(w, "runs.jsonl")), start),
                       "live": _stats(rows, C.read_jsonl(C.RUNS), start)},
             "holdings": sorted(last.get("holdings", []), key=lambda h: -(h.get("value") or 0))[:8],
-            "status": {k: v for k, v in (C.read_json(os.path.join(d, "docs", "data", "status.json"), {}) or {}).items() if k != "sync"}}   # 11-09 대시보드 '온톨로지' 상태바
+            "status": {k: v for k, v in (C.read_json(os.path.join(d, "docs", "data", "status.json"), {}) or {}).items() if k != "sync"},   # 11-09 대시보드 '온톨로지' 상태바
+            "decision": _shadow_decision(d, start)}   # 11-09 Live Decision 2열 (Sigma · SiON)
 
 
 def write_all(note=""):

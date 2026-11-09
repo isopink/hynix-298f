@@ -163,7 +163,7 @@ details.log[open] > summary::after { content: "−"; }
 .dec-more::after { content: "+"; font-size: 15px; line-height: 1; } .dec-more[aria-expanded="true"]::after { content: "−"; }
 /* 오늘 마지막 매매 회차 결과 한 줄 (샀다 / 팔았다 / 막혔다 / 관망) */
 .dec-trade { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 14px; margin: 2px 0 8px; padding: 8px 12px; border-radius: 10px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); font-size: 13px; color: var(--body); line-height: 1.6; }
-.dec-trade[hidden] { display: none; }
+.dec-trade[hidden], .dec-colhead[hidden] { display: none; }
 .dec-trade .t { color: var(--ink); font-weight: 600; }
 .dec-trade .buy { color: var(--red-hi); } .dec-trade .sell { color: #4aa3d4; } .dec-trade .blk { color: var(--muted); }
 .dec-head .why { flex: 1 1 260px; min-width: 0; color: var(--muted); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -192,6 +192,19 @@ details.log[open] > summary::after { content: "−"; }
   .dec-detail { grid-column: 1 / -1; padding: 2px 0 6px; font-size: 13px; line-height: 1.6; color: var(--body); }
   .dec-detail .t { display: none; }
   .dec-row .why { grid-column: 1 / -1; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+}
+/* 11-09 Live Decision 2열: 종목마다 Sigma Engine 판단 · SiON Engine(온톨로지 그림자) 판단 나란히 */
+.dec-row.cmp, .dec-colhead { grid-template-columns: minmax(80px, 150px) 200px 200px minmax(0, 1fr); }
+.dec-colhead { display: grid; gap: 14px; padding: 4px 0 6px; font-size: 11px; color: var(--muted); }
+.dec-colhead .on { color: #3ecf8e; }
+.dec-row .pair { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.dec-row .pair .cf { flex: 1; min-width: 0; }
+.dec-row .pair .na { font-size: 12px; color: var(--muted); }
+@media (max-width: 640px) {
+  .dec-list .dec-row.cmp, .dec-colhead { grid-template-columns: minmax(0, 1fr) 96px 96px; gap: 6px 8px; }
+  .dec-row.cmp .pair { flex-direction: column; align-items: flex-start; gap: 3px; }
+  .dec-row.cmp .pair .cf { flex: none; } .dec-row.cmp .pair .cf i { display: none; } .dec-row.cmp .pair .cf::after { content: none; }
+  .dec-colhead .why-h { display: none; }
 }
 .cal { display: grid; grid-template-columns: 44px repeat(5, minmax(0, 1fr)); gap: 6px; }
 .cal .wd, .cal .wk { font-size: 11px; color: var(--muted); display: flex; align-items: center; }
@@ -396,6 +409,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
         <div class="hd"><h2 class="eyebrow" id="dec-title">Live Decision</h2><span class="sub" id="dec-asof"></span></div>
         <div class="dec-head m-hide" id="dec-head"></div>
         <div class="dec-trade" id="dec-trade" hidden></div>
+        <div class="dec-colhead" id="dec-colhead" hidden></div>
         <div class="dec-list" id="dec-list"></div>
         <button type="button" class="dec-more" id="dec-more" hidden aria-controls="dec-list"></button>
       </div>
@@ -1025,7 +1039,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   let SHADOW = null, SHADOW_LIVE = null;   // SHADOW_LIVE = Supabase shadow_snapshots 최신 1건 {ts, total, status}
   // 11-09 S.Lee: 장중에도 겹쳐 보이게 1분마다 다시 받음 (그림자 기록이 바뀌었을 때만 다시 그림). 오늘 점 = 그림자의 가장 최근 회차 자산
   const loadShadow = () => fetch('data/shadow.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null).catch(() => null)
-    .then(v => { if (v && SHADOW && v.updated === SHADOW.updated) return; SHADOW = v || SHADOW; if (D && SHADOW) { hero(); agentStatus(); } });
+    .then(v => { if (v && SHADOW && v.updated === SHADOW.updated) return; SHADOW = v || SHADOW; if (D && SHADOW) { hero(); agentStatus(); decisionCard(); } });
   loadShadow(); setInterval(() => { if (!document.hidden) loadShadow(); }, 60000);
 
   // ---------- 리스크 한도: agent/config/risk_limits.json 과 같은 값 (대회 내내 고정, 바뀌면 여기도 고칠 것) ----------
@@ -1274,7 +1288,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   const eok = v => v == null ? '—' : (v > 0 ? '+' : v < 0 ? '−' : '') + won(Math.round(Math.abs(v) / 1e8)) + '억';
   function briefingCard() {
     const b = BRIEF, head = $('dec-head'), list = $('dec-list');
-    $('dec-trade').hidden = true;
+    $('dec-trade').hidden = true; $('dec-colhead').hidden = true;
     $('dec-title').textContent = 'Watch List';
     $('dec-asof').textContent = b.created ? md(toD(b.created)) + ' ' + b.created.slice(11, 16) : '';   // 수집 시각만
     if (!b.created) { head.innerHTML = ''; return none(list, '시장 자료를 기다리는 중이에요. (평일 08:30 수집)'); }
@@ -1340,24 +1354,44 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       tipTarget(itEl, html);
     }
     const items = dc.items || [];
-    if (!items.length) return none(list, '이번 판단에서 검토한 종목이 없어요.');
-    list.innerHTML = items.map((d, i) => {
-      const cls = d.action.startsWith('매수') ? 'buy' : d.action.startsWith('매도') ? 'sell' : '', c = +d.confidence || 0;   // '매수 예정'(판단 갱신)도 같은 색
-      const act = d.qty ? `${d.action} ${won(d.qty)}주` : d.action;
-      const vol = d.vol20 ?? ((BRIEF.candidates || []).find(c => c.code === d.code) || {}).vol20;   // 예전 decision.json 엔 vol20 이 없어 후보 자료로 보충
-      const exch = d.exchange ?? ((BRIEF.candidates || []).find(c => c.code === d.code) || {}).exchange ?? EXCH[d.code];
-      return `<div class="dec-row${cls ? '' : ' quiet'}" data-i="${i}"><span class="nm">${esc(d.name)}${exTag(exch)}${volTag(vol)}</span><span class="act ${cls}">${esc(act)}</span>`
-        + `<span class="cf"><i><b class="${c >= .6 ? 'hi' : ''}" style="width:${Math.round(c * 100)}%"></b></i>${c.toFixed(2)}</span>`
-        + `<span class="why">${d.blocked ? '<em>차단</em> · ' : ''}${esc(d.decision)}</span></div>`;
+    if (!items.length) { $('dec-colhead').hidden = true; return none(list, '이번 판단에서 검토한 종목이 없어요.'); }
+    // 11-09 S.Lee: SiON Engine(온톨로지 그림자) 판단을 2열로. Supabase 1분 기록(짧은 요약)과 shadow.json(근거 포함) 중 새것, 같은 날일 때만
+    const sA = SHADOW_LIVE && SHADOW_LIVE.status && SHADOW_LIVE.status.decision, sB = SHADOW && SHADOW.decision;
+    const sd = [sA, sB].filter(x => x && x.time && x.time.slice(0, 10) === dc.time.slice(0, 10)).sort((a, b) => a.time < b.time ? 1 : -1)[0];
+    const sFull = sB && sd && sB.time === sd.time ? new Map((sB.items || []).map(x => [x.code, x])) : new Map();
+    const sMap = new Map(((sd && sd.items) || []).map(x => [x.code, { ...x, ...(sFull.get(x.code) || {}) }]));
+    const cmp = !!sd, colhead = $('dec-colhead');
+    colhead.hidden = !cmp;
+    if (cmp) colhead.innerHTML = `<span>종목</span><span>Sigma Engine ${esc(dc.time.slice(11, 16))}</span><span class="on">SiON Engine ${esc(sd.time.slice(11, 16))}</span><span class="why-h">근거 (Sigma)</span>`;
+    const rows = items.map(d => ({ code: d.code, name: d.name, a: d, b: sMap.get(d.code) }));
+    if (cmp) for (const [code, x] of sMap) if (!items.some(d => d.code === code)) rows.push({ code, name: x.name, a: null, b: x });   // SiON 만 본 종목은 아래에
+    const cls = d => d.action.startsWith('매수') ? 'buy' : d.action.startsWith('매도') ? 'sell' : '';
+    const pill = d => { const c = +d.confidence || 0, k = cls(d); return `<span class="act ${k}">${esc(d.qty ? `${d.action} ${won(d.qty)}주` : d.action)}</span>`
+      + `<span class="cf"><i><b class="${c >= .6 ? 'hi' : ''}" style="width:${Math.round(c * 100)}%"></b></i>${c.toFixed(2)}</span>`; };
+    list.innerHTML = rows.map((r, i) => {
+      const d = r.a || r.b, quiet = !(r.a && cls(r.a)) && !(r.b && cls(r.b));
+      const vol = d.vol20 ?? ((BRIEF.candidates || []).find(c => c.code === r.code) || {}).vol20;   // 예전 decision.json 엔 vol20 이 없어 후보 자료로 보충
+      const exch = d.exchange ?? ((BRIEF.candidates || []).find(c => c.code === r.code) || {}).exchange ?? EXCH[r.code];
+      const nm = `<span class="nm">${esc(r.name)}${exTag(exch)}${volTag(vol)}</span>`;
+      const why = `<span class="why">${r.a && r.a.blocked ? '<em>차단</em> · ' : ''}${esc((r.a || r.b).decision || '')}</span>`;
+      if (!cmp) return `<div class="dec-row${quiet ? ' quiet' : ''}" data-i="${i}">${nm}${pill(d)}${why}</div>`;
+      return `<div class="dec-row cmp${quiet ? ' quiet' : ''}" data-i="${i}">${nm}`
+        + `<span class="pair">${r.a ? pill(r.a) : '<span class="na">판단 없음</span>'}</span>`
+        + `<span class="pair">${r.b ? pill(r.b) : '<span class="na">판단 없음</span>'}</span>${why}</div>`;
     }).join('');
+    const side = (label, d) => !d ? `<p class="tp"><b>${label}</b> 이 종목은 판단하지 않음</p>`
+      : `<p class="tp"><b>${label}</b> ${esc(d.action)}${d.qty ? ' ' + won(d.qty) + '주' : ''}, 확신도 ${(+d.confidence).toFixed(2)}</p>`
+        + (d.bull ? `<p class="tp"><span class="up">매수 측</span> ${esc(d.bull)}</p>` : '') + (d.bear ? `<p class="tp"><span class="down">매도 측</span> ${esc(d.bear)}</p>` : '')
+        + (d.decision ? `<p class="tp">결정 ${esc(d.decision)}</p>` : '') + (d.blocked ? `<p class="tp"><span class="up">Hook 차단</span> ${esc(d.blocked)}</p>` : '');
     list.querySelectorAll('.dec-row').forEach(el => {
-      const d = items[+el.dataset.i], lc = (BRIEF.candidates || []).find(c => c.code === d.code && c.activity !== undefined);
-      const html = `<div class="t">${esc(d.name)} ${esc(d.action)}, 확신도 ${(+d.confidence).toFixed(2)}</div>`
+      const r = rows[+el.dataset.i], d = r.a || r.b, lc = (BRIEF.candidates || []).find(c => c.code === r.code && c.activity !== undefined);
+      const html = `<div class="t">${esc(r.name)}${cmp ? '' : ` ${esc(d.action)}, 확신도 ${(+d.confidence).toFixed(2)}`}</div>`
         + (lc ? row('오늘 외국인 · 기관', eok(lc.foreign_today) + ' · ' + eok(lc.inst_today))
           + (lc.activity != null ? row('거래 활발도', '평소의 ' + lc.activity.toFixed(1) + '배') : '') : '')
-        + `<p class="tp"><span class="up">매수 측</span> ${esc(d.bull)}</p><p class="tp"><span class="down">매도 측</span> ${esc(d.bear)}</p>`
-        + `<p class="tp"><b>결정</b> ${esc(d.decision)}</p>` + (d.blocked ? `<p class="tp"><span class="up">Hook 차단</span> ${esc(d.blocked)}</p>` : '');
-      tipTarget(el, html, d.code);
+        + (cmp ? side('Sigma Engine', r.a) + side('SiON Engine', r.b)
+          : `<p class="tp"><span class="up">매수 측</span> ${esc(d.bull)}</p><p class="tp"><span class="down">매도 측</span> ${esc(d.bear)}</p>`
+            + `<p class="tp"><b>결정</b> ${esc(d.decision)}</p>` + (d.blocked ? `<p class="tp"><span class="up">Hook 차단</span> ${esc(d.blocked)}</p>` : ''));
+      tipTarget(el, html, r.code);
     });
   }
 
