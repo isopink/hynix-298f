@@ -1087,7 +1087,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const lo = Math.min(0, d3.min(rows, r => Math.min(r.ret, r.kret)), d3.min(sh, r => r.ret) ?? 0), hi = Math.max(0, d3.max(rows, r => Math.max(r.ret, r.kret)), d3.max(sh, r => r.ret) ?? 0);
     const y0 = d3.scaleLinear([lo, hi], [0, 1]).nice(4), ticks = y0.ticks(4), tstep = ticks.length > 1 ? ticks[1] - ticks[0] : .01, tf = v => (v > 0 ? '+' : '') + (v * 100).toFixed(tstep < .0099 ? 1 : 0) + '%';
     const lw = Math.max(textW(svg, 'Sigma Engine ' + pct(D.ret), 12), textW(svg, 'KOSPI ' + pct(D.kret), 12), sh.length ? textW(svg, 'SiON Engine ' + pct(sh[sh.length - 1].ret), 12) : 0);
-    const m = { t: narrow ? (sh.length > 1 ? 44 : 30) : 10, r: narrow ? 8 : lw + 18, b: 28, l: d3.max(ticks, v => textW(svg, tf(v))) + 10 };   // 휴대폰은 위쪽에 범례 자리
+    const m = { t: narrow ? 30 : 10, r: narrow ? 8 : lw + 18, b: 28, l: d3.max(ticks, v => textW(svg, tf(v))) + 10 };   // 휴대폰은 위쪽에 범례 자리
     // 11-06 S.Lee: 가로축 = 11/2 ~ 마지막 기록일 거래일(주말 뺌). 첫날이 맨 왼쪽, 최신 날짜가 맨 오른쪽 — 날이 늘면 칸이 좁아짐
     const last = rows[rows.length - 1].d, DAYS = d3.utcDays(toD(START), d3.utcDay.offset(last, 1)).filter(d => d.getUTCDay() % 6 !== 0);
     const di = new Map(DAYS.map((d, i) => [+d, i])), idx = r => di.get(+r.d) ?? d3.bisectLeft(DAYS, r.d);
@@ -1141,19 +1141,27 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       labs.sort((a, b) => a.y - b.y).forEach((l, i, a) => { if (i && l.y - a[i - 1].y < 18) l.y = a[i - 1].y + 18; });   // 이름표가 겹치면 아래로 밀어 냄
       labs.forEach(l => { const t = svg.append('text').attr('x', x(L.d) + 12).attr('y', l.y).attr('dy', '.32em').attr('font-size', 12).attr('fill', l.c); t.append('tspan').attr('font-weight', 600).text(l.n); t.append('tspan').attr('dx', 6).text(pct(l.v)); });
     } else {   // 휴대폰: 오른쪽 이름표 대신 위쪽 한 줄 범례
-      const g = svg.append('g').attr('transform', `translate(${m.l},12)`);
-      g.append('line').attr('x1', 0).attr('x2', 14).attr('y1', 0).attr('y2', 0).attr('stroke', col).attr('stroke-width', 1.5);
-      const t1 = g.append('text').attr('x', 20).attr('dy', '.32em').attr('font-size', 12).attr('fill', colHi);
-      t1.append('tspan').attr('font-weight', 600).text('Sigma Engine'); t1.append('tspan').attr('dx', 5).text(pct(L.ret));
-      const x2 = 20 + t1.node().getComputedTextLength() + 18;
-      g.append('line').attr('x1', x2).attr('x2', x2 + 14).attr('y1', 0).attr('y2', 0).attr('stroke', '#a8a8a8').attr('stroke-width', 1.5);
-      const t2 = g.append('text').attr('x', x2 + 20).attr('dy', '.32em').attr('font-size', 12).attr('fill', '#9a9a9a');
-      t2.append('tspan').attr('font-weight', 600).text('KOSPI'); t2.append('tspan').attr('dx', 5).text(pct(L.kret));
-      if (sh.length > 1) {   // 온톨로지는 범례 둘째 줄
-        const g2 = svg.append('g').attr('transform', `translate(${m.l},28)`), v = sh[sh.length - 1].ret;
-        g2.append('line').attr('x1', 0).attr('x2', 14).attr('y1', 0).attr('y2', 0).attr('stroke', ONT).attr('stroke-width', 1.5);
-        const t3 = g2.append('text').attr('x', 20).attr('dy', '.32em').attr('font-size', 12).attr('fill', ONT);
-        t3.append('tspan').attr('font-weight', 600).text('SiON Engine'); t3.append('tspan').attr('dx', 5).text(pct(v));
+      // 11-09 한 줄 범례: Sigma Engine · SiON Engine · KOSPI. 폭이 모자라면 짧은 이름 → 글씨 11px 순으로 줄임
+      const items = [{ n: 'Sigma Engine', s: 'Sigma', v: L.ret, lc: col, c: colHi }];
+      if (sh.length > 1) items.push({ n: 'SiON Engine', s: 'SiON', v: sh[sh.length - 1].ret, lc: ONT, c: ONT });
+      items.push({ n: 'KOSPI', s: 'KOSPI', v: L.kret, lc: '#a8a8a8', c: '#9a9a9a' });
+      const avail = W - m.l - 4;
+      const draw = (short, fs, gapX) => {
+        const g = svg.append('g').attr('transform', `translate(${m.l},12)`);
+        let xx = 0;
+        items.forEach((it, k) => {
+          if (k) xx += gapX;
+          g.append('line').attr('x1', xx).attr('x2', xx + 12).attr('y1', 0).attr('y2', 0).attr('stroke', it.lc).attr('stroke-width', 1.5);
+          const t = g.append('text').attr('x', xx + 17).attr('dy', '.32em').attr('font-size', fs).attr('fill', it.c);
+          t.append('tspan').attr('font-weight', 600).text(short ? it.s : it.n); t.append('tspan').attr('dx', 4).text(pct(it.v));
+          xx += 17 + t.node().getComputedTextLength();
+        });
+        return { g, w: xx };
+      };
+      for (const [short, fs, gapX] of [[false, 12, 14], [true, 12, 14], [true, 11, 10]]) {
+        const r = draw(short, fs, gapX);
+        if (r.w <= avail || fs === 11) break;
+        r.g.remove();
       }
     }
     const rule = svg.append('line').attr('y1', m.t).attr('y2', H - m.b).attr('stroke', '#444').attr('opacity', 0);
