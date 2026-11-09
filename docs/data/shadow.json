@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-09 12:54",
+  "updated": "2026-11-09 13:01",
   "start": "2026-11-09",
   "base": 48960657,
   "daily": [
     {
       "date": "2026-11-09",
-      "total": 49023058
+      "total": 48937958
     }
   ],
   "series": [
@@ -78,13 +78,18 @@
       "time": "2026-11-09 12:54",
       "shadow": 0.00127,
       "live": -0.00041
+    },
+    {
+      "time": "2026-11-09 13:01",
+      "shadow": -0.00046,
+      "live": -0.00102
     }
   ],
   "now": {
-    "shadow": 0.00127,
-    "live": -0.00041,
-    "shadow_total": 49023058,
-    "live_total": 48940668
+    "shadow": -0.00046,
+    "live": -0.00102,
+    "shadow_total": 48937958,
+    "live_total": 48910919
   },
   "stats": {
     "shadow": {
@@ -98,14 +103,14 @@
       "tokens_k": 3705
     },
     "live": {
-      "fills": 10,
-      "buys": 4,
+      "fills": 11,
+      "buys": 5,
       "sells": 6,
-      "watch": 228,
-      "runs": 15,
+      "watch": 248,
+      "runs": 16,
       "failures": 1,
       "avg_min": 6.5,
-      "tokens_k": 1243
+      "tokens_k": 1341
     }
   },
   "holdings": [
@@ -113,22 +118,15 @@
       "code": "006360",
       "name": "GS건설",
       "qty": 125,
-      "value": 3887500,
-      "pnl_pct": -0.0016
+      "value": 3868750,
+      "pnl_pct": -0.0064
     },
     {
       "code": "028050",
       "name": "삼성E&A",
       "qty": 59,
-      "value": 3663900,
-      "pnl_pct": 0.0197
-    },
-    {
-      "code": "018260",
-      "name": "삼성에스디에스",
-      "qty": 15,
-      "value": 3352500,
-      "pnl_pct": 0.0068
+      "value": 3646200,
+      "pnl_pct": 0.0148
     },
     {
       "code": "035720",
@@ -138,40 +136,47 @@
       "pnl_pct": -0.0061
     },
     {
+      "code": "018260",
+      "name": "삼성에스디에스",
+      "qty": 15,
+      "value": 3330000,
+      "pnl_pct": 0.0
+    },
+    {
       "code": "003490",
       "name": "대한항공",
       "qty": 69,
-      "value": 2025150,
-      "pnl_pct": -0.0007
+      "value": 2042400,
+      "pnl_pct": 0.0078
     },
     {
       "code": "128940",
       "name": "한미약품",
       "qty": 4,
-      "value": 1956000,
-      "pnl_pct": 0.0262
+      "value": 1942000,
+      "pnl_pct": 0.0189
     },
     {
       "code": "316140",
       "name": "우리금융지주",
       "qty": 62,
-      "value": 1934400,
-      "pnl_pct": -0.0016
+      "value": 1925100,
+      "pnl_pct": -0.0064
     },
     {
       "code": "030200",
       "name": "KT",
       "qty": 36,
-      "value": 1904400,
-      "pnl_pct": -0.0148
+      "value": 1895400,
+      "pnl_pct": -0.0195
     }
   ],
   "status": {
-    "last_run": "2026-11-09 12:45",
+    "last_run": "2026-11-09 13:00",
     "last_ok": false,
-    "next_run": "2026-11-09 13:00",
-    "runs_today": 14,
-    "failures_today": 1,
+    "next_run": "2026-11-09 13:15",
+    "runs_today": 15,
+    "failures_today": 2,
     "note": "실행 상태 요약 · 원문 비공개"
   },
   "decision": {
