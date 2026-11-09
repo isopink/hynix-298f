@@ -451,7 +451,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
 
     <!-- 포트폴리오: 접지 않고 늘 펼쳐 둠 (11-05) -->
     <section class="card c12">
-      <div class="hd"><h2 class="eyebrow">Portfolio</h2><span class="sub">빨간 호 = 국면 상한</span></div>
+      <div class="hd"><h2 class="eyebrow">Sigma Engine 포트폴리오</h2><span class="sub">빨간 호 = 국면 상한</span></div>
       <div class="chart" id="ch-donut" style="min-height:240px"></div>
       <div class="kx-flow">   <!-- 보유 종목 손익: 포트폴리오 카드 안 아래칸 (11-05) -->
         <div class="hd"><h3 class="eyebrow">Holdings P&amp;L</h3><span class="sub" id="pnl-sub">수수료·세금 반영</span></div>
@@ -463,6 +463,12 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
     <section class="card c12 sion-card" id="sion-card" hidden>
       <div class="hd"><h2 class="eyebrow on" title="온톨로지 버전 가상 계좌 (실제 계좌를 복사해 시작, 주문은 가상 체결)">SiON Engine 계좌</h2><span class="sub" id="sion-sub"></span></div>
       <div class="sion-kpi" id="sion-kpi"></div>
+      <h3 class="eyebrow">SiON Engine 포트폴리오</h3>   <!-- 11-09 S.Lee: 포트폴리오를 Sigma · SiON 따로 -->
+      <div class="chart" id="ch-sion-donut" style="min-height:240px"></div>
+      <div class="kx-flow" style="margin-bottom:18px">
+        <div class="hd"><h3 class="eyebrow">Holdings P&amp;L</h3><span class="sub">수수료·세금 반영</span></div>
+        <div class="chart" id="ch-sion-pnl" style="min-height:120px"></div>
+      </div>
       <div class="sion-cols">
         <div><h3 class="eyebrow">보유 종목</h3><div class="sion-tbl" id="sion-hold"></div></div>
         <div><h3 class="eyebrow">가상 체결</h3><div class="sion-tbl" id="sion-trades"></div></div>
@@ -1470,25 +1476,28 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
 
   function donut() {
     const parts = D.hold.map(h => ({ name: h.name, v: h.value, pnl: h.pnl })).sort((a, b) => b.v - a.v).concat([{ name: '현금', v: D.cash }]);
-    const el = $('ch-donut'), below = el.clientWidth < 340, ring = el.clientWidth < 520 ? 200 : 240;   // 좁은 폰은 범례를 도넛 아래로
+    drawDonut($('ch-donut'), parts, D.cap, ['#da291c', '#ff7a6e', '#bdbdbd', '#7a7a7a', '#4a4a4a', '#3a3a3a'], C.red);
+  }
+  // 11-09 Sigma · SiON 포트폴리오 공용 도넛. parts = [{name, v, pnl?}] (마지막이 현금), cap = 국면 상한(없으면 호 없음)
+  function drawDonut(el, parts, cap, shades, capColor) {
+    const below = el.clientWidth < 340, ring = el.clientWidth < 520 ? 200 : 240;   // 좁은 폰은 범례를 도넛 아래로
     const side = !below && el.clientWidth >= 340, legH = parts.length * 22 + 10;   // 11-09 범례가 도넛보다 길면 카드 높이를 늘려 제목과 안 겹치게
     const { svg, W, H: H0 } = svgIn(el, below ? ring + legH - 2 : Math.max(ring, side ? legH : 0)), H = below ? ring : H0;
-    const tot = d3.sum(parts, p => p.v);
-    const shades = ['#da291c', '#ff7a6e', '#bdbdbd', '#7a7a7a', '#4a4a4a', '#3a3a3a'];
-    const color = (p, i) => p.name === '현금' ? 'rgba(255,255,255,.08)' : shades[i] || ['#5e5e5e', '#525252', '#464646'][i % 3];   // 7번째부터는 회색 (예전엔 검정으로 빠짐)
+    const tot = d3.sum(parts, p => p.v), stock = d3.sum(parts.filter(p => p.name !== '현금'), p => p.v);
+    const color = (p, i) => p.name === '현금' ? 'rgba(255,255,255,.08)' : shades[i] || ['#5e5e5e', '#525252', '#464646'][i % 3];   // 7번째부터는 회색
     const legendW = W >= 340 ? 150 : 0;
     const R = Math.min((W - legendW) / 2, H / 2) - 14, cx = legendW ? (W - legendW) / 2 : W / 2, cy = H / 2;
     const g = svg.append('g').attr('transform', `translate(${cx},${cy})`);
     const pie = d3.pie().sort(null).value(p => p.v).padAngle(.012);
     g.selectAll('path.s').data(pie(parts)).join('path').attr('class', 's').attr('d', d3.arc().innerRadius(R * .66).outerRadius(R).cornerRadius(3)).attr('fill', (a, i) => color(a.data, i))
       .call(tipMark, a => `<div class="t">${esc(a.data.name)}</div>${row('평가금액', won(Math.round(a.data.v)))}${row('비중', (a.data.v / tot * 100).toFixed(1) + '%')}${a.data.pnl != null ? row('손익 (수수료·세금 반영)', pct(a.data.pnl), a.data.pnl >= 0 ? 'up' : 'down') : ''}`);
-    if (D.cap) {
-    const capA = Math.min(1, D.cap) * 2 * Math.PI;
-    g.append('path').attr('d', d3.arc()({ innerRadius: R + 5, outerRadius: R + 7, startAngle: 0, endAngle: capA })).attr('fill', C.red);
-    g.append('line').attr('x1', (R + 2) * Math.sin(capA)).attr('y1', -(R + 2) * Math.cos(capA)).attr('x2', (R + 11) * Math.sin(capA)).attr('y2', -(R + 11) * Math.cos(capA)).attr('stroke', C.red).attr('stroke-width', 2);
+    if (cap) {
+      const capA = Math.min(1, cap) * 2 * Math.PI;
+      g.append('path').attr('d', d3.arc()({ innerRadius: R + 5, outerRadius: R + 7, startAngle: 0, endAngle: capA })).attr('fill', capColor);
+      g.append('line').attr('x1', (R + 2) * Math.sin(capA)).attr('y1', -(R + 2) * Math.cos(capA)).attr('x2', (R + 11) * Math.sin(capA)).attr('y2', -(R + 11) * Math.cos(capA)).attr('stroke', capColor).attr('stroke-width', 2);
     }
-    g.append('text').attr('text-anchor', 'middle').attr('dy', '-.1em').attr('font-size', 24).attr('font-weight', 500).attr('fill', C.ink).text((D.stock / tot * 100).toFixed(1) + '%');
-    g.append('text').attr('text-anchor', 'middle').attr('dy', '1.4em').attr('font-size', 11).attr('fill', C.muted).text(D.cap ? '주식 / 상한 ' + (D.cap * 100).toFixed(1) + '%' : '주식 비중');
+    g.append('text').attr('text-anchor', 'middle').attr('dy', '-.1em').attr('font-size', 24).attr('font-weight', 500).attr('fill', C.ink).text((stock / tot * 100).toFixed(1) + '%');
+    g.append('text').attr('text-anchor', 'middle').attr('dy', '1.4em').attr('font-size', 11).attr('fill', C.muted).text(cap ? '주식 / 상한 ' + (cap * 100).toFixed(1) + '%' : '주식 비중');
     if (legendW || below) {
       const lw2 = legendW || Math.min(W, 260);
       const lg = svg.append('g').attr('transform', below ? `translate(${(W - lw2) / 2},${ring + 14})` : `translate(${W - legendW + 8},${Math.max(14, cy - (parts.length - 1) * 11)})`);
@@ -1518,6 +1527,14 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const pnlAll = total - INIT, pnlSeed = total - seed, sigma = D && D.last ? D.last.total : null;
     const cls = v => v > 0 ? 'up' : v < 0 ? 'down' : '';
     const sw = v => (v > 0 ? '+' : v < 0 ? '−' : '') + won(Math.abs(Math.round(v))) + '원';
+    // 11-09 S.Lee: SiON 포트폴리오 (도넛 · 보유 손익) 를 Sigma 와 따로
+    const sp = hs.map(h => ({ name: h.name, v: h.value || h.price * h.qty, pnl: h.pnl_pct == null ? null : fee(+h.pnl_pct) })).sort((a, b) => b.v - a.v).concat([{ name: '현금', v: Math.max(0, cash) }]);
+    drawDonut($('ch-sion-donut'), sp, null, ['#1f9e72', '#3ecf8e', '#8fe3bd', '#5a7d6c', '#46604f', '#3a4a40'], '#3ecf8e');
+    const sr = hs.filter(h => h.pnl_pct != null).map(h => { const avg = h.avg_price || h.price / (1 + +h.pnl_pct); return { name: h.name, v: fee(+h.pnl_pct), avg, price: h.price, qty: h.qty }; });
+    const sCost = d3.sum(sr, r => r.avg * r.qty), sTot = sCost ? d3.sum(sr, r => r.avg * r.qty * r.v) / sCost : 0;
+    if (!sr.length) none($('ch-sion-pnl'), '보유 종목이 없어요.');
+    else drawPnl($('ch-sion-pnl'), sr, sTot, r => r.total ? `<div class="t">SiON 보유 합계</div>${row('매입금액', won(Math.round(sCost)))}${row('수수료·세금 반영', pct(sTot))}`
+      : `<div class="t">${esc(r.name)}</div>${row('평단', won(Math.round(r.avg)))}${row('현재가', won(+r.price))}${row('수수료·세금 반영', pct(r.v), r.v >= 0 ? 'up' : 'down')}`, true);
     $('sion-sub').textContent = (since ? md(toD(since)) + ' 시작 · ' : '') + (L && L.ts ? new Date(L.ts).toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Seoul' }) + ' 기준' : '');
     const k = (label, val, c = '', tip = '') => `<div class="k"${tip ? ` title="${esc(tip)}"` : ''}><span>${label}</span><b class="${c}">${val}</b></div>`;
     $('sion-kpi').innerHTML = k('총자산', won(Math.round(total)) + '원')
@@ -1539,52 +1556,37 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     });
   }
 
-  function pnl() {
-    // 11-09 S.Lee: SiON Engine(온톨로지 그림자) 보유 손익을 초록 반투명 막대로 겹쳐 그림. Supabase 1분 기록 → 없으면 shadow.json
-    const sh = (SHADOW_LIVE && SHADOW_LIVE.holdings && SHADOW_LIVE.holdings.length ? SHADOW_LIVE.holdings : SHADOW && SHADOW.holdings) || [];
-    const sNet = g => (1 + g) * (1 - 0.0035 - 0.002) / (1 + 0.0035) - 1;   // 그림자 기록은 가격 변동만 → 키움과 같은 수수료 0.35%·세금 0.2% 반영 (params.costs)
-    const sHold = new Map(sh.filter(h => h.qty && h.pnl_pct != null && h.price).map(h => [h.code, { ...h, avg: h.price / (1 + h.pnl_pct), sv: sNet(+h.pnl_pct) }]));
-    $('pnl-sub').innerHTML = sHold.size ? '수수료·세금 반영 · 위 Sigma · <span style="color:#3ecf8e">아래 SiON</span>' : '수수료·세금 반영';
-    if (!D.hold.length && !sHold.size) return none($('ch-pnl'), '보유 종목이 없어요.');
-    const gross = r => r.price / r.avg_price - 1, cost = r => r.avg_price * r.qty;
-    const val = r => pnlMode === 'gross' ? gross(r) : r.pnl;
-    const sumCost = d3.sum(D.hold, cost), sCost = d3.sum([...sHold.values()], h => h.avg * h.qty);
-    const total = { name: '합계', total: true,
-      v: !D.hold.length ? null : pnlMode === 'gross' ? d3.sum(D.hold, r => r.price * r.qty) / sumCost - 1 : d3.sum(D.hold, r => cost(r) * r.pnl) / sumCost,
-      s: sHold.size ? d3.sum([...sHold.values()], h => h.avg * h.qty * h.sv) / sCost : null };
-    const mine = D.hold.map(r => ({ ...r, v: val(r), s: sHold.has(r.code) ? sHold.get(r.code).sv : null }));
-    const only = [...sHold.values()].filter(h => !D.hold.some(r => r.code === h.code)).map(h => ({ code: h.code, name: h.name, v: null, s: h.sv, sOnly: true }));
-    const key = r => r.v ?? r.s;
-    const rows = mine.concat(only).sort((a, b) => key(b) - key(a)).concat(D.hold.length + sHold.size > 1 ? [total] : []), bh = 22, gap = 22;
-    const H = Math.max(220, rows.length * (bh + gap) + 20), { svg, W } = svgIn($('ch-pnl'), H);
-    const two = sHold.size > 0, lw = d3.max(rows, r => textW(svg, r.name, 12)) + 12, vw = two ? 124 : 54;   // 11-09 2개 값 (Sigma · SiON)
-    const mx = d3.max(rows, r => Math.max(Math.abs(r.v ?? 0), Math.abs(r.s ?? 0))) || .01;
-    const x = d3.scaleLinear([-mx, mx], [lw, W - vw]);
+  function pnl() {   // 11-09 S.Lee: Sigma 만 (SiON 은 SiON 카드 안 따로)
+    $('pnl-sub').textContent = '수수료·세금 반영';
+    if (!D.hold.length) return none($('ch-pnl'), '보유 종목이 없어요.');
+    const cost = r => r.avg_price * r.qty, sumCost = d3.sum(D.hold, cost);
+    const rows = D.hold.map(r => ({ ...r, v: pnlMode === 'gross' ? r.price / r.avg_price - 1 : r.pnl, cost: cost(r) }));
+    const totalV = d3.sum(D.hold, r => cost(r) * r.pnl) / sumCost;
+    drawPnl($('ch-pnl'), rows, totalV, r => r.total
+      ? `<div class="t">보유 합계</div>${row('매입금액', won(Math.round(sumCost)))}${row('순수', pct(d3.sum(D.hold, h => h.price * h.qty) / sumCost - 1))}${row('수수료·세금 반영', pct(totalV))}`
+      : `<div class="t">${esc(r.name)}</div>${row('평단', won(+r.avg_price))}${row('현재가', won(+r.price))}${row('수수료·세금 반영', pct(r.pnl), r.pnl >= 0 ? 'up' : 'down')}`
+        + `${row('손익 (반영)', (r.pnl > 0 ? '+' : r.pnl < 0 ? '−' : '') + won(Math.abs(Math.round(r.cost * r.pnl))) + '원', r.pnl >= 0 ? 'up' : 'down')}${r.stop ? row('손절 / 익절', won(+r.stop) + ' / ' + won(+r.take)) : ''}${r.held_days != null ? row('보유일', r.held_days + ' / ' + r.max_days + '일') : ''}`);
+  }
+  // 11-09 Sigma · SiON 공용 보유 손익 막대. rows = [{name, v}], green = SiON (초록 한 색)
+  function drawPnl(el, list, totalV, tip, green) {
+    const rows = [...list].sort((a, b) => b.v - a.v).concat(list.length > 1 ? [{ name: '합계', total: true, v: totalV }] : []), bh = 22, gap = 22;
+    const H = Math.max(green ? 120 : 220, rows.length * (bh + gap) + 20), { svg, W } = svgIn(el, H);
+    const lw = d3.max(rows, r => textW(svg, r.name, 12)) + 12, vw = 54;
+    const mx = d3.max(rows, r => Math.abs(r.v)) || .01, x = d3.scaleLinear([-mx, mx], [lw, W - vw]);
     svg.append('line').attr('x1', x(0)).attr('x2', x(0)).attr('y1', 4).attr('y2', H - 4).attr('stroke', '#3a3a3a');
     const top = (H - rows.length * (bh + gap) + gap) / 2;
     rows.forEach((r, i) => {
-      const yy = top + i * (bh + gap), up = (r.v ?? 0) >= 0;
+      const yy = top + i * (bh + gap), up = r.v >= 0;
       if (r.total) svg.append('line').attr('x1', 0).attr('x2', W).attr('y1', yy - gap / 2).attr('y2', yy - gap / 2).attr('stroke', 'rgba(255,255,255,.08)');
       svg.append('text').attr('x', 0).attr('y', yy + bh / 2).attr('dy', '.32em').attr('font-size', 12).attr('fill', r.total ? C.ink : C.body).attr('font-weight', r.total ? 500 : null).text(r.name);
-      // 11-09 S.Lee: 겹치지 않고 같은 행에 위(Sigma) · 아래(SiON 초록) 두 막대로 나눔. 값도 Sigma · SiON 두 칸
-      const yA = two ? yy + 1 : yy + 3, hA = two ? 9 : bh - 6, yB = yy + 12, hB = 9;
-      if (r.v != null) svg.append('rect').attr('x', Math.min(x(0), x(r.v))).attr('y', yA).attr('height', hA).attr('rx', 2).attr('width', Math.max(2, Math.abs(x(r.v) - x(0)))).attr('fill', up ? GR.redH : GR.blueH).attr('opacity', r.total ? .7 : null);
-      if (r.s != null) svg.append('rect').attr('x', Math.min(x(0), x(r.s))).attr('y', yB).attr('height', hB).attr('rx', 2).attr('width', Math.max(2, Math.abs(x(r.s) - x(0))))
-        .attr('fill', '#3ecf8e').attr('fill-opacity', r.total ? .55 : .75);
-      const vt = (xx, v, c) => svg.append('text').attr('x', xx).attr('y', yy + bh / 2).attr('dy', '.32em').attr('text-anchor', 'end').attr('font-size', 12).attr('font-weight', 500).attr('fill', c).text(v == null ? '—' : pct(v));
-      vt(two ? W - 64 : W, r.v, r.v == null ? C.muted : up ? C.redHi : C.blue);
-      if (two) vt(W, r.s, '#3ecf8e');
-      const sRow = r.s != null ? row('SiON Engine (가상)', pct(r.s), r.s >= 0 ? 'up' : 'down') : '';
-      const tip = r.total
-        ? `<div class="t">보유 합계</div>${D.hold.length ? row('매입금액', won(Math.round(sumCost))) + row('순수', pct(d3.sum(D.hold, h => h.price * h.qty) / sumCost - 1)) + row('수수료·세금 반영', pct(d3.sum(D.hold, h => cost(h) * h.pnl) / sumCost)) : ''}${sRow}`
-        : r.sOnly ? `<div class="t">${esc(r.name)}</div><p class="tp">Sigma Engine 은 보유하지 않음</p>${row('SiON 평단', won(Math.round(sHold.get(r.code).avg)))}${row('현재가', won(+sHold.get(r.code).price))}${sRow}`
-        : `<div class="t">${esc(r.name)}</div>${row('평단', won(+r.avg_price))}${row('현재가', won(+r.price))}`
-          + `${row('수수료·세금 반영', pct(r.pnl), r.pnl >= 0 ? 'up' : 'down')}`
-          + `${row('손익 (반영)', (r.pnl > 0 ? '+' : r.pnl < 0 ? '−' : '') + won(Math.abs(Math.round(cost(r) * r.pnl))) + '원', r.pnl >= 0 ? 'up' : 'down')}${r.stop ? row('손절 / 익절', won(+r.stop) + ' / ' + won(+r.take)) : ''}${r.held_days != null ? row('보유일', r.held_days + ' / ' + r.max_days + '일') : ''}${sRow}`;
-      svg.append('rect').attr('x', 0).attr('y', yy - 4).attr('width', W).attr('height', bh + 8).attr('fill', 'transparent')
-        .call(tipMark, () => tip);
+      svg.append('rect').attr('x', Math.min(x(0), x(r.v))).attr('y', yy + 3).attr('height', bh - 6).attr('rx', 2).attr('width', Math.max(2, Math.abs(x(r.v) - x(0))))
+        .attr('fill', green ? '#3ecf8e' : up ? GR.redH : GR.blueH).attr('fill-opacity', green ? (r.total ? .5 : .75) : null).attr('opacity', !green && r.total ? .7 : null);
+      svg.append('text').attr('x', W).attr('y', yy + bh / 2).attr('dy', '.32em').attr('text-anchor', 'end').attr('font-size', 12).attr('font-weight', 500)
+        .attr('fill', green ? '#3ecf8e' : up ? C.redHi : C.blue).text(pct(r.v));
+      svg.append('rect').attr('x', 0).attr('y', yy - 4).attr('width', W).attr('height', bh + 8).attr('fill', 'transparent').call(tipMark, () => tip(r));
     });
   }
+
 
   function scatter() {
     const pts = D.trades.filter(t => t.side === '매수' && t.outcome != null);
