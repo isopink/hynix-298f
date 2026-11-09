@@ -81,48 +81,13 @@
     ]
   },
   "intraday": {
-    "time": "10:45",
-    "pool": 373,
+    "time": "11:00",
+    "pool": 235,
     "analyzed_new": 30,
-    "passed": 16,
+    "passed": 12,
     "kept_prep": false
   },
   "candidates": [
-    {
-      "code": "089860",
-      "name": "롯데렌탈",
-      "close": 58500,
-      "ret5": 0.1185,
-      "ret20": 0.1426,
-      "rsi14": 75.4,
-      "vol20": 0.469,
-      "foreign_net": -6880633700,
-      "inst_net": 74240426800,
-      "score": 0.931,
-      "news": [
-        {
-          "date": "11-08",
-          "title": "롯데렌탈, 단일계좌 거래량 상위로 9일 투자주의 지정",
-          "risk": false
-        },
-        {
-          "date": "11-08",
-          "title": "롯데렌탈 개미가 대주주 값 받기까지…'50%+1주' 법안이면 어렵다",
-          "risk": false
-        },
-        {
-          "date": "11-08",
-          "title": "롯데 떠난 롯데렌탈, TPG 품에서 상장폐지 수순…다음 행보는?",
-          "risk": false
-        }
-      ],
-      "price": 58400,
-      "chg": 0.0,
-      "activity": 6.78,
-      "foreign_today": 1051200000,
-      "inst_today": 0,
-      "exchange": "KOSPI"
-    },
     {
       "code": "006360",
       "name": "GS건설",
@@ -133,7 +98,7 @@
       "vol20": 0.888,
       "foreign_net": 1436621025,
       "inst_net": 20425868350,
-      "score": 0.653,
+      "score": 0.612,
       "news": [
         {
           "date": "11-09",
@@ -153,159 +118,9 @@
       ],
       "price": 30900,
       "chg": 0.0387,
-      "activity": 3.66,
-      "foreign_today": 927000000,
-      "inst_today": 339900000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "017670",
-      "name": "SK텔레콤",
-      "close": 77300,
-      "ret5": 0.039,
-      "ret20": -0.0819,
-      "rsi14": 45.2,
-      "vol20": 0.491,
-      "foreign_net": -22121547500,
-      "inst_net": 56405917100,
-      "score": 0.431,
-      "news": [],
-      "price": 77500,
-      "chg": -0.0026,
-      "activity": 1.76,
-      "foreign_today": 1705000000,
-      "inst_today": 155000000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "004020",
-      "name": "현대제철",
-      "close": 28300,
-      "ret5": 0.1098,
-      "ret20": 0.0089,
-      "rsi14": 48.9,
-      "vol20": 0.625,
-      "foreign_net": 652431450,
-      "inst_net": 21161016850,
-      "score": 0.375,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "인하대학교 황용우 교수팀, 현대제철과 철강 탄소발자국 평가 기준 고도...",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "현대제철 노사, 당진제철소 임직원 가족과 늦가을 목장길 트레킹",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "\"주주가치 제고는 언제쯤\"… 현대제철, 결국 '저PBR' 낙인까지",
-          "risk": false
-        }
-      ],
-      "foreign_today": 226400000,
-      "inst_today": 141500000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "032640",
-      "name": "LG유플러스",
-      "close": 16520,
-      "ret5": 0.1667,
-      "ret20": 0.1448,
-      "rsi14": 72.8,
-      "vol20": 0.402,
-      "foreign_net": -43204631710,
-      "inst_net": 74782934530,
-      "score": 0.347,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "LG유플러스, 서울대∙KAIST∙연세대와 한국어 음성 AI 개발 나선다",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "LG유플러스, 수능 시즌 멤버십 혜택 확대…50여개 제휴 쿠폰 제공",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "LG유플러스, 서울대·KAIST·연세대와 한국어 특화 음성 AI 개발",
-          "risk": false
-        }
-      ],
-      "foreign_today": 346920000,
-      "inst_today": 132160000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "008930",
-      "name": "한미사이언스",
-      "close": 53700,
-      "ret5": 0.268,
-      "ret20": 0.0327,
-      "rsi14": 63.3,
-      "vol20": 0.738,
-      "foreign_net": -7484986975,
-      "inst_net": 26975170300,
-      "score": 0.333,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "비만약 상업화·기술수출 겹호재…한미사이언스 성장성 부각 [Why 바이오...",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "신약 상업화·기술수출 확대 기대감…한미사이언스 7% 급등",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "한미사이언스, 신약 팔릴수록 지주사도 웃는다…'특허수익 확대' 기대",
-          "risk": false
-        }
-      ],
+      "activity": 3.43,
       "foreign_today": 0,
-      "inst_today": 590700000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "028050",
-      "name": "삼성E&A",
-      "close": 61300,
-      "ret5": 0.0116,
-      "ret20": 0.2797,
-      "rsi14": 59.4,
-      "vol20": 0.957,
-      "foreign_net": -76658998800,
-      "inst_net": 63121010150,
-      "score": 0.292,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "메리츠증권, 삼성E&A 목표주가 7만6000원 유지",
-          "risk": false
-        },
-        {
-          "date": "11-08",
-          "title": "삼성E&A, UAE 아디펙서 기술력 부각…'임팩트 챔피언' 선정",
-          "risk": false
-        },
-        {
-          "date": "11-08",
-          "title": "삼성E&A 말레이시아 공사 종료일 2027년 1월 29일로 연장",
-          "risk": false
-        }
-      ],
-      "price": 62500,
-      "chg": 0.0331,
-      "activity": 1.05,
-      "foreign_today": 1812500000,
-      "inst_today": 0,
+      "inst_today": 339900000,
       "exchange": "KOSPI"
     },
     {
@@ -318,7 +133,7 @@
       "vol20": 0.592,
       "foreign_net": -8231059200,
       "inst_net": 53595627900,
-      "score": 0.25,
+      "score": 0.449,
       "news": [
         {
           "date": "11-09",
@@ -341,6 +156,38 @@
       "exchange": "KOSPI"
     },
     {
+      "code": "008930",
+      "name": "한미사이언스",
+      "close": 53700,
+      "ret5": 0.268,
+      "ret20": 0.0327,
+      "rsi14": 63.3,
+      "vol20": 0.738,
+      "foreign_net": -7484986975,
+      "inst_net": 26975170300,
+      "score": 0.408,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "비만약 상업화·기술수출 겹호재…한미사이언스 성장성 부각 [Why 바이오...",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "신약 상업화·기술수출 확대 기대감…한미사이언스 7% 급등",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "한미사이언스, 신약 팔릴수록 지주사도 웃는다…'특허수익 확대' 기대",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 590700000,
+      "exchange": "KOSPI"
+    },
+    {
       "code": "112610",
       "name": "씨에스윈드",
       "close": 48800,
@@ -350,7 +197,7 @@
       "vol20": 0.843,
       "foreign_net": -27562520175,
       "inst_net": 30133908725,
-      "score": 0.167,
+      "score": 0.388,
       "news": [
         {
           "date": "11-09",
@@ -368,11 +215,94 @@
           "risk": false
         }
       ],
-      "price": 49900,
-      "chg": 0.0163,
-      "activity": 2.74,
+      "price": 49400,
+      "chg": 0.0061,
+      "activity": 2.68,
       "foreign_today": 0,
-      "inst_today": 449100000,
+      "inst_today": 444600000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "032640",
+      "name": "LG유플러스",
+      "close": 16520,
+      "ret5": 0.1667,
+      "ret20": 0.1448,
+      "rsi14": 72.8,
+      "vol20": 0.402,
+      "foreign_net": -43204631710,
+      "inst_net": 74782934530,
+      "score": 0.347,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "LG유플러스, 한국어 대화 특화 '차세대 음성 AI' 개발…산학협력 강화",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "LG유플러스, 서울대·KAIST·연세대와 ‘K-보이스 엔진’ 만든다",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "LG유플러스, 수능 시즌 멤버십 혜택 확대…50여개 제휴 쿠폰 제공",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 132160000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "004020",
+      "name": "현대제철",
+      "close": 28300,
+      "ret5": 0.1098,
+      "ret20": 0.0089,
+      "rsi14": 48.9,
+      "vol20": 0.625,
+      "foreign_net": 652431450,
+      "inst_net": 21161016850,
+      "score": 0.306,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "인하대학교 황용우 교수팀, 현대제철과 철강 탄소발자국 평가 기준 고도...",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "현대제철 노사, 당진제철소 임직원 가족과 늦가을 목장길 트레킹",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "\"주주가치 제고는 언제쯤\"… 현대제철, 결국 '저PBR' 낙인까지",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 141500000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "017670",
+      "name": "SK텔레콤",
+      "close": 77300,
+      "ret5": 0.039,
+      "ret20": -0.0819,
+      "rsi14": 45.2,
+      "vol20": 0.491,
+      "foreign_net": -22121547500,
+      "inst_net": 56405917100,
+      "score": 0.265,
+      "news": [],
+      "price": 77500,
+      "chg": -0.0026,
+      "activity": 1.7,
+      "foreign_today": 0,
+      "inst_today": 155000000,
       "exchange": "KOSPI"
     },
     {
@@ -405,7 +335,7 @@
       ],
       "price": 59400,
       "chg": 0.08,
-      "activity": 6.01,
+      "activity": 5.32,
       "foreign_today": 0,
       "inst_today": 831600000,
       "exchange": "KOSDAQ"
@@ -420,7 +350,7 @@
       "vol20": 1.387,
       "foreign_net": -6381603720,
       "inst_net": 16519823935,
-      "score": 0.653,
+      "score": 0.776,
       "news": [
         {
           "date": "11-09",
@@ -438,71 +368,11 @@
           "risk": false
         }
       ],
-      "price": 16420,
-      "chg": 0.0628,
-      "activity": 3.71,
+      "price": 16400,
+      "chg": 0.0615,
+      "activity": 3.34,
       "foreign_today": 0,
-      "inst_today": 837420000,
-      "exchange": "KOSDAQ"
-    },
-    {
-      "code": "389260",
-      "name": "대명에너지",
-      "close": 13630,
-      "ret5": 0.3522,
-      "ret20": 0.0089,
-      "rsi14": 61.3,
-      "vol20": 1.105,
-      "foreign_net": -1315515485,
-      "inst_net": 73370470,
-      "score": 0.569,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "미국 민주당 압승 '블루 쓰나미'…한화솔루션·SK이터닉스·대명에너지...",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "대명에너지 주가, 11월 6일 13,700원 3.11% 하락",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "코스피 8% 폭락에도 대명에너지·금양그린파워·강원에너지 ‘빨간불’...",
-          "risk": false
-        }
-      ],
-      "price": 14200,
-      "chg": 0.0365,
-      "activity": 3.38,
-      "foreign_today": 781000000,
-      "inst_today": 0,
-      "exchange": "KOSDAQ"
-    },
-    {
-      "code": "443670",
-      "name": "에스피소프트",
-      "close": 4410,
-      "ret5": -0.0764,
-      "ret20": -0.1082,
-      "rsi14": 48.9,
-      "vol20": 1.449,
-      "foreign_net": 33414656,
-      "inst_net": 22535130,
-      "score": 0.556,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "딥페이크 범죄 막는 AI 보안株 휘파람…에스피소프트·파수AI 노려라",
-          "risk": false
-        }
-      ],
-      "price": 4915,
-      "chg": 0.1133,
-      "activity": 4.06,
-      "foreign_today": 162195000,
-      "inst_today": 0,
+      "inst_today": 836400000,
       "exchange": "KOSDAQ"
     },
     {
@@ -515,7 +385,7 @@
       "vol20": 1.068,
       "foreign_net": -23144745850,
       "inst_net": 30167917550,
-      "score": 0.389,
+      "score": 0.449,
       "news": [
         {
           "date": "11-08",
@@ -533,11 +403,11 @@
           "risk": false
         }
       ],
-      "price": 211000,
-      "chg": 0.076,
-      "activity": 5.62,
+      "price": 211750,
+      "chg": 0.0798,
+      "activity": 5.1,
       "foreign_today": 0,
-      "inst_today": 422000000,
+      "inst_today": 423500000,
       "exchange": "KOSPI"
     },
     {
