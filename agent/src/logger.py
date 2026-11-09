@@ -281,6 +281,18 @@ def _stats(rows, runs, start):
             "tokens_k": round(sum(r.get("tokens", 0) or 0 for r in runs) / 1000)}
 
 
+def _shadow_runs(d, start):
+    """11-09 그림자 runs.jsonl 은 한 줄이 수십 MB(온톨로지 입력 기록)라 읽지 않음 → 그림자 docs/data/system.json(날짜별 실행·실패·토큰)으로 대신."""
+    out = []
+    for r in C.read_json(os.path.join(d, "docs", "data", "system.json"), []) or []:
+        if r.get("date", "") >= start:
+            out += [{"time": r["date"] + " 00:00", "kind": "decide", "ok": True}] * max(0, (r.get("runs") or 0) - (r.get("failures") or 0))
+            out += [{"time": r["date"] + " 00:00", "kind": "decide", "ok": False}] * (r.get("failures") or 0)
+            if out:
+                out[-1]["tokens"] = (r.get("tokens_k") or 0) * 1000
+    return out
+
+
 def _shadow_decision(d, start):
     dc = C.read_json(os.path.join(d, "docs", "data", "decision.json"), {}) or {}
     if not dc.get("time") or dc["time"][:10] < start:   # 그림자 시작 전 기록(저장소에 딸려 온 실제 판단)은 빼기
@@ -313,7 +325,7 @@ def shadow(rows):
             "series": [{"time": e["time"], "shadow": ret(e.get("total")), "live": ret(e.get("real_total"))} for e in pick],
             "now": {"shadow": ret(last.get("total")), "live": ret(last.get("real_total")),
                     "shadow_total": last.get("total"), "live_total": last.get("real_total")},
-            "stats": {"shadow": _stats(C.read_jsonl(os.path.join(w, "journal.jsonl")), C.read_jsonl(os.path.join(w, "runs.jsonl")), start),
+            "stats": {"shadow": _stats(C.read_jsonl(os.path.join(w, "journal.jsonl")), _shadow_runs(d, start), start),
                       "live": _stats(rows, C.read_jsonl(C.RUNS), start)},
             "holdings": sorted(last.get("holdings", []), key=lambda h: -(h.get("value") or 0))[:8],
             "status": {k: v for k, v in (C.read_json(os.path.join(d, "docs", "data", "status.json"), {}) or {}).items() if k != "sync"},   # 11-09 대시보드 '온톨로지' 상태바
