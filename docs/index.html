@@ -1263,7 +1263,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const lastD = rows[rows.length - 1].d; while (sh.length && sh[sh.length - 1].d > lastD) sh.pop();   // 실제 기록보다 앞선 날은 그리지 않음
     if (sh.length) { const b = rows.filter(r => r.d < sh[0].d).pop(); if (b) sh.unshift({ d: b.d, ret: b.ret, total: b.total, seed: true }); }
     const shAt = d => sh.find(r => +r.d === +d && !r.seed);
-    const neg = D.ret < 0, col = neg ? C.blue : C.red, colHi = neg ? '#7cc4ea' : C.redHi;   // 수익률 양수 빨강 · 음수 파랑
+    const neg = D.ret < 0, col = window.VOLT ? C.red : neg ? C.blue : C.red, colHi = window.VOLT ? C.redHi : neg ? '#7cc4ea' : C.redHi;   // 11-10 VoltAgent: 선 구분을 위해 Sigma 는 늘 초록 실선, SiON 흰 점선, KOSPI 회색 점   // 수익률 양수 빨강 · 음수 파랑
     const lo = Math.min(0, d3.min(rows, r => Math.min(r.ret, r.kret)), d3.min(sh, r => r.ret) ?? 0), hi = Math.max(0, d3.max(rows, r => Math.max(r.ret, r.kret)), d3.max(sh, r => r.ret) ?? 0);
     const y0 = d3.scaleLinear([lo, hi], [0, 1]).nice(4), ticks = y0.ticks(4), tstep = ticks.length > 1 ? ticks[1] - ticks[0] : .01, tf = v => (v > 0 ? '+' : '') + (v * 100).toFixed(tstep < .0099 ? 1 : 0) + '%';
     const lw = Math.max(textW(svg, 'Sigma Engine ' + pct(D.ret), 12), textW(svg, 'KOSPI ' + pct(D.kret), 12), sh.length ? textW(svg, 'SiON Engine ' + pct(sh[sh.length - 1].ret), 12) : 0);
@@ -1294,12 +1294,13 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       g.append('stop').attr('offset', 0).attr('stop-color', c).attr('stop-opacity', a0); g.append('stop').attr('offset', 1).attr('stop-color', c).attr('stop-opacity', a1); return `url(#${id})`; };
     fade(svg.append('path').datum(rows).attr('clip-path', 'url(#cHeroUp)').attr('fill', grad('gHeroUp', '#ff4a36', .42, .04)).attr('d', gap), .5);   // 위로 갈수록 진하게
     fade(svg.append('path').datum(rows).attr('clip-path', 'url(#cHeroDn)').attr('fill', grad('gHeroDn', '#4aa3d4', .04, .42)).attr('d', gap), .5);   // 아래로 갈수록 진하게
-    const kp = svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', '#a8a8a8').attr('stroke-width', 0.6).attr('stroke-linejoin', 'round').attr('filter', 'url(#fHeroGlow)').attr('d', kLine);   // 11-05 1.75 → 0.6 (얇게)
-    const p = svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', col).attr('stroke-width', 0.6).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round').attr('filter', 'url(#fHeroGlow)').attr('d', d3.line().curve(cv).x(r => x(r.d)).y(r => y(r.ret)));   // 11-05 2.5 → 0.6
-    if (fx) { animate(kp); animate(p); }
+    const LS = window.VOLT ? { s: 2, o: 1.6, od: '6 4', k: 1.2, kd: '1 4', kc: '#8b949e', f: null } : { s: 0.6, o: 0.9, od: null, k: 0.6, kd: null, kc: '#a8a8a8', f: 'url(#fHeroGlow)' };   // 11-10 S.Lee: 선이 구분되게 (굵기 · 점선)
+    const kp = svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', LS.kc).attr('stroke-width', LS.k).attr('stroke-dasharray', LS.kd).attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round').attr('filter', LS.f).attr('d', kLine);   // 11-05 1.75 → 0.6 (얇게)
+    const p = svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', col).attr('stroke-width', LS.s).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round').attr('filter', LS.f).attr('d', d3.line().curve(cv).x(r => x(r.d)).y(r => y(r.ret)));   // 11-05 2.5 → 0.6
+    if (fx) { if (!LS.kd) animate(kp); animate(p); }   // 점선은 그리기 효과가 점선을 덮어서 안 씀
     if (sh.length > 1) {   // 온톨로지 그림자 (초록)
-      const op = svg.append('path').datum(sh).attr('fill', 'none').attr('stroke', ONT).attr('stroke-width', 0.9).attr('stroke-linejoin', 'round').attr('filter', 'url(#fHeroGlow)').attr('d', d3.line().curve(cv).x(r => x(r.d)).y(r => y(r.ret)));
-      if (fx) animate(op);
+      const op = svg.append('path').datum(sh).attr('fill', 'none').attr('stroke', ONT).attr('stroke-width', LS.o).attr('stroke-dasharray', LS.od).attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round').attr('filter', LS.f).attr('d', d3.line().curve(cv).x(r => x(r.d)).y(r => y(r.ret)));
+      if (fx && !LS.od) animate(op);
       const SL = sh[sh.length - 1];
       fade(svg.append('circle').attr('cx', x(SL.d)).attr('cy', y(SL.ret)).attr('r', 3.5).attr('fill', ONT).attr('stroke', '#fff').attr('stroke-width', 1.2), 1);
     }
@@ -1322,19 +1323,19 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       labs.forEach(l => { const t = svg.append('text').attr('x', x(L.d) + 12).attr('y', l.y).attr('dy', '.32em').attr('font-size', 12).attr('fill', l.c); t.append('tspan').attr('font-weight', 600).text(l.n); t.append('tspan').attr('dx', 6).text(pct(l.v)); });
     } else {   // 휴대폰: 오른쪽 이름표 대신 그래프 아래 한 줄 범례 (11-10 S.Lee: 위 → 아래, 가운데)
       // 11-09 한 줄 범례: Sigma Engine · SiON Engine · KOSPI. 폭이 모자라면 짧은 이름 → 글씨 11px 순으로 줄임
-      const items = [{ n: 'Sigma Engine', s: 'Sigma', v: L.ret, lc: col, c: colHi }];
-      if (sh.length > 1) items.push({ n: 'SiON Engine', s: 'SiON', v: sh[sh.length - 1].ret, lc: ONT, c: ONT });
-      items.push({ n: 'KOSPI', s: 'KOSPI', v: L.kret, lc: '#a8a8a8', c: '#9a9a9a' });
+      const items = [{ n: 'Sigma Engine', s: 'Sigma', v: L.ret, lc: col, c: colHi, w: LS.s }];
+      if (sh.length > 1) items.push({ n: 'SiON Engine', s: 'SiON', v: sh[sh.length - 1].ret, lc: ONT, c: ONT, d: LS.od, w: LS.o });
+      items.push({ n: 'KOSPI', s: 'KOSPI', v: L.kret, lc: LS.kc, c: '#9a9a9a', d: LS.kd, w: LS.k });
       const avail = W - 8;
       const draw = (short, fs, gapX) => {
         const g = svg.append('g');
         let xx = 0;
         items.forEach((it, k) => {
           if (k) xx += gapX;
-          g.append('line').attr('x1', xx).attr('x2', xx + 12).attr('y1', 0).attr('y2', 0).attr('stroke', it.lc).attr('stroke-width', 1.5);
-          const t = g.append('text').attr('x', xx + 17).attr('dy', '.32em').attr('font-size', fs).attr('fill', it.c);
+          g.append('line').attr('x1', xx).attr('x2', xx + 14).attr('y1', 0).attr('y2', 0).attr('stroke', it.lc).attr('stroke-width', Math.max(1.5, it.w || 0)).attr('stroke-dasharray', it.d ? (it.d === '1 4' ? '1 3' : '4 3') : null).attr('stroke-linecap', 'round');
+          const t = g.append('text').attr('x', xx + 19).attr('dy', '.32em').attr('font-size', fs).attr('fill', it.c);
           t.append('tspan').attr('font-weight', 600).text(short ? it.s : it.n);   // 11-10 값은 위 요약에 있으니 이름만
-          xx += 17 + t.node().getComputedTextLength();
+          xx += 19 + t.node().getComputedTextLength();
         });
         g.attr('transform', `translate(${Math.max(4, (W - xx) / 2)},${H - 10})`);
         return { g, w: xx };
