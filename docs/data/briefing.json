@@ -81,9 +81,9 @@
     ]
   },
   "intraday": {
-    "time": "12:45",
-    "pool": 411,
-    "analyzed_new": 22,
+    "time": "13:00",
+    "pool": 412,
+    "analyzed_new": 8,
     "passed": 21,
     "kept_prep": false
   },
@@ -98,7 +98,7 @@
       "vol20": 0.888,
       "foreign_net": 1436621025,
       "inst_net": 20425868350,
-      "score": 0.914,
+      "score": 0.892,
       "news": [
         {
           "date": "11-09",
@@ -116,11 +116,11 @@
           "risk": false
         }
       ],
-      "price": 31100,
-      "chg": 0.0454,
-      "activity": 2.43,
-      "foreign_today": 1990400000,
-      "inst_today": 2488000000,
+      "price": 30950,
+      "chg": 0.0403,
+      "activity": 2.32,
+      "foreign_today": 1980800000,
+      "inst_today": 2476000000,
       "exchange": "KOSPI"
     },
     {
@@ -133,7 +133,7 @@
       "vol20": 0.792,
       "foreign_net": -20437500850,
       "inst_net": 51491335800,
-      "score": 0.796,
+      "score": 0.753,
       "news": [
         {
           "date": "11-07",
@@ -146,30 +146,11 @@
           "risk": false
         }
       ],
-      "price": 79300,
-      "chg": 0.0702,
-      "activity": 2.14,
-      "foreign_today": 3330600000,
-      "inst_today": 475800000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "017670",
-      "name": "SK텔레콤",
-      "close": 77300,
-      "ret5": 0.039,
-      "ret20": -0.0819,
-      "rsi14": 45.2,
-      "vol20": 0.491,
-      "foreign_net": -22121547500,
-      "inst_net": 56405917100,
-      "score": 0.677,
-      "news": [],
-      "price": 77800,
-      "chg": 0.0013,
-      "activity": 1.28,
-      "foreign_today": 4045600000,
-      "inst_today": 778000000,
+      "price": 79100,
+      "chg": 0.0675,
+      "activity": 2.07,
+      "foreign_today": 3322200000,
+      "inst_today": 474600000,
       "exchange": "KOSPI"
     },
     {
@@ -186,6 +167,11 @@
       "news": [
         {
           "date": "11-09",
+          "title": "SK바이오팜, 미국 링스 입주사 31곳 선정…현지 사업화 지원",
+          "risk": false
+        },
+        {
+          "date": "11-09",
           "title": "SK바이오팜, 미국 진출 플랫폼 '링스' 입주사 31곳 확정",
           "risk": false
         },
@@ -193,15 +179,29 @@
           "date": "11-09",
           "title": "SK바이오팜, 국내 바이오텍 31곳 美 진출 지원…'링스' 가동",
           "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "SK바이오팜, 국내 바이오기업 31곳 미국 진출 지원…'LinX' 운영",
-          "risk": false
         }
       ],
       "foreign_today": 1953600000,
       "inst_today": 0,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "017670",
+      "name": "SK텔레콤",
+      "close": 77300,
+      "ret5": 0.039,
+      "ret20": -0.0819,
+      "rsi14": 45.2,
+      "vol20": 0.491,
+      "foreign_net": -22121547500,
+      "inst_net": 56405917100,
+      "score": 0.634,
+      "news": [],
+      "price": 77700,
+      "chg": 0.0,
+      "activity": 1.26,
+      "foreign_today": 4040400000,
+      "inst_today": 777000000,
       "exchange": "KOSPI"
     },
     {
@@ -260,7 +260,7 @@
         },
         {
           "date": "11-09",
-          "title": "[위클리오늘] 이동통신 소식_LG유플러스, KT(11.9)",
+          "title": "LG유플러스, 서울대·KAIST·연세대와 한국형 음성AI 개발 나선다",
           "risk": false
         }
       ],
@@ -296,11 +296,11 @@
           "risk": false
         }
       ],
-      "price": 49350,
-      "chg": 0.0051,
-      "activity": 1.8,
+      "price": 49200,
+      "chg": 0.002,
+      "activity": 1.71,
       "foreign_today": 0,
-      "inst_today": 1677900000,
+      "inst_today": 1672800000,
       "exchange": "KOSPI"
     },
     {
@@ -331,11 +331,11 @@
           "risk": false
         }
       ],
-      "price": 62300,
-      "chg": 0.0298,
-      "activity": 0.63,
-      "foreign_today": 2865800000,
-      "inst_today": 311500000,
+      "price": 61800,
+      "chg": 0.0215,
+      "activity": 0.62,
+      "foreign_today": 2842800000,
+      "inst_today": 309000000,
       "exchange": "KOSPI"
     },
     {
@@ -348,7 +348,7 @@
       "vol20": 0.738,
       "foreign_net": -7484986975,
       "inst_net": 26975170300,
-      "score": 0.323,
+      "score": 0.344,
       "news": [
         {
           "date": "11-09",
@@ -380,7 +380,7 @@
       "vol20": 0.404,
       "foreign_net": -5748052750,
       "inst_net": 7853604175,
-      "score": 0.323,
+      "score": 0.344,
       "news": [],
       "foreign_today": 0,
       "inst_today": 325200000,
@@ -396,7 +396,7 @@
       "vol20": 0.625,
       "foreign_net": 652431450,
       "inst_net": 21161016850,
-      "score": 0.323,
+      "score": 0.344,
       "news": [
         {
           "date": "11-09",
@@ -428,7 +428,7 @@
       "vol20": 0.592,
       "foreign_net": -8231059200,
       "inst_net": 53595627900,
-      "score": 0.29,
+      "score": 0.312,
       "news": [
         {
           "date": "11-09",
@@ -460,7 +460,7 @@
       "vol20": 0.254,
       "foreign_net": 5502551950,
       "inst_net": 9691482340,
-      "score": 0.247,
+      "score": 0.269,
       "news": [
         {
           "date": "11-09",
@@ -539,7 +539,7 @@
       ],
       "price": 59600,
       "chg": 0.0836,
-      "activity": 3.17,
+      "activity": 3.03,
       "foreign_today": 0,
       "inst_today": 894000000,
       "exchange": "KOSDAQ"
@@ -554,7 +554,7 @@
       "vol20": 1.387,
       "foreign_net": -6381603720,
       "inst_net": 16519823935,
-      "score": 0.753,
+      "score": 0.774,
       "news": [
         {
           "date": "11-09",
@@ -572,30 +572,36 @@
           "risk": false
         }
       ],
-      "price": 16530,
-      "chg": 0.0699,
-      "activity": 2.11,
+      "price": 16750,
+      "chg": 0.0841,
+      "activity": 2.12,
       "foreign_today": 0,
-      "inst_today": 1388520000,
+      "inst_today": 1407000000,
       "exchange": "KOSDAQ"
     },
     {
-      "code": "425420",
-      "name": "티에프이",
-      "close": 64800,
-      "ret5": -0.2448,
-      "ret20": 0.0157,
-      "rsi14": 46.5,
-      "vol20": 1.507,
-      "foreign_net": 14334611050,
-      "inst_net": -8579187950,
-      "score": 0.527,
-      "news": [],
-      "price": 69400,
-      "chg": 0.1266,
-      "activity": 0.94,
+      "code": "119850",
+      "name": "지엔씨에너지",
+      "close": 35250,
+      "ret5": 0.119,
+      "ret20": -0.2664,
+      "rsi14": 42.4,
+      "vol20": 1.141,
+      "foreign_net": -11979305150,
+      "inst_net": 12404586800,
+      "score": 0.505,
+      "news": [
+        {
+          "date": "11-06",
+          "title": "JP모건 시큐리티즈, 지엔씨에너지 5.07% 보유 보고",
+          "risk": false
+        }
+      ],
+      "price": 38550,
+      "chg": 0.0921,
+      "activity": 2.92,
       "foreign_today": 0,
-      "inst_today": 971600000,
+      "inst_today": 385500000,
       "exchange": "KOSDAQ"
     },
     {
@@ -626,10 +632,10 @@
           "risk": false
         }
       ],
-      "price": 14220,
-      "chg": 0.038,
-      "activity": 1.75,
-      "foreign_today": 583020000,
+      "price": 14210,
+      "chg": 0.0372,
+      "activity": 1.65,
+      "foreign_today": 582610000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -661,11 +667,11 @@
           "risk": false
         }
       ],
-      "price": 213500,
-      "chg": 0.0887,
-      "activity": 3.38,
+      "price": 214000,
+      "chg": 0.0913,
+      "activity": 3.23,
       "foreign_today": 0,
-      "inst_today": 213500000,
+      "inst_today": 214000000,
       "exchange": "KOSPI"
     },
     {
