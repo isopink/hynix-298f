@@ -1236,7 +1236,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     svg.append('g').selectAll('text').data(xt).join('text').attr('x', r => x(r.d)).attr('y', H - 8).attr('font-size', 11).attr('fill', C.muted)
       .attr('text-anchor', (r, i) => i === 0 ? 'start' : i === xt.length - 1 ? 'end' : 'middle').text(r => md(r.d));
     // 우리 ↔ KOSPI 격차 색칠: 우리가 위면 빨강(앞섬), 아래면 파랑(뒤짐). KOSPI 선을 기준으로 위·아래를 잘라 칠함
-    const cv = d3.curveMonotoneX, kLine = d3.line().curve(cv).x(r => x(r.d)).y(r => y(r.kret));   // 11-05 부드러운 곡선 (값을 넘어 튀지 않는 monotone)
+    const cv = d3.curveLinear, kLine = d3.line().curve(cv).x(r => x(r.d)).y(r => y(r.kret));   // 11-10 S.Lee: 곡선 대신 직선으로 이음 (11-05 monotone 곡선)
     const defs = svg.append('defs');
     defs.append('clipPath').attr('id', 'cHeroUp').append('path').datum(rows).attr('d', d3.area().curve(cv).x(r => x(r.d)).y0(m.t - 20).y1(r => y(r.kret)));
     defs.append('clipPath').attr('id', 'cHeroDn').append('path').datum(rows).attr('d', d3.area().curve(cv).x(r => x(r.d)).y0(H).y1(r => y(r.kret)));
