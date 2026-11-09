@@ -137,7 +137,7 @@ reports/    보고서 PDF, drafts/ = 주간 회고 에이전트가 쓴 초안
 - [x] `setup_tasks.ps1`로 작업 스케줄러 등록, `GIT_PUSH=1` (11-02 데스크톱, 작업 10개)
 - [x] 에이전트를 데스크톱으로 옮기기 (`agent/MOVE_PC.md`). 11-02 밤 이전, 노트북 작업은 해제. 노트북 push → 데스크톱 반영 확인
 - [ ] 장중 push 때 sync 가 monitor 를 실제로 재시작하는지 확인 (임시 저장소로는 확인함). 하루 이상 문제없으면 노트북 `C:\dev\uostock-ai-trader` 삭제
-- [ ] 그림자 운영 (11-08 S.Lee): 온톨로지 버전([sigma-six-ontology](https://github.com/kyaa468-ui/sigma-six-ontology))을 브랜치 `shadow/ontology` 로 실제 옆에서 가상 계좌로 15분마다 (3분 늦게). 데스크톱에 `agent/shadow/setup_shadow.ps1` 한 번 실행 → `C:\dev\hynix-shadow`, 작업 `Hynix298S-*`. 키움 새 호출 없음, 실제가 1시간 안에 실패하면 쉼. 비교 `agent/shadow/compare.py`. main 에는 합치지 않음. 대시보드: 그림자가 회차마다 `work/shadow_equity.jsonl`(그림자·실제 자산 같은 시각)을 남기면 실제 logger 가 `../hynix-shadow`(또는 SHADOW_DIR)에서 읽어 `docs/data/shadow.json`(daily = 날짜별 그림자 자산)으로 올림 → 누적 수익률 차트에 초록 SiON Engine 선 (11-09 이름: Sigma + Ontology, 상태바도 SiON Engine) (11-09 대시보드가 1분마다 다시 받아 장중 오늘 점도 그림자 최근 회차로 갱신), 파일이 없으면 안 그림
+- [ ] 그림자 운영 (11-08 S.Lee): 온톨로지 버전([sigma-six-ontology](https://github.com/kyaa468-ui/sigma-six-ontology))을 브랜치 `shadow/ontology` 로 실제 옆에서 가상 계좌로 15분마다 (3분 늦게). 데스크톱에 `agent/shadow/setup_shadow.ps1` 한 번 실행 → `C:\dev\hynix-shadow`, 작업 `Hynix298S-*`. 키움 새 호출 없음, 실제가 1시간 안에 실패하면 쉼. 비교 `agent/shadow/compare.py`. main 에는 합치지 않음. 대시보드: 그림자가 회차마다 `work/shadow_equity.jsonl`(그림자·실제 자산 같은 시각)을 남기면 실제 logger 가 `../hynix-shadow`(또는 SHADOW_DIR)에서 읽어 `docs/data/shadow.json`(daily = 날짜별 그림자 자산)으로 올림 → 누적 수익률 차트에 초록 SiON Engine 선 (11-09 이름: Sigma + Ontology, 상태바는 '온톨로지') (11-09 대시보드가 1분마다 다시 받아 장중 오늘 점도 그림자 최근 회차로 갱신), 파일이 없으면 안 그림
 - [ ] 대회 후 README 결과·회고 섹션 채우기
 
 ## 커밋
