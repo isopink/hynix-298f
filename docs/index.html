@@ -609,6 +609,41 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
 [data-theme=volt] svg [tabindex]:focus-visible, [data-theme=volt] button:focus-visible, [data-theme=volt] summary:focus-visible { outline-color: #2fd6a1; }
 `;
   document.head.appendChild(st);
+  // 7) 화면 글자를 영어로 (11-10 S.Lee: 시안은 영어). 종목명 · 에이전트 판단 근거(데이터)는 원문 그대로
+  const EN = {
+    '모니터링': 'Monitor', '에이전트': 'Agent', '온톨로지': 'Ontology', '포트폴리오': 'Portfolio', '총자산': 'Total assets', '주식 비중': 'Equity weight', '보유': 'HOLD', '오늘 체결': 'Fills today',
+    '종목명': 'Stock', '비중': 'Weight', '수익률': 'Return', '합산 수익률': 'Total return', '현금': 'Cash', '국면': 'Regime', '하락': 'Bear', '상승': 'Bull', '횡보': 'Sideways',
+    '주식 비중 상한': 'Equity cap', '장중 수급': 'Intraday flow', '관망': 'WAIT', '매수': 'BUY', '매도': 'SELL', '최근 체결': 'Recent fills', '실제 계좌': 'Live account', '가상 체결': 'Virtual fills',
+    '시각': 'Time', '구분': 'Side', '종목': 'Stock', '수량': 'Qty', '가격': 'Price', '실시간 KOSPI': 'Live KOSPI', '거래량': 'Volume', '투자자별 순매수': 'Net buying by investor',
+    '수급 데이터를 기다리는 중이에요.': 'Waiting for flow data.', 'KOSPI 데이터를 기다리는 중이에요.': 'Waiting for KOSPI data.', '이번 주': 'This week', 'vs 지난 금요일': 'vs last Friday',
+    '월': 'Mon', '화': 'Tue', '수': 'Wed', '목': 'Thu', '금': 'Fri', '최대 낙폭': 'Max drawdown', '고점 대비': 'from peak', '승률': 'Win rate', '● 청산  ○ 보유 중': '● closed  ○ open',
+    '리스크 한도 사용률': 'Risk limit usage', '주문 직전 Hook이 강제, 100%면 차단': 'Enforced by the pre-order hook, blocked at 100%', '오늘 손실': 'Loss today', '누적 손실': 'Total loss',
+    '현금 비중': 'Cash weight', '보유 종목 수': 'Positions', '일별 초과수익': 'Daily excess return', '수익률 캘린더': 'Return calendar', '큰 숫자 Sigma Engine, 작은 숫자 KOSPI': 'Large: Sigma Engine, small: KOSPI',
+    '기준값 자동 조정 (매일)': 'Daily auto-tuning', '유지': 'Kept', '주간 회고 (수요일 · 금요일)': 'Weekly review (Wed, Fri)', '반영': 'Applied', '검토 중': 'In review',
+    '수수료·세금 반영': 'after fees and tax', '확신도': 'Confidence', '현재가': 'Price', '평단': 'Avg cost', '총 손익': 'Total P&L', '초과': 'Excess', '매입금액': 'Cost', '금액': 'Amount',
+    '평가금액': 'Market value', '토큰': 'Tokens', '종가': 'Close', '조건 통과': 'Passed', '전일 대비': 'vs prev close', '외국인': 'Foreign', '외국인 · 기관 5일': 'Foreign, inst. 5d',
+    '오늘 외국인 · 기관': 'Foreign, inst. today', '실행': 'Runs', '실패': 'Failures', '순위 상위 풀': 'Top ranked pool', '순수': 'Price only', '손절 / 익절': 'Stop / take', '손익 (수수료·세금 반영)': 'P&L (after fees, tax)',
+    '손익 (반영)': 'P&L (net)', '보유일': 'Days held', '보유 종목 평가손익': 'Unrealized P&L', '매수 금액': 'Buy amount', '기관': 'Institution', '거래 활발도': 'Activity', '개인': 'Retail',
+    'Sigma 대비': 'vs Sigma', 'SiON Engine (가상)': 'SiON Engine (virtual)', 'RSI · 변동성': 'RSI, volatility', '5일 · 20일': '5d, 20d', 'SiON Engine 수익률 (가상)': 'SiON Engine return (virtual)',
+    'SiON 보유 합계': 'SiON holdings total', '보유 합계': 'Holdings total', '매도 측': 'Bear side', '매수 측': 'Bull side', '총괄 판단': 'Decision', '판단': 'Decision', '차단': 'Blocked',
+    '평일 매매': 'Weekdays', '15분마다': 'every 15 min', '다음 매매': 'Next trade', '장 마감': 'Closed', '동작': 'Running', '멈춤': 'Stopped', '판단 중': 'Deciding', '데이터 없음': 'No data',
+    '주식': 'Equity', '상한': 'Cap', '일': 'day', '접기': 'Collapse', '닫기': 'Close'
+  };
+  const RX = [
+    [/^(\d+\/\d+) 기준$/, 'as of $1'], [/^(\d+\/\d+ \d+:\d+) 회차$/, 'Round $1'], [/^전체 (\d+)종목 보기/, 'Show all $1'], [/^(\d+)종목$/, '$1 stocks'], [/^(\d+)건$/, '$1'], [/^(\d+)개$/, '$1'],
+    [/^변동성 (\d+%)$/, 'Vol $1'], [/^고변동 (\d+%)$/, 'High vol $1'], [/^주식 \/ 상한 (.+)$/, 'Equity / cap $1'], [/^상한 (.+)$/, 'Cap $1'], [/^([\d,]+)원$/, '₩$1'], [/^(\d+\/\d+) 시작 ·$/, 'Since $1 ·'],
+    [/^(\d+\/\d+ \d+:\d+) 장 마감$/, '$1, closed'], [/^청산 (\d+)건 중 (\d+)건 수익$/, '$2 of $1 closed trades won'], [/^한도 (.+)$/, 'Limit $1'], [/^최소 (.+)$/, 'Min $1'], [/^최대 (\d+)개, (.+)$/, 'Max $1, $2'],
+    [/^국면 상한 (.+) 안, (.+)$/, 'Within cap $1, $2'], [/^KOSPI 이긴 날 (\d+) \/ (\d+)일$/, 'Beat KOSPI $1 / $2 days'], [/^(\d)주$/, 'W$1'], [/^평균 ([\d,]+)천$/, 'Avg $1k'],
+    [/^종목당 최대 비중 \((.+)\)$/, 'Max weight per stock ($1)'], [/^코스닥 비중.*$/, 'KOSDAQ weight'], [/^주식 비중 \(.+\)$/, 'Equity weight (regime cap)'], [/^매수 확신도 기준 (.+)$/, 'Buy threshold $1'],
+    [/^(\d+\/\d+) 시가 대비$/, 'vs $1 open'], [/^수익률 (.*)$/, 'Return $1'], [/^장중 수급 재선별 ·(.*)$/, 'Intraday rescreen ·$1'], [/^(\d+\/\d+ \d+:\d+) 마감$/, '$1, closed']
+  ];
+  const tr = s => { const k = s.trim(); if (!k || !/[가-힣]/.test(k)) return s; if (EN[k]) return s.replace(k, EN[k]); for (const [re, to] of RX) if (re.test(k)) return s.replace(k, k.replace(re, to)); return s; };
+  const SKIP = 'script, style';   // 종목명 · 판단 근거는 사전에 없으니 그대로 남음
+  const walk = root => { if (!root) return; if (root.nodeType === 3) { const p = root.parentElement; if (p && !p.closest(SKIP)) { const v = tr(root.nodeValue); if (v !== root.nodeValue) root.nodeValue = v; } return; }
+    if (root.nodeType !== 1 || root.closest && root.closest(SKIP)) return; const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); let n; const a = []; while ((n = w.nextNode())) a.push(n); a.forEach(walk); };
+  document.documentElement.lang = 'en';
+  new MutationObserver(ms => ms.forEach(m => m.type === 'characterData' ? walk(m.target) : m.addedNodes.forEach(walk))).observe(document.documentElement, { childList: true, subtree: true, characterData: true });
+  document.addEventListener('DOMContentLoaded', () => walk(document.body));
 })();
 </script>
 <script src="config.js"></script>

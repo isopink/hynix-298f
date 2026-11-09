@@ -115,7 +115,7 @@ reports/    보고서 PDF, drafts/ = 주간 회고 에이전트가 쓴 초안
 - 상태 점 규칙: 초록 = 동작, 초록 깜빡임 = 판단 실행 중, 빨강 깜빡임 = 장중 실패·지연·동기화 멈춤(온톨로지는 지연·쉼을 회색), 회색 = 장 마감. 11-10 S.Lee: 장 밖에는 실패가 있어도 회색, 사유는 툴팁에만
 - 11-10 S.Lee: PC(641px 이상)는 접는 칸(Table · 최근 체결 · Live KOSPI · Record · Feedback Loop)을 전부 펼친 채로, + − 표시·클릭 없음. 폰은 지금처럼 접힘
 - 링크 미리보기(11-10): 제목 'The Sigma Engine' 만(설명 없음), 그림 `docs/og.jpg` = 커버 신경망 + 가운데 The Sigma Engine (1200×630)
-- 11-10 VoltAgent 디자인 시안 (S.Lee): `?theme=volt` 또는 `/volt/` (링크 미리보기 `docs/volt/og.jpg`) 에서만 켜짐. index.html 안 `VOLT` 스크립트가 CSS 글자 · d3 색 · 캔버스 · 인라인 style 의 색을 한 번에 바꿈 (빨강 → 초록 #00d992, 파랑 → 회색 #8b949e, SiON 초록 → 흰색), Inter + Pretendard + JetBrains Mono, 유리·그라데이션 없이 1px 선 #3d3a39 · 8px 모서리. 본 화면 규칙은 그대로, 채택하면 이 블록을 기본으로
+- 11-10 VoltAgent 디자인 시안 (S.Lee): `?theme=volt` 또는 `/volt/` (링크 미리보기 `docs/volt/og.jpg`) 에서만 켜짐. index.html 안 `VOLT` 스크립트가 CSS 글자 · d3 색 · 캔버스 · 인라인 style 의 색을 한 번에 바꿈 (빨강 → 초록 #00d992, 파랑 → 회색 #8b949e, SiON 초록 → 흰색), Inter + Pretendard + JetBrains Mono, 화면 글자는 영어(사전 `EN` · 패턴 `RX`, 종목명·에이전트 판단 근거는 원문), 유리·그라데이션 없이 1px 선 #3d3a39 · 8px 모서리. 본 화면 규칙은 그대로, 채택하면 이 블록을 기본으로
 - 수정 후 데스크톱(1280)·모바일(400) 둘 다 가로 스크롤 없는지 확인
 
 ## 보안 (반드시 지킬 것)
