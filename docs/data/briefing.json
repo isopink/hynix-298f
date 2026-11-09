@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "10:00",
+    "time": "10:15",
     "pool": 371,
     "analyzed_new": 30,
-    "passed": 16,
+    "passed": 15,
     "kept_prep": false
   },
   "candidates": [
@@ -98,7 +98,7 @@
       "vol20": 0.469,
       "foreign_net": -6880633700,
       "inst_net": 74240426800,
-      "score": 0.973,
+      "score": 0.985,
       "news": [
         {
           "date": "11-08",
@@ -118,7 +118,7 @@
       ],
       "price": 58400,
       "chg": 0.0,
-      "activity": 10.96,
+      "activity": 9.03,
       "foreign_today": 1051200000,
       "inst_today": 0,
       "exchange": "KOSPI"
@@ -133,8 +133,13 @@
       "vol20": 0.888,
       "foreign_net": 1436621025,
       "inst_net": 20425868350,
-      "score": 0.644,
+      "score": 0.6,
       "news": [
+        {
+          "date": "11-09",
+          "title": "[건설 Pick] 삼성물산·GS건설·대우건설, 대규모 수주와 친환경 자원순...",
+          "risk": false
+        },
         {
           "date": "11-09",
           "title": "GS건설, '목동윤슬자이' 분양 호응…목동 재건축 시장 공략",
@@ -144,80 +149,13 @@
           "date": "11-09",
           "title": "“목동 주거 눈높이 맞췄다”… GS건설 ‘목동윤슬자이’, 맞춤형 상품...",
           "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "GS건설, 연제갤러리자이 9~11일 정당계약…1순위 667건 접수",
-          "risk": false
         }
       ],
-      "price": 30950,
-      "chg": 0.0403,
-      "activity": 4.68,
-      "foreign_today": 928500000,
-      "inst_today": 340450000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "018260",
-      "name": "삼성에스디에스",
-      "close": 215000,
-      "ret5": 0.075,
-      "ret20": 0.0964,
-      "rsi14": 53.4,
-      "vol20": 0.591,
-      "foreign_net": 190562600,
-      "inst_net": 45355817350,
-      "score": 0.534,
-      "news": [
-        {
-          "date": "11-07",
-          "title": "11월1주차 삼성에스디에스 주가 21만 5천원 상승 마감",
-          "risk": false
-        },
-        {
-          "date": "11-07",
-          "title": "삼성SDI·삼성에스디에스·SK가스[하나證 주간추천주]",
-          "risk": false
-        }
-      ],
-      "foreign_today": 0,
-      "inst_today": 3440000000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "035720",
-      "name": "카카오",
-      "close": 32000,
-      "ret5": 0.0959,
-      "ret20": -0.0123,
-      "rsi14": 53.9,
-      "vol20": 0.46,
-      "foreign_net": 26399005875,
-      "inst_net": 25956034400,
-      "score": 0.521,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "엔비디아 동맹 기대했던 카카오모빌리티·포티투닷, 매디슨 황 방한 취...",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "카카오뱅크 AI 이모지 퀴즈 정답(11월9일)",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "캐피탈 이어 카드·증권 검토…카카오뱅크, 사업 확장",
-          "risk": false
-        }
-      ],
-      "price": 32450,
-      "chg": 0.0046,
-      "activity": 2.79,
-      "foreign_today": 2109250000,
-      "inst_today": 0,
+      "price": 30500,
+      "chg": 0.0252,
+      "activity": 4.26,
+      "foreign_today": 915000000,
+      "inst_today": 335500000,
       "exchange": "KOSPI"
     },
     {
@@ -230,45 +168,45 @@
       "vol20": 0.491,
       "foreign_net": -22121547500,
       "inst_net": 56405917100,
-      "score": 0.384,
+      "score": 0.415,
       "news": [],
-      "price": 77700,
-      "chg": 0.0,
-      "activity": 2.04,
-      "foreign_today": 1709400000,
-      "inst_today": 155400000,
+      "price": 78100,
+      "chg": 0.0051,
+      "activity": 1.96,
+      "foreign_today": 1718200000,
+      "inst_today": 156200000,
       "exchange": "KOSPI"
     },
     {
-      "code": "032640",
-      "name": "LG유플러스",
-      "close": 16520,
-      "ret5": 0.1667,
-      "ret20": 0.1448,
-      "rsi14": 72.8,
-      "vol20": 0.402,
-      "foreign_net": -43204631710,
-      "inst_net": 74782934530,
-      "score": 0.315,
+      "code": "004020",
+      "name": "현대제철",
+      "close": 28300,
+      "ret5": 0.1098,
+      "ret20": 0.0089,
+      "rsi14": 48.9,
+      "vol20": 0.625,
+      "foreign_net": 652431450,
+      "inst_net": 21161016850,
+      "score": 0.369,
       "news": [
         {
           "date": "11-09",
-          "title": "LG유플러스, 3개 대학과 한국어 음성 AI 개발…대화 맥락∙말투 연구",
+          "title": "현대제철 노사, 당진제철소 임직원 가족과 늦가을 목장길 트레킹",
           "risk": false
         },
         {
           "date": "11-09",
-          "title": "LG유플러스, 서울대·KAIST·연세대와 한국어 음성 AI 'K-보이스 엔진' 개...",
+          "title": "\"주주가치 제고는 언제쯤\"… 현대제철, 결국 '저PBR' 낙인까지",
           "risk": false
         },
         {
-          "date": "11-09",
-          "title": "LG유플러스, 서울대·KAIST·연세대와 손잡고 한국형 음성 AI 개발한다",
+          "date": "11-08",
+          "title": "美, 한국산 후판 상계관세 최종 확정…동국제강 1.89%·현대제철 1.39%",
           "risk": false
         }
       ],
-      "foreign_today": 346920000,
-      "inst_today": 132160000,
+      "foreign_today": 226400000,
+      "inst_today": 141500000,
       "exchange": "KOSPI"
     },
     {
@@ -281,7 +219,7 @@
       "vol20": 0.738,
       "foreign_net": -7484986975,
       "inst_net": 26975170300,
-      "score": 0.301,
+      "score": 0.338,
       "news": [
         {
           "date": "11-09",
@@ -304,6 +242,38 @@
       "exchange": "KOSPI"
     },
     {
+      "code": "032640",
+      "name": "LG유플러스",
+      "close": 16520,
+      "ret5": 0.1667,
+      "ret20": 0.1448,
+      "rsi14": 72.8,
+      "vol20": 0.402,
+      "foreign_net": -43204631710,
+      "inst_net": 74782934530,
+      "score": 0.323,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "LG유플러스, 서울대·KAIST·연세대와 한국어 특화 음성 AI 개발 착수",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "LG유플러스, 서울대·KAIST·연세대와 ‘K-보이스 얼라이언스’ 출범",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "LG유플러스, 사람처럼 자연스럽게 대화…서울대·KAIST·연세대 협력",
+          "risk": false
+        }
+      ],
+      "foreign_today": 346920000,
+      "inst_today": 132160000,
+      "exchange": "KOSPI"
+    },
+    {
       "code": "028050",
       "name": "삼성E&A",
       "close": 61300,
@@ -313,7 +283,7 @@
       "vol20": 0.957,
       "foreign_net": -76658998800,
       "inst_net": 63121010150,
-      "score": 0.301,
+      "score": 0.292,
       "news": [
         {
           "date": "11-09",
@@ -331,10 +301,10 @@
           "risk": false
         }
       ],
-      "price": 62850,
-      "chg": 0.0388,
-      "activity": 1.26,
-      "foreign_today": 1822650000,
+      "price": 62400,
+      "chg": 0.0314,
+      "activity": 1.24,
+      "foreign_today": 1809600000,
       "inst_today": 0,
       "exchange": "KOSPI"
     },
@@ -348,7 +318,7 @@
       "vol20": 0.843,
       "foreign_net": -27562520175,
       "inst_net": 30133908725,
-      "score": 0.178,
+      "score": 0.154,
       "news": [
         {
           "date": "11-09",
@@ -362,15 +332,15 @@
         },
         {
           "date": "11-09",
-          "title": "씨에스윈드, 타워 영업이익 83% 증가…미국 생산성 개선 효과-키움",
+          "title": "NH證 \"씨에스윈드, 美 인허가 개혁이 주가 변수\"",
           "risk": false
         }
       ],
-      "price": 51300,
-      "chg": 0.0448,
-      "activity": 3.35,
+      "price": 49950,
+      "chg": 0.0173,
+      "activity": 3.2,
       "foreign_today": 0,
-      "inst_today": 461700000,
+      "inst_today": 449550000,
       "exchange": "KOSPI"
     },
     {
@@ -401,11 +371,11 @@
           "risk": false
         }
       ],
-      "price": 58600,
-      "chg": 0.0655,
-      "activity": 9.45,
+      "price": 58900,
+      "chg": 0.0709,
+      "activity": 7.95,
       "foreign_today": 0,
-      "inst_today": 820400000,
+      "inst_today": 824600000,
       "exchange": "KOSDAQ"
     },
     {
@@ -418,7 +388,7 @@
       "vol20": 1.387,
       "foreign_net": -6381603720,
       "inst_net": 16519823935,
-      "score": 0.658,
+      "score": 0.646,
       "news": [
         {
           "date": "11-09",
@@ -436,11 +406,11 @@
           "risk": false
         }
       ],
-      "price": 16790,
-      "chg": 0.0867,
-      "activity": 4.99,
+      "price": 16330,
+      "chg": 0.057,
+      "activity": 4.62,
       "foreign_today": 0,
-      "inst_today": 856290000,
+      "inst_today": 832830000,
       "exchange": "KOSDAQ"
     },
     {
@@ -453,7 +423,7 @@
       "vol20": 1.105,
       "foreign_net": -1315515485,
       "inst_net": 73370470,
-      "score": 0.616,
+      "score": 0.6,
       "news": [
         {
           "date": "11-09",
@@ -471,10 +441,10 @@
           "risk": false
         }
       ],
-      "price": 14360,
-      "chg": 0.0482,
-      "activity": 5.19,
-      "foreign_today": 789800000,
+      "price": 14210,
+      "chg": 0.0372,
+      "activity": 4.47,
+      "foreign_today": 781550000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -488,7 +458,7 @@
       "vol20": 1.449,
       "foreign_net": 33414656,
       "inst_net": 22535130,
-      "score": 0.534,
+      "score": 0.554,
       "news": [
         {
           "date": "11-09",
@@ -496,37 +466,47 @@
           "risk": false
         }
       ],
-      "price": 4905,
-      "chg": 0.111,
-      "activity": 6.27,
-      "foreign_today": 161865000,
+      "price": 4835,
+      "chg": 0.0951,
+      "activity": 5.23,
+      "foreign_today": 159555000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
     {
-      "code": "119850",
-      "name": "지엔씨에너지",
-      "close": 35250,
-      "ret5": 0.119,
-      "ret20": -0.2664,
-      "rsi14": 42.4,
-      "vol20": 1.141,
-      "foreign_net": -11979305150,
-      "inst_net": 12404586800,
-      "score": 0.507,
+      "code": "180640",
+      "name": "한진칼",
+      "close": 196700,
+      "ret5": 0.6005,
+      "ret20": 0.5154,
+      "rsi14": 82.1,
+      "vol20": 1.068,
+      "foreign_net": -23144745850,
+      "inst_net": 30167917550,
+      "score": 0.4,
       "news": [
         {
-          "date": "11-06",
-          "title": "JP모건 시큐리티즈, 지엔씨에너지 5.07% 보유 보고",
+          "date": "11-08",
+          "title": "[공시] 한진칼우 '매매거래정지 예고', 미래나노텍·성창기업지주 '공매...",
+          "risk": true
+        },
+        {
+          "date": "11-09",
+          "title": "[증시키워드] 코스피 폭락 속 한진칼 경영권 분쟁에 관심↑",
+          "risk": false
+        },
+        {
+          "date": "11-08",
+          "title": "한진칼 흔드는 호반의 자본력, 어디까지 가나",
           "risk": false
         }
       ],
-      "price": 38150,
-      "chg": 0.0807,
-      "activity": 6.65,
+      "price": 213000,
+      "chg": 0.0862,
+      "activity": 7.47,
       "foreign_today": 0,
-      "inst_today": 381500000,
-      "exchange": "KOSDAQ"
+      "inst_today": 426000000,
+      "exchange": "KOSPI"
     },
     {
       "code": "114800",
