@@ -81,9 +81,9 @@
     ]
   },
   "intraday": {
-    "time": "13:45",
-    "pool": 446,
-    "analyzed_new": 30,
+    "time": "14:00",
+    "pool": 445,
+    "analyzed_new": 17,
     "passed": 21,
     "kept_prep": false
   },
@@ -116,11 +116,11 @@
           "risk": false
         }
       ],
-      "price": 30900,
-      "chg": 0.0387,
-      "activity": 2.14,
-      "foreign_today": 1483200000,
-      "inst_today": 5592900000,
+      "price": 30950,
+      "chg": 0.0403,
+      "activity": 2.09,
+      "foreign_today": 1485600000,
+      "inst_today": 5601950000,
       "exchange": "KOSPI"
     },
     {
@@ -135,11 +135,11 @@
       "inst_net": 56405917100,
       "score": 0.725,
       "news": [],
-      "price": 77700,
-      "chg": 0.0,
-      "activity": 1.19,
-      "foreign_today": 5128200000,
-      "inst_today": 777000000,
+      "price": 77600,
+      "chg": -0.0013,
+      "activity": 1.17,
+      "foreign_today": 5121600000,
+      "inst_today": 776000000,
       "exchange": "KOSPI"
     },
     {
@@ -156,17 +156,17 @@
       "news": [
         {
           "date": "11-09",
-          "title": "SK바이오팜, 국내 바이오기업 31곳 미국 진출 지원…현지 플랫폼 본격 운...",
+          "title": "SK바이오팜, 31개 기업과 함께 미국 시장 진출 도전장",
           "risk": false
         },
         {
           "date": "11-09",
-          "title": "SK바이오팜, 국내 바이오기업 31곳 미국 진출 지원",
+          "title": "세노바메이트 상업화 경험 공유…SK바이오팜, 국내사 지원",
           "risk": false
         },
         {
           "date": "11-09",
-          "title": "SK바이오팜, 미국 진출 지원 기업 31곳 선정…‘K-바이오 교두보’ 구축",
+          "title": "SK바이오팜, 美 K-바이오 상생 플랫폼 '링스' 입주사 31곳 선정",
           "risk": false
         }
       ],
@@ -188,17 +188,17 @@
       "news": [
         {
           "date": "11-09",
+          "title": "LG유플러스, 서울대·KAIST·연세대와 'K-보이스 AI' 개발…한국어 음성...",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "LG유플러스, 초고속인터넷 속도·안정성서 '7개 지표 1위'...경쟁사 모두...",
+          "risk": false
+        },
+        {
+          "date": "11-09",
           "title": "LG유플러스, 3개 대학과 한국어 음성 AI 연구",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "말투 읽고 긴 대화도 기억한다…LG유플러스, 한국어 음성 AI 개발",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "LG유플러스-서울대-KAIST-연세대, AI 'K-보이스 엔진' 개발 추진",
           "risk": false
         }
       ],
@@ -216,7 +216,7 @@
       "vol20": 0.843,
       "foreign_net": -27562520175,
       "inst_net": 30133908725,
-      "score": 0.571,
+      "score": 0.549,
       "news": [
         {
           "date": "11-09",
@@ -234,11 +234,11 @@
           "risk": false
         }
       ],
-      "price": 48950,
-      "chg": -0.0031,
-      "activity": 1.52,
+      "price": 49050,
+      "chg": -0.001,
+      "activity": 1.47,
       "foreign_today": 0,
-      "inst_today": 3181750000,
+      "inst_today": 3188250000,
       "exchange": "KOSPI"
     },
     {
@@ -303,7 +303,7 @@
       ],
       "price": 62000,
       "chg": 0.0248,
-      "activity": 0.56,
+      "activity": 0.54,
       "foreign_today": 3844000000,
       "inst_today": 2790000000,
       "exchange": "KOSPI"
@@ -320,11 +320,11 @@
       "inst_net": 157835015500,
       "score": 0.495,
       "news": [],
-      "price": 1540000,
-      "chg": 0.0158,
-      "activity": 0.87,
+      "price": 1542000,
+      "chg": 0.0172,
+      "activity": 0.86,
       "foreign_today": 0,
-      "inst_today": 3080000000,
+      "inst_today": 3084000000,
       "exchange": "KOSPI"
     },
     {
@@ -357,7 +357,7 @@
       "news": [
         {
           "date": "11-09",
-          "title": "현대제철, 하반기 신규채용 진행…9일까지 신입·연구직 모집",
+          "title": "충남 당진 현대제철, 노사가 함께하는 가족 건강 트레킹",
           "risk": false
         },
         {
@@ -367,7 +367,7 @@
         },
         {
           "date": "11-09",
-          "title": "美, 한국산 후판 상계관세 재심 최종 판정…동국제강 1.89%·현대제철 1....",
+          "title": "현대제철, 하반기 신규채용 진행…9일까지 신입·연구직 모집",
           "risk": false
         }
       ],
@@ -385,7 +385,7 @@
       "vol20": 0.738,
       "foreign_net": -7484986975,
       "inst_net": 26975170300,
-      "score": 0.374,
+      "score": 0.385,
       "news": [
         {
           "date": "11-09",
@@ -421,17 +421,17 @@
       "news": [
         {
           "date": "11-09",
+          "title": "코웨이, '블랙프라이데이' 프로모션… 렌탈·온라인 고객 확보 나서",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "코웨이, 블랙프라이데이 할인전…최대 67% 할인",
+          "risk": false
+        },
+        {
+          "date": "11-09",
           "title": "코웨이, 26일까지 코웨이닷컴 '블랙프라이데이' 프로모션",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "코웨이, 블랙프라이데이 프로모션 진행",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "[뉴스워커_코웨이] 블랙프라이데이 행사…렌탈료 최대 15개월 월 1만원",
           "risk": false
         }
       ],
@@ -526,11 +526,11 @@
           "risk": false
         }
       ],
-      "price": 59000,
-      "chg": 0.0727,
-      "activity": 2.83,
+      "price": 58900,
+      "chg": 0.0709,
+      "activity": 2.73,
       "foreign_today": 0,
-      "inst_today": 1003000000,
+      "inst_today": 1001300000,
       "exchange": "KOSDAQ"
     },
     {
@@ -543,7 +543,7 @@
       "vol20": 1.387,
       "foreign_net": -6381603720,
       "inst_net": 16519823935,
-      "score": 0.989,
+      "score": 0.978,
       "news": [
         {
           "date": "11-09",
@@ -561,11 +561,11 @@
           "risk": false
         }
       ],
-      "price": 16570,
-      "chg": 0.0725,
-      "activity": 2.18,
-      "foreign_today": 745650000,
-      "inst_today": 2187240000,
+      "price": 16680,
+      "chg": 0.0796,
+      "activity": 2.12,
+      "foreign_today": 750600000,
+      "inst_today": 2201760000,
       "exchange": "KOSDAQ"
     },
     {
@@ -586,41 +586,11 @@
           "risk": false
         }
       ],
-      "price": 38550,
-      "chg": 0.0921,
-      "activity": 2.93,
+      "price": 38400,
+      "chg": 0.0878,
+      "activity": 2.83,
       "foreign_today": 0,
-      "inst_today": 346950000,
-      "exchange": "KOSDAQ"
-    },
-    {
-      "code": "008830",
-      "name": "대동기어",
-      "close": 6540,
-      "ret5": 0.2505,
-      "ret20": 0.0721,
-      "rsi14": 60.3,
-      "vol20": 1.052,
-      "foreign_net": -3890551700,
-      "inst_net": -186177575,
-      "score": 0.516,
-      "news": [
-        {
-          "date": "11-06",
-          "title": "대동기어 주가, 11월 6일 애프터마켓 6,750원 2.27% 상승",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "대동기어 회전율 88%…금양그린파워·대명에너지도 50% 넘어",
-          "risk": false
-        }
-      ],
-      "price": 6760,
-      "chg": 0.0045,
-      "activity": 2.41,
-      "foreign_today": 398840000,
-      "inst_today": 0,
+      "inst_today": 345600000,
       "exchange": "KOSDAQ"
     },
     {
@@ -633,7 +603,7 @@
       "vol20": 1.105,
       "foreign_net": -1315515485,
       "inst_net": 73370470,
-      "score": 0.505,
+      "score": 0.538,
       "news": [
         {
           "date": "11-09",
@@ -651,10 +621,40 @@
           "risk": false
         }
       ],
-      "price": 14340,
-      "chg": 0.0467,
-      "activity": 1.47,
-      "foreign_today": 673980000,
+      "price": 14790,
+      "chg": 0.0796,
+      "activity": 1.62,
+      "foreign_today": 695130000,
+      "inst_today": 0,
+      "exchange": "KOSDAQ"
+    },
+    {
+      "code": "008830",
+      "name": "대동기어",
+      "close": 6540,
+      "ret5": 0.2505,
+      "ret20": 0.0721,
+      "rsi14": 60.3,
+      "vol20": 1.052,
+      "foreign_net": -3890551700,
+      "inst_net": -186177575,
+      "score": 0.505,
+      "news": [
+        {
+          "date": "11-06",
+          "title": "대동기어 주가, 11월 6일 애프터마켓 6,750원 2.27% 상승",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "대동기어 회전율 88%…금양그린파워·대명에너지도 50% 넘어",
+          "risk": false
+        }
+      ],
+      "price": 6730,
+      "chg": 0.0,
+      "activity": 2.4,
+      "foreign_today": 397070000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
