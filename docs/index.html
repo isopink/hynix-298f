@@ -215,6 +215,36 @@ details.log[open] > summary::after { content: "−"; }
   .dec-row.cmp .pair .cf { flex: none; } .dec-row.cmp .pair .cf i { display: none; } .dec-row.cmp .pair .cf::after { content: none; }
   .dec-colhead .why-h { display: none; }
 }
+/* 11-10 가독성 개편: 엔진 요약 · 탭 */
+.eng-sum { gap: 22px; }
+.eng { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.eng[hidden] { display: none; }
+.eng + .eng { padding-top: 20px; border-top: 1px solid rgba(255,255,255,.07); }
+.eng-h { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.eng .eyebrow.on, .sion-card .eyebrow.on { color: #3ecf8e; }
+.eng .st-line { position: static; flex-direction: row; gap: 4px 12px; }
+.eng .st-line > span + span::before { content: none; }
+.hero .eng .big { margin: 4px 0 2px; }
+.hero .eng.sion .big.won { font-size: clamp(28px, 3vw, 40px); }
+.eng-kv { display: flex; flex-wrap: wrap; gap: 4px 18px; font-size: 13px; color: var(--muted); }
+.eng-kv b { font-weight: 500; margin-left: 4px; }
+.eng-tabs { display: flex; gap: 6px; padding: 4px; border-radius: 12px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.07); width: max-content; max-width: 100%; }
+.eng-tabs[hidden], .pane[hidden] { display: none; }
+.eng-tabs button { font: inherit; font-size: 13px; color: var(--muted); background: none; border: 0; border-radius: 9px; padding: 8px 16px; cursor: pointer; }
+.eng-tabs button[aria-selected="true"] { color: var(--ink); background: rgba(255,255,255,.09); }
+.eng-tabs button[data-eng="sion"][aria-selected="true"] { color: #3ecf8e; }
+.eng-tabs button:focus-visible { outline: 2px solid rgba(255,255,255,.4); outline-offset: 1px; }
+.tr-tbl .r { grid-template-columns: 74px 44px minmax(0, 1.4fr) 54px 1fr !important; }
+@media (max-width: 640px) {
+  .hero .side.eng-sum { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; }
+  .hero .side.eng-sum > div:first-child { grid-column: auto; }
+  .eng + .eng { padding-top: 0; border-top: 0; padding-left: 14px; border-left: 1px solid rgba(255,255,255,.07); }
+  .hero .side.eng-sum .eng .big.won { font-size: 24px; letter-spacing: -.5px; white-space: nowrap; }
+  .eng-kv { flex-direction: column; gap: 2px; font-size: 12px; }
+  .eng .st-line { font-size: 11px; gap: 2px 8px; }
+  .eng-tabs { width: 100%; } .eng-tabs button { flex: 1; }
+  .tr-tbl .r { grid-template-columns: 44px 34px minmax(0, 1fr) 40px 76px !important; gap: 8px !important; }
+}
 /* 11-09 SiON Engine 계좌 카드 */
 .sion-card[hidden] { display: none; }
 .sion-card .eyebrow.on { color: #3ecf8e; }
@@ -425,45 +455,55 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
 
   <div class="grid">
     <section class="card c12 hero-card">
-      <div class="st-line" id="st-line"></div>
       <div class="hero">
-        <div class="side">
-          <div>
-            <div id="realized"><span class="eyebrow">총 손익</span>
-            <div class="big won" id="pnl-won">—</div></div>
-            <div class="vs sm"><span class="eyebrow">현재 수익률</span><span id="ret-pct">—</span></div>
-            <div class="vs sm"><span class="eyebrow">KOSPI 대비</span><span id="k-alpha">—</span></div>
+        <div class="side eng-sum">   <!-- 11-10 S.Lee 가독성 개편: 두 엔진 요약을 나란히 (Sigma 위 · SiON 아래, 폰은 좌우) -->
+          <div class="eng" id="eng-sigma">
+            <div class="eng-h"><span class="eyebrow">Sigma Engine</span><span class="st-line" id="st-line"></span></div>
+            <div id="realized"><div class="big won" id="pnl-won">—</div></div>
+            <div class="eng-kv"><span>수익률 <b id="ret-pct">—</b></span><span>KOSPI 대비 <b id="k-alpha">—</b></span></div>
+          </div>
+          <div class="eng sion" id="eng-sion" hidden>
+            <div class="eng-h"><span class="eyebrow on">SiON Engine</span><span class="st-line" id="st-sion"></span></div>
+            <div id="s-realized"><div class="big won" id="s-pnl-won">—</div></div>
+            <div class="eng-kv"><span>수익률 <b id="s-ret">—</b></span><span>Sigma 대비 <b id="s-vs">—</b></span></div>
           </div>
         </div>
         <div class="hero-chart" style="display:flex;flex-direction:column;gap:10px;min-width:0">
-          <div class="chart" id="ch-hero" style="min-height:210px"></div>
+          <div class="chart" id="ch-hero" style="min-height:230px"></div>
         </div>
-      </div>
-      <div class="kx-flow">   <!-- 실시간 판단: 누적 수익률 카드 안 아래칸 -->
-        <div class="hd"><h2 class="eyebrow" id="dec-title">Live Decision</h2><span class="sub" id="dec-asof"></span></div>
-        <div class="dec-head m-hide" id="dec-head"></div>
-        <div class="dec-trade" id="dec-trade" hidden></div>
-        <div class="dec-colhead" id="dec-colhead" hidden></div>
-        <div class="dec-list" id="dec-list"></div>
-        <button type="button" class="dec-more" id="dec-more" hidden aria-controls="dec-list"></button>
       </div>
     </section>
 
+    <!-- 11-10 엔진 탭: 아래 판단 · 포트폴리오 · 체결은 고른 엔진만 -->
+    <div class="c12 eng-tabs" id="eng-tabs" role="tablist" aria-label="엔진 선택" hidden>
+      <button type="button" role="tab" data-eng="sigma" aria-selected="true">Sigma Engine</button>
+      <button type="button" role="tab" data-eng="sion" aria-selected="false">SiON Engine</button>
+    </div>
+
+    <section class="card c12" id="dec-card">
+      <div class="hd"><h2 class="eyebrow" id="dec-title">Live Decision</h2><span class="sub" id="dec-asof"></span></div>
+      <div class="dec-head m-hide" id="dec-head"></div>
+      <div class="dec-trade" id="dec-trade" hidden></div>
+      <div class="dec-colhead" id="dec-colhead" hidden></div>
+      <div class="dec-list" id="dec-list"></div>
+      <button type="button" class="dec-more" id="dec-more" hidden aria-controls="dec-list"></button>
+    </section>
+
     <!-- 포트폴리오: 접지 않고 늘 펼쳐 둠 (11-05) -->
-    <section class="card c12">
-      <div class="hd"><h2 class="eyebrow">Sigma Engine 포트폴리오</h2><span class="sub">빨간 호 = 국면 상한</span></div>
+    <section class="card c12 pane" data-eng="sigma">
+      <div class="hd"><h2 class="eyebrow">포트폴리오</h2><span class="sub">빨간 호 = 국면 상한</span></div>
       <div class="chart" id="ch-donut" style="min-height:240px"></div>
       <div class="kx-flow">   <!-- 보유 종목 손익: 포트폴리오 카드 안 아래칸 (11-05) -->
         <div class="hd"><h3 class="eyebrow">Holdings P&amp;L</h3><span class="sub" id="pnl-sub">수수료·세금 반영</span></div>
         <div class="chart" id="ch-pnl" style="min-height:200px"></div>
       </div>
+      <div class="kx-flow"><div class="hd"><h3 class="eyebrow">최근 체결</h3><span class="sub">실제 계좌</span></div><div class="sion-tbl tr-tbl" id="sig-trades"></div></div>
     </section>
 
     <!-- 11-09 S.Lee: SiON Engine(온톨로지 그림자) 가상 계좌를 따로 -->
-    <section class="card c12 sion-card" id="sion-card" hidden>
-      <div class="hd"><h2 class="eyebrow on" title="온톨로지 버전 가상 계좌 (실제 계좌를 복사해 시작, 주문은 가상 체결)">SiON Engine 계좌</h2><span class="sub" id="sion-sub"></span></div>
-      <div class="sion-kpi" id="sion-kpi"></div>
-      <div class="hd"><h3 class="eyebrow">SiON Engine 포트폴리오</h3><span class="sub">빨간 호 = 국면 상한</span></div>   <!-- 11-09 S.Lee: 포트폴리오를 Sigma · SiON 따로, 양식은 Sigma 와 같게 -->
+    <section class="card c12 sion-card pane" data-eng="sion" id="sion-card" hidden>
+      <div class="hd"><h2 class="eyebrow" title="온톨로지 버전 가상 계좌 (실제 계좌를 복사해 시작, 주문은 가상 체결)">포트폴리오</h2><span class="sub" id="sion-sub"></span></div>
+      <div class="sion-kpi" id="sion-kpi"></div>   <!-- 11-09 S.Lee: 포트폴리오를 Sigma · SiON 따로, 양식은 Sigma 와 같게 -->
       <div class="chart" id="ch-sion-donut" style="min-height:240px"></div>
       <div class="kx-flow" style="margin-bottom:18px">
         <div class="hd"><h3 class="eyebrow">Holdings P&amp;L</h3><span class="sub">수수료·세금 반영</span></div>
@@ -471,7 +511,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
       </div>
       <div class="sion-cols">
         <div><h3 class="eyebrow">보유 종목</h3><div class="sion-tbl" id="sion-hold"></div></div>
-        <div><h3 class="eyebrow">가상 체결</h3><div class="sion-tbl" id="sion-trades"></div></div>
+        <div><h3 class="eyebrow">최근 체결 (가상)</h3><div class="sion-tbl tr-tbl" id="sion-trades"></div></div>
       </div>
     </section>
 
@@ -892,11 +932,28 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     $('k-win-sub').textContent = '청산 ' + closed.length + '건 중 ' + wins + '건 수익';
   }
 
+  // 11-10 엔진 탭 (Sigma | SiON). 고른 엔진은 이 브라우저에만 기억 (실패해도 Sigma)
+  let ENG = 'sigma';
+  try { if (localStorage.getItem('eng') === 'sion') ENG = 'sion'; } catch (e) { /* 저장소 막힘 */ }
+  function setEng(e, keep) {
+    if ($('eng-tabs').hidden) e = 'sigma';   // SiON 기록이 없으면 Sigma 만
+    else if (!keep) { try { localStorage.setItem('eng', e); } catch (err) { /* 무시 */ } }
+    ENG = e;
+    document.querySelectorAll('#eng-tabs [role=tab]').forEach(b => b.setAttribute('aria-selected', String(b.dataset.eng === e)));
+    document.querySelectorAll('.pane').forEach(p => { p.hidden = p.dataset.eng !== e; });
+    $('dec-card').classList.toggle('on-sion', e === 'sion');
+    if (!D) return;
+    decisionCard();
+    if (e === 'sion') sionCard(); else { donut(); pnl(); }   // 숨긴 칸은 폭이 0 이라 보일 때 다시 그림
+  }
+  document.querySelectorAll('#eng-tabs [role=tab]').forEach(b => b.addEventListener('click', () => setEng(b.dataset.eng)));
+  $('eng-tabs').addEventListener('keydown', ev => { if (ev.key === 'ArrowRight' || ev.key === 'ArrowLeft') { setEng(ENG === 'sigma' ? 'sion' : 'sigma'); $('eng-tabs').querySelector(`[data-eng=${ENG}]`).focus(); } });
+
   function drawAll() {
     if (!D) return;
     hero(); sparkLine($('sp-kospi'), D.eq.map(r => r.kospi), '#bdbdbd'); winDots($('sp-win'));
     sparkBars($('sp-week'), D.eq.slice(-5).map(r => r.day)); drawdown($('sp-dd'));
-    agentStatus(); decisionCard(); calendar(); donut(); pnl(); sionCard(); scatter(); tokens(); review(); limits(); alpha(); drawKospi(); drawFlow();
+    agentStatus(); calendar(); sionCard(); setEng(ENG, true); scatter(); tokens(); review(); limits(); alpha(); drawKospi(); drawFlow();
     animated = true;
   }
 
@@ -1089,7 +1146,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   let SHADOW = null, SHADOW_LIVE = null;   // SHADOW_LIVE = Supabase shadow_snapshots 최신 1건 {ts, total, status}
   // 11-09 S.Lee: 장중에도 겹쳐 보이게 1분마다 다시 받음 (그림자 기록이 바뀌었을 때만 다시 그림). 오늘 점 = 그림자의 가장 최근 회차 자산
   const loadShadow = () => fetch('data/shadow.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null).catch(() => null)
-    .then(v => { if (v && SHADOW && v.updated === SHADOW.updated) return; SHADOW = v || SHADOW; if (D && SHADOW) { hero(); agentStatus(); decisionCard(); pnl(); sionCard(); } });
+    .then(v => { if (v && SHADOW && v.updated === SHADOW.updated) return; SHADOW = v || SHADOW; if (D && SHADOW) { hero(); agentStatus(); sionCard(); setEng(ENG, true); } });
   loadShadow(); setInterval(() => { if (!document.hidden) loadShadow(); }, 60000);
 
   // ---------- 리스크 한도: agent/config/risk_limits.json 과 같은 값 (대회 내내 고정, 바뀌면 여기도 고칠 것) ----------
@@ -1334,7 +1391,8 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     // 11-09 온톨로지 그림자 운영: Supabase 1분 기록의 상태(없으면 shadow.json) · 실제와 같이 :30 에 켜져 순위를 받자마자 판단. 그림자가 아예 없으면 표시 안 함
     const sst = (SHADOW_LIVE && SHADOW_LIVE.status && SHADOW_LIVE.status.last_run !== undefined) ? SHADOW_LIVE.status : SHADOW && SHADOW.status;
     const onto = (SHADOW || SHADOW_LIVE) ? judge(sst, 0, '첫 판단 대기 · 평일 09:30부터 15분마다', true) : null;
-    el.innerHTML = `<span>${pill(watch, '모니터링')}</span><span>${pill(agent, '에이전트')}</span>` + (onto ? `<span>${pill(onto, '온톨로지')}</span>` : '');
+    el.innerHTML = `<span>${pill(watch, '모니터링')}</span><span>${pill(agent, '에이전트')}</span>`;
+    $('st-sion').innerHTML = onto ? `<span>${pill(onto, '온톨로지')}</span>` : '';   // 11-10 SiON 요약 칸 안으로
   }
 
   // ---------- 실시간 판단: docs/data/decision.json (가장 최근 정기 판단 1회분) ----------
@@ -1416,7 +1474,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     // 온톨로지 쪽 공개 기록은 근거를 '상세 주장 비공개'·'판단 원문은 로컬 상세에서 확인'으로 가림 → 그런 값은 버리고 채워진 쪽을 씀
     const hid = v => !v || /비공개|로컬 상세에서 확인/.test(v), clean = x => Object.fromEntries(Object.entries(x || {}).filter(([k, v]) => !['bull', 'bear', 'decision'].includes(k) || !hid(v)));
     const sMap = new Map(((sd && sd.items) || []).map(x => [x.code, { ...clean(x), ...clean(sFull.get(x.code)) }]));
-    const cmp = !!sd;
+    const cmp = false, showS = ENG === 'sion' && !!sd;   // 11-10 S.Lee: 탭에서 고른 엔진 하나만 (나란히 2열 → 탭)
     $('dec-colhead').hidden = true;
     const slot = t => { const m = +t.slice(11, 13) * 60 + +t.slice(14, 16), q = Math.floor(m / 15) * 15; return String(Math.floor(q / 60)).padStart(2, '0') + ':' + String(q % 60).padStart(2, '0'); };
     const cls = d => d.action.startsWith('매수') ? 'buy' : d.action.startsWith('매도') ? 'sell' : '';
@@ -1429,10 +1487,15 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
         + `<span class="why">${d.blocked ? '<em>차단</em> · ' : ''}${esc(d.decision || '')}</span></div>`;
     };
     // 11-09 S.Lee: SiON Engine 판단은 Sigma 와 별개 목록으로 나란히 (각자 순서). SiON 은 매수·매도 먼저, 그 안에서 확신도 높은 순
-    const sItems = cmp ? [...sMap.values()].sort((p, q) => (/^(매수|매도)/.test(q.action) - /^(매수|매도)/.test(p.action)) || (+q.confidence || 0) - (+p.confidence || 0)) : [];
+    const sItems = sd ? [...sMap.values()].sort((p, q) => (/^(매수|매도)/.test(q.action) - /^(매수|매도)/.test(p.action)) || (+q.confidence || 0) - (+p.confidence || 0)) : [];
     const panes = [items, sItems];
-    list.classList.toggle('two', cmp);
-    list.innerHTML = !cmp ? items.map((d, i) => rowHtml(d, i, 0)).join('')
+    if (showS) {
+      $('dec-asof').textContent = md(toD(sd.time)) + ' ' + slot(sd.time) + ' 회차';
+      head.innerHTML = sd.regime ? `<span class="rg">국면 <b style="color:${regC(sd.regime)}">${esc(sd.regime)}</b></span>` : '';
+    } else $('dec-asof').textContent = md(toD(dc.time)) + ' ' + slot(dc.time) + ' 회차';
+    list.classList.remove('two');
+    list.innerHTML = showS ? sItems.map((d, i) => rowHtml(d, i, 1)).join('')
+      : !cmp ? items.map((d, i) => rowHtml(d, i, 0)).join('')
       : `<div class="dec-pane"><div class="pane-h">Sigma Engine ${slot(dc.time)} 회차</div>${items.map((d, i) => rowHtml(d, i, 0)).join('')}</div>`
         + `<div class="dec-pane on"><div class="pane-h">SiON Engine ${slot(sd.time)} 회차</div>${sItems.map((d, i) => rowHtml(d, i, 1)).join('')}</div>`;
     list.querySelectorAll('.dec-row').forEach(el => {
@@ -1520,10 +1583,11 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   function sionCard() {
     const card = $('sion-card'), L = SHADOW_LIVE, S = SHADOW;
     const total = L && L.total || S && S.now && S.now.shadow_total;
-    if (!total) { card.hidden = true; return; }
-    card.hidden = false;
+    if (!total) { card.hidden = true; $('eng-tabs').hidden = true; $('eng-sion').hidden = true; return; }
+    card.hidden = ENG !== 'sion';
     const st = (L && L.status) || {}, seed = st.seed_total || (S && S.base) || INIT, since = (st.seeded_at || (S && S.start) || '').slice(0, 10);
-    const hs = ((L && L.holdings && L.holdings.length ? L.holdings : S && S.holdings) || []).filter(h => h.qty);
+    const hs = ((L && L.holdings && L.holdings.length ? L.holdings : S && S.holdings) || []).filter(h => h.qty)
+      .map(h => ({ ...h, price: h.price || (h.value && h.qty ? Math.round(h.value / h.qty) : null) }));   // 11-10 shadow.json 보유 기록엔 현재가가 없어 평가금액 ÷ 수량 (예전 NaN)
     const trades = st.trades || (S && S.trades) || [];
     const fee = g => (1 + g) * (1 - 0.0035 - 0.002) / (1 + 0.0035) - 1;   // Sigma 와 같은 기준 (키움 수수료 0.35%·세금 0.2%)
     const stock = d3.sum(hs, h => h.value || h.price * h.qty), cash = (L && L.cash) ?? (total - stock);
@@ -1542,10 +1606,15 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     $('sion-sub').textContent = (since ? md(toD(since)) + ' 시작 · ' : '') + (L && L.ts ? new Date(L.ts).toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Seoul' }) + ' 기준' : '');
     const k = (label, val, c = '', tip = '') => `<div class="k"${tip ? ` title="${esc(tip)}"` : ''}><span>${label}</span><b class="${c}">${val}</b></div>`;
     $('sion-kpi').innerHTML = k('총자산', won(Math.round(total)) + '원')
-      + k('총 손익', sw(pnlAll), cls(pnlAll), '시작 원금 5,000만 원 대비')
       + k(since ? md(toD(since)) + ' 이후' : '시작 이후', sw(pnlSeed), cls(pnlSeed), '실제 계좌를 복사한 시점 대비')
-      + (sigma ? k('Sigma 대비', sw(total - sigma), cls(total - sigma), 'SiON 총자산 − Sigma 총자산') : '')
       + k('주식 비중', (stock / total * 100).toFixed(1) + '%') + k('보유', hs.length + '종목');
+    // 11-10 맨 위 SiON 요약 (총 손익 · 수익률 · Sigma 대비)
+    $('eng-sion').hidden = false;
+    const sv = $('s-pnl-won'); sv.textContent = sw(pnlAll); sv.classList.toggle('neg', pnlAll < 0);
+    $('s-ret').textContent = pct(total / INIT - 1); tone($('s-ret'), total / INIT - 1);
+    if (sigma) { $('s-vs').textContent = sw(total - sigma); tone($('s-vs'), total - sigma); }
+    tipTarget($('s-realized'), `<div class="t">SiON Engine 총 손익 (가상)</div>${row('총자산', won(Math.round(total)) + '원')}${row(since ? md(toD(since)) + ' 이후' : '시작 이후', sw(pnlSeed), pnlSeed >= 0 ? 'up' : 'down')}${sigma ? row('Sigma 대비', sw(total - sigma), total - sigma >= 0 ? 'up' : 'down') : ''}`);
+    $('eng-tabs').hidden = false;
     const H = `<div class="r h"><span>종목</span><span class="num">수량</span><span class="num">평단</span><span class="num">현재가</span><span class="num">손익</span></div>`;
     $('sion-hold').innerHTML = !hs.length ? '<div class="empty">보유 종목이 없어요.</div>' : H + [...hs].sort((a, b) => (b.value || 0) - (a.value || 0)).map(h => {
       const g = h.pnl_pct, avg = h.avg_price || (g != null ? Math.round(h.price / (1 + g)) : null), v = g == null ? null : fee(+g);
@@ -1560,7 +1629,18 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     });
   }
 
+  function sigTrades() {   // 11-10 Sigma 최근 체결 (SiON 카드와 같은 표)
+    const el = $('sig-trades'), tr = [...D.trades].sort((a, b) => a.time < b.time ? 1 : -1).slice(0, 8);
+    if (!tr.length) { el.innerHTML = '<div class="empty">아직 체결이 없어요.</div>'; return; }
+    const today = kstDate(new Date().toISOString());
+    el.innerHTML = `<div class="r h"><span>시각</span><span>구분</span><span>종목</span><span class="num">수량</span><span class="num">가격</span></div>` + tr.map((t, i) =>
+      `<div class="r" data-i="${i}"><span>${esc(t.time.slice(0, 10) === today ? t.time.slice(11, 16) : md(toD(t.time.slice(0, 10))))}</span><span class="${t.side === '매수' ? 'up' : 'down'}">${esc(t.side)}</span><span class="n">${esc(t.name)}</span><span class="num">${won(t.qty)}</span><span class="num">${won(t.price)}</span></div>`).join('');
+    el.querySelectorAll('.r[data-i]').forEach(r => { const t = tr[+r.dataset.i];
+      tipTarget(r, `<div class="t">${esc(t.name)} ${esc(t.side)} ${won(t.qty)}주</div>${row('가격', won(t.price) + '원')}${row('금액', won(Math.round(t.qty * t.price)) + '원')}${t.confidence ? row('확신도', (+t.confidence).toFixed(2)) : ''}${t.decision ? `<p class="tp">${esc(t.decision)}</p>` : ''}`); });
+  }
+
   function pnl() {   // 11-09 S.Lee: Sigma 만 (SiON 은 SiON 카드 안 따로)
+    sigTrades();
     $('pnl-sub').textContent = '수수료·세금 반영';
     if (!D.hold.length) return none($('ch-pnl'), '보유 종목이 없어요.');
     const cost = r => r.avg_price * r.qty, sumCost = d3.sum(D.hold, cost);
