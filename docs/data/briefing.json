@@ -81,9 +81,9 @@
     ]
   },
   "intraday": {
-    "time": "12:30",
+    "time": "12:45",
     "pool": 411,
-    "analyzed_new": 30,
+    "analyzed_new": 22,
     "passed": 21,
     "kept_prep": false
   },
@@ -98,7 +98,7 @@
       "vol20": 0.888,
       "foreign_net": 1436621025,
       "inst_net": 20425868350,
-      "score": 0.909,
+      "score": 0.914,
       "news": [
         {
           "date": "11-09",
@@ -116,11 +116,11 @@
           "risk": false
         }
       ],
-      "price": 30850,
-      "chg": 0.037,
-      "activity": 2.52,
-      "foreign_today": 1974400000,
-      "inst_today": 2468000000,
+      "price": 31100,
+      "chg": 0.0454,
+      "activity": 2.43,
+      "foreign_today": 1990400000,
+      "inst_today": 2488000000,
       "exchange": "KOSPI"
     },
     {
@@ -133,7 +133,7 @@
       "vol20": 0.792,
       "foreign_net": -20437500850,
       "inst_net": 51491335800,
-      "score": 0.761,
+      "score": 0.796,
       "news": [
         {
           "date": "11-07",
@@ -146,43 +146,11 @@
           "risk": false
         }
       ],
-      "price": 79100,
-      "chg": 0.0675,
-      "activity": 2.18,
-      "foreign_today": 3322200000,
-      "inst_today": 474600000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "326030",
-      "name": "SK바이오팜",
-      "close": 88800,
-      "ret5": 0.1532,
-      "ret20": 0.2215,
-      "rsi14": 69.5,
-      "vol20": 0.56,
-      "foreign_net": -19235375950,
-      "inst_net": 64455133600,
-      "score": 0.682,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "SK바이오팜, 국내 바이오텍 31곳 美 진출 지원…'링스' 가동",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "SK바이오팜, 국내 바이오기업 31곳 미국 진출 지원…'LinX' 운영",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "SK바이오팜, 美 진출 지원 플랫폼 '링스' 입주사 31곳 선정",
-          "risk": false
-        }
-      ],
-      "foreign_today": 1953600000,
-      "inst_today": 0,
+      "price": 79300,
+      "chg": 0.0702,
+      "activity": 2.14,
+      "foreign_today": 3330600000,
+      "inst_today": 475800000,
       "exchange": "KOSPI"
     },
     {
@@ -195,13 +163,45 @@
       "vol20": 0.491,
       "foreign_net": -22121547500,
       "inst_net": 56405917100,
-      "score": 0.648,
+      "score": 0.677,
       "news": [],
-      "price": 77500,
-      "chg": -0.0026,
-      "activity": 1.31,
-      "foreign_today": 4030000000,
-      "inst_today": 775000000,
+      "price": 77800,
+      "chg": 0.0013,
+      "activity": 1.28,
+      "foreign_today": 4045600000,
+      "inst_today": 778000000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "326030",
+      "name": "SK바이오팜",
+      "close": 88800,
+      "ret5": 0.1532,
+      "ret20": 0.2215,
+      "rsi14": 69.5,
+      "vol20": 0.56,
+      "foreign_net": -19235375950,
+      "inst_net": 64455133600,
+      "score": 0.677,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "SK바이오팜, 미국 진출 플랫폼 '링스' 입주사 31곳 확정",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "SK바이오팜, 국내 바이오텍 31곳 美 진출 지원…'링스' 가동",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "SK바이오팜, 국내 바이오기업 31곳 미국 진출 지원…'LinX' 운영",
+          "risk": false
+        }
+      ],
+      "foreign_today": 1953600000,
+      "inst_today": 0,
       "exchange": "KOSPI"
     },
     {
@@ -246,7 +246,7 @@
       "vol20": 0.402,
       "foreign_net": -43204631710,
       "inst_net": 74782934530,
-      "score": 0.523,
+      "score": 0.527,
       "news": [
         {
           "date": "11-09",
@@ -278,7 +278,7 @@
       "vol20": 0.843,
       "foreign_net": -27562520175,
       "inst_net": 30133908725,
-      "score": 0.432,
+      "score": 0.43,
       "news": [
         {
           "date": "11-09",
@@ -296,11 +296,11 @@
           "risk": false
         }
       ],
-      "price": 49150,
-      "chg": 0.001,
-      "activity": 1.88,
+      "price": 49350,
+      "chg": 0.0051,
+      "activity": 1.8,
       "foreign_today": 0,
-      "inst_today": 1671100000,
+      "inst_today": 1677900000,
       "exchange": "KOSPI"
     },
     {
@@ -313,7 +313,7 @@
       "vol20": 0.957,
       "foreign_net": -76658998800,
       "inst_net": 63121010150,
-      "score": 0.42,
+      "score": 0.409,
       "news": [
         {
           "date": "11-09",
@@ -331,11 +331,11 @@
           "risk": false
         }
       ],
-      "price": 61900,
-      "chg": 0.0231,
-      "activity": 0.66,
-      "foreign_today": 2847400000,
-      "inst_today": 309500000,
+      "price": 62300,
+      "chg": 0.0298,
+      "activity": 0.63,
+      "foreign_today": 2865800000,
+      "inst_today": 311500000,
       "exchange": "KOSPI"
     },
     {
@@ -348,7 +348,7 @@
       "vol20": 0.738,
       "foreign_net": -7484986975,
       "inst_net": 26975170300,
-      "score": 0.341,
+      "score": 0.323,
       "news": [
         {
           "date": "11-09",
@@ -380,7 +380,7 @@
       "vol20": 0.404,
       "foreign_net": -5748052750,
       "inst_net": 7853604175,
-      "score": 0.33,
+      "score": 0.323,
       "news": [],
       "foreign_today": 0,
       "inst_today": 325200000,
@@ -396,7 +396,7 @@
       "vol20": 0.625,
       "foreign_net": 652431450,
       "inst_net": 21161016850,
-      "score": 0.33,
+      "score": 0.323,
       "news": [
         {
           "date": "11-09",
@@ -428,7 +428,7 @@
       "vol20": 0.592,
       "foreign_net": -8231059200,
       "inst_net": 53595627900,
-      "score": 0.295,
+      "score": 0.29,
       "news": [
         {
           "date": "11-09",
@@ -460,7 +460,7 @@
       "vol20": 0.254,
       "foreign_net": 5502551950,
       "inst_net": 9691482340,
-      "score": 0.25,
+      "score": 0.247,
       "news": [
         {
           "date": "11-09",
@@ -492,7 +492,7 @@
       "vol20": 0.428,
       "foreign_net": 11365936950,
       "inst_net": -1065209850,
-      "score": 0.182,
+      "score": 0.172,
       "news": [
         {
           "date": "11-09",
@@ -537,11 +537,11 @@
           "risk": false
         }
       ],
-      "price": 59400,
-      "chg": 0.08,
-      "activity": 3.32,
+      "price": 59600,
+      "chg": 0.0836,
+      "activity": 3.17,
       "foreign_today": 0,
-      "inst_today": 891000000,
+      "inst_today": 894000000,
       "exchange": "KOSDAQ"
     },
     {
@@ -554,7 +554,7 @@
       "vol20": 1.387,
       "foreign_net": -6381603720,
       "inst_net": 16519823935,
-      "score": 0.784,
+      "score": 0.753,
       "news": [
         {
           "date": "11-09",
@@ -572,11 +572,30 @@
           "risk": false
         }
       ],
-      "price": 16410,
-      "chg": 0.0621,
-      "activity": 2.2,
+      "price": 16530,
+      "chg": 0.0699,
+      "activity": 2.11,
       "foreign_today": 0,
-      "inst_today": 1378440000,
+      "inst_today": 1388520000,
+      "exchange": "KOSDAQ"
+    },
+    {
+      "code": "425420",
+      "name": "티에프이",
+      "close": 64800,
+      "ret5": -0.2448,
+      "ret20": 0.0157,
+      "rsi14": 46.5,
+      "vol20": 1.507,
+      "foreign_net": 14334611050,
+      "inst_net": -8579187950,
+      "score": 0.527,
+      "news": [],
+      "price": 69400,
+      "chg": 0.1266,
+      "activity": 0.94,
+      "foreign_today": 0,
+      "inst_today": 971600000,
       "exchange": "KOSDAQ"
     },
     {
@@ -589,7 +608,7 @@
       "vol20": 1.105,
       "foreign_net": -1315515485,
       "inst_net": 73370470,
-      "score": 0.466,
+      "score": 0.462,
       "news": [
         {
           "date": "11-09",
@@ -607,10 +626,10 @@
           "risk": false
         }
       ],
-      "price": 14180,
-      "chg": 0.035,
-      "activity": 1.86,
-      "foreign_today": 581380000,
+      "price": 14220,
+      "chg": 0.038,
+      "activity": 1.75,
+      "foreign_today": 583020000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -624,7 +643,7 @@
       "vol20": 1.068,
       "foreign_net": -23144745850,
       "inst_net": 30167917550,
-      "score": 0.455,
+      "score": 0.452,
       "news": [
         {
           "date": "11-08",
@@ -644,40 +663,10 @@
       ],
       "price": 213500,
       "chg": 0.0887,
-      "activity": 3.57,
+      "activity": 3.38,
       "foreign_today": 0,
       "inst_today": 213500000,
       "exchange": "KOSPI"
-    },
-    {
-      "code": "008830",
-      "name": "대동기어",
-      "close": 6540,
-      "ret5": 0.2505,
-      "ret20": 0.0721,
-      "rsi14": 60.3,
-      "vol20": 1.052,
-      "foreign_net": -3890551700,
-      "inst_net": -186177575,
-      "score": 0.318,
-      "news": [
-        {
-          "date": "11-06",
-          "title": "대동기어 주가, 11월 6일 애프터마켓 6,750원 2.27% 상승",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "대동기어 회전율 88%…금양그린파워·대명에너지도 50% 넘어",
-          "risk": false
-        }
-      ],
-      "price": 6480,
-      "chg": -0.0371,
-      "activity": 1.27,
-      "foreign_today": 388800000,
-      "inst_today": 0,
-      "exchange": "KOSDAQ"
     },
     {
       "code": "114800",
