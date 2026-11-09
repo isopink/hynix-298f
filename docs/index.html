@@ -45,7 +45,11 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
 .top h1 .tagline { font-size: clamp(13px, 1.3vw, 16px); font-weight: 400; letter-spacing: 0; margin-left: 10px; color: var(--muted); white-space: nowrap; }
 .top h1 .st-top { display: inline-flex; gap: 14px; align-items: center; vertical-align: middle; font-size: 13px; }
 .st-top .who { display: inline-flex; align-items: center; gap: 6px; }
-.eng-kv[hidden], .st-line[hidden] { display: none !important; }
+.eng-kv[hidden], .st-line[hidden], .kx-row[hidden] { display: none !important; }
+.kx-row { font-size: 13px; color: var(--body); text-align: center; padding: 0 0 12px; margin: -4px 0 14px; border-bottom: 1px solid rgba(255,255,255,.07); }
+.kx-row b { color: var(--ink); font-weight: 500; margin: 0 6px 0 4px; }
+.kx-row .kc-rsi { margin-left: 6px; }
+@media (max-width: 640px) { .top .sched { display: none; } }
 .eyebrow { margin: 0; font-size: 12px; font-weight: 600; color: var(--muted); }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 9999px; font-size: 12px; color: var(--body); white-space: nowrap; }
@@ -445,7 +449,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
     <div class="brand">
       <div>
         <h1>Sigma Engine <span class="tagline st-top" id="st-top" aria-label="실행 상태"></span></h1>   <!-- 11-10 S.Lee: 목표 문구 자리에 상태 3개 (모니터링 · 에이전트 · 온톨로지) -->
-        <div class="chips sched" id="sched" aria-label="실시간 KOSPI와 평일 정기 매매 시각"><span class="chip kx-chip" id="kx-chip" hidden></span></div>   <!-- 11-10 S.Lee: 맨 앞 KOSPI 칩 (폰은 이것만) -->
+        <div class="chips sched" id="sched" aria-label="실시간 KOSPI와 평일 정기 매매 시각"><span class="chip kx-chip m-hide" id="kx-chip" hidden></span></div>   <!-- 11-10 S.Lee: 맨 앞 KOSPI 칩 (폰은 이것만) -->
       </div>
     </div>
     <div class="cheer">
@@ -473,6 +477,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
 
   <div class="grid">
     <section class="card c12 hero-card">
+      <div class="kx-row m-only" id="kx-row" hidden></div>   <!-- 11-10 S.Lee: 폰은 KOSPI 를 수익률 카드 맨 위에 붙이고 연한 선으로만 구분 -->
       <div class="hero">
         <div class="side eng-sum">   <!-- 11-10 S.Lee 가독성 개편: 두 엔진 요약을 나란히 (Sigma 위 · SiON 아래, 폰은 좌우) -->
           <div class="eng" id="eng-sigma">
@@ -1087,9 +1092,9 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     $('kx-chg').textContent = (chg >= 0 ? '▲ ' : '▼ ') + f2(Math.abs(L.v - prev)) + ' (' + pct(chg) + ')'; tone($('kx-chg'), chg);
     $('kx-rsi').textContent = lastR == null ? '' : 'RSI ' + Math.round(lastR); tone($('kx-rsi'), lastR == null ? 0 : lastR >= 70 ? 1 : lastR <= 30 ? -1 : 0);
     // 11-10 머리글 칩: 지수 · 등락률 · RSI 만
-    const kc = $('kx-chip'); kc.hidden = false;
-    kc.innerHTML = `KOSPI <b>${f2(L.v)}</b> <span id="kc-chg">${pct(chg)}</span>` + (lastR == null ? '' : ` <span id="kc-rsi">RSI ${Math.round(lastR)}</span>`);
-    tone($('kc-chg'), chg); if (lastR != null) tone($('kc-rsi'), lastR >= 70 ? 1 : lastR <= 30 ? -1 : 0);
+    ['kx-chip', 'kx-row'].forEach(id => { const kc = $(id); kc.hidden = false;   // PC 는 머리글 칩, 폰은 수익률 카드 맨 위
+      kc.innerHTML = `KOSPI <b>${f2(L.v)}</b> <span class="kc-chg">${pct(chg)}</span>` + (lastR == null ? '' : ` <span class="kc-rsi">RSI ${Math.round(lastR)}</span>`);
+      tone(kc.querySelector('.kc-chg'), chg); if (lastR != null) tone(kc.querySelector('.kc-rsi'), lastR >= 70 ? 1 : lastR <= 30 ? -1 : 0); });
     $('kx-asof').textContent = md(toD(kstDate(L.t.toISOString()))) + ' ' + hm(L.t) + (marketOpen() ? ' 기준' : ' 장 마감');
     // 세 칸: 가격 · 거래량 · RSI (같은 시간축)
     const narrow = el.clientWidth < 520, gap = 12;
@@ -1387,7 +1392,8 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       // 장 밖에선 판단이 돌지 않으므로 Off (실패·동기화 문제는 그대로 보여줌)
       // 11-09: 장 마감 뒤엔 지연은 문제로 안 봄 (실패·동기화 문제만 빨강)
       const stuck = a[1] === 'bad' && !/지연/.test(a[2]);
-      if (!opsOpen()) return ['Off', stuck ? 'bad' : '', stuck ? '장 마감 · ' + a[2] : '장 마감 · 다음 판단 평일 09:30'];
+      // 11-10 S.Lee: 장 밖엔 무조건 회색. 마지막 실패는 툴팁에만
+      if (!opsOpen()) return ['Off', '', stuck ? '장 마감 · ' + a[2] : '장 마감 · 다음 판단 평일 09:30'];
       // 판단 실행 중 (시간으로 추정): 판단 회차(15분마다) 시작 뒤 6분 안이고 그 회차 결과가 아직 안 올라왔으면.
       // 실행은 보통 3~4분, 끝나면 status.json 의 last_run 이 그 회차 시각으로 바뀜
       const k = new Date(Date.now() + 9 * 3600e3 - off * 60e3), m = k.getUTCHours() * 60 + k.getUTCMinutes();
