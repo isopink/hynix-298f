@@ -463,7 +463,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
     <section class="card c12 sion-card" id="sion-card" hidden>
       <div class="hd"><h2 class="eyebrow on" title="온톨로지 버전 가상 계좌 (실제 계좌를 복사해 시작, 주문은 가상 체결)">SiON Engine 계좌</h2><span class="sub" id="sion-sub"></span></div>
       <div class="sion-kpi" id="sion-kpi"></div>
-      <h3 class="eyebrow">SiON Engine 포트폴리오</h3>   <!-- 11-09 S.Lee: 포트폴리오를 Sigma · SiON 따로 -->
+      <div class="hd"><h3 class="eyebrow">SiON Engine 포트폴리오</h3><span class="sub">빨간 호 = 국면 상한</span></div>   <!-- 11-09 S.Lee: 포트폴리오를 Sigma · SiON 따로, 양식은 Sigma 와 같게 -->
       <div class="chart" id="ch-sion-donut" style="min-height:240px"></div>
       <div class="kx-flow" style="margin-bottom:18px">
         <div class="hd"><h3 class="eyebrow">Holdings P&amp;L</h3><span class="sub">수수료·세금 반영</span></div>
@@ -1529,12 +1529,13 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const sw = v => (v > 0 ? '+' : v < 0 ? '−' : '') + won(Math.abs(Math.round(v))) + '원';
     // 11-09 S.Lee: SiON 포트폴리오 (도넛 · 보유 손익) 를 Sigma 와 따로
     const sp = hs.map(h => ({ name: h.name, v: h.value || h.price * h.qty, pnl: h.pnl_pct == null ? null : fee(+h.pnl_pct) })).sort((a, b) => b.v - a.v).concat([{ name: '현금', v: Math.max(0, cash) }]);
-    drawDonut($('ch-sion-donut'), sp, null, ['#1f9e72', '#3ecf8e', '#8fe3bd', '#5a7d6c', '#46604f', '#3a4a40'], '#3ecf8e');
+    const sReg = st.decision && st.decision.regime, sCap = D && D.cap && (!sReg || sReg === (D.last && D.last.regime)) ? D.cap : null;   // 국면이 Sigma 와 같으면 같은 상한 호
+    drawDonut($('ch-sion-donut'), sp, sCap, ['#da291c', '#ff7a6e', '#bdbdbd', '#7a7a7a', '#4a4a4a', '#3a3a3a'], C.red);   // 11-09 S.Lee: Sigma 와 같은 양식
     const sr = hs.filter(h => h.pnl_pct != null).map(h => { const avg = h.avg_price || h.price / (1 + +h.pnl_pct); return { name: h.name, v: fee(+h.pnl_pct), avg, price: h.price, qty: h.qty }; });
     const sCost = d3.sum(sr, r => r.avg * r.qty), sTot = sCost ? d3.sum(sr, r => r.avg * r.qty * r.v) / sCost : 0;
     if (!sr.length) none($('ch-sion-pnl'), '보유 종목이 없어요.');
     else drawPnl($('ch-sion-pnl'), sr, sTot, r => r.total ? `<div class="t">SiON 보유 합계</div>${row('매입금액', won(Math.round(sCost)))}${row('수수료·세금 반영', pct(sTot))}`
-      : `<div class="t">${esc(r.name)}</div>${row('평단', won(Math.round(r.avg)))}${row('현재가', won(+r.price))}${row('수수료·세금 반영', pct(r.v), r.v >= 0 ? 'up' : 'down')}`, true);
+      : `<div class="t">${esc(r.name)}</div>${row('평단', won(Math.round(r.avg)))}${row('현재가', won(+r.price))}${row('수수료·세금 반영', pct(r.v), r.v >= 0 ? 'up' : 'down')}`);
     $('sion-sub').textContent = (since ? md(toD(since)) + ' 시작 · ' : '') + (L && L.ts ? new Date(L.ts).toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Seoul' }) + ' 기준' : '');
     const k = (label, val, c = '', tip = '') => `<div class="k"${tip ? ` title="${esc(tip)}"` : ''}><span>${label}</span><b class="${c}">${val}</b></div>`;
     $('sion-kpi').innerHTML = k('총자산', won(Math.round(total)) + '원')
