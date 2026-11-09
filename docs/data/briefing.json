@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "13:15",
+    "time": "13:30",
     "pool": 445,
     "analyzed_new": 30,
-    "passed": 21,
+    "passed": 20,
     "kept_prep": false
   },
   "candidates": [
@@ -98,7 +98,7 @@
       "vol20": 0.888,
       "foreign_net": 1436621025,
       "inst_net": 20425868350,
-      "score": 0.969,
+      "score": 0.989,
       "news": [
         {
           "date": "11-09",
@@ -116,73 +116,11 @@
           "risk": false
         }
       ],
-      "price": 31100,
-      "chg": 0.0454,
-      "activity": 2.28,
-      "foreign_today": 1492800000,
-      "inst_today": 5629100000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "064400",
-      "name": "LG씨엔에스",
-      "close": 73700,
-      "ret5": 0.0351,
-      "ret20": 0.0886,
-      "rsi14": 51.8,
-      "vol20": 0.792,
-      "foreign_net": -20437500850,
-      "inst_net": 51491335800,
-      "score": 0.896,
-      "news": [
-        {
-          "date": "11-07",
-          "title": "11월 첫째 주 LG씨엔에스 주가 변동성 장세 연출",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "LG씨엔에스 3.03% 올라 7만4800원…AI·클라우드 성장 주목",
-          "risk": false
-        }
-      ],
-      "price": 79000,
-      "chg": 0.0661,
-      "activity": 2.04,
-      "foreign_today": 6083000000,
-      "inst_today": 4029000000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "326030",
-      "name": "SK바이오팜",
-      "close": 88800,
-      "ret5": 0.1532,
-      "ret20": 0.2215,
-      "rsi14": 69.5,
-      "vol20": 0.56,
-      "foreign_net": -19235375950,
-      "inst_net": 64455133600,
-      "score": 0.698,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "SK바이오팜, 美 진출 지원 플랫폼 '링스' 입주기업 31개사 선정",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "SK바이오팜, 미국 진출 지원 플랫폼 '링스' 입주기업 31개사 선정",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "SK바이오팜, 미국 링스 입주사 31곳 선정…현지 사업화 지원",
-          "risk": false
-        }
-      ],
-      "foreign_today": 3019200000,
-      "inst_today": 0,
+      "price": 31050,
+      "chg": 0.0437,
+      "activity": 2.2,
+      "foreign_today": 1490400000,
+      "inst_today": 5620050000,
       "exchange": "KOSPI"
     },
     {
@@ -195,13 +133,45 @@
       "vol20": 0.491,
       "foreign_net": -22121547500,
       "inst_net": 56405917100,
-      "score": 0.688,
+      "score": 0.7,
       "news": [],
-      "price": 77800,
-      "chg": 0.0013,
-      "activity": 1.23,
-      "foreign_today": 5134800000,
-      "inst_today": 778000000,
+      "price": 77500,
+      "chg": -0.0026,
+      "activity": 1.21,
+      "foreign_today": 5115000000,
+      "inst_today": 775000000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "326030",
+      "name": "SK바이오팜",
+      "close": 88800,
+      "ret5": 0.1532,
+      "ret20": 0.2215,
+      "rsi14": 69.5,
+      "vol20": 0.56,
+      "foreign_net": -19235375950,
+      "inst_net": 64455133600,
+      "score": 0.7,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "SK바이오팜, 미국 진출 지원 기업 31곳 선정…‘K-바이오 교두보’ 구축",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "SK바이오팜, 상생플랫폼 미국 링스 입주사 31곳 선정",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "SK바이오팜, 美 진출 지원 플랫폼 '링스' 입주기업 31개사 선정",
+          "risk": false
+        }
+      ],
+      "foreign_today": 3019200000,
+      "inst_today": 0,
       "exchange": "KOSPI"
     },
     {
@@ -214,8 +184,13 @@
       "vol20": 0.402,
       "foreign_net": -43204631710,
       "inst_net": 74782934530,
-      "score": 0.667,
+      "score": 0.678,
       "news": [
+        {
+          "date": "11-09",
+          "title": "말투 읽고 긴 대화도 기억한다…LG유플러스, 한국어 음성 AI 개발",
+          "risk": false
+        },
         {
           "date": "11-09",
           "title": "LG유플러스-서울대-KAIST-연세대, AI 'K-보이스 엔진' 개발 추진",
@@ -224,11 +199,6 @@
         {
           "date": "11-09",
           "title": "LG유플러스, 서울대·KAIST·연세대와 한국어 특화 음성 AI 개발",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "LG유플러스, 서울대·KAIST·연세대와 한국형 음성AI 개발 나선다",
           "risk": false
         }
       ],
@@ -246,7 +216,7 @@
       "vol20": 0.843,
       "foreign_net": -27562520175,
       "inst_net": 30133908725,
-      "score": 0.51,
+      "score": 0.556,
       "news": [
         {
           "date": "11-09",
@@ -264,11 +234,46 @@
           "risk": false
         }
       ],
-      "price": 49000,
-      "chg": -0.002,
-      "activity": 1.64,
+      "price": 49150,
+      "chg": 0.001,
+      "activity": 1.58,
       "foreign_today": 0,
-      "inst_today": 3185000000,
+      "inst_today": 3194750000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "028050",
+      "name": "삼성E&A",
+      "close": 61300,
+      "ret5": 0.0116,
+      "ret20": 0.2797,
+      "rsi14": 59.4,
+      "vol20": 0.957,
+      "foreign_net": -76658998800,
+      "inst_net": 63121010150,
+      "score": 0.511,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "메리츠증권, 삼성E&A 목표주가 7만6000원 유지",
+          "risk": false
+        },
+        {
+          "date": "11-08",
+          "title": "삼성E&A, UAE 아디펙서 기술력 부각…'임팩트 챔피언' 선정",
+          "risk": false
+        },
+        {
+          "date": "11-08",
+          "title": "삼성E&A 말레이시아 공사 종료일 2027년 1월 29일로 연장",
+          "risk": false
+        }
+      ],
+      "price": 62000,
+      "chg": 0.0248,
+      "activity": 0.58,
+      "foreign_today": 3844000000,
+      "inst_today": 2790000000,
       "exchange": "KOSPI"
     },
     {
@@ -281,7 +286,7 @@
       "vol20": 0.469,
       "foreign_net": -6880633700,
       "inst_net": 74240426800,
-      "score": 0.49,
+      "score": 0.511,
       "news": [
         {
           "date": "11-08",
@@ -304,41 +309,6 @@
       "exchange": "KOSPI"
     },
     {
-      "code": "028050",
-      "name": "삼성E&A",
-      "close": 61300,
-      "ret5": 0.0116,
-      "ret20": 0.2797,
-      "rsi14": 59.4,
-      "vol20": 0.957,
-      "foreign_net": -76658998800,
-      "inst_net": 63121010150,
-      "score": 0.479,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "메리츠증권, 삼성E&A 목표주가 7만6000원 유지",
-          "risk": false
-        },
-        {
-          "date": "11-08",
-          "title": "삼성E&A, UAE 아디펙서 기술력 부각…'임팩트 챔피언' 선정",
-          "risk": false
-        },
-        {
-          "date": "11-08",
-          "title": "삼성E&A 말레이시아 공사 종료일 2027년 1월 29일로 연장",
-          "risk": false
-        }
-      ],
-      "price": 62000,
-      "chg": 0.0248,
-      "activity": 0.6,
-      "foreign_today": 3844000000,
-      "inst_today": 2790000000,
-      "exchange": "KOSPI"
-    },
-    {
       "code": "207940",
       "name": "삼성바이오로직스",
       "close": 1508000,
@@ -348,13 +318,13 @@
       "vol20": 0.541,
       "foreign_net": -85838332500,
       "inst_net": 157835015500,
-      "score": 0.469,
+      "score": 0.478,
       "news": [],
-      "price": 1549000,
-      "chg": 0.0218,
-      "activity": 0.88,
+      "price": 1548000,
+      "chg": 0.0211,
+      "activity": 0.87,
       "foreign_today": 0,
-      "inst_today": 3098000000,
+      "inst_today": 3096000000,
       "exchange": "KOSPI"
     },
     {
@@ -367,7 +337,7 @@
       "vol20": 0.404,
       "foreign_net": -5748052750,
       "inst_net": 7853604175,
-      "score": 0.417,
+      "score": 0.444,
       "news": [],
       "foreign_today": 0,
       "inst_today": 867200000,
@@ -383,7 +353,7 @@
       "vol20": 0.625,
       "foreign_net": 652431450,
       "inst_net": 21161016850,
-      "score": 0.354,
+      "score": 0.389,
       "news": [
         {
           "date": "11-09",
@@ -415,7 +385,7 @@
       "vol20": 0.738,
       "foreign_net": -7484986975,
       "inst_net": 26975170300,
-      "score": 0.333,
+      "score": 0.344,
       "news": [
         {
           "date": "11-09",
@@ -438,6 +408,33 @@
       "exchange": "KOSPI"
     },
     {
+      "code": "036570",
+      "name": "NC",
+      "close": 207500,
+      "ret5": 0.0375,
+      "ret20": -0.0695,
+      "rsi14": 49.3,
+      "vol20": 0.428,
+      "foreign_net": 11365936950,
+      "inst_net": -1065209850,
+      "score": 0.3,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "[NC스테이지] 효녀 심청 뒤에 숨은 아버지의 욕망…'먼 눈'의 비극",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "NC문화재단, 특수교사 9명 수업 사례 담은 '나의AAC' 자료집 무료 배포…...",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 830000000,
+      "exchange": "KOSPI"
+    },
+    {
       "code": "086280",
       "name": "현대글로비스",
       "close": 195500,
@@ -447,7 +444,7 @@
       "vol20": 0.592,
       "foreign_net": -8231059200,
       "inst_net": 53595627900,
-      "score": 0.302,
+      "score": 0.3,
       "news": [
         {
           "date": "11-09",
@@ -470,68 +467,6 @@
       "exchange": "KOSPI"
     },
     {
-      "code": "036570",
-      "name": "NC",
-      "close": 207500,
-      "ret5": 0.0375,
-      "ret20": -0.0695,
-      "rsi14": 49.3,
-      "vol20": 0.428,
-      "foreign_net": 11365936950,
-      "inst_net": -1065209850,
-      "score": 0.271,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "[NC스테이지] 효녀 심청 뒤에 숨은 아버지의 욕망…'먼 눈'의 비극",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "NC문화재단, 특수교사 9명 수업 사례 담은 '나의AAC' 자료집 무료 배포…...",
-          "risk": false
-        }
-      ],
-      "foreign_today": 0,
-      "inst_today": 830000000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "468530",
-      "name": "프로티나",
-      "close": 53600,
-      "ret5": 0.0094,
-      "ret20": 0.1978,
-      "rsi14": 60.3,
-      "vol20": 1.371,
-      "foreign_net": -2097260775,
-      "inst_net": 7682858150,
-      "score": 1.0,
-      "news": [
-        {
-          "date": "11-07",
-          "title": "엔젠바이오 上…자금조달에 희비 엇갈린 프로티나·애드바이오텍[바이...",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "[애프터마켓 리뷰] 프로티나, 365억원 조달해 AI 바이오파운드리 구축",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "[더벨]프로티나, IPO 1년 만의 변심 '청사진 변화' 신사업에 무게",
-          "risk": false
-        }
-      ],
-      "price": 61400,
-      "chg": 0.1164,
-      "activity": 3.1,
-      "foreign_today": 0,
-      "inst_today": 1043800000,
-      "exchange": "KOSDAQ"
-    },
-    {
       "code": "328130",
       "name": "루닛",
       "close": 15470,
@@ -541,7 +476,7 @@
       "vol20": 1.387,
       "foreign_net": -6381603720,
       "inst_net": 16519823935,
-      "score": 0.969,
+      "score": 1.0,
       "news": [
         {
           "date": "11-09",
@@ -559,11 +494,46 @@
           "risk": false
         }
       ],
-      "price": 16810,
-      "chg": 0.088,
-      "activity": 2.29,
-      "foreign_today": 756450000,
-      "inst_today": 2218920000,
+      "price": 16680,
+      "chg": 0.0796,
+      "activity": 2.23,
+      "foreign_today": 750600000,
+      "inst_today": 2201760000,
+      "exchange": "KOSDAQ"
+    },
+    {
+      "code": "468530",
+      "name": "프로티나",
+      "close": 53600,
+      "ret5": 0.0094,
+      "ret20": 0.1978,
+      "rsi14": 60.3,
+      "vol20": 1.371,
+      "foreign_net": -2097260775,
+      "inst_net": 7682858150,
+      "score": 0.989,
+      "news": [
+        {
+          "date": "11-07",
+          "title": "엔젠바이오 上…자금조달에 희비 엇갈린 프로티나·애드바이오텍[바이...",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "[애프터마켓 리뷰] 프로티나, 365억원 조달해 AI 바이오파운드리 구축",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "[더벨]프로티나, IPO 1년 만의 변심 '청사진 변화' 신사업에 무게",
+          "risk": false
+        }
+      ],
+      "price": 59400,
+      "chg": 0.08,
+      "activity": 2.95,
+      "foreign_today": 0,
+      "inst_today": 1009800000,
       "exchange": "KOSDAQ"
     },
     {
@@ -576,13 +546,13 @@
       "vol20": 1.507,
       "foreign_net": 14334611050,
       "inst_net": -8579187950,
-      "score": 0.656,
+      "score": 0.744,
       "news": [],
-      "price": 70100,
-      "chg": 0.138,
-      "activity": 0.92,
+      "price": 70800,
+      "chg": 0.1494,
+      "activity": 1.02,
       "foreign_today": 0,
-      "inst_today": 1752500000,
+      "inst_today": 1770000000,
       "exchange": "KOSDAQ"
     },
     {
@@ -595,7 +565,7 @@
       "vol20": 1.141,
       "foreign_net": -11979305150,
       "inst_net": 12404586800,
-      "score": 0.542,
+      "score": 0.556,
       "news": [
         {
           "date": "11-06",
@@ -603,11 +573,11 @@
           "risk": false
         }
       ],
-      "price": 39000,
-      "chg": 0.1048,
-      "activity": 3.04,
+      "price": 38600,
+      "chg": 0.0935,
+      "activity": 3.01,
       "foreign_today": 0,
-      "inst_today": 351000000,
+      "inst_today": 347400000,
       "exchange": "KOSDAQ"
     },
     {
@@ -620,7 +590,7 @@
       "vol20": 1.105,
       "foreign_net": -1315515485,
       "inst_net": 73370470,
-      "score": 0.5,
+      "score": 0.511,
       "news": [
         {
           "date": "11-09",
@@ -638,10 +608,10 @@
           "risk": false
         }
       ],
-      "price": 14250,
-      "chg": 0.0401,
-      "activity": 1.58,
-      "foreign_today": 669750000,
+      "price": 14330,
+      "chg": 0.046,
+      "activity": 1.54,
+      "foreign_today": 673510000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
