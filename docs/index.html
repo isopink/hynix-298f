@@ -314,7 +314,7 @@ details.log summary:focus-visible { outline: 2px solid #f6e500; outline-offset: 
 table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 960px; }
 th { text-align: left; font-size: 11px; font-weight: 600; color: var(--muted); padding: 8px 12px 8px 0; border-bottom: 1px solid var(--line); white-space: nowrap; }
 td { padding: 10px 12px 10px 0; border-bottom: 1px solid #222; vertical-align: top; color: var(--body); line-height: 1.5; }
-.pf-tbl-wrap { margin: 14px auto 0; max-width: 720px; }
+.pf-tbl-wrap { margin-top: 14px; } .pf-tbl-wrap .pf-tbl { max-width: 720px; margin: 0 auto; }
 .pf-tbl { width: 100%; min-width: 0; border-collapse: collapse; font-size: 13px; }
 .pf-tbl th { font-size: 11px; font-weight: 400; color: var(--muted); padding: 0 4px 8px; text-align: center; border-bottom: 1px solid rgba(255,255,255,.1); }
 .pf-tbl td { text-align: center; padding: 7px 4px; color: var(--ink); border-bottom: 1px solid rgba(255,255,255,.05); font-variant-numeric: tabular-nums; }
@@ -513,14 +513,6 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
       <button type="button" role="tab" data-eng="sion" aria-selected="false">SiON Engine</button>
     </div>
 
-    <section class="card c12" id="dec-card">
-      <div class="hd"><h2 class="eyebrow" id="dec-title">Live Decision</h2><span class="sub" id="dec-asof"></span></div>
-      <div class="dec-head m-hide" id="dec-head"></div>
-      <div class="dec-trade" id="dec-trade" hidden></div>
-      <div class="dec-colhead" id="dec-colhead" hidden></div>
-      <div class="dec-list" id="dec-list"></div>
-      <button type="button" class="dec-more" id="dec-more" hidden aria-controls="dec-list"></button>
-    </section>
 
     <!-- 포트폴리오: 접지 않고 늘 펼쳐 둠 (11-05) -->
     <!-- 11-10 S.Lee: 두 엔진 포트폴리오를 같은 양식으로 (요약 숫자 4개 · 비중 도넛 | 보유 손익 · 최근 체결) -->
@@ -531,7 +523,6 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
         <div class="hd"><h3 class="eyebrow">비중 · 손익</h3><span class="sub">빨간 호 = 국면 상한 · 수익률은 수수료·세금 반영</span></div><div class="chart" id="ch-donut" style="min-height:220px"></div>
         <div class="chart" id="ch-pnl" hidden></div>
       </div>
-      <details class="kx-flow tr-box"><summary class="hd"><h3 class="eyebrow">최근 체결</h3><span class="sub">실제 계좌</span></summary><div class="sion-tbl tr-tbl" id="sig-trades"></div></details>
     </section>
 
     <section class="card c12 pane sion-card" id="sion-card" hidden data-eng="sion">
@@ -541,7 +532,19 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
         <div class="hd"><h3 class="eyebrow">비중 · 손익</h3><span class="sub">빨간 호 = 국면 상한 · 수익률은 수수료·세금 반영</span></div><div class="chart" id="ch-sion-donut" style="min-height:220px"></div>
         <div class="chart" id="ch-sion-pnl" hidden></div>
       </div>
-      <details class="kx-flow tr-box"><summary class="hd"><h3 class="eyebrow">최근 체결</h3><span class="sub">가상 체결</span></summary><div class="sion-tbl tr-tbl" id="sion-trades"></div></details>
+    </section>
+
+    <!-- 11-10 S.Lee: 포트폴리오 카드가 위, Live Decision 이 아래 -->
+    <section class="card c12" id="dec-card">
+      <div class="hd"><h2 class="eyebrow" id="dec-title">Live Decision</h2><span class="sub" id="dec-asof"></span></div>
+      <div class="dec-head m-hide" id="dec-head"></div>
+      <div class="dec-trade" id="dec-trade" hidden></div>
+      <div class="dec-colhead" id="dec-colhead" hidden></div>
+      <div class="dec-list" id="dec-list"></div>
+      <button type="button" class="dec-more" id="dec-more" hidden aria-controls="dec-list"></button>
+      <!-- 11-10 S.Lee: 최근 체결은 Live Decision 카드 안 (고른 엔진만) -->
+      <details class="kx-flow tr-box pane" data-eng="sigma"><summary class="hd"><h3 class="eyebrow">최근 체결</h3><span class="sub">실제 계좌</span></summary><div class="sion-tbl tr-tbl" id="sig-trades"></div></details>
+      <details class="kx-flow tr-box pane" data-eng="sion" hidden><summary class="hd"><h3 class="eyebrow">최근 체결</h3><span class="sub">가상 체결</span></summary><div class="sion-tbl tr-tbl" id="sion-trades"></div></details>
     </section>
 
 
@@ -1245,7 +1248,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     svg.append('g').selectAll('text').data(xt).join('text').attr('x', r => x(r.d)).attr('y', H - 8).attr('font-size', 11).attr('fill', C.muted)
       .attr('text-anchor', (r, i) => i === 0 ? 'start' : i === xt.length - 1 ? 'end' : 'middle').text(r => md(r.d));
     // 우리 ↔ KOSPI 격차 색칠: 우리가 위면 빨강(앞섬), 아래면 파랑(뒤짐). KOSPI 선을 기준으로 위·아래를 잘라 칠함
-    const cv = d3.curveLinear, kLine = d3.line().curve(cv).x(r => x(r.d)).y(r => y(r.kret));   // 11-10 S.Lee: 곡선 대신 직선으로 이음 (11-05 monotone 곡선)
+    const cv = d3.curveMonotoneX, kLine = d3.line().curve(cv).x(r => x(r.d)).y(r => y(r.kret));   // 11-05 부드러운 곡선 (값을 넘어 튀지 않는 monotone). 11-10 직선 시도 후 S.Lee 가 곡선으로 되돌림
     const defs = svg.append('defs');
     defs.append('clipPath').attr('id', 'cHeroUp').append('path').datum(rows).attr('d', d3.area().curve(cv).x(r => x(r.d)).y0(m.t - 20).y1(r => y(r.kret)));
     defs.append('clipPath').attr('id', 'cHeroDn').append('path').datum(rows).attr('d', d3.area().curve(cv).x(r => x(r.d)).y0(H).y1(r => y(r.kret)));
