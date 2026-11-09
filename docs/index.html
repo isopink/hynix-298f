@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- Sigma Engine · Designed by S.Lee -->
-<html lang="ko">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -10,16 +10,16 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://isopink.github.io/hynix-298f/">
 <meta property="og:site_name" content="Sigma Engine">
-<meta property="og:image" content="https://isopink.github.io/hynix-298f/og.jpg?v=7">
+<meta property="og:image" content="https://isopink.github.io/hynix-298f/og.jpg?v=8">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="The Sigma Engine 신경망">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://isopink.github.io/hynix-298f/og.jpg?v=7">
+<meta name="twitter:image" content="https://isopink.github.io/hynix-298f/og.jpg?v=8">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<meta name="theme-color" content="#0d0d10">
+<meta name="theme-color" content="#101010">
 <meta name="twitter:title" content="The Sigma Engine">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&display=swap">
@@ -536,13 +536,13 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
 <script id="sample-data" type="application/json">{}</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
 <script>
-/* 11-10 S.Lee: VoltAgent 디자인 시안. ?theme=volt (또는 /volt/) 일 때만 켜짐, 본 화면은 그대로.
+/* 11-10 S.Lee: VoltAgent 디자인 (본 화면 기본). ?theme=classic 이면 예전 Noto Serif · 유리 화면.
    색은 한 곳에서 바꿈: 기존 CSS 글자 · d3 색 속성 · 캔버스(커버 신경망) · 인라인 style 의 빨강/파랑/초록을
    VoltAgent 팔레트(초록 #00d992 하나 + 무채색)로 옮김. 수익 = 초록, 손실 = 회색, SiON = 흰색. */
 (function () {
-  const VOLT = /(^|[?&])theme=volt\b/.test(location.search);
+  const VOLT = !/(^|[?&])theme=classic\b/.test(location.search);   // 11-10 S.Lee: 본 화면을 VoltAgent 로. 예전 화면은 ?theme=classic
   window.VOLT = VOLT;
-  if (!VOLT) return;
+  if (!VOLT) { document.documentElement.lang = 'ko'; return; }
   document.documentElement.dataset.theme = 'volt';
   const HEX = { '#da291c': '#00d992', '#ff5a4a': '#2fd6a1', '#ff8a70': '#2fd6a1', '#ff4a36': '#00d992', '#c41a0d': '#10b981', '#a8160b': '#10b981', '#ff6a55': '#2fd6a1', '#b01e0a': '#10b981', '#ffd2cc': '#c8f5e6', '#ff7a6e': '#7fe8c4', '#e0b84a': '#d0d0d0',
     '#4aa3d4': '#8b949e', '#7cc4ea': '#bdbdbd', '#9ad6f2': '#d0d0d0', '#1f6f9c': '#5a6068', '#3ecf8e': '#f2f2f2', '#c8f5dc': '#ffffff',
