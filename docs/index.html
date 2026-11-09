@@ -43,6 +43,9 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
 .top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; padding-bottom: 16px; }
 .top h1 { margin: 6px 0 0; font-size: clamp(26px, 3.4vw, 40px); font-weight: 500; letter-spacing: -0.8px; line-height: 1.1; }
 .top h1 .tagline { font-size: clamp(13px, 1.3vw, 16px); font-weight: 400; letter-spacing: 0; margin-left: 10px; color: var(--muted); white-space: nowrap; }
+.top h1 .st-top { display: inline-flex; gap: 14px; align-items: center; vertical-align: middle; font-size: 13px; }
+.st-top .who { display: inline-flex; align-items: center; gap: 6px; }
+.eng-kv[hidden], .st-line[hidden] { display: none !important; }
 .eyebrow { margin: 0; font-size: 12px; font-weight: 600; color: var(--muted); }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 9999px; font-size: 12px; color: var(--body); white-space: nowrap; }
@@ -114,6 +117,7 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
   .top { flex-direction: column; align-items: center; text-align: center; gap: 14px; }
   .brand { flex-direction: column; gap: 10px; }
   .top h1 .tagline { display: block; margin: 8px 0 0; }
+  .top h1 .st-top { display: flex; }
   .top h1 { font-size: 28px; }
   .top { gap: 12px; padding-bottom: 4px; }
   .wrap { padding-block: 20px 40px; gap: 12px; }
@@ -440,7 +444,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
   <header class="top">
     <div class="brand">
       <div>
-        <h1>Sigma Engine <span class="tagline">목표 : 시장을 이기기</span></h1>
+        <h1>Sigma Engine <span class="tagline st-top" id="st-top" aria-label="실행 상태"></span></h1>   <!-- 11-10 S.Lee: 목표 문구 자리에 상태 3개 (모니터링 · 에이전트 · 온톨로지) -->
         <div class="chips sched m-hide" id="sched" aria-label="평일 정기 매매 판단 시각"></div>
       </div>
     </div>
@@ -472,14 +476,14 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
       <div class="hero">
         <div class="side eng-sum">   <!-- 11-10 S.Lee 가독성 개편: 두 엔진 요약을 나란히 (Sigma 위 · SiON 아래, 폰은 좌우) -->
           <div class="eng" id="eng-sigma">
-            <div class="eng-h"><span class="eyebrow">Sigma Engine</span><span class="st-line" id="st-line"></span></div>
+            <div class="eng-h"><span class="eyebrow">Sigma Engine</span><span class="st-line" id="st-line" hidden></span></div>
             <div id="realized"><div class="big won" id="pnl-won">—</div></div>
-            <div class="eng-kv"><span hidden>수익률 <b id="ret-pct">—</b></span><span>KOSPI 대비 <b id="k-alpha">—</b></span></div>
+            <div class="eng-kv" hidden><span>수익률 <b id="ret-pct">—</b></span><span>KOSPI 대비 <b id="k-alpha">—</b></span></div>   <!-- 11-10 S.Lee: 비교값 없앰 -->
           </div>
           <div class="eng sion" id="eng-sion" hidden>
-            <div class="eng-h"><span class="eyebrow on">SiON Engine</span><span class="st-line" id="st-sion"></span></div>
+            <div class="eng-h"><span class="eyebrow on">SiON Engine</span><span class="st-line" id="st-sion" hidden></span></div>
             <div id="s-realized"><div class="big won" id="s-pnl-won">—</div></div>
-            <div class="eng-kv"><span hidden>수익률 <b id="s-ret">—</b></span><span>Sigma 대비 <b id="s-vs">—</b></span></div>
+            <div class="eng-kv" hidden><span>수익률 <b id="s-ret">—</b></span><span>Sigma 대비 <b id="s-vs">—</b></span></div>
           </div>
         </div>
         <div class="hero-chart" style="display:flex;flex-direction:column;gap:10px;min-width:0">
@@ -1398,6 +1402,8 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       return `<span class="who solo" tabindex="0" title="${esc(list.map(([a, n]) => n + ' · ' + a[2]).join('\n'))}" aria-label="${esc(list.map(([a, n]) => n + ' ' + a[0]).join(', '))}"><i class="dot ${w[0][1]}"></i></span>`; };
     el.innerHTML = one([[watch, '모니터링'], [agent, '에이전트']]);
     $('st-sion').innerHTML = onto ? one([[onto, '온톨로지']]) : '';
+    // 11-10 S.Lee: 머리글 목표 문구 자리에 세 개 나란히
+    $('st-top').innerHTML = `<span>${pill(watch, '모니터링')}</span><span>${pill(agent, '에이전트')}</span>` + (onto ? `<span>${pill(onto, '온톨로지')}</span>` : '');
   }
 
   // ---------- 실시간 판단: docs/data/decision.json (가장 최근 정기 판단 1회분) ----------
@@ -2009,7 +2015,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       // 이름은 켜졌을 때만. 폰에서도 읽히게 화면 기준 12px 이상
       ctx.globalCompositeOperation = 'source-over'; ctx.textAlign = 'center';
       const fs = 12 * W / cssW, ln = n => fs * (1 + Math.min(.2, n.deg * .02));   // 화면 기준 12px, 연결 많으면 조금 크게
-      Object.values(N).forEach(n => {
+      if (false) Object.values(N).forEach(n => {   // 11-10 S.Lee: 커버 뉴런 이름 없앰
         if (!(n.on > 0)) return;   // 이름은 켜져 있는 동안만
         const f = ln(n); ctx.globalAlpha = Math.min(1, n.glow * 1.4);
         ctx.font = `500 ${f}px ${FONT}`; ctx.lineWidth = 4; ctx.lineJoin = 'round'; ctx.strokeStyle = 'rgba(10,10,12,.94)';
