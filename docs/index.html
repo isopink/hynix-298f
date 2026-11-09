@@ -1369,7 +1369,9 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const sA = SHADOW_LIVE && SHADOW_LIVE.status && SHADOW_LIVE.status.decision, sB = SHADOW && SHADOW.decision;
     const sd = [sA, sB].filter(x => x && x.time && x.time.slice(0, 10) === dc.time.slice(0, 10)).sort((a, b) => a.time < b.time ? 1 : -1)[0];
     const sFull = sB && sd && sB.time === sd.time ? new Map((sB.items || []).map(x => [x.code, x])) : new Map();
-    const sMap = new Map(((sd && sd.items) || []).map(x => [x.code, { ...x, ...(sFull.get(x.code) || {}) }]));
+    // 온톨로지 쪽 공개 기록은 근거를 '상세 주장 비공개'·'판단 원문은 로컬 상세에서 확인'으로 가림 → 그런 값은 버리고 채워진 쪽을 씀
+    const hid = v => !v || /비공개|로컬 상세에서 확인/.test(v), clean = x => Object.fromEntries(Object.entries(x || {}).filter(([k, v]) => !['bull', 'bear', 'decision'].includes(k) || !hid(v)));
+    const sMap = new Map(((sd && sd.items) || []).map(x => [x.code, { ...clean(x), ...clean(sFull.get(x.code)) }]));
     const cmp = !!sd;
     $('dec-colhead').hidden = true;
     const slot = t => { const m = +t.slice(11, 13) * 60 + +t.slice(14, 16), q = Math.floor(m / 15) * 15; return String(Math.floor(q / 60)).padStart(2, '0') + ':' + String(q % 60).padStart(2, '0'); };
