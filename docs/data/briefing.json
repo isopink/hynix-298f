@@ -81,48 +81,13 @@
     ]
   },
   "intraday": {
-    "time": "12:00",
+    "time": "12:15",
     "pool": 410,
     "analyzed_new": 30,
-    "passed": 21,
+    "passed": 20,
     "kept_prep": false
   },
   "candidates": [
-    {
-      "code": "089860",
-      "name": "롯데렌탈",
-      "close": 58500,
-      "ret5": 0.1185,
-      "ret20": 0.1426,
-      "rsi14": 75.4,
-      "vol20": 0.469,
-      "foreign_net": -6880633700,
-      "inst_net": 74240426800,
-      "score": 0.93,
-      "news": [
-        {
-          "date": "11-08",
-          "title": "롯데렌탈, 단일계좌 거래량 상위로 9일 투자주의 지정",
-          "risk": false
-        },
-        {
-          "date": "11-08",
-          "title": "롯데렌탈 개미가 대주주 값 받기까지…'50%+1주' 법안이면 어렵다",
-          "risk": false
-        },
-        {
-          "date": "11-08",
-          "title": "롯데 떠난 롯데렌탈, TPG 품에서 상장폐지 수순…다음 행보는?",
-          "risk": false
-        }
-      ],
-      "price": 58400,
-      "chg": 0.0,
-      "activity": 4.43,
-      "foreign_today": 1051200000,
-      "inst_today": 0,
-      "exchange": "KOSPI"
-    },
     {
       "code": "006360",
       "name": "GS건설",
@@ -133,7 +98,7 @@
       "vol20": 0.888,
       "foreign_net": 1436621025,
       "inst_net": 20425868350,
-      "score": 0.907,
+      "score": 0.905,
       "news": [
         {
           "date": "11-09",
@@ -151,11 +116,46 @@
           "risk": false
         }
       ],
-      "price": 31150,
-      "chg": 0.0471,
-      "activity": 2.78,
-      "foreign_today": 1993600000,
-      "inst_today": 2492000000,
+      "price": 30850,
+      "chg": 0.037,
+      "activity": 2.61,
+      "foreign_today": 1974400000,
+      "inst_today": 2468000000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "089860",
+      "name": "롯데렌탈",
+      "close": 58500,
+      "ret5": 0.1185,
+      "ret20": 0.1426,
+      "rsi14": 75.4,
+      "vol20": 0.469,
+      "foreign_net": -6880633700,
+      "inst_net": 74240426800,
+      "score": 0.905,
+      "news": [
+        {
+          "date": "11-08",
+          "title": "롯데렌탈, 단일계좌 거래량 상위로 9일 투자주의 지정",
+          "risk": false
+        },
+        {
+          "date": "11-08",
+          "title": "롯데렌탈 개미가 대주주 값 받기까지…'50%+1주' 법안이면 어렵다",
+          "risk": false
+        },
+        {
+          "date": "11-08",
+          "title": "롯데 떠난 롯데렌탈, TPG 품에서 상장폐지 수순…다음 행보는?",
+          "risk": false
+        }
+      ],
+      "price": 58450,
+      "chg": 0.0009,
+      "activity": 4.17,
+      "foreign_today": 1052100000,
+      "inst_today": 0,
       "exchange": "KOSPI"
     },
     {
@@ -168,7 +168,7 @@
       "vol20": 0.792,
       "foreign_net": -20437500850,
       "inst_net": 51491335800,
-      "score": 0.756,
+      "score": 0.75,
       "news": [
         {
           "date": "11-07",
@@ -181,11 +181,11 @@
           "risk": false
         }
       ],
-      "price": 79300,
-      "chg": 0.0702,
-      "activity": 2.26,
-      "foreign_today": 3330600000,
-      "inst_today": 475800000,
+      "price": 79200,
+      "chg": 0.0688,
+      "activity": 2.23,
+      "foreign_today": 3326400000,
+      "inst_today": 475200000,
       "exchange": "KOSPI"
     },
     {
@@ -198,11 +198,11 @@
       "vol20": 0.56,
       "foreign_net": -19235375950,
       "inst_net": 64455133600,
-      "score": 0.686,
+      "score": 0.679,
       "news": [
         {
           "date": "11-09",
-          "title": "SK바이오팜, 美 진출 지원 플랫폼 '링스' 입주사 31곳 선정",
+          "title": "SK바이오팜, 국내 바이오기업 31곳 미국 진출 지원…'LinX' 운영",
           "risk": false
         },
         {
@@ -212,7 +212,7 @@
         },
         {
           "date": "11-09",
-          "title": "SK바이오팜, 국내 제약·바이오 31개사 미국 진출 지원",
+          "title": "SK바이오팜, 美 진출 지원 플랫폼 '링스' 입주사 31곳 선정",
           "risk": false
         }
       ],
@@ -230,13 +230,13 @@
       "vol20": 0.491,
       "foreign_net": -22121547500,
       "inst_net": 56405917100,
-      "score": 0.616,
+      "score": 0.643,
       "news": [],
-      "price": 77500,
-      "chg": -0.0026,
-      "activity": 1.41,
-      "foreign_today": 4030000000,
-      "inst_today": 775000000,
+      "price": 77800,
+      "chg": 0.0013,
+      "activity": 1.36,
+      "foreign_today": 4045600000,
+      "inst_today": 778000000,
       "exchange": "KOSPI"
     },
     {
@@ -249,16 +249,16 @@
       "vol20": 0.402,
       "foreign_net": -43204631710,
       "inst_net": 74782934530,
-      "score": 0.523,
+      "score": 0.512,
       "news": [
         {
           "date": "11-09",
-          "title": "LG유플러스, 서울대·KAIST·연세대와 한국어 특화 음성 AI 개발",
+          "title": "LG유플러스-서울대-KAIST-연세대, AI 'K-보이스 엔진' 개발 추진",
           "risk": false
         },
         {
           "date": "11-09",
-          "title": "LG유플러스, 서울대·KAIST·연세대와 한국형 음성AI 개발 나선다",
+          "title": "LG유플러스, 서울대·KAIST·연세대와 한국어 특화 음성 AI 개발",
           "risk": false
         },
         {
@@ -272,41 +272,6 @@
       "exchange": "KOSPI"
     },
     {
-      "code": "028050",
-      "name": "삼성E&A",
-      "close": 61300,
-      "ret5": 0.0116,
-      "ret20": 0.2797,
-      "rsi14": 59.4,
-      "vol20": 0.957,
-      "foreign_net": -76658998800,
-      "inst_net": 63121010150,
-      "score": 0.407,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "메리츠증권, 삼성E&A 목표주가 7만6000원 유지",
-          "risk": false
-        },
-        {
-          "date": "11-08",
-          "title": "삼성E&A, UAE 아디펙서 기술력 부각…'임팩트 챔피언' 선정",
-          "risk": false
-        },
-        {
-          "date": "11-08",
-          "title": "삼성E&A 말레이시아 공사 종료일 2027년 1월 29일로 연장",
-          "risk": false
-        }
-      ],
-      "price": 62200,
-      "chg": 0.0281,
-      "activity": 0.74,
-      "foreign_today": 2861200000,
-      "inst_today": 311000000,
-      "exchange": "KOSPI"
-    },
-    {
       "code": "112610",
       "name": "씨에스윈드",
       "close": 48800,
@@ -316,7 +281,7 @@
       "vol20": 0.843,
       "foreign_net": -27562520175,
       "inst_net": 30133908725,
-      "score": 0.395,
+      "score": 0.393,
       "news": [
         {
           "date": "11-09",
@@ -334,11 +299,46 @@
           "risk": false
         }
       ],
-      "price": 49300,
-      "chg": 0.0041,
-      "activity": 2.08,
+      "price": 49050,
+      "chg": -0.001,
+      "activity": 1.96,
       "foreign_today": 0,
-      "inst_today": 1676200000,
+      "inst_today": 1667700000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "028050",
+      "name": "삼성E&A",
+      "close": 61300,
+      "ret5": 0.0116,
+      "ret20": 0.2797,
+      "rsi14": 59.4,
+      "vol20": 0.957,
+      "foreign_net": -76658998800,
+      "inst_net": 63121010150,
+      "score": 0.393,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "메리츠증권, 삼성E&A 목표주가 7만6000원 유지",
+          "risk": false
+        },
+        {
+          "date": "11-08",
+          "title": "삼성E&A, UAE 아디펙서 기술력 부각…'임팩트 챔피언' 선정",
+          "risk": false
+        },
+        {
+          "date": "11-08",
+          "title": "삼성E&A 말레이시아 공사 종료일 2027년 1월 29일로 연장",
+          "risk": false
+        }
+      ],
+      "price": 62000,
+      "chg": 0.0248,
+      "activity": 0.69,
+      "foreign_today": 2852000000,
+      "inst_today": 310000000,
       "exchange": "KOSPI"
     },
     {
@@ -351,7 +351,7 @@
       "vol20": 0.738,
       "foreign_net": -7484986975,
       "inst_net": 26975170300,
-      "score": 0.337,
+      "score": 0.333,
       "news": [
         {
           "date": "11-09",
@@ -383,7 +383,7 @@
       "vol20": 0.404,
       "foreign_net": -5748052750,
       "inst_net": 7853604175,
-      "score": 0.326,
+      "score": 0.31,
       "news": [],
       "foreign_today": 0,
       "inst_today": 325200000,
@@ -399,7 +399,7 @@
       "vol20": 0.625,
       "foreign_net": 652431450,
       "inst_net": 21161016850,
-      "score": 0.326,
+      "score": 0.31,
       "news": [
         {
           "date": "11-09",
@@ -431,7 +431,7 @@
       "vol20": 0.592,
       "foreign_net": -8231059200,
       "inst_net": 53595627900,
-      "score": 0.291,
+      "score": 0.274,
       "news": [
         {
           "date": "11-09",
@@ -463,21 +463,21 @@
       "vol20": 0.254,
       "foreign_net": 5502551950,
       "inst_net": 9691482340,
-      "score": 0.244,
+      "score": 0.226,
       "news": [
         {
           "date": "11-09",
-          "title": "카카오뱅크, '눈치보고 주말 혜택받기'…1000번째로 버튼 누르면 경품",
+          "title": "11월 9일 카카오뱅크 AI 이모지 퀴즈, 낮 12시 정답은 ‘킬커버’",
           "risk": false
         },
         {
           "date": "11-09",
-          "title": "카카오뱅크, 7000명 참여 'Save Race 2026' 개최…16억5000만원 기부",
+          "title": "[금융소식] 토스 '더 머니이슈2'·하나은행 '하나 EZ라운지'·카카오뱅크...",
           "risk": false
         },
         {
           "date": "11-09",
-          "title": "카카오뱅크, '눈치보고 주말 혜택받기' 출시…1000번째 순번에 경품",
+          "title": "OOO 쿠션… 카카오뱅크 AI 이모지 퀴즈 9일 낮 12시 정답",
           "risk": false
         }
       ],
@@ -495,7 +495,7 @@
       "vol20": 0.428,
       "foreign_net": 11365936950,
       "inst_net": -1065209850,
-      "score": 0.174,
+      "score": 0.143,
       "news": [
         {
           "date": "11-09",
@@ -540,11 +540,11 @@
           "risk": false
         }
       ],
-      "price": 59500,
-      "chg": 0.0818,
-      "activity": 3.82,
+      "price": 59100,
+      "chg": 0.0745,
+      "activity": 3.52,
       "foreign_today": 0,
-      "inst_today": 892500000,
+      "inst_today": 886500000,
       "exchange": "KOSDAQ"
     },
     {
@@ -557,7 +557,7 @@
       "vol20": 1.387,
       "foreign_net": -6381603720,
       "inst_net": 16519823935,
-      "score": 0.779,
+      "score": 0.774,
       "news": [
         {
           "date": "11-09",
@@ -575,11 +575,11 @@
           "risk": false
         }
       ],
-      "price": 16450,
-      "chg": 0.0647,
-      "activity": 2.5,
+      "price": 16470,
+      "chg": 0.066,
+      "activity": 2.35,
       "foreign_today": 0,
-      "inst_today": 1381800000,
+      "inst_today": 1383480000,
       "exchange": "KOSDAQ"
     },
     {
@@ -592,7 +592,7 @@
       "vol20": 1.105,
       "foreign_net": -1315515485,
       "inst_net": 73370470,
-      "score": 0.477,
+      "score": 0.476,
       "news": [
         {
           "date": "11-09",
@@ -610,47 +610,12 @@
           "risk": false
         }
       ],
-      "price": 14250,
-      "chg": 0.0401,
-      "activity": 2.12,
-      "foreign_today": 584250000,
+      "price": 14340,
+      "chg": 0.0467,
+      "activity": 1.99,
+      "foreign_today": 587940000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
-    },
-    {
-      "code": "180640",
-      "name": "한진칼",
-      "close": 196700,
-      "ret5": 0.6005,
-      "ret20": 0.5154,
-      "rsi14": 82.1,
-      "vol20": 1.068,
-      "foreign_net": -23144745850,
-      "inst_net": 30167917550,
-      "score": 0.442,
-      "news": [
-        {
-          "date": "11-08",
-          "title": "[공시] 한진칼우 '매매거래정지 예고', 미래나노텍·성창기업지주 '공매...",
-          "risk": true
-        },
-        {
-          "date": "11-09",
-          "title": "[증시키워드] 코스피 폭락 속 한진칼 경영권 분쟁에 관심↑",
-          "risk": false
-        },
-        {
-          "date": "11-08",
-          "title": "한진칼 흔드는 호반의 자본력, 어디까지 가나",
-          "risk": false
-        }
-      ],
-      "price": 215500,
-      "chg": 0.0989,
-      "activity": 4.09,
-      "foreign_today": 0,
-      "inst_today": 215500000,
-      "exchange": "KOSPI"
     },
     {
       "code": "008830",
@@ -662,7 +627,7 @@
       "vol20": 1.052,
       "foreign_net": -3890551700,
       "inst_net": -186177575,
-      "score": 0.326,
+      "score": 0.298,
       "news": [
         {
           "date": "11-06",
@@ -675,10 +640,10 @@
           "risk": false
         }
       ],
-      "price": 6520,
-      "chg": -0.0312,
-      "activity": 1.44,
-      "foreign_today": 391200000,
+      "price": 6490,
+      "chg": -0.0357,
+      "activity": 1.34,
+      "foreign_today": 389400000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
