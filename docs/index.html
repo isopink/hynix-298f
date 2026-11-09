@@ -545,10 +545,10 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
   if (!VOLT) { document.documentElement.lang = 'ko'; return; }
   document.documentElement.dataset.theme = 'volt';
   const HEX = { '#da291c': '#00d992', '#ff5a4a': '#2fd6a1', '#ff8a70': '#2fd6a1', '#ff4a36': '#00d992', '#c41a0d': '#10b981', '#a8160b': '#10b981', '#ff6a55': '#2fd6a1', '#b01e0a': '#10b981', '#ffd2cc': '#c8f5e6', '#ff7a6e': '#7fe8c4', '#e0b84a': '#d0d0d0',
-    '#4aa3d4': '#8b949e', '#7cc4ea': '#bdbdbd', '#9ad6f2': '#d0d0d0', '#1f6f9c': '#5a6068', '#3ecf8e': '#f2f2f2', '#c8f5dc': '#ffffff',
+    '#4aa3d4': '#8b949e', '#7cc4ea': '#bdbdbd', '#9ad6f2': '#d0d0d0', '#1f6f9c': '#5a6068', '#3ecf8e': '#b4b4b4', '#c8f5dc': '#ffffff',
     '#141414': '#101010', '#1c1c1c': '#101010', '#232323': '#1a1a1a', '#2a2a2a': '#3d3a39', '#0d0d10': '#101010', '#0a0a0c': '#101010', '#f6e500': '#2fd6a1' };
   const RGB = { '218,41,28': '0,217,146', '255,90,74': '47,214,161', '255,120,100': '0,217,146', '255,120,104': '47,214,161', '240,160,150': '150,235,205',
-    '74,163,212': '139,148,158', '120,190,230': '139,148,158', '62,207,142': '242,242,242', '70,210,135': '225,225,225', '110,230,170': '235,235,235' };
+    '74,163,212': '139,148,158', '120,190,230': '139,148,158', '62,207,142': '200,200,200', '70,210,135': '225,225,225', '110,230,170': '235,235,235' };
   const hexRe = new RegExp(Object.keys(HEX).join('|'), 'gi');
   const rgbRe = new RegExp('(' + Object.keys(RGB).map(k => k.replace(/,/g, ',\\s*')).join('|') + ')', 'g');
   const map = v => typeof v !== 'string' ? v : v.replace(hexRe, m => HEX[m.toLowerCase()]).replace(rgbRe, m => RGB[m.replace(/\s/g, '')]);
@@ -603,7 +603,17 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
 [data-theme=volt] .hero .big, [data-theme=volt] .hero .big.neg { background: none !important; -webkit-background-clip: border-box; background-clip: border-box; filter: none !important; color: #00d992; font-weight: 400; letter-spacing: -0.65px; }
 [data-theme=volt] .hero .big.neg { color: #8b949e; }
 [data-theme=volt] .eyebrow { text-transform: uppercase; letter-spacing: 2.2px; font-weight: 600; font-size: 12px; color: #8b949e; }
-[data-theme=volt] .eng .eyebrow.on, [data-theme=volt] .eyebrow.on { color: #f2f2f2; }
+/* 11-10 S.Lee: 메인은 Sigma Engine, SiON 은 테스트 → 강조를 Sigma 로 */
+[data-theme=volt] .eng#eng-sigma .eyebrow { color: #00d992; }
+[data-theme=volt] .eng#eng-sigma .eyebrow::after { content: "LIVE"; margin-left: 8px; padding: 1px 7px; border-radius: 9999px; font-size: 10px; letter-spacing: 1.2px; color: #101010; background: #00d992; vertical-align: 1px; }
+[data-theme=volt] .eng .eyebrow.on, [data-theme=volt] .eyebrow.on { color: #8b949e; }
+[data-theme=volt] .eng#eng-sion .eyebrow::after { content: "TEST"; margin-left: 8px; padding: 0 6px; border-radius: 9999px; font-size: 10px; letter-spacing: 1.2px; color: #8b949e; border: 1px solid #3d3a39; vertical-align: 1px; }
+[data-theme=volt] .eng#eng-sion .big { opacity: .6; }
+[data-theme=volt] .hero .eng#eng-sigma .big:not(.neg) { color: #00d992; }
+[data-theme=volt] .eng-tabs button[data-eng="sion"] { color: #8b949e; }
+[data-theme=volt] .eng-tabs button[data-eng="sion"]::after { content: "TEST"; margin-left: 6px; padding: 0 5px; border-radius: 9999px; font-size: 9px; letter-spacing: 1px; border: 1px solid #3d3a39; vertical-align: 2px; }
+@media (max-width: 640px) { [data-theme=volt] .hero .eng .eyebrow { letter-spacing: 1px; font-size: 11px; white-space: nowrap; } [data-theme=volt] .eng .eyebrow::after { margin-left: 5px !important; font-size: 8.5px !important; letter-spacing: .6px !important; padding: 0 5px !important; } }
+[data-theme=volt] .eng-tabs button[data-eng="sion"][aria-selected="true"] { color: #bdbdbd; box-shadow: inset 0 -2px 0 #5a5a5a; }
 [data-theme=volt] .kx-chip b, [data-theme=volt] .kx-row b, [data-theme=volt] .pf-tbl td, [data-theme=volt] .dec-row .cf, [data-theme=volt] .sion-tbl .r, [data-theme=volt] .chips .chip b, [data-theme=volt] svg text { font-family: var(--mono); }
 [data-theme=volt] .eng-tabs { border-radius: 8px; background: #101010; border-color: #3d3a39; }
 [data-theme=volt] .eng-tabs button { border-radius: 6px; }
@@ -647,7 +657,11 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
     [/^종목당 최대 비중 \((.+)\)$/, 'Max weight per stock ($1)'], [/^코스닥 비중.*$/, 'KOSDAQ weight'], [/^주식 비중 \(.+\)$/, 'Equity weight (regime cap)'], [/^매수 확신도 기준 (.+)$/, 'Buy threshold $1'],
     [/^(\d+\/\d+) 시가 대비$/, 'vs $1 open'], [/^수익률 (.*)$/, 'Return $1'], [/^장중 수급 재선별 ·(.*)$/, 'Intraday rescreen ·$1'], [/^(\d+\/\d+ \d+:\d+) 마감$/, '$1, closed']
   ];
-  const tr = s => { const k = s.trim(); if (!k || !/[가-힣]/.test(k)) return s; if (EN[k]) return s.replace(k, EN[k]); for (const [re, to] of RX) if (re.test(k)) return s.replace(k, k.replace(re, to)); return s; };
+  // 11-10 S.Lee: 화면 전체에서 괄호와 그 안 글자를 지움
+  const PAREN = /\s*[(（][^()（）]*[)）]/g;
+  const noParen = v => { let o = v, n; while ((n = o.replace(PAREN, '')) !== o) o = n; return o; };
+  const tr0 = s => { const k = s.trim(); if (!k || !/[가-힣]/.test(k)) return s; if (EN[k]) return s.replace(k, EN[k]); for (const [re, to] of RX) if (re.test(k)) return s.replace(k, k.replace(re, to)); return s; };
+  const tr = s => noParen(tr0(s));
   const SKIP = 'script, style';   // 종목명 · 판단 근거는 사전에 없으니 그대로 남음
   const walk = root => { if (!root) return; if (root.nodeType === 3) { const p = root.parentElement; if (p && !p.closest(SKIP)) { const v = tr(root.nodeValue); if (v !== root.nodeValue) root.nodeValue = v; } return; }
     if (root.nodeType !== 1 || root.closest && root.closest(SKIP)) return; const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); let n; const a = []; while ((n = w.nextNode())) a.push(n); a.forEach(walk); };
@@ -1304,7 +1318,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       g.append('stop').attr('offset', 0).attr('stop-color', c).attr('stop-opacity', a0); g.append('stop').attr('offset', 1).attr('stop-color', c).attr('stop-opacity', a1); return `url(#${id})`; };
     fade(svg.append('path').datum(rows).attr('clip-path', 'url(#cHeroUp)').attr('fill', grad('gHeroUp', '#ff4a36', .42, .04)).attr('d', gap), .5);   // 위로 갈수록 진하게
     fade(svg.append('path').datum(rows).attr('clip-path', 'url(#cHeroDn)').attr('fill', grad('gHeroDn', '#4aa3d4', .04, .42)).attr('d', gap), .5);   // 아래로 갈수록 진하게
-    const LS = window.VOLT ? { s: 2, o: 1.6, od: '6 4', k: 1.2, kd: '1 4', kc: '#8b949e', f: null } : { s: 0.6, o: 0.9, od: null, k: 0.6, kd: null, kc: '#a8a8a8', f: 'url(#fHeroGlow)' };   // 11-10 S.Lee: 선이 구분되게 (굵기 · 점선)
+    const LS = window.VOLT ? { s: 2.4, o: 1.2, od: '5 4', k: 1.2, kd: '1 4', kc: '#8b949e', f: null } : { s: 0.6, o: 0.9, od: null, k: 0.6, kd: null, kc: '#a8a8a8', f: 'url(#fHeroGlow)' };   // 11-10 S.Lee: 선이 구분되게 (굵기 · 점선)
     const kp = svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', LS.kc).attr('stroke-width', LS.k).attr('stroke-dasharray', LS.kd).attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round').attr('filter', LS.f).attr('d', kLine);   // 11-05 1.75 → 0.6 (얇게)
     const p = svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', col).attr('stroke-width', LS.s).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round').attr('filter', LS.f).attr('d', d3.line().curve(cv).x(r => x(r.d)).y(r => y(r.ret)));   // 11-05 2.5 → 0.6
     if (fx) { if (!LS.kd) animate(kp); animate(p); }   // 점선은 그리기 효과가 점선을 덮어서 안 씀
