@@ -155,6 +155,30 @@ def push(env, snap, kospi):
     }, {"apikey": key, "Authorization": "Bearer " + key})
 
 
+SHADOW_LIVE = os.path.join(os.environ.get("SHADOW_DIR") or os.path.join(os.path.dirname(os.path.dirname(HERE)), "hynix-shadow"),
+                           "agent", "work", "shadow_live.json")   # 11-09 그림자 운영 감시가 1분마다 씀
+
+
+def push_shadow(env):
+    """11-09 온톨로지 그림자 운영의 1분 자산·상태를 같이 올림 (supabase/shadow.sql). 그림자가 없거나 3분 넘게 묵었으면 건너뜀.
+    실패해도 실제 잔고 업로드에는 영향 없음."""
+    try:
+        with open(SHADOW_LIVE, encoding="utf-8") as f:
+            x = json.load(f)
+    except (OSError, ValueError):
+        return
+    if time.time() - x.get("epoch", 0) > 180 or not x.get("total"):
+        return
+    try:
+        key = env["SUPABASE_ANON_KEY"]
+        post_json(env["SUPABASE_URL"].rstrip("/") + "/rest/v1/rpc/push_shadow", {
+            "p_secret": env["SNAPSHOT_SECRET"], "p_total": int(x["total"]), "p_cash": int(x.get("cash") or 0),
+            "p_holdings": x.get("holdings", []), "p_status": x.get("status", {})}, {"apikey": key, "Authorization": "Bearer " + key})
+        print(f"  → 그림자(온톨로지) {int(x['total']):,}원")
+    except Exception as e:  # noqa: BLE001  shadow.sql 실행 전이면 404
+        print(f"  (그림자 업로드 건너뜀: {str(e)[:120]})")
+
+
 def market_open(now):
     if now.weekday() >= 5:
         return False
@@ -179,6 +203,7 @@ def run_once(env, dry=False):
             sys.exit(f".env 에 {k} 값이 비어 있습니다.")
     push(env, snap, kospi)
     print("  → 대시보드에 올림")
+    push_shadow(env)
 
 
 def main():
