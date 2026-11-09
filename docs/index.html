@@ -200,6 +200,12 @@ details.log[open] > summary::after { content: "−"; }
 .dec-row .pair { display: flex; align-items: center; gap: 8px; min-width: 0; }
 .dec-row .pair .cf { flex: 1; min-width: 0; }
 .dec-row .pair .na { font-size: 12px; color: var(--muted); }
+.dec-list.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 28px; align-items: start; }   /* 11-09 Sigma · SiON 별개 목록 */
+.dec-list.two .dec-row { grid-template-columns: minmax(70px, 130px) auto 96px minmax(0, 1fr); gap: 10px; }
+.dec-pane .pane-h { padding: 4px 0 8px; font-size: 12px; color: var(--muted); }
+.dec-pane.on .pane-h { color: #3ecf8e; }
+@media (max-width: 900px) { .dec-list.two { grid-template-columns: minmax(0, 1fr); gap: 14px; } }
+@media (max-width: 640px) { .dec-list.two .dec-row { grid-template-columns: minmax(0, 1fr) auto 104px; gap: 6px 10px; } }
 .dec-row .why.two { display: flex; flex-direction: column; gap: 3px; }
 .dec-row .why.two > span { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .dec-row .why.two .s { color: #3ecf8e; opacity: .85; }
@@ -1236,13 +1242,14 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   const FOLD_N = 5;
   let decOpen = false;
   try { decOpen = localStorage.getItem('decOpen') === '1'; } catch (e) { /* 저장소 막힌 브라우저는 늘 접힌 채로 시작 */ }
-  function foldDec() {
-    const list = $('dec-list'), btn = $('dec-more'), rows = [...list.children].filter(e => e.classList.contains('dec-row'));
-    const extra = rows.length - FOLD_N;
-    rows.forEach((r, i) => { r.hidden = !decOpen && i >= FOLD_N; });
+  function foldDec() {   // 11-09 2열(Sigma · SiON)이면 칸마다 위 5종목
+    const list = $('dec-list'), btn = $('dec-more'), panes = list.querySelectorAll('.dec-pane');
+    const groups = panes.length ? [...panes].map(p => [...p.children].filter(e => e.classList.contains('dec-row'))) : [[...list.children].filter(e => e.classList.contains('dec-row'))];
+    let extra = 0, n = 0;
+    groups.forEach(rows => { rows.forEach((r, i) => { r.hidden = !decOpen && i >= FOLD_N; }); extra = Math.max(extra, rows.length - FOLD_N); n = Math.max(n, rows.length); });
     btn.hidden = extra <= 0;
     btn.setAttribute('aria-expanded', decOpen);
-    btn.textContent = decOpen ? '접기' : `전체 ${rows.length}종목 보기`;
+    btn.textContent = decOpen ? '접기' : panes.length ? '전체 보기' : `전체 ${n}종목 보기`;
   }
   $('dec-more').addEventListener('click', () => {
     decOpen = !decOpen;
@@ -1363,52 +1370,35 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const sd = [sA, sB].filter(x => x && x.time && x.time.slice(0, 10) === dc.time.slice(0, 10)).sort((a, b) => a.time < b.time ? 1 : -1)[0];
     const sFull = sB && sd && sB.time === sd.time ? new Map((sB.items || []).map(x => [x.code, x])) : new Map();
     const sMap = new Map(((sd && sd.items) || []).map(x => [x.code, { ...x, ...(sFull.get(x.code) || {}) }]));
-    const cmp = !!sd, colhead = $('dec-colhead');
-    colhead.hidden = !cmp;
-    // 11-09 회차(15분 단위)만 표시. 기록 시각은 판단이 끝난 시각이라 엔진마다 다름 (툴팁)
+    const cmp = !!sd;
+    $('dec-colhead').hidden = true;
     const slot = t => { const m = +t.slice(11, 13) * 60 + +t.slice(14, 16), q = Math.floor(m / 15) * 15; return String(Math.floor(q / 60)).padStart(2, '0') + ':' + String(q % 60).padStart(2, '0'); };
-    if (cmp) {
-      const a = slot(dc.time), b = slot(sd.time);
-      colhead.innerHTML = `<span>종목</span><span title="판단 기록 ${esc(dc.time.slice(11, 16))}">Sigma Engine ${a} 회차</span>`
-        + `<span class="on" title="판단 기록 ${esc(sd.time.slice(11, 16))}">SiON Engine ${b} 회차</span><span class="why-h">근거</span>`;
-    }
-    const rows = items.map(d => ({ code: d.code, name: d.name, a: d, b: sMap.get(d.code) }));
-    if (cmp) {
-      for (const [code, x] of sMap) if (!items.some(d => d.code === code)) rows.push({ code, name: x.name, a: null, b: x });
-      // 11-09 S.Lee: 두 엔진 중 하나라도 사고판 종목 먼저, 그 안에서 두 엔진 확신도 중 높은 값 순 (SiON 확신도도 순위에 반영)
-      const act = d => d && /^(매수|매도)/.test(d.action), cf = d => d ? +d.confidence || 0 : 0;
-      rows.sort((p, q) => (act(q.a) || act(q.b)) - (act(p.a) || act(p.b)) || Math.max(cf(q.a), cf(q.b)) - Math.max(cf(p.a), cf(p.b)));
-    }
     const cls = d => d.action.startsWith('매수') ? 'buy' : d.action.startsWith('매도') ? 'sell' : '';
-    const pill = d => { const c = +d.confidence || 0, k = cls(d); return `<span class="act ${k}">${esc(d.qty ? `${d.action} ${won(d.qty)}주` : d.action)}</span>`
-      + `<span class="cf"><i><b class="${c >= .6 ? 'hi' : ''}" style="width:${Math.round(c * 100)}%"></b></i>${c.toFixed(2)}</span>`; };
-    list.innerHTML = rows.map((r, i) => {
-      const d = r.a || r.b, quiet = !(r.a && cls(r.a)) && !(r.b && cls(r.b));
-      const vol = d.vol20 ?? ((BRIEF.candidates || []).find(c => c.code === r.code) || {}).vol20;   // 예전 decision.json 엔 vol20 이 없어 후보 자료로 보충
-      const exch = d.exchange ?? ((BRIEF.candidates || []).find(c => c.code === r.code) || {}).exchange ?? EXCH[r.code];
-      const nm = `<span class="nm">${esc(r.name)}${exTag(exch)}${volTag(vol)}</span>`;
-      const why = `<span class="why">${r.a && r.a.blocked ? '<em>차단</em> · ' : ''}${esc((r.a || r.b).decision || '')}</span>`;
-      if (!cmp) return `<div class="dec-row${quiet ? ' quiet' : ''}" data-i="${i}">${nm}${pill(d)}${why}</div>`;
-      const w2 = `<span class="why two">${r.a ? `<span>${r.a.blocked ? '<em>차단</em> · ' : ''}${esc(r.a.decision || '')}</span>` : ''}`   // 11-09 근거 두 줄: Sigma · SiON(초록)
-        + `${r.b && r.b.decision ? `<span class="s">${esc(r.b.decision)}</span>` : ''}</span>`;
-      return `<div class="dec-row cmp${quiet ? ' quiet' : ''}" data-i="${i}">${nm}`
-        + `<span class="pair">${r.a ? pill(r.a) : '<span class="na">판단 없음</span>'}</span>`
-        + `<span class="pair">${r.b ? pill(r.b) : '<span class="na">판단 없음</span>'}</span>${w2}</div>`;
-    }).join('');
-    const side = (label, d) => !d ? `<p class="tp"><b>${label}</b> 이 종목은 판단하지 않음</p>`
-      : `<p class="tp"><b>${label}</b> ${esc(d.action)}${d.qty ? ' ' + won(d.qty) + '주' : ''}, 확신도 ${(+d.confidence).toFixed(2)}</p>`
-        + (d.bull ? `<p class="tp"><span class="up">매수 측</span> ${esc(d.bull)}</p>` : '') + (d.bear ? `<p class="tp"><span class="down">매도 측</span> ${esc(d.bear)}</p>` : '')
-        + (d.decision ? `<p class="tp">결정 ${esc(d.decision)}</p>` : '') + (d.blocked ? `<p class="tp"><span class="up">Hook 차단</span> ${esc(d.blocked)}</p>` : '');
+    const rowHtml = (d, i, pane) => {
+      const c = +d.confidence || 0, act = d.qty ? `${d.action} ${won(d.qty)}주` : d.action;
+      const vol = d.vol20 ?? ((BRIEF.candidates || []).find(x => x.code === d.code) || {}).vol20;   // 예전 decision.json 엔 vol20 이 없어 후보 자료로 보충
+      const exch = d.exchange ?? ((BRIEF.candidates || []).find(x => x.code === d.code) || {}).exchange ?? EXCH[d.code];
+      return `<div class="dec-row${cls(d) ? '' : ' quiet'}" data-p="${pane}" data-i="${i}"><span class="nm">${esc(d.name)}${exTag(exch)}${volTag(vol)}</span><span class="act ${cls(d)}">${esc(act)}</span>`
+        + `<span class="cf"><i><b class="${c >= .6 ? 'hi' : ''}" style="width:${Math.round(c * 100)}%"></b></i>${c.toFixed(2)}</span>`
+        + `<span class="why">${d.blocked ? '<em>차단</em> · ' : ''}${esc(d.decision || '')}</span></div>`;
+    };
+    // 11-09 S.Lee: SiON Engine 판단은 Sigma 와 별개 목록으로 나란히 (각자 순서). SiON 은 매수·매도 먼저, 그 안에서 확신도 높은 순
+    const sItems = cmp ? [...sMap.values()].sort((p, q) => (/^(매수|매도)/.test(q.action) - /^(매수|매도)/.test(p.action)) || (+q.confidence || 0) - (+p.confidence || 0)) : [];
+    const panes = [items, sItems];
+    list.classList.toggle('two', cmp);
+    list.innerHTML = !cmp ? items.map((d, i) => rowHtml(d, i, 0)).join('')
+      : `<div class="dec-pane"><div class="pane-h">Sigma Engine ${slot(dc.time)} 회차</div>${items.map((d, i) => rowHtml(d, i, 0)).join('')}</div>`
+        + `<div class="dec-pane on"><div class="pane-h">SiON Engine ${slot(sd.time)} 회차</div>${sItems.map((d, i) => rowHtml(d, i, 1)).join('')}</div>`;
     list.querySelectorAll('.dec-row').forEach(el => {
-      const r = rows[+el.dataset.i], d = r.a || r.b, lc = (BRIEF.candidates || []).find(c => c.code === r.code && c.activity !== undefined);
-      const html = `<div class="t">${esc(r.name)}${cmp ? '' : ` ${esc(d.action)}, 확신도 ${(+d.confidence).toFixed(2)}`}</div>`
+      const d = panes[+el.dataset.p][+el.dataset.i], lc = (BRIEF.candidates || []).find(c => c.code === d.code && c.activity !== undefined);
+      const html = `<div class="t">${el.dataset.p === '1' ? 'SiON Engine · ' : ''}${esc(d.name)} ${esc(d.action)}, 확신도 ${(+d.confidence).toFixed(2)}</div>`
         + (lc ? row('오늘 외국인 · 기관', eok(lc.foreign_today) + ' · ' + eok(lc.inst_today))
           + (lc.activity != null ? row('거래 활발도', '평소의 ' + lc.activity.toFixed(1) + '배') : '') : '')
-        + (cmp ? side('Sigma Engine', r.a) + side('SiON Engine', r.b)
-          : `<p class="tp"><span class="up">매수 측</span> ${esc(d.bull)}</p><p class="tp"><span class="down">매도 측</span> ${esc(d.bear)}</p>`
-            + `<p class="tp"><b>결정</b> ${esc(d.decision)}</p>` + (d.blocked ? `<p class="tp"><span class="up">Hook 차단</span> ${esc(d.blocked)}</p>` : ''));
-      tipTarget(el, html, r.code);
+        + (d.bull ? `<p class="tp"><span class="up">매수 측</span> ${esc(d.bull)}</p>` : '') + (d.bear ? `<p class="tp"><span class="down">매도 측</span> ${esc(d.bear)}</p>` : '')
+        + `<p class="tp"><b>결정</b> ${esc(d.decision || '')}</p>` + (d.blocked ? `<p class="tp"><span class="up">Hook 차단</span> ${esc(d.blocked)}</p>` : '');
+      tipTarget(el, html, d.code);
     });
+    foldDec();
   }
 
 
