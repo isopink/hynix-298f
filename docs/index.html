@@ -42,7 +42,9 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
 .top h1 .tagline { font-size: clamp(13px, 1.3vw, 16px); font-weight: 400; letter-spacing: 0; margin-left: 10px; color: var(--muted); white-space: nowrap; }
 .top h1 .st-top { display: inline-flex; gap: 14px; align-items: center; vertical-align: middle; font-size: 13px; }
 .st-top .who { display: inline-flex; align-items: center; gap: 6px; }
-.eng-kv[hidden], .st-line[hidden], .kx-row[hidden] { display: none !important; }
+.st-line[hidden], .kx-row[hidden], .chip[hidden] { display: none !important; }   /* 11-10 hallmark: 데이터 전 빈 KOSPI 칩 숨김 */
+svg [tabindex]:focus-visible { outline: 2px solid #f6e500; outline-offset: 2px; stroke: #f6e500; stroke-width: 2px; }
+html, body { overflow-x: clip; }   /* 11-10 hallmark 34 */   /* 11-10 hallmark 26a: 차트 점 · 도넛 조각 키보드 포커스 */
 .kx-row { font-size: 13px; color: var(--body); text-align: center; padding: 0 0 12px; margin: -4px 0 14px; border-bottom: 1px solid rgba(255,255,255,.07); }
 .kx-row b { color: var(--ink); font-weight: 500; margin: 0 6px 0 4px; }
 .kx-row .kc-rsi { margin-left: 6px; }
@@ -93,27 +95,7 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
 .tip .why b { color: var(--ink); font-weight: 500; }
 .tip .tp, .dec-detail .tp { margin: 6px 0 0; color: var(--body); }
 .tip .tp b, .dec-detail .tp b { color: var(--ink); font-weight: 500; }
-/* 상단에 응원 글이 한 줄로 흘러감 (누르면 응원하기 열림) */
-.ticker[hidden] { display: none; }
-.ticker { display: block; width: 100%; overflow: hidden; padding: 9px 0; border: 1px solid rgba(255,255,255,.09); border-radius: 9999px; background: rgba(255,255,255,.04); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); font: inherit; text-align: left; cursor: pointer;
-  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
-.tk-track { display: inline-flex; white-space: nowrap; animation: tk var(--dur, 30s) linear infinite; }
-.tk-item { font-size: 13px; color: var(--body); padding-right: 32px; }
-.tk-item b { color: var(--red-hi); font-weight: 600; margin-right: 6px; }
-@keyframes tk { to { transform: translateX(-50%); } }
-.ticker:hover .tk-track, .ticker:focus-visible .tk-track { animation-play-state: paused; }   /* 움직임 줄이기 설정이어도 흐름, 올리면 멈춤 (11-05 S.Lee) */
-.cheer { position: relative; margin-left: auto; align-self: center; display: flex; align-items: center; gap: 8px; }
-.pop { position: absolute; right: 0; top: calc(100% + 10px); z-index: 50; width: min(380px, calc(100vw - 32px)); max-height: min(72vh, 600px); overflow-y: auto; box-shadow: 0 18px 48px rgba(0,0,0,.55); }
-.pop[hidden] { display: none !important; }
-.card.pop { background: rgba(22,22,24,.95); }
 @media (max-width: 640px) {
-  .cheer { margin: 0 auto; }
-  /* 휴대폰: 응원하기는 화면 아래에서 올라오는 시트 */
-  .pop { position: fixed; left: 0; right: 0; top: auto; bottom: 0; width: 100%; max-height: 85dvh; border-radius: 16px 16px 0 0 !important; padding: 16px 16px calc(16px + env(safe-area-inset-bottom, 0px)); }
-  .card.pop { background: rgba(22,22,24,.98); }
-  .pop .f-form input, .pop .f-form textarea { font-size: 16px; }   /* 16px 미만이면 iOS가 확대함 */
-  .pop .f-list { max-height: none; }
-  body.sheet-open { overflow: hidden; }
   /* 휴대폰: 로고 · 제목 · 부제 · 버튼을 한 줄씩 가운데로 */
   .top { flex-direction: column; align-items: center; text-align: center; gap: 14px; }
   .brand { flex-direction: column; gap: 10px; }
@@ -122,21 +104,7 @@ body { font-family: var(--font); font-size: 14px; font-variant-numeric: tabular-
   .top h1 { font-size: 28px; }
   .top { gap: 12px; padding-bottom: 4px; }
   .wrap { padding-block: 20px 40px; gap: 12px; }
-  .fab { padding: 9px 18px; }
 }
-.pop .cm { grid-template-columns: minmax(0, 1fr); }
-.pop-x { margin-left: auto; width: 32px; height: 32px; border: 0; border-radius: 50%; background: rgba(255,255,255,.06); color: var(--body); font-size: 14px; cursor: pointer; }
-.scrim { position: fixed; inset: 0; z-index: 45; background: rgba(0,0,0,.55); }
-.scrim[hidden] { display: none; }
-@media (min-width: 641px) { .scrim { display: none; } }
-.pop .f-form .two { grid-template-columns: minmax(0, 1fr); }
-.pop .f-form textarea { min-height: 72px; }
-.pop .f-list { max-height: 260px; }
-.fab { border: 0; cursor: pointer; font-family: inherit; display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; border-radius: 9999px; background: linear-gradient(135deg, #ff6a55 0%, #da291c 55%, #a8160b 100%); color: #fff; font-size: 14px; font-weight: 600; text-decoration: none; box-shadow: 0 6px 24px rgba(218,41,28,.45), inset 0 1px 0 rgba(255,255,255,.25); transition: transform .15s, box-shadow .15s; }
-.fab:hover { transform: translateY(-1px); box-shadow: 0 10px 32px rgba(218,41,28,.6), inset 0 1px 0 rgba(255,255,255,.25); }
-.fab b { min-width: 20px; padding: 1px 7px; border-radius: 9999px; background: #fff; color: var(--red); font-size: 12px; font-weight: 700; text-align: center; }
-.fab b:empty { display: none; }
-.fab[hidden] { display: none; }   /* 11-06 응원하기 버튼 숨김 (응원 띠를 누르면 열림) */
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 
 details.log { background: var(--card); border: 1px solid var(--line); }
@@ -232,8 +200,6 @@ details.log[open] > summary::after { content: "−"; }
 .eng .st-line > span + span::before { content: none; }
 .hero .eng .big { margin: 4px 0 2px; }
 /* 11-10 S.Lee: SiON 숫자도 Sigma 와 같은 크기 (예전 작게) */
-.eng-kv { display: flex; flex-wrap: wrap; gap: 4px 18px; font-size: 13px; color: var(--muted); }
-.eng-kv b { font-weight: 500; margin-left: 4px; }
 .eng-tabs { display: flex; gap: 6px; padding: 4px; border-radius: 12px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.07); width: max-content; max-width: 100%; }
 .eng-tabs[hidden], .pane[hidden] { display: none; }
 .eng-tabs button { font: inherit; font-size: 13px; color: var(--muted); background: none; border: 0; border-radius: 9px; padding: 8px 16px; cursor: pointer; }
@@ -247,14 +213,13 @@ details.log[open] > summary::after { content: "−"; }
   .hero .side.eng-sum > div:first-child { grid-column: auto; }
   .eng + .eng { padding-top: 0; border-top: 0; padding-left: 14px; border-left: 1px solid rgba(255,255,255,.07); }
   .hero .side.eng-sum .eng .big.won { font-size: 24px; letter-spacing: -.5px; white-space: nowrap; }
-  .eng-kv { flex-direction: column; gap: 2px; font-size: 12px; }
   .eng .st-line { font-size: 11px; gap: 2px 8px; }
   .eng-tabs { width: 100%; } .eng-tabs button { flex: 1; }
   .tr-tbl .r { grid-template-columns: 44px 34px minmax(0, 1fr) 40px 76px !important; gap: 8px !important; }
 }
 /* 11-10 포트폴리오 공통 양식 */
 .pf-one { margin-top: 8px; }
-.pane .sion-kpi, .pf-one > .hd { display: none; }   /* 11-10 S.Lee: 요약 숫자 4개 · '비중 · 손익' 제목 줄 없앰 */
+.pane .sion-kpi { display: none; }   /* 11-10 S.Lee: 요약 숫자 4개 없앰 */
 .tr-box > summary { cursor: pointer; list-style: none; }   /* 11-10 S.Lee: 최근 체결 접기 (기본 접힘) */
 .tr-box > summary::-webkit-details-marker { display: none; }
 .tr-box > summary .eyebrow::after { content: "  +"; color: var(--muted); font-weight: 400; }
@@ -327,11 +292,6 @@ td { padding: 10px 12px 10px 0; border-bottom: 1px solid #222; vertical-align: t
 .pf-tbl .sw { display: inline-block; width: 8px; height: 8px; margin-right: 6px; vertical-align: 1px; }
 td.k { color: var(--ink); white-space: nowrap; }
 
-.cm { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 16px; }
-.f-form { display: grid; gap: 10px; align-content: start; }
-.f-form .two { display: grid; grid-template-columns: 140px 1fr; gap: 10px; }
-.f-form input, .f-form textarea { background: var(--canvas); color: var(--ink); border: 1px solid var(--line); border-radius: 0; padding: 12px 14px; font: inherit; font-size: 14px; width: 100%; }
-.f-form textarea { min-height: 88px; resize: vertical; line-height: 1.5; }
 .fl-kv { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 22px; font-size: 14px; }
 .fl-kv .k { display: inline-flex; align-items: center; gap: 8px; color: #a0a0a0; font-size: 13px; }
 .fl-kv .k svg { flex: none; }
@@ -350,7 +310,7 @@ td.k { color: var(--ink); white-space: nowrap; }
 .cover::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 34% 22% at 50% 43%, rgba(10,10,12,.55), rgba(10,10,12,0)), radial-gradient(ellipse at 50% 50%, rgba(10,10,12,0) 30%, rgba(10,10,12,.5) 100%); pointer-events: none; }   /* 가장자리로 갈수록 어둡게, 글자가 가운데서 뜸 */
 .cover-text { position: absolute; inset: 0; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; pointer-events: none; padding: 0 24px 14vh; text-align: center; }   /* 11-06 S.Lee: 제목을 가운데보다 조금 위로 */
 .cover-title { margin: 0; font-size: clamp(26px, 6vw, 60px); font-weight: 500; letter-spacing: -.5px; line-height: 1.1; color: var(--ink); text-shadow: 0 0 24px rgba(0,0,0,.9), 0 0 60px rgba(218,41,28,.25); text-wrap: balance; }
-body.covered { overflow: hidden; }
+body.covered { overflow: clip; }   /* 11-10 hallmark 34: hidden 은 sticky 를 깸 */
 @media (min-width: 641px) { .cover { display: none; } }   /* PC 는 커버 없이 바로 대시보드 (11-05) */
 .kx-flow { margin-top: 14px; padding-top: 14px; border-top: 1px dashed rgba(255,255,255,.08); }   /* 카드 안 아래칸 (누적 수익률 → 실시간 판단, 실시간 KOSPI → 순매수) */
 .kx-flow .hd { margin-bottom: 8px; }
@@ -359,18 +319,6 @@ body.covered { overflow: hidden; }
     radial-gradient(700px 320px at 0% 0%, rgba(74,163,212,.20), transparent 70%),
     linear-gradient(180deg, rgba(255,255,255,.06) 0%, rgba(255,255,255,.02) 100%);
   border-color: rgba(120,190,230,.16); }
-.f-form input:focus-visible, .f-form textarea:focus-visible, .btn:focus-visible { outline: 2px solid #f6e500; outline-offset: 1px; }
-.f-form .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
-.f-form .row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-.count { color: var(--muted); font-size: 12px; }
-.btn { background: var(--red); color: #fff; border: 0; border-radius: 0; height: 44px; padding: 0 28px; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
-.btn:active { background: #b01e0a; } .btn:disabled { background: var(--card-2); color: var(--muted); cursor: not-allowed; }
-.f-msg { font-size: 12px; color: var(--body); min-height: 1.4em; margin: 0; } .f-msg.err { color: var(--red-hi); }
-.f-list { display: grid; max-height: 300px; overflow-y: auto; }
-.f-item { padding: 12px 0; border-bottom: 1px solid var(--line); display: grid; gap: 4px; }
-.f-item .who { display: flex; gap: 10px; align-items: baseline; font-size: 12px; }
-.f-item .who b { font-weight: 500; } .f-item .who time { color: var(--muted); }
-.f-item p { margin: 0; color: var(--body); font-size: 13px; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere; }
 .f-empty { color: var(--muted); font-size: 13px; margin: 8px 0; }
 .foot { color: var(--muted); font-size: 11px; text-align: center; padding-top: 8px; }
 
@@ -394,8 +342,6 @@ body.covered { overflow: hidden; }
   .hero .kv { padding-top: 12px; border-top: 1px solid rgba(255,255,255,.08); }
   .hero .kv span:last-child { font-size: 14px; white-space: nowrap; }
   #ch-hero { min-height: 0 !important; }
-  .cm { grid-template-columns: minmax(0, 1fr); }
-  .f-form .two { grid-template-columns: minmax(0, 1fr); }
 }
 @media (prefers-reduced-motion: no-preference) {
   .draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animation: draw 1.2s cubic-bezier(.2,.7,.2,1) forwards; }
@@ -439,9 +385,6 @@ body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-i
 .hero .big { background: linear-gradient(135deg, #ff8a70 0%, #ff4a36 45%, #c41a0d 100%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 6px 28px rgba(218,41,28,.35)); }
 .hero .big.neg { background: linear-gradient(135deg, #9ad6f2 0%, #4aa3d4 45%, #1f6f9c 100%); -webkit-background-clip: text; background-clip: text; filter: drop-shadow(0 6px 28px rgba(74,163,212,.35)); }
 .tip { background: rgba(14,14,16,.78); border: 1px solid rgba(255,255,255,.1); border-radius: 12px; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
-.f-form input, .f-form textarea { background: rgba(0,0,0,.28); border-color: rgba(255,255,255,.09); border-radius: 10px; }
-.btn { border-radius: 10px; background: linear-gradient(135deg, #ff5a4a, #da291c 55%, #a8160b); box-shadow: 0 8px 22px rgba(218,41,28,.35), inset 0 1px 0 rgba(255,255,255,.25); }
-.btn:active { background: linear-gradient(135deg, #da291c, #a8160b); }
 details.log summary { border-radius: 16px; }
 .foot { display: flex; flex-direction: column; align-items: center; gap: 6px; }
 .foot a { color: var(--body); text-decoration: none; display: inline-flex; align-items: center; padding: 4px 6px; vertical-align: -4px; }
@@ -464,28 +407,8 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
         <div class="chips sched" id="sched" aria-label="실시간 KOSPI와 평일 정기 매매 시각"><span class="chip kx-chip m-hide" id="kx-chip" hidden></span></div>   <!-- 11-10 S.Lee: 맨 앞 KOSPI 칩 (폰은 이것만) -->
       </div>
     </div>
-    <div class="cheer">
-      <button class="fab" id="fab" type="button" hidden aria-expanded="false" aria-controls="comments"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>응원하기!<b id="fab-n"></b></button>
-      <div class="scrim" id="scrim" hidden></div>
-      <div class="card pop" id="comments" role="dialog" aria-label="응원하기" hidden>
-        <div class="hd"><span class="eyebrow">응원하기!</span><button class="pop-x" id="pop-x" type="button" aria-label="닫기">✕</button></div>
-        <div class="cm">
-          <form class="f-form" id="cm-form" novalidate>
-            <div class="two">
-              <input id="cm-nick" name="nick" maxlength="20" placeholder="닉네임 (선택)" autocomplete="off" aria-label="닉네임">
-              <textarea id="cm-body" name="body" maxlength="300" placeholder="하이닉스 298층 가즈아" aria-label="내용"></textarea>
-            </div>
-            <div class="hp" aria-hidden="true"><input id="cm-web" name="website" tabindex="-1" autocomplete="off"></div>
-            <div class="row"><span class="count" id="cm-count">0 / 300</span><button class="btn" id="cm-submit" type="submit">남기기</button></div>
-            <p class="f-msg" id="cm-msg" role="status"></p>
-          </form>
-          <div><div class="sub" id="cm-total" style="margin-bottom:4px"></div><div class="f-list" id="cm-list"><p class="f-empty">댓글을 불러오는 중이에요.</p></div></div>
-        </div>
-      </div>
-    </div>
   </header>
 
-  <button class="ticker" id="ticker" type="button" aria-label="응원 글 보기" hidden><span class="tk-track" id="tk-track"></span></button>
 
   <div class="grid">
     <section class="card c12 hero-card">
@@ -495,12 +418,10 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
           <div class="eng" id="eng-sigma">
             <div class="eng-h"><span class="eyebrow">Sigma Engine</span><span class="st-line" id="st-line" hidden></span></div>
             <div id="realized"><div class="big won" id="pnl-won">—</div></div>
-            <div class="eng-kv" hidden><span>수익률 <b id="ret-pct">—</b></span><span>KOSPI 대비 <b id="k-alpha">—</b></span></div>   <!-- 11-10 S.Lee: 비교값 없앰 -->
           </div>
           <div class="eng sion" id="eng-sion" hidden>
             <div class="eng-h"><span class="eyebrow on">SiON Engine</span><span class="st-line" id="st-sion" hidden></span></div>
             <div id="s-realized"><div class="big won" id="s-pnl-won">—</div></div>
-            <div class="eng-kv" hidden><span>수익률 <b id="s-ret">—</b></span><span>Sigma 대비 <b id="s-vs">—</b></span></div>
           </div>
         </div>
         <div class="hero-chart" style="display:flex;flex-direction:column;gap:10px;min-width:0">
@@ -522,7 +443,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
       <div class="hd"><h2 class="eyebrow">포트폴리오</h2><span class="sub" id="sig-sub"></span></div>
       <div class="sion-kpi" id="sig-kpi"></div>
       <div class="pf-one">   <!-- 11-10 S.Lee: 보유 손익 막대 없앰 → 종목별 손익은 범례 옆, 합계 손익은 도넛 가운데 -->
-        <div class="hd"><h3 class="eyebrow">비중 · 손익</h3><span class="sub">빨간 호 = 국면 상한 · 수익률은 수수료·세금 반영</span></div><div class="chart" id="ch-donut" style="min-height:220px"></div>
+        <div class="chart" id="ch-donut" style="min-height:220px"></div>
         <div class="chart" id="ch-pnl" hidden></div>
       </div>
     </section>
@@ -531,7 +452,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
       <div class="hd"><h2 class="eyebrow">포트폴리오</h2><span class="sub" id="sion-sub"></span></div>
       <div class="sion-kpi" id="sion-kpi"></div>
       <div class="pf-one">   <!-- 11-10 S.Lee: 보유 손익 막대 없앰 → 종목별 손익은 범례 옆, 합계 손익은 도넛 가운데 -->
-        <div class="hd"><h3 class="eyebrow">비중 · 손익</h3><span class="sub">빨간 호 = 국면 상한 · 수익률은 수수료·세금 반영</span></div><div class="chart" id="ch-sion-donut" style="min-height:220px"></div>
+        <div class="chart" id="ch-sion-donut" style="min-height:220px"></div>
         <div class="chart" id="ch-sion-pnl" hidden></div>
       </div>
     </section>
@@ -937,8 +858,6 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
 
   function fillText() {
     const signed = v => (v > 0 ? '+' : v < 0 ? '−' : '') + won(Math.abs(Math.round(v))) + '원';
-    $('ret-pct').textContent = pct(D.ret); tone($('ret-pct'), D.ret);   // 전체 수익률 = 현재 자산 ÷ 시작 원금 − 1
-    $('k-alpha').textContent = pct(D.alpha).replace('%', '%p'); tone($('k-alpha'), D.alpha);   // 11-05 차트 배지 대신 여기 숫자로 (누적 수익률 − 누적 KOSPI 수익률)
     const rz = realized(D.trades), pl = rz.net, total = D.ret * INIT;   // 총 손익 = 현재 자산 − 시작 원금 (11-05 S.Lee 양도차익 대신). 양도차익 = 판 종목의 (매도금액 − 매도 수수료·세금) − (평단 × 수량 + 매수 수수료)
     $('pnl-won').textContent = pct(D.ret);   // 11-10 S.Lee: 금액 대신 수익률 (금액은 툴팁)
     $('pnl-won').classList.toggle('neg', total < 0); document.querySelector('.hero-card').classList.toggle('neg', total < 0);   // 손실은 파랑 (국내 증시 관례)
@@ -1652,8 +1571,6 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     // 11-10 맨 위 SiON 요약 (총 손익 · 수익률 · Sigma 대비)
     $('eng-sion').hidden = false;
     const sv = $('s-pnl-won'); sv.textContent = pct(total / INIT - 1); sv.classList.toggle('neg', pnlAll < 0);   // 11-10 금액 대신 수익률
-    $('s-ret').textContent = pct(total / INIT - 1); tone($('s-ret'), total / INIT - 1);
-    if (sigma) { const dv = (total - sigma) / INIT; $('s-vs').textContent = pct(dv).replace('%', '%p'); tone($('s-vs'), dv); }
     tipTarget($('s-realized'), `<div class="t">SiON Engine 수익률 (가상)</div>${row('총 손익', sw(pnlAll), pnlAll >= 0 ? 'up' : 'down')}${row('총자산', won(Math.round(total)) + '원')}${row(since ? md(toD(since)) + ' 이후' : '시작 이후', sw(pnlSeed), pnlSeed >= 0 ? 'up' : 'down')}${sigma ? row('Sigma 대비', sw(total - sigma), total - sigma >= 0 ? 'up' : 'down') : ''}`);
     $('eng-tabs').hidden = false;
     $('sion-trades').innerHTML = !trades.length ? '<div class="empty">아직 가상 체결이 없어요.</div>'
@@ -2124,110 +2041,6 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     cover.addEventListener('wheel', leave, { passive: true }); cover.addEventListener('touchmove', leave, { passive: true });
     cover.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); leave(); } });
   }
-})();
-</script>
-<script>
-(function () {
-  const cfg = window.DASH_CONFIG || {};
-  const url = (cfg.supabaseUrl || '').replace(/\/$/, ''), key = cfg.supabaseAnonKey || '';
-  const list = document.getElementById('cm-list'), form = document.getElementById('cm-form');
-  const nick = document.getElementById('cm-nick'), body = document.getElementById('cm-body');
-  const btn = document.getElementById('cm-submit'), msg = document.getElementById('cm-msg');
-  const count = document.getElementById('cm-count'), total = document.getElementById('cm-total');
-  const fabN = document.getElementById('fab-n');
-  const fab = document.getElementById('fab'), pop = document.getElementById('comments');
-  function openPop(on) {
-    pop.hidden = !on; scrim.hidden = !on; fab.setAttribute('aria-expanded', on);
-    document.body.classList.toggle('sheet-open', on && sheet.matches);
-    if (on && !sheet.matches) body.focus();   // 휴대폰에선 키보드가 바로 올라오지 않게
-  }
-  const scrim = document.getElementById('scrim'), sheet = matchMedia('(max-width: 640px)');
-  document.getElementById('pop-x').addEventListener('click', () => openPop(false));
-  fab.addEventListener('click', () => openPop(pop.hidden));
-  document.addEventListener('pointerdown', e => { if (!pop.hidden && !e.target.closest('.cheer')) openPop(false); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !pop.hidden) { openPop(false); (document.getElementById('ticker') || fab).focus(); } });
-  const COOLDOWN = 30000;
-  const headers = { apikey: key, Authorization: 'Bearer ' + key, 'Content-Type': 'application/json' };
-  const say = (t, err) => { msg.textContent = t; msg.classList.toggle('err', !!err); };
-  const ago = (iso) => {
-    const s = (Date.now() - Date.parse(iso)) / 1000;
-    if (s < 60) return '방금'; if (s < 3600) return Math.floor(s / 60) + '분 전';
-    if (s < 86400) return Math.floor(s / 3600) + '시간 전';
-    const d = new Date(iso); return (d.getMonth() + 1) + '/' + d.getDate();
-  };
-  const lastSent = () => { try { return +localStorage.getItem('cm-last') || 0; } catch (e) { return 0; } };
-  const markSent = () => { try { localStorage.setItem('cm-last', String(Date.now())); } catch (e) {} };
-  body.addEventListener('input', () => { count.textContent = body.value.length + ' / 300'; });
-  if (!url || !key) { list.innerHTML = '<p class="f-empty">댓글 저장소가 아직 연결되지 않았어요. config.js에 Supabase 주소와 anon 키를 넣으면 켜집니다.</p>'; btn.disabled = true; return; }
-  function render(rows) {
-    pool = rows; ticker(); rows = rows.slice(0, 100);   // 목록은 100개만
-    list.textContent = ''; total.textContent = rows.length ? rows.length + '개의 글' : ''; fabN.textContent = rows.length || '';
-    if (!rows.length) { const p = document.createElement('p'); p.className = 'f-empty'; p.textContent = '첫 댓글을 남겨 주세요.'; list.appendChild(p); return; }
-    for (const r of rows) {
-      const it = document.createElement('div'); it.className = 'f-item';
-      const who = document.createElement('div'); who.className = 'who';
-      const b = document.createElement('b'); b.textContent = r.nickname || '익명 개미';
-      const tm = document.createElement('time'); tm.dateTime = r.created_at; tm.textContent = ago(r.created_at);
-      who.append(b, tm); const p = document.createElement('p'); p.textContent = r.body;
-      it.append(who, p); list.appendChild(it);
-    }
-  }
-  async function load() {
-    try { const r = await fetch(url + '/rest/v1/comments?select=id,nickname,body,created_at&hidden=eq.false&order=created_at.desc&limit=300', { headers }); if (!r.ok) throw new Error(r.status); render(await r.json()); }
-    catch (e) { list.innerHTML = '<p class="f-empty">댓글을 불러오지 못했어요. 잠시 뒤 새로고침해 주세요.</p>'; }
-  }
-  form.addEventListener('submit', async (ev) => {
-    ev.preventDefault();
-    if (document.getElementById('cm-web').value) return;
-    const text = body.value.trim(), name = nick.value.trim() || '익명 개미';
-    if (!text) { say('내용을 입력해 주세요.', true); body.focus(); return; }
-    const wait = COOLDOWN - (Date.now() - lastSent());
-    if (wait > 0) { say(Math.ceil(wait / 1000) + '초 뒤에 다시 남길 수 있어요.', true); return; }
-    btn.disabled = true; say('올리는 중…');
-    try {
-      const r = await fetch(url + '/rest/v1/comments', { method: 'POST', headers: { ...headers, Prefer: 'return=minimal' }, body: JSON.stringify({ nickname: name.slice(0, 20), body: text.slice(0, 300) }) });
-      if (!r.ok) throw new Error(await r.text());
-      markSent(); body.value = ''; count.textContent = '0 / 300'; say(''); load();
-    } catch (e) { say(String(e.message).includes('too_many') ? '지금 댓글이 너무 많이 올라와요. 1분 뒤에 다시 시도해 주세요.' : '댓글을 올리지 못했어요. 잠시 뒤 다시 시도해 주세요.', true); }
-    finally { btn.disabled = false; }
-  });
-  load(); setInterval(() => { if (!document.hidden) load(); }, 60000);
-
-  // ---------- 응원 띠: 최근 응원 20개를 한 줄로 (두 벌 이어 붙여 끊김 없이 반복, 누르면 응원하기 열림) ----------
-  let pool = [];
-  const tk = document.getElementById('ticker'), tkTrack = document.getElementById('tk-track');
-  let tkKey = '';
-  function ticker() {
-    tk.hidden = true; return;   // 11-10 S.Lee: 상단 응원 띠 없앰 (게시판 글은 Supabase 에 그대로 남음)
-    const rows = pool.slice(0, 20), key = rows.map(r => r.id).join();
-    if (!rows.length || key === tkKey) return;
-    tkKey = key; tkTrack.textContent = '';
-    for (let k = 0; k < 2; k++) for (const r of rows) {
-      const it = document.createElement('span'); it.className = 'tk-item';
-      const n = document.createElement('b'); n.textContent = r.nickname || '익명 개미';
-      it.append(n, r.body.length > 40 ? r.body.slice(0, 40) + '…' : r.body); tkTrack.appendChild(it);
-    }
-    requestAnimationFrame(() => tkTrack.style.setProperty('--dur', Math.max(15, tkTrack.scrollWidth / 2 / 45) + 's'));   // 초당 45px
-  }
-  tk.addEventListener('click', () => fab.click());
-
-  // ---------- 매매 시각: 평일 15분마다 매매 (하루 24번) (agent/setup_tasks.ps1 · params.schedule.trade_times 와 맞출 것). 다음 매매에 빨간 점 ----------
-  const SCHED = { trades: window.TRADE_TIMES, judge: 15 };
-  const sched = document.getElementById('sched');
-  function drawSched() {
-    const k = new Date(Date.now() + 9 * 3600e3), day = k.getUTCDay();   // 한국 시각
-    const hm = m => String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0'), toM = t => +t.slice(0, 2) * 60 + +t.slice(3);
-    const now = k.getUTCHours() * 60 + k.getUTCMinutes(), tt = SCHED.trades;
-    const n = tt.map(toM).find(m => m > now);
-    const next = day >= 1 && day <= 5 && n != null ? hm(n) : null;
-    const kc = document.getElementById('kx-chip');
-    sched.textContent = ''; if (kc) sched.appendChild(kc);
-    const add = (html, live) => { const c = document.createElement('span'); c.className = 'chip m-hide' + (live ? ' live' : ''); c.innerHTML = html; sched.appendChild(c); return c; };
-    add('평일 매매');
-    add(`<b>${tt[0]}~${tt[tt.length - 1]}</b> ${SCHED.judge}분마다`);   // 11-05 모든 판단 회차가 매매
-    if (next) add(`다음 매매 <b>${next}</b>`, true);
-  }
-  drawSched(); setInterval(drawSched, 60e3);
 })();
 </script>
 </body>
