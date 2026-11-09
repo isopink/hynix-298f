@@ -121,11 +121,11 @@
       "fills": 15,
       "buys": 6,
       "sells": 9,
-      "watch": 369,
-      "runs": 23,
+      "watch": 391,
+      "runs": 24,
       "failures": 2,
       "avg_min": 6.6,
-      "tokens_k": 1784
+      "tokens_k": 1884
     }
   },
   "holdings": [

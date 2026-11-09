@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "15:00",
-    "pool": 450,
-    "analyzed_new": 8,
-    "passed": 20,
+    "time": "15:15",
+    "pool": 449,
+    "analyzed_new": 7,
+    "passed": 22,
     "kept_prep": false
   },
   "candidates": [
@@ -102,23 +102,23 @@
       "news": [
         {
           "date": "11-09",
+          "title": "GS건설 2.18% 상승…주택 원가율 정상화 여부 촉각",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "윤슬자이 청약 흥행…GS건설, 목동 수주전 탄력받나",
+          "risk": false
+        },
+        {
+          "date": "11-09",
           "title": "GS건설·IPARK현대산업개발, 영통2구역 공사비 4358억원 증액…40.9%↑",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "GS건설 '2800억 손실' 전망…경쟁사 흑자인데 왜 철수 택했나",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "GS건설 베트남, 호찌민에 문화·예술 전시 공간 열어",
           "risk": false
         }
       ],
       "price": 30300,
       "chg": 0.0185,
-      "activity": 1.95,
+      "activity": 1.94,
       "foreign_today": 727200000,
       "inst_today": 6817500000,
       "exchange": "KOSPI"
@@ -133,7 +133,7 @@
       "vol20": 0.402,
       "foreign_net": -43204631710,
       "inst_net": 74782934530,
-      "score": 0.74,
+      "score": 0.75,
       "news": [
         {
           "date": "11-09",
@@ -142,12 +142,12 @@
         },
         {
           "date": "11-09",
-          "title": "LG유플러스, 한국어 특화 음성 AI 개발…서울대·KAIST·연세대와 협력",
+          "title": "LG유플러스, 서울대·KAIST·연세대와 한국어 음성 AI 개발",
           "risk": false
         },
         {
           "date": "11-09",
-          "title": "LG유플러스, 한국어 특화 'K-보이스 엔진' 공동 개발",
+          "title": "LG유플러스, 한국어 특화 음성 AI 개발…서울대·KAIST·연세대와 협력",
           "risk": false
         }
       ],
@@ -165,21 +165,21 @@
       "vol20": 0.56,
       "foreign_net": -19235375950,
       "inst_net": 64455133600,
-      "score": 0.714,
+      "score": 0.724,
       "news": [
         {
           "date": "11-09",
-          "title": "\"기술만으론 美 시장 못 뚫어\"…SK바이오팜, 국내 바이오 31곳에 현지 네...",
+          "title": "SK바이오팜 2.48% 내려…세노바메이트 성장세 확인",
           "risk": false
         },
         {
           "date": "11-09",
-          "title": "SK바이오팜, 美 K바이오 혁신 상생 플랫폼 '링스' 입주사 선정",
+          "title": "SK바이오팜, 미국 뉴저지 ‘링스’ 입주기업 31곳 선정...글로벌 진출 지...",
           "risk": false
         },
         {
           "date": "11-09",
-          "title": "SK바이오팜, 美 진출 지원 플랫폼 '링스' 입주사 31곳 선정",
+          "title": "한림대 Station C SK바이오팜과 손잡고 춘천지역 4개 사 미국 시장진출 ...",
           "risk": false
         }
       ],
@@ -197,13 +197,13 @@
       "vol20": 0.491,
       "foreign_net": -22121547500,
       "inst_net": 56405917100,
-      "score": 0.675,
+      "score": 0.711,
       "news": [],
-      "price": 77800,
-      "chg": 0.0013,
-      "activity": 1.29,
-      "foreign_today": 5679400000,
-      "inst_today": 855800000,
+      "price": 77900,
+      "chg": 0.0026,
+      "activity": 1.31,
+      "foreign_today": 5686700000,
+      "inst_today": 856900000,
       "exchange": "KOSPI"
     },
     {
@@ -216,7 +216,7 @@
       "vol20": 0.469,
       "foreign_net": -6880633700,
       "inst_net": 74240426800,
-      "score": 0.649,
+      "score": 0.684,
       "news": [
         {
           "date": "11-08",
@@ -248,7 +248,7 @@
       "vol20": 0.843,
       "foreign_net": -27562520175,
       "inst_net": 30133908725,
-      "score": 0.532,
+      "score": 0.592,
       "news": [
         {
           "date": "11-09",
@@ -266,11 +266,11 @@
           "risk": false
         }
       ],
-      "price": 47950,
-      "chg": -0.0234,
-      "activity": 1.34,
+      "price": 48700,
+      "chg": -0.0081,
+      "activity": 1.35,
       "foreign_today": 0,
-      "inst_today": 3692150000,
+      "inst_today": 3749900000,
       "exchange": "KOSPI"
     },
     {
@@ -283,19 +283,24 @@
       "vol20": 0.541,
       "foreign_net": -85838332500,
       "inst_net": 157835015500,
-      "score": 0.532,
+      "score": 0.553,
       "news": [
+        {
+          "date": "11-09",
+          "title": "파업으로 비상운영인데…\"품질 위반 제보\" 압박한 삼성바이오로직스 노...",
+          "risk": false
+        },
         {
           "date": "11-09",
           "title": "삼성바이오로직스 152만원…수주잔고 매출 전환 주목",
           "risk": false
         }
       ],
-      "price": 1515000,
-      "chg": -0.0007,
+      "price": 1509000,
+      "chg": -0.0046,
       "activity": 0.83,
       "foreign_today": 0,
-      "inst_today": 9090000000,
+      "inst_today": 9054000000,
       "exchange": "KOSPI"
     },
     {
@@ -308,7 +313,7 @@
       "vol20": 0.404,
       "foreign_net": -5748052750,
       "inst_net": 7853604175,
-      "score": 0.429,
+      "score": 0.461,
       "news": [],
       "foreign_today": 0,
       "inst_today": 1111100000,
@@ -324,7 +329,7 @@
       "vol20": 0.957,
       "foreign_net": -76658998800,
       "inst_net": 63121010150,
-      "score": 0.416,
+      "score": 0.434,
       "news": [
         {
           "date": "11-09",
@@ -342,11 +347,11 @@
           "risk": false
         }
       ],
-      "price": 60500,
-      "chg": 0.0,
+      "price": 60700,
+      "chg": 0.0033,
       "activity": 0.51,
-      "foreign_today": 2904000000,
-      "inst_today": 2662000000,
+      "foreign_today": 2913600000,
+      "inst_today": 2670800000,
       "exchange": "KOSPI"
     },
     {
@@ -359,8 +364,13 @@
       "vol20": 0.428,
       "foreign_net": 11365936950,
       "inst_net": -1065209850,
-      "score": 0.364,
+      "score": 0.395,
       "news": [
+        {
+          "date": "11-09",
+          "title": "Naver, Kakao, NC step up push into defense AI",
+          "risk": false
+        },
         {
           "date": "11-09",
           "title": "[NC스테이지] 효녀 심청 뒤에 숨은 아버지의 욕망…'먼 눈'의 비극",
@@ -381,7 +391,7 @@
       "vol20": 0.738,
       "foreign_net": -7484986975,
       "inst_net": 26975170300,
-      "score": 0.338,
+      "score": 0.368,
       "news": [
         {
           "date": "11-09",
@@ -404,38 +414,6 @@
       "exchange": "KOSPI"
     },
     {
-      "code": "021240",
-      "name": "코웨이",
-      "close": 105900,
-      "ret5": 0.0232,
-      "ret20": 0.0558,
-      "rsi14": 53.0,
-      "vol20": 0.373,
-      "foreign_net": -14432444800,
-      "inst_net": 17027887850,
-      "score": 0.325,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "말레이·미국 쌍끌이에 흑자 전환까지…LS證, '분기 최대 실적' 코웨이 ...",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "코웨이, '블랙프라이데이' 렌탈료 월 1만원 행사…\"일시불 제품 최대 67...",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "매출 늘었지만 순익 줄어든 코웨이",
-          "risk": false
-        }
-      ],
-      "foreign_today": 1906200000,
-      "inst_today": 0,
-      "exchange": "KOSPI"
-    },
-    {
       "code": "004020",
       "name": "현대제철",
       "close": 28300,
@@ -445,8 +423,13 @@
       "vol20": 0.625,
       "foreign_net": 652431450,
       "inst_net": 21161016850,
-      "score": 0.312,
+      "score": 0.342,
       "news": [
+        {
+          "date": "11-09",
+          "title": "현대제철 노사, 임직원 가족과 건강 트레킹",
+          "risk": false
+        },
         {
           "date": "11-09",
           "title": "충남 당진 현대제철, 노사가 함께하는 가족 건강 트레킹",
@@ -456,15 +439,42 @@
           "date": "11-09",
           "title": "현대제철, 임직원 참여형 헤리티지 플랫폼 'H.ARCHIVE' 개설",
           "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "현대제철, 하반기 신규채용 진행…9일까지 신입·연구직 모집",
-          "risk": false
         }
       ],
       "foreign_today": 537700000,
       "inst_today": 396200000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "021240",
+      "name": "코웨이",
+      "close": 105900,
+      "ret5": 0.0232,
+      "ret20": 0.0558,
+      "rsi14": 53.0,
+      "vol20": 0.373,
+      "foreign_net": -14432444800,
+      "inst_net": 17027887850,
+      "score": 0.342,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "코웨이, 정수기·공기청정기 월 1만원 렌탈···블랙프라이데이 할인전...",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "코웨이, 블랙프라이데이 프로모션…렌탈료 월 1만원",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "말레이·미국 쌍끌이에 흑자 전환까지…LS證, '분기 최대 실적' 코웨이 ...",
+          "risk": false
+        }
+      ],
+      "foreign_today": 1906200000,
+      "inst_today": 0,
       "exchange": "KOSPI"
     },
     {
@@ -477,7 +487,7 @@
       "vol20": 1.387,
       "foreign_net": -6381603720,
       "inst_net": 16519823935,
-      "score": 0.961,
+      "score": 1.0,
       "news": [
         {
           "date": "11-09",
@@ -495,11 +505,11 @@
           "risk": false
         }
       ],
-      "price": 16350,
-      "chg": 0.0583,
-      "activity": 1.88,
-      "foreign_today": 1128150000,
-      "inst_today": 2452500000,
+      "price": 16260,
+      "chg": 0.0524,
+      "activity": 1.83,
+      "foreign_today": 1121940000,
+      "inst_today": 2439000000,
       "exchange": "KOSDAQ"
     },
     {
@@ -512,8 +522,13 @@
       "vol20": 1.371,
       "foreign_net": -2097260775,
       "inst_net": 7682858150,
-      "score": 0.857,
+      "score": 0.895,
       "news": [
+        {
+          "date": "11-09",
+          "title": "프로티나 6.91% 올라…단백질 분석 플랫폼 사업화 주목",
+          "risk": false
+        },
         {
           "date": "11-07",
           "title": "엔젠바이오 上…자금조달에 희비 엇갈린 프로티나·애드바이오텍[바이...",
@@ -523,37 +538,13 @@
           "date": "11-06",
           "title": "[애프터마켓 리뷰] 프로티나, 365억원 조달해 AI 바이오파운드리 구축",
           "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "[더벨]프로티나, IPO 1년 만의 변심 '청사진 변화' 신사업에 무게",
-          "risk": false
         }
       ],
-      "price": 58700,
-      "chg": 0.0673,
-      "activity": 2.49,
+      "price": 59200,
+      "chg": 0.0764,
+      "activity": 2.45,
       "foreign_today": 0,
-      "inst_today": 880500000,
-      "exchange": "KOSDAQ"
-    },
-    {
-      "code": "425420",
-      "name": "티에프이",
-      "close": 64800,
-      "ret5": -0.2448,
-      "ret20": 0.0157,
-      "rsi14": 46.5,
-      "vol20": 1.507,
-      "foreign_net": 14334611050,
-      "inst_net": -8579187950,
-      "score": 0.714,
-      "news": [],
-      "price": 69400,
-      "chg": 0.1266,
-      "activity": 1.05,
-      "foreign_today": 0,
-      "inst_today": 3192400000,
+      "inst_today": 888000000,
       "exchange": "KOSDAQ"
     },
     {
@@ -566,7 +557,7 @@
       "vol20": 1.105,
       "foreign_net": -1315515485,
       "inst_net": 73370470,
-      "score": 0.455,
+      "score": 0.487,
       "news": [
         {
           "date": "11-09",
@@ -584,10 +575,10 @@
           "risk": false
         }
       ],
-      "price": 14650,
-      "chg": 0.0693,
-      "activity": 1.78,
-      "foreign_today": 776450000,
+      "price": 14730,
+      "chg": 0.0752,
+      "activity": 1.79,
+      "foreign_today": 780690000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -601,7 +592,7 @@
       "vol20": 1.32,
       "foreign_net": 18202372050,
       "inst_net": 3628579775,
-      "score": 0.39,
+      "score": 0.382,
       "news": [
         {
           "date": "11-09",
@@ -619,12 +610,47 @@
           "risk": false
         }
       ],
-      "price": 27200,
-      "chg": -0.0389,
-      "activity": 0.69,
+      "price": 27250,
+      "chg": -0.0371,
+      "activity": 0.68,
       "foreign_today": 0,
-      "inst_today": 244800000,
+      "inst_today": 245250000,
       "exchange": "KOSDAQ"
+    },
+    {
+      "code": "010060",
+      "name": "OCI홀딩스",
+      "close": 198800,
+      "ret5": 0.2249,
+      "ret20": -0.1504,
+      "rsi14": 48.8,
+      "vol20": 1.175,
+      "foreign_net": -77593720300,
+      "inst_net": 97015002750,
+      "score": 0.184,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "OCI홀딩스 1.35% 내려…태양광 밸류체인 수급 부담",
+          "risk": false
+        },
+        {
+          "date": "11-08",
+          "title": "OCI홀딩스, 미국이 찾는 폴리실리콘 공급사…내년 실적 10배 뛴다",
+          "risk": false
+        },
+        {
+          "date": "11-07",
+          "title": "11월 1주차 OCI홀딩스 주가 20만원선 등락 19만원대 마감",
+          "risk": false
+        }
+      ],
+      "price": 198000,
+      "chg": -0.0095,
+      "activity": 0.91,
+      "foreign_today": 0,
+      "inst_today": 1782000000,
+      "exchange": "KOSPI"
     },
     {
       "code": "114800",
@@ -641,18 +667,106 @@
       "exchange": "ETF"
     },
     {
-      "code": "069500",
-      "name": "KODEX 200",
-      "close": 79005,
-      "ret5": -0.1299,
-      "ret20": -0.2522,
-      "rsi14": 31.0,
-      "vol20": 0.643,
-      "foreign_net": null,
-      "inst_net": null,
-      "score": null,
-      "news": [],
-      "exchange": "ETF"
+      "code": "096530",
+      "name": "씨젠",
+      "close": 28900,
+      "ret5": -0.1189,
+      "ret20": -0.2385,
+      "rsi14": 28.9,
+      "vol20": 0.517,
+      "foreign_net": -4284758200,
+      "inst_net": 5000156600,
+      "score": 0,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "씨젠 18.87% 급락…3분기 실적 발표 뒤 변동성 확대",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "씨젠 주가 장중 17%대 급락, 3분기 영업이익 기대 밑돌고 순손익 적자 전...",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "씨젠, 블록딜·실적 하향 부담 속에 20% 급락[종목NOW]",
+          "risk": false
+        }
+      ],
+      "price": 24850,
+      "chg": -0.1984,
+      "foreign_today": 0,
+      "inst_today": 0,
+      "exchange": "KOSDAQ"
+    },
+    {
+      "code": "196170",
+      "name": "알테오젠",
+      "close": 201000,
+      "ret5": -0.0383,
+      "ret20": -0.1642,
+      "rsi14": 35.7,
+      "vol20": 0.739,
+      "foreign_net": 420595450,
+      "inst_net": 20980611900,
+      "score": 0,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "美 약가인하 변수에도…알테오젠 \"SC 플랫폼 경쟁력 유효\"",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "\"망막질환 신약·ADC 피하주사 기술 알린다\"…알테오젠, '바이오 유럽'서...",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "미국서 날아온 악재…알테오젠, 피하주사 사업성 문제없나",
+          "risk": false
+        }
+      ],
+      "price": 169200,
+      "chg": -0.1561,
+      "foreign_today": 0,
+      "inst_today": 0,
+      "exchange": "KOSDAQ"
+    },
+    {
+      "code": "006400",
+      "name": "삼성SDI",
+      "close": 474500,
+      "ret5": -0.1131,
+      "ret20": -0.1631,
+      "rsi14": 41.7,
+      "vol20": 1.005,
+      "foreign_net": -114458657750,
+      "inst_net": -47544259250,
+      "score": 0,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "삼성SDI·LG에너지솔루션, 전기차 부진 딛고 실적 개선세… ESS 성장·中...",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "삼성SDI 주가 10%대 급락…40만원선 사수 여부 '촉각'",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "삼성SDI 42만9500원…배터리주 변동성에 8.23% 하락",
+          "risk": false
+        }
+      ],
+      "price": 416000,
+      "chg": -0.1111,
+      "foreign_today": 0,
+      "inst_today": 0,
+      "exchange": "KOSPI"
     }
   ]
 }
