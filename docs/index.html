@@ -1020,7 +1020,10 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
 
   // ---------- 11-08 온톨로지 그림자 운영 (data/shadow.json, 실제 logger 가 그림자 폴더에서 읽어 올림) → 누적 수익률 차트에 초록 선 ----------
   let SHADOW = null;
-  fetch('data/shadow.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null).catch(() => null).then(v => { SHADOW = v; if (D) hero(); });
+  // 11-09 S.Lee: 장중에도 겹쳐 보이게 1분마다 다시 받음 (그림자 기록이 바뀌었을 때만 다시 그림). 오늘 점 = 그림자의 가장 최근 회차 자산
+  const loadShadow = () => fetch('data/shadow.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null).catch(() => null)
+    .then(v => { if (v && SHADOW && v.updated === SHADOW.updated) return; SHADOW = v || SHADOW; if (D && SHADOW) hero(); });
+  loadShadow(); setInterval(() => { if (!document.hidden) loadShadow(); }, 60000);
 
   // ---------- 리스크 한도: agent/config/risk_limits.json 과 같은 값 (대회 내내 고정, 바뀌면 여기도 고칠 것) ----------
   const RL = { daily: -0.03, total: -0.10, minCash: 0.10, maxPos: 20, maxW: 0.20 };
