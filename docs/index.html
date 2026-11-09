@@ -581,10 +581,20 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
 :root[data-theme=volt] { --canvas: #101010; --card: #101010; --card-2: #1a1a1a; --line: #3d3a39; --grid: #262626; --ink: #f2f2f2; --body: #bdbdbd; --muted: #8b949e;
   --red: #00d992; --red-hi: #2fd6a1; --blue: #8b949e; --grey: #5a5a5a;
   --font: Inter, "Pretendard Variable", Pretendard, system-ui, -apple-system, "Segoe UI", sans-serif; --mono: "JetBrains Mono", SFMono-Regular, Menlo, Consolas, monospace; }
-[data-theme=volt] body { background: #101010 !important; font-feature-settings: "calt", "rlig"; }
+[data-theme=volt] body { background:
+    radial-gradient(1000px 520px at 6% -10%, rgba(0,217,146,.10), transparent 62%),
+    radial-gradient(800px 480px at 104% 2%, rgba(242,242,242,.035), transparent 60%),
+    radial-gradient(900px 600px at 50% 118%, rgba(0,217,146,.06), transparent 65%),
+    #101010 !important; background-attachment: fixed !important; font-feature-settings: "calt", "rlig"; }
+/* 11-10 S.Lee: 은은한 그라데이션 (초록 빛 번짐 · 카드 윗변 빛 · 카드 위쪽 얇은 초록 선) */
+[data-theme=volt] .card::before { content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 1px; border-radius: 8px 8px 0 0; pointer-events: none;
+  background: linear-gradient(90deg, transparent 0%, rgba(0,217,146,.55) 22%, rgba(0,217,146,.12) 60%, transparent 100%); }
 [data-theme=volt] body::before { display: none; }
 [data-theme=volt] .card, [data-theme=volt] details.log, [data-theme=volt] .card.hero-card, [data-theme=volt] .card.glow-red, [data-theme=volt] .card.glow-blue {
-  background: #101010 !important; border: 1px solid #3d3a39 !important; border-radius: 8px !important; box-shadow: none !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+  background: linear-gradient(180deg, rgba(255,255,255,.028) 0%, rgba(255,255,255,0) 38%), #101010 !important; border: 1px solid #3d3a39 !important; border-radius: 8px !important; box-shadow: none !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+[data-theme=volt] .card.hero-card { background: radial-gradient(640px 300px at 0% 0%, rgba(0,217,146,.09), transparent 70%), radial-gradient(520px 260px at 100% 100%, rgba(242,242,242,.03), transparent 70%), #101010 !important; }
+[data-theme=volt] .eng-tabs button[aria-selected="true"] { background: linear-gradient(180deg, #1a1a1a 0%, rgba(0,217,146,.08) 100%) !important; }
+[data-theme=volt] .cover { background: radial-gradient(ellipse 70% 55% at 50% 45%, rgba(0,217,146,.07), transparent 70%), #101010; }
 [data-theme=volt] details.log summary { border-radius: 8px; }
 [data-theme=volt] .chip, [data-theme=volt] .tip, [data-theme=volt] .cal .cell.has { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
 [data-theme=volt] .chip { background: #101010; border-color: #3d3a39; }
@@ -603,7 +613,6 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
 [data-theme=volt] .dec-row .act { border-radius: 9999px; }
 [data-theme=volt] .grid > .card + .card { }
 [data-theme=volt] .foot { border-top: 1px dashed rgba(79,93,117,.4); padding-top: 24px; }
-[data-theme=volt] .cover { background: #101010; }
 [data-theme=volt] .cover-title { font-family: Inter, "Pretendard Variable", sans-serif; font-weight: 400; letter-spacing: -0.65px; color: #fff; text-shadow: 0 0 24px rgba(0,0,0,.9); }
 [data-theme=volt] .cover::after { background: radial-gradient(ellipse 34% 22% at 50% 43%, rgba(16,16,16,.6), rgba(16,16,16,0)), radial-gradient(ellipse at 50% 50%, rgba(16,16,16,0) 30%, rgba(16,16,16,.55) 100%); }
 [data-theme=volt] svg [tabindex]:focus-visible, [data-theme=volt] button:focus-visible, [data-theme=volt] summary:focus-visible { outline-color: #2fd6a1; }
