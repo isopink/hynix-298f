@@ -1373,7 +1373,12 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
         + `<span class="on" title="판단 기록 ${esc(sd.time.slice(11, 16))}">SiON Engine ${b} 회차</span><span class="why-h">근거</span>`;
     }
     const rows = items.map(d => ({ code: d.code, name: d.name, a: d, b: sMap.get(d.code) }));
-    if (cmp) for (const [code, x] of sMap) if (!items.some(d => d.code === code)) rows.push({ code, name: x.name, a: null, b: x });   // SiON 만 본 종목은 아래에
+    if (cmp) {
+      for (const [code, x] of sMap) if (!items.some(d => d.code === code)) rows.push({ code, name: x.name, a: null, b: x });
+      // 11-09 S.Lee: 두 엔진 중 하나라도 사고판 종목 먼저, 그 안에서 두 엔진 확신도 중 높은 값 순 (SiON 확신도도 순위에 반영)
+      const act = d => d && /^(매수|매도)/.test(d.action), cf = d => d ? +d.confidence || 0 : 0;
+      rows.sort((p, q) => (act(q.a) || act(q.b)) - (act(p.a) || act(p.b)) || Math.max(cf(q.a), cf(q.b)) - Math.max(cf(p.a), cf(p.b)));
+    }
     const cls = d => d.action.startsWith('매수') ? 'buy' : d.action.startsWith('매도') ? 'sell' : '';
     const pill = d => { const c = +d.confidence || 0, k = cls(d); return `<span class="act ${k}">${esc(d.qty ? `${d.action} ${won(d.qty)}주` : d.action)}</span>`
       + `<span class="cf"><i><b class="${c >= .6 ? 'hi' : ''}" style="width:${Math.round(c * 100)}%"></b></i>${c.toFixed(2)}</span>`; };
