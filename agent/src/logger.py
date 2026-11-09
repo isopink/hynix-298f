@@ -298,6 +298,14 @@ def _shadow_decision(d, start):
     if not dc.get("time") or dc["time"][:10] < start:   # 그림자 시작 전 기록(저장소에 딸려 온 실제 판단)은 빼기
         return None
     keep = ("code", "name", "action", "qty", "confidence", "bull", "bear", "decision", "blocked")
+    last = {}   # 11-09 그림자 decision.json 은 근거를 '비공개'로 가림 → 그림자 journal 의 같은 회차 판단·체결 문장으로 채움
+    for r in C.read_jsonl(os.path.join(d, "agent", "work", "journal.jsonl")):
+        if r.get("kind") in ("decision", "fill") and r.get("code"):   # 가장 최근 회차 (decision.json 시각과 기록 시각이 몇 분 다름)
+            last[r["code"]] = r
+    for x in dc.get("items", []):
+        r = last.get(x.get("code"))
+        if r:
+            x.update({k: r[k] for k in ("bull", "bear", "decision") if r.get(k)})
     return {"time": dc["time"], "regime": dc.get("regime"), "items": [{k: x.get(k) for k in keep if x.get(k) is not None} for x in dc.get("items", [])]}
 
 

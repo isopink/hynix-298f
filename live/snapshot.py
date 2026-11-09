@@ -159,6 +159,27 @@ SHADOW_LIVE = os.path.join(os.environ.get("SHADOW_DIR") or os.path.join(os.path.
                            "agent", "work", "shadow_live.json")   # 11-09 그림자 운영 감시가 1분마다 씀
 
 
+def shadow_texts(dc, journal, n=140):
+    """11-09 그림자(온톨로지) decision.json 은 근거를 '비공개'로 가림 → 그림자 journal 의 같은 회차 판단·체결에서 bull·bear·decision 을 채움."""
+    if not dc or not dc.get("items"):
+        return
+    last = {}
+    with open(journal, encoding="utf-8") as f:
+        for line in f:
+            try:
+                r = json.loads(line)
+            except ValueError:
+                continue
+            if r.get("kind") in ("decision", "fill") and r.get("code"):   # 가장 최근 회차 (decision.json 시각과 기록 시각이 몇 분 다름)
+                last[r["code"]] = r
+    for it in dc["items"]:
+        r = last.get(it.get("code"))
+        if r:
+            for k in ("bull", "bear", "decision"):
+                if r.get(k):
+                    it[k] = str(r[k])[:n]
+
+
 def push_shadow(env):
     """11-09 온톨로지 그림자 운영의 1분 자산·상태를 같이 올림 (supabase/shadow.sql). 그림자가 없거나 3분 넘게 묵었으면 건너뜀.
     실패해도 실제 잔고 업로드에는 영향 없음."""
@@ -169,6 +190,10 @@ def push_shadow(env):
         return
     if time.time() - x.get("epoch", 0) > 180 or not x.get("total"):
         return
+    try:
+        shadow_texts(x.get("status", {}).get("decision"), os.path.join(os.path.dirname(SHADOW_LIVE), "journal.jsonl"))
+    except Exception as e:  # noqa: BLE001
+        print(f"  (그림자 판단 문장 건너뜀: {str(e)[:80]})")
     try:
         key = env["SUPABASE_ANON_KEY"]
         post_json(env["SUPABASE_URL"].rstrip("/") + "/rest/v1/rpc/push_shadow", {
