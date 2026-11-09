@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "14:00",
-    "pool": 445,
-    "analyzed_new": 17,
-    "passed": 21,
+    "time": "14:15",
+    "pool": 444,
+    "analyzed_new": 8,
+    "passed": 20,
     "kept_prep": false
   },
   "candidates": [
@@ -98,8 +98,13 @@
       "vol20": 0.888,
       "foreign_net": 1436621025,
       "inst_net": 20425868350,
-      "score": 0.945,
+      "score": 0.965,
       "news": [
+        {
+          "date": "11-09",
+          "title": "GS건설 베트남, 호찌민에 문화·예술 전시 공간 열어",
+          "risk": false
+        },
         {
           "date": "11-09",
           "title": "GS건설 목동윤슬자이, 주거공간·웰니스 시설 차별화…지역 수요 공략",
@@ -109,69 +114,13 @@
           "date": "11-09",
           "title": "GS건설, 호주 송전망 진출...전력 인프라로 사업 확장",
           "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "[굿모닝! 9일 건설업계 소식] 현대건설·GS건설·SK에코플랜트·금호건설...",
-          "risk": false
         }
       ],
-      "price": 30950,
-      "chg": 0.0403,
-      "activity": 2.09,
-      "foreign_today": 1485600000,
-      "inst_today": 5601950000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "017670",
-      "name": "SK텔레콤",
-      "close": 77300,
-      "ret5": 0.039,
-      "ret20": -0.0819,
-      "rsi14": 45.2,
-      "vol20": 0.491,
-      "foreign_net": -22121547500,
-      "inst_net": 56405917100,
-      "score": 0.725,
-      "news": [],
-      "price": 77600,
-      "chg": -0.0013,
-      "activity": 1.17,
-      "foreign_today": 5121600000,
-      "inst_today": 776000000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "326030",
-      "name": "SK바이오팜",
-      "close": 88800,
-      "ret5": 0.1532,
-      "ret20": 0.2215,
-      "rsi14": 69.5,
-      "vol20": 0.56,
-      "foreign_net": -19235375950,
-      "inst_net": 64455133600,
-      "score": 0.703,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "SK바이오팜, 31개 기업과 함께 미국 시장 진출 도전장",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "세노바메이트 상업화 경험 공유…SK바이오팜, 국내사 지원",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "SK바이오팜, 美 K-바이오 상생 플랫폼 '링스' 입주사 31곳 선정",
-          "risk": false
-        }
-      ],
-      "foreign_today": 3019200000,
-      "inst_today": 0,
+      "price": 30450,
+      "chg": 0.0235,
+      "activity": 2.04,
+      "foreign_today": 1461600000,
+      "inst_today": 5511450000,
       "exchange": "KOSPI"
     },
     {
@@ -184,8 +133,13 @@
       "vol20": 0.402,
       "foreign_net": -43204631710,
       "inst_net": 74782934530,
-      "score": 0.681,
+      "score": 0.709,
       "news": [
+        {
+          "date": "11-09",
+          "title": "5G SA '카운트다운'…SKT 체험단·LG유플러스 스포츠 집중",
+          "risk": false
+        },
         {
           "date": "11-09",
           "title": "LG유플러스, 서울대·KAIST·연세대와 'K-보이스 AI' 개발…한국어 음성...",
@@ -195,15 +149,42 @@
           "date": "11-09",
           "title": "LG유플러스, 초고속인터넷 속도·안정성서 '7개 지표 1위'...경쟁사 모두...",
           "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "LG유플러스, 3개 대학과 한국어 음성 AI 연구",
-          "risk": false
         }
       ],
       "foreign_today": 0,
       "inst_today": 3898720000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "326030",
+      "name": "SK바이오팜",
+      "close": 88800,
+      "ret5": 0.1532,
+      "ret20": 0.2215,
+      "rsi14": 69.5,
+      "vol20": 0.56,
+      "foreign_net": -19235375950,
+      "inst_net": 64455133600,
+      "score": 0.709,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "SK바이오팜, 美 진출 지원 플랫폼 ‘링스’에 국내 기업 31곳 입주",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "SK바이오팜, 美 K-바이오 혁신 상생 플랫폼 '링스' 입주사 선정",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "SK바이오팜, 美 ‘링스’ 입주사 선정⋯ 총 31개사 선정",
+          "risk": false
+        }
+      ],
+      "foreign_today": 3019200000,
+      "inst_today": 0,
       "exchange": "KOSPI"
     },
     {
@@ -216,7 +197,7 @@
       "vol20": 0.843,
       "foreign_net": -27562520175,
       "inst_net": 30133908725,
-      "score": 0.549,
+      "score": 0.535,
       "news": [
         {
           "date": "11-09",
@@ -234,11 +215,11 @@
           "risk": false
         }
       ],
-      "price": 49050,
-      "chg": -0.001,
-      "activity": 1.47,
+      "price": 48300,
+      "chg": -0.0163,
+      "activity": 1.42,
       "foreign_today": 0,
-      "inst_today": 3188250000,
+      "inst_today": 3139500000,
       "exchange": "KOSPI"
     },
     {
@@ -251,7 +232,7 @@
       "vol20": 0.469,
       "foreign_net": -6880633700,
       "inst_net": 74240426800,
-      "score": 0.538,
+      "score": 0.535,
       "news": [
         {
           "date": "11-08",
@@ -283,7 +264,7 @@
       "vol20": 0.957,
       "foreign_net": -76658998800,
       "inst_net": 63121010150,
-      "score": 0.527,
+      "score": 0.512,
       "news": [
         {
           "date": "11-09",
@@ -301,11 +282,11 @@
           "risk": false
         }
       ],
-      "price": 62000,
-      "chg": 0.0248,
-      "activity": 0.54,
-      "foreign_today": 3844000000,
-      "inst_today": 2790000000,
+      "price": 61000,
+      "chg": 0.0083,
+      "activity": 0.53,
+      "foreign_today": 3782000000,
+      "inst_today": 2745000000,
       "exchange": "KOSPI"
     },
     {
@@ -318,13 +299,13 @@
       "vol20": 0.541,
       "foreign_net": -85838332500,
       "inst_net": 157835015500,
-      "score": 0.495,
+      "score": 0.477,
       "news": [],
-      "price": 1542000,
-      "chg": 0.0172,
-      "activity": 0.86,
+      "price": 1523000,
+      "chg": 0.0046,
+      "activity": 0.84,
       "foreign_today": 0,
-      "inst_today": 3084000000,
+      "inst_today": 3046000000,
       "exchange": "KOSPI"
     },
     {
@@ -337,7 +318,7 @@
       "vol20": 0.404,
       "foreign_net": -5748052750,
       "inst_net": 7853604175,
-      "score": 0.473,
+      "score": 0.465,
       "news": [],
       "foreign_today": 0,
       "inst_today": 867200000,
@@ -353,7 +334,7 @@
       "vol20": 0.625,
       "foreign_net": 652431450,
       "inst_net": 21161016850,
-      "score": 0.418,
+      "score": 0.407,
       "news": [
         {
           "date": "11-09",
@@ -362,12 +343,12 @@
         },
         {
           "date": "11-09",
-          "title": "현대제철, 임직원 참여형 헤리티지 플랫폼 'H.ARCHIVE' 개설",
+          "title": "현대제철, 하반기 신규채용 진행…9일까지 신입·연구직 모집",
           "risk": false
         },
         {
           "date": "11-09",
-          "title": "현대제철, 하반기 신규채용 진행…9일까지 신입·연구직 모집",
+          "title": "현대제철, 임직원 참여형 헤리티지 플랫폼 'H.ARCHIVE' 개설",
           "risk": false
         }
       ],
@@ -385,7 +366,7 @@
       "vol20": 0.738,
       "foreign_net": -7484986975,
       "inst_net": 26975170300,
-      "score": 0.385,
+      "score": 0.384,
       "news": [
         {
           "date": "11-09",
@@ -417,8 +398,13 @@
       "vol20": 0.373,
       "foreign_net": -14432444800,
       "inst_net": 17027887850,
-      "score": 0.341,
+      "score": 0.36,
       "news": [
+        {
+          "date": "11-09",
+          "title": "코웨이, 정수기 최대 15개월 ‘월 1만원’…블랙프라이데이 할인",
+          "risk": false
+        },
         {
           "date": "11-09",
           "title": "코웨이, '블랙프라이데이' 프로모션… 렌탈·온라인 고객 확보 나서",
@@ -427,11 +413,6 @@
         {
           "date": "11-09",
           "title": "코웨이, 블랙프라이데이 할인전…최대 67% 할인",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "코웨이, 26일까지 코웨이닷컴 '블랙프라이데이' 프로모션",
           "risk": false
         }
       ],
@@ -449,7 +430,7 @@
       "vol20": 0.428,
       "foreign_net": 11365936950,
       "inst_net": -1065209850,
-      "score": 0.319,
+      "score": 0.326,
       "news": [
         {
           "date": "11-09",
@@ -476,7 +457,7 @@
       "vol20": 0.592,
       "foreign_net": -8231059200,
       "inst_net": 53595627900,
-      "score": 0.308,
+      "score": 0.291,
       "news": [
         {
           "date": "11-09",
@@ -526,11 +507,11 @@
           "risk": false
         }
       ],
-      "price": 58900,
-      "chg": 0.0709,
-      "activity": 2.73,
+      "price": 59300,
+      "chg": 0.0782,
+      "activity": 2.68,
       "foreign_today": 0,
-      "inst_today": 1001300000,
+      "inst_today": 1008100000,
       "exchange": "KOSDAQ"
     },
     {
@@ -543,7 +524,7 @@
       "vol20": 1.387,
       "foreign_net": -6381603720,
       "inst_net": 16519823935,
-      "score": 0.978,
+      "score": 0.953,
       "news": [
         {
           "date": "11-09",
@@ -561,11 +542,30 @@
           "risk": false
         }
       ],
-      "price": 16680,
-      "chg": 0.0796,
-      "activity": 2.12,
-      "foreign_today": 750600000,
-      "inst_today": 2201760000,
+      "price": 16410,
+      "chg": 0.0621,
+      "activity": 2.03,
+      "foreign_today": 738450000,
+      "inst_today": 2166120000,
+      "exchange": "KOSDAQ"
+    },
+    {
+      "code": "425420",
+      "name": "티에프이",
+      "close": 64800,
+      "ret5": -0.2448,
+      "ret20": 0.0157,
+      "rsi14": 46.5,
+      "vol20": 1.507,
+      "foreign_net": 14334611050,
+      "inst_net": -8579187950,
+      "score": 0.709,
+      "news": [],
+      "price": 69300,
+      "chg": 0.125,
+      "activity": 1.08,
+      "foreign_today": 0,
+      "inst_today": 1732500000,
       "exchange": "KOSDAQ"
     },
     {
@@ -578,7 +578,7 @@
       "vol20": 1.141,
       "foreign_net": -11979305150,
       "inst_net": 12404586800,
-      "score": 0.56,
+      "score": 0.535,
       "news": [
         {
           "date": "11-06",
@@ -586,11 +586,11 @@
           "risk": false
         }
       ],
-      "price": 38400,
-      "chg": 0.0878,
-      "activity": 2.83,
+      "price": 37900,
+      "chg": 0.0737,
+      "activity": 2.74,
       "foreign_today": 0,
-      "inst_today": 345600000,
+      "inst_today": 341100000,
       "exchange": "KOSDAQ"
     },
     {
@@ -603,7 +603,7 @@
       "vol20": 1.105,
       "foreign_net": -1315515485,
       "inst_net": 73370470,
-      "score": 0.538,
+      "score": 0.523,
       "news": [
         {
           "date": "11-09",
@@ -621,40 +621,10 @@
           "risk": false
         }
       ],
-      "price": 14790,
-      "chg": 0.0796,
-      "activity": 1.62,
-      "foreign_today": 695130000,
-      "inst_today": 0,
-      "exchange": "KOSDAQ"
-    },
-    {
-      "code": "008830",
-      "name": "대동기어",
-      "close": 6540,
-      "ret5": 0.2505,
-      "ret20": 0.0721,
-      "rsi14": 60.3,
-      "vol20": 1.052,
-      "foreign_net": -3890551700,
-      "inst_net": -186177575,
-      "score": 0.505,
-      "news": [
-        {
-          "date": "11-06",
-          "title": "대동기어 주가, 11월 6일 애프터마켓 6,750원 2.27% 상승",
-          "risk": false
-        },
-        {
-          "date": "11-06",
-          "title": "대동기어 회전율 88%…금양그린파워·대명에너지도 50% 넘어",
-          "risk": false
-        }
-      ],
-      "price": 6730,
-      "chg": 0.0,
-      "activity": 2.4,
-      "foreign_today": 397070000,
+      "price": 14540,
+      "chg": 0.0613,
+      "activity": 1.72,
+      "foreign_today": 683380000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
