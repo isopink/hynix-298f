@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "11:45",
-    "pool": 409,
+    "time": "12:00",
+    "pool": 410,
     "analyzed_new": 30,
-    "passed": 20,
+    "passed": 21,
     "kept_prep": false
   },
   "candidates": [
@@ -98,7 +98,7 @@
       "vol20": 0.469,
       "foreign_net": -6880633700,
       "inst_net": 74240426800,
-      "score": 0.905,
+      "score": 0.93,
       "news": [
         {
           "date": "11-08",
@@ -118,7 +118,7 @@
       ],
       "price": 58400,
       "chg": 0.0,
-      "activity": 4.74,
+      "activity": 4.43,
       "foreign_today": 1051200000,
       "inst_today": 0,
       "exchange": "KOSPI"
@@ -133,8 +133,13 @@
       "vol20": 0.888,
       "foreign_net": 1436621025,
       "inst_net": 20425868350,
-      "score": 0.881,
+      "score": 0.907,
       "news": [
+        {
+          "date": "11-09",
+          "title": "\"목동맘 눈높이 통과했다\"… GS건설 '윤슬자이' 흥행 합격점",
+          "risk": false
+        },
         {
           "date": "11-09",
           "title": "[건설업계 동향] GS건설ㆍIPARK현대산업개발ㆍKT에스테이트 (11.9)",
@@ -144,18 +149,13 @@
           "date": "11-09",
           "title": "‘목동윤슬자이’ 분양 성과…GS건설, 목동 주거시장서 브랜드 입지 확...",
           "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "[건설 Pick] 삼성물산·GS건설·대우건설, 대규모 수주와 친환경 자원순...",
-          "risk": false
         }
       ],
-      "price": 31250,
-      "chg": 0.0504,
-      "activity": 2.95,
-      "foreign_today": 2000000000,
-      "inst_today": 2500000000,
+      "price": 31150,
+      "chg": 0.0471,
+      "activity": 2.78,
+      "foreign_today": 1993600000,
+      "inst_today": 2492000000,
       "exchange": "KOSPI"
     },
     {
@@ -168,7 +168,7 @@
       "vol20": 0.792,
       "foreign_net": -20437500850,
       "inst_net": 51491335800,
-      "score": 0.726,
+      "score": 0.756,
       "news": [
         {
           "date": "11-07",
@@ -183,7 +183,7 @@
       ],
       "price": 79300,
       "chg": 0.0702,
-      "activity": 2.37,
+      "activity": 2.26,
       "foreign_today": 3330600000,
       "inst_today": 475800000,
       "exchange": "KOSPI"
@@ -198,21 +198,21 @@
       "vol20": 0.56,
       "foreign_net": -19235375950,
       "inst_net": 64455133600,
-      "score": 0.667,
+      "score": 0.686,
       "news": [
         {
           "date": "11-09",
-          "title": "SK바이오팜, 미국 거점 'SK라이프사이언스 링스' 입주 기업 31곳 선정",
+          "title": "SK바이오팜, 美 진출 지원 플랫폼 '링스' 입주사 31곳 선정",
           "risk": false
         },
         {
           "date": "11-09",
-          "title": "SK바이오팜 3분기 이익 65.9% 증가…IBK 목표가 하향",
+          "title": "SK바이오팜, 美 진출 돕는 바이오 플랫폼 가동…31개사 입주",
           "risk": false
         },
         {
-          "date": "11-08",
-          "title": "엑스코프리 \"쾌속질주\", 오파칼림 \"동력확충\"...SK바이오팜, 올 3분기 영...",
+          "date": "11-09",
+          "title": "SK바이오팜, 국내 제약·바이오 31개사 미국 진출 지원",
           "risk": false
         }
       ],
@@ -230,13 +230,13 @@
       "vol20": 0.491,
       "foreign_net": -22121547500,
       "inst_net": 56405917100,
-      "score": 0.595,
+      "score": 0.616,
       "news": [],
-      "price": 77600,
-      "chg": -0.0013,
-      "activity": 1.46,
-      "foreign_today": 4035200000,
-      "inst_today": 776000000,
+      "price": 77500,
+      "chg": -0.0026,
+      "activity": 1.41,
+      "foreign_today": 4030000000,
+      "inst_today": 775000000,
       "exchange": "KOSPI"
     },
     {
@@ -249,7 +249,7 @@
       "vol20": 0.402,
       "foreign_net": -43204631710,
       "inst_net": 74782934530,
-      "score": 0.5,
+      "score": 0.523,
       "news": [
         {
           "date": "11-09",
@@ -258,52 +258,17 @@
         },
         {
           "date": "11-09",
-          "title": "[위클리오늘] 이동통신 소식_LG유플러스, KT(11.9)",
+          "title": "LG유플러스, 서울대·KAIST·연세대와 한국형 음성AI 개발 나선다",
           "risk": false
         },
         {
           "date": "11-09",
-          "title": "LG유플러스, 서울대·KAIST·연세대와 한국형 음성AI 개발 나선다",
+          "title": "[위클리오늘] 이동통신 소식_LG유플러스, KT(11.9)",
           "risk": false
         }
       ],
       "foreign_today": 0,
       "inst_today": 1007720000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "112610",
-      "name": "씨에스윈드",
-      "close": 48800,
-      "ret5": 0.2927,
-      "ret20": -0.1191,
-      "rsi14": 55.5,
-      "vol20": 0.843,
-      "foreign_net": -27562520175,
-      "inst_net": 30133908725,
-      "score": 0.369,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "\"씨에스윈드, 美 법인 생산성 개선\"",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "씨에스윈드, 美 데이터센터 '청정에너지 착공 의무' 직수혜…\"주정부 규...",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "\"씨에스윈드, 美 풍력 프로젝트 규제 완화 기대\"-하나",
-          "risk": false
-        }
-      ],
-      "price": 49800,
-      "chg": 0.0143,
-      "activity": 2.24,
-      "foreign_today": 0,
-      "inst_today": 1693200000,
       "exchange": "KOSPI"
     },
     {
@@ -316,7 +281,7 @@
       "vol20": 0.957,
       "foreign_net": -76658998800,
       "inst_net": 63121010150,
-      "score": 0.345,
+      "score": 0.407,
       "news": [
         {
           "date": "11-09",
@@ -336,9 +301,44 @@
       ],
       "price": 62200,
       "chg": 0.0281,
-      "activity": 0.78,
+      "activity": 0.74,
       "foreign_today": 2861200000,
       "inst_today": 311000000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "112610",
+      "name": "씨에스윈드",
+      "close": 48800,
+      "ret5": 0.2927,
+      "ret20": -0.1191,
+      "rsi14": 55.5,
+      "vol20": 0.843,
+      "foreign_net": -27562520175,
+      "inst_net": 30133908725,
+      "score": 0.395,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "\"씨에스윈드, 美 법인 생산성 개선\"",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "씨에스윈드, 美 데이터센터 '청정에너지 착공 의무' 직수혜…\"주정부 규...",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "\"씨에스윈드, 美 풍력 프로젝트 규제 완화 기대\"-하나",
+          "risk": false
+        }
+      ],
+      "price": 49300,
+      "chg": 0.0041,
+      "activity": 2.08,
+      "foreign_today": 0,
+      "inst_today": 1676200000,
       "exchange": "KOSPI"
     },
     {
@@ -351,7 +351,7 @@
       "vol20": 0.738,
       "foreign_net": -7484986975,
       "inst_net": 26975170300,
-      "score": 0.321,
+      "score": 0.337,
       "news": [
         {
           "date": "11-09",
@@ -383,7 +383,7 @@
       "vol20": 0.404,
       "foreign_net": -5748052750,
       "inst_net": 7853604175,
-      "score": 0.298,
+      "score": 0.326,
       "news": [],
       "foreign_today": 0,
       "inst_today": 325200000,
@@ -399,8 +399,13 @@
       "vol20": 0.625,
       "foreign_net": 652431450,
       "inst_net": 21161016850,
-      "score": 0.298,
+      "score": 0.326,
       "news": [
+        {
+          "date": "11-09",
+          "title": "현대제철 노사, 가족 동반 건강체중 프로그램 트레킹 개최",
+          "risk": false
+        },
         {
           "date": "11-09",
           "title": "현대제철 노사, 가족과 함께 건강한 동행…130여 명 트레킹",
@@ -409,11 +414,6 @@
         {
           "date": "11-09",
           "title": "인하대학교 황용우 교수팀, 현대제철과 철강 탄소발자국 평가 기준 고도...",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "현대제철 노사, 당진제철소 임직원 가족과 늦가을 목장길 트레킹",
           "risk": false
         }
       ],
@@ -431,7 +431,7 @@
       "vol20": 0.592,
       "foreign_net": -8231059200,
       "inst_net": 53595627900,
-      "score": 0.262,
+      "score": 0.291,
       "news": [
         {
           "date": "11-09",
@@ -463,7 +463,7 @@
       "vol20": 0.254,
       "foreign_net": 5502551950,
       "inst_net": 9691482340,
-      "score": 0.214,
+      "score": 0.244,
       "news": [
         {
           "date": "11-09",
@@ -483,6 +483,33 @@
       ],
       "foreign_today": 287700000,
       "inst_today": 0,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "036570",
+      "name": "NC",
+      "close": 207500,
+      "ret5": 0.0375,
+      "ret20": -0.0695,
+      "rsi14": 49.3,
+      "vol20": 0.428,
+      "foreign_net": 11365936950,
+      "inst_net": -1065209850,
+      "score": 0.174,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "[NC스테이지] 효녀 심청 뒤에 숨은 아버지의 욕망…'먼 눈'의 비극",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "NC문화재단, 특수교사 9명 수업 사례 담은 '나의AAC' 자료집 무료 배포…...",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 207500000,
       "exchange": "KOSPI"
     },
     {
@@ -513,11 +540,11 @@
           "risk": false
         }
       ],
-      "price": 59400,
-      "chg": 0.08,
-      "activity": 4.1,
+      "price": 59500,
+      "chg": 0.0818,
+      "activity": 3.82,
       "foreign_today": 0,
-      "inst_today": 891000000,
+      "inst_today": 892500000,
       "exchange": "KOSDAQ"
     },
     {
@@ -530,7 +557,7 @@
       "vol20": 1.387,
       "foreign_net": -6381603720,
       "inst_net": 16519823935,
-      "score": 0.75,
+      "score": 0.779,
       "news": [
         {
           "date": "11-09",
@@ -548,11 +575,11 @@
           "risk": false
         }
       ],
-      "price": 16490,
-      "chg": 0.0673,
-      "activity": 2.67,
+      "price": 16450,
+      "chg": 0.0647,
+      "activity": 2.5,
       "foreign_today": 0,
-      "inst_today": 1385160000,
+      "inst_today": 1381800000,
       "exchange": "KOSDAQ"
     },
     {
@@ -565,7 +592,7 @@
       "vol20": 1.105,
       "foreign_net": -1315515485,
       "inst_net": 73370470,
-      "score": 0.452,
+      "score": 0.477,
       "news": [
         {
           "date": "11-09",
@@ -583,37 +610,47 @@
           "risk": false
         }
       ],
-      "price": 14170,
-      "chg": 0.0343,
-      "activity": 2.28,
-      "foreign_today": 580970000,
+      "price": 14250,
+      "chg": 0.0401,
+      "activity": 2.12,
+      "foreign_today": 584250000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
     {
-      "code": "119850",
-      "name": "지엔씨에너지",
-      "close": 35250,
-      "ret5": 0.119,
-      "ret20": -0.2664,
-      "rsi14": 42.4,
-      "vol20": 1.141,
-      "foreign_net": -11979305150,
-      "inst_net": 12404586800,
-      "score": 0.44,
+      "code": "180640",
+      "name": "한진칼",
+      "close": 196700,
+      "ret5": 0.6005,
+      "ret20": 0.5154,
+      "rsi14": 82.1,
+      "vol20": 1.068,
+      "foreign_net": -23144745850,
+      "inst_net": 30167917550,
+      "score": 0.442,
       "news": [
         {
-          "date": "11-06",
-          "title": "JP모건 시큐리티즈, 지엔씨에너지 5.07% 보유 보고",
+          "date": "11-08",
+          "title": "[공시] 한진칼우 '매매거래정지 예고', 미래나노텍·성창기업지주 '공매...",
+          "risk": true
+        },
+        {
+          "date": "11-09",
+          "title": "[증시키워드] 코스피 폭락 속 한진칼 경영권 분쟁에 관심↑",
+          "risk": false
+        },
+        {
+          "date": "11-08",
+          "title": "한진칼 흔드는 호반의 자본력, 어디까지 가나",
           "risk": false
         }
       ],
-      "price": 38000,
-      "chg": 0.0765,
-      "activity": 3.3,
+      "price": 215500,
+      "chg": 0.0989,
+      "activity": 4.09,
       "foreign_today": 0,
-      "inst_today": 380000000,
-      "exchange": "KOSDAQ"
+      "inst_today": 215500000,
+      "exchange": "KOSPI"
     },
     {
       "code": "008830",
@@ -625,7 +662,7 @@
       "vol20": 1.052,
       "foreign_net": -3890551700,
       "inst_net": -186177575,
-      "score": 0.298,
+      "score": 0.326,
       "news": [
         {
           "date": "11-06",
@@ -638,10 +675,10 @@
           "risk": false
         }
       ],
-      "price": 6560,
-      "chg": -0.0253,
-      "activity": 1.54,
-      "foreign_today": 393600000,
+      "price": 6520,
+      "chg": -0.0312,
+      "activity": 1.44,
+      "foreign_today": 391200000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
