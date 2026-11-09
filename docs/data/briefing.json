@@ -81,9 +81,9 @@
     ]
   },
   "intraday": {
-    "time": "14:30",
-    "pool": 449,
-    "analyzed_new": 30,
+    "time": "14:45",
+    "pool": 450,
+    "analyzed_new": 11,
     "passed": 20,
     "kept_prep": false
   },
@@ -116,11 +116,11 @@
           "risk": false
         }
       ],
-      "price": 30700,
-      "chg": 0.0319,
-      "activity": 2.02,
-      "foreign_today": 736800000,
-      "inst_today": 6907500000,
+      "price": 30550,
+      "chg": 0.0269,
+      "activity": 1.99,
+      "foreign_today": 733200000,
+      "inst_today": 6873750000,
       "exchange": "KOSPI"
     },
     {
@@ -133,21 +133,21 @@
       "vol20": 0.402,
       "foreign_net": -43204631710,
       "inst_net": 74782934530,
-      "score": 0.75,
+      "score": 0.732,
       "news": [
         {
           "date": "11-09",
+          "title": "LG유플러스, 원청 사용자성 인정에도 행정소송… 희망연대본부 \"교섭 책...",
+          "risk": true
+        },
+        {
+          "date": "11-09",
+          "title": "LG유플러스, 서울대·KAIST·연세대와 한국어 특화 'K-보이스 엔진' 만든...",
+          "risk": false
+        },
+        {
+          "date": "11-09",
           "title": "5G SA '카운트다운'…SKT 체험단·LG유플러스 스포츠 집중",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "LG유플러스, 서울대·KAIST·연세대와 'K-보이스 AI' 개발…한국어 음성...",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "LG유플러스, 초고속인터넷 속도·안정성서 '7개 지표 1위'...경쟁사 모두...",
           "risk": false
         }
       ],
@@ -165,21 +165,21 @@
       "vol20": 0.56,
       "foreign_net": -19235375950,
       "inst_net": 64455133600,
-      "score": 0.726,
+      "score": 0.707,
       "news": [
         {
           "date": "11-09",
+          "title": "SK바이오팜, 美 K바이오 혁신 상생 플랫폼 '링스' 입주사 선정",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "SK바이오팜, 美 진출 지원 플랫폼 '링스' 입주사 31곳 선정",
+          "risk": false
+        },
+        {
+          "date": "11-09",
           "title": "SK바이오팜, 美 진출 지원 플랫폼 '링스' 입주기업 31곳 선정",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "SK바이오팜, ﻿美 K-바이오 혁신 상생 플랫폼 '링스' 입주사 선정",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "SK바이오팜, 국내 제약·바이오 31개사 美 진출 지원 본격화",
           "risk": false
         }
       ],
@@ -197,13 +197,13 @@
       "vol20": 0.491,
       "foreign_net": -22121547500,
       "inst_net": 56405917100,
-      "score": 0.667,
+      "score": 0.695,
       "news": [],
-      "price": 77500,
-      "chg": -0.0026,
-      "activity": 1.2,
-      "foreign_today": 5657500000,
-      "inst_today": 852500000,
+      "price": 77900,
+      "chg": 0.0026,
+      "activity": 1.23,
+      "foreign_today": 5686700000,
+      "inst_today": 856900000,
       "exchange": "KOSPI"
     },
     {
@@ -216,7 +216,7 @@
       "vol20": 0.469,
       "foreign_net": -6880633700,
       "inst_net": 74240426800,
-      "score": 0.667,
+      "score": 0.646,
       "news": [
         {
           "date": "11-08",
@@ -248,7 +248,7 @@
       "vol20": 0.843,
       "foreign_net": -27562520175,
       "inst_net": 30133908725,
-      "score": 0.56,
+      "score": 0.549,
       "news": [
         {
           "date": "11-09",
@@ -266,11 +266,11 @@
           "risk": false
         }
       ],
-      "price": 48550,
-      "chg": -0.0112,
-      "activity": 1.39,
+      "price": 48200,
+      "chg": -0.0183,
+      "activity": 1.35,
       "foreign_today": 0,
-      "inst_today": 3738350000,
+      "inst_today": 3711400000,
       "exchange": "KOSPI"
     },
     {
@@ -283,13 +283,13 @@
       "vol20": 0.541,
       "foreign_net": -85838332500,
       "inst_net": 157835015500,
-      "score": 0.548,
+      "score": 0.537,
       "news": [],
-      "price": 1524000,
-      "chg": 0.0053,
+      "price": 1522000,
+      "chg": 0.004,
       "activity": 0.84,
       "foreign_today": 0,
-      "inst_today": 9144000000,
+      "inst_today": 9132000000,
       "exchange": "KOSPI"
     },
     {
@@ -302,7 +302,7 @@
       "vol20": 0.404,
       "foreign_net": -5748052750,
       "inst_net": 7853604175,
-      "score": 0.464,
+      "score": 0.439,
       "news": [],
       "foreign_today": 0,
       "inst_today": 1111100000,
@@ -318,7 +318,7 @@
       "vol20": 0.957,
       "foreign_net": -76658998800,
       "inst_net": 63121010150,
-      "score": 0.417,
+      "score": 0.402,
       "news": [
         {
           "date": "11-09",
@@ -336,11 +336,11 @@
           "risk": false
         }
       ],
-      "price": 61300,
-      "chg": 0.0132,
-      "activity": 0.52,
-      "foreign_today": 2942400000,
-      "inst_today": 2697200000,
+      "price": 60800,
+      "chg": 0.005,
+      "activity": 0.51,
+      "foreign_today": 2918400000,
+      "inst_today": 2675200000,
       "exchange": "KOSPI"
     },
     {
@@ -353,7 +353,7 @@
       "vol20": 0.428,
       "foreign_net": 11365936950,
       "inst_net": -1065209850,
-      "score": 0.405,
+      "score": 0.378,
       "news": [
         {
           "date": "11-09",
@@ -375,7 +375,7 @@
       "vol20": 0.738,
       "foreign_net": -7484986975,
       "inst_net": 26975170300,
-      "score": 0.357,
+      "score": 0.341,
       "news": [
         {
           "date": "11-09",
@@ -398,38 +398,6 @@
       "exchange": "KOSPI"
     },
     {
-      "code": "004020",
-      "name": "현대제철",
-      "close": 28300,
-      "ret5": 0.1098,
-      "ret20": 0.0089,
-      "rsi14": 48.9,
-      "vol20": 0.625,
-      "foreign_net": 652431450,
-      "inst_net": 21161016850,
-      "score": 0.357,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "충남 당진 현대제철, 노사가 함께하는 가족 건강 트레킹",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "현대제철, 임직원 참여형 헤리티지 플랫폼 'H.ARCHIVE' 개설",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "현대제철, 하반기 신규채용 진행…9일까지 신입·연구직 모집",
-          "risk": false
-        }
-      ],
-      "foreign_today": 537700000,
-      "inst_today": 396200000,
-      "exchange": "KOSPI"
-    },
-    {
       "code": "021240",
       "name": "코웨이",
       "close": 105900,
@@ -439,26 +407,58 @@
       "vol20": 0.373,
       "foreign_net": -14432444800,
       "inst_net": 17027887850,
-      "score": 0.333,
+      "score": 0.341,
       "news": [
         {
           "date": "11-09",
+          "title": "코웨이 매출·영업이익 늘었지만, 당기순이익은 감소",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "코웨이, ‘블랙프라이데이’ 프로모션…정수기·비데 등 월 1만원",
+          "risk": false
+        },
+        {
+          "date": "11-09",
           "title": "코웨이, 블랙프라이데이 프로모션…렌털료 할인에 경품까지",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "코웨이, 블랙프라이데이 프로모션…렌탈료 월 1만원·최대 67% 할인",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "코웨이, 정수기 최대 15개월 ‘월 1만원’…블랙프라이데이 할인",
           "risk": false
         }
       ],
       "foreign_today": 1906200000,
       "inst_today": 0,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "004020",
+      "name": "현대제철",
+      "close": 28300,
+      "ret5": 0.1098,
+      "ret20": 0.0089,
+      "rsi14": 48.9,
+      "vol20": 0.625,
+      "foreign_net": 652431450,
+      "inst_net": 21161016850,
+      "score": 0.329,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "충남 당진 현대제철, 노사가 함께하는 가족 건강 트레킹",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "현대제철, 하반기 신규채용 진행…9일까지 신입·연구직 모집",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "현대제철, 임직원 참여형 헤리티지 플랫폼 'H.ARCHIVE' 개설",
+          "risk": false
+        }
+      ],
+      "foreign_today": 537700000,
+      "inst_today": 396200000,
       "exchange": "KOSPI"
     },
     {
@@ -471,7 +471,7 @@
       "vol20": 1.387,
       "foreign_net": -6381603720,
       "inst_net": 16519823935,
-      "score": 0.976,
+      "score": 0.963,
       "news": [
         {
           "date": "11-09",
@@ -489,11 +489,11 @@
           "risk": false
         }
       ],
-      "price": 16590,
-      "chg": 0.0738,
-      "activity": 1.99,
-      "foreign_today": 1144710000,
-      "inst_today": 2488500000,
+      "price": 16450,
+      "chg": 0.0647,
+      "activity": 1.92,
+      "foreign_today": 1135050000,
+      "inst_today": 2467500000,
       "exchange": "KOSDAQ"
     },
     {
@@ -506,7 +506,7 @@
       "vol20": 1.371,
       "foreign_net": -2097260775,
       "inst_net": 7682858150,
-      "score": 0.881,
+      "score": 0.866,
       "news": [
         {
           "date": "11-07",
@@ -524,11 +524,11 @@
           "risk": false
         }
       ],
-      "price": 59700,
-      "chg": 0.0855,
-      "activity": 2.66,
+      "price": 58600,
+      "chg": 0.0655,
+      "activity": 2.53,
       "foreign_today": 0,
-      "inst_today": 895500000,
+      "inst_today": 879000000,
       "exchange": "KOSDAQ"
     },
     {
@@ -541,38 +541,13 @@
       "vol20": 1.507,
       "foreign_net": 14334611050,
       "inst_net": -8579187950,
-      "score": 0.786,
+      "score": 0.72,
       "news": [],
-      "price": 70200,
-      "chg": 0.1396,
-      "activity": 1.09,
+      "price": 69400,
+      "chg": 0.1266,
+      "activity": 1.08,
       "foreign_today": 0,
-      "inst_today": 3229200000,
-      "exchange": "KOSDAQ"
-    },
-    {
-      "code": "119850",
-      "name": "지엔씨에너지",
-      "close": 35250,
-      "ret5": 0.119,
-      "ret20": -0.2664,
-      "rsi14": 42.4,
-      "vol20": 1.141,
-      "foreign_net": -11979305150,
-      "inst_net": 12404586800,
-      "score": 0.619,
-      "news": [
-        {
-          "date": "11-06",
-          "title": "JP모건 시큐리티즈, 지엔씨에너지 5.07% 보유 보고",
-          "risk": false
-        }
-      ],
-      "price": 38250,
-      "chg": 0.0836,
-      "activity": 2.72,
-      "foreign_today": 0,
-      "inst_today": 994500000,
+      "inst_today": 3192400000,
       "exchange": "KOSDAQ"
     },
     {
@@ -585,7 +560,7 @@
       "vol20": 1.105,
       "foreign_net": -1315515485,
       "inst_net": 73370470,
-      "score": 0.488,
+      "score": 0.476,
       "news": [
         {
           "date": "11-09",
@@ -603,11 +578,46 @@
           "risk": false
         }
       ],
-      "price": 14690,
-      "chg": 0.0723,
-      "activity": 1.76,
-      "foreign_today": 778570000,
+      "price": 14670,
+      "chg": 0.0708,
+      "activity": 1.8,
+      "foreign_today": 777510000,
       "inst_today": 0,
+      "exchange": "KOSDAQ"
+    },
+    {
+      "code": "030530",
+      "name": "원익홀딩스",
+      "close": 28800,
+      "ret5": -0.0017,
+      "ret20": 0.0052,
+      "rsi14": 54.8,
+      "vol20": 1.32,
+      "foreign_net": 18202372050,
+      "inst_net": 3628579775,
+      "score": 0.378,
+      "news": [
+        {
+          "date": "11-07",
+          "title": "11월 1주차 원익홀딩스 주가, 장마감 급반등",
+          "risk": false
+        },
+        {
+          "date": "11-07",
+          "title": "원익홀딩스, 양대지수 급락에도 강세 지켰다…새주 주가 향방은?",
+          "risk": false
+        },
+        {
+          "date": "11-06",
+          "title": "코스닥 '요동'...엘리스·원익홀딩스·현대바이오·루닛은 '급등'",
+          "risk": false
+        }
+      ],
+      "price": 27450,
+      "chg": -0.03,
+      "activity": 0.71,
+      "foreign_today": 0,
+      "inst_today": 247050000,
       "exchange": "KOSDAQ"
     },
     {
