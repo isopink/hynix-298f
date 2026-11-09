@@ -535,6 +535,82 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
 
 <script id="sample-data" type="application/json">{}</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script>
+/* 11-10 S.Lee: VoltAgent 디자인 시안. ?theme=volt (또는 /volt/) 일 때만 켜짐, 본 화면은 그대로.
+   색은 한 곳에서 바꿈: 기존 CSS 글자 · d3 색 속성 · 캔버스(커버 신경망) · 인라인 style 의 빨강/파랑/초록을
+   VoltAgent 팔레트(초록 #00d992 하나 + 무채색)로 옮김. 수익 = 초록, 손실 = 회색, SiON = 흰색. */
+(function () {
+  const VOLT = /(^|[?&])theme=volt\b/.test(location.search);
+  window.VOLT = VOLT;
+  if (!VOLT) return;
+  document.documentElement.dataset.theme = 'volt';
+  const HEX = { '#da291c': '#00d992', '#ff5a4a': '#2fd6a1', '#ff8a70': '#2fd6a1', '#ff4a36': '#00d992', '#c41a0d': '#10b981', '#a8160b': '#10b981', '#ff6a55': '#2fd6a1', '#b01e0a': '#10b981', '#ffd2cc': '#c8f5e6', '#ff7a6e': '#7fe8c4', '#e0b84a': '#d0d0d0',
+    '#4aa3d4': '#8b949e', '#7cc4ea': '#bdbdbd', '#9ad6f2': '#d0d0d0', '#1f6f9c': '#5a6068', '#3ecf8e': '#f2f2f2', '#c8f5dc': '#ffffff',
+    '#141414': '#101010', '#1c1c1c': '#101010', '#232323': '#1a1a1a', '#2a2a2a': '#3d3a39', '#0d0d10': '#101010', '#0a0a0c': '#101010', '#f6e500': '#2fd6a1' };
+  const RGB = { '218,41,28': '0,217,146', '255,90,74': '47,214,161', '255,120,100': '0,217,146', '255,120,104': '47,214,161', '240,160,150': '150,235,205',
+    '74,163,212': '139,148,158', '120,190,230': '139,148,158', '62,207,142': '242,242,242', '70,210,135': '225,225,225', '110,230,170': '235,235,235' };
+  const hexRe = new RegExp(Object.keys(HEX).join('|'), 'gi');
+  const rgbRe = new RegExp('(' + Object.keys(RGB).map(k => k.replace(/,/g, ',\\s*')).join('|') + ')', 'g');
+  const map = v => typeof v !== 'string' ? v : v.replace(hexRe, m => HEX[m.toLowerCase()]).replace(rgbRe, m => RGB[m.replace(/\s/g, '')]);
+  window.voltColor = map;
+  // 1) 이미 읽힌 스타일 글자
+  document.querySelectorAll('style').forEach(s => { s.textContent = map(s.textContent); });
+  // 2) d3 색 속성
+  if (window.d3) {
+    const A = d3.selection.prototype.attr, S = d3.selection.prototype.style, CK = /^(fill|stroke|stop-color|color|flood-color)$/;
+    const wrap = v => typeof v === 'function' ? function () { return map(v.apply(this, arguments)); } : map(v);
+    d3.selection.prototype.attr = function (n, v) { return arguments.length > 1 && CK.test(n) ? A.call(this, n, wrap(v)) : A.apply(this, arguments); };
+    d3.selection.prototype.style = function (n, v, p) { return arguments.length > 1 && CK.test(n) ? S.call(this, n, wrap(v), p) : S.apply(this, arguments); };
+  }
+  // 3) 캔버스 (커버 신경망)
+  const P = CanvasRenderingContext2D.prototype;
+  ['fillStyle', 'strokeStyle', 'shadowColor'].forEach(k => { const d = Object.getOwnPropertyDescriptor(P, k); Object.defineProperty(P, k, { get: d.get, set(v) { d.set.call(this, map(v)); }, configurable: true }); });
+  const acs = CanvasGradient.prototype.addColorStop; CanvasGradient.prototype.addColorStop = function (o, c) { return acs.call(this, o, map(c)); };
+  // 4) 나중에 innerHTML 로 들어오는 인라인 style
+  const fix = el => { if (el.nodeType !== 1) return; if (el.hasAttribute('style')) { const s = el.getAttribute('style'), m = map(s); if (m !== s) el.setAttribute('style', m); } el.querySelectorAll && el.querySelectorAll('[style]').forEach(fix0); };
+  const fix0 = el => { const s = el.getAttribute('style'), m = map(s); if (m !== s) el.setAttribute('style', m); };
+  new MutationObserver(ms => ms.forEach(m => m.type === 'childList' ? m.addedNodes.forEach(fix) : fix0(m.target))).observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
+  // 5) 글꼴: Inter + Pretendard (한글) + JetBrains Mono (숫자 · 코드)
+  for (const href of ['https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap',
+    'https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css']) {
+    const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = href; document.head.appendChild(l);
+  }
+  // 6) VoltAgent 겉모습 (이 블록은 색 바꾸기 뒤에 붙여 그대로 씀)
+  const st = document.createElement('style'); st.id = 'volt-css';
+  st.textContent = `
+:root[data-theme=volt] { --canvas: #101010; --card: #101010; --card-2: #1a1a1a; --line: #3d3a39; --grid: #262626; --ink: #f2f2f2; --body: #bdbdbd; --muted: #8b949e;
+  --red: #00d992; --red-hi: #2fd6a1; --blue: #8b949e; --grey: #5a5a5a;
+  --font: Inter, "Pretendard Variable", Pretendard, system-ui, -apple-system, "Segoe UI", sans-serif; --mono: "JetBrains Mono", SFMono-Regular, Menlo, Consolas, monospace; }
+[data-theme=volt] body { background: #101010 !important; font-feature-settings: "calt", "rlig"; }
+[data-theme=volt] body::before { display: none; }
+[data-theme=volt] .card, [data-theme=volt] details.log, [data-theme=volt] .card.hero-card, [data-theme=volt] .card.glow-red, [data-theme=volt] .card.glow-blue {
+  background: #101010 !important; border: 1px solid #3d3a39 !important; border-radius: 8px !important; box-shadow: none !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+[data-theme=volt] details.log summary { border-radius: 8px; }
+[data-theme=volt] .chip, [data-theme=volt] .tip, [data-theme=volt] .cal .cell.has { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+[data-theme=volt] .chip { background: #101010; border-color: #3d3a39; }
+[data-theme=volt] .tip { background: #1a1a1a; border-color: #3d3a39; border-radius: 8px; box-shadow: 0 20px 60px rgba(0,0,0,.7); }
+[data-theme=volt] .top h1 { font-weight: 400; letter-spacing: -0.65px; color: #fff; }
+[data-theme=volt] .hero .big, [data-theme=volt] .hero .big.neg { background: none !important; -webkit-background-clip: border-box; background-clip: border-box; filter: none !important; color: #00d992; font-weight: 400; letter-spacing: -0.65px; }
+[data-theme=volt] .hero .big.neg { color: #8b949e; }
+[data-theme=volt] .eyebrow { text-transform: uppercase; letter-spacing: 2.2px; font-weight: 600; font-size: 12px; color: #8b949e; }
+[data-theme=volt] .eng .eyebrow.on, [data-theme=volt] .eyebrow.on { color: #f2f2f2; }
+[data-theme=volt] .kx-chip b, [data-theme=volt] .kx-row b, [data-theme=volt] .pf-tbl td, [data-theme=volt] .dec-row .cf, [data-theme=volt] .sion-tbl .r, [data-theme=volt] .chips .chip b, [data-theme=volt] svg text { font-family: var(--mono); }
+[data-theme=volt] .eng-tabs { border-radius: 8px; background: #101010; border-color: #3d3a39; }
+[data-theme=volt] .eng-tabs button { border-radius: 6px; }
+[data-theme=volt] .eng-tabs button[aria-selected="true"] { background: #1a1a1a; color: #f2f2f2; box-shadow: inset 0 -2px 0 #00d992; }
+[data-theme=volt] .dot.ok { background: #00d992; box-shadow: 0 0 0 3px rgba(0,217,146,.2); }
+[data-theme=volt] .dot.bad { background: #ff5a4a; box-shadow: 0 0 0 3px rgba(255,90,74,.2); }
+[data-theme=volt] .dec-row .act { border-radius: 9999px; }
+[data-theme=volt] .grid > .card + .card { }
+[data-theme=volt] .foot { border-top: 1px dashed rgba(79,93,117,.4); padding-top: 24px; }
+[data-theme=volt] .cover { background: #101010; }
+[data-theme=volt] .cover-title { font-family: Inter, "Pretendard Variable", sans-serif; font-weight: 400; letter-spacing: -0.65px; color: #fff; text-shadow: 0 0 24px rgba(0,0,0,.9); }
+[data-theme=volt] .cover::after { background: radial-gradient(ellipse 34% 22% at 50% 43%, rgba(16,16,16,.6), rgba(16,16,16,0)), radial-gradient(ellipse at 50% 50%, rgba(16,16,16,0) 30%, rgba(16,16,16,.55) 100%); }
+[data-theme=volt] svg [tabindex]:focus-visible, [data-theme=volt] button:focus-visible, [data-theme=volt] summary:focus-visible { outline-color: #2fd6a1; }
+`;
+  document.head.appendChild(st);
+})();
+</script>
 <script src="config.js"></script>
 <script>
 // 매매 회차 (agent/config/params.json 의 schedule.trade_times 와 맞출 것). 판단 카드·상단 칩이 같이 씀
