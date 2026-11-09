@@ -1577,6 +1577,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     drawDonut($('ch-donut'), parts, D.cap, ['#da291c', '#ff7a6e', '#bdbdbd', '#7a7a7a', '#4a4a4a', '#3a3a3a'], C.red, { v: tv });
   }
   // 11-09 Sigma · SiON 포트폴리오 공용 도넛. parts = [{name, v, pnl?}] (마지막이 현금), cap = 국면 상한(없으면 호 없음)
+  const PF_OPEN = {};
   function drawDonut(el, parts, cap, shades, capColor, center) {   // 11-10 S.Lee: 가운데 = 주식 비중 / 국면 상한, 종목은 도넛 아래 표 (종목명 · 비중 · 수익률 · 합산 수익률)
     const ring = el.clientWidth < 520 ? 210 : 240;
     const { svg, W, H } = svgIn(el, ring);
@@ -1598,10 +1599,12 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const st = parts.filter(p => p.name !== '현금'), cashP = parts.find(p => p.name === '현금');
     const sw = (p, i) => `<i class="sw" style="background:${color(p, i)}${p.name === '현금' ? ';border:1px solid #555' : ''}"></i>`;
     const tv = center && center.v != null ? `<td class="sum ${tone2(center.v)}" rowspan="${st.length}">${pct(center.v)}</td>` : `<td rowspan="${st.length}"></td>`;
-    const rows = st.map((p, i) => `<tr><td class="nm">${sw(p, i)}${esc(p.name)}</td><td>${(p.v / tot * 100).toFixed(1)}%</td><td class="${tone2(p.pnl)}">${p.pnl != null ? pct(p.pnl) : '—'}</td>${i ? '' : tv}</tr>`).join('');
+    const ord = st.map((p, i) => [p, i]).sort((a, b) => (b[0].pnl ?? -Infinity) - (a[0].pnl ?? -Infinity));   // 11-10 S.Lee: 수익률 높은 순 (색은 도넛 조각 그대로)
+    const rows = ord.map(([p, ci], i) => `<tr><td class="nm">${sw(p, ci)}${esc(p.name)}</td><td>${(p.v / tot * 100).toFixed(1)}%</td><td class="${tone2(p.pnl)}">${p.pnl != null ? pct(p.pnl) : '—'}</td>${i ? '' : tv}</tr>`).join('');
     const cashR = cashP ? `<tr class="cash"><td class="nm">${sw(cashP, parts.indexOf(cashP))}현금</td><td>${(cashP.v / tot * 100).toFixed(1)}%</td><td></td><td></td></tr>` : '';
-    const box = document.createElement('div'); box.className = 'pf-tbl-wrap';
-    box.innerHTML = `<table class="pf-tbl"><thead><tr><th>종목명</th><th>비중</th><th>수익률</th><th>합산 수익률</th></tr></thead><tbody>${rows}${cashR}</tbody></table>`;
+    const box = document.createElement('details'); box.className = 'pf-tbl-wrap tr-box'; box.open = !!PF_OPEN[el.id];   // 11-10 S.Lee: Table + 로 펼침 (기본 접힘, 다시 그려도 상태 유지)
+    box.addEventListener('toggle', () => { PF_OPEN[el.id] = box.open; });
+    box.innerHTML = `<summary class="hd"><h3 class="eyebrow">Table</h3></summary><table class="pf-tbl"><thead><tr><th>종목명</th><th>비중</th><th>수익률</th><th>합산 수익률</th></tr></thead><tbody>${rows}${cashR}</tbody></table>`;
     el.appendChild(box);
   }
 
