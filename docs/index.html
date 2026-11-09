@@ -650,7 +650,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
   };
   const RX = [
     [/^(\d+\/\d+) 기준$/, 'as of $1'], [/^(\d+\/\d+ \d+:\d+) 회차$/, 'Round $1'], [/^전체 (\d+)종목 보기/, 'Show all $1'], [/^(\d+)종목$/, '$1 stocks'], [/^(\d+)건$/, '$1'], [/^(\d+)개$/, '$1'],
-    [/^변동성 (\d+%)$/, 'Vol $1'], [/^고변동 (\d+%)$/, 'High vol $1'], [/^주식 \/ 상한 (.+)$/, 'Equity / cap $1'], [/^상한 (.+)$/, 'Cap $1'], [/^([\d,]+)원$/, '₩$1'], [/^(\d+\/\d+) 시작 ·$/, 'Since $1 ·'], [/^(\d+\/\d+) 시작 · (\d+:\d+) 기준$/, 'Since $1, as of $2'],
+    [/^변동성 (\d+%)$/, 'Vol $1'], [/^고변동 (\d+%)$/, 'High vol $1'], [/^주식 \/ 상한 (.+)$/, 'Equity / cap $1'], [/^상한 (.+)$/, 'Cap $1'], [/^([\d,]+)원$/, '₩$1'], [/^(\d+\/\d+) 시작 ·$/, 'Since $1 ·'],
     [/^(\d+\/\d+ \d+:\d+) 장 마감$/, '$1, closed'], [/^청산 (\d+)건 중 (\d+)건 수익$/, '$2 of $1 closed trades won'], [/^한도 (.+)$/, 'Limit $1'], [/^최소 (.+)$/, 'Min $1'], [/^최대 (\d+)개, (.+)$/, 'Max $1, $2'],
     [/^국면 상한 (.+) 안, (.+)$/, 'Within cap $1, $2'], [/^KOSPI 이긴 날 (\d+) \/ (\d+)일$/, 'Beat KOSPI $1 / $2 days'], [/^(\d)주$/, 'W$1'], [/^평균 ([\d,]+)천$/, 'Avg $1k'],
     [/^종목당 최대 비중 \((.+)\)$/, 'Max weight per stock ($1)'], [/^코스닥 비중.*$/, 'KOSDAQ weight'], [/^주식 비중 \(.+\)$/, 'Equity weight (regime cap)'], [/^매수 확신도 기준 (.+)$/, 'Buy threshold $1'],
@@ -667,260 +667,66 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
   document.documentElement.lang = 'en';
   new MutationObserver(ms => ms.forEach(m => m.type === 'characterData' ? walk(m.target) : m.addedNodes.forEach(walk))).observe(document.documentElement, { childList: true, subtree: true, characterData: true });
   document.addEventListener('DOMContentLoaded', () => walk(document.body));
-  // 8) 11-10 S.Lee: 모션 묶음 (VoltAgent 색 안에서). 움직임 줄이기 설정이면 전부 끔
-  //    커버 = 조립 장면 (고리 · 장갑판 · 핀 · 볼트가 날아와 차례로 맞물려 잠김, 예전 신경망 · 생체 엔진 · 톱니 엔진은 뺌)
-  //    대시보드 = 기계 · 군용 계기판 (모서리를 딴 판, 경고 줄무늬, 판이 조립되듯 드러남, 잠금 레일, 레이더 · 스캐너, 격자) + 깊은 우주 배경
-  // 톱니 모양 한 벌 (캔버스 · SVG 가 같이 씀): 이 n 개, 피치 반지름 rp, 모듈 m (맞물리는 톱니끼리는 m 이 같아야 함)
-  const gearPts = (n, rp, m) => { const ro = rp + m * .95, rr = rp - m * 1.1, s = 6.2832 / n, P = []; for (let i = 0; i < n; i++) { const a = i * s; [[-.27, rr], [-.13, ro], [.13, ro], [.27, rr]].forEach(([k, r]) => P.push([Math.cos(a + k * s) * r, Math.sin(a + k * s) * r])); } return P; };
-  const gearD = (n, rp, m) => gearPts(n, rp, m).map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join('') + 'Z';
-  const svgGear = (x, y, n, rp, m, dur, rev, rot, sw, col) => `<g transform="translate(${x},${y})"><g class="sg${rev ? ' rev' : ''}" style="--d:${dur}s"><g transform="rotate(${rot})">
-    <path d="${gearD(n, rp, m)}" fill="none" stroke="${col}" stroke-width="${sw}" stroke-linejoin="round"/><circle r="${(rp * .62).toFixed(1)}" fill="none" stroke="${col}" stroke-width="${sw * .6}"/>
-    ${Array.from({ length: 5 }, (_, i) => `<line x1="${(Math.cos(i * 1.2566) * rp * .2).toFixed(1)}" y1="${(Math.sin(i * 1.2566) * rp * .2).toFixed(1)}" x2="${(Math.cos(i * 1.2566) * rp * .62).toFixed(1)}" y2="${(Math.sin(i * 1.2566) * rp * .62).toFixed(1)}" stroke="${col}" stroke-width="${sw * .6}"/>`).join('')}
-    <circle r="${(rp * .2).toFixed(1)}" fill="none" stroke="${col}" stroke-width="${sw}"/></g></g></g>`;
-  window.voltGearD = gearD;
-  const sigilMini = `<svg class="sigil mini" viewBox="-120 -120 240 240" aria-hidden="true" focusable="false">${svgGear(-34, 14, 10, 70, 14, 14, false, 0, 9, '#00d992')}${svgGear(52, -58, 6, 42, 14, 8.4, true, 43.4, 8, '#f2f2f2')}</svg>`;   // 머리글 제목 앞: 맞물려 도는 톱니 한 쌍
-  const gearMark = `<svg class="fx-gears" viewBox="-170 -170 340 340" aria-hidden="true" focusable="false">${svgGear(-20, 20, 24, 108, 9, 60, false, 0, 1.6, '#00d992')}${svgGear(-20 + 153 * Math.cos(-.6), 20 + 153 * Math.sin(-.6), 10, 45, 9, 25, true, ((24 / 10) * -.6 - .6 + Math.PI + Math.PI / 10) * 57.2958, 1.6, '#f2f2f2')}</svg>`;   // 수익률 판 뒤에 깔리는 큰 톱니
-  // 판이 조립되듯 드러남: 왼쪽 판 → 오른쪽 판이 밀려 들어오고, 가운데 위 · 아래 판이 내려와 물린 뒤 한 번 번쩍 (마스크 4장의 크기를 단계별로)
-  const ASM = (() => { const io = k => k * k * (3 - 2 * k), seg = (p, a, b) => io(Math.max(0, Math.min(1, (p - a) / (b - a)))); let s = '';
-    for (let p = 0; p <= 100; p += 4) { const z = p === 100 ? '100% 100%, 100% 100%, 100% 100%, 100% 100%' : `${(41 * seg(p, 0, 40)).toFixed(1)}% 100%, ${(41 * seg(p, 10, 50)).toFixed(1)}% 100%, 20% ${(51 * seg(p, 42, 76)).toFixed(1)}%, 20% ${(51 * seg(p, 52, 86)).toFixed(1)}%`;
-      s += `${p}% { -webkit-mask-size: ${z}; mask-size: ${z}; opacity: ${p ? 1 : 0}; filter: brightness(${p >= 86 && p < 100 ? 1.9 : 1}); } `; } return s; })();
-  const CUT = 'polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut))';
-  const PLATE = `linear-gradient(135deg, transparent 50%, var(--ln) 50% calc(50% + 1.3px), transparent calc(50% + 1.3px)) 0 0 / var(--cut) var(--cut) no-repeat,
-    linear-gradient(315deg, transparent 50%, var(--ln) 50% calc(50% + 1.3px), transparent calc(50% + 1.3px)) 100% 100% / var(--cut) var(--cut) no-repeat,
-    repeating-linear-gradient(135deg, rgba(0,217,146,.6) 0 3px, transparent 3px 7px) calc(100% - 16px) 5px / 52px 4px no-repeat,
-    radial-gradient(circle, #6a6663 0 1.4px, transparent 2px) 6px calc(100% - 6px) / 6px 6px no-repeat, radial-gradient(circle, #6a6663 0 1.4px, transparent 2px) calc(100% - 6px) 14px / 6px 6px no-repeat`;   // 딴 모서리의 빗금 선 둘 + 오른쪽 위 경고 줄무늬 + 볼트 둘
-  const BR = '#00d992, #00d992';
+  // 8) 11-10 S.Lee: 우주 · 외계 문명 느낌의 모션 (VoltAgent 색 안에서). 움직임 줄이기 설정이면 전부 끔
+  //    깊은 우주 배경(별 · 신호 줄기 · 오로라) / 커버 한가운데 문양과 들어갈 때 통과 효과 / 카드가 훑듯 나타남 · 숫자 해독 / 도넛 궤도 / 카드 윗변 신호
+  const sigilMini = `<svg class="sigil mini" viewBox="-120 -120 240 240" aria-hidden="true" focusable="false">
+    <circle class="sg rev" style="--d:26s" r="100" fill="none" stroke="#00d992" stroke-width="9" stroke-dasharray="150 40 14 40"/>
+    <polygon class="sg" style="--d:40s" points="0,-62 53.7,31 -53.7,31" fill="none" stroke="#f2f2f2" stroke-opacity=".75" stroke-width="8"/>
+    <g class="sg rev" style="--d:26s"><circle cx="100" r="13" fill="#00d992"/></g>
+    <circle class="core" r="13" fill="#00d992"/>
+  </svg>`;   // 머리글용 작은 문양 (선을 굵게, 요소는 적게)
   const fxCss = document.createElement('style'); fxCss.id = 'volt-fx';
   fxCss.textContent = `
 .sigil { display: block; overflow: visible; }
-.sigil .sg, .fx-gears .sg, .fx-orbit { transform-origin: 0 0; }
+.sigil .sg, .fx-orbit { transform-origin: 0 0; }
+[data-theme=volt] .cover .live { transform-origin: 50% 50%; transition: transform 1.15s cubic-bezier(.6, 0, .85, .35); }
+[data-theme=volt] .cover.out .live { animation: none !important; transform: scale(2.6); }   /* 들어갈 때 신경망 속으로 빨려 들어감 */
 .top h1 .sigil.mini { display: inline-block; width: .8em; height: .8em; margin-right: .34em; vertical-align: -.06em; }
-/* ---- 커버: 조립 장면 ---- */
-.cover canvas.mech { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
-[data-theme=volt] .cover .live { display: none; }
-[data-theme=volt] .cover::after { display: none; }
-/* ---- 대시보드: 잠금 레일 · 톱니 ---- */
-#fx-engine { display: block; width: 100%; height: 40px; margin: -4px 0 0; }
-.fx-gears { position: absolute; left: -70px; bottom: -110px; width: 360px; height: 360px; z-index: -1; opacity: .09; pointer-events: none; }
-@media (max-width: 640px) { .fx-gears { display: none; } }   /* 폰은 그래프가 판을 다 차지해서 뺌 */
-/* ---- 대시보드: 깊은 우주 + 전술 격자 ---- */
 #fx-space { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
-#fx-grid { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; mask-image: radial-gradient(ellipse 90% 80% at 50% 30%, #000 0%, transparent 78%); -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 30%, #000 0%, transparent 78%); }
-#fx-grid i { position: absolute; inset: -64px; background-image: linear-gradient(rgba(242,242,242,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(242,242,242,.05) 1px, transparent 1px); background-size: 64px 64px; }
 [data-theme=volt] body::before { display: block; inset: -20%; z-index: 0; mask-image: none; -webkit-mask-image: none; background-size: auto;
   background-image: radial-gradient(40% 30% at 28% 30%, rgba(0,217,146,.10), transparent 70%), radial-gradient(34% 26% at 74% 64%, rgba(47,214,161,.06), transparent 70%), radial-gradient(28% 22% at 58% 16%, rgba(242,242,242,.035), transparent 70%); }
-/* ---- 대시보드: 모서리를 딴 판 ---- */
-[data-theme=volt] .wrap .card, [data-theme=volt] .wrap details.log { --cut: 14px; --ln: #5a5653; border-radius: 2px !important; clip-path: ${CUT};
-  background: ${PLATE}, linear-gradient(180deg, rgba(255,255,255,.028) 0%, rgba(255,255,255,0) 38%), rgba(16,16,16,.84) !important; background-origin: border-box !important; transition: border-color .18s; }
-[data-theme=volt] .wrap .card.hero-card { --ln: rgba(0,217,146,.75); background: ${PLATE},
-  linear-gradient(${BR}) calc(100% - 7px) 16px / 12px 1px no-repeat, linear-gradient(${BR}) calc(100% - 7px) 16px / 1px 12px no-repeat,
-  linear-gradient(${BR}) 7px calc(100% - 7px) / 12px 1px no-repeat, linear-gradient(${BR}) 7px calc(100% - 7px) / 1px 12px no-repeat,
-  radial-gradient(640px 300px at 0% 0%, rgba(0,217,146,.10), transparent 70%), radial-gradient(520px 260px at 100% 100%, rgba(242,242,242,.03), transparent 70%), rgba(16,16,16,.84) !important; background-origin: border-box !important; }
-[data-theme=volt] .wrap details.log summary { border-radius: 2px; }
-[data-theme=volt] .card .hd .eyebrow::before { content: ""; display: inline-block; width: 4px; height: 10px; margin-right: 9px; background: #00d992; vertical-align: -1px; }   /* 이름판 표식 */
-[data-theme=volt] .eng-tabs { border-radius: 2px; }
-[data-theme=volt] .eng-tabs button { border-radius: 1px; }
-[data-theme=volt] .chip { border-radius: 2px; }
-[data-theme=volt] .dec-row .act, [data-theme=volt] .eng .eyebrow::after, [data-theme=volt] .eng-tabs button::after { border-radius: 2px !important; }
-[data-theme=volt] .dec-row .cf i, [data-theme=volt] .dec-row .cf i b { border-radius: 0; }
-[data-theme=volt] .tip { border-radius: 2px; }
-[data-theme=volt] #ch-hero { position: relative; }
-@media (hover: hover) { [data-theme=volt] .wrap .card:hover { border-color: rgba(0,217,146,.5) !important; --ln: rgba(0,217,146,.8); } }
-.fx-sweep path { pointer-events: none; }
+[data-theme=volt] .card, [data-theme=volt] details.log { background: linear-gradient(180deg, rgba(255,255,255,.028) 0%, rgba(255,255,255,0) 38%), rgba(16,16,16,.84) !important; }   /* 별이 카드 뒤로 살짝 비침 */
+[data-theme=volt] .card.hero-card { background:
+  linear-gradient(#00d992, #00d992) 7px 7px / 12px 1px no-repeat, linear-gradient(#00d992, #00d992) 7px 7px / 1px 12px no-repeat,
+  linear-gradient(#00d992, #00d992) calc(100% - 7px) 7px / 12px 1px no-repeat, linear-gradient(#00d992, #00d992) calc(100% - 7px) 7px / 1px 12px no-repeat,
+  linear-gradient(#00d992, #00d992) 7px calc(100% - 7px) / 12px 1px no-repeat, linear-gradient(#00d992, #00d992) 7px calc(100% - 7px) / 1px 12px no-repeat,
+  linear-gradient(#00d992, #00d992) calc(100% - 7px) calc(100% - 7px) / 12px 1px no-repeat, linear-gradient(#00d992, #00d992) calc(100% - 7px) calc(100% - 7px) / 1px 12px no-repeat,
+  radial-gradient(640px 300px at 0% 0%, rgba(0,217,146,.10), transparent 70%), radial-gradient(520px 260px at 100% 100%, rgba(242,242,242,.03), transparent 70%), rgba(16,16,16,.84) !important; }
 @media (prefers-reduced-motion: no-preference) {
-  .sigil .sg, .fx-gears .sg { animation: sg-rot var(--d, 40s) linear infinite; }
-  .sigil .sg.rev, .fx-gears .sg.rev, .fx-orbit.rev { animation-direction: reverse; }
-  .fx-orbit { animation: sg-rot 26s linear infinite; } .fx-orbit.rev { animation-duration: 43s; } .fx-orbit.fx-sweep { animation-duration: 6.5s; }
+  .sigil .sg { animation: sg-rot var(--d, 40s) linear infinite; }
+  .sigil .sg.rev, .fx-orbit.rev { animation-direction: reverse; }
+  .sigil .core { transform-origin: 0 0; animation: sg-core 2.6s ease-in-out infinite; }
+  .sigil .ripple { transform-origin: 0 0; animation: sg-ripple 3.4s ease-out infinite; }
+  .sigil.mini .ripple { display: none; }
+  .fx-orbit { animation: sg-rot 26s linear infinite; } .fx-orbit.rev { animation-duration: 43s; }
+  [data-theme=volt] .cover .live { animation: nn-breathe 14s ease-in-out infinite alternate; }   /* 신경망 전체가 천천히 숨 쉬듯 다가왔다 물러남 */
+  @keyframes nn-breathe { from { transform: scale(1) rotate(-.4deg); } to { transform: scale(1.08) rotate(.5deg); } }
   @keyframes sg-rot { to { transform: rotate(360deg); } }
+  @keyframes sg-core { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.7); opacity: .55; } }
+  @keyframes sg-ripple { 0% { transform: scale(1); opacity: .55; } 80%, 100% { transform: scale(1.55); opacity: 0; } }
   [data-theme=volt] body::before { animation: fx-aurora 38s ease-in-out infinite alternate; will-change: transform; }
   @keyframes fx-aurora { from { transform: translate3d(-4%, -2%, 0) rotate(0deg) scale(1); } to { transform: translate3d(5%, 4%, 0) rotate(9deg) scale(1.16); } }
-  #fx-grid i { animation: fx-grid 16s linear infinite; will-change: transform; }
-  @keyframes fx-grid { to { transform: translate3d(64px, 64px, 0); } }
   [data-theme=volt] .card::after { content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 1px; pointer-events: none;
     background: linear-gradient(90deg, transparent, rgba(0,217,146,.95) 50%, transparent) no-repeat; background-size: 140px 1px; background-position: -140px 0;
-    animation: fx-edge 9s linear infinite; animation-delay: calc(var(--i, 0) * -1.7s); }   /* 판 윗변을 지나가는 신호 */
+    animation: fx-edge 11s linear infinite; animation-delay: calc(var(--i, 0) * -1.7s); }   /* 카드 윗변을 지나가는 신호 */
   @keyframes fx-edge { 0% { background-position: -140px 0; } 45%, 100% { background-position: calc(100% + 140px) 0; } }
-  /* 판이 조립되듯 드러남 (처음 한 번 · 엔진 탭을 바꿀 때) */
-  .fx-go .wrap .card, .fx-go .wrap details.log, .wrap .card.fx-re { -webkit-mask: linear-gradient(#000 0 0) 0 0 / 0 100% no-repeat, linear-gradient(#000 0 0) 100% 0 / 0 100% no-repeat, linear-gradient(#000 0 0) 50% 0 / 20% 0 no-repeat, linear-gradient(#000 0 0) 50% 100% / 20% 0 no-repeat; mask: linear-gradient(#000 0 0) 0 0 / 0 100% no-repeat, linear-gradient(#000 0 0) 100% 0 / 0 100% no-repeat, linear-gradient(#000 0 0) 50% 0 / 20% 0 no-repeat, linear-gradient(#000 0 0) 50% 100% / 20% 0 no-repeat; }
-  .fx-go .wrap .card, .fx-go .wrap details.log { animation: fx-asm .95s linear both; animation-delay: calc(var(--fx0, 0ms) + var(--i, 0) * 90ms); }
-  .wrap .card.fx-re { animation: fx-asm .7s linear both; }
-  .fx-go .wrap .eng-tabs { animation: fx-fade .5s ease both; animation-delay: calc(var(--fx0, 0ms) + var(--i, 0) * 80ms); }
-  @keyframes fx-asm { ${ASM} }
-  @keyframes fx-fade { from { opacity: 0; } to { opacity: 1; } }
-  /* 확신도 막대가 충전되듯 참 */
-  .fx-go .dec-row .cf i b, .fx-re .dec-row .cf i b { transform-origin: 0 50%; animation: fx-charge .7s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--fx0, 0ms) + 520ms); }
-  .fx-re .dec-row .cf i b { animation-delay: 180ms; }
-  @keyframes fx-charge { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-  /* 수익률 차트를 훑는 스캐너 */
-  [data-theme=volt] #ch-hero::after { content: ""; position: absolute; top: 4%; bottom: 12%; left: 4%; width: 1px; pointer-events: none; opacity: 0;
-    background: linear-gradient(180deg, transparent, rgba(0,217,146,.85), transparent); box-shadow: 0 0 14px 2px rgba(0,217,146,.22); animation: fx-scan 7s cubic-bezier(.4, 0, .6, 1) infinite 1.5s; }
-  @keyframes fx-scan { 0% { left: 4%; opacity: 0; } 8% { opacity: .9; } 58% { opacity: .9; } 68%, 100% { left: 96%; opacity: 0; } }
+  .fx-go .wrap .card, .fx-go .wrap details.log, .fx-go .wrap .eng-tabs { animation: fx-wipe .95s cubic-bezier(.2, .7, .2, 1) both; animation-delay: calc(var(--fx0, 0ms) + var(--i, 0) * 95ms); }
+  @keyframes fx-wipe { 0% { opacity: 0; clip-path: inset(0 100% 0 0); } 35% { opacity: 1; } 100% { opacity: 1; clip-path: inset(0 0 0 0); } }   /* 왼쪽에서 훑듯 나타남 (한 번) */
 }
 `;
   document.head.appendChild(fxCss);
   const calm = matchMedia('(prefers-reduced-motion: reduce)').matches, phone = matchMedia('(max-width: 640px)').matches;
   const coverEl = document.getElementById('cover');
   const h1 = document.querySelector('.top h1'); if (h1) h1.insertAdjacentHTML('afterbegin', sigilMini);
-  const heroCard = document.querySelector('.hero-card'); if (heroCard) heroCard.insertAdjacentHTML('afterbegin', gearMark);
-  // 커버의 조립 장면 (11-10 S.Lee: 판들이 날아와 복잡하게 맞물려 잠기는 모습). 가운데 핵 → 고리 넷(조각 6 · 8 · 24 · 10)이 안쪽부터 날아와 끼워지고 한 칸 돌아 잠김
-  // → 이음매 핀 · 버팀 실린더 → 위아래 장갑판이 좌우에서 밀려와 계단 이음매로 물리고 볼트가 돌아 잠김. 다 조립된 뒤에도 고리 · 판이 차례로 풀림 → 회전 → 다시 잠김을 되풀이.
-  // 터치하면 바깥 판부터 풀려 나가며 핵 속으로 빨려 들어감
-  const mech = cover => {
-    const cv = document.createElement('canvas'); cv.className = 'mech'; cv.setAttribute('aria-hidden', 'true'); cover.appendChild(cv);
-    const ctx = cv.getContext('2d'), bg = document.createElement('canvas'), bx = bg.getContext('2d');
-    const G = '0,217,146', K = '242,242,242', cos = Math.cos, sin = Math.sin, PI = Math.PI, DARK = 'rgba(17,22,20,.95)';
-    let W = 0, H = 0, U = 0, cx = 0, cy = 0, parts = [], groups = [], T_IN = 4, energy = 0;
-    const cl = v => v < 0 ? 0 : v > 1 ? 1 : v, io = k => k * k * (3 - 2 * k), back = k => { const x = k - 1; return 1 + 2.4 * x * x * x + 1.4 * x * x; };   // back = 살짝 지나쳤다 돌아옴 (철컥)
-    const cyc = f => f < .12 ? [io(f / .12), 0] : f < .55 ? [1, io((f - .12) / .43)] : f < .67 ? [1 - io((f - .55) / .12), 1] : [0, 1];   // 한 주기: 풀림 → 회전 → 잠김 → 쉼
-    const grp = o => { const g = Object.assign({ per: 6, ph: 0, dir: 0, step: 0, amt: 0, tw: 0, rot: 0, c: 0 }, o); groups.push(g); return g; };
-    const add = o => parts.push(Object.assign({ ox: 0, oy: 0, ux: 0, uy: 0, r: 0, rot: 0, t0: 0, d: .5, col: K, a: .55, lw: 1.2, fill: DARK, w: 0, lk: -1, fl: -9, done: 0, sx: 0, sy: 0 }, o));
-    const A = (p, r, a, b) => { p.moveTo(cos(a) * r, sin(a) * r); p.arc(0, 0, r, a, b); };
-    const dot = (p, x, y, r) => { p.moveTo(x + r, y); p.arc(x, y, r, 0, 6.2832); };
-    const poly = pts => { const p = new Path2D(); pts.forEach((q, i) => i ? p.lineTo(q[0], q[1]) : p.moveTo(q[0], q[1])); p.closePath(); return p; };
-    const sector = (r0, r1, a0, a1, o) => {   // 고리 조각: 바깥 모서리를 따고(cr), 바깥 돌기(tab) · 안쪽 홈(notch)을 낼 수 있음
-      const p = new Path2D(), m = (a0 + a1) / 2, c = o.cr || 0, ca = c / r1, L = (r, a) => p.lineTo(cos(a) * r, sin(a) * r);
-      p.moveTo(cos(a0) * r0, sin(a0) * r0); L(r1 - c, a0);
-      if (o.tab) { p.arc(0, 0, r1, a0 + ca, m - o.tab[0]); L(r1 + o.tab[1], m - o.tab[0] + .012); p.arc(0, 0, r1 + o.tab[1], m - o.tab[0] + .012, m + o.tab[0] - .012); L(r1, m + o.tab[0]); p.arc(0, 0, r1, m + o.tab[0], a1 - ca); }
-      else p.arc(0, 0, r1, a0 + ca, a1 - ca);
-      L(r1 - c, a1); L(r0, a1);
-      if (o.notch) { p.arc(0, 0, r0, a1, m + o.notch[0], true); L(r0 + o.notch[1], m + o.notch[0]); p.arc(0, 0, r0 + o.notch[1], m + o.notch[0], m - o.notch[0], true); L(r0, m - o.notch[0]); p.arc(0, 0, r0, m - o.notch[0], a0, true); }
-      else p.arc(0, 0, r0, a1, a0, true);
-      p.closePath(); return p;
-    };
-    const ring = (n, r0, r1, o) => { const g = grp(o.g), s = 2 * PI / n, gap = o.gap / ((r0 + r1) / 2);
-      for (let i = 0; i < n; i++) { const a0 = i * s + gap / 2 + (o.a0 || 0), a1 = (i + 1) * s - gap / 2 + (o.a0 || 0), m = (a0 + a1) / 2;
-        add({ g, gr: 1, gl: 1, ox: cx, oy: cy, ux: cos(m), uy: sin(m), r: o.from, rot: o.spin * (o.alt && i % 2 ? -1 : 1), t0: o.t0 + i * o.dt, d: o.d, col: o.col, a: o.a, lw: o.lw || 1.2, path: sector(r0, r1, a0, a1, o), det: o.det ? o.det(r0, r1, a0, a1, m) : null, acc: o.acc ? o.acc(r0, r1, a0, a1, m) : null, w: o.wave ? i / n * o.wave : 0, sx: cos(a0) * r1, sy: sin(a0) * r1 }); }
-      return g; };
-    const build = () => {
-      parts = []; groups = []; const R4 = U * .44;
-      // 1) 위아래 장갑판: 가운데서 가까운 줄부터 좌우에서 밀려와 계단 이음매로 물림 → 볼트가 돌아 잠김 → 줄 사이 걸쇠
-      [[16, cy - R4 - 30, 1], [cy + R4 + 30, H - 16, -1]].forEach(([ya, yb, sgn], ri) => {
-        const hh = yb - ya; if (hh < 60) return; const nr = hh >= 150 ? 3 : 2, gy = 5, rh = (hh - gy * (nr - 1)) / nr, mx = 14, ch = 10;
-        for (let j = 0; j < nr; j++) {
-          const jj = sgn > 0 ? nr - 1 - j : j, y0 = ya + jj * (rh + gy), s = W * [.44, .62, .33][(j + ri) % 3], st = 12 * (j % 2 ? -1 : 1), t0 = 2.0 + j * .26 + ri * .09, ym = y0 + rh / 2;
-          const g = grp({ per: 9 + j * 1.3, ph: .35 + j * .31 + ri * .17, dir: 1, step: PI / 3, amt: 10 });
-          const dl = new Path2D(), dr = new Path2D(), al = new Path2D(), ar = new Path2D();
-          dl.moveTo(mx + ch + 6, y0 + 5); dl.lineTo(s - 10, y0 + 5); for (let k = 0; k < 5; k++) { dl.moveTo(mx + 16 + k * 7, y0 + rh * .42); dl.lineTo(mx + 11 + k * 7, y0 + rh * .78); }
-          dl.rect(mx + (s - mx) * .46, y0 + rh * .36, (s - mx) * .3, rh * .4); dot(dl, mx + 6, y0 + rh - 6, 1.4); dot(dl, s - 7, y0 + 11, 1.4); al.rect(s - 8, ym + (st > 0 ? -rh * .34 : rh * .12), 3, rh * .22);
-          dr.moveTo(s + 14, y0 + rh - 5); dr.lineTo(W - mx - ch - 6, y0 + rh - 5); for (let k = 0; k < 5; k++) { dr.moveTo(W - mx - 16 - k * 7, y0 + rh * .22); dr.lineTo(W - mx - 11 - k * 7, y0 + rh * .58); }
-          dr.rect(s + (W - mx - s) * .22, y0 + rh * .24, (W - mx - s) * .3, rh * .4); dot(dr, W - mx - 6, y0 + 6, 1.4); dot(dr, s + st + 11, y0 + rh - 11, 1.4); ar.rect(s + st + 8, ym + (st > 0 ? rh * .12 : -rh * .34), 3, rh * .22);
-          add({ g, gl: 1, ux: -1, r: W * .95, t0, d: .62, a: .5, sx: s, sy: ym, det: dl, acc: al, path: poly([[mx + ch, y0], [s, y0], [s, ym], [s + st, ym], [s + st, y0 + rh], [mx, y0 + rh], [mx, y0 + ch]]) });
-          add({ g, gl: 1, ux: 1, r: W * .95, t0: t0 + .1, d: .62, a: .5, sx: s + st, sy: ym, det: dr, acc: ar, path: poly([[s + 3, y0], [W - mx, y0], [W - mx, y0 + rh - ch], [W - mx - ch, y0 + rh], [s + st + 3, y0 + rh], [s + st + 3, ym], [s + 3, ym]]) });
-          const hx = new Path2D(), hd = new Path2D(); for (let k = 0; k < 6; k++) hx[k ? 'lineTo' : 'moveTo'](cos(k * PI / 3) * 6.5, sin(k * PI / 3) * 6.5); hx.closePath(); hd.moveTo(-3.4, 0); hd.lineTo(3.4, 0);
-          add({ g, gr: 1, sc: 1, ox: s + st / 2 + 1.5, oy: ym, rot: 2.6, t0: t0 + .78, d: .34, col: G, a: .95, fill: 'rgba(10,14,13,1)', path: hx, det: hd });
-          if (j < nr - 1) [.2, .8].forEach((fx, q) => { const yc = sgn > 0 ? y0 - gy / 2 : y0 + rh + gy / 2, xc = W * fx, p = new Path2D(); p.rect(xc - 10, yc - 7, 20, 14); const d2 = new Path2D(); d2.moveTo(xc - 5, yc); d2.lineTo(xc + 5, yc);
-            add({ ux: 0, uy: -sgn, r: 70, t0: 3.05 + j * .12 + q * .06, d: .32, col: G, a: .8, path: p, det: d2, sx: xc, sy: yc }); });
-        }
-      });
-      // 2) 버팀 실린더 6개: 바깥 고리에서 뻗어 나가 판 · 틀에 물림
-      [PI / 4, 3 * PI / 4, 5 * PI / 4, 7 * PI / 4, PI / 2, -PI / 2].forEach((ang, i) => { const ra = R4 + 7, rb = i < 4 ? Math.min(U * .68, (W / 2 - 16) / Math.abs(cos(ang))) : R4 + 28;
-        add({ ox: cx, oy: cy, t0: 2.75 + i * .07, d: .5, sx: cos(ang) * rb, sy: sin(ang) * rb, draw: (k, gl) => { const e = io(k), r1 = ra + (rb - ra) * Math.min(.5, e), r2 = ra + (rb - ra) * e, X = cos(ang), Y = sin(ang);
-          ctx.strokeStyle = `rgba(${K},.3)`; ctx.lineWidth = 6; ctx.beginPath(); ctx.moveTo(X * ra, Y * ra); ctx.lineTo(X * r1, Y * r1); ctx.stroke();
-          ctx.strokeStyle = `rgba(${G},.85)`; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.moveTo(X * r1, Y * r1); ctx.lineTo(X * r2, Y * r2); ctx.stroke();
-          ctx.fillStyle = k >= 1 ? `rgba(${G},${.55 + .45 * gl})` : DARK; ctx.strokeStyle = `rgba(${K},.7)`; ctx.lineWidth = 1; ctx.fillRect(X * r2 - 3.5, Y * r2 - 3.5, 7, 7); ctx.strokeRect(X * r2 - 3.5, Y * r2 - 3.5, 7, 7); } }); });
-      // 3) 고리 넷 (바깥 → 안, 안쪽이 위에 그려짐). 시작은 안쪽 고리부터
-      const g4 = ring(10, U * .32, R4, { gap: 5, cr: 9, notch: [.1, U * .014], from: U * .75, spin: .7, alt: 1, t0: 1.7, dt: .08, d: .66, col: K, a: .6, lw: 1.3, wave: .55, g: { per: 8.5, ph: .15, amt: U * .022 },
-        det: (r0, r1, a0, a1, m) => { const p = new Path2D(); A(p, r1 - 7, a0 + .07, a1 - .07); A(p, r0 + 8, a0 + .05, m - .14); A(p, r0 + 8, m + .14, a1 - .05); [-1, 0, 1].forEach(k => { const a = m + k * .05; p.moveTo(cos(a) * (r0 + (r1 - r0) * .4), sin(a) * (r0 + (r1 - r0) * .4)); p.lineTo(cos(a) * (r0 + (r1 - r0) * .7), sin(a) * (r0 + (r1 - r0) * .7)); }); dot(p, cos(a0 + .1) * (r1 - 15), sin(a0 + .1) * (r1 - 15), 1.5); dot(p, cos(a1 - .1) * (r1 - 15), sin(a1 - .1) * (r1 - 15), 1.5); return p; },
-        acc: (r0, r1, a0, a1, m) => { const p = new Path2D(); A(p, r1 - 13, m - .1, m + .1); return p; } });
-      for (let i = 0; i < 10; i++) { const a = i * PI / 5, X = cos(a), Y = sin(a), nx = -Y, ny = X, ra = U * .362, rb = U * .402, h = 4;   // 판 사이 이음매를 가로질러 꽂히는 핀
-        add({ g: g4, gl: 1, ox: cx, oy: cy, ux: X, uy: Y, r: U * .16, t0: 2.95 + i * .04, d: .3, col: G, a: .9, w: (i - .5) / 10 * .55 - .03, sx: X * rb, sy: Y * rb, fill: 'rgba(10,14,13,1)', path: poly([[X * ra + nx * h, Y * ra + ny * h], [X * rb + nx * h, Y * rb + ny * h], [X * rb - nx * h, Y * rb - ny * h], [X * ra - nx * h, Y * ra - ny * h]]) }); }
-      ring(24, U * .25, U * .285, { gap: 3, from: U * .34, spin: .5, t0: 1.3, dt: .028, d: .42, col: G, a: .75, lw: 1, wave: .5, g: { per: 6.1, ph: .5, dir: 1, step: PI / 12, amt: U * .012, tw: 2.5 } });
-      ring(8, U * .155, U * .225, { gap: 4, cr: 5, tab: [.13, U * .012], from: U * .62, spin: .9, alt: 1, t0: .7, dt: .06, d: .6, col: K, a: .65, g: { per: 7.4, ph: .8, dir: -1, step: PI / 4, amt: U * .012, tw: 1.9 },
-        det: (r0, r1, a0, a1, m) => { const p = new Path2D(); A(p, (r0 + r1) / 2, a0 + .12, a1 - .12); dot(p, cos(a0 + .09) * (r1 - 7), sin(a0 + .09) * (r1 - 7), 1.3); dot(p, cos(a1 - .09) * (r1 - 7), sin(a1 - .09) * (r1 - 7), 1.3); return p; } });
-      ring(6, U * .08, U * .135, { gap: 4, cr: 4, from: U * .5, spin: -1.2, t0: .25, dt: .05, d: .55, col: G, a: .9, lw: 1.4, g: { per: 5.2, ph: 1.1, dir: 1, step: PI / 3, amt: U * .01, tw: 1.1 } });
-      add({ ox: cx, oy: cy, t0: 0, d: .5, draw: k => { const s = back(k), r = U * .055 * s;   // 4) 핵
-        const gr = ctx.createRadialGradient(0, 0, 0, 0, 0, U * (.1 + .05 * energy)); gr.addColorStop(0, `rgba(235,255,246,${.8 + .2 * energy})`); gr.addColorStop(.4, `rgba(${G},${.4 + .4 * energy})`); gr.addColorStop(1, `rgba(${G},0)`);
-        ctx.fillStyle = DARK; ctx.strokeStyle = `rgba(${G},.95)`; ctx.lineWidth = 1.5; ctx.beginPath(); for (let i = 0; i < 6; i++) ctx[i ? 'lineTo' : 'moveTo'](cos(i * PI / 3 + PI / 6) * r, sin(i * PI / 3 + PI / 6) * r); ctx.closePath(); ctx.fill(); ctx.stroke();
-        ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(0, 0, U * .15, 0, 6.2832); ctx.fill(); ctx.strokeStyle = `rgba(${K},.8)`; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(0, 0, r * .45, 0, 6.2832); ctx.stroke(); } });
-      T_IN = Math.max(...parts.map(p => p.t0 + p.d)) + .25;
-    };
-    const size = () => {
-      const d = Math.min(2, devicePixelRatio || 1); W = cover.clientWidth || innerWidth; H = cover.clientHeight || innerHeight;
-      [cv, bg].forEach(c => { c.width = W * d; c.height = H * d; }); ctx.setTransform(d, 0, 0, d, 0, 0); bx.setTransform(d, 0, 0, d, 0, 0);
-      U = Math.min(W, H * .56); cx = W / 2; cy = H / 2; build();
-      // 움직이지 않는 바탕: 격자 · 틀 · 눈금 고리 + 조립될 자리의 옅은 설계도 선
-      bx.clearRect(0, 0, W, H); bx.lineWidth = 1;
-      bx.strokeStyle = `rgba(${K},.035)`; bx.beginPath(); for (let x = (W / 2) % 32; x < W; x += 32) { bx.moveTo(x, 0); bx.lineTo(x, H); } for (let y = (H / 2) % 32; y < H; y += 32) { bx.moveTo(0, y); bx.lineTo(W, y); } bx.stroke();
-      const c = 18, i = 8; bx.strokeStyle = `rgba(${K},.2)`; bx.beginPath(); bx.moveTo(i + c, i); bx.lineTo(W - i, i); bx.lineTo(W - i, H - i - c); bx.lineTo(W - i - c, H - i); bx.lineTo(i, H - i); bx.lineTo(i, i + c); bx.closePath(); bx.stroke();
-      bx.strokeStyle = `rgba(${K},.28)`; bx.beginPath(); for (let k = 0; k < 120; k++) { const a = k / 120 * 6.2832, r0 = U * (k % 5 ? .462 : .455); bx.moveTo(cx + cos(a) * r0, cy + sin(a) * r0); bx.lineTo(cx + cos(a) * U * .47, cy + sin(a) * U * .47); } bx.stroke();
-      bx.strokeStyle = `rgba(${K},.075)`; parts.forEach(p => { if (!p.path) return; bx.save(); bx.translate(p.ox, p.oy); if (p.gr && p.g.tw) bx.rotate(-p.g.dir * p.g.step); bx.stroke(p.path); bx.restore(); });
-    };
-    size(); addEventListener('resize', size);
-    const sparks = []; let last = 0, t0 = 0, outAt = 0;
-    const spark = (p, n) => { const a = p.gr && p.g ? p.g.rot : 0, x = p.ox + p.sx * cos(a) - p.sy * sin(a), y = p.oy + p.sx * sin(a) + p.sy * cos(a); for (let k = 0; k < n; k++) { const d = Math.random() * 6.2832, v = 40 + Math.random() * 90; sparks.push({ x, y, vx: cos(d) * v, vy: sin(d) * v - 20, life: 1 }); } };
-    const paint = t => {
-      if (!t0) t0 = t; const now = t / 1000, dt = Math.min(.05, (t - (last || t)) / 1000), tau = calm ? 99 : (t - t0) / 1000, ti = calm ? 0 : Math.max(0, tau - T_IN); last = t;
-      let q = 0, to = -1; if (cover.classList.contains('out')) { if (!outAt) outAt = t; to = (t - outAt) / 1000; q = cl(to / 1.05); }
-      energy *= Math.exp(-dt * 2.6);
-      groups.forEach(g => { g.c = ti / g.per - g.ph; const n = Math.floor(g.c), rp = g.c > 0 ? n + cyc(g.c - n)[1] : 0; g.rot = g.dir * g.step * (rp - (g.tw ? 1 - io(cl((tau - g.tw) / .45)) : 0)); if (g.tw && !g.twd && tau >= g.tw + .45) { g.twd = 1; g.fl = now; energy = Math.min(1, energy + .35); } });
-      ctx.clearRect(0, 0, W, H); ctx.save(); const z = 1 + q * q * 13; ctx.translate(cx, cy); ctx.scale(z, z); ctx.translate(-cx, -cy);
-      ctx.globalAlpha = 1 - q * .7; ctx.drawImage(bg, 0, 0, W, H); ctx.globalAlpha = 1;
-      const hud = cl((tau - 2.2) / .8) * (1 - q); if (hud > 0) {   // 고리 사이를 도는 점선 · 바깥을 도는 호 둘
-        ctx.lineWidth = 1; ctx.strokeStyle = `rgba(${K},${.45 * hud})`; ctx.setLineDash([U * .03, U * .016]); ctx.lineDashOffset = -now * 22; ctx.beginPath(); ctx.arc(cx, cy, U * .302, 0, 6.2832); ctx.stroke(); ctx.setLineDash([]);
-        ctx.strokeStyle = `rgba(${G},${.7 * hud})`; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.arc(cx, cy, U * .485, now * .5, now * .5 + 1.1); ctx.stroke(); ctx.beginPath(); ctx.arc(cx, cy, U * .485, now * .5 + PI, now * .5 + PI + 1.1); ctx.stroke();
-        ctx.strokeStyle = `rgba(${K},${.4 * hud})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(cx, cy, U * .5, -now * .33, -now * .33 + .7); ctx.stroke(); ctx.beginPath(); ctx.arc(cx, cy, U * .5, -now * .33 + 2.2, -now * .33 + 2.5); ctx.stroke();
-      }
-      const N = parts.length;
-      parts.forEach((p, i) => {
-        const k = cl((tau - p.t0) / p.d); if (k <= 0) return; const g = p.g;
-        if (k >= 1 && !p.done) { p.done = 1; p.fl = now; energy = Math.min(1, energy + .14); if (!calm && tau < 90) spark(p, 3); }
-        let lift = 0; if (g && p.gl) { const pc = g.c - p.w; if (pc > 0) { const n = Math.floor(pc), f = pc - n; lift = cyc(f)[0]; if (f >= .67 && p.lk !== n) { p.lk = n; p.fl = now; energy = Math.min(1, energy + .06); if (Math.random() < .5) spark(p, 2); } } }
-        let e = 1 - back(k), al = cl(k * 3.5); if (to >= 0) { const po = cl((to - i / N * .28) / .5); e = Math.max(e, po * po); al = Math.min(al, 1 - po); }
-        const gl = Math.max(0, 1 - (now - Math.max(p.fl, g && p.gr && g.fl || -9)) / .42);
-        ctx.save(); ctx.globalAlpha = al; ctx.translate(p.ox, p.oy); ctx.rotate((g && p.gr ? g.rot : 0) + p.rot * e);
-        const L = p.r * e + (g && p.gl ? lift * g.amt : 0); if (L) ctx.translate(p.ux * L, p.uy * L); if (p.sc) ctx.scale(Math.max(.01, 1 - e), Math.max(.01, 1 - e));
-        if (p.draw) p.draw(k, gl);
-        else {
-          ctx.fillStyle = p.fill; ctx.fill(p.path); ctx.lineJoin = 'round'; ctx.strokeStyle = `rgba(${p.col},${p.a})`; ctx.lineWidth = p.lw; ctx.stroke(p.path);
-          if (p.det) { ctx.strokeStyle = `rgba(${p.col},${p.a * .5})`; ctx.lineWidth = 1; ctx.stroke(p.det); }
-          if (p.acc) { ctx.strokeStyle = ctx.fillStyle = `rgba(${G},${k >= 1 && lift < .05 ? .75 + .25 * gl : .18})`; ctx.lineWidth = 2; ctx.stroke(p.acc); }
-          if (gl > 0) { ctx.strokeStyle = `rgba(215,255,238,${gl * .9})`; ctx.lineWidth = p.lw + 1.6 * gl; ctx.stroke(p.path); }
-        }
-        ctx.restore();
-      });
-      ctx.lineWidth = 1.2; for (let k = sparks.length - 1; k >= 0; k--) { const s = sparks[k]; s.life -= dt * 2.4; if (s.life <= 0) { sparks.splice(k, 1); continue; } s.vy += 240 * dt; const nx = s.x + s.vx * dt, ny = s.y + s.vy * dt; ctx.strokeStyle = `rgba(215,255,238,${s.life})`; ctx.beginPath(); ctx.moveTo(s.x, s.y); ctx.lineTo(nx + s.vx * .02, ny + s.vy * .02); ctx.stroke(); s.x = nx; s.y = ny; }
-      ctx.restore();
-      if (q > 0) { const fl = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(W, H) * (.2 + q)); fl.addColorStop(0, `rgba(235,255,246,${.7 * q})`); fl.addColorStop(1, `rgba(${G},0)`); ctx.fillStyle = fl; ctx.fillRect(0, 0, W, H); }
-    };
-    const loop = t => { if (!document.documentElement.contains(cover)) return; requestAnimationFrame(loop); if (document.hidden) { last = 0; return; } if (t - last < 22) return; paint(t); };
-    if (calm) paint(1); else requestAnimationFrame(loop);
-  };
-  if (coverEl && phone) mech(coverEl);
-  // 대시보드 머리글 아래의 잠금 레일: 계단 이음매로 물린 판들이 차례로 들렸다가 다시 잠기는 물결이 지나감. 속도는 상태를 따름 (판단 실행 중 = 빠르게, 동작 중 = 보통, 장 마감 = 천천히)
-  const strip = () => {
-    const top = document.querySelector('.wrap > .top, .wrap header.top'); if (!top) return;
-    const cv = document.createElement('canvas'); cv.id = 'fx-engine'; cv.setAttribute('aria-hidden', 'true'); top.insertAdjacentElement('afterend', cv);
-    const ctx = cv.getContext('2d'), G = '0,217,146', K = '242,242,242', io = k => k * k * (3 - 2 * k); let W = 0, H = 40, acc = 0, last = 0, spd = .3, want = .32, tick = 0;
-    const size = () => { const d = Math.min(2, devicePixelRatio || 1); W = cv.clientWidth || 300; cv.width = W * d; cv.height = H * d; ctx.setTransform(d, 0, 0, d, 0, 0); };
-    size(); addEventListener('resize', size);
-    const paint = t => {
-      const dt = Math.min(.05, (t - (last || t)) / 1000); last = t;
-      if (t - tick > 1500) { tick = t; want = document.querySelector('#st-top .dot.run') ? 2.6 : document.querySelector('#st-top .dot.ok') ? 1 : .32; }
-      spd += (want - spd) * Math.min(1, dt * 1.5); if (!calm) acc += dt * spd * .5;
-      ctx.clearRect(0, 0, W, H); const y = 14, ph = 14, st = 8, n = Math.max(6, Math.min(28, Math.floor((W - 16) / 44))), pw = (W - 16) / n;
-      ctx.strokeStyle = `rgba(${K},.2)`; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(4, y + ph + 5.5); ctx.lineTo(W - 4, y + ph + 5.5); for (let i = 0; i <= n * 2; i++) { const x = 4 + i * pw / 2; ctx.moveTo(x, y + ph + 5.5); ctx.lineTo(x, y + ph + (i % 2 ? 7.5 : 9.5)); } ctx.stroke();
-      for (let i = 0; i < n; i++) {
-        const c = acc - i * .11, f = c - Math.floor(c), lift = calm ? 0 : f < .08 ? io(f / .08) : f < .22 ? 1 : f < .3 ? 1 - io((f - .22) / .08) : 0, glow = !calm && f >= .3 ? Math.max(0, 1 - (f - .3) / .12) : 0;
-        const x0 = 4 + i * pw + 1.5, x1 = x0 + pw - 3, yy = y - lift * 8, ym = yy + ph / 2;
-        if (lift > .05) { ctx.strokeStyle = `rgba(${G},.7)`; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(x0 + st + 4, yy + ph); ctx.lineTo(x0 + st + 4, y + ph + 5); ctx.moveTo(x1 - 2, yy + ph); ctx.lineTo(x1 - 2, y + ph + 5); ctx.stroke(); }
-        ctx.beginPath(); ctx.moveTo(x0, yy); ctx.lineTo(x1, yy); ctx.lineTo(x1, ym); ctx.lineTo(x1 + st, ym); ctx.lineTo(x1 + st, yy + ph); ctx.lineTo(x0 + st, yy + ph); ctx.lineTo(x0 + st, ym); ctx.lineTo(x0, ym); ctx.closePath();
-        ctx.fillStyle = 'rgba(17,22,20,.95)'; ctx.fill(); ctx.strokeStyle = glow > 0 ? `rgba(215,255,238,${.4 + .6 * glow})` : `rgba(${K},.38)`; ctx.lineWidth = 1; ctx.stroke();
-        ctx.fillStyle = `rgba(${G},${lift > .05 ? .15 : .5 + .5 * glow})`; ctx.fillRect(x0 + pw * .42, ym - 1.5, pw * .2, 3);
-      }
-    };
-    const loop = t => { requestAnimationFrame(loop); if (document.hidden) { last = 0; return; } if (t - last < 30) return; paint(t); };
-    if (calm) paint(1); else requestAnimationFrame(loop);
-  };
-  // 깊은 우주: 별 3겹(스크롤 시차 · 깜빡임) + 가끔 지나가는 초록 신호 줄기, 그 위에 천천히 흐르는 전술 격자
+  // 깊은 우주: 별 3겹(스크롤 시차 · 깜빡임) + 가끔 지나가는 초록 신호 줄기
   const space = () => {
-    const gd = document.createElement('div'); gd.id = 'fx-grid'; gd.setAttribute('aria-hidden', 'true'); gd.innerHTML = '<i></i>'; document.body.insertBefore(gd, document.body.firstChild);
     const cv = document.createElement('canvas'); cv.id = 'fx-space'; cv.setAttribute('aria-hidden', 'true'); document.body.insertBefore(cv, document.body.firstChild);
     const ctx = cv.getContext('2d'); let W = 0, H = 0, dpr = 1;
     const size = () => { dpr = Math.min(2, devicePixelRatio || 1); W = innerWidth; H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); };
     size(); addEventListener('resize', size);
     let seed = 298; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
     const stars = Array.from({ length: phone ? 110 : 240 }, () => { const z = .25 + rnd() * .75; return { x: rnd(), y: rnd(), z, r: z > .85 ? 1.6 : z > .55 ? 1.1 : .7, p: rnd() * 6.28, s: .4 + rnd() * 1.6, g: rnd() < .12 }; });
-    const sig = []; let nextSig = 1800, last = 0;
+    const sig = []; let nextSig = 2500, last = 0;
     const draw = t => {
       if (calm) { paint(0); return; }
       requestAnimationFrame(draw);
@@ -938,7 +744,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
         if (s.z > .92) { ctx.fillStyle = s.g ? `rgba(0,217,146,${a * .18})` : `rgba(242,242,242,${a * .14})`; ctx.fillRect(x - 2, y + s.r / 2 - .25, s.r + 4, .5); ctx.fillRect(x + s.r / 2 - .25, y - 2, .5, s.r + 4); }   // 가까운 별의 십자 빛
       }
       if (calm) return;
-      if (t > nextSig) { nextSig = t + 3000 + Math.random() * 5500; const fromL = Math.random() < .5; sig.push({ x: fromL ? -40 : W + 40, y: Math.random() * H * .6, vx: (fromL ? 1 : -1) * (.5 + Math.random() * .35), vy: .12 + Math.random() * .16, t0: t }); }
+      if (t > nextSig) { nextSig = t + 5000 + Math.random() * 9000; const fromL = Math.random() < .5; sig.push({ x: fromL ? -40 : W + 40, y: Math.random() * H * .6, vx: (fromL ? 1 : -1) * (.5 + Math.random() * .35), vy: .12 + Math.random() * .16, t0: t }); }
       for (let i = sig.length - 1; i >= 0; i--) {
         const g = sig[i], age = t - g.t0, x = g.x + g.vx * age, y = g.y + g.vy * age;
         if (age > 2600 || x < -200 || x > W + 200) { sig.splice(i, 1); continue; }
@@ -952,7 +758,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
   // 숫자 해독: 큰 수익률이 잠깐 기호로 흩어졌다가 왼쪽부터 제자리로
   const decode = el => {
     if (!el || calm) return; const fin = el.textContent; if (!/\d/.test(fin)) return;
-    const G = '0123456789', t0 = performance.now(), D = 1100; let lastSet = fin;   // 기계식 계수기처럼 숫자만 돌다가 멈춤
+    const G = '0123456789ΔΣΛΞΦΨΩ', t0 = performance.now(), D = 1100; let lastSet = fin;
     const tick = now => {
       if (el.textContent !== lastSet) return;   // 그 사이 새 값이 들어왔으면 손대지 않음
       const p = Math.min(1, (now - t0) / D), n = Math.floor(p * fin.length);
@@ -961,22 +767,17 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
     };
     requestAnimationFrame(tick);
   };
-  // 대시보드가 처음 드러나는 순간 한 번: 판이 차례로 열리고 숫자를 해독
+  // 대시보드가 처음 드러나는 순간 한 번: 카드가 차례로 나타나고 숫자를 해독
   let went = false;
   const go = base => {
     if (went) return; went = true;
     document.querySelectorAll('.wrap .card, .wrap details.log, .wrap .eng-tabs').forEach((c, i) => c.style.setProperty('--i', Math.min(i, 9)));
     if (!calm) { document.documentElement.style.setProperty('--fx0', base + 'ms'); document.documentElement.classList.add('fx-go'); setTimeout(() => document.documentElement.classList.remove('fx-go'), base + 2600); }
     let tries = 0; const wait = setInterval(() => { const a = document.getElementById('pnl-won'); if ((a && /\d/.test(a.textContent)) || ++tries > 60) { clearInterval(wait); setTimeout(() => { decode(a); decode(document.getElementById('s-pnl-won')); }, 120); } }, 100);
-    space(); strip();
+    space();
   };
   if (coverEl && phone) new MutationObserver(() => { if (coverEl.classList.contains('out')) go(350); }).observe(coverEl, { attributes: true, attributeFilter: ['class'] });
   else go(60);
-  // 엔진 탭을 바꾸면 그 엔진의 판이 다시 열림
-  const tabs = document.getElementById('eng-tabs');
-  if (tabs && !calm) tabs.addEventListener('click', () => setTimeout(() => {
-    document.querySelectorAll('.wrap .card.pane:not([hidden]), #dec-card').forEach(c => { c.classList.remove('fx-re'); void c.offsetWidth; c.classList.add('fx-re'); setTimeout(() => c.classList.remove('fx-re'), 900); });
-  }, 30));
 })();
 </script>
 <script src="config.js"></script>
@@ -1966,19 +1767,9 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     if (window.VOLT) {   // 11-10 S.Lee: 도넛을 도는 궤도 (위성 둘, 다시 그려도 위치가 이어지게 시작 시각을 맞춤)
       const ph = (per) => `-${((Date.now() / 1000) % per).toFixed(2)}s`;
       const o1 = g.append('g').attr('class', 'fx-orbit').style('animation-delay', ph(26));
-      const tc = 2 * Math.PI * (R + 16) / 96; o1.append('circle').attr('r', R + 16).attr('fill', 'none').attr('stroke', 'rgba(242,242,242,.2)').attr('stroke-width', 4).attr('stroke-dasharray', `${tc} ${tc}`);   // 톱니 고리 (이 48개)
-      o1.append('circle').attr('r', R + 13.5).attr('fill', 'none').attr('stroke', 'rgba(242,242,242,.16)').attr('stroke-width', .8);
+      o1.append('circle').attr('r', R + 16).attr('fill', 'none').attr('stroke', 'rgba(242,242,242,.2)').attr('stroke-width', .8).attr('stroke-dasharray', '1 6');
       o1.append('circle').attr('cx', R + 16).attr('r', 2.6).attr('fill', '#00d992');
-      const pr = (R + 17) / 6, pm = (R + 17) / 24, px = R + 17.5 + pr;   // 톱니 고리를 돌리는 구동 톱니 둘 (이 8개, 고리보다 6배 빠르게 반대로)
-      if (W / 2 > px + pr + pm + 3) [[1, '#00d992'], [-1, 'rgba(242,242,242,.6)']].forEach(([sd, c]) => {
-        const pg = g.append('g').attr('transform', `translate(${sd * px},0)`).append('g').attr('class', 'fx-orbit rev').style('animation-duration', (26 / 6).toFixed(3) + 's').style('animation-delay', ph(26)).append('g').attr('transform', 'rotate(11.25)');
-        pg.append('path').attr('d', window.voltGearD(8, pr, pm)).attr('fill', '#0e1412').attr('stroke', c).attr('stroke-width', 1.2).attr('stroke-linejoin', 'round');
-        pg.append('circle').attr('r', pr * .42).attr('fill', 'none').attr('stroke', c).attr('stroke-width', 1); pg.append('line').attr('x1', -pr * .42).attr('x2', pr * .42).attr('stroke', c).attr('stroke-width', 1);
-      });
       g.append('g').attr('class', 'fx-orbit rev').style('animation-delay', ph(43)).append('circle').attr('cx', -(R + 16)).attr('r', 1.7).attr('fill', '#f2f2f2').attr('opacity', .75);
-      const sw = g.append('g').attr('class', 'fx-orbit fx-sweep').style('animation-delay', ph(6.5));   // 레이더처럼 도넛을 훑는 빛
-      for (let k = 0; k < 9; k++) sw.append('path').attr('d', d3.arc()({ innerRadius: R * .66, outerRadius: R + 16, startAngle: -(k + 1) * .1, endAngle: -k * .1 })).attr('fill', '#00d992').attr('opacity', .2 * (1 - k / 9));
-      sw.append('line').attr('y1', -R * .66).attr('y2', -(R + 16)).attr('stroke', '#00d992').attr('stroke-width', 1).attr('opacity', .7);
     }
     g.append('text').attr('text-anchor', 'middle').attr('dy', '-.1em').attr('font-size', 24).attr('font-weight', 500).attr('fill', C.ink).text((stock / tot * 100).toFixed(1) + '%');
     g.append('text').attr('text-anchor', 'middle').attr('dy', '1.4em').attr('font-size', 11).attr('fill', C.muted).text(cap ? '주식 / 상한 ' + (cap * 100).toFixed(1) + '%' : '주식 비중');
@@ -2276,7 +2067,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     // 경로 = 출발-도착
     const LINKS = ('kbal-snap snap-rpc rpc-sbs sbs-dash nav-cron cron-kxt cron-flw cron-kxd kxt-dash kxd-dash flw-dash snap-lsnap lsnap-mon mon-exitr exitr-run sched-run sched-snap sched-mon sched-close lock-run krank-intr krxl-krx krx-ind ind-prep newsapi-news news-prep prep-screen screen-brief intr-brief run-prep run-intr brief-cl run-cl cl-reg reg-cl cl-bull bull-web bull-bear bear-web bear-cl cl-boost boost-cl cl-mcp mcp-plan params-plan norebuy-plan etf-plan probe-plan partial-plan plan-mcp mcp-hook limits-hook hook-block block-jrn hook-broker rate-broker mode-broker broker-korder kprice-broker mcp-jrn jrn-logger dbf-logger logger-eqf logger-hdf logger-trf logger-stf eqf-pub hdf-pub trf-pub stf-pub close-logger pub-gh gh-pg pg-dash lap-gh gh-sync sync-run cl-tune tunerules-tune tune-params tune-chg chg-gh cl-rev rev-drafts drafts-pub params-pub' +
       ' bull-ofact bear-ofact ofact-ohyp ofact-oprem cl-oprem mcp-otrace otrace-oprem jrn-oeval ohyp-oeval oeval-ocase ocase-olesson olesson-opol opol-tune olesson-brief').split(' ');
-    let N, E, EDGE, dots, mesh, H = 620, ys = 1, scale = 1, phone = null, lw = 1, cssW = 1000, ready = false, dprCap = 3, cost = 0;
+    let N, E, EDGE, dots, mesh, far = null, mid = null, wave = null, waveAt = 2500, H = 620, ys = 1, scale = 1, phone = null, lw = 1, cssW = 1000, ready = false, dprCap = 3, cost = 0;
     let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647, r2 = () => (rnd() + rnd()) - 1;
     // 선의 네 점은 매 프레임 지금 위치로 계산 (지점이 천천히 떠다니므로)
     const geo = s => {
@@ -2313,11 +2104,11 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       });
       dots = [];
       let guard = 0;
-      while (dots.length < (phone ? 150 : 100) && guard++ < 12000) {   // 빈 자리와 모서리까지 작은 뉴런으로 채움 (11-06 90·60 → 150·100, 더 촘촘하게)
+      while (dots.length < (phone ? 240 : 140) && guard++ < 20000) {   // 빈 자리와 모서리까지 작은 뉴런으로 채움 (11-06 90·60 → 150·100 → 11-10 240·140, 더 촘촘하게)
         const x = -20 + rnd() * (W + 40), y = -20 + rnd() * (H + 40);
-        if (Object.values(N).every(n => Math.hypot(n.x - x, n.y - y) > 30) && dots.every(d => Math.hypot(d.x - x, d.y - y) > 24)) { const d = { x, y, x0: x, y0: y, den: [], amp: 18 }; drift(d); dots.push(d); }
+        if (Object.values(N).every(n => Math.hypot(n.x - x, n.y - y) > 30) && dots.every(d => Math.hypot(d.x - x, d.y - y) > 19)) { const d = { x, y, x0: x, y0: y, den: [], amp: 18, dot: 1, out: [] }; drift(d); dots.push(d); }
       }
-      dots.forEach(d => { for (let i = 0; i < 6; i++) branch(0, 0, rnd() * Math.PI * 2, 16 + rnd() * 16, 5, d.den, .9); });
+      dots.forEach((d, j) => { const sm = d.sm = j >= (phone ? 150 : 100); for (let i = 0; i < (sm ? 5 : 6); i++) branch(0, 0, rnd() * Math.PI * 2, sm ? 9 + rnd() * 10 : 16 + rnd() * 16, sm ? 4 : 5, d.den, sm ? .8 : .9); });   // 11-10 늘린 뉴런은 가지를 짧게 (크기가 섞여 깊이감 · 가지 그림은 한 장(mid)에 모아 같이 떠다님 → 늘어도 가볍게)
       Object.values(N).forEach(n => { n.nb = new Set(); n.near = new Set(); });
       E.forEach(e => { e.a.nb.add(e.b); e.b.nb.add(e.a); });
       mesh = [];
@@ -2330,7 +2121,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       });
       dots.forEach(d => {
         [...dots, ...Object.values(N)].filter(o => o !== d).sort((a, b) => Math.hypot(a.x - d.x, a.y - d.y) - Math.hypot(b.x - d.x, b.y - d.y)).slice(0, 4).forEach(o => {
-          mesh.push({ a: d, b: o, k: (rnd() - .5) * .5 });
+          const m = { a: d, b: o, k: (rnd() - .5) * .5 }; mesh.push(m); d.out.push(m);   // d.out = 이 뉴런에서 나가는 가는 선 (연쇄 발화가 타고 감)
         });
       });
       // 11-06 S.Lee: 경로 가운데에서 가까운 작은 뉴런 2~3개로 갈라지는 잔가지 (데이터가 한 지점에만 모이지 않고 갈라져 퍼짐)
@@ -2366,7 +2157,20 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       const cw = Math.round(r.width * dpr), ch = Math.round(cw * H / W);
       if (cw === cv.width && ch === cv.height && ready) return;
       cv.width = cw; cv.height = ch; scale = cw / W; cssW = r.width;
-      Object.values(N).forEach(n => bake(n, 1)); dots.forEach(d => bake(d, .6));
+      Object.values(N).forEach(n => bake(n, 1)); dots.forEach(d => { if (!d.sm) bake(d, .6); });
+      // 뒤에 까는 두 장(far · mid)은 본 캔버스 밑의 별도 캔버스 → 매 프레임 다시 그리지 않고 위치만 옮김 (브라우저가 합성, 가벼움)
+      const lay = el => { if (!el) { el = document.createElement('canvas'); el.className = 'live'; el.setAttribute('aria-hidden', 'true'); cv.before(el); } el.width = cw; el.height = ch; return el; };
+      far = lay(far); mid = lay(mid);   // 늘린 작은 뉴런들의 가지는 한 장에
+      { const g = mid.getContext('2d'); g.setTransform(scale, 0, 0, scale, 0, 0); g.lineCap = 'round';
+        dots.forEach(d => { if (!d.sm) return; d.den.forEach(b => { g.strokeStyle = `rgba(230,228,228,${Math.min(.24, (.04 + .11 * b.w) * .6)})`; g.lineWidth = b.w * lw; g.beginPath(); g.moveTo(d.x0 + b.x, d.y0 + b.y); g.quadraticCurveTo(d.x0 + b.cx, d.y0 + b.cy, d.x0 + b.ex, d.y0 + b.ey); g.stroke(); }); }); }
+      // 11-10 S.Lee: 더 촘촘해 보이게 뒤쪽에 먼 층을 한 장 깔아 둠 (작고 흐린 뉴런 · 가는 선, 한 번만 그려 두고 매 프레임 살짝 밀어 찍음)
+      { const g = far.getContext('2d'); g.setTransform(scale, 0, 0, scale, 0, 0); g.lineCap = 'round'; let sd = 11; const r = () => (sd = (sd * 16807) % 2147483647) / 2147483647;
+        const P = Array.from({ length: phone ? 320 : 200 }, () => [r() * W, r() * H]);
+        g.strokeStyle = 'rgba(230,228,228,.055)'; g.lineWidth = .6 * lw; g.beginPath();
+        P.forEach(a => { P.filter(b => b !== a).sort((b, c) => Math.hypot(b[0] - a[0], b[1] - a[1]) - Math.hypot(c[0] - a[0], c[1] - a[1])).slice(0, 2).forEach(b => { const mx = (a[0] + b[0]) / 2 + (r() - .5) * 24, my = (a[1] + b[1]) / 2 + (r() - .5) * 24; g.moveTo(a[0], a[1]); g.quadraticCurveTo(mx, my, b[0], b[1]); }); });
+        g.stroke(); g.strokeStyle = 'rgba(230,228,228,.08)'; g.beginPath();
+        P.forEach(a => { for (let i = 0; i < 5; i++) { const an = r() * 6.283, l = 8 + r() * 16; g.moveTo(a[0], a[1]); g.quadraticCurveTo(a[0] + Math.cos(an) * l * .5 + (r() - .5) * 6, a[1] + Math.sin(an) * l * .5 + (r() - .5) * 6, a[0] + Math.cos(an) * l, a[1] + Math.sin(an) * l); } });
+        g.stroke(); g.fillStyle = 'rgba(235,235,238,.3)'; P.forEach(a => { g.beginPath(); g.arc(a[0], a[1], .9 * lw, 0, 6.283); g.fill(); }); }
       ready = true;
     }
     fit(); addEventListener('resize', fit);
@@ -2381,30 +2185,41 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       const sec = dt / 1000;
       const pop = n => n.fl == null ? 1 : 1 + 1.1 * Math.exp(-(clock - n.fl) / 450);   // 켜진 순간 번쩍, 약 1초에 걸쳐 가라앉음
       // 지점이 천천히 떠다님 (랜덤 위상, 6~12초 주기)
-      const move = o => { let dx = 0, dy = 0; for (const w of o.w) { dx += Math.sin(clock * w.fx + w.px) * w.a; dy += Math.sin(clock * w.fy + w.py) * w.a; } o.x = o.x0 + dx * o.amp; o.y = o.y0 + dy * o.amp; };
+      const GX = Math.sin(clock / 6100) * 11 + Math.sin(clock / 2300) * 4, GY = Math.cos(clock / 7300) * 11 + Math.sin(clock / 2900) * 4;   // 한 장에 모은 작은 뉴런들은 같이 떠다님
+      const move = o => { if (o.sm) { o.x = o.x0 + GX; o.y = o.y0 + GY; return; } let dx = 0, dy = 0; for (const w of o.w) { dx += Math.sin(clock * w.fx + w.px) * w.a; dy += Math.sin(clock * w.fy + w.py) * w.a; } o.x = o.x0 + dx * o.amp; o.y = o.y0 + dy * o.amp; };
       Object.values(N).forEach(move); dots.forEach(move);
       ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1; ctx.clearRect(0, 0, cv.width, cv.height);
       ctx.setTransform(scale, 0, 0, scale, 0, 0); ctx.globalCompositeOperation = 'lighter'; ctx.lineCap = 'round';
       // 쉬는 망: 경로·그물·잔가지·지점 빛
       ctx.strokeStyle = 'rgba(210,210,216,.15)'; E.forEach(e => e.strands.forEach(s => { ctx.lineWidth = s.w * lw; curve(ctx, s); }));
-      mesh.forEach(m => { ctx.lineWidth = (m.w ? .9 : .7) * lw; ctx.strokeStyle = m.w ? 'rgba(230,228,228,.09)' : 'rgba(230,228,228,.06)'; curve(ctx, m); });
-      ctx.globalAlpha = 1; dots.forEach(d => ctx.drawImage(d.img, d.x - d.R, d.y - d.R, d.R * 2, d.R * 2)); Object.values(N).forEach(n => ctx.drawImage(n.img, n.x - n.R, n.y - n.R, n.R * 2, n.R * 2)); ctx.globalAlpha = 1;
+      if (far) { const ks = cssW / W; far.style.translate = `${(Math.sin(clock / 9000) * 16 * ks).toFixed(2)}px ${(Math.cos(clock / 11000) * 16 * ks).toFixed(2)}px`; mid.style.translate = `${(GX * ks).toFixed(2)}px ${(GY * ks).toFixed(2)}px`; }   // 먼 층은 앞 층과 다르게 천천히 밀림 (깊이감)
+      [1, 0].forEach(strong => { ctx.lineWidth = (strong ? .9 : .7) * lw; ctx.strokeStyle = strong ? 'rgba(230,228,228,.09)' : 'rgba(230,228,228,.06)'; ctx.beginPath(); mesh.forEach(m => { if (!m.w === !strong) { const [p0, c1, c2, p3] = geo(m); ctx.moveTo(p0[0], p0[1]); ctx.bezierCurveTo(c1[0], c1[1], c2[0], c2[1], p3[0], p3[1]); } }); ctx.stroke(); });   // 그물은 두 묶음으로 한 번에 그림 (선이 늘어도 가볍게)
+      ctx.globalAlpha = 1; dots.forEach(d => { if (!d.sm) ctx.drawImage(d.img, d.x - d.R, d.y - d.R, d.R * 2, d.R * 2); }); Object.values(N).forEach(n => ctx.drawImage(n.img, n.x - n.R, n.y - n.R, n.R * 2, n.R * 2)); ctx.globalAlpha = 1;
       dots.forEach(d => stamp(d.x, d.y, SP.n, 12, .22)); Object.values(N).forEach(n => stamp(n.x, n.y, n.ont ? SP.gw : SP.rw, n.size * (n.ont ? 1.25 : 1), n.ont ? .95 : .55));
       // 11-06 S.Lee: 데이터가 흐를 때 경로를 붉게 칠하지 않고, 움직이는 점만 보여 줌
       for (let i = bursts.length - 1; i >= 0; i--) {
-        const p = bursts[i]; p.t += dt / p.life; if (p.t < 0) continue; if (p.t >= 1) { if (p.to) { p.to.fl = clock; p.to.fg = !!p.g; } bursts.splice(i, 1); continue; }
+        const p = bursts[i]; p.t += dt / p.life; if (p.t < 0) continue; if (p.t >= 1) { if (p.to) { p.to.fl = clock; p.to.fg = !!p.g; if (p.hop > 0 && p.to.out && p.to.out.length && bursts.length < 420) for (let k = rnd() < .38 ? 2 : 1; k--;) { const m = p.to.out[Math.floor(rnd() * p.to.out.length)]; bursts.push({ s: m, t: 0, life: 420 + rnd() * 520, size: 7, g: p.g, to: m.b.dot ? m.b : null, hop: p.hop - 1 }); } } bursts.splice(i, 1); continue; }   // 닿은 뉴런이 다시 옆 뉴런으로 쏨 (연쇄)
         const [x, y] = at(p.s, p.t), [tx, ty] = at(p.s, Math.max(0, p.t - .05));
         ctx.globalAlpha = p.c ? .25 : .55; ctx.strokeStyle = p.c ? 'rgb(205,205,210)' : p.g ? 'rgb(110,230,170)' : 'rgb(255,120,104)'; ctx.lineWidth = 1.2 * lw; ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(x, y); ctx.stroke();
         stamp(x, y, SP[p.c || (p.g ? 'g' : 'r')], p.size, p.c ? .5 : .95);
       }
       dots.forEach(d => {   // 갈라진 데이터가 닿은 작은 뉴런: 한 번 번쩍이고 가라앉음
-        if (d.fl == null) return; const k = Math.exp(-(clock - d.fl) / 520); if (k < .03) return;
+        if (d.fl == null) return; const k = Math.exp(-(clock - d.fl) / 520); if (k < .05) { d.fl = null; return; }
         ctx.globalAlpha = 1; ctx.strokeStyle = d.fg ? `rgba(62,207,142,${.7 * k})` : `rgba(255,90,74,${.7 * k})`;
-        d.den.forEach(b => { ctx.lineWidth = (b.w + .1) * lw; ctx.beginPath(); ctx.moveTo(d.x + b.x, d.y + b.y); ctx.quadraticCurveTo(d.x + b.cx, d.y + b.cy, d.x + b.ex, d.y + b.ey); ctx.stroke(); });
+        ctx.lineWidth = .8 * lw; ctx.beginPath(); d.den.forEach(b => { ctx.moveTo(d.x + b.x, d.y + b.y); ctx.quadraticCurveTo(d.x + b.cx, d.y + b.cy, d.x + b.ex, d.y + b.ey); }); ctx.stroke();   // 11-10 한 뉴런의 가지는 한 번에 그림 (연쇄 발화로 여러 개가 같이 켜져도 가볍게)
         const sp = d.fg ? SP.g : SP.r; stamp(d.x, d.y, sp, 40 * (.8 + .4 * k), k); stamp(d.x, d.y, sp, 14, k);
       });
       Object.values(N).forEach(n => { if (!(n.glow > .05)) return; ctx.globalAlpha = 1; ctx.strokeStyle = `rgba(${n.ont ? '62,207,142' : '255,90,74'},${Math.min(1, .8 * n.int * n.glow * pop(n))})`; n.den.forEach(b => { ctx.lineWidth = (b.w + .2) * lw; ctx.beginPath(); ctx.moveTo(n.x + b.x, n.y + b.y); ctx.quadraticCurveTo(n.x + b.cx, n.y + b.cy, n.x + b.ex, n.y + b.ey); ctx.stroke(); }); });
-      if (dt && clock > nextSpark) { nextSpark = clock + 900 + rnd() * 1400; bursts.push({ s: mesh[Math.floor(rnd() * mesh.length)], t: 0, life: 1600, size: 7, c: 'n' }); }
+      if (dt && clock > nextSpark) {   // 11-10 S.Lee: 더 다이나믹하게 → 쉬는 동안에도 작은 뉴런들이 곳곳에서 연쇄로 발화 (0.25~0.6초마다 한 줄기, 3~5번 건너뜀)
+        nextSpark = clock + 250 + rnd() * 350; bursts.push({ s: mesh[Math.floor(rnd() * mesh.length)], t: 0, life: 1600, size: 7, c: 'n' });
+        const d = dots[Math.floor(rnd() * dots.length)], m = d.out[Math.floor(rnd() * d.out.length)]; if (m) { d.fl = clock; d.fg = false; bursts.push({ s: m, t: 0, life: 420 + rnd() * 520, size: 8, to: m.b.dot ? m.b : null, hop: 3 + Math.floor(rnd() * 3) }); }
+      }
+      // 가운데(총괄 AI)에서 바깥으로 퍼지는 물결: 지나가는 자리의 뉴런이 차례로 잠깐 밝아짐 (7~9초마다)
+      if (dt && clock > waveAt && N.cl) { waveAt = clock + 7000 + rnd() * 2000; wave = { x: N.cl.x, y: N.cl.y, t0: clock, id: clock }; }
+      if (wave) { const r = (clock - wave.t0) * .46, far2 = Math.hypot(W, H);
+        if (r > far2) wave = null; else { dots.forEach(d => { if (d.wk !== wave.id && Math.hypot(d.x - wave.x, d.y - wave.y) < r) { d.wk = wave.id; d.wv = clock; } });
+          ctx.globalAlpha = Math.max(0, .1 * (1 - r / far2)); ctx.strokeStyle = 'rgb(255,120,104)'; ctx.lineWidth = 2 * lw; ctx.beginPath(); ctx.arc(wave.x, wave.y, r, 0, 6.283); ctx.stroke(); } }
+      dots.forEach(d => { if (d.wv == null) return; const k = Math.exp(-(clock - d.wv) / 420); if (k < .04) { d.wv = null; return; } stamp(d.x, d.y, SP.r, 30 * (.7 + .5 * k), .75 * k); });
       Object.values(N).forEach(n => {
         const target = (n.on || 0) > 0 ? 1 : [...n.nb].some(o => o.on > 0) ? .35 : [...n.near].some(o => o.on > 0) ? .15 : 0;
         n.glow += (target - n.glow) * Math.min(1, sec * (target > n.glow ? 8 : 2.5));
@@ -2481,6 +2296,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const SHOW = [PREP, [...DEBATE, ...ONTO, 'cl-mcp', 'mcp:400', ...ORDER, ...TRACE, ...BLOCK, 'dbf:300', ...PUBLISH], ['lsnap-mon', 'mon:500', ...EXIT, ...ORDER, ...PUBLISH], CLOSE, LEARN, TUNE, REVIEW, ['lap:500', 'lap-gh', 'gh:500', 'gh-sync', 'sync:1000', 'sync-run', 'run:500']];
     (async () => { const t = T(); for (;;) { await play(t, NUMBERS); await wait(t, 2500); await play(t, KOSPI); await wait(t, 5000); } })();
     (async () => { const t = T(); for (;;) for (const list of SHOW) { await play(t, list); await wait(t, 1500); } })();
+    (async () => { const t = T(); await wait(t, 3000); for (;;) for (let i = 0; i < SHOW.length; i++) { await play(t, SHOW[(i + 4) % SHOW.length]); await wait(t, 1500); } })();   // 11-10 S.Lee: 같은 시나리오를 엇갈려 하나 더 (큰 뉴런도 더 자주 켜짐)
     return { stop() { visible = false; } };
   }
   // 11-10 S.Lee: PC 는 접는 칸을 전부 펼친 채로 (닫히면 다시 엶)
@@ -2492,7 +2308,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   // 커버는 폰에서만. PC 는 커버를 지우고 바로 대시보드 (11-05 S.Lee)
   const cover = $('cover'), onPhone = matchMedia('(max-width: 640px)').matches;
   if (cover && !onPhone) cover.remove();
-  const engine = cover && onPhone && !window.VOLT ? liveStatus() : null;   // 11-10 VoltAgent 화면의 커버는 기계 엔진(mech)이 그림
+  const engine = cover && onPhone ? liveStatus() : null;
   // 커버: 아무 곳이나 터치(또는 Enter·Space)하면 서서히 사라지고 대시보드
   if (cover && onPhone) {
     document.body.classList.add('covered');
