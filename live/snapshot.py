@@ -208,7 +208,7 @@ def shadow_now(snap):
             continue
         avg = p.get("avg_price") or 0
         price = px.get(c) or avg
-        hs.append({"code": c, "name": p.get("name", c), "qty": p["qty"], "price": price, "value": price * p["qty"],
+        hs.append({"code": c, "name": p.get("name", c), "qty": p["qty"], "avg_price": round(avg), "price": price, "value": price * p["qty"],
                    "pnl_pct": round(price / avg - 1, 4) if avg else None})
     st = _rj(os.path.join(shadow_root, "docs", "data", "status.json"), {}) or {}
     status = {k: st.get(k) for k in ("last_run", "last_ok", "next_run", "runs_today", "failures_today", "note")}
@@ -218,7 +218,26 @@ def shadow_now(snap):
         status["decision"] = {"time": dc["time"], "regime": dc.get("regime"),
                               "items": [{k: x.get(k) for k in ("code", "name", "action", "qty", "confidence", "decision")} for x in dc.get("items", [])]}
         shadow_texts(status["decision"], os.path.join(work, "journal.jsonl"))
+    status["seed_total"], status["seeded_at"] = m.get("seed_total"), m.get("seeded_at")   # 11-09 대시보드 SiON 계좌 카드 (출발 자산)
+    status["trades"] = shadow_trades(os.path.join(work, "journal.jsonl"))
     return {"total": round(m.get("cash", 0) + sum(h["value"] for h in hs)), "cash": round(m.get("cash", 0)), "holdings": hs, "status": status}
+
+
+def shadow_trades(journal, n=30):
+    """그림자 가상 체결 최근 n건 (대시보드 SiON 계좌 카드)."""
+    out = []
+    try:
+        with open(journal, encoding="utf-8") as f:
+            for line in f:
+                try:
+                    r = json.loads(line)
+                except ValueError:
+                    continue
+                if r.get("kind") == "fill":
+                    out.append({k: r.get(k) for k in ("time", "code", "name", "side", "qty", "price", "confidence")} | {"decision": str(r.get("decision") or "")[:120]})
+    except OSError:
+        pass
+    return out[-n:][::-1]
 
 
 def push_shadow(env, snap):

@@ -337,7 +337,9 @@ def shadow(rows):
                       "live": _stats(rows, C.read_jsonl(C.RUNS), start)},
             "holdings": sorted(last.get("holdings", []), key=lambda h: -(h.get("value") or 0))[:8],
             "status": {k: v for k, v in (C.read_json(os.path.join(d, "docs", "data", "status.json"), {}) or {}).items() if k != "sync"},   # 11-09 대시보드 '온톨로지' 상태바
-            "decision": _shadow_decision(d, start)}   # 11-09 Live Decision 2열 (Sigma · SiON)
+            "decision": _shadow_decision(d, start),   # 11-09 Live Decision 2열 (Sigma · SiON)
+            "trades": [{k: r.get(k) for k in ("time", "code", "name", "side", "qty", "price", "confidence", "decision")}   # 11-09 SiON 계좌 카드
+                       for r in C.read_jsonl(os.path.join(w, "journal.jsonl")) if r.get("kind") == "fill"][-30:][::-1]}
 
 
 def write_all(note=""):
