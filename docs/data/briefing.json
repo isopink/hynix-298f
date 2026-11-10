@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "13:00",
-    "pool": 419,
-    "analyzed_new": 4,
-    "passed": 21,
+    "time": "13:15",
+    "pool": 398,
+    "analyzed_new": 30,
+    "passed": 15,
     "kept_prep": false
   },
   "candidates": [
@@ -98,8 +98,13 @@
       "vol20": 0.864,
       "foreign_net": -17756228825,
       "inst_net": 32921916375,
-      "score": 0.791,
+      "score": 0.962,
       "news": [
+        {
+          "date": "11-10",
+          "title": "GS건설, 동절기 앞두고 레미콘 공장 전수 검증",
+          "risk": false
+        },
         {
           "date": "11-10",
           "title": "GS건설, 겨울철 콘크리트 품질 관리 강화…레미콘 공장 전수 검증 실시",
@@ -109,18 +114,13 @@
           "date": "11-10",
           "title": "GS건설, 동절기 내한 콘크리트 공급 전 품질 검증",
           "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "GS건설, 동절기 앞두고 레미콘 공장 전수 검증 착수",
-          "risk": false
         }
       ],
-      "price": 31950,
-      "chg": 0.0545,
-      "activity": 1.93,
+      "price": 31650,
+      "chg": 0.0446,
+      "activity": 1.83,
       "foreign_today": 0,
-      "inst_today": 670950000,
+      "inst_today": 3165000000,
       "exchange": "KOSPI"
     },
     {
@@ -133,7 +133,7 @@
       "vol20": 0.401,
       "foreign_net": -37698150775,
       "inst_net": 99683469350,
-      "score": 0.725,
+      "score": 0.925,
       "news": [
         {
           "date": "11-10",
@@ -141,11 +141,11 @@
           "risk": false
         }
       ],
-      "price": 30300,
-      "chg": 0.0134,
-      "activity": 1.9,
+      "price": 30250,
+      "chg": 0.0117,
+      "activity": 1.83,
       "foreign_today": 0,
-      "inst_today": 1212000000,
+      "inst_today": 5142500000,
       "exchange": "KOSPI"
     },
     {
@@ -158,85 +158,89 @@
       "vol20": 0.34,
       "foreign_net": -7527384600,
       "inst_net": 47458324425,
-      "score": 0.659,
+      "score": 0.717,
       "news": [
+        {
+          "date": "11-10",
+          "title": "이통 3사 3분기 실적 '희비'…SKT·LGU+ 영업익 증가, KT 나홀로 감소[종...",
+          "risk": false
+        },
+        {
+          "date": "11-10",
+          "title": "이동근이 유력? KT는 고민, 또 고민 \"당장 뭐가 필요한가를 봐야\"",
+          "risk": false
+        },
         {
           "date": "11-10",
           "title": "美 AI DC 투자 지형 변화…SKT·KT, 글로벌 빅테크 투자 유치 기대 고조",
           "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "[특징주] KT, 실적 발표 뒤 장중 1.3% 하락",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "KT, 3분기 영업익 6% 뒷걸음… AI·데이터센터 사업으로 돌파구 찾는다",
-          "risk": false
         }
       ],
-      "foreign_today": 2481600000,
+      "foreign_today": 4435200000,
       "inst_today": 0,
       "exchange": "KOSPI"
     },
     {
-      "code": "012330",
-      "name": "현대모비스",
-      "close": 331500,
-      "ret5": -0.0542,
-      "ret20": -0.0582,
-      "rsi14": 40.5,
-      "vol20": 0.683,
-      "foreign_net": -73538377500,
-      "inst_net": 104888122250,
-      "score": 0.659,
+      "code": "326030",
+      "name": "SK바이오팜",
+      "close": 87200,
+      "ret5": 0.1223,
+      "ret20": 0.2316,
+      "rsi14": 65.5,
+      "vol20": 0.553,
+      "foreign_net": -21680191950,
+      "inst_net": 66517718150,
+      "score": 0.623,
       "news": [
         {
           "date": "11-10",
-          "title": "[JB프리뷰] ‘외국선수 1명’ 균형 맞춰진 현대모비스-소노의 외나무다...",
+          "title": "SK바이오팜 세노바메이트 쟁탈전… 中 복제약도 가세",
+          "risk": false
+        },
+        {
+          "date": "11-10",
+          "title": "한림대, SK바이오팜과 교원 창업 기업 등 미국 진출 지원",
+          "risk": false
+        },
+        {
+          "date": "11-10",
+          "title": "SK바이오팜, 상생플랫폼 미국 링스 입주사 31곳 선정",
           "risk": false
         }
       ],
-      "price": 349000,
-      "chg": 0.0512,
-      "activity": 0.73,
-      "foreign_today": 3141000000,
-      "inst_today": 3839000000,
+      "foreign_today": 1395200000,
+      "inst_today": 0,
       "exchange": "KOSPI"
     },
     {
-      "code": "068270",
-      "name": "셀트리온",
-      "close": 211000,
-      "ret5": 0.0938,
-      "ret20": 0.1703,
-      "rsi14": 68.7,
-      "vol20": 0.427,
-      "foreign_net": -74613443700,
-      "inst_net": 403177326200,
-      "score": 0.571,
+      "code": "271560",
+      "name": "오리온",
+      "close": 117100,
+      "ret5": 0.0104,
+      "ret20": 0.111,
+      "rsi14": 57.4,
+      "vol20": 0.232,
+      "foreign_net": -18778364950,
+      "inst_net": 25113216300,
+      "score": 0.585,
       "news": [
         {
           "date": "11-10",
-          "title": "삼성바이오에피스·셀트리온, 美 약가 인하에 기회·부담 공존",
+          "title": "“베트남 생산능력 1조 원으로”…오리온, 중동·아프리카 공략 거점으...",
           "risk": false
         },
         {
-          "date": "11-10",
-          "title": "셀트리온 스테키마, 유럽서 소아 치료 범위 넓힌다",
+          "date": "11-09",
+          "title": "오리온, 베트남서 1조 생산…중동·阿 공략",
           "risk": false
         },
         {
-          "date": "11-10",
-          "title": "셀트리온제약, 3분기 누적 영업익 561억원…지난해 연간 실적 돌파",
+          "date": "11-09",
+          "title": "초코파이로 번 돈 엉뚱한 곳에?…흔들리는 오리온 3세 '승계 명분' [재계...",
           "risk": false
         }
       ],
-      "price": 206000,
-      "chg": -0.019,
-      "activity": 0.95,
-      "foreign_today": 1854000000,
+      "foreign_today": 1873600000,
       "inst_today": 0,
       "exchange": "KOSPI"
     },
@@ -250,93 +254,13 @@
       "vol20": 0.333,
       "foreign_net": -86710371150,
       "inst_net": 113686106975,
-      "score": 0.56,
+      "score": 0.509,
       "news": [],
-      "price": 31150,
-      "chg": 0.0081,
-      "activity": 0.76,
+      "price": 31050,
+      "chg": 0.0049,
+      "activity": 0.75,
       "foreign_today": 0,
-      "inst_today": 2647750000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "112610",
-      "name": "씨에스윈드",
-      "close": 47650,
-      "ret5": 0.1524,
-      "ret20": -0.1368,
-      "rsi14": 52.8,
-      "vol20": 0.846,
-      "foreign_net": -30362102875,
-      "inst_net": 32840193100,
-      "score": 0.527,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "신재생에너지는 '미국 블루웨이브 쇼크' 무풍지대, '풍력' 씨에스윈드·...",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "[종목이 보영] 씨에스윈드, 정책 훈풍에 본업도 회복",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "\"씨에스윈드, 美 법인 생산성 개선\"",
-          "risk": false
-        }
-      ],
-      "foreign_today": 1238900000,
-      "inst_today": 667100000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "161390",
-      "name": "한국타이어앤테크놀로지",
-      "close": 61100,
-      "ret5": 0.0608,
-      "ret20": -0.0097,
-      "rsi14": 52.4,
-      "vol20": 0.502,
-      "foreign_net": -10862318450,
-      "inst_net": 22690494600,
-      "score": 0.462,
-      "news": [],
-      "foreign_today": 0,
-      "inst_today": 1038700000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "008930",
-      "name": "한미사이언스",
-      "close": 58100,
-      "ret5": 0.3295,
-      "ret20": 0.1392,
-      "rsi14": 68.8,
-      "vol20": 0.784,
-      "foreign_net": -7680339725,
-      "inst_net": 27347572175,
-      "score": 0.462,
-      "news": [
-        {
-          "date": "11-10",
-          "title": "[더벨][한미 오너가 분쟁] 한미사이언스 지분전쟁 '초박빙' 0.27%p에 뒤집...",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "iM증권, 한미사이언스 특허·기여수익 확대 전망",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "한미사이언스, 신약 상업화·기술수출 성과에 성장세 가속 전망...주가 ...",
-          "risk": false
-        }
-      ],
-      "foreign_today": 639100000,
-      "inst_today": 116200000,
+      "inst_today": 3601800000,
       "exchange": "KOSPI"
     },
     {
@@ -349,7 +273,7 @@
       "vol20": 0.94,
       "foreign_net": -90215064750,
       "inst_net": 71337297050,
-      "score": 0.396,
+      "score": 0.453,
       "news": [
         {
           "date": "11-09",
@@ -367,123 +291,75 @@
           "risk": false
         }
       ],
-      "price": 64700,
-      "chg": 0.0677,
+      "price": 63800,
+      "chg": 0.0528,
       "activity": 0.63,
       "foreign_today": 0,
-      "inst_today": 711700000,
+      "inst_today": 4019400000,
       "exchange": "KOSPI"
     },
     {
-      "code": "032640",
-      "name": "LG유플러스",
-      "close": 16380,
-      "ret5": 0.1227,
-      "ret20": 0.132,
-      "rsi14": 70.1,
-      "vol20": 0.405,
-      "foreign_net": -54692635835,
-      "inst_net": 85968537160,
-      "score": 0.363,
+      "code": "112610",
+      "name": "씨에스윈드",
+      "close": 47650,
+      "ret5": 0.1524,
+      "ret20": -0.1368,
+      "rsi14": 52.8,
+      "vol20": 0.846,
+      "foreign_net": -30362102875,
+      "inst_net": 32840193100,
+      "score": 0.377,
       "news": [
         {
-          "date": "11-10",
-          "title": "LG유플러스, GS네오텍과 단말·클라우드 통합보안 구축",
+          "date": "11-09",
+          "title": "신재생에너지는 '미국 블루웨이브 쇼크' 무풍지대, '풍력' 씨에스윈드·...",
           "risk": false
         },
         {
-          "date": "11-10",
-          "title": "LG유플러스, GS네오텍과 단말·클라우드 잇는 'E2E 보안' 구축",
+          "date": "11-09",
+          "title": "[종목이 보영] 씨에스윈드, 정책 훈풍에 본업도 회복",
           "risk": false
         },
         {
-          "date": "11-10",
-          "title": "LG유플러스, GS네오텍과 보안사업 협력…클라우드까지 통합 보호",
+          "date": "11-09",
+          "title": "\"씨에스윈드, 美 법인 생산성 개선\"",
           "risk": false
         }
       ],
-      "foreign_today": 0,
-      "inst_today": 163800000,
+      "foreign_today": 1667750000,
+      "inst_today": 0,
       "exchange": "KOSPI"
     },
     {
-      "code": "086280",
-      "name": "현대글로비스",
-      "close": 190100,
-      "ret5": -0.0612,
-      "ret20": 0.048,
-      "rsi14": 48.9,
-      "vol20": 0.601,
-      "foreign_net": -11565905200,
-      "inst_net": 23164820850,
-      "score": 0.363,
+      "code": "008930",
+      "name": "한미사이언스",
+      "close": 58100,
+      "ret5": 0.3295,
+      "ret20": 0.1392,
+      "rsi14": 68.8,
+      "vol20": 0.784,
+      "foreign_net": -7680339725,
+      "inst_net": 27347572175,
+      "score": 0.377,
       "news": [
         {
           "date": "11-10",
-          "title": "현대글로비스·HMM, 美 항만료 추가 유예 확정…해운비 부담 변수 완화",
+          "title": "[더벨][한미 오너가 분쟁] 한미사이언스 지분전쟁 '초박빙' 0.27%p에 뒤집...",
           "risk": false
         },
         {
           "date": "11-10",
-          "title": "[단독] 현대글로비스, 美 탬파항 물류기지 66% 확장…필라델피아 이어 ...",
+          "title": "iM증권, 한미사이언스 특허·기여수익 확대 전망",
           "risk": false
         },
         {
-          "date": "11-10",
-          "title": "한화證 “현대글로비스, 해운·해외물류 호조에 실적 성장 전망… 목표...",
+          "date": "11-09",
+          "title": "한미사이언스, 신약 상업화·기술수출 성과에 성장세 가속 전망...주가 ...",
           "risk": false
         }
       ],
-      "foreign_today": 0,
-      "inst_today": 570300000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "175330",
-      "name": "JB금융지주",
-      "close": 26550,
-      "ret5": 0.0371,
-      "ret20": -0.0432,
-      "rsi14": 47.7,
-      "vol20": 0.41,
-      "foreign_net": -10024081475,
-      "inst_net": 11905700725,
-      "score": 0.242,
-      "news": [],
-      "foreign_today": 0,
-      "inst_today": 53100000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "323410",
-      "name": "카카오뱅크",
-      "close": 20400,
-      "ret5": 0.0308,
-      "ret20": 0.0313,
-      "rsi14": 53.9,
-      "vol20": 0.253,
-      "foreign_net": 1897865370,
-      "inst_net": 14561074190,
-      "score": 0.231,
-      "news": [
-        {
-          "date": "11-10",
-          "title": "카카오뱅크, 앱에서 '고향사랑기부' 가능해진다…답례품 조회·납부 연...",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "카카오뱅크, ‘고향사랑기부제’ 출시…“특산품 받고 연말정산 챙기세...",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "카카오뱅크, 고향사랑기부제 출시…세액공제·답례품 혜택 한 번에",
-          "risk": false
-        }
-      ],
-      "foreign_today": 0,
-      "inst_today": 61200000,
+      "foreign_today": 755300000,
+      "inst_today": 0,
       "exchange": "KOSPI"
     },
     {
@@ -504,10 +380,10 @@
           "risk": false
         }
       ],
-      "price": 6880,
-      "chg": 0.0801,
-      "activity": 3.55,
-      "foreign_today": 1107680000,
+      "price": 6790,
+      "chg": 0.0659,
+      "activity": 3.36,
+      "foreign_today": 1147510000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -521,7 +397,7 @@
       "vol20": 1.381,
       "foreign_net": -8424528360,
       "inst_net": 20664819130,
-      "score": 0.835,
+      "score": 0.755,
       "news": [
         {
           "date": "11-09",
@@ -539,41 +415,11 @@
           "risk": false
         }
       ],
-      "price": 16740,
-      "chg": 0.0353,
-      "activity": 1.5,
-      "foreign_today": 351540000,
-      "inst_today": 820260000,
-      "exchange": "KOSDAQ"
-    },
-    {
-      "code": "443670",
-      "name": "에스피소프트",
-      "close": 5370,
-      "ret5": 0.0762,
-      "ret20": 0.2191,
-      "rsi14": 58.9,
-      "vol20": 1.586,
-      "foreign_net": -523993734,
-      "inst_net": 12021555,
-      "score": 0.769,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "에스피소프트 21.18% 급등…클라우드·DaaS 성장성 부각",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "딥페이크 범죄 막는 AI 보안株 휘파람…에스피소프트·파수AI 노려라",
-          "risk": false
-        }
-      ],
-      "price": 5760,
-      "chg": 0.0766,
-      "activity": 8.46,
-      "foreign_today": 97920000,
-      "inst_today": 0,
+      "price": 16790,
+      "chg": 0.0383,
+      "activity": 1.44,
+      "foreign_today": 0,
+      "inst_today": 1359990000,
       "exchange": "KOSDAQ"
     },
     {
@@ -586,7 +432,7 @@
       "vol20": 1.312,
       "foreign_net": -343188300,
       "inst_net": 1370113450,
-      "score": 0.626,
+      "score": 0.547,
       "news": [
         {
           "date": "11-09",
@@ -604,11 +450,11 @@
           "risk": false
         }
       ],
-      "price": 28750,
-      "chg": 0.057,
-      "activity": 1.48,
+      "price": 28500,
+      "chg": 0.0478,
+      "activity": 1.42,
       "foreign_today": 0,
-      "inst_today": 948750000,
+      "inst_today": 1539000000,
       "exchange": "KOSDAQ"
     },
     {
@@ -621,13 +467,13 @@
       "vol20": 1.508,
       "foreign_net": 10600396200,
       "inst_net": -3906304850,
-      "score": 0.56,
+      "score": 0.509,
       "news": [],
-      "price": 73700,
-      "chg": 0.0743,
-      "activity": 1.0,
+      "price": 73100,
+      "chg": 0.0656,
+      "activity": 0.95,
       "foreign_today": 0,
-      "inst_today": 221100000,
+      "inst_today": 584800000,
       "exchange": "KOSDAQ"
     },
     {
