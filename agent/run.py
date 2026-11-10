@@ -197,6 +197,7 @@ def main():
         return
     if kind == "close":
         refresh_account()
+        py("benchmark.py")   # 11-11 비교 기준 KODEX 200 일봉 갱신 (실패해도 마감 기록은 계속)
         py("logger.py", "--close")
         publish(f"Agent close {C.today().isoformat()}")
         return

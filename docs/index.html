@@ -515,14 +515,14 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
       <div class="grid">
         <section class="card c3 glow-red m-hide"><div class="hd"><h2 class="eyebrow">이번 주</h2><span class="sub">vs 지난 금요일</span></div><div class="val" id="k-week">—</div><div class="chart" id="sp-week"></div></section>
         <section class="card c3 glow-blue m-hide"><div class="hd"><h2 class="eyebrow">최대 낙폭</h2><span class="sub">고점 대비</span></div><div class="val" id="k-mdd">—</div><div class="chart" id="sp-dd"></div></section>
-        <section class="card c3 m-hide"><div class="hd"><h2 class="eyebrow">KOSPI</h2><span class="sub">11/2 시가 대비</span></div><div class="val" id="k-kospi">—</div><div class="chart" id="sp-kospi"></div></section>
+        <section class="card c3 m-hide"><div class="hd"><h2 class="eyebrow" id="bm-title">KOSPI</h2><span class="sub">11/2 시가 대비</span></div><div class="val" id="k-kospi">—</div><div class="chart" id="sp-kospi"></div></section>
         <section class="card c3 m-hide"><div class="hd"><h2 class="eyebrow">승률</h2><span class="sub" id="k-win-sub">—</span></div><div class="val" id="k-win">—</div><div class="chart" id="sp-win"></div></section>
         <section class="card c6 m-hide">
           <div class="hd"><h2 class="eyebrow">리스크 한도 사용률</h2><span class="sub">주문 직전 Hook이 강제, 100%면 차단</span></div>
           <div class="lim" id="ch-lim"></div>
         </section>
         <section class="card c6 m-hide">
-          <div class="hd"><h2 class="eyebrow">일별 초과수익</h2><span class="sub">Sigma Engine − KOSPI (%p)</span></div>
+          <div class="hd"><h2 class="eyebrow">일별 초과수익</h2><span class="sub" id="bm-alpha-sub">Sigma Engine − KOSPI (%p)</span></div>
           <div class="chart" id="ch-alpha" style="min-height:200px"></div>
         </section>
         <section class="card c12">
@@ -673,7 +673,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
     [/^(\d+\/\d+) 기준$/, 'as of $1'], [/^(\d+\/\d+ \d+:\d+) 회차$/, 'Round $1'], [/^전체 (\d+)종목 보기/, 'Show all $1'], [/^(\d+)종목$/, '$1 stocks'], [/^(\d+)건$/, '$1'], [/^(\d+)개$/, '$1'],
     [/^변동성 (\d+%)$/, 'Vol $1'], [/^고변동 (\d+%)$/, 'High vol $1'], [/^주식 \/ 상한 (.+)$/, 'Equity / cap $1'], [/^상한 (.+)$/, 'Cap $1'], [/^([\d,]+)원$/, '₩$1'], [/^(\d+\/\d+) 시작 ·$/, 'Since $1 ·'], [/^(\d+\/\d+) 시작 · (\d+:\d+) 기준$/, 'Since $1, as of $2'], [/^(\d+\/\d+) 시작 · (\d+\/\d+) 기준$/, 'Since $1, as of $2'],
     [/^(\d+\/\d+ \d+:\d+) 장 마감$/, '$1, closed'], [/^청산 (\d+)건 중 (\d+)건 수익$/, '$2 of $1 closed trades won'], [/^한도 (.+)$/, 'Limit $1'], [/^최소 (.+)$/, 'Min $1'], [/^최대 (\d+)개, (.+)$/, 'Max $1, $2'],
-    [/^국면 상한 (.+) 안, (.+)$/, 'Within cap $1, $2'], [/^KOSPI 이긴 날 (\d+) \/ (\d+)일$/, 'Beat KOSPI $1 / $2 days'], [/^(\d)주$/, 'W$1'], [/^평균 ([\d,]+)천$/, 'Avg $1k'],
+    [/^국면 상한 (.+) 안, (.+)$/, 'Within cap $1, $2'], [/^(KOSPI|KODEX 200) 이긴 날 (\d+) \/ (\d+)일$/, 'Beat $1 $2 / $3 days'], [/^(\d)주$/, 'W$1'], [/^평균 ([\d,]+)천$/, 'Avg $1k'],
     [/^종목당 최대 비중 \((.+)\)$/, 'Max weight per stock ($1)'], [/^코스닥 비중.*$/, 'KOSDAQ weight'], [/^주식 비중 \(.+\)$/, 'Equity weight (regime cap)'], [/^매수 확신도 기준 (.+)$/, 'Buy threshold $1'],
     [/^(\d+\/\d+) 시가 대비$/, 'vs $1 open'], [/^수익률 (.*)$/, 'Return $1'], [/^장중 수급 재선별 ·(.*)$/, 'Intraday rescreen ·$1'], [/^(\d+\/\d+ \d+:\d+) 마감$/, '$1, closed']
   ];
@@ -972,10 +972,11 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   // data/*.json 이 있으면 그걸 쓰고, 없으면(파일을 더블클릭해 연 경우 등) HTML에 넣어 둔 샘플을 씀
   let SAMPLE = {};
   try { SAMPLE = JSON.parse(document.getElementById('sample-data').textContent); } catch (e) {}
-  Promise.all(['equity', 'holdings', 'trades', 'risk', 'system', 'reviews', 'status', 'decision', 'briefing', 'tuning'].map(n =>
+  Promise.all(['equity', 'holdings', 'trades', 'risk', 'system', 'reviews', 'status', 'decision', 'briefing', 'tuning', 'kodex200'].map(n =>
     fetch('data/' + n + '.json', { cache: 'no-store' }).then(r => { if (!r.ok) throw 0; return r.json(); }).catch(() => SAMPLE[n] || [])
-  ).concat(Promise.resolve().then(loadKD))).then(([equity, holdings, trades, risk, system, reviews, status, decision, briefing, tuning]) => {
+  ).concat(Promise.resolve().then(loadKD))).then(([equity, holdings, trades, risk, system, reviews, status, decision, briefing, tuning, kodex200]) => {
     TUNING = Array.isArray(tuning) ? tuning : [];
+    BM = kodex200 && kodex200.days ? kodex200 : null;   // 11-11 S.Lee: 비교 기준 KODEX 200 (없으면 예전처럼 KOSPI)
     STATUS = Array.isArray(status) ? {} : status || {};
     DECISION = Array.isArray(decision) ? {} : decision || {};
     BRIEF = Array.isArray(briefing) ? {} : briefing || {};
@@ -1005,6 +1006,9 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   const kstDate = iso => new Date(Date.parse(iso) + 9 * 3600e3).toISOString().slice(0, 10);
   // 날짜별 KOSPI 종가 (supabase/kospi.sql 의 kospi_daily). 잔고 스냅샷·equity.json 에 KOSPI 가 없는 날의 예비값
   let KD = new Map();
+  let BM = null;   // 11-11 S.Lee: 비교 기준 = KODEX 200 일봉 (data/kodex200.json: 시작일 시가 · 날짜별 종가). 없으면 KOSPI
+  const BMN = () => BM ? 'KODEX 200' : 'KOSPI';
+  const bmClose = date => BM && BM.days[date] ? BM.days[date].c : null;
   async function loadKD() {
     const url = (CFG.supabaseUrl || '').replace(/\/$/, ''), key = CFG.supabaseAnonKey || '';
     if (!url || !key) return;
@@ -1082,7 +1086,13 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       const eqLive = (BASE.equity || []).concat(filled).filter(r => r.date < today && r.date >= since).sort((a, b) => a.date < b.date ? -1 : 1)
         .concat(liveEquity(snaps)), tk = (tick || [])[0], lastRow = eqLive[eqLive.length - 1];
       // 오늘 KOSPI 끝점은 실시간 KOSPI 카드와 같은 네이버 1분봉으로 (잔고 스냅샷의 키움 지수는 조금 늦음) → 누적 수익률 기준 통일
-      if (tk && lastRow && kstDate(tk.ts) === lastRow.date) lastRow.kospi = +tk.price;
+      if (tk && lastRow && kstDate(tk.ts) === lastRow.date) {
+        lastRow.kospi = +tk.price;
+        if (BM && !bmClose(lastRow.date)) {   // 11-11 S.Lee: KODEX 200 오늘 종가는 마감 뒤에 올라오므로 장중엔 KOSPI 1분봉 등락률로 추정 (오차는 보통 0.1%p 안팎)
+          const pd = Object.keys(BM.days).filter(x => x < lastRow.date).sort().pop(), kp0 = pd && KD.get(pd);
+          if (pd && kp0) lastRow.bm = BM.days[pd].c * (+tk.price / kp0);
+        }
+      }
       D = derive({ ...BASE, equity: eqLive, holdings: holdings.length ? holdings : BASE.holdings });
       if (lastPointer !== 'mouse') tip.hidden = true;   // 터치로 고정한 말풍선은 누른 순간 값이라, 새 값이 오면 닫음
       fillText(); drawAll();
@@ -1099,12 +1109,12 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   // (11-05 +0.09%p · 11-06 +0.16%p · 11-09 +0.21%p 차이가 누적 매매대금의 약 0.1%와 일치) → 그날까지의 누적 매매대금 × 0.1% 를 더해 보여줌
   const OFFICIAL_ADJ = 0.001;
   const adjUpTo = (trades, date) => OFFICIAL_ADJ * d3.sum(trades.filter(t => String(t.time).slice(0, 10) <= date), t => +t.amount || (+t.qty * +t.price) || 0);
-  function derive(d) {
+  function derive(d) {   // 비교선(kospi · kret · kday 이름은 그대로) 값은 KODEX 200 일봉 (BM), BM 이 없으면 KOSPI
     // KOSPI: 기록값 → 없으면 kospi_daily 종가 → 그래도 없으면 전날 값
     let kp = null;
-    const eq = d.equity.map(r => { const k = +(r.kospi ?? KD.get(r.date)) || kp; kp = k; return { ...r, d: toD(r.date), total: +r.total + adjUpTo(d.trades, r.date), kiwoom: +r.total, kospi: k }; });
+    const eq = d.equity.map(r => { const k = (BM ? (bmClose(r.date) ?? r.bm) : +(r.kospi ?? KD.get(r.date))) || kp; kp = k; return { ...r, d: toD(r.date), total: +r.total + adjUpTo(d.trades, r.date), kiwoom: +r.total, kospi: k }; });
     // KOSPI 기준 = 대회 시작일 시가 (config.js kospiStart). 첫날 값을 기준으로 하면 첫날 등락이 빠짐. 없으면 첫 기록값
-    const k0 = +CFG.kospiStart || (eq.find(r => r.kospi) || {}).kospi;
+    const k0 = BM ? +BM.start : +CFG.kospiStart || (eq.find(r => r.kospi) || {}).kospi;   // KODEX 200 은 시작일 시가
     let peak = INIT;   // 고점은 시작 원금부터 (첫날 손실도 낙폭으로 잡음)
     eq.forEach((r, i) => {
       r.ret = r.total / INIT - 1; r.kret = k0 && r.kospi ? r.kospi / k0 - 1 : 0;
@@ -1164,6 +1174,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     $('k-week').textContent = pct(D.week); tone($('k-week'), D.week);
     $('k-mdd').textContent = pct(D.mdd); tone($('k-mdd'), D.mdd);
     $('k-kospi').textContent = pct(D.kret); tone($('k-kospi'), D.kret);
+    { const t = $('bm-title'), a = $('bm-alpha-sub'); if (t) t.textContent = BMN(); if (a) a.textContent = `Sigma Engine − ${BMN()} (%p)`; }   // 11-11 비교 기준 이름
     const closed = D.trades.filter(t => t.side === '매수' && t.status === '청산'), wins = closed.filter(t => t.outcome > 0).length;
     $('k-win').textContent = closed.length ? Math.round(wins / closed.length * 100) + '%' : '—';
     $('k-win-sub').textContent = '청산 ' + closed.length + '건 중 ' + wins + '건 수익';
@@ -1420,7 +1431,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     svg.append('g').selectAll('text').data(y.ticks(4)).join('text').attr('x', m.l - 8).attr('y', y).attr('dy', '.32em').attr('text-anchor', 'end').attr('font-size', 10).attr('fill', C.muted).text(tf);
     svg.append('g').selectAll('rect').data(rows).join('rect').attr('x', r => x(+r.d) + off).attr('width', bw)
       .attr('y', r => y(Math.max(0, r.v))).attr('height', r => Math.max(1, Math.abs(y(r.v) - y(0)))).attr('fill', r => r.v >= 0 ? C.red : C.blue).attr('opacity', .9)
-      .call(tipMark, r => `<div class="t">${md(r.d)}</div>${row('초과', tf(r.v) + '%p', r.v >= 0 ? 'up' : 'down')}${row('Sigma Engine', pct(r.day), r.day >= 0 ? 'up' : 'down')}${row('KOSPI', pct(r.kday))}`)
+      .call(tipMark, r => `<div class="t">${md(r.d)}</div>${row('초과', tf(r.v) + '%p', r.v >= 0 ? 'up' : 'down')}${row('Sigma Engine', pct(r.day), r.day >= 0 ? 'up' : 'down')}${row(BMN(), pct(r.kday))}`)
       .on('pointerleave', hideTip);
     if (lab) svg.append('g').selectAll('text').data(rows).join('text').attr('x', r => x(+r.d) + x.bandwidth() / 2).attr('y', r => r.v >= 0 ? y(r.v) - 5 : y(r.v) + 13)
       .attr('text-anchor', 'middle').attr('font-size', 11).attr('fill', r => r.v >= 0 ? C.redHi : C.blue).text(r => tf(r.v));
@@ -1428,7 +1439,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     svg.append('g').selectAll('text').data(rows.filter((r, i) => i % step === 0 || i === rows.length - 1)).join('text').attr('x', r => x(+r.d) + x.bandwidth() / 2).attr('y', H - 6)
       .attr('text-anchor', 'middle').attr('font-size', 11).attr('fill', C.muted).text(r => md(r.d));
     const win = rows.filter(r => r.v > 0).length;
-    svg.append('text').attr('x', W - m.r).attr('y', 10).attr('text-anchor', 'end').attr('font-size', 11).attr('fill', C.body).text(`KOSPI 이긴 날 ${win} / ${rows.length}일`);
+    svg.append('text').attr('x', W - m.r).attr('y', 10).attr('text-anchor', 'end').attr('font-size', 11).attr('fill', C.body).text(`${BMN()} 이긴 날 ${win} / ${rows.length}일`);
   }
 
   function hero() {
@@ -1449,7 +1460,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const neg = D.ret < 0, col = window.VOLT ? C.red : neg ? C.blue : C.red, colHi = window.VOLT ? C.redHi : neg ? '#7cc4ea' : C.redHi;   // 11-10 VoltAgent: 선 구분을 위해 Sigma 는 늘 초록 실선, SiON 흰 점선, KOSPI 회색 점   // 수익률 양수 빨강 · 음수 파랑
     const lo = Math.min(0, d3.min(rows, r => Math.min(r.ret, r.kret)), d3.min(sh, r => r.ret) ?? 0), hi = Math.max(0, d3.max(rows, r => Math.max(r.ret, r.kret)), d3.max(sh, r => r.ret) ?? 0);
     const y0 = d3.scaleLinear([lo, hi], [0, 1]).nice(4), ticks = y0.ticks(4), tstep = ticks.length > 1 ? ticks[1] - ticks[0] : .01, tf = v => (v > 0 ? '+' : '') + (v * 100).toFixed(tstep < .0099 ? 1 : 0) + '%';
-    const lw = Math.max(textW(svg, 'Sigma Engine ' + pct(D.ret), 12), textW(svg, 'KOSPI ' + pct(D.kret), 12), sh.length ? textW(svg, 'SiON Engine ' + pct(sh[sh.length - 1].ret), 12) : 0);
+    const lw = Math.max(textW(svg, 'Sigma Engine ' + pct(D.ret), 12), textW(svg, BMN() + ' ' + pct(D.kret), 12), sh.length ? textW(svg, 'SiON Engine ' + pct(sh[sh.length - 1].ret), 12) : 0);
     const m = { t: narrow ? 12 : 10, r: narrow ? 8 : lw + 18, b: narrow ? 56 : 28, l: d3.max(ticks, v => textW(svg, tf(v))) + 10 };   // 휴대폰은 아래쪽에 범례 자리 (11-10 위 → 아래)
     // 11-06 S.Lee: 가로축 = 11/2 ~ 마지막 기록일 거래일(주말 뺌). 첫날이 맨 왼쪽, 최신 날짜가 맨 오른쪽 — 날이 늘면 칸이 좁아짐
     const last = rows[rows.length - 1].d, DAYS = d3.utcDays(toD(START), d3.utcDay.offset(last, 1)).filter(d => d.getUTCDay() % 6 !== 0);
@@ -1500,7 +1511,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     svg.append('circle').attr('class', 'h-pulse').attr('cx', ex).attr('cy', yR).attr('r', 4.5).attr('fill', col);   // 맥박 (퍼졌다 사라짐)
     fade(svg.append('circle').attr('cx', ex).attr('cy', yR).attr('r', 4.5).attr('fill', col).attr('stroke', '#fff').attr('stroke-width', 1.5), 1);
     if (!narrow) {
-      const labs = [{ n: 'Sigma Engine', v: L.ret, c: colHi, y: y(L.ret) }, { n: 'KOSPI', v: L.kret, c: '#9a9a9a', y: y(L.kret) }];
+      const labs = [{ n: 'Sigma Engine', v: L.ret, c: colHi, y: y(L.ret) }, { n: BMN(), v: L.kret, c: '#9a9a9a', y: y(L.kret) }];
       if (sh.length > 1) labs.push({ n: 'SiON Engine', v: sh[sh.length - 1].ret, c: ONT, y: y(sh[sh.length - 1].ret) });
       labs.sort((a, b) => a.y - b.y).forEach((l, i, a) => { if (i && l.y - a[i - 1].y < 18) l.y = a[i - 1].y + 18; });   // 이름표가 겹치면 아래로 밀어 냄
       labs.forEach(l => { const t = svg.append('text').attr('x', x(L.d) + 12).attr('y', l.y).attr('dy', '.32em').attr('font-size', 12).attr('fill', l.c); t.append('tspan').attr('font-weight', 600).text(l.n); t.append('tspan').attr('dx', 6).text(pct(l.v)); });
@@ -1508,7 +1519,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       // 11-09 한 줄 범례: Sigma Engine · SiON Engine · KOSPI. 폭이 모자라면 짧은 이름 → 글씨 11px 순으로 줄임
       const items = [{ n: 'Sigma Engine', s: 'Sigma', v: L.ret, lc: col, c: colHi, w: LS.s }];
       if (sh.length > 1) items.push({ n: 'SiON Engine', s: 'SiON', v: sh[sh.length - 1].ret, lc: ONT, c: ONT, d: LS.od, w: LS.o });
-      items.push({ n: 'KOSPI', s: 'KOSPI', v: L.kret, lc: LS.kc, c: '#9a9a9a', d: LS.kd, w: LS.k });
+      items.push({ n: BMN(), s: BMN(), v: L.kret, lc: LS.kc, c: '#9a9a9a', d: LS.kd, w: LS.k });
       const avail = W - 8;
       const draw = (short, fs, gapX) => {
         const g = svg.append('g');
@@ -1533,7 +1544,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const dot = svg.append('circle').attr('r', 4).attr('fill', '#141414').attr('stroke', colHi).attr('stroke-width', 2).attr('opacity', 0);
     const bis = (rs, i) => d3.minIndex(rs, r => Math.abs(idx(r) - i));   // 마우스 위치와 가장 가까운 거래일
     const off = () => { rule.attr('opacity', 0); dot.attr('opacity', 0); };
-    const pick = r => { rule.attr('x1', x(r.d)).attr('x2', x(r.d)).attr('opacity', 1); dot.attr('cx', x(r.d)).attr('cy', y(r.ret)).attr('opacity', 1); return `<div class="t">${md(r.d)}${r.regime ? ' · ' + esc(r.regime) + ' 국면' : ''}</div>${row('Sigma Engine', pct(r.ret), r.ret >= 0 ? 'up' : 'down')}${row('KOSPI', pct(r.kret))}${shAt(r.d) ? row('SiON Engine (가상)', pct(shAt(r.d).ret)) : ''}${row('총자산', won(r.total))}`; };
+    const pick = r => { rule.attr('x1', x(r.d)).attr('x2', x(r.d)).attr('opacity', 1); dot.attr('cx', x(r.d)).attr('cy', y(r.ret)).attr('opacity', 1); return `<div class="t">${md(r.d)}${r.regime ? ' · ' + esc(r.regime) + ' 국면' : ''}</div>${row('Sigma Engine', pct(r.ret), r.ret >= 0 ? 'up' : 'down')}${row(BMN(), pct(r.kret))}${shAt(r.d) ? row('SiON Engine (가상)', pct(shAt(r.d).ret)) : ''}${row('총자산', won(r.total))}`; };
     svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r).attr('height', H - m.t - m.b).attr('fill', 'transparent')
       .on('pointermove pointerdown', ev => showTip(ev, pick(rows[bis(rows, xi.invert(d3.pointer(ev)[0]))])))
       .on('pointerleave', () => { hideTip(); off(); })
@@ -1792,7 +1803,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
         c.style.background = `linear-gradient(135deg, rgba(${rgb},${(a + .06).toFixed(3)}), rgba(${rgb},${(a * .35).toFixed(3)}))`;
         c.style.borderColor = `rgba(${rgb},${(.2 + a).toFixed(3)})`;
         const vl = document.createElement('span'); vl.className = 'v ' + (v.day >= 0 ? 'up' : 'down'); vl.textContent = pct(v.day); c.appendChild(vl);
-        tipTarget(c, `<div class="t">${md(dt)}</div>${row('Sigma Engine', pct(v.day), v.day >= 0 ? 'up' : 'down')}${row('KOSPI', pct(v.kday))}${row('초과', pct(v.day - v.kday), v.day - v.kday >= 0 ? 'up' : 'down')}`);
+        tipTarget(c, `<div class="t">${md(dt)}</div>${row('Sigma Engine', pct(v.day), v.day >= 0 ? 'up' : 'down')}${row(BMN(), pct(v.kday))}${row('초과', pct(v.day - v.kday), v.day - v.kday >= 0 ? 'up' : 'down')}`);
       }
     }
   }

@@ -904,6 +904,19 @@ def test_inverse_min_weight_in_falling_market():
     assert "수량 계산 초과" not in ok and "확신도" not in ok, ok
 
 
+def test_benchmark_kodex200_parse():
+    """11-11 비교 기준: 네이버 일봉 응답 → 날짜별 시가·종가, 시작일 시가가 기준."""
+    import benchmark
+    xml = '<item data="20261030|91495|91885|88590|90800|1" /><item data="20261102|89280|93855|88850|92945|2" /><item data="20261103|90320|90805|88810|89325|3" />'
+    out = benchmark.build(benchmark.parse(xml), "2026-11-02")
+    assert out["start"] == 89280 and list(out["days"]) == ["2026-11-02", "2026-11-03"] and out["days"]["2026-11-03"]["c"] == 89325
+    try:
+        benchmark.build(benchmark.parse(xml), "2026-11-05")
+        assert False
+    except ValueError:
+        pass
+
+
 if __name__ == "__main__":
     fails = 0
     for n, f in list(globals().items()):
