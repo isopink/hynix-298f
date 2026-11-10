@@ -81,7 +81,7 @@
     ]
   },
   "intraday": {
-    "time": "11:15",
+    "time": "11:30",
     "pool": 419,
     "analyzed_new": 30,
     "passed": 19,
@@ -98,64 +98,29 @@
       "vol20": 0.864,
       "foreign_net": -17756228825,
       "inst_net": 32921916375,
-      "score": 0.793,
+      "score": 0.78,
       "news": [
         {
           "date": "11-10",
-          "title": "GS건설, 동절기 내한 콘크리트 공급공장 전수 검증",
+          "title": "GS건설, 레미콘 납품 전 품질검사…부적합 공장 공급 차단",
           "risk": false
         },
         {
           "date": "11-10",
-          "title": "로보톰, GS건설과 협력해 가변형 주거 솔루션 '무빙월'에 로보틱스 기술...",
+          "title": "GS건설, 동절기 내한 콘크리트 공급 전 공장별 품질 검증",
           "risk": false
         },
         {
           "date": "11-10",
-          "title": "[개장 전 주요 공시] 삼성화재·GS건설·더블유게임즈·DL·피노 등",
+          "title": "GS건설, 레미콘 공장 대상 사전 성능 검증 실시…\"동절기 콘크리트 품질...",
           "risk": false
         }
       ],
       "price": 32000,
       "chg": 0.0561,
-      "activity": 2.8,
+      "activity": 2.64,
       "foreign_today": 0,
       "inst_today": 672000000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "112610",
-      "name": "씨에스윈드",
-      "close": 47650,
-      "ret5": 0.1524,
-      "ret20": -0.1368,
-      "rsi14": 52.8,
-      "vol20": 0.846,
-      "foreign_net": -30362102875,
-      "inst_net": 32840193100,
-      "score": 0.756,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "신재생에너지는 '미국 블루웨이브 쇼크' 무풍지대, '풍력' 씨에스윈드·...",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "[종목이 보영] 씨에스윈드, 정책 훈풍에 본업도 회복",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "\"씨에스윈드, 美 법인 생산성 개선\"",
-          "risk": false
-        }
-      ],
-      "price": 48950,
-      "chg": 0.0062,
-      "activity": 1.82,
-      "foreign_today": 1272700000,
-      "inst_today": 685300000,
       "exchange": "KOSPI"
     },
     {
@@ -168,7 +133,7 @@
       "vol20": 0.683,
       "foreign_net": -73538377500,
       "inst_net": 104888122250,
-      "score": 0.695,
+      "score": 0.683,
       "news": [
         {
           "date": "11-10",
@@ -176,11 +141,11 @@
           "risk": false
         }
       ],
-      "price": 355000,
-      "chg": 0.0693,
-      "activity": 1.02,
-      "foreign_today": 3195000000,
-      "inst_today": 3905000000,
+      "price": 352500,
+      "chg": 0.0617,
+      "activity": 0.96,
+      "foreign_today": 3172500000,
+      "inst_today": 3877500000,
       "exchange": "KOSPI"
     },
     {
@@ -195,11 +160,11 @@
       "inst_net": 99683469350,
       "score": 0.659,
       "news": [],
-      "price": 30200,
-      "chg": 0.01,
-      "activity": 2.09,
+      "price": 30150,
+      "chg": 0.0084,
+      "activity": 2.07,
       "foreign_today": 0,
-      "inst_today": 1208000000,
+      "inst_today": 1206000000,
       "exchange": "KOSPI"
     },
     {
@@ -212,21 +177,21 @@
       "vol20": 0.34,
       "foreign_net": -7527384600,
       "inst_net": 47458324425,
-      "score": 0.634,
+      "score": 0.646,
       "news": [
         {
           "date": "11-10",
-          "title": "[위클리오늘] 이동통신 소식_LG유플러스, KT(11.10)",
+          "title": "KT, 3분기 매출 7조원 육박…5G·데이터센터 성장이 뒷받침",
           "risk": false
         },
         {
           "date": "11-10",
-          "title": "KT \"AI 데이터센터 규모 2031년까지 1GW 이상으로 늘린다\"",
+          "title": "KT, 매출 6조9975억원…통신3사 중 최대",
           "risk": false
         },
         {
           "date": "11-10",
-          "title": "KT, 3분기 영업이익 5053억원...전년比 6.1% 감소",
+          "title": "KT, 3분기 영업익 5053억원…일회성 기저효과·고객 보답에 감소",
           "risk": false
         }
       ],
@@ -244,13 +209,45 @@
       "vol20": 0.333,
       "foreign_net": -86710371150,
       "inst_net": 113686106975,
-      "score": 0.524,
+      "score": 0.573,
       "news": [],
-      "price": 31200,
-      "chg": 0.0097,
-      "activity": 1.01,
+      "price": 31150,
+      "chg": 0.0081,
+      "activity": 0.97,
       "foreign_today": 0,
-      "inst_today": 2652000000,
+      "inst_today": 2647750000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "112610",
+      "name": "씨에스윈드",
+      "close": 47650,
+      "ret5": 0.1524,
+      "ret20": -0.1368,
+      "rsi14": 52.8,
+      "vol20": 0.846,
+      "foreign_net": -30362102875,
+      "inst_net": 32840193100,
+      "score": 0.537,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "신재생에너지는 '미국 블루웨이브 쇼크' 무풍지대, '풍력' 씨에스윈드·...",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "[종목이 보영] 씨에스윈드, 정책 훈풍에 본업도 회복",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "\"씨에스윈드, 美 법인 생산성 개선\"",
+          "risk": false
+        }
+      ],
+      "foreign_today": 1238900000,
+      "inst_today": 667100000,
       "exchange": "KOSPI"
     },
     {
@@ -263,8 +260,13 @@
       "vol20": 0.427,
       "foreign_net": -74613443700,
       "inst_net": 403177326200,
-      "score": 0.5,
+      "score": 0.524,
       "news": [
+        {
+          "date": "11-10",
+          "title": "삼성바이오에피스·셀트리온, 美 약가 인하에 기회·부담 공존",
+          "risk": false
+        },
         {
           "date": "11-10",
           "title": "셀트리온 스테키마, 유럽서 소아 치료 범위 넓힌다",
@@ -276,10 +278,10 @@
           "risk": false
         }
       ],
-      "price": 209500,
-      "chg": -0.0024,
-      "activity": 0.96,
-      "foreign_today": 1885500000,
+      "price": 209000,
+      "chg": -0.0048,
+      "activity": 0.92,
+      "foreign_today": 1881000000,
       "inst_today": 0,
       "exchange": "KOSPI"
     },
@@ -293,7 +295,7 @@
       "vol20": 0.502,
       "foreign_net": -10862318450,
       "inst_net": 22690494600,
-      "score": 0.439,
+      "score": 0.451,
       "news": [],
       "foreign_today": 0,
       "inst_today": 1038700000,
@@ -309,7 +311,7 @@
       "vol20": 0.94,
       "foreign_net": -90215064750,
       "inst_net": 71337297050,
-      "score": 0.354,
+      "score": 0.378,
       "news": [
         {
           "date": "11-09",
@@ -327,11 +329,11 @@
           "risk": false
         }
       ],
-      "price": 64000,
-      "chg": 0.0561,
-      "activity": 0.86,
+      "price": 63800,
+      "chg": 0.0528,
+      "activity": 0.8,
       "foreign_today": 0,
-      "inst_today": 704000000,
+      "inst_today": 701800000,
       "exchange": "KOSPI"
     },
     {
@@ -344,42 +346,26 @@
       "vol20": 0.405,
       "foreign_net": -54692635835,
       "inst_net": 85968537160,
-      "score": 0.354,
+      "score": 0.366,
       "news": [
         {
           "date": "11-10",
-          "title": "[위클리오늘] 이동통신 소식_LG유플러스, KT(11.10)",
+          "title": "LG유플러스, 국내 이통사 첫 자동차 사이버보안 ML3 인증",
           "risk": false
         },
         {
           "date": "11-10",
-          "title": "LG유플러스, 자동차 사이버보안 ML3 인증…차량 SW 프로젝트 적용",
+          "title": "LG유플러스·GS네오텍, 단말부터 클라우드까지 기업 보안 협력",
           "risk": false
         },
         {
           "date": "11-10",
-          "title": "LG유플러스, 차량 SW 보안 역량 입증…글로벌 완성차 공략 강화",
+          "title": "통신 넘어 차량 SW로…LG유플러스, 완성차 보안 요구 대응",
           "risk": false
         }
       ],
       "foreign_today": 0,
       "inst_today": 163800000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "175330",
-      "name": "JB금융지주",
-      "close": 26550,
-      "ret5": 0.0371,
-      "ret20": -0.0432,
-      "rsi14": 47.7,
-      "vol20": 0.41,
-      "foreign_net": -10024081475,
-      "inst_net": 11905700725,
-      "score": 0.207,
-      "news": [],
-      "foreign_today": 0,
-      "inst_today": 53100000,
       "exchange": "KOSPI"
     },
     {
@@ -392,7 +378,7 @@
       "vol20": 0.253,
       "foreign_net": 1897865370,
       "inst_net": 14561074190,
-      "score": 0.195,
+      "score": 0.22,
       "news": [
         {
           "date": "11-10",
@@ -415,6 +401,22 @@
       "exchange": "KOSPI"
     },
     {
+      "code": "175330",
+      "name": "JB금융지주",
+      "close": 26550,
+      "ret5": 0.0371,
+      "ret20": -0.0432,
+      "rsi14": 47.7,
+      "vol20": 0.41,
+      "foreign_net": -10024081475,
+      "inst_net": 11905700725,
+      "score": 0.22,
+      "news": [],
+      "foreign_today": 0,
+      "inst_today": 53100000,
+      "exchange": "KOSPI"
+    },
+    {
       "code": "008830",
       "name": "대동기어",
       "close": 6150,
@@ -432,10 +434,10 @@
           "risk": false
         }
       ],
-      "price": 6960,
-      "chg": 0.0926,
-      "activity": 5.96,
-      "foreign_today": 1120560000,
+      "price": 6930,
+      "chg": 0.0879,
+      "activity": 5.44,
+      "foreign_today": 1115730000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -467,11 +469,11 @@
           "risk": false
         }
       ],
-      "price": 16800,
-      "chg": 0.039,
-      "activity": 2.37,
-      "foreign_today": 352800000,
-      "inst_today": 823200000,
+      "price": 16780,
+      "chg": 0.0377,
+      "activity": 2.17,
+      "foreign_today": 352380000,
+      "inst_today": 822220000,
       "exchange": "KOSDAQ"
     },
     {
@@ -497,10 +499,10 @@
           "risk": false
         }
       ],
-      "price": 5850,
-      "chg": 0.0935,
-      "activity": 13.82,
-      "foreign_today": 99450000,
+      "price": 5760,
+      "chg": 0.0766,
+      "activity": 12.6,
+      "foreign_today": 97920000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -532,11 +534,11 @@
           "risk": false
         }
       ],
-      "price": 29650,
-      "chg": 0.0901,
-      "activity": 2.27,
+      "price": 29475,
+      "chg": 0.0836,
+      "activity": 2.1,
       "foreign_today": 0,
-      "inst_today": 978450000,
+      "inst_today": 972675000,
       "exchange": "KOSDAQ"
     },
     {
@@ -549,13 +551,13 @@
       "vol20": 1.508,
       "foreign_net": 10600396200,
       "inst_net": -3906304850,
-      "score": 0.549,
+      "score": 0.585,
       "news": [],
-      "price": 74600,
-      "chg": 0.0875,
-      "activity": 1.55,
+      "price": 74900,
+      "chg": 0.0918,
+      "activity": 1.44,
       "foreign_today": 0,
-      "inst_today": 223800000,
+      "inst_today": 224700000,
       "exchange": "KOSDAQ"
     },
     {
