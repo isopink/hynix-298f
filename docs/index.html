@@ -1323,7 +1323,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const P = { t: 10, h: narrow ? 140 : 170 }, V = { h: hasVol ? (narrow ? 34 : 48) : 0 }, Q = { h: narrow ? 44 : 58 };
     V.t = P.t + P.h + gap; Q.t = V.t + V.h + (V.h ? gap : 0);
     const { svg, W, H } = svgIn(el, Q.t + Q.h + 22);
-    const all = KX.concat(KY);
+    const all = KX;   // 11-10 S.Lee: 전일 선은 안 그림 (가격 범위도 오늘 값 기준)
     const y = d3.scaleLinear([Math.min(prev, d3.min(all, d => d.v)), Math.max(prev, d3.max(all, d => d.v))], [P.t + P.h, P.t]).nice(4);
     AXL.kx = d3.max(y.ticks(4), v => textW(svg, won(v))) + 10; AXL.kxUsed = Math.max(AXL.kx, AXL.fl);
     const m = { l: AXL.kxUsed, r: 8 };
@@ -1336,11 +1336,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     svg.append('g').selectAll('text').data(y.ticks(4)).join('text').attr('x', m.l - 8).attr('y', y).attr('dy', '.32em').attr('text-anchor', 'end').attr('font-size', 11).attr('fill', C.muted).text(won);
     [9, 11, 13, 15].forEach(h => svg.append('text').attr('x', x(new Date(`${day}T${String(h).padStart(2, '0')}:00:00+09:00`))).attr('y', H - 6).attr('text-anchor', h === 9 ? 'start' : 'middle').attr('font-size', 11).attr('fill', C.muted).text(h + ':00'));
     svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(prev)).attr('y2', y(prev)).attr('stroke', '#8a8a8a').attr('stroke-dasharray', '3 4');
-    if (KY.length) {
-      svg.append('path').datum(KY).attr('fill', 'none').attr('stroke', '#6a6a6a').attr('stroke-width', 1.1).attr('stroke-linejoin', 'round').attr('d', d3.line().x(d => x(d.t)).y(d => y(d.v)));
-      const Y = KY[KY.length - 1];
-      svg.append('text').attr('x', x(Y.t) + 6).attr('y', y(Y.v)).attr('dy', '.32em').attr('font-size', 11).attr('fill', C.muted).text('전일');
-    }
+    svg.append('text').attr('x', m.l + 4).attr('y', y(prev) - 5).attr('font-size', 10).attr('fill', C.muted).text('전일');   // 점선 = 전일 종가 (전일 선 대신 이름만)
     svg.append('path').datum(KX).attr('fill', gradient(svg, 'gKx', col, .3)).attr('d', d3.area().x(d => x(d.t)).y0(P.t + P.h).y1(d => y(d.v)));
     svg.append('path').datum(KX).attr('fill', 'none').attr('stroke', col).attr('stroke-width', 1.4).attr('stroke-linejoin', 'round').attr('d', d3.line().x(d => x(d.t)).y(d => y(d.v)));
     svg.append('circle').attr('cx', x(L.t)).attr('cy', y(L.v)).attr('r', 4).attr('fill', col).attr('stroke', '#fff').attr('stroke-width', 1.5);
