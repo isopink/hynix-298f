@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "11:45",
+    "time": "12:00",
     "pool": 419,
     "analyzed_new": 30,
-    "passed": 20,
+    "passed": 21,
     "kept_prep": false
   },
   "candidates": [
@@ -98,29 +98,29 @@
       "vol20": 0.864,
       "foreign_net": -17756228825,
       "inst_net": 32921916375,
-      "score": 0.793,
+      "score": 0.78,
       "news": [
+        {
+          "date": "11-10",
+          "title": "GS건설, '겨울철 내한 콘크리트 품질' 정조준…전 레미콘 공장 성능검증...",
+          "risk": false
+        },
+        {
+          "date": "11-10",
+          "title": "GS건설, 내한 콘크리트 공장 전수 검증",
+          "risk": false
+        },
         {
           "date": "11-10",
           "title": "GS건설, 동절기 콘크리트 품질관리 강화…레미콘 공장 사전 검증",
           "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "GS건설, 겨울철 콘크리트 품질관리 강화…공급 전 성능 검증",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "[건설업계 동향] GS건설ㆍ현대엔지니어링ㆍ동부건설 (11.10)",
-          "risk": false
         }
       ],
-      "price": 31850,
-      "chg": 0.0512,
-      "activity": 2.46,
+      "price": 31950,
+      "chg": 0.0545,
+      "activity": 2.31,
       "foreign_today": 0,
-      "inst_today": 668850000,
+      "inst_today": 670950000,
       "exchange": "KOSPI"
     },
     {
@@ -133,13 +133,13 @@
       "vol20": 0.401,
       "foreign_net": -37698150775,
       "inst_net": 99683469350,
-      "score": 0.701,
+      "score": 0.714,
       "news": [],
-      "price": 30050,
-      "chg": 0.005,
-      "activity": 1.99,
+      "price": 30100,
+      "chg": 0.0067,
+      "activity": 1.89,
       "foreign_today": 0,
-      "inst_today": 1202000000,
+      "inst_today": 1204000000,
       "exchange": "KOSPI"
     },
     {
@@ -152,7 +152,7 @@
       "vol20": 0.683,
       "foreign_net": -73538377500,
       "inst_net": 104888122250,
-      "score": 0.69,
+      "score": 0.692,
       "news": [
         {
           "date": "11-10",
@@ -162,7 +162,7 @@
       ],
       "price": 352000,
       "chg": 0.0602,
-      "activity": 0.91,
+      "activity": 0.87,
       "foreign_today": 3168000000,
       "inst_today": 3872000000,
       "exchange": "KOSPI"
@@ -177,26 +177,45 @@
       "vol20": 0.34,
       "foreign_net": -7527384600,
       "inst_net": 47458324425,
-      "score": 0.655,
+      "score": 0.659,
       "news": [
         {
           "date": "11-10",
-          "title": "KT지니뮤직, 이세계아이돌 신보 유통…독점 콘텐츠-팬트리 파티 개최",
+          "title": "KT, 통신 본업 회복 추진…AI·데이터센터 성장 기반 확대",
           "risk": false
         },
         {
           "date": "11-10",
-          "title": "통신 상장기업 2026년 11월 브랜드평판... KT, SK텔레콤, LG유플러스 順",
+          "title": "KT만 웃지 못한 3분기…통신 3사 엇갈린 성적표",
           "risk": false
         },
         {
           "date": "11-10",
-          "title": "[KT 인사이드] KT, AI 수주 확대에도 통신 본업 회복 지연…수익성 확보...",
+          "title": "KT, 3분기 영업이익 5053억원…전년比 6.1% 감소",
           "risk": false
         }
       ],
       "foreign_today": 2481600000,
       "inst_today": 0,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "316140",
+      "name": "우리금융지주",
+      "close": 31450,
+      "ret5": 0.0311,
+      "ret20": -0.0218,
+      "rsi14": 48.3,
+      "vol20": 0.333,
+      "foreign_net": -86710371150,
+      "inst_net": 113686106975,
+      "score": 0.56,
+      "news": [],
+      "price": 31150,
+      "chg": 0.0081,
+      "activity": 0.89,
+      "foreign_today": 0,
+      "inst_today": 2647750000,
       "exchange": "KOSPI"
     },
     {
@@ -209,7 +228,7 @@
       "vol20": 0.427,
       "foreign_net": -74613443700,
       "inst_net": 403177326200,
-      "score": 0.563,
+      "score": 0.56,
       "news": [
         {
           "date": "11-10",
@@ -227,30 +246,11 @@
           "risk": false
         }
       ],
-      "price": 208500,
-      "chg": -0.0071,
-      "activity": 0.96,
-      "foreign_today": 1876500000,
+      "price": 207500,
+      "chg": -0.0119,
+      "activity": 0.98,
+      "foreign_today": 1867500000,
       "inst_today": 0,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "316140",
-      "name": "우리금융지주",
-      "close": 31450,
-      "ret5": 0.0311,
-      "ret20": -0.0218,
-      "rsi14": 48.3,
-      "vol20": 0.333,
-      "foreign_net": -86710371150,
-      "inst_net": 113686106975,
-      "score": 0.552,
-      "news": [],
-      "price": 31200,
-      "chg": 0.0097,
-      "activity": 0.91,
-      "foreign_today": 0,
-      "inst_today": 2652000000,
       "exchange": "KOSPI"
     },
     {
@@ -263,7 +263,7 @@
       "vol20": 0.846,
       "foreign_net": -30362102875,
       "inst_net": 32840193100,
-      "score": 0.552,
+      "score": 0.538,
       "news": [
         {
           "date": "11-09",
@@ -286,6 +286,38 @@
       "exchange": "KOSPI"
     },
     {
+      "code": "008930",
+      "name": "한미사이언스",
+      "close": 58100,
+      "ret5": 0.3295,
+      "ret20": 0.1392,
+      "rsi14": 68.8,
+      "vol20": 0.784,
+      "foreign_net": -7680339725,
+      "inst_net": 27347572175,
+      "score": 0.462,
+      "news": [
+        {
+          "date": "11-10",
+          "title": "[더벨][한미 오너가 분쟁] 한미사이언스 지분전쟁 '초박빙' 0.27%p에 뒤집...",
+          "risk": false
+        },
+        {
+          "date": "11-10",
+          "title": "iM증권, 한미사이언스 특허·기여수익 확대 전망",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "한미사이언스, 신약 상업화·기술수출 성과에 성장세 가속 전망...주가 ...",
+          "risk": false
+        }
+      ],
+      "foreign_today": 639100000,
+      "inst_today": 116200000,
+      "exchange": "KOSPI"
+    },
+    {
       "code": "161390",
       "name": "한국타이어앤테크놀로지",
       "close": 61100,
@@ -295,7 +327,7 @@
       "vol20": 0.502,
       "foreign_net": -10862318450,
       "inst_net": 22690494600,
-      "score": 0.46,
+      "score": 0.451,
       "news": [],
       "foreign_today": 0,
       "inst_today": 1038700000,
@@ -311,7 +343,7 @@
       "vol20": 0.94,
       "foreign_net": -90215064750,
       "inst_net": 71337297050,
-      "score": 0.391,
+      "score": 0.396,
       "news": [
         {
           "date": "11-09",
@@ -329,11 +361,11 @@
           "risk": false
         }
       ],
-      "price": 63600,
-      "chg": 0.0495,
-      "activity": 0.74,
+      "price": 63700,
+      "chg": 0.0512,
+      "activity": 0.7,
       "foreign_today": 0,
-      "inst_today": 699600000,
+      "inst_today": 700700000,
       "exchange": "KOSPI"
     },
     {
@@ -346,7 +378,7 @@
       "vol20": 0.405,
       "foreign_net": -54692635835,
       "inst_net": 85968537160,
-      "score": 0.368,
+      "score": 0.363,
       "news": [
         {
           "date": "11-10",
@@ -378,7 +410,7 @@
       "vol20": 0.601,
       "foreign_net": -11565905200,
       "inst_net": 23164820850,
-      "score": 0.356,
+      "score": 0.352,
       "news": [
         {
           "date": "11-10",
@@ -410,7 +442,7 @@
       "vol20": 0.253,
       "foreign_net": 1897865370,
       "inst_net": 14561074190,
-      "score": 0.23,
+      "score": 0.231,
       "news": [
         {
           "date": "11-10",
@@ -442,7 +474,7 @@
       "vol20": 0.41,
       "foreign_net": -10024081475,
       "inst_net": 11905700725,
-      "score": 0.23,
+      "score": 0.231,
       "news": [],
       "foreign_today": 0,
       "inst_today": 53100000,
@@ -466,10 +498,10 @@
           "risk": false
         }
       ],
-      "price": 6900,
-      "chg": 0.0832,
-      "activity": 4.96,
-      "foreign_today": 1110900000,
+      "price": 6890,
+      "chg": 0.0816,
+      "activity": 4.56,
+      "foreign_today": 1109290000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -483,7 +515,7 @@
       "vol20": 1.381,
       "foreign_net": -8424528360,
       "inst_net": 20664819130,
-      "score": 0.874,
+      "score": 0.835,
       "news": [
         {
           "date": "11-09",
@@ -501,11 +533,11 @@
           "risk": false
         }
       ],
-      "price": 16770,
-      "chg": 0.0371,
-      "activity": 2.01,
-      "foreign_today": 352170000,
-      "inst_today": 821730000,
+      "price": 16810,
+      "chg": 0.0396,
+      "activity": 1.88,
+      "foreign_today": 353010000,
+      "inst_today": 823690000,
       "exchange": "KOSDAQ"
     },
     {
@@ -518,7 +550,7 @@
       "vol20": 1.586,
       "foreign_net": -523993734,
       "inst_net": 12021555,
-      "score": 0.77,
+      "score": 0.769,
       "news": [
         {
           "date": "11-09",
@@ -531,10 +563,10 @@
           "risk": false
         }
       ],
-      "price": 5840,
-      "chg": 0.0916,
-      "activity": 11.77,
-      "foreign_today": 99280000,
+      "price": 5810,
+      "chg": 0.086,
+      "activity": 10.8,
+      "foreign_today": 98770000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -548,7 +580,7 @@
       "vol20": 1.312,
       "foreign_net": -343188300,
       "inst_net": 1370113450,
-      "score": 0.655,
+      "score": 0.648,
       "news": [
         {
           "date": "11-09",
@@ -568,7 +600,7 @@
       ],
       "price": 29150,
       "chg": 0.0717,
-      "activity": 1.96,
+      "activity": 1.83,
       "foreign_today": 0,
       "inst_today": 961950000,
       "exchange": "KOSDAQ"
@@ -583,13 +615,13 @@
       "vol20": 1.508,
       "foreign_net": 10600396200,
       "inst_net": -3906304850,
-      "score": 0.598,
+      "score": 0.593,
       "news": [],
-      "price": 74900,
-      "chg": 0.0918,
-      "activity": 1.34,
+      "price": 74800,
+      "chg": 0.0904,
+      "activity": 1.25,
       "foreign_today": 0,
-      "inst_today": 224700000,
+      "inst_today": 224400000,
       "exchange": "KOSDAQ"
     },
     {
