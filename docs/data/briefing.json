@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "11:00",
-    "pool": 380,
+    "time": "11:15",
+    "pool": 419,
     "analyzed_new": 30,
-    "passed": 16,
+    "passed": 19,
     "kept_prep": false
   },
   "candidates": [
@@ -98,8 +98,13 @@
       "vol20": 0.864,
       "foreign_net": -17756228825,
       "inst_net": 32921916375,
-      "score": 0.833,
+      "score": 0.793,
       "news": [
+        {
+          "date": "11-10",
+          "title": "GS건설, 동절기 내한 콘크리트 공급공장 전수 검증",
+          "risk": false
+        },
         {
           "date": "11-10",
           "title": "로보톰, GS건설과 협력해 가변형 주거 솔루션 '무빙월'에 로보틱스 기술...",
@@ -109,43 +114,13 @@
           "date": "11-10",
           "title": "[개장 전 주요 공시] 삼성화재·GS건설·더블유게임즈·DL·피노 등",
           "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "[전일 주요공시] 삼성물산ㆍGS건설ㆍHD현대중공업ㆍ두산 등",
-          "risk": false
         }
       ],
-      "price": 31900,
-      "chg": 0.0528,
-      "activity": 2.98,
-      "foreign_today": 1052700000,
-      "inst_today": 638000000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "012330",
-      "name": "현대모비스",
-      "close": 331500,
-      "ret5": -0.0542,
-      "ret20": -0.0582,
-      "rsi14": 40.5,
-      "vol20": 0.683,
-      "foreign_net": -73538377500,
-      "inst_net": 104888122250,
-      "score": 0.652,
-      "news": [
-        {
-          "date": "11-10",
-          "title": "[JB프리뷰] ‘외국선수 1명’ 균형 맞춰진 현대모비스-소노의 외나무다...",
-          "risk": false
-        }
-      ],
-      "price": 352500,
-      "chg": 0.0617,
-      "activity": 1.09,
-      "foreign_today": 3525000000,
-      "inst_today": 2820000000,
+      "price": 32000,
+      "chg": 0.0561,
+      "activity": 2.8,
+      "foreign_today": 0,
+      "inst_today": 672000000,
       "exchange": "KOSPI"
     },
     {
@@ -158,7 +133,7 @@
       "vol20": 0.846,
       "foreign_net": -30362102875,
       "inst_net": 32840193100,
-      "score": 0.636,
+      "score": 0.756,
       "news": [
         {
           "date": "11-09",
@@ -176,11 +151,36 @@
           "risk": false
         }
       ],
-      "price": 49050,
-      "chg": 0.0082,
-      "activity": 1.97,
-      "foreign_today": 833850000,
-      "inst_today": 1226250000,
+      "price": 48950,
+      "chg": 0.0062,
+      "activity": 1.82,
+      "foreign_today": 1272700000,
+      "inst_today": 685300000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "012330",
+      "name": "현대모비스",
+      "close": 331500,
+      "ret5": -0.0542,
+      "ret20": -0.0582,
+      "rsi14": 40.5,
+      "vol20": 0.683,
+      "foreign_net": -73538377500,
+      "inst_net": 104888122250,
+      "score": 0.695,
+      "news": [
+        {
+          "date": "11-10",
+          "title": "[JB프리뷰] ‘외국선수 1명’ 균형 맞춰진 현대모비스-소노의 외나무다...",
+          "risk": false
+        }
+      ],
+      "price": 355000,
+      "chg": 0.0693,
+      "activity": 1.02,
+      "foreign_today": 3195000000,
+      "inst_today": 3905000000,
       "exchange": "KOSPI"
     },
     {
@@ -193,13 +193,110 @@
       "vol20": 0.401,
       "foreign_net": -37698150775,
       "inst_net": 99683469350,
-      "score": 0.591,
+      "score": 0.659,
       "news": [],
-      "price": 29800,
-      "chg": -0.0033,
-      "activity": 2.03,
+      "price": 30200,
+      "chg": 0.01,
+      "activity": 2.09,
       "foreign_today": 0,
-      "inst_today": 1519800000,
+      "inst_today": 1208000000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "030200",
+      "name": "KT",
+      "close": 52800,
+      "ret5": 0.1282,
+      "ret20": 0.0645,
+      "rsi14": 64.7,
+      "vol20": 0.34,
+      "foreign_net": -7527384600,
+      "inst_net": 47458324425,
+      "score": 0.634,
+      "news": [
+        {
+          "date": "11-10",
+          "title": "[위클리오늘] 이동통신 소식_LG유플러스, KT(11.10)",
+          "risk": false
+        },
+        {
+          "date": "11-10",
+          "title": "KT \"AI 데이터센터 규모 2031년까지 1GW 이상으로 늘린다\"",
+          "risk": false
+        },
+        {
+          "date": "11-10",
+          "title": "KT, 3분기 영업이익 5053억원...전년比 6.1% 감소",
+          "risk": false
+        }
+      ],
+      "foreign_today": 2481600000,
+      "inst_today": 0,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "316140",
+      "name": "우리금융지주",
+      "close": 31450,
+      "ret5": 0.0311,
+      "ret20": -0.0218,
+      "rsi14": 48.3,
+      "vol20": 0.333,
+      "foreign_net": -86710371150,
+      "inst_net": 113686106975,
+      "score": 0.524,
+      "news": [],
+      "price": 31200,
+      "chg": 0.0097,
+      "activity": 1.01,
+      "foreign_today": 0,
+      "inst_today": 2652000000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "068270",
+      "name": "셀트리온",
+      "close": 211000,
+      "ret5": 0.0938,
+      "ret20": 0.1703,
+      "rsi14": 68.7,
+      "vol20": 0.427,
+      "foreign_net": -74613443700,
+      "inst_net": 403177326200,
+      "score": 0.5,
+      "news": [
+        {
+          "date": "11-10",
+          "title": "셀트리온 스테키마, 유럽서 소아 치료 범위 넓힌다",
+          "risk": false
+        },
+        {
+          "date": "11-10",
+          "title": "셀트리온제약, 3분기 누적 영업익 561억원…지난해 연간 실적 돌파",
+          "risk": false
+        }
+      ],
+      "price": 209500,
+      "chg": -0.0024,
+      "activity": 0.96,
+      "foreign_today": 1885500000,
+      "inst_today": 0,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "161390",
+      "name": "한국타이어앤테크놀로지",
+      "close": 61100,
+      "ret5": 0.0608,
+      "ret20": -0.0097,
+      "rsi14": 52.4,
+      "vol20": 0.502,
+      "foreign_net": -10862318450,
+      "inst_net": 22690494600,
+      "score": 0.439,
+      "news": [],
+      "foreign_today": 0,
+      "inst_today": 1038700000,
       "exchange": "KOSPI"
     },
     {
@@ -212,7 +309,7 @@
       "vol20": 0.94,
       "foreign_net": -90215064750,
       "inst_net": 71337297050,
-      "score": 0.5,
+      "score": 0.354,
       "news": [
         {
           "date": "11-09",
@@ -230,30 +327,11 @@
           "risk": false
         }
       ],
-      "price": 63900,
-      "chg": 0.0545,
-      "activity": 0.92,
-      "foreign_today": 2619900000,
-      "inst_today": 511200000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "316140",
-      "name": "우리금융지주",
-      "close": 31450,
-      "ret5": 0.0311,
-      "ret20": -0.0218,
-      "rsi14": 48.3,
-      "vol20": 0.333,
-      "foreign_net": -86710371150,
-      "inst_net": 113686106975,
-      "score": 0.409,
-      "news": [],
-      "price": 31300,
-      "chg": 0.0129,
-      "activity": 1.06,
+      "price": 64000,
+      "chg": 0.0561,
+      "activity": 0.86,
       "foreign_today": 0,
-      "inst_today": 2191000000,
+      "inst_today": 704000000,
       "exchange": "KOSPI"
     },
     {
@@ -266,26 +344,26 @@
       "vol20": 0.405,
       "foreign_net": -54692635835,
       "inst_net": 85968537160,
-      "score": 0.318,
+      "score": 0.354,
       "news": [
         {
           "date": "11-10",
-          "title": "LG유플러스, GS네오텍과 손잡고 기업 보안사업 확대",
+          "title": "[위클리오늘] 이동통신 소식_LG유플러스, KT(11.10)",
           "risk": false
         },
         {
           "date": "11-10",
-          "title": "LG유플러스, 국내 통신사 최초 자동차 사이버보안 'ML3' 인증…글로벌 ...",
+          "title": "LG유플러스, 자동차 사이버보안 ML3 인증…차량 SW 프로젝트 적용",
           "risk": false
         },
         {
           "date": "11-10",
-          "title": "LG유플러스, GS네오텍과 단말부터 클라우드까지 E2E 보안 강화",
+          "title": "LG유플러스, 차량 SW 보안 역량 입증…글로벌 완성차 공략 강화",
           "risk": false
         }
       ],
       "foreign_today": 0,
-      "inst_today": 131040000,
+      "inst_today": 163800000,
       "exchange": "KOSPI"
     },
     {
@@ -298,10 +376,10 @@
       "vol20": 0.41,
       "foreign_net": -10024081475,
       "inst_net": 11905700725,
-      "score": 0.258,
+      "score": 0.207,
       "news": [],
       "foreign_today": 0,
-      "inst_today": 79650000,
+      "inst_today": 53100000,
       "exchange": "KOSPI"
     },
     {
@@ -314,87 +392,50 @@
       "vol20": 0.253,
       "foreign_net": 1897865370,
       "inst_net": 14561074190,
-      "score": 0.227,
+      "score": 0.195,
       "news": [
+        {
+          "date": "11-10",
+          "title": "카카오뱅크, 연말정산 앞두고 '고향사랑기부' 제휴…세액공제·답례품 ...",
+          "risk": false
+        },
+        {
+          "date": "11-10",
+          "title": "카카오뱅크, 고향사랑기부제 서비스 선보여..연말정산 혜택에 답례품까...",
+          "risk": false
+        },
         {
           "date": "11-10",
           "title": "“답례품 고르고 기부까지” 카카오뱅크, 고향사랑기부 서비스 출시",
           "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "[금융 게시판] 케이뱅크, 보금자리론 최대 25만원 지원…카카오뱅크, 고...",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "카카오뱅크, 웰로 제휴 '고향사랑기부제' 출시",
-          "risk": false
         }
       ],
       "foreign_today": 0,
-      "inst_today": 81600000,
+      "inst_today": 61200000,
       "exchange": "KOSPI"
     },
     {
-      "code": "030200",
-      "name": "KT",
-      "close": 52800,
-      "ret5": 0.1282,
-      "ret20": 0.0645,
-      "rsi14": 64.7,
-      "vol20": 0.34,
-      "foreign_net": -7527384600,
-      "inst_net": 47458324425,
-      "score": 0.212,
-      "news": [
-        {
-          "date": "11-10",
-          "title": "KT, 3분기 영업익 5053억원…기저효과에 6.1%↓",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "KT, 3분기 영업이익 5053억원...전년 동기 대비 6.1% 감소",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "삼성SDS컨소, 석유공사 132억 생성형 AI 사업 우협…점수 1위 KT는 예가 ...",
-          "risk": false
-        }
-      ],
-      "foreign_today": 0,
-      "inst_today": 52800000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "443670",
-      "name": "에스피소프트",
-      "close": 5370,
-      "ret5": 0.0762,
-      "ret20": 0.2191,
-      "rsi14": 58.9,
-      "vol20": 1.586,
-      "foreign_net": -523993734,
-      "inst_net": 12021555,
+      "code": "008830",
+      "name": "대동기어",
+      "close": 6150,
+      "ret5": 0.1389,
+      "ret20": 0.0771,
+      "rsi14": 53.7,
+      "vol20": 1.048,
+      "foreign_net": -5714115110,
+      "inst_net": -188314985,
       "score": 1.0,
       "news": [
         {
-          "date": "11-09",
-          "title": "에스피소프트 21.18% 급등…클라우드·DaaS 성장성 부각",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "딥페이크 범죄 막는 AI 보안株 휘파람…에스피소프트·파수AI 노려라",
+          "date": "11-10",
+          "title": "대동기어 주가, 급등세... 무슨 회사길래?",
           "risk": false
         }
       ],
-      "price": 5840,
-      "chg": 0.0916,
-      "activity": 14.61,
-      "foreign_today": 893520000,
+      "price": 6960,
+      "chg": 0.0926,
+      "activity": 5.96,
+      "foreign_today": 1120560000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -408,7 +449,7 @@
       "vol20": 1.381,
       "foreign_net": -8424528360,
       "inst_net": 20664819130,
-      "score": 0.955,
+      "score": 0.866,
       "news": [
         {
           "date": "11-09",
@@ -426,35 +467,40 @@
           "risk": false
         }
       ],
-      "price": 16930,
-      "chg": 0.047,
-      "activity": 2.59,
-      "foreign_today": 2031600000,
-      "inst_today": 389390000,
+      "price": 16800,
+      "chg": 0.039,
+      "activity": 2.37,
+      "foreign_today": 352800000,
+      "inst_today": 823200000,
       "exchange": "KOSDAQ"
     },
     {
-      "code": "008830",
-      "name": "대동기어",
-      "close": 6150,
-      "ret5": 0.1389,
-      "ret20": 0.0771,
-      "rsi14": 53.7,
-      "vol20": 1.048,
-      "foreign_net": -5714115110,
-      "inst_net": -188314985,
-      "score": 0.848,
+      "code": "443670",
+      "name": "에스피소프트",
+      "close": 5370,
+      "ret5": 0.0762,
+      "ret20": 0.2191,
+      "rsi14": 58.9,
+      "vol20": 1.586,
+      "foreign_net": -523993734,
+      "inst_net": 12021555,
+      "score": 0.78,
       "news": [
         {
-          "date": "11-10",
-          "title": "대동기어 주가, 급등세... 무슨 회사길래?",
+          "date": "11-09",
+          "title": "에스피소프트 21.18% 급등…클라우드·DaaS 성장성 부각",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "딥페이크 범죄 막는 AI 보안株 휘파람…에스피소프트·파수AI 노려라",
           "risk": false
         }
       ],
-      "price": 6940,
-      "chg": 0.0895,
-      "activity": 6.43,
-      "foreign_today": 721760000,
+      "price": 5850,
+      "chg": 0.0935,
+      "activity": 13.82,
+      "foreign_today": 99450000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -468,7 +514,7 @@
       "vol20": 1.312,
       "foreign_net": -343188300,
       "inst_net": 1370113450,
-      "score": 0.515,
+      "score": 0.683,
       "news": [
         {
           "date": "11-09",
@@ -486,11 +532,30 @@
           "risk": false
         }
       ],
-      "price": 29450,
-      "chg": 0.0827,
-      "activity": 2.42,
+      "price": 29650,
+      "chg": 0.0901,
+      "activity": 2.27,
       "foreign_today": 0,
-      "inst_today": 441750000,
+      "inst_today": 978450000,
+      "exchange": "KOSDAQ"
+    },
+    {
+      "code": "425420",
+      "name": "티에프이",
+      "close": 67600,
+      "ret5": -0.1746,
+      "ret20": 0.0886,
+      "rsi14": 48.9,
+      "vol20": 1.508,
+      "foreign_net": 10600396200,
+      "inst_net": -3906304850,
+      "score": 0.549,
+      "news": [],
+      "price": 74600,
+      "chg": 0.0875,
+      "activity": 1.55,
+      "foreign_today": 0,
+      "inst_today": 223800000,
       "exchange": "KOSDAQ"
     },
     {
