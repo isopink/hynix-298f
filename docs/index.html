@@ -316,7 +316,7 @@ td.k { color: var(--ink); white-space: nowrap; }
 .cover-text { position: absolute; inset: 0; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; pointer-events: none; padding: 0 24px 14vh; text-align: center; }   /* 11-06 S.Lee: 제목을 가운데보다 조금 위로 */
 .cover-title { margin: 0; font-size: clamp(26px, 6vw, 60px); font-weight: 500; letter-spacing: -.5px; line-height: 1.1; color: var(--ink); text-shadow: 0 0 24px rgba(0,0,0,.9), 0 0 60px rgba(218,41,28,.25); text-wrap: balance; }
 body.covered { overflow: clip; }   /* 11-10 hallmark 34: hidden 은 sticky 를 깸 */
-@media (min-width: 641px) { .cover { display: none; } }   /* PC 는 커버 없이 바로 대시보드 (11-05) */
+/* 11-10 S.Lee: PC 에서도 커버를 보임 (예전엔 PC 는 커버 없이 바로 대시보드) */
 .kx-flow { margin-top: 14px; padding-top: 14px; border-top: 1px dashed rgba(255,255,255,.08); }   /* 카드 안 아래칸 (누적 수익률 → 실시간 판단, 실시간 KOSPI → 순매수) */
 .kx-flow .hd { margin-bottom: 8px; }
 .kx-flow .fl-kv .v { font-size: 17px; }
@@ -818,7 +818,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
     let tries = 0; const wait = setInterval(() => { const a = document.getElementById('pnl-won'); if ((a && /\d/.test(a.textContent)) || ++tries > 60) { clearInterval(wait); setTimeout(() => { decode(a); decode(document.getElementById('s-pnl-won')); }, 120); } }, 100);
     space();
   };
-  if (coverEl && phone) new MutationObserver(() => { if (coverEl.classList.contains('out')) go(350); }).observe(coverEl, { attributes: true, attributeFilter: ['class'] });
+  if (coverEl) new MutationObserver(() => { if (coverEl.classList.contains('out')) go(350); }).observe(coverEl, { attributes: true, attributeFilter: ['class'] });
   else go(60);
   // 11-10 S.Lee: 엔진 탭을 바꿀 때는 애니메이션 없이 바로 바뀜
 })();
@@ -2362,12 +2362,11 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     document.querySelectorAll('details').forEach(keep);
     new MutationObserver(ms => ms.forEach(m => m.addedNodes.forEach(n => { if (n.nodeType === 1) (n.matches('details') ? [n] : [...n.querySelectorAll('details')]).forEach(keep); }))).observe(document.body, { childList: true, subtree: true });
   }
-  // 커버는 폰에서만. PC 는 커버를 지우고 바로 대시보드 (11-05 S.Lee)
-  const cover = $('cover'), onPhone = matchMedia('(max-width: 640px)').matches;
-  if (cover && !onPhone) cover.remove();
-  const engine = cover && onPhone ? liveStatus() : null;
+  // 커버는 폰 · PC 모두 (11-10 S.Lee: 예전엔 폰에서만)
+  const cover = $('cover');
+  const engine = cover ? liveStatus() : null;
   // 커버: 아무 곳이나 터치(또는 Enter·Space)하면 서서히 사라지고 대시보드
-  if (cover && onPhone) {
+  if (cover) {
     document.body.classList.add('covered');
     const leave = () => {
       if (cover.classList.contains('out')) return;
