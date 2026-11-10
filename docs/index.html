@@ -732,14 +732,12 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
   @keyframes fx-edge { 0% { background-position: -140px 0; } 45%, 100% { background-position: calc(100% + 140px) 0; } }
   /* 격납고 문처럼 가운데서 위아래로 열림 (처음 한 번 · 엔진 탭을 바꿀 때) */
   .fx-go .wrap .card, .fx-go .wrap details.log { animation: fx-door .62s cubic-bezier(.2, .9, .25, 1) both; animation-delay: calc(var(--fx0, 0ms) + var(--i, 0) * 80ms); }
-  .wrap .card.fx-re { animation: fx-door .5s cubic-bezier(.2, .9, .25, 1) both; }
   .fx-go .wrap .eng-tabs { animation: fx-fade .5s ease both; animation-delay: calc(var(--fx0, 0ms) + var(--i, 0) * 80ms); }
   @keyframes fx-door { 0% { opacity: 0; filter: brightness(2.4); clip-path: polygon(14px 50%, 100% 50%, 100% 50%, calc(100% - 14px) 50%, 0 50%, 0 50%); } 22% { opacity: 1; }
     100% { opacity: 1; filter: brightness(1); clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px); } }
   @keyframes fx-fade { from { opacity: 0; } to { opacity: 1; } }
   /* 확신도 막대가 충전되듯 참 */
-  .fx-go .dec-row .cf i b, .fx-re .dec-row .cf i b { transform-origin: 0 50%; animation: fx-charge .7s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--fx0, 0ms) + 520ms); }
-  .fx-re .dec-row .cf i b { animation-delay: 180ms; }
+  .fx-go .dec-row .cf i b { transform-origin: 0 50%; animation: fx-charge .7s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--fx0, 0ms) + 520ms); }
   @keyframes fx-charge { from { transform: scaleX(0); } to { transform: scaleX(1); } }
   /* 수익률 차트를 훑는 스캐너 */
   [data-theme=volt] #ch-hero::after { content: ""; position: absolute; top: 4%; bottom: 12%; left: 4%; width: 1px; pointer-events: none; opacity: 0;
@@ -811,11 +809,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
   };
   if (coverEl && phone) new MutationObserver(() => { if (coverEl.classList.contains('out')) go(350); }).observe(coverEl, { attributes: true, attributeFilter: ['class'] });
   else go(60);
-  // 엔진 탭을 바꾸면 그 엔진의 판이 다시 열림
-  const tabs = document.getElementById('eng-tabs');
-  if (tabs && !calm) tabs.addEventListener('click', () => setTimeout(() => {
-    document.querySelectorAll('.wrap .card.pane:not([hidden]), #dec-card').forEach(c => { c.classList.remove('fx-re'); void c.offsetWidth; c.classList.add('fx-re'); setTimeout(() => c.classList.remove('fx-re'), 900); });
-  }, 30));
+  // 11-10 S.Lee: 엔진 탭을 바꿀 때는 애니메이션 없이 바로 바뀜
 })();
 </script>
 <script src="config.js"></script>
