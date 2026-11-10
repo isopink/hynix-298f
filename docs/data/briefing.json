@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "09:30",
+    "time": "09:45",
     "pool": 321,
     "analyzed_new": 30,
-    "passed": 8,
+    "passed": 7,
     "kept_prep": false
   },
   "candidates": [
@@ -98,7 +98,7 @@
       "vol20": 0.683,
       "foreign_net": -73538377500,
       "inst_net": 104888122250,
-      "score": 0.625,
+      "score": 0.591,
       "news": [
         {
           "date": "11-10",
@@ -106,10 +106,10 @@
           "risk": false
         }
       ],
-      "price": 354000,
-      "chg": 0.0663,
-      "activity": 2.48,
-      "foreign_today": 3186000000,
+      "price": 353500,
+      "chg": 0.0648,
+      "activity": 1.9,
+      "foreign_today": 3181500000,
       "inst_today": 0,
       "exchange": "KOSPI"
     },
@@ -123,7 +123,7 @@
       "vol20": 0.447,
       "foreign_net": -17944203050,
       "inst_net": 55497333350,
-      "score": 0.5,
+      "score": 0.545,
       "news": [
         {
           "date": "11-10",
@@ -141,35 +141,10 @@
           "risk": false
         }
       ],
-      "price": 82700,
-      "chg": 0.0685,
-      "activity": 4.63,
-      "foreign_today": 496200000,
-      "inst_today": 0,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "105560",
-      "name": "KB금융",
-      "close": 152500,
-      "ret5": -0.0085,
-      "ret20": -0.0598,
-      "rsi14": 40.5,
-      "vol20": 0.305,
-      "foreign_net": -109290854150,
-      "inst_net": 110376454550,
-      "score": 0.406,
-      "news": [
-        {
-          "date": "11-10",
-          "title": "[특징주] KB금융 3%대↑…ELS 과징금 환입·방어주 매력에 은행株 강세",
-          "risk": false
-        }
-      ],
-      "price": 156100,
-      "chg": 0.0345,
-      "activity": 1.61,
-      "foreign_today": 3122000000,
+      "price": 81900,
+      "chg": 0.0581,
+      "activity": 3.93,
+      "foreign_today": 491400000,
       "inst_today": 0,
       "exchange": "KOSPI"
     },
@@ -183,7 +158,7 @@
       "vol20": 0.94,
       "foreign_net": -90215064750,
       "inst_net": 71337297050,
-      "score": 0.344,
+      "score": 0.318,
       "news": [
         {
           "date": "11-09",
@@ -201,10 +176,10 @@
           "risk": false
         }
       ],
-      "price": 63900,
-      "chg": 0.0545,
-      "activity": 2.01,
-      "foreign_today": 511200000,
+      "price": 63400,
+      "chg": 0.0462,
+      "activity": 1.53,
+      "foreign_today": 507200000,
       "inst_today": 0,
       "exchange": "KOSPI"
     },
@@ -219,11 +194,17 @@
       "foreign_net": -5714115110,
       "inst_net": -188314985,
       "score": 1.0,
-      "news": [],
-      "price": 6980,
-      "chg": 0.0958,
-      "activity": 7.66,
-      "foreign_today": 607260000,
+      "news": [
+        {
+          "date": "11-10",
+          "title": "대동기어 주가, 급등세... 무슨 회사길래?",
+          "risk": false
+        }
+      ],
+      "price": 7060,
+      "chg": 0.1083,
+      "activity": 12.6,
+      "foreign_today": 614220000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -237,7 +218,7 @@
       "vol20": 1.586,
       "foreign_net": -523993734,
       "inst_net": 12021555,
-      "score": 0.844,
+      "score": 0.955,
       "news": [
         {
           "date": "11-09",
@@ -250,29 +231,10 @@
           "risk": false
         }
       ],
-      "price": 5580,
-      "chg": 0.043,
-      "activity": 13.92,
-      "foreign_today": 122760000,
-      "inst_today": 0,
-      "exchange": "KOSDAQ"
-    },
-    {
-      "code": "263860",
-      "name": "지니언스",
-      "close": 23900,
-      "ret5": -0.1261,
-      "ret20": 0.0839,
-      "rsi14": 53.2,
-      "vol20": 1.398,
-      "foreign_net": -4112853625,
-      "inst_net": -1722545450,
-      "score": 0.656,
-      "news": [],
-      "price": 24900,
-      "chg": 0.0375,
-      "activity": 4.69,
-      "foreign_today": 323700000,
+      "price": 5890,
+      "chg": 0.1009,
+      "activity": 14.32,
+      "foreign_today": 129580000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -284,6 +246,20 @@
       "ret20": 0.2577,
       "rsi14": 69.2,
       "vol20": 0.629,
+      "foreign_net": null,
+      "inst_net": null,
+      "score": null,
+      "news": [],
+      "exchange": "ETF"
+    },
+    {
+      "code": "069500",
+      "name": "KODEX 200",
+      "close": 78490,
+      "ret5": -0.1555,
+      "ret20": -0.2275,
+      "rsi14": 30.6,
+      "vol20": 0.636,
       "foreign_net": null,
       "inst_net": null,
       "score": null,
