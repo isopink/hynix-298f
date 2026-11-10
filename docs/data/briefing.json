@@ -81,48 +81,13 @@
     ]
   },
   "intraday": {
-    "time": "10:15",
-    "pool": 379,
+    "time": "10:30",
+    "pool": 380,
     "analyzed_new": 30,
-    "passed": 9,
+    "passed": 11,
     "kept_prep": false
   },
   "candidates": [
-    {
-      "code": "017670",
-      "name": "SK텔레콤",
-      "close": 77100,
-      "ret5": 0.0118,
-      "ret20": -0.0277,
-      "rsi14": 44.8,
-      "vol20": 0.447,
-      "foreign_net": -17944203050,
-      "inst_net": 55497333350,
-      "score": 0.71,
-      "news": [
-        {
-          "date": "11-10",
-          "title": "KT, 11월 통신 상장기업 브랜드평판 빅데이터 1위…SK텔레콤·LG유플러스...",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "KT, 통신사 브랜드평판 1위 지켰다…SK텔레콤·LG유플러스 모두 하락",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "[브랜드평판] KT, 통신 상장기업 11월 1위... SK텔레콤, LG유플러스 뒤이...",
-          "risk": false
-        }
-      ],
-      "price": 81900,
-      "chg": 0.0581,
-      "activity": 3.1,
-      "foreign_today": 2538900000,
-      "inst_today": 1801800000,
-      "exchange": "KOSPI"
-    },
     {
       "code": "006360",
       "name": "GS건설",
@@ -133,7 +98,7 @@
       "vol20": 0.864,
       "foreign_net": -17756228825,
       "inst_net": 32921916375,
-      "score": 0.71,
+      "score": 0.707,
       "news": [
         {
           "date": "11-10",
@@ -151,11 +116,46 @@
           "risk": false
         }
       ],
-      "price": 31300,
-      "chg": 0.033,
-      "activity": 3.96,
-      "foreign_today": 1032900000,
-      "inst_today": 626000000,
+      "price": 31500,
+      "chg": 0.0396,
+      "activity": 3.5,
+      "foreign_today": 1039500000,
+      "inst_today": 630000000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "017670",
+      "name": "SK텔레콤",
+      "close": 77100,
+      "ret5": 0.0118,
+      "ret20": -0.0277,
+      "rsi14": 44.8,
+      "vol20": 0.447,
+      "foreign_net": -17944203050,
+      "inst_net": 55497333350,
+      "score": 0.659,
+      "news": [
+        {
+          "date": "11-10",
+          "title": "KT, 11월 통신 상장기업 브랜드평판 빅데이터 1위…SK텔레콤·LG유플러스...",
+          "risk": false
+        },
+        {
+          "date": "11-10",
+          "title": "KT, 통신사 브랜드평판 1위 지켰다…SK텔레콤·LG유플러스 모두 하락",
+          "risk": false
+        },
+        {
+          "date": "11-10",
+          "title": "[브랜드평판] KT, 통신 상장기업 11월 1위... SK텔레콤, LG유플러스 뒤이...",
+          "risk": false
+        }
+      ],
+      "price": 81800,
+      "chg": 0.0568,
+      "activity": 2.82,
+      "foreign_today": 2535800000,
+      "inst_today": 1799600000,
       "exchange": "KOSPI"
     },
     {
@@ -168,7 +168,7 @@
       "vol20": 0.846,
       "foreign_net": -30362102875,
       "inst_net": 32840193100,
-      "score": 0.419,
+      "score": 0.439,
       "news": [
         {
           "date": "11-09",
@@ -186,36 +186,78 @@
           "risk": false
         }
       ],
-      "price": 48550,
-      "chg": -0.0021,
-      "activity": 2.62,
-      "foreign_today": 825350000,
-      "inst_today": 1213750000,
+      "price": 48600,
+      "chg": -0.001,
+      "activity": 2.33,
+      "foreign_today": 826200000,
+      "inst_today": 1215000000,
       "exchange": "KOSPI"
     },
     {
-      "code": "316140",
-      "name": "우리금융지주",
-      "close": 31450,
-      "ret5": 0.0311,
-      "ret20": -0.0218,
-      "rsi14": 48.3,
-      "vol20": 0.333,
-      "foreign_net": -86710371150,
-      "inst_net": 113686106975,
-      "score": 0.161,
+      "code": "028050",
+      "name": "삼성E&A",
+      "close": 60500,
+      "ret5": -0.0457,
+      "ret20": 0.3195,
+      "rsi14": 57.7,
+      "vol20": 0.94,
+      "foreign_net": -90215064750,
+      "inst_net": 71337297050,
+      "score": 0.39,
       "news": [
         {
           "date": "11-09",
-          "title": "하나증권 \"은행주 중장기 투자 유효, 최선호주 KB금융지주 우리금융지주...",
+          "title": "삼성E&A, 10일 싱가포르·홍콩서 NDR",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "반도체 특수에 삼성물산·삼성E&A·SK에코 '쾌재'",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "삼성E&A 6만1400원…대형 프로젝트 원가 관리 속 1.49% 상승",
           "risk": false
         }
       ],
-      "price": 31300,
-      "chg": 0.0129,
-      "activity": 1.38,
+      "price": 63500,
+      "chg": 0.0479,
+      "activity": 1.11,
+      "foreign_today": 2603500000,
+      "inst_today": 508000000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "032640",
+      "name": "LG유플러스",
+      "close": 16380,
+      "ret5": 0.1227,
+      "ret20": 0.132,
+      "rsi14": 70.1,
+      "vol20": 0.405,
+      "foreign_net": -54692635835,
+      "inst_net": 85968537160,
+      "score": 0.244,
+      "news": [
+        {
+          "date": "11-10",
+          "title": "LG유플러스, 자동차 사이버보안 관리체계 국제표준 인증…'ML3' 획득",
+          "risk": false
+        },
+        {
+          "date": "11-10",
+          "title": "LG유플러스, 차량 보안 국제표준 ML3 인증...완성차 협력 확대",
+          "risk": false
+        },
+        {
+          "date": "11-10",
+          "title": "LG유플러스, GS네오텍과 손잡고 기업 보안시장 공략",
+          "risk": false
+        }
+      ],
       "foreign_today": 0,
-      "inst_today": 2191000000,
+      "inst_today": 131040000,
       "exchange": "KOSPI"
     },
     {
@@ -241,10 +283,10 @@
           "risk": false
         }
       ],
-      "price": 5870,
-      "chg": 0.0972,
-      "activity": 20.61,
-      "foreign_today": 898110000,
+      "price": 5780,
+      "chg": 0.0804,
+      "activity": 17.99,
+      "foreign_today": 884340000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -258,7 +300,7 @@
       "vol20": 1.381,
       "foreign_net": -8424528360,
       "inst_net": 20664819130,
-      "score": 0.839,
+      "score": 0.927,
       "news": [
         {
           "date": "11-09",
@@ -276,11 +318,11 @@
           "risk": false
         }
       ],
-      "price": 16620,
-      "chg": 0.0278,
-      "activity": 3.47,
-      "foreign_today": 1994400000,
-      "inst_today": 382260000,
+      "price": 16820,
+      "chg": 0.0402,
+      "activity": 3.14,
+      "foreign_today": 2018400000,
+      "inst_today": 386860000,
       "exchange": "KOSDAQ"
     },
     {
@@ -293,7 +335,7 @@
       "vol20": 1.048,
       "foreign_net": -5714115110,
       "inst_net": -188314985,
-      "score": 0.677,
+      "score": 0.756,
       "news": [
         {
           "date": "11-10",
@@ -301,11 +343,46 @@
           "risk": false
         }
       ],
-      "price": 6900,
-      "chg": 0.0832,
-      "activity": 9.39,
-      "foreign_today": 717600000,
+      "price": 6890,
+      "chg": 0.0816,
+      "activity": 8.08,
+      "foreign_today": 716560000,
       "inst_today": 0,
+      "exchange": "KOSDAQ"
+    },
+    {
+      "code": "030530",
+      "name": "원익홀딩스",
+      "close": 26400,
+      "ret5": -0.1914,
+      "ret20": 0.0154,
+      "rsi14": 49.5,
+      "vol20": 1.312,
+      "foreign_net": -343188300,
+      "inst_net": 1370113450,
+      "score": 0.366,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "원익홀딩스 주가, 11월 9일 애프터마켓 26,450원 6.54% 하락",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "원익홀딩스 2.30% 하락…반도체 장비 업황과 자회사 가치 점검",
+          "risk": false
+        },
+        {
+          "date": "11-07",
+          "title": "11월 1주차 원익홀딩스 주가, 장마감 급반등",
+          "risk": false
+        }
+      ],
+      "price": 29600,
+      "chg": 0.0882,
+      "activity": 2.4,
+      "foreign_today": 0,
+      "inst_today": 444000000,
       "exchange": "KOSDAQ"
     },
     {
