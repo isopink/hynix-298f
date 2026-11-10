@@ -70,6 +70,10 @@ def check(order, account, price, p=None, r=None):
         dp = daily_pnl(account)
         if dp <= r["daily_loss_limit"] and not xd:   # 11-06 S.Lee: 급락일 지수 예외 매수는 일일 손실 한도의 예외 (폭락일 반등 매수)
             bad.append(("일일 손실 한도", f"오늘 {dp:.1%} ≤ {r['daily_loss_limit']:.0%}, 신규 매수 중단"))
+        for k, nm in (("inverse", "인버스"), ("index", "지수추종")):   # 11-11 S.Lee: 인버스·KODEX 200 매수 금지, 개별주만
+            c = p.get(k) or {}
+            if not c.get("enabled") and code in c.get("codes", {}):
+                bad.append((f"{nm} 매수 금지", f"{c['codes'][code]} 는 매수하지 않음 (개별주만)"))
         cap, regime = sizing.equity_cap(p, r, account)
         etf, label = C.market_etf(code, p)
         if etf:   # 시장 ETF(인버스·지수): 정해진 국면에서만, 하루 정해진 횟수만

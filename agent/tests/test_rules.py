@@ -19,6 +19,9 @@ import risk  # noqa: E402
 import sizing  # noqa: E402
 
 P, R = C.params(), C.risk_limits()
+BAN = {k: P[k]['enabled'] for k in ('inverse', 'index')}   # 11-11 실제 설정은 매수 금지, 기존 ETF 규칙 테스트는 켜서 확인
+for k in BAN:
+    P[k]['enabled'] = True
 P["competition"]["start"] = C.today().isoformat()   # 1주차
 P["week_factor"]["1"] = 1.0                         # 계산을 단순하게 하려고 1.0 으로
 P["decision"]["buy_min_confidence"] = 0.60          # 기준값은 자동 조정으로 바뀌므로 테스트에선 고정
@@ -781,6 +784,7 @@ def test_index_debate_after_1500_no_stop():
     import monitor
     q = C.params()
     q["competition"]["start"], q["week_factor"]["1"] = C.today().isoformat(), 1.0
+    q["index"]["enabled"] = q["inverse"]["enabled"] = True   # 11-11 실제 설정은 매수 금지, 규칙만 확인
     ix, real, old_pos, real_p = "069500", C.now, C.POSITIONS, C.params
     try:
         C.POSITIONS = os.path.join(tmp, "positions.json")
@@ -811,6 +815,7 @@ def test_inverse_debate_after_1000_stop3():
     """11-06 S.Lee: 인버스는 국면 제한 없이 토론으로, 매수·판단 매도는 10:00 이후만, 손절 −3% (실제 설정)."""
     q = C.params()
     q["competition"]["start"], q["week_factor"]["1"] = C.today().isoformat(), 1.0
+    q["index"]["enabled"] = q["inverse"]["enabled"] = True   # 11-11 실제 설정은 매수 금지, 규칙만 확인
     iv, real = "114800", C.now
     try:
         open(C.JOURNAL, "w").close()
@@ -902,6 +907,20 @@ def test_inverse_min_weight_in_falling_market():
     assert sizing.plan_buy("114800", 0.40, 1_000, acc(), p, R)["qty"] == 0          # 소액 하한 미만은 그대로 0
     ok = [x for x, _ in risk.check({"code": "114800", "side": "매수", "qty": lo["qty"], "confidence": 0.56}, acc(), 1_000, p, R)]
     assert "수량 계산 초과" not in ok and "확신도" not in ok, ok
+
+
+def test_etf_buy_banned_stocks_only():
+    """11-11 S.Lee: 인버스·KODEX 200 매수 금지 (실제 설정이 꺼져 있으면 Hook 이 막음), 개별주는 통과."""
+    import copy
+    q = copy.deepcopy(P)
+    for k, on in BAN.items():
+        assert on is False, f"실제 params.{k}.enabled 는 꺼져 있어야 함"
+        q[k]["enabled"] = False
+    for code in ("114800", "069500"):
+        got = [x for x, _ in risk.check({"code": code, "side": "매수", "qty": 1, "confidence": 0.9}, acc(), 10_000, q, R)]
+        assert any("매수 금지" in x for x in got), (code, got)
+    got = [x for x, _ in risk.check({"code": "005930", "side": "매수", "qty": 1, "confidence": 0.9}, acc(), 10_000, q, R)]
+    assert not any("매수 금지" in x for x in got), got
 
 
 def test_benchmark_kodex200_parse():
