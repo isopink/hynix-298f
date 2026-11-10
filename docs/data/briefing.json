@@ -81,9 +81,9 @@
     ]
   },
   "intraday": {
-    "time": "13:45",
-    "pool": 443,
-    "analyzed_new": 11,
+    "time": "14:00",
+    "pool": 444,
+    "analyzed_new": 8,
     "passed": 20,
     "kept_prep": false
   },
@@ -106,11 +106,11 @@
           "risk": false
         }
       ],
-      "price": 30600,
-      "chg": 0.0234,
-      "activity": 1.82,
+      "price": 30550,
+      "chg": 0.0217,
+      "activity": 1.77,
       "foreign_today": 0,
-      "inst_today": 5202000000,
+      "inst_today": 5193500000,
       "exchange": "KOSPI"
     },
     {
@@ -127,25 +127,25 @@
       "news": [
         {
           "date": "11-10",
-          "title": "GS건설, 레미콘 공장 전수 검증 실시…\"동절기 콘크리트 품질 확보\"",
+          "title": "GS건설, 겨울철 레미콘 납품 전 품질검증… 기준 미달 공장은 공급 제한",
           "risk": false
         },
         {
           "date": "11-10",
-          "title": "주택 넘어 AI 데이터센터로…GS건설, 대규모 수주 기대감 커진다",
+          "title": "GS건설, 겨울철 콘크리트 품질관리 강화…레미콘 공장 전수검증",
           "risk": false
         },
         {
           "date": "11-10",
-          "title": "GS건설, 내한 콘크리트 사전검증..미달 공장 납품 제한",
+          "title": "GS건설, 겨울철 레미콘 공장 전수 검증…기준 미달 땐 납품 제한",
           "risk": false
         }
       ],
-      "price": 31750,
-      "chg": 0.0479,
-      "activity": 1.7,
+      "price": 31800,
+      "chg": 0.0495,
+      "activity": 1.66,
       "foreign_today": 0,
-      "inst_today": 3175000000,
+      "inst_today": 3180000000,
       "exchange": "KOSPI"
     },
     {
@@ -162,17 +162,17 @@
       "news": [
         {
           "date": "11-10",
+          "title": "'팀타율 1위' 최강 KT 타선 만든 코치가 한화 온다...김강 타격코치 영입...",
+          "risk": false
+        },
+        {
+          "date": "11-10",
           "title": "쪼그라드는 KT 본업 경쟁력..모바일 매출 LG에 추월 직전",
           "risk": false
         },
         {
           "date": "11-10",
           "title": "KT, 3분기 영업익 5053억 전년比 6.1%↓…AX 수주는 20% 성장",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "KT cs, 3분기 영업익 110억원 '역대 최대'…주주환원 강화",
           "risk": false
         }
       ],
@@ -288,11 +288,11 @@
       "inst_net": 113686106975,
       "score": 0.506,
       "news": [],
-      "price": 31050,
-      "chg": 0.0049,
-      "activity": 0.72,
+      "price": 31100,
+      "chg": 0.0065,
+      "activity": 0.74,
       "foreign_today": 0,
-      "inst_today": 3601800000,
+      "inst_today": 3607600000,
       "exchange": "KOSPI"
     },
     {
@@ -323,11 +323,11 @@
           "risk": false
         }
       ],
-      "price": 64200,
-      "chg": 0.0594,
-      "activity": 0.61,
+      "price": 64300,
+      "chg": 0.0611,
+      "activity": 0.6,
       "foreign_today": 0,
-      "inst_today": 4044600000,
+      "inst_today": 4050900000,
       "exchange": "KOSPI"
     },
     {
@@ -350,7 +350,7 @@
       ],
       "price": 351000,
       "chg": 0.0572,
-      "activity": 0.69,
+      "activity": 0.68,
       "foreign_today": 0,
       "inst_today": 3159000000,
       "exchange": "KOSPI"
@@ -429,7 +429,7 @@
       "vol20": 0.784,
       "foreign_net": -7680339725,
       "inst_net": 27347572175,
-      "score": 0.416,
+      "score": 0.39,
       "news": [
         {
           "date": "11-10",
@@ -465,12 +465,12 @@
       "news": [
         {
           "date": "11-10",
-          "title": "카카오뱅크, 고향사랑기부제 앱에 담았다…10만 원 기부하면 세액공제·...",
+          "title": "[금융단신] 우리은행·카카오뱅크·케이뱅크·한국수출입은행",
           "risk": false
         },
         {
           "date": "11-10",
-          "title": "카카오뱅크, 앱에서 '고향사랑기부'...답례품 조회부터 납부까지",
+          "title": "카카오뱅크, 고향사랑기부제 앱에 담았다…10만 원 기부하면 세액공제·...",
           "risk": false
         },
         {
@@ -493,7 +493,7 @@
       "vol20": 1.048,
       "foreign_net": -5714115110,
       "inst_net": -188314985,
-      "score": 0.935,
+      "score": 0.961,
       "news": [
         {
           "date": "11-10",
@@ -501,10 +501,10 @@
           "risk": false
         }
       ],
-      "price": 6830,
-      "chg": 0.0722,
-      "activity": 3.09,
-      "foreign_today": 1154270000,
+      "price": 6890,
+      "chg": 0.0816,
+      "activity": 2.99,
+      "foreign_today": 1164410000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -536,11 +536,11 @@
           "risk": false
         }
       ],
-      "price": 16960,
-      "chg": 0.0489,
-      "activity": 1.36,
+      "price": 16810,
+      "chg": 0.0396,
+      "activity": 1.32,
       "foreign_today": 0,
-      "inst_today": 1373760000,
+      "inst_today": 1361610000,
       "exchange": "KOSDAQ"
     },
     {
@@ -571,11 +571,11 @@
           "risk": false
         }
       ],
-      "price": 28550,
-      "chg": 0.0496,
-      "activity": 1.32,
+      "price": 28650,
+      "chg": 0.0533,
+      "activity": 1.28,
       "foreign_today": 0,
-      "inst_today": 1541700000,
+      "inst_today": 1547100000,
       "exchange": "KOSDAQ"
     },
     {
@@ -590,11 +590,11 @@
       "inst_net": -3906304850,
       "score": 0.571,
       "news": [],
-      "price": 73600,
-      "chg": 0.0729,
-      "activity": 0.89,
+      "price": 73800,
+      "chg": 0.0758,
+      "activity": 0.87,
       "foreign_today": 0,
-      "inst_today": 588800000,
+      "inst_today": 590400000,
       "exchange": "KOSDAQ"
     },
     {
