@@ -315,6 +315,8 @@ td.k { color: var(--ink); white-space: nowrap; }
 .cover::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 34% 22% at 50% 43%, rgba(10,10,12,.55), rgba(10,10,12,0)), radial-gradient(ellipse at 50% 50%, rgba(10,10,12,0) 30%, rgba(10,10,12,.5) 100%); pointer-events: none; }   /* 가장자리로 갈수록 어둡게, 글자가 가운데서 뜸 */
 .cover-text { position: absolute; inset: 0; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; pointer-events: none; padding: 0 24px 14vh; text-align: center; }   /* 11-06 S.Lee: 제목을 가운데보다 조금 위로 */
 .cover-title { margin: 0; font-size: clamp(26px, 6vw, 60px); font-weight: 500; letter-spacing: -.5px; line-height: 1.1; color: var(--ink); text-shadow: 0 0 24px rgba(0,0,0,.9), 0 0 60px rgba(218,41,28,.25); text-wrap: balance; }
+html.cover-lock, html.cover-lock body { overflow: hidden !important; overscroll-behavior: none; height: 100%; }   /* 11-10 S.Lee: 커버가 열려 있는 동안 뒤 대시보드가 스크롤되지 않게 (body 의 clip 만으로는 휠 · 터치 · 키보드 스크롤이 막히지 않았음) */
+.cover { touch-action: none; overscroll-behavior: contain; }
 body.covered { overflow: clip; }   /* 11-10 hallmark 34: hidden 은 sticky 를 깸 */
 /* 11-10 S.Lee: PC 에서도 커버를 보임 (예전엔 PC 는 커버 없이 바로 대시보드) */
 .cover-enter { margin-top: 28px; pointer-events: auto; font: 500 12px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; letter-spacing: 3px; text-transform: uppercase; color: #00d992; background: rgba(16,16,16,.72);
@@ -2375,16 +2377,24 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   const engine = cover ? liveStatus() : null;
   // 커버: ENTER 버튼(또는 Enter·Space)으로만 서서히 사라지고 대시보드. 배경 터치 · 스크롤로는 안 닫히고, 처음 1.5초는 입력을 무시 (11-10 S.Lee)
   if (cover) {
-    document.body.classList.add('covered');
+    document.body.classList.add('covered'); document.documentElement.classList.add('cover-lock'); scrollTo(0, 0);
     const btn = $('cover-enter'); let ready = false;
     const leave = () => {
       if (!ready || cover.classList.contains('out')) return;
-      cover.classList.add('out'); document.body.classList.remove('covered');
+      cover.classList.add('out'); document.body.classList.remove('covered'); document.documentElement.classList.remove('cover-lock');
       setTimeout(() => { cover.remove(); if (engine) engine.stop(); }, 1200);
     };
+    // 커버 동안 휠 · 터치 이동 · 스크롤 키는 막고, 그래도 움직이면 맨 위로 되돌림
+    const open = () => cover.isConnected && !cover.classList.contains('out'), stop = e => { if (open()) e.preventDefault(); };
+    document.addEventListener('wheel', stop, { passive: false }); document.addEventListener('touchmove', stop, { passive: false });
+    addEventListener('scroll', () => { if (open() && scrollY) scrollTo(0, 0); }, { passive: true });
     setTimeout(() => { ready = true; if (btn) { btn.disabled = false; btn.classList.add('ready'); try { btn.focus({ preventScroll: true }); } catch (e) { /* 무시 */ } } }, 1500);
     if (btn) btn.addEventListener('click', leave);
-    document.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && cover.isConnected) { e.preventDefault(); leave(); } });
+    document.addEventListener('keydown', e => {
+      if (!open()) return;
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); leave(); }
+      else if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End'].includes(e.key)) e.preventDefault();
+    });
   }
 })();
 </script>
