@@ -81,38 +81,13 @@
     ]
   },
   "intraday": {
-    "time": "09:45",
-    "pool": 321,
+    "time": "10:00",
+    "pool": 324,
     "analyzed_new": 30,
     "passed": 7,
     "kept_prep": false
   },
   "candidates": [
-    {
-      "code": "012330",
-      "name": "현대모비스",
-      "close": 331500,
-      "ret5": -0.0542,
-      "ret20": -0.0582,
-      "rsi14": 40.5,
-      "vol20": 0.683,
-      "foreign_net": -73538377500,
-      "inst_net": 104888122250,
-      "score": 0.591,
-      "news": [
-        {
-          "date": "11-10",
-          "title": "[BK 프리뷰] 현대모비스의 3연패 탈출? 소노의 5연패 탈출?",
-          "risk": false
-        }
-      ],
-      "price": 353500,
-      "chg": 0.0648,
-      "activity": 1.9,
-      "foreign_today": 3181500000,
-      "inst_today": 0,
-      "exchange": "KOSPI"
-    },
     {
       "code": "017670",
       "name": "SK텔레콤",
@@ -123,7 +98,7 @@
       "vol20": 0.447,
       "foreign_net": -17944203050,
       "inst_net": 55497333350,
-      "score": 0.545,
+      "score": 0.333,
       "news": [
         {
           "date": "11-10",
@@ -141,45 +116,10 @@
           "risk": false
         }
       ],
-      "price": 81900,
-      "chg": 0.0581,
-      "activity": 3.93,
-      "foreign_today": 491400000,
-      "inst_today": 0,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "028050",
-      "name": "삼성E&A",
-      "close": 60500,
-      "ret5": -0.0457,
-      "ret20": 0.3195,
-      "rsi14": 57.7,
-      "vol20": 0.94,
-      "foreign_net": -90215064750,
-      "inst_net": 71337297050,
-      "score": 0.318,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "삼성E&A, 10일 싱가포르·홍콩서 NDR",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "반도체 특수에 삼성물산·삼성E&A·SK에코 '쾌재'",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "삼성E&A 6만1400원…대형 프로젝트 원가 관리 속 1.49% 상승",
-          "risk": false
-        }
-      ],
-      "price": 63400,
-      "chg": 0.0462,
-      "activity": 1.53,
-      "foreign_today": 507200000,
+      "price": 81850,
+      "chg": 0.0575,
+      "activity": 3.48,
+      "foreign_today": 491100000,
       "inst_today": 0,
       "exchange": "KOSPI"
     },
@@ -201,42 +141,81 @@
           "risk": false
         }
       ],
-      "price": 7060,
-      "chg": 0.1083,
-      "activity": 12.6,
-      "foreign_today": 614220000,
+      "price": 6900,
+      "chg": 0.0832,
+      "activity": 11.04,
+      "foreign_today": 600300000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
     {
-      "code": "443670",
-      "name": "에스피소프트",
-      "close": 5370,
-      "ret5": 0.0762,
-      "ret20": 0.2191,
-      "rsi14": 58.9,
-      "vol20": 1.586,
-      "foreign_net": -523993734,
-      "inst_net": 12021555,
-      "score": 0.955,
+      "code": "263860",
+      "name": "지니언스",
+      "close": 23900,
+      "ret5": -0.1261,
+      "ret20": 0.0839,
+      "rsi14": 53.2,
+      "vol20": 1.398,
+      "foreign_net": -4112853625,
+      "inst_net": -1722545450,
+      "score": 0.667,
+      "news": [],
+      "price": 25350,
+      "chg": 0.0563,
+      "activity": 4.45,
+      "foreign_today": 329550000,
+      "inst_today": 0,
+      "exchange": "KOSDAQ"
+    },
+    {
+      "code": "207940",
+      "name": "삼성바이오로직스",
+      "close": 1517000,
+      "ret5": 0.0586,
+      "ret20": 0.2684,
+      "rsi14": 63.7,
+      "vol20": 0.529,
+      "foreign_net": -96300565000,
+      "inst_net": 188766220000,
+      "score": 0.88,
       "news": [
         {
           "date": "11-09",
-          "title": "에스피소프트 21.18% 급등…클라우드·DaaS 성장성 부각",
+          "title": "[CEO 레이더] 삼성바이오로직스_존 림 대표이사 사장, 인수자금 412억 부...",
+          "risk": false
+        }
+      ],
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "028050",
+      "name": "삼성E&A",
+      "close": 60500,
+      "ret5": -0.0457,
+      "ret20": 0.3195,
+      "rsi14": 57.7,
+      "vol20": 0.94,
+      "foreign_net": -90215064750,
+      "inst_net": 71337297050,
+      "score": 0.68,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "삼성E&A, 10일 싱가포르·홍콩서 NDR",
           "risk": false
         },
         {
           "date": "11-09",
-          "title": "딥페이크 범죄 막는 AI 보안株 휘파람…에스피소프트·파수AI 노려라",
+          "title": "반도체 특수에 삼성물산·삼성E&A·SK에코 '쾌재'",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "삼성E&A 6만1400원…대형 프로젝트 원가 관리 속 1.49% 상승",
           "risk": false
         }
       ],
-      "price": 5890,
-      "chg": 0.1009,
-      "activity": 14.32,
-      "foreign_today": 129580000,
-      "inst_today": 0,
-      "exchange": "KOSDAQ"
+      "exchange": "KOSPI"
     },
     {
       "code": "114800",
