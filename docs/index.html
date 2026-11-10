@@ -1679,9 +1679,15 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   }
   function decisionCard() {
     const dc = DECISION, head = $('dec-head'), list = $('dec-list');
-    if (!dc.time || (BRIEF.created && BRIEF.created > dc.time)) return briefingCard();
+    // 11-10 S.Lee: SiON 탭에서는 Sigma 판단 · Sigma 시장 자료로 되돌아가지 않음
+    const sA0 = SHADOW_LIVE && SHADOW_LIVE.status && SHADOW_LIVE.status.decision, sB0 = SHADOW && SHADOW.decision;
+    if (ENG === 'sion' && ![sA0, sB0].some(x => x && x.time)) {
+      $('dec-title').textContent = 'Live Decision'; $('dec-trade').hidden = true; $('dec-colhead').hidden = true; $('dec-asof').textContent = ''; head.innerHTML = '';
+      return none(list, 'SiON 판단을 기다리는 중이에요.');
+    }
+    if (ENG !== 'sion' && (!dc.time || (BRIEF.created && BRIEF.created > dc.time))) return briefingCard();
     $('dec-title').textContent = 'Live Decision';
-    $('dec-asof').textContent = md(toD(dc.time)) + ' ' + dc.time.slice(11, 16);   // 이 판단을 한 시각 (11-05 다음 매매 시각 대신)
+    if (ENG !== 'sion') $('dec-asof').textContent = md(toD(dc.time)) + ' ' + dc.time.slice(11, 16);   // 이 판단을 한 시각 (11-05 다음 매매 시각 대신)
     const lt = dc.last_trade, tr = $('dec-trade');   // 오늘 마지막 매매 회차 결과: 샀다 / 팔았다 / 막혔다 / 관망
     tr.hidden = true;   // 11-09 S.Lee: 마지막 매매 회차 요약 띠 없앰 (아래 목록과 겹침)
     if (false && lt) {
@@ -1698,7 +1704,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     head.innerHTML = `<span class="rg">국면 <b style="color:${regC(dc.regime)}">${esc(dc.regime)}</b></span>`
       + `<span>주식 비중 상한 <b>${Math.round(+dc.cap * 100)}%</b></span>`
       + (liveTag() ? `<span class="it">${liveTag()}</span>` : '');
-    if (dc.reason) {   // 국면 근거 문장은 화면에서 빼고 툴팁으로
+    if (dc.reason && ENG !== 'sion') {   // 국면 근거 문장은 화면에서 빼고 툴팁으로
       const rg = head.querySelector('.rg'), html = `<div class="t">${esc(dc.regime)} 국면 근거</div><p class="tp">${esc(dc.reason)}</p>`;
       tipTarget(rg, html);
     }
@@ -1711,10 +1717,10 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       tipTarget(itEl, html);
     }
     const items = dc.items || [];
-    if (!items.length) { $('dec-colhead').hidden = true; return none(list, '이번 판단에서 검토한 종목이 없어요.'); }
+    if (!items.length && ENG !== 'sion') { $('dec-colhead').hidden = true; return none(list, '이번 판단에서 검토한 종목이 없어요.'); }
     // 11-09 S.Lee: SiON Engine(온톨로지 그림자) 판단을 2열로. Supabase 1분 기록(짧은 요약)과 shadow.json(근거 포함) 중 새것, 같은 날일 때만
     const sA = SHADOW_LIVE && SHADOW_LIVE.status && SHADOW_LIVE.status.decision, sB = SHADOW && SHADOW.decision;
-    const sd = [sA, sB].filter(x => x && x.time && x.time.slice(0, 10) === dc.time.slice(0, 10)).sort((a, b) => a.time < b.time ? 1 : -1)[0];
+    const sd = [sA, sB].filter(x => x && x.time && (ENG === 'sion' || x.time.slice(0, 10) === dc.time.slice(0, 10))).sort((a, b) => a.time < b.time ? 1 : -1)[0];
     const sFull = sB && sd && sB.time === sd.time ? new Map((sB.items || []).map(x => [x.code, x])) : new Map();
     // 온톨로지 쪽 공개 기록은 근거를 '상세 주장 비공개'·'판단 원문은 로컬 상세에서 확인'으로 가림 → 그런 값은 버리고 채워진 쪽을 씀
     const hid = v => !v || /비공개|로컬 상세에서 확인/.test(v), clean = x => Object.fromEntries(Object.entries(x || {}).filter(([k, v]) => !['bull', 'bear', 'decision'].includes(k) || !hid(v)));
