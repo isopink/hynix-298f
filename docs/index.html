@@ -685,7 +685,10 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
   fxCss.textContent = `
 .sigil { display: block; overflow: visible; }
 .sigil .sg, .fx-orbit { transform-origin: 0 0; }
-.top h1 .sigil.mini { display: inline-block; width: .8em; height: .8em; margin-right: .34em; vertical-align: -.06em; }
+[data-theme=volt] .top { flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 12px; }   /* 11-10 S.Lee: 제목 중앙 정렬 (PC 도), 로고 없음 */
+[data-theme=volt] .top h1 .tagline { display: block; margin: 8px 0 0; }
+[data-theme=volt] .top h1 .st-top { display: flex; justify-content: center; }
+[data-theme=volt] .top .chips { justify-content: center; }
 /* ---- 대시보드: 깊은 우주 + 전술 격자 ---- */
 #fx-space { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
 #fx-grid { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; mask-image: radial-gradient(ellipse 90% 80% at 50% 30%, #000 0%, transparent 78%); -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 30%, #000 0%, transparent 78%); }
@@ -747,7 +750,6 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
   document.head.appendChild(fxCss);
   const calm = matchMedia('(prefers-reduced-motion: reduce)').matches, phone = matchMedia('(max-width: 640px)').matches;
   const coverEl = document.getElementById('cover');
-  const h1 = document.querySelector('.top h1'); if (h1) h1.insertAdjacentHTML('afterbegin', sigilMini);
   // 깊은 우주: 별 3겹(스크롤 시차 · 깜빡임) + 가끔 지나가는 초록 신호 줄기, 그 위에 천천히 흐르는 전술 격자
   const space = () => {
     const gd = document.createElement('div'); gd.id = 'fx-grid'; gd.setAttribute('aria-hidden', 'true'); gd.innerHTML = '<i></i>'; document.body.insertBefore(gd, document.body.firstChild);
