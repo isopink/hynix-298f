@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "10:30",
+    "time": "10:45",
     "pool": 380,
     "analyzed_new": 30,
-    "passed": 11,
+    "passed": 14,
     "kept_prep": false
   },
   "candidates": [
@@ -98,7 +98,7 @@
       "vol20": 0.864,
       "foreign_net": -17756228825,
       "inst_net": 32921916375,
-      "score": 0.707,
+      "score": 0.804,
       "news": [
         {
           "date": "11-10",
@@ -116,46 +116,11 @@
           "risk": false
         }
       ],
-      "price": 31500,
-      "chg": 0.0396,
-      "activity": 3.5,
-      "foreign_today": 1039500000,
-      "inst_today": 630000000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "017670",
-      "name": "SK텔레콤",
-      "close": 77100,
-      "ret5": 0.0118,
-      "ret20": -0.0277,
-      "rsi14": 44.8,
-      "vol20": 0.447,
-      "foreign_net": -17944203050,
-      "inst_net": 55497333350,
-      "score": 0.659,
-      "news": [
-        {
-          "date": "11-10",
-          "title": "KT, 11월 통신 상장기업 브랜드평판 빅데이터 1위…SK텔레콤·LG유플러스...",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "KT, 통신사 브랜드평판 1위 지켰다…SK텔레콤·LG유플러스 모두 하락",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "[브랜드평판] KT, 통신 상장기업 11월 1위... SK텔레콤, LG유플러스 뒤이...",
-          "risk": false
-        }
-      ],
-      "price": 81800,
-      "chg": 0.0568,
-      "activity": 2.82,
-      "foreign_today": 2535800000,
-      "inst_today": 1799600000,
+      "price": 31750,
+      "chg": 0.0479,
+      "activity": 3.18,
+      "foreign_today": 1047750000,
+      "inst_today": 635000000,
       "exchange": "KOSPI"
     },
     {
@@ -168,7 +133,7 @@
       "vol20": 0.846,
       "foreign_net": -30362102875,
       "inst_net": 32840193100,
-      "score": 0.439,
+      "score": 0.589,
       "news": [
         {
           "date": "11-09",
@@ -186,11 +151,55 @@
           "risk": false
         }
       ],
-      "price": 48600,
-      "chg": -0.001,
-      "activity": 2.33,
-      "foreign_today": 826200000,
-      "inst_today": 1215000000,
+      "price": 48750,
+      "chg": 0.0021,
+      "activity": 2.17,
+      "foreign_today": 828750000,
+      "inst_today": 1218750000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "012330",
+      "name": "현대모비스",
+      "close": 331500,
+      "ret5": -0.0542,
+      "ret20": -0.0582,
+      "rsi14": 40.5,
+      "vol20": 0.683,
+      "foreign_net": -73538377500,
+      "inst_net": 104888122250,
+      "score": 0.571,
+      "news": [
+        {
+          "date": "11-10",
+          "title": "[JB프리뷰] ‘외국선수 1명’ 균형 맞춰진 현대모비스-소노의 외나무다...",
+          "risk": false
+        }
+      ],
+      "price": 350500,
+      "chg": 0.0557,
+      "activity": 1.14,
+      "foreign_today": 3505000000,
+      "inst_today": 2804000000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "015760",
+      "name": "한국전력",
+      "close": 30000,
+      "ret5": 0.0221,
+      "ret20": 0.0545,
+      "rsi14": 52.3,
+      "vol20": 0.401,
+      "foreign_net": -37698150775,
+      "inst_net": 99683469350,
+      "score": 0.536,
+      "news": [],
+      "price": 29750,
+      "chg": -0.005,
+      "activity": 2.19,
+      "foreign_today": 0,
+      "inst_today": 1517250000,
       "exchange": "KOSPI"
     },
     {
@@ -203,7 +212,7 @@
       "vol20": 0.94,
       "foreign_net": -90215064750,
       "inst_net": 71337297050,
-      "score": 0.39,
+      "score": 0.393,
       "news": [
         {
           "date": "11-09",
@@ -221,11 +230,36 @@
           "risk": false
         }
       ],
-      "price": 63500,
-      "chg": 0.0479,
-      "activity": 1.11,
-      "foreign_today": 2603500000,
-      "inst_today": 508000000,
+      "price": 63800,
+      "chg": 0.0528,
+      "activity": 1.01,
+      "foreign_today": 2615800000,
+      "inst_today": 510400000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "316140",
+      "name": "우리금융지주",
+      "close": 31450,
+      "ret5": 0.0311,
+      "ret20": -0.0218,
+      "rsi14": 48.3,
+      "vol20": 0.333,
+      "foreign_net": -86710371150,
+      "inst_net": 113686106975,
+      "score": 0.375,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "하나증권 \"은행주 중장기 투자 유효, 최선호주 KB금융지주 우리금융지주...",
+          "risk": false
+        }
+      ],
+      "price": 31350,
+      "chg": 0.0146,
+      "activity": 1.16,
+      "foreign_today": 0,
+      "inst_today": 2194500000,
       "exchange": "KOSPI"
     },
     {
@@ -238,26 +272,58 @@
       "vol20": 0.405,
       "foreign_net": -54692635835,
       "inst_net": 85968537160,
-      "score": 0.244,
+      "score": 0.268,
       "news": [
         {
           "date": "11-10",
-          "title": "LG유플러스, 자동차 사이버보안 관리체계 국제표준 인증…'ML3' 획득",
+          "title": "LG유플러스, GS네오텍과 E2E 보안 분야 협력 강화",
           "risk": false
         },
         {
           "date": "11-10",
-          "title": "LG유플러스, 차량 보안 국제표준 ML3 인증...완성차 협력 확대",
+          "title": "LG유플러스, GS네오텍과 손잡고 E2E 보안 강화 단말부터 클라우드까지 ...",
           "risk": false
         },
         {
           "date": "11-10",
-          "title": "LG유플러스, GS네오텍과 손잡고 기업 보안시장 공략",
+          "title": "LG유플러스, 자동차 사이버보안 'ML3' 인증",
           "risk": false
         }
       ],
       "foreign_today": 0,
       "inst_today": 131040000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "323410",
+      "name": "카카오뱅크",
+      "close": 20400,
+      "ret5": 0.0308,
+      "ret20": 0.0313,
+      "rsi14": 53.9,
+      "vol20": 0.253,
+      "foreign_net": 1897865370,
+      "inst_net": 14561074190,
+      "score": 0.179,
+      "news": [
+        {
+          "date": "11-10",
+          "title": "카카오뱅크, '고향사랑기부제' 서비스 출시…세액공제·답례품 제공",
+          "risk": false
+        },
+        {
+          "date": "11-10",
+          "title": "카카오뱅크, ‘고향사랑기부제’ 서비스 출시…앱에서 답례품 조회·기...",
+          "risk": false
+        },
+        {
+          "date": "11-10",
+          "title": "카카오뱅크, '고향사랑기부제' 출시",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 81600000,
       "exchange": "KOSPI"
     },
     {
@@ -283,10 +349,10 @@
           "risk": false
         }
       ],
-      "price": 5780,
-      "chg": 0.0804,
-      "activity": 17.99,
-      "foreign_today": 884340000,
+      "price": 5800,
+      "chg": 0.0841,
+      "activity": 16.31,
+      "foreign_today": 887400000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -300,7 +366,7 @@
       "vol20": 1.381,
       "foreign_net": -8424528360,
       "inst_net": 20664819130,
-      "score": 0.927,
+      "score": 0.946,
       "news": [
         {
           "date": "11-09",
@@ -318,11 +384,11 @@
           "risk": false
         }
       ],
-      "price": 16820,
-      "chg": 0.0402,
-      "activity": 3.14,
-      "foreign_today": 2018400000,
-      "inst_today": 386860000,
+      "price": 17080,
+      "chg": 0.0563,
+      "activity": 2.86,
+      "foreign_today": 2049600000,
+      "inst_today": 392840000,
       "exchange": "KOSDAQ"
     },
     {
@@ -335,7 +401,7 @@
       "vol20": 1.048,
       "foreign_net": -5714115110,
       "inst_net": -188314985,
-      "score": 0.756,
+      "score": 0.821,
       "news": [
         {
           "date": "11-10",
@@ -343,10 +409,10 @@
           "risk": false
         }
       ],
-      "price": 6890,
-      "chg": 0.0816,
-      "activity": 8.08,
-      "foreign_today": 716560000,
+      "price": 6880,
+      "chg": 0.0801,
+      "activity": 7.09,
+      "foreign_today": 715520000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -360,7 +426,7 @@
       "vol20": 1.312,
       "foreign_net": -343188300,
       "inst_net": 1370113450,
-      "score": 0.366,
+      "score": 0.482,
       "news": [
         {
           "date": "11-09",
@@ -378,11 +444,11 @@
           "risk": false
         }
       ],
-      "price": 29600,
-      "chg": 0.0882,
-      "activity": 2.4,
+      "price": 30100,
+      "chg": 0.1066,
+      "activity": 2.54,
       "foreign_today": 0,
-      "inst_today": 444000000,
+      "inst_today": 451500000,
       "exchange": "KOSDAQ"
     },
     {
