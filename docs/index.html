@@ -309,7 +309,7 @@ td.k { color: var(--ink); white-space: nowrap; }
 .lim-row .track { grid-column: 1 / -1; height: 6px; border-radius: 3px; background: rgba(255,255,255,.07); overflow: hidden; }
 .lim-row .track i { display: block; height: 100%; border-radius: 3px; }
 /* Sigma Network. PC: 누적 수익률 카드 전체를 덮는 배경(옅게). 폰: 따로 카드 안에 블록으로 */
-.cover { position: fixed; inset: 0; z-index: 50; background: var(--canvas); cursor: pointer; opacity: 1; transition: opacity 1.1s ease; }
+.cover { position: fixed; inset: 0; z-index: 50; background: var(--canvas); opacity: 1; transition: opacity 1.1s ease; }
 .cover.out { opacity: 0; pointer-events: none; }
 .cover .live { position: absolute; inset: 0; width: 100%; height: 100%; }
 .cover::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 34% 22% at 50% 43%, rgba(10,10,12,.55), rgba(10,10,12,0)), radial-gradient(ellipse at 50% 50%, rgba(10,10,12,0) 30%, rgba(10,10,12,.5) 100%); pointer-events: none; }   /* 가장자리로 갈수록 어둡게, 글자가 가운데서 뜸 */
@@ -317,6 +317,13 @@ td.k { color: var(--ink); white-space: nowrap; }
 .cover-title { margin: 0; font-size: clamp(26px, 6vw, 60px); font-weight: 500; letter-spacing: -.5px; line-height: 1.1; color: var(--ink); text-shadow: 0 0 24px rgba(0,0,0,.9), 0 0 60px rgba(218,41,28,.25); text-wrap: balance; }
 body.covered { overflow: clip; }   /* 11-10 hallmark 34: hidden 은 sticky 를 깸 */
 /* 11-10 S.Lee: PC 에서도 커버를 보임 (예전엔 PC 는 커버 없이 바로 대시보드) */
+.cover-enter { margin-top: 28px; pointer-events: auto; font: 500 12px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; letter-spacing: 3px; text-transform: uppercase; color: #00d992; background: rgba(16,16,16,.72);
+  border: 1px solid rgba(0,217,146,.6); padding: 12px 36px 12px 39px; cursor: pointer; opacity: 0; transform: translateY(6px); transition: opacity .9s ease, transform .9s ease, background .2s ease;
+  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px); }   /* 계기판 판처럼 두 모서리를 딴 버튼 */
+.cover-enter.ready { opacity: 1; transform: none; }
+.cover-enter:hover, .cover-enter:focus-visible { background: rgba(0,217,146,.16); outline: none; }
+.cover-enter:disabled { cursor: default; }
+@media (prefers-reduced-motion: reduce) { .cover-enter { transition: none; transform: none; } }
 .kx-flow { margin-top: 14px; padding-top: 14px; border-top: 1px dashed rgba(255,255,255,.08); }   /* 카드 안 아래칸 (누적 수익률 → 실시간 판단, 실시간 KOSPI → 순매수) */
 .kx-flow .hd { margin-bottom: 8px; }
 .kx-flow .fl-kv .v { font-size: 17px; }
@@ -398,10 +405,10 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
 </style>
 </head>
 <body>
-<!-- 첫 화면 커버 (11-05): 뉴런 망이 자동으로 돌고 가운데 제목. 아무 곳이나 터치하면 사라지며 대시보드 -->
-<div class="cover" id="cover" role="button" tabindex="0" aria-label="The Sigma Engine. 터치하면 대시보드로 들어갑니다">
+<!-- 첫 화면 커버 (11-05): 뉴런 망이 자동으로 돌고 가운데 제목. 11-10 S.Lee: 배경을 눌러도 스크롤해도 닫히지 않고, ENTER 버튼(1.5초 뒤 켜짐) 또는 Enter·Space 로만 대시보드 -->
+<div class="cover" id="cover" role="dialog" aria-label="The Sigma Engine">
   <canvas id="ch-live" class="live" aria-hidden="true"></canvas>
-  <div class="cover-text"><h1 class="cover-title">The Sigma Engine</h1><p class="cover-sub">Built to think</p><p class="cover-sub">Wired to act</p></div>
+  <div class="cover-text"><h1 class="cover-title">The Sigma Engine</h1><p class="cover-sub">Built to think</p><p class="cover-sub">Wired to act</p><button type="button" class="cover-enter" id="cover-enter" disabled>Enter</button></div>
 </div>
 <div class="wrap">
 
@@ -633,6 +640,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
 [data-theme=volt] .cover .live { opacity: .5; }   /* 11-10 S.Lee: 글씨가 보이게 뒤쪽 신경망을 연하게 */
 .cover-sub { margin: 0; font-family: Inter, "Pretendard Variable", sans-serif; font-size: clamp(13px, 3.6vw, 17px); font-weight: 400; letter-spacing: 3px; text-transform: uppercase; color: #d8d8d8; text-shadow: 0 0 14px rgba(16,16,16,1), 0 0 30px rgba(16,16,16,.95); }
 .cover-sub:last-child { color: #00d992; }
+.cover-sub { padding-left: 3px; }   /* 11-10 S.Lee: 글자 사이 간격 3px 이 마지막 글자 뒤에도 붙어 눈에는 왼쪽으로 쏠려 보이던 것을 보정 */
 [data-theme=volt] .cover-title { margin-bottom: 8px; text-shadow: 0 0 18px rgba(16,16,16,1), 0 0 40px rgba(16,16,16,.95); }   /* 11-10 S.Lee: 커버 제목 작게 · 정가운데 (예전 아래 여백 14vh) */
 [data-theme=volt] .cover::after { z-index: 0; background: radial-gradient(ellipse 62% 26% at 50% 50%, rgba(16,16,16,.82), rgba(16,16,16,0)), radial-gradient(ellipse at 50% 50%, rgba(16,16,16,0) 30%, rgba(16,16,16,.55) 100%); }
 [data-theme=volt] svg [tabindex]:focus-visible, [data-theme=volt] button:focus-visible, [data-theme=volt] summary:focus-visible { outline-color: #2fd6a1; }
@@ -2365,17 +2373,18 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   // 커버는 폰 · PC 모두 (11-10 S.Lee: 예전엔 폰에서만)
   const cover = $('cover');
   const engine = cover ? liveStatus() : null;
-  // 커버: 아무 곳이나 터치(또는 Enter·Space)하면 서서히 사라지고 대시보드
+  // 커버: ENTER 버튼(또는 Enter·Space)으로만 서서히 사라지고 대시보드. 배경 터치 · 스크롤로는 안 닫히고, 처음 1.5초는 입력을 무시 (11-10 S.Lee)
   if (cover) {
     document.body.classList.add('covered');
+    const btn = $('cover-enter'); let ready = false;
     const leave = () => {
-      if (cover.classList.contains('out')) return;
+      if (!ready || cover.classList.contains('out')) return;
       cover.classList.add('out'); document.body.classList.remove('covered');
       setTimeout(() => { cover.remove(); if (engine) engine.stop(); }, 1200);
     };
-    cover.addEventListener('pointerdown', leave);
-    cover.addEventListener('wheel', leave, { passive: true }); cover.addEventListener('touchmove', leave, { passive: true });
-    cover.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); leave(); } });
+    setTimeout(() => { ready = true; if (btn) { btn.disabled = false; btn.classList.add('ready'); try { btn.focus({ preventScroll: true }); } catch (e) { /* 무시 */ } } }, 1500);
+    if (btn) btn.addEventListener('click', leave);
+    document.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && cover.isConnected) { e.preventDefault(); leave(); } });
   }
 })();
 </script>
