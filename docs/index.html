@@ -650,7 +650,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
     '리스크 한도 사용률': 'Risk limit usage', '주문 직전 Hook이 강제, 100%면 차단': 'Enforced by the pre-order hook, blocked at 100%', '오늘 손실': 'Loss today', '누적 손실': 'Total loss',
     '현금 비중': 'Cash weight', '보유 종목 수': 'Positions', '일별 초과수익': 'Daily excess return', '수익률 캘린더': 'Return calendar', '큰 숫자 Sigma Engine, 작은 숫자 KOSPI': 'Large: Sigma Engine, small: KOSPI',
     '기준값 자동 조정 (매일)': 'Daily auto-tuning', '유지': 'Kept', '주간 회고 (수요일 · 금요일)': 'Weekly review (Wed, Fri)', '반영': 'Applied', '검토 중': 'In review',
-    '수수료·세금 반영': 'after fees and tax', '확신도': 'Confidence', '현재가': 'Price', '평단': 'Avg cost', '총 손익': 'Total P&L', '초과': 'Excess', '매입금액': 'Cost', '금액': 'Amount',
+    '수수료·세금 반영': 'after fees and tax', '확신도': 'Confidence', '현재가': 'Price', '평단': 'Avg cost', '총 손익': 'Total P&L', '손익': 'P&L', '이김': 'Won', '짐': 'Lost', '초과': 'Excess', '매입금액': 'Cost', '금액': 'Amount',
     '평가금액': 'Market value', '토큰': 'Tokens', '종가': 'Close', '조건 통과': 'Passed', '전일 대비': 'vs prev close', '외국인': 'Foreign', '외국인 · 기관 5일': 'Foreign, inst. 5d',
     '오늘 외국인 · 기관': 'Foreign, inst. today', '실행': 'Runs', '실패': 'Failures', '순위 상위 풀': 'Top ranked pool', '순수': 'Price only', '손절 / 익절': 'Stop / take', '손익 (수수료·세금 반영)': 'P&L (after fees, tax)',
     '손익 (반영)': 'P&L (net)', '보유일': 'Days held', '보유 종목 평가손익': 'Unrealized P&L', '매수 금액': 'Buy amount', '기관': 'Institution', '거래 활발도': 'Activity', '개인': 'Retail',
@@ -661,7 +661,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
   };
   const RX = [
     [/^(\d+\/\d+) 기준$/, 'as of $1'], [/^(\d+\/\d+ \d+:\d+) 회차$/, 'Round $1'], [/^전체 (\d+)종목 보기/, 'Show all $1'], [/^(\d+)종목$/, '$1 stocks'], [/^(\d+)건$/, '$1'], [/^(\d+)개$/, '$1'],
-    [/^변동성 (\d+%)$/, 'Vol $1'], [/^고변동 (\d+%)$/, 'High vol $1'], [/^주식 \/ 상한 (.+)$/, 'Equity / cap $1'], [/^상한 (.+)$/, 'Cap $1'], [/^([\d,]+)원$/, '₩$1'], [/^(\d+\/\d+) 시작 ·$/, 'Since $1 ·'], [/^(\d+\/\d+) 시작 · (\d+:\d+) 기준$/, 'Since $1, as of $2'],
+    [/^변동성 (\d+%)$/, 'Vol $1'], [/^고변동 (\d+%)$/, 'High vol $1'], [/^주식 \/ 상한 (.+)$/, 'Equity / cap $1'], [/^상한 (.+)$/, 'Cap $1'], [/^([\d,]+)원$/, '₩$1'], [/^(\d+\/\d+) 시작 ·$/, 'Since $1 ·'], [/^(\d+\/\d+) 시작 · (\d+:\d+) 기준$/, 'Since $1, as of $2'], [/^(\d+\/\d+) 시작 · (\d+\/\d+) 기준$/, 'Since $1, as of $2'],
     [/^(\d+\/\d+ \d+:\d+) 장 마감$/, '$1, closed'], [/^청산 (\d+)건 중 (\d+)건 수익$/, '$2 of $1 closed trades won'], [/^한도 (.+)$/, 'Limit $1'], [/^최소 (.+)$/, 'Min $1'], [/^최대 (\d+)개, (.+)$/, 'Max $1, $2'],
     [/^국면 상한 (.+) 안, (.+)$/, 'Within cap $1, $2'], [/^KOSPI 이긴 날 (\d+) \/ (\d+)일$/, 'Beat KOSPI $1 / $2 days'], [/^(\d)주$/, 'W$1'], [/^평균 ([\d,]+)천$/, 'Avg $1k'],
     [/^종목당 최대 비중 \((.+)\)$/, 'Max weight per stock ($1)'], [/^코스닥 비중.*$/, 'KOSDAQ weight'], [/^주식 비중 \(.+\)$/, 'Equity weight (regime cap)'], [/^매수 확신도 기준 (.+)$/, 'Buy threshold $1'],
@@ -1149,7 +1149,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const rz = realized(D.trades), pl = rz.net, total = D.ret * INIT;   // 총 손익 = 현재 자산 − 시작 원금 (11-05 S.Lee 양도차익 대신). 양도차익 = 판 종목의 (매도금액 − 매도 수수료·세금) − (평단 × 수량 + 매수 수수료)
     $('pnl-won').textContent = pct(D.ret);   // 11-10 S.Lee: 금액 대신 수익률 (금액은 툴팁)
     $('pnl-won').classList.toggle('neg', total < 0); document.querySelector('.hero-card').classList.toggle('neg', total < 0);   // 손실은 파랑 (국내 증시 관례)
-    const rtip = `<div class="t">수익률 ${pct(D.ret)} · 총 손익 ${signed(total)}</div>${row(`판 종목 양도차익 (매도 ${rz.n}건)`, signed(pl), pl >= 0 ? 'up' : 'down')}${row('보유 종목 평가손익', signed(total - pl), total - pl >= 0 ? 'up' : 'down')}${row('총 손익', signed(total), total >= 0 ? 'up' : 'down')}<p class="tp">대회 게시판 기준 (키움 모의 잔고 ${won(Math.round(D.last.kiwoom || D.last.total))}원 + 누적 매매대금의 0.1% 수수료 차이)</p>`;
+    const rtip = `<div class="t">수익률 ${pct(D.ret)} · 손익 ${signed(total)}</div><p class="tp">대회 게시판 기준 (키움 모의 잔고 ${won(Math.round(D.last.kiwoom || D.last.total))}원 + 누적 매매대금의 0.1% 수수료 차이)</p>`;   // 11-10 S.Lee: 실현 · 미실현을 나누지 않고 손익 하나로
     tipTarget($('realized'), rtip);
     $('k-week').textContent = pct(D.week); tone($('k-week'), D.week);
     $('k-mdd').textContent = pct(D.mdd); tone($('k-mdd'), D.mdd);
@@ -1543,16 +1543,15 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     svg.append('circle').attr('cx', x(vals.length - 1)).attr('cy', y(vals[vals.length - 1])).attr('r', 3).attr('fill', color);
   }
   function winDots(el) {
-    // 매수 1건 = 점 1개. 청산된 건은 채우고, 보유 중은 테두리만
-    const pts = D.trades.filter(t => t.side === '매수' && t.outcome != null).sort((a, b) => a.d - b.d);
-    const { svg, W, H } = svgIn(el, 56), r = 7, gap = 8;
-    const per = Math.max(1, Math.floor((W + gap) / (r * 2 + gap)));
+    // 11-10 S.Lee: 이겼다(초록 채움) · 졌다(회색 채움) 두 가지만. 청산된 매수만 점 1개씩, 보유 중은 안 그림, 아래 범례 글자 없음
+    const pts = D.trades.filter(t => t.side === '매수' && t.status === '청산' && t.outcome != null).sort((a, b) => a.d - b.d);
+    const r = 7, gap = 8, W0 = el.clientWidth || 200, per = Math.max(1, Math.floor((W0 + gap) / (r * 2 + gap)));
+    const rows = Math.max(1, Math.ceil(pts.length / per)), { svg } = svgIn(el, 8 + rows * (r * 2 + 6));
     pts.forEach((p, i) => {
-      const cx = r + (i % per) * (r * 2 + gap), cy = 14 + Math.floor(i / per) * (r * 2 + 6), col = p.outcome >= 0 ? C.red : C.blue;
-      svg.append('circle').attr('cx', cx).attr('cy', cy).attr('r', r).attr('fill', p.status === '청산' ? col : 'transparent').attr('stroke', col).attr('stroke-width', 1.5)
-        .call(tipMark, () => `<div class="t">${md(p.d)} · ${esc(p.name)}</div>${row(p.status, pct(p.outcome), p.outcome >= 0 ? 'up' : 'down')}`);
+      const win = p.outcome > 0, cx = r + (i % per) * (r * 2 + gap), cy = 14 + Math.floor(i / per) * (r * 2 + 6), col = win ? C.red : C.blue;
+      svg.append('circle').attr('cx', cx).attr('cy', cy).attr('r', r).attr('fill', col)
+        .call(tipMark, () => `<div class="t">${md(p.d)} · ${esc(p.name)}</div>${row(win ? '이김' : '짐', pct(p.outcome), win ? 'up' : 'down')}`);
     });
-    svg.append('text').attr('x', 0).attr('y', H - 2).attr('font-size', 10).attr('fill', C.muted).text('● 청산  ○ 보유 중');
   }
   function sparkBars(el, vals) {
     const { svg, W, H } = svgIn(el, 56), days = ['월', '화', '수', '목', '금'];
@@ -1709,13 +1708,11 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       tipTarget(rg, html);
     }
     const itEl = head.querySelector('.it'), it = BRIEF.intraday;
-    if (itEl) {   // 장중 수급 재선별 결과: 마우스 오버·터치로 상세
-      const html = `<div class="t">장중 수급 재선별 · ${esc(it.time)}</div>`
-        + (it.error ? `<p class="tp">순위 API 실패, 이전 후보로 판단</p><p class="tp">${esc(it.error)}</p>`
-          : it.kept_prep ? `<p class="tp">순위 상위 ${it.pool || 0}종목 중 조건 통과 0개, 이전 후보로 판단</p>`
-          : row('순위 상위 풀', (it.pool || 0) + '종목') + row('조건 통과', (it.passed || 0) + '종목'));
-      tipTarget(itEl, html);
-    }
+    const itHtml = () => `<div class="t">장중 수급 재선별 · ${esc(it.time)}</div>`   // 장중 수급 재선별 결과: 마우스 오버·터치로 상세
+      + (it.error ? `<p class="tp">순위 API 실패, 이전 후보로 판단</p><p class="tp">${esc(it.error)}</p>`
+        : it.kept_prep ? `<p class="tp">순위 상위 ${it.pool || 0}종목 중 조건 통과 0개, 이전 후보로 판단</p>`
+        : row('순위 상위 풀', (it.pool || 0) + '종목') + row('조건 통과', (it.passed || 0) + '종목'));
+    if (itEl) tipTarget(itEl, itHtml());
     const items = dc.items || [];
     if (!items.length && ENG !== 'sion') { $('dec-colhead').hidden = true; return none(list, '이번 판단에서 검토한 종목이 없어요.'); }
     // 11-09 S.Lee: SiON Engine(온톨로지 그림자) 판단을 2열로. Supabase 1분 기록(짧은 요약)과 shadow.json(근거 포함) 중 새것, 같은 날일 때만
@@ -1742,7 +1739,13 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const panes = [items, sItems];
     if (showS) {
       $('dec-asof').textContent = md(toD(sd.time)) + ' ' + slot(sd.time) + ' 회차';
-      head.innerHTML = sd.regime ? `<span class="rg">국면 <b style="color:${regC(sd.regime)}">${esc(sd.regime)}</b></span>` : '';
+      // 11-10 S.Lee: SiON 도 Sigma 와 같은 머리글 (국면 · 주식 비중 상한 · 장중 수급). 상한은 같은 국면의 Sigma 값(같은 기준값표), 장중 수급은 둘이 같은 순위를 받아 판단하므로 같은 값
+      const capOf = rg => rg === dc.regime && dc.cap ? +dc.cap : ((D && D.eq || []).slice().reverse().find(r => r.regime === rg && r.cap) || {}).cap;
+      const sc = sd.regime ? capOf(sd.regime) : null;
+      head.innerHTML = (sd.regime ? `<span class="rg">국면 <b style="color:${regC(sd.regime)}">${esc(sd.regime)}</b></span>` : '')
+        + (sc ? `<span>주식 비중 상한 <b>${Math.round(+sc * 100)}%</b></span>` : '')
+        + (liveTag() ? `<span class="it">${liveTag()}</span>` : '');
+      const itEl2 = head.querySelector('.it'); if (itEl2) tipTarget(itEl2, itHtml());
     } else $('dec-asof').textContent = md(toD(dc.time)) + ' ' + slot(dc.time) + ' 회차';
     list.classList.remove('two');
     list.innerHTML = showS ? sItems.map((d, i) => rowHtml(d, i, 1)).join('')
@@ -1878,11 +1881,8 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     // 11-10 맨 위 SiON 요약 (총 손익 · 수익률 · Sigma 대비)
     $('eng-sion').hidden = false;
     const sv = $('s-pnl-won'); sv.textContent = pct(total / INIT - 1); sv.classList.toggle('neg', pnlAll < 0);   // 11-10 금액 대신 수익률
-    // 11-10 S.Lee: Sigma 와 같은 항목 (판 종목 양도차익 · 보유 종목 평가손익 · 총 손익 · 대회 게시판 기준). SiON 은 시작일까지 실제 체결을 이어받고 그 뒤는 가상 체결
-    const sHist = (D ? D.trades.filter(t => !since || String(t.time).slice(0, 10) < since) : [])
-      .concat(trades.filter(t => !since || String(t.time).slice(0, 10) >= since).map((t, i) => ({ ...t, id: 100000 + i, amount: t.amount || t.qty * t.price })));
-    const srz = realized(sHist), spl = srz.net;
-    tipTarget($('s-realized'), `<div class="t">수익률 ${pct(total / INIT - 1)} · 총 손익 ${sw(pnlAll)}</div>${row(`판 종목 양도차익 (매도 ${srz.n}건)`, sw(spl), spl >= 0 ? 'up' : 'down')}${row('보유 종목 평가손익', sw(pnlAll - spl), pnlAll - spl >= 0 ? 'up' : 'down')}${row('총 손익', sw(pnlAll), pnlAll >= 0 ? 'up' : 'down')}<p class="tp">대회 게시판 기준 (SiON 가상 계좌 ${won(Math.round(raw))}원 + 누적 매매대금의 0.1% 수수료 차이)</p>`);
+    // 11-10 S.Lee: Sigma 와 같은 양식 (수익률 · 손익 하나 + 대회 게시판 기준)
+    tipTarget($('s-realized'), `<div class="t">수익률 ${pct(total / INIT - 1)} · 손익 ${sw(pnlAll)}</div><p class="tp">대회 게시판 기준 (SiON 가상 계좌 ${won(Math.round(raw))}원 + 누적 매매대금의 0.1% 수수료 차이)</p>`);
     $('eng-tabs').hidden = false;
     $('sion-trades').innerHTML = !trades.length ? '<div class="empty">아직 가상 체결이 없어요.</div>'
       : `<div class="r h"><span>시각</span><span>구분</span><span>종목</span><span class="num">수량</span><span class="num">가격</span></div>` + trades.slice(0, 12).map((t, i) =>
@@ -1916,7 +1916,9 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   function pnl() {   // 11-09 S.Lee: Sigma 만 (SiON 은 SiON 카드 안 따로)
     sigTrades();
     pfKpi($('sig-kpi'), D.last.total, D.stock, D.cap, D.hold.length, D.trades);
-    $('sig-sub').textContent = D.last.date ? md(toD(D.last.date)) + ' 기준' : '';
+    // 11-10 S.Lee: SiON 카드와 같은 양식 (시작일 · 마지막 기록 시각 기준)
+    const sigT = LIVE_AT ? new Date(LIVE_AT).toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Seoul' }) : '';
+    $('sig-sub').textContent = md(toD(START)) + ' 시작 · ' + (sigT || (D.last.date ? md(toD(D.last.date)) : '')) + ' 기준';
     return;   // 11-10 S.Lee: 보유 손익 막대 없앰 (도넛 범례·가운데로)
     const cost = r => r.avg_price * r.qty, sumCost = d3.sum(D.hold, cost);
     const rows = D.hold.map(r => ({ ...r, v: pnlMode === 'gross' ? r.price / r.avg_price - 1 : r.pnl, cost: cost(r) }));
