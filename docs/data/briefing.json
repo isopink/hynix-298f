@@ -80,56 +80,37 @@
       5018.85
     ]
   },
-  "intraday": null,
+  "intraday": {
+    "time": "09:30",
+    "pool": 321,
+    "analyzed_new": 30,
+    "passed": 8,
+    "kept_prep": false
+  },
   "candidates": [
     {
-      "code": "207940",
-      "name": "삼성바이오로직스",
-      "close": 1517000,
-      "ret5": 0.0586,
-      "ret20": 0.2684,
-      "rsi14": 63.7,
-      "vol20": 0.529,
-      "foreign_net": -96300565000,
-      "inst_net": 188766220000,
-      "score": 0.88,
+      "code": "012330",
+      "name": "현대모비스",
+      "close": 331500,
+      "ret5": -0.0542,
+      "ret20": -0.0582,
+      "rsi14": 40.5,
+      "vol20": 0.683,
+      "foreign_net": -73538377500,
+      "inst_net": 104888122250,
+      "score": 0.625,
       "news": [
         {
-          "date": "11-09",
-          "title": "[CEO 레이더] 삼성바이오로직스_존 림 대표이사 사장, 인수자금 412억 부...",
+          "date": "11-10",
+          "title": "[BK 프리뷰] 현대모비스의 3연패 탈출? 소노의 5연패 탈출?",
           "risk": false
         }
       ],
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "028050",
-      "name": "삼성E&A",
-      "close": 60500,
-      "ret5": -0.0457,
-      "ret20": 0.3195,
-      "rsi14": 57.7,
-      "vol20": 0.94,
-      "foreign_net": -90215064750,
-      "inst_net": 71337297050,
-      "score": 0.68,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "삼성E&A, 10일 싱가포르·홍콩서 NDR",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "반도체 특수에 삼성물산·삼성E&A·SK에코 '쾌재'",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "삼성E&A 6만1400원…대형 프로젝트 원가 관리 속 1.49% 상승",
-          "risk": false
-        }
-      ],
+      "price": 354000,
+      "chg": 0.0663,
+      "activity": 2.48,
+      "foreign_today": 3186000000,
+      "inst_today": 0,
       "exchange": "KOSPI"
     },
     {
@@ -142,7 +123,7 @@
       "vol20": 0.447,
       "foreign_net": -17944203050,
       "inst_net": 55497333350,
-      "score": 0.44,
+      "score": 0.5,
       "news": [
         {
           "date": "11-10",
@@ -160,126 +141,90 @@
           "risk": false
         }
       ],
+      "price": 82700,
+      "chg": 0.0685,
+      "activity": 4.63,
+      "foreign_today": 496200000,
+      "inst_today": 0,
       "exchange": "KOSPI"
     },
     {
-      "code": "328130",
-      "name": "루닛",
-      "close": 16290,
-      "ret5": 0.0181,
-      "ret20": 0.4796,
-      "rsi14": 67.0,
-      "vol20": 1.381,
-      "foreign_net": -8424528360,
-      "inst_net": 20664819130,
+      "code": "105560",
+      "name": "KB금융",
+      "close": 152500,
+      "ret5": -0.0085,
+      "ret20": -0.0598,
+      "rsi14": 40.5,
+      "vol20": 0.305,
+      "foreign_net": -109290854150,
+      "inst_net": 110376454550,
+      "score": 0.406,
+      "news": [
+        {
+          "date": "11-10",
+          "title": "[특징주] KB금융 3%대↑…ELS 과징금 환입·방어주 매력에 은행株 강세",
+          "risk": false
+        }
+      ],
+      "price": 156100,
+      "chg": 0.0345,
+      "activity": 1.61,
+      "foreign_today": 3122000000,
+      "inst_today": 0,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "028050",
+      "name": "삼성E&A",
+      "close": 60500,
+      "ret5": -0.0457,
+      "ret20": 0.3195,
+      "rsi14": 57.7,
+      "vol20": 0.94,
+      "foreign_net": -90215064750,
+      "inst_net": 71337297050,
+      "score": 0.344,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "삼성E&A, 10일 싱가포르·홍콩서 NDR",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "반도체 특수에 삼성물산·삼성E&A·SK에코 '쾌재'",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "삼성E&A 6만1400원…대형 프로젝트 원가 관리 속 1.49% 상승",
+          "risk": false
+        }
+      ],
+      "price": 63900,
+      "chg": 0.0545,
+      "activity": 2.01,
+      "foreign_today": 511200000,
+      "inst_today": 0,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "008830",
+      "name": "대동기어",
+      "close": 6150,
+      "ret5": 0.1389,
+      "ret20": 0.0771,
+      "rsi14": 53.7,
+      "vol20": 1.048,
+      "foreign_net": -5714115110,
+      "inst_net": -188314985,
       "score": 1.0,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "[속보] 루닛 VI 발동, 주가 9%대 급등…장중 1만7000원선 돌파도",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "루닛 주가, 11월 9일 장중 16,860원 9.13% 상승",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "루닛, 서밋 협업 기대 속 수익성 시험대…연말 손익분기 가능성은",
-          "risk": false
-        }
-      ],
-      "exchange": "KOSDAQ"
-    },
-    {
-      "code": "180640",
-      "name": "한진칼",
-      "close": 216000,
-      "ret5": 0.499,
-      "ret20": 0.6489,
-      "rsi14": 85.4,
-      "vol20": 1.099,
-      "foreign_net": -26440086000,
-      "inst_net": 25606796250,
-      "score": 0.94,
-      "news": [
-        {
-          "date": "11-10",
-          "title": "[증시키워드] 한진칼 분쟁 관심 유지…이차전지 폭락에 주목도↑",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "[한진칼 지분 경쟁] 호반에 밀린 조원태, 자금 동원력 시험대",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "[한진칼 지분 경쟁 ] LX판토스 3.8% 장기보유…조원태의 숨은 백기사",
-          "risk": false
-        }
-      ],
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "468530",
-      "name": "프로티나",
-      "close": 59100,
-      "ret5": 0.2403,
-      "ret20": 0.3939,
-      "rsi14": 65.3,
-      "vol20": 1.383,
-      "foreign_net": -894627725,
-      "inst_net": 12211149475,
-      "score": 0.9,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "프로티나 주가, 11월 9일 애프터마켓 58,100원 5.64% 상승",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "프로티나 6.91% 올라…단백질 분석 플랫폼 사업화 주목",
-          "risk": false
-        },
-        {
-          "date": "11-07",
-          "title": "엔젠바이오 上…자금조달에 희비 엇갈린 프로티나·애드바이오텍[바이...",
-          "risk": false
-        }
-      ],
-      "exchange": "KOSDAQ"
-    },
-    {
-      "code": "053800",
-      "name": "안랩",
-      "close": 105900,
-      "ret5": -0.0863,
-      "ret20": 0.3473,
-      "rsi14": 57.9,
-      "vol20": 1.569,
-      "foreign_net": -847247400,
-      "inst_net": 3897531750,
-      "score": 0.76,
-      "news": [
-        {
-          "date": "11-10",
-          "title": "안랩·클라우드메이트 하반기 공채…29일까지 접수",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "안랩·안랩클라우드메이트, 올 하반기 공채…29일까지 접수",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "안랩 주가, 11월 9일 애프터마켓 104,900원 5.85% 상승",
-          "risk": false
-        }
-      ],
+      "news": [],
+      "price": 6980,
+      "chg": 0.0958,
+      "activity": 7.66,
+      "foreign_today": 607260000,
+      "inst_today": 0,
       "exchange": "KOSDAQ"
     },
     {
@@ -292,7 +237,7 @@
       "vol20": 1.586,
       "foreign_net": -523993734,
       "inst_net": 12021555,
-      "score": 0.58,
+      "score": 0.844,
       "news": [
         {
           "date": "11-09",
@@ -305,6 +250,30 @@
           "risk": false
         }
       ],
+      "price": 5580,
+      "chg": 0.043,
+      "activity": 13.92,
+      "foreign_today": 122760000,
+      "inst_today": 0,
+      "exchange": "KOSDAQ"
+    },
+    {
+      "code": "263860",
+      "name": "지니언스",
+      "close": 23900,
+      "ret5": -0.1261,
+      "ret20": 0.0839,
+      "rsi14": 53.2,
+      "vol20": 1.398,
+      "foreign_net": -4112853625,
+      "inst_net": -1722545450,
+      "score": 0.656,
+      "news": [],
+      "price": 24900,
+      "chg": 0.0375,
+      "activity": 4.69,
+      "foreign_today": 323700000,
+      "inst_today": 0,
       "exchange": "KOSDAQ"
     },
     {
