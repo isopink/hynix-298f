@@ -408,9 +408,9 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
 </head>
 <body>
 <!-- 첫 화면 커버 (11-05): 뉴런 망이 자동으로 돌고 가운데 제목. 11-10 S.Lee: 배경을 눌러도 스크롤해도 닫히지 않고, ENTER 버튼(1.5초 뒤 켜짐) 또는 Enter·Space 로만 대시보드 -->
-<div class="cover" id="cover" role="dialog" aria-label="The Sigma Engine">
+<div class="cover" id="cover" role="dialog" aria-label="SIGMA ENGINE">
   <canvas id="ch-live" class="live" aria-hidden="true"></canvas>
-  <div class="cover-text"><h1 class="cover-title">The Sigma Engine</h1><p class="cover-sub">Built to think</p><p class="cover-sub">Wired to act</p><button type="button" class="cover-enter" id="cover-enter" disabled>Launch</button></div>
+  <div class="cover-text"><h1 class="cover-title">SIGMA ENGINE</h1><p class="cover-sub">Built to think</p><p class="cover-sub">Wired to act</p><button type="button" class="cover-enter" id="cover-enter" disabled>Launch</button></div>
 </div>
 <div class="wrap">
 
@@ -637,7 +637,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
 [data-theme=volt] .dec-row .act { border-radius: 9999px; }
 [data-theme=volt] .grid > .card + .card { }
 [data-theme=volt] .foot { border-top: 1px dashed rgba(79,93,117,.4); padding-top: 24px; }
-[data-theme=volt] .cover-title { font-family: Inter, "Pretendard Variable", sans-serif; font-weight: 400; letter-spacing: -0.4px; font-size: clamp(20px, 5vw, 34px); color: #fff; text-shadow: 0 0 24px rgba(0,0,0,.9); }
+[data-theme=volt] .cover-title { font-family: Inter, "Pretendard Variable", sans-serif; font-weight: 400; letter-spacing: .16em; padding-left: .16em; white-space: nowrap;   /* 11-10 S.Lee: 'SIGMA ENGINE' 대문자 (The 뺌). 글자 간격 때문에 쏠리는 만큼 왼쪽 여백으로 가운데 보정 */ font-size: clamp(20px, 5vw, 34px); color: #fff; text-shadow: 0 0 24px rgba(0,0,0,.9); }
 [data-theme=volt] .cover-text { padding: 0 24px; gap: 10px; }
 [data-theme=volt] .cover .live { opacity: .5; }   /* 11-10 S.Lee: 글씨가 보이게 뒤쪽 신경망을 연하게 */
 .cover-sub { margin: 0; font-family: Inter, "Pretendard Variable", sans-serif; font-size: clamp(13px, 3.6vw, 17px); font-weight: 400; letter-spacing: 3px; text-transform: uppercase; color: #d8d8d8; text-shadow: 0 0 14px rgba(16,16,16,1), 0 0 30px rgba(16,16,16,.95); }
