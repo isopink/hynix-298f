@@ -650,7 +650,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
   };
   const RX = [
     [/^(\d+\/\d+) 기준$/, 'as of $1'], [/^(\d+\/\d+ \d+:\d+) 회차$/, 'Round $1'], [/^전체 (\d+)종목 보기/, 'Show all $1'], [/^(\d+)종목$/, '$1 stocks'], [/^(\d+)건$/, '$1'], [/^(\d+)개$/, '$1'],
-    [/^변동성 (\d+%)$/, 'Vol $1'], [/^고변동 (\d+%)$/, 'High vol $1'], [/^주식 \/ 상한 (.+)$/, 'Equity / cap $1'], [/^상한 (.+)$/, 'Cap $1'], [/^([\d,]+)원$/, '₩$1'], [/^(\d+\/\d+) 시작 ·$/, 'Since $1 ·'],
+    [/^변동성 (\d+%)$/, 'Vol $1'], [/^고변동 (\d+%)$/, 'High vol $1'], [/^주식 \/ 상한 (.+)$/, 'Equity / cap $1'], [/^상한 (.+)$/, 'Cap $1'], [/^([\d,]+)원$/, '₩$1'], [/^(\d+\/\d+) 시작 ·$/, 'Since $1 ·'], [/^(\d+\/\d+) 시작 · (\d+:\d+) 기준$/, 'Since $1, as of $2'],
     [/^(\d+\/\d+ \d+:\d+) 장 마감$/, '$1, closed'], [/^청산 (\d+)건 중 (\d+)건 수익$/, '$2 of $1 closed trades won'], [/^한도 (.+)$/, 'Limit $1'], [/^최소 (.+)$/, 'Min $1'], [/^최대 (\d+)개, (.+)$/, 'Max $1, $2'],
     [/^국면 상한 (.+) 안, (.+)$/, 'Within cap $1, $2'], [/^KOSPI 이긴 날 (\d+) \/ (\d+)일$/, 'Beat KOSPI $1 / $2 days'], [/^(\d)주$/, 'W$1'], [/^평균 ([\d,]+)천$/, 'Avg $1k'],
     [/^종목당 최대 비중 \((.+)\)$/, 'Max weight per stock ($1)'], [/^코스닥 비중.*$/, 'KOSDAQ weight'], [/^주식 비중 \(.+\)$/, 'Equity weight (regime cap)'], [/^매수 확신도 기준 (.+)$/, 'Buy threshold $1'],
@@ -667,66 +667,97 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
   document.documentElement.lang = 'en';
   new MutationObserver(ms => ms.forEach(m => m.type === 'characterData' ? walk(m.target) : m.addedNodes.forEach(walk))).observe(document.documentElement, { childList: true, subtree: true, characterData: true });
   document.addEventListener('DOMContentLoaded', () => walk(document.body));
-  // 8) 11-10 S.Lee: 우주 · 외계 문명 느낌의 모션 (VoltAgent 색 안에서). 움직임 줄이기 설정이면 전부 끔
-  //    깊은 우주 배경(별 · 신호 줄기 · 오로라) / 커버 한가운데 문양과 들어갈 때 통과 효과 / 카드가 훑듯 나타남 · 숫자 해독 / 도넛 궤도 / 카드 윗변 신호
+  // 8) 11-10 S.Lee: 모션 묶음 (VoltAgent 색 안에서). 움직임 줄이기 설정이면 전부 끔
+  //    커버 = 신경망만 (생체 엔진은 뺌) (심장처럼 뛰는 핵 · 막 · 촉수 · 포자, 신경망도 같이 박동)
+  //    대시보드 = 기계 · 군용 계기판 (모서리를 딴 판, 경고 줄무늬, 격납고 문처럼 열림, 레이더 · 스캐너, 격자) + 깊은 우주 배경
   const sigilMini = `<svg class="sigil mini" viewBox="-120 -120 240 240" aria-hidden="true" focusable="false">
     <circle class="sg rev" style="--d:26s" r="100" fill="none" stroke="#00d992" stroke-width="9" stroke-dasharray="150 40 14 40"/>
     <polygon class="sg" style="--d:40s" points="0,-62 53.7,31 -53.7,31" fill="none" stroke="#f2f2f2" stroke-opacity=".75" stroke-width="8"/>
     <g class="sg rev" style="--d:26s"><circle cx="100" r="13" fill="#00d992"/></g>
     <circle class="core" r="13" fill="#00d992"/>
-  </svg>`;   // 머리글용 작은 문양 (선을 굵게, 요소는 적게)
+  </svg>`;   // 머리글 제목 앞 조준 표식
+  const CUT = 'polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut))';
+  const PLATE = `linear-gradient(135deg, transparent 50%, var(--ln) 50% calc(50% + 1.3px), transparent calc(50% + 1.3px)) 0 0 / var(--cut) var(--cut) no-repeat,
+    linear-gradient(315deg, transparent 50%, var(--ln) 50% calc(50% + 1.3px), transparent calc(50% + 1.3px)) 100% 100% / var(--cut) var(--cut) no-repeat,
+    repeating-linear-gradient(135deg, rgba(0,217,146,.6) 0 3px, transparent 3px 7px) calc(100% - 16px) 5px / 52px 4px no-repeat`;   // 딴 모서리의 빗금 선 둘 + 오른쪽 위 경고 줄무늬
+  const BR = '#00d992, #00d992';
   const fxCss = document.createElement('style'); fxCss.id = 'volt-fx';
   fxCss.textContent = `
 .sigil { display: block; overflow: visible; }
 .sigil .sg, .fx-orbit { transform-origin: 0 0; }
-[data-theme=volt] .cover .live { transform-origin: 50% 50%; transition: transform 1.15s cubic-bezier(.6, 0, .85, .35); }
-[data-theme=volt] .cover.out .live { animation: none !important; transform: scale(2.6); }   /* 들어갈 때 신경망 속으로 빨려 들어감 */
 .top h1 .sigil.mini { display: inline-block; width: .8em; height: .8em; margin-right: .34em; vertical-align: -.06em; }
+/* ---- 대시보드: 깊은 우주 + 전술 격자 ---- */
 #fx-space { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+#fx-grid { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; mask-image: radial-gradient(ellipse 90% 80% at 50% 30%, #000 0%, transparent 78%); -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 30%, #000 0%, transparent 78%); }
+#fx-grid i { position: absolute; inset: -64px; background-image: linear-gradient(rgba(242,242,242,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(242,242,242,.05) 1px, transparent 1px); background-size: 64px 64px; }
 [data-theme=volt] body::before { display: block; inset: -20%; z-index: 0; mask-image: none; -webkit-mask-image: none; background-size: auto;
   background-image: radial-gradient(40% 30% at 28% 30%, rgba(0,217,146,.10), transparent 70%), radial-gradient(34% 26% at 74% 64%, rgba(47,214,161,.06), transparent 70%), radial-gradient(28% 22% at 58% 16%, rgba(242,242,242,.035), transparent 70%); }
-[data-theme=volt] .card, [data-theme=volt] details.log { background: linear-gradient(180deg, rgba(255,255,255,.028) 0%, rgba(255,255,255,0) 38%), rgba(16,16,16,.84) !important; }   /* 별이 카드 뒤로 살짝 비침 */
-[data-theme=volt] .card.hero-card { background:
-  linear-gradient(#00d992, #00d992) 7px 7px / 12px 1px no-repeat, linear-gradient(#00d992, #00d992) 7px 7px / 1px 12px no-repeat,
-  linear-gradient(#00d992, #00d992) calc(100% - 7px) 7px / 12px 1px no-repeat, linear-gradient(#00d992, #00d992) calc(100% - 7px) 7px / 1px 12px no-repeat,
-  linear-gradient(#00d992, #00d992) 7px calc(100% - 7px) / 12px 1px no-repeat, linear-gradient(#00d992, #00d992) 7px calc(100% - 7px) / 1px 12px no-repeat,
-  linear-gradient(#00d992, #00d992) calc(100% - 7px) calc(100% - 7px) / 12px 1px no-repeat, linear-gradient(#00d992, #00d992) calc(100% - 7px) calc(100% - 7px) / 1px 12px no-repeat,
-  radial-gradient(640px 300px at 0% 0%, rgba(0,217,146,.10), transparent 70%), radial-gradient(520px 260px at 100% 100%, rgba(242,242,242,.03), transparent 70%), rgba(16,16,16,.84) !important; }
+/* ---- 대시보드: 모서리를 딴 판 ---- */
+[data-theme=volt] .wrap .card, [data-theme=volt] .wrap details.log { --cut: 14px; --ln: #5a5653; border-radius: 2px !important; clip-path: ${CUT};
+  background: ${PLATE}, linear-gradient(180deg, rgba(255,255,255,.028) 0%, rgba(255,255,255,0) 38%), rgba(16,16,16,.84) !important; background-origin: border-box !important; transition: border-color .18s; }
+[data-theme=volt] .wrap .card.hero-card { --ln: rgba(0,217,146,.75); background: ${PLATE},
+  linear-gradient(${BR}) calc(100% - 7px) 16px / 12px 1px no-repeat, linear-gradient(${BR}) calc(100% - 7px) 16px / 1px 12px no-repeat,
+  linear-gradient(${BR}) 7px calc(100% - 7px) / 12px 1px no-repeat, linear-gradient(${BR}) 7px calc(100% - 7px) / 1px 12px no-repeat,
+  radial-gradient(640px 300px at 0% 0%, rgba(0,217,146,.10), transparent 70%), radial-gradient(520px 260px at 100% 100%, rgba(242,242,242,.03), transparent 70%), rgba(16,16,16,.84) !important; background-origin: border-box !important; }
+[data-theme=volt] .wrap details.log summary { border-radius: 2px; }
+[data-theme=volt] .card .hd .eyebrow::before { content: ""; display: inline-block; width: 4px; height: 10px; margin-right: 9px; background: #00d992; vertical-align: -1px; }   /* 이름판 표식 */
+[data-theme=volt] .eng-tabs { border-radius: 2px; }
+[data-theme=volt] .eng-tabs button { border-radius: 1px; }
+[data-theme=volt] .chip { border-radius: 2px; }
+[data-theme=volt] .dec-row .act, [data-theme=volt] .eng .eyebrow::after, [data-theme=volt] .eng-tabs button::after { border-radius: 2px !important; }
+[data-theme=volt] .dec-row .cf i, [data-theme=volt] .dec-row .cf i b { border-radius: 0; }
+[data-theme=volt] .tip { border-radius: 2px; }
+[data-theme=volt] #ch-hero { position: relative; }
+@media (hover: hover) { [data-theme=volt] .wrap .card:hover { border-color: rgba(0,217,146,.5) !important; --ln: rgba(0,217,146,.8); } }
+.fx-sweep path { pointer-events: none; }
 @media (prefers-reduced-motion: no-preference) {
   .sigil .sg { animation: sg-rot var(--d, 40s) linear infinite; }
   .sigil .sg.rev, .fx-orbit.rev { animation-direction: reverse; }
   .sigil .core { transform-origin: 0 0; animation: sg-core 2.6s ease-in-out infinite; }
-  .sigil .ripple { transform-origin: 0 0; animation: sg-ripple 3.4s ease-out infinite; }
-  .sigil.mini .ripple { display: none; }
-  .fx-orbit { animation: sg-rot 26s linear infinite; } .fx-orbit.rev { animation-duration: 43s; }
+  .fx-orbit { animation: sg-rot 26s linear infinite; } .fx-orbit.rev { animation-duration: 43s; } .fx-orbit.fx-sweep { animation-duration: 6.5s; }
   [data-theme=volt] .cover .live { animation: nn-breathe 14s ease-in-out infinite alternate; }   /* 신경망 전체가 천천히 숨 쉬듯 다가왔다 물러남 */
   @keyframes nn-breathe { from { transform: scale(1) rotate(-.4deg); } to { transform: scale(1.08) rotate(.5deg); } }
   @keyframes sg-rot { to { transform: rotate(360deg); } }
   @keyframes sg-core { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.7); opacity: .55; } }
-  @keyframes sg-ripple { 0% { transform: scale(1); opacity: .55; } 80%, 100% { transform: scale(1.55); opacity: 0; } }
   [data-theme=volt] body::before { animation: fx-aurora 38s ease-in-out infinite alternate; will-change: transform; }
   @keyframes fx-aurora { from { transform: translate3d(-4%, -2%, 0) rotate(0deg) scale(1); } to { transform: translate3d(5%, 4%, 0) rotate(9deg) scale(1.16); } }
+  #fx-grid i { animation: fx-grid 16s linear infinite; will-change: transform; }
+  @keyframes fx-grid { to { transform: translate3d(64px, 64px, 0); } }
   [data-theme=volt] .card::after { content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 1px; pointer-events: none;
     background: linear-gradient(90deg, transparent, rgba(0,217,146,.95) 50%, transparent) no-repeat; background-size: 140px 1px; background-position: -140px 0;
-    animation: fx-edge 11s linear infinite; animation-delay: calc(var(--i, 0) * -1.7s); }   /* 카드 윗변을 지나가는 신호 */
+    animation: fx-edge 9s linear infinite; animation-delay: calc(var(--i, 0) * -1.7s); }   /* 판 윗변을 지나가는 신호 */
   @keyframes fx-edge { 0% { background-position: -140px 0; } 45%, 100% { background-position: calc(100% + 140px) 0; } }
-  .fx-go .wrap .card, .fx-go .wrap details.log, .fx-go .wrap .eng-tabs { animation: fx-wipe .95s cubic-bezier(.2, .7, .2, 1) both; animation-delay: calc(var(--fx0, 0ms) + var(--i, 0) * 95ms); }
-  @keyframes fx-wipe { 0% { opacity: 0; clip-path: inset(0 100% 0 0); } 35% { opacity: 1; } 100% { opacity: 1; clip-path: inset(0 0 0 0); } }   /* 왼쪽에서 훑듯 나타남 (한 번) */
+  /* 격납고 문처럼 가운데서 위아래로 열림 (처음 한 번 · 엔진 탭을 바꿀 때) */
+  .fx-go .wrap .card, .fx-go .wrap details.log { animation: fx-door .62s cubic-bezier(.2, .9, .25, 1) both; animation-delay: calc(var(--fx0, 0ms) + var(--i, 0) * 80ms); }
+  .wrap .card.fx-re { animation: fx-door .5s cubic-bezier(.2, .9, .25, 1) both; }
+  .fx-go .wrap .eng-tabs { animation: fx-fade .5s ease both; animation-delay: calc(var(--fx0, 0ms) + var(--i, 0) * 80ms); }
+  @keyframes fx-door { 0% { opacity: 0; filter: brightness(2.4); clip-path: polygon(14px 50%, 100% 50%, 100% 50%, calc(100% - 14px) 50%, 0 50%, 0 50%); } 22% { opacity: 1; }
+    100% { opacity: 1; filter: brightness(1); clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px); } }
+  @keyframes fx-fade { from { opacity: 0; } to { opacity: 1; } }
+  /* 확신도 막대가 충전되듯 참 */
+  .fx-go .dec-row .cf i b, .fx-re .dec-row .cf i b { transform-origin: 0 50%; animation: fx-charge .7s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--fx0, 0ms) + 520ms); }
+  .fx-re .dec-row .cf i b { animation-delay: 180ms; }
+  @keyframes fx-charge { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  /* 수익률 차트를 훑는 스캐너 */
+  [data-theme=volt] #ch-hero::after { content: ""; position: absolute; top: 4%; bottom: 12%; left: 4%; width: 1px; pointer-events: none; opacity: 0;
+    background: linear-gradient(180deg, transparent, rgba(0,217,146,.85), transparent); box-shadow: 0 0 14px 2px rgba(0,217,146,.22); animation: fx-scan 7s cubic-bezier(.4, 0, .6, 1) infinite 1.5s; }
+  @keyframes fx-scan { 0% { left: 4%; opacity: 0; } 8% { opacity: .9; } 58% { opacity: .9; } 68%, 100% { left: 96%; opacity: 0; } }
 }
 `;
   document.head.appendChild(fxCss);
   const calm = matchMedia('(prefers-reduced-motion: reduce)').matches, phone = matchMedia('(max-width: 640px)').matches;
   const coverEl = document.getElementById('cover');
   const h1 = document.querySelector('.top h1'); if (h1) h1.insertAdjacentHTML('afterbegin', sigilMini);
-  // 깊은 우주: 별 3겹(스크롤 시차 · 깜빡임) + 가끔 지나가는 초록 신호 줄기
+  // 깊은 우주: 별 3겹(스크롤 시차 · 깜빡임) + 가끔 지나가는 초록 신호 줄기, 그 위에 천천히 흐르는 전술 격자
   const space = () => {
+    const gd = document.createElement('div'); gd.id = 'fx-grid'; gd.setAttribute('aria-hidden', 'true'); gd.innerHTML = '<i></i>'; document.body.insertBefore(gd, document.body.firstChild);
     const cv = document.createElement('canvas'); cv.id = 'fx-space'; cv.setAttribute('aria-hidden', 'true'); document.body.insertBefore(cv, document.body.firstChild);
     const ctx = cv.getContext('2d'); let W = 0, H = 0, dpr = 1;
     const size = () => { dpr = Math.min(2, devicePixelRatio || 1); W = innerWidth; H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); };
     size(); addEventListener('resize', size);
     let seed = 298; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
     const stars = Array.from({ length: phone ? 110 : 240 }, () => { const z = .25 + rnd() * .75; return { x: rnd(), y: rnd(), z, r: z > .85 ? 1.6 : z > .55 ? 1.1 : .7, p: rnd() * 6.28, s: .4 + rnd() * 1.6, g: rnd() < .12 }; });
-    const sig = []; let nextSig = 2500, last = 0;
+    const sig = []; let nextSig = 1800, last = 0;
     const draw = t => {
       if (calm) { paint(0); return; }
       requestAnimationFrame(draw);
@@ -744,7 +775,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
         if (s.z > .92) { ctx.fillStyle = s.g ? `rgba(0,217,146,${a * .18})` : `rgba(242,242,242,${a * .14})`; ctx.fillRect(x - 2, y + s.r / 2 - .25, s.r + 4, .5); ctx.fillRect(x + s.r / 2 - .25, y - 2, .5, s.r + 4); }   // 가까운 별의 십자 빛
       }
       if (calm) return;
-      if (t > nextSig) { nextSig = t + 5000 + Math.random() * 9000; const fromL = Math.random() < .5; sig.push({ x: fromL ? -40 : W + 40, y: Math.random() * H * .6, vx: (fromL ? 1 : -1) * (.5 + Math.random() * .35), vy: .12 + Math.random() * .16, t0: t }); }
+      if (t > nextSig) { nextSig = t + 3000 + Math.random() * 5500; const fromL = Math.random() < .5; sig.push({ x: fromL ? -40 : W + 40, y: Math.random() * H * .6, vx: (fromL ? 1 : -1) * (.5 + Math.random() * .35), vy: .12 + Math.random() * .16, t0: t }); }
       for (let i = sig.length - 1; i >= 0; i--) {
         const g = sig[i], age = t - g.t0, x = g.x + g.vx * age, y = g.y + g.vy * age;
         if (age > 2600 || x < -200 || x > W + 200) { sig.splice(i, 1); continue; }
@@ -767,7 +798,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
     };
     requestAnimationFrame(tick);
   };
-  // 대시보드가 처음 드러나는 순간 한 번: 카드가 차례로 나타나고 숫자를 해독
+  // 대시보드가 처음 드러나는 순간 한 번: 판이 차례로 열리고 숫자를 해독
   let went = false;
   const go = base => {
     if (went) return; went = true;
@@ -778,6 +809,11 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
   };
   if (coverEl && phone) new MutationObserver(() => { if (coverEl.classList.contains('out')) go(350); }).observe(coverEl, { attributes: true, attributeFilter: ['class'] });
   else go(60);
+  // 엔진 탭을 바꾸면 그 엔진의 판이 다시 열림
+  const tabs = document.getElementById('eng-tabs');
+  if (tabs && !calm) tabs.addEventListener('click', () => setTimeout(() => {
+    document.querySelectorAll('.wrap .card.pane:not([hidden]), #dec-card').forEach(c => { c.classList.remove('fx-re'); void c.offsetWidth; c.classList.add('fx-re'); setTimeout(() => c.classList.remove('fx-re'), 900); });
+  }, 30));
 })();
 </script>
 <script src="config.js"></script>
@@ -1770,6 +1806,9 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       o1.append('circle').attr('r', R + 16).attr('fill', 'none').attr('stroke', 'rgba(242,242,242,.2)').attr('stroke-width', .8).attr('stroke-dasharray', '1 6');
       o1.append('circle').attr('cx', R + 16).attr('r', 2.6).attr('fill', '#00d992');
       g.append('g').attr('class', 'fx-orbit rev').style('animation-delay', ph(43)).append('circle').attr('cx', -(R + 16)).attr('r', 1.7).attr('fill', '#f2f2f2').attr('opacity', .75);
+      const sw = g.append('g').attr('class', 'fx-orbit fx-sweep').style('animation-delay', ph(6.5));   // 레이더처럼 도넛을 훑는 빛
+      for (let k = 0; k < 9; k++) sw.append('path').attr('d', d3.arc()({ innerRadius: R * .66, outerRadius: R + 16, startAngle: -(k + 1) * .1, endAngle: -k * .1 })).attr('fill', '#00d992').attr('opacity', .2 * (1 - k / 9));
+      sw.append('line').attr('y1', -R * .66).attr('y2', -(R + 16)).attr('stroke', '#00d992').attr('stroke-width', 1).attr('opacity', .7);
     }
     g.append('text').attr('text-anchor', 'middle').attr('dy', '-.1em').attr('font-size', 24).attr('font-weight', 500).attr('fill', C.ink).text((stock / tot * 100).toFixed(1) + '%');
     g.append('text').attr('text-anchor', 'middle').attr('dy', '1.4em').attr('font-size', 11).attr('fill', C.muted).text(cap ? '주식 / 상한 ' + (cap * 100).toFixed(1) + '%' : '주식 비중');
@@ -2214,12 +2253,6 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
         nextSpark = clock + 250 + rnd() * 350; bursts.push({ s: mesh[Math.floor(rnd() * mesh.length)], t: 0, life: 1600, size: 7, c: 'n' });
         const d = dots[Math.floor(rnd() * dots.length)], m = d.out[Math.floor(rnd() * d.out.length)]; if (m) { d.fl = clock; d.fg = false; bursts.push({ s: m, t: 0, life: 420 + rnd() * 520, size: 8, to: m.b.dot ? m.b : null, hop: 3 + Math.floor(rnd() * 3) }); }
       }
-      // 가운데(총괄 AI)에서 바깥으로 퍼지는 물결: 지나가는 자리의 뉴런이 차례로 잠깐 밝아짐 (7~9초마다)
-      if (dt && clock > waveAt && N.cl) { waveAt = clock + 7000 + rnd() * 2000; wave = { x: N.cl.x, y: N.cl.y, t0: clock, id: clock }; }
-      if (wave) { const r = (clock - wave.t0) * .46, far2 = Math.hypot(W, H);
-        if (r > far2) wave = null; else { dots.forEach(d => { if (d.wk !== wave.id && Math.hypot(d.x - wave.x, d.y - wave.y) < r) { d.wk = wave.id; d.wv = clock; } });
-          ctx.globalAlpha = Math.max(0, .1 * (1 - r / far2)); ctx.strokeStyle = 'rgb(255,120,104)'; ctx.lineWidth = 2 * lw; ctx.beginPath(); ctx.arc(wave.x, wave.y, r, 0, 6.283); ctx.stroke(); } }
-      dots.forEach(d => { if (d.wv == null) return; const k = Math.exp(-(clock - d.wv) / 420); if (k < .04) { d.wv = null; return; } stamp(d.x, d.y, SP.r, 30 * (.7 + .5 * k), .75 * k); });
       Object.values(N).forEach(n => {
         const target = (n.on || 0) > 0 ? 1 : [...n.nb].some(o => o.on > 0) ? .35 : [...n.near].some(o => o.on > 0) ? .15 : 0;
         n.glow += (target - n.glow) * Math.min(1, sec * (target > n.glow ? 8 : 2.5));
