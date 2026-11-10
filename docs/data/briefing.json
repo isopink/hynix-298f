@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "14:45",
+    "time": "15:00",
     "pool": 445,
-    "analyzed_new": 7,
-    "passed": 21,
+    "analyzed_new": 6,
+    "passed": 22,
     "kept_prep": false
   },
   "candidates": [
@@ -111,11 +111,11 @@
           "risk": false
         }
       ],
-      "price": 30700,
-      "chg": 0.0268,
-      "activity": 1.68,
+      "price": 30650,
+      "chg": 0.0251,
+      "activity": 1.65,
       "foreign_today": 0,
-      "inst_today": 5740900000,
+      "inst_today": 5731550000,
       "exchange": "KOSPI"
     },
     {
@@ -128,8 +128,19 @@
       "vol20": 0.34,
       "foreign_net": -7527384600,
       "inst_net": 47458324425,
-      "score": 0.765,
-      "news": [],
+      "score": 0.756,
+      "news": [
+        {
+          "date": "11-10",
+          "title": "KT, 3분기 매출 6조9975억원…본업 회복세",
+          "risk": false
+        },
+        {
+          "date": "11-10",
+          "title": "[공식] 한화, ‘KT 우승 경험’ 김강 코치-‘체육학 석사’ 안영명 코치...",
+          "risk": false
+        }
+      ],
       "foreign_today": 5544000000,
       "inst_today": 0,
       "exchange": "KOSPI"
@@ -144,7 +155,7 @@
       "vol20": 0.232,
       "foreign_net": -18778364950,
       "inst_net": 25113216300,
-      "score": 0.671,
+      "score": 0.667,
       "news": [
         {
           "date": "11-10",
@@ -176,21 +187,21 @@
       "vol20": 0.864,
       "foreign_net": -17756228825,
       "inst_net": 32921916375,
-      "score": 0.612,
+      "score": 0.611,
       "news": [
         {
           "date": "11-10",
-          "title": "['리플리제 자이' 홍보관을 가다] 기후변화까지 품은 혁신설계… GS건설...",
+          "title": "GS건설, 겨울 콘크리트 문제 사전 차단한다…레미콘 공장 검증",
           "risk": false
         },
         {
           "date": "11-10",
-          "title": "\"겨울철 균열 잡는다\"… GS건설, '내한 콘크리트' 사전 검증",
+          "title": "GS건설, 레미콘 공장 전수 검증…콘크리트 품질 확보",
           "risk": false
         },
         {
           "date": "11-10",
-          "title": "GS건설, 동절기 콘크리트 품질확보 만전… 레미콘 공장 전수검증 나서",
+          "title": "GS건설, 해외 원가 598억원 반영···얀부 공사 지연에 2027년 준공",
           "risk": false
         }
       ],
@@ -208,7 +219,7 @@
       "vol20": 0.41,
       "foreign_net": -10024081475,
       "inst_net": 11905700725,
-      "score": 0.588,
+      "score": 0.589,
       "news": [],
       "foreign_today": 0,
       "inst_today": 1513350000,
@@ -224,7 +235,7 @@
       "vol20": 0.553,
       "foreign_net": -21680191950,
       "inst_net": 66517718150,
-      "score": 0.576,
+      "score": 0.578,
       "news": [
         {
           "date": "11-10",
@@ -247,41 +258,6 @@
       "exchange": "KOSPI"
     },
     {
-      "code": "028050",
-      "name": "삼성E&A",
-      "close": 60500,
-      "ret5": -0.0457,
-      "ret20": 0.3195,
-      "rsi14": 57.7,
-      "vol20": 0.94,
-      "foreign_net": -90215064750,
-      "inst_net": 71337297050,
-      "score": 0.553,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "삼성E&A, 10일 싱가포르·홍콩서 NDR",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "반도체 특수에 삼성물산·삼성E&A·SK에코 '쾌재'",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "삼성E&A 6만1400원…대형 프로젝트 원가 관리 속 1.49% 상승",
-          "risk": false
-        }
-      ],
-      "price": 64700,
-      "chg": 0.0677,
-      "activity": 0.59,
-      "foreign_today": 0,
-      "inst_today": 5176000000,
-      "exchange": "KOSPI"
-    },
-    {
       "code": "112610",
       "name": "씨에스윈드",
       "close": 47650,
@@ -291,7 +267,7 @@
       "vol20": 0.846,
       "foreign_net": -30362102875,
       "inst_net": 32840193100,
-      "score": 0.553,
+      "score": 0.556,
       "news": [
         {
           "date": "11-09",
@@ -314,6 +290,60 @@
       "exchange": "KOSPI"
     },
     {
+      "code": "028050",
+      "name": "삼성E&A",
+      "close": 60500,
+      "ret5": -0.0457,
+      "ret20": 0.3195,
+      "rsi14": 57.7,
+      "vol20": 0.94,
+      "foreign_net": -90215064750,
+      "inst_net": 71337297050,
+      "score": 0.533,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "삼성E&A, 10일 싱가포르·홍콩서 NDR",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "반도체 특수에 삼성물산·삼성E&A·SK에코 '쾌재'",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "삼성E&A 6만1400원…대형 프로젝트 원가 관리 속 1.49% 상승",
+          "risk": false
+        }
+      ],
+      "price": 64900,
+      "chg": 0.071,
+      "activity": 0.6,
+      "foreign_today": 0,
+      "inst_today": 5192000000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "316140",
+      "name": "우리금융지주",
+      "close": 31450,
+      "ret5": 0.0311,
+      "ret20": -0.0218,
+      "rsi14": 48.3,
+      "vol20": 0.333,
+      "foreign_net": -86710371150,
+      "inst_net": 113686106975,
+      "score": 0.522,
+      "news": [],
+      "price": 31000,
+      "chg": 0.0032,
+      "activity": 0.74,
+      "foreign_today": 0,
+      "inst_today": 4185000000,
+      "exchange": "KOSPI"
+    },
+    {
       "code": "161390",
       "name": "한국타이어앤테크놀로지",
       "close": 61100,
@@ -323,7 +353,7 @@
       "vol20": 0.502,
       "foreign_net": -10862318450,
       "inst_net": 22690494600,
-      "score": 0.518,
+      "score": 0.511,
       "news": [],
       "foreign_today": 0,
       "inst_today": 2260700000,
@@ -339,7 +369,7 @@
       "vol20": 0.601,
       "foreign_net": -11565905200,
       "inst_net": 23164820850,
-      "score": 0.506,
+      "score": 0.5,
       "news": [
         {
           "date": "11-10",
@@ -371,8 +401,13 @@
       "vol20": 0.867,
       "foreign_net": 434469800,
       "inst_net": 4990999975,
-      "score": 0.471,
+      "score": 0.467,
       "news": [
+        {
+          "date": "11-10",
+          "title": "디앤디파마텍 MASH 신약, 美 간학회 핵심 연구로 선정",
+          "risk": false
+        },
         {
           "date": "11-10",
           "title": "디앤디파마텍 '자보페그두타이드', 미국간학회 주요 임상 연구 선정",
@@ -382,16 +417,11 @@
           "date": "11-10",
           "title": "디앤디파마텍 '자보페그두타이드', AASLD 핵심 연구 선정",
           "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "디앤디파마텍 DD01, 美간학회서 48주 조직생검 결과 공개",
-          "risk": false
         }
       ],
       "price": 40200,
       "chg": 0.0593,
-      "activity": 0.9,
+      "activity": 0.92,
       "foreign_today": 0,
       "inst_today": 562800000,
       "exchange": "KOSDAQ"
@@ -406,19 +436,29 @@
       "vol20": 0.683,
       "foreign_net": -73538377500,
       "inst_net": 104888122250,
-      "score": 0.435,
+      "score": 0.411,
       "news": [
+        {
+          "date": "11-10",
+          "title": "현대모비스 상승 흐름, 고저 차 16,000원",
+          "risk": false
+        },
+        {
+          "date": "11-10",
+          "title": "프로농구 오늘(10일) 경기 일정…울산 현대모비스VS 고양 소노, 중계 채...",
+          "risk": false
+        },
         {
           "date": "11-10",
           "title": "[JB프리뷰] ‘외국선수 1명’ 균형 맞춰진 현대모비스-소노의 외나무다...",
           "risk": false
         }
       ],
-      "price": 354000,
-      "chg": 0.0663,
+      "price": 352000,
+      "chg": 0.0602,
       "activity": 0.67,
       "foreign_today": 0,
-      "inst_today": 2124000000,
+      "inst_today": 2112000000,
       "exchange": "KOSPI"
     },
     {
@@ -431,7 +471,7 @@
       "vol20": 0.784,
       "foreign_net": -7680339725,
       "inst_net": 27347572175,
-      "score": 0.365,
+      "score": 0.367,
       "news": [
         {
           "date": "11-10",
@@ -463,8 +503,13 @@
       "vol20": 0.253,
       "foreign_net": 1897865370,
       "inst_net": 14561074190,
-      "score": 0.341,
+      "score": 0.344,
       "news": [
+        {
+          "date": "11-10",
+          "title": "카카오뱅크, '고향사랑기부제' 서비스 출시",
+          "risk": false
+        },
         {
           "date": "11-10",
           "title": "답례품 고르고 기부금 납부…카카오뱅크, 고향사랑기부 연계",
@@ -473,11 +518,6 @@
         {
           "date": "11-10",
           "title": "카카오뱅크, 신용카드업도 저울질…인수로 간다면 '수신 71조'가 무기",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "[금융단신] 우리은행·카카오뱅크·케이뱅크·한국수출입은행",
           "risk": false
         }
       ],
@@ -495,7 +535,7 @@
       "vol20": 1.048,
       "foreign_net": -5714115110,
       "inst_net": -188314985,
-      "score": 0.976,
+      "score": 0.978,
       "news": [
         {
           "date": "11-10",
@@ -503,10 +543,10 @@
           "risk": false
         }
       ],
-      "price": 7230,
-      "chg": 0.135,
-      "activity": 3.77,
-      "foreign_today": 1359240000,
+      "price": 7220,
+      "chg": 0.1334,
+      "activity": 3.92,
+      "foreign_today": 1357360000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -520,7 +560,7 @@
       "vol20": 1.381,
       "foreign_net": -8424528360,
       "inst_net": 20664819130,
-      "score": 0.8,
+      "score": 0.789,
       "news": [
         {
           "date": "11-09",
@@ -538,12 +578,47 @@
           "risk": false
         }
       ],
-      "price": 16980,
-      "chg": 0.0501,
-      "activity": 1.23,
+      "price": 16910,
+      "chg": 0.0458,
+      "activity": 1.2,
       "foreign_today": 0,
-      "inst_today": 1935720000,
+      "inst_today": 1927740000,
       "exchange": "KOSDAQ"
+    },
+    {
+      "code": "010060",
+      "name": "OCI홀딩스",
+      "close": 191300,
+      "ret5": 0.029,
+      "ret20": -0.146,
+      "rsi14": 46.2,
+      "vol20": 1.173,
+      "foreign_net": -82191579550,
+      "inst_net": 84640960650,
+      "score": 0.633,
+      "news": [
+        {
+          "date": "11-10",
+          "title": "한화큐셀·OCI홀딩스, 美 태양광 관세 확정…현지 셀 생산이 수혜 가른...",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "美 태양광 셀 공장 두 번 미룬 OCI홀딩스···재검토 앞당기나",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "OCI홀딩스 주가, 11월 9일 애프터마켓 191,100원 4.40% 하락",
+          "risk": false
+        }
+      ],
+      "price": 198500,
+      "chg": 0.0128,
+      "activity": 1.17,
+      "foreign_today": 3970000000,
+      "inst_today": 0,
+      "exchange": "KOSPI"
     },
     {
       "code": "425420",
@@ -555,48 +630,13 @@
       "vol20": 1.508,
       "foreign_net": 10600396200,
       "inst_net": -3906304850,
-      "score": 0.612,
+      "score": 0.611,
       "news": [],
-      "price": 74600,
-      "chg": 0.0875,
-      "activity": 0.84,
+      "price": 73900,
+      "chg": 0.0773,
+      "activity": 0.82,
       "foreign_today": 0,
-      "inst_today": 895200000,
-      "exchange": "KOSDAQ"
-    },
-    {
-      "code": "030530",
-      "name": "원익홀딩스",
-      "close": 26400,
-      "ret5": -0.1914,
-      "ret20": 0.0154,
-      "rsi14": 49.5,
-      "vol20": 1.312,
-      "foreign_net": -343188300,
-      "inst_net": 1370113450,
-      "score": 0.6,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "원익홀딩스 주가, 11월 9일 애프터마켓 26,450원 6.54% 하락",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "원익홀딩스 2.30% 하락…반도체 장비 업황과 자회사 가치 점검",
-          "risk": false
-        },
-        {
-          "date": "11-07",
-          "title": "11월 1주차 원익홀딩스 주가, 장마감 급반등",
-          "risk": false
-        }
-      ],
-      "price": 29000,
-      "chg": 0.0662,
-      "activity": 1.17,
-      "foreign_today": 0,
-      "inst_today": 1595000000,
+      "inst_today": 886800000,
       "exchange": "KOSDAQ"
     },
     {
@@ -611,11 +651,11 @@
       "inst_net": -1722545450,
       "score": 0.6,
       "news": [],
-      "price": 25100,
-      "chg": 0.0458,
-      "activity": 1.25,
+      "price": 25000,
+      "chg": 0.0417,
+      "activity": 1.21,
       "foreign_today": 0,
-      "inst_today": 150600000,
+      "inst_today": 150000000,
       "exchange": "KOSDAQ"
     },
     {
