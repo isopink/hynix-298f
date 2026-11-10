@@ -268,15 +268,15 @@ details.log[open] > summary::after { content: "−"; }
 .cal { display: grid; grid-template-columns: 44px repeat(5, minmax(0, 1fr)); gap: 6px; }
 .cal .wd, .cal .wk { font-size: 11px; color: var(--muted); display: flex; align-items: center; }
 .cal .wd { justify-content: center; padding-bottom: 2px; }
-.cal .cell { position: relative; min-height: 58px; border-radius: 10px; border: 1px solid rgba(255,255,255,.07); background: rgba(255,255,255,.025); padding: 8px 10px; display: flex; flex-direction: column; justify-content: space-between; }
+.cal .cell { position: relative; min-height: 84px; border-radius: 10px; border: 1px solid rgba(255,255,255,.07); background: rgba(255,255,255,.025); padding: 8px 10px; display: flex; flex-direction: column; justify-content: space-between; }
 .cal .cell .top { display: flex; justify-content: space-between; gap: 6px; font-size: 11px; color: var(--muted); }
 .cal .cell .k { color: rgba(255,255,255,.62); font-variant-numeric: tabular-nums; }
-.cal .cell .v { font-size: 14px; font-weight: 500; color: var(--ink); text-align: right; }
+.cal .cell .v { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 500; color: var(--ink); text-align: center; }   /* 11-10 S.Lee: 칸 정중앙에 Sigma 당일 등락만 */
 .cal .cell.has { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: inset 0 1px 0 rgba(255,255,255,.06); }
 .cal .cell .v.up { color: var(--red-hi); } .cal .cell .v.down { color: var(--blue); }
 .cal .cell.today { border-color: rgba(255,90,74,.7) !important; }
 .cal .cell.has { cursor: default; }
-@media (max-width: 640px) { .cal { grid-template-columns: 30px repeat(5, minmax(0, 1fr)); gap: 4px; } .cal .cell { min-height: 48px; padding: 6px; } .cal .cell .v { font-size: 12px; } .cal .cell .k, .cal-sub { display: none; } }
+@media (max-width: 640px) { .cal { grid-template-columns: 30px repeat(5, minmax(0, 1fr)); gap: 4px; } .cal .cell { min-height: 60px; padding: 6px; } .cal .cell .v { font-size: 12px; } .cal-sub { display: none; } }
 .fb-body { padding: 4px 20px 18px; }
 .more-body { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 0 16px 16px; }
 .wrap > *, .more-body > * { min-width: 0; }   /* 넓은 표가 페이지 폭을 밀어내지 않게 */
@@ -517,7 +517,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
           <div class="chart" id="ch-alpha" style="min-height:200px"></div>
         </section>
         <section class="card c12">
-          <div class="hd"><h2 class="eyebrow">수익률 캘린더</h2><span class="sub cal-sub">큰 숫자 Sigma Engine, 작은 숫자 KOSPI</span></div>
+          <div class="hd"><h2 class="eyebrow">수익률 캘린더</h2><span class="sub cal-sub">Sigma Engine 당일 등락</span></div>
           <div class="cal" id="ch-cal"></div>
         </section>
       </div>
@@ -648,7 +648,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
     '수급 데이터를 기다리는 중이에요.': 'Waiting for flow data.', 'KOSPI 데이터를 기다리는 중이에요.': 'Waiting for KOSPI data.', '이번 주': 'This week', 'vs 지난 금요일': 'vs last Friday',
     '월': 'Mon', '화': 'Tue', '수': 'Wed', '목': 'Thu', '금': 'Fri', '최대 낙폭': 'Max drawdown', '고점 대비': 'from peak', '승률': 'Win rate', '● 청산  ○ 보유 중': '● closed  ○ open',
     '리스크 한도 사용률': 'Risk limit usage', '주문 직전 Hook이 강제, 100%면 차단': 'Enforced by the pre-order hook, blocked at 100%', '오늘 손실': 'Loss today', '누적 손실': 'Total loss',
-    '현금 비중': 'Cash weight', '보유 종목 수': 'Positions', '일별 초과수익': 'Daily excess return', '수익률 캘린더': 'Return calendar', '큰 숫자 Sigma Engine, 작은 숫자 KOSPI': 'Large: Sigma Engine, small: KOSPI',
+    '현금 비중': 'Cash weight', '보유 종목 수': 'Positions', '일별 초과수익': 'Daily excess return', '수익률 캘린더': 'Return calendar', 'Sigma Engine 당일 등락': 'Sigma Engine daily change',
     '기준값 자동 조정 (매일)': 'Daily auto-tuning', '유지': 'Kept', '주간 회고 (수요일 · 금요일)': 'Weekly review (Wed, Fri)', '반영': 'Applied', '검토 중': 'In review',
     '수수료·세금 반영': 'after fees and tax', '확신도': 'Confidence', '현재가': 'Price', '평단': 'Avg cost', '총 손익': 'Total P&L', '손익': 'P&L', '이김': 'Won', '짐': 'Lost', '초과': 'Excess', '매입금액': 'Cost', '금액': 'Amount',
     '평가금액': 'Market value', '토큰': 'Tokens', '종가': 'Close', '조건 통과': 'Passed', '전일 대비': 'vs prev close', '외국인': 'Foreign', '외국인 · 기관 5일': 'Foreign, inst. 5d',
@@ -1781,7 +1781,6 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
         const top = document.createElement('div'); top.className = 'top'; c.appendChild(top);
         const dl = document.createElement('span'); dl.textContent = md(dt); top.appendChild(dl);
         if (!v) continue;
-        const kl = document.createElement('span'); kl.className = 'k'; kl.textContent = 'K ' + pct(v.kday); top.appendChild(kl);
         // 반투명 유리: 수익률이 클수록 진하게 (빨강 = 수익, 파랑 = 손실), 숫자도 같은 색
         const a = .08 + .22 * Math.min(1, Math.abs(v.day) / mx), rgb = v.day >= 0 ? '255,90,74' : '74,163,212';
         c.style.background = `linear-gradient(135deg, rgba(${rgb},${(a + .06).toFixed(3)}), rgba(${rgb},${(a * .35).toFixed(3)}))`;
@@ -2006,13 +2005,19 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
         const k = document.createElement('b'); k.style.cssText = 'font-weight:500;color:' + C.ink; k.textContent = `${x.label} ${fmt(x.from, x.key)} → ${fmt(x.to, x.key)}`;
         s.append(k, document.createTextNode(' · ' + x.reason)); b.appendChild(s);
       });
-      if (t.summary) { const s = document.createElement('span'); s.style.color = C.muted; s.textContent = t.summary; b.appendChild(s); }
+      if (t.summary) { const s = document.createElement('span'); s.style.color = C.muted; s.textContent = plainKr(t.summary); b.appendChild(s); }
       if (t.rejected.length) { const s = document.createElement('span'); s.style.color = C.muted; s.textContent = '규칙에 막힘 ' + t.rejected.length + '건: ' + t.rejected.map(x => x.rejected).join(' / '); b.appendChild(s); }
       it.append(a, b); box.appendChild(it);
     });
     el.appendChild(box);
   }
 
+  // 11-10 S.Lee: 에이전트가 회고·조정 글에 쓴 코드 이름(buy_min_confidence, changes=[] 등)을 화면에서는 한글 설명으로
+  const KR_KEYS = { buy_min_confidence: '매수 확신도 기준', sell_min_confidence: '매도 확신도 기준', full_size_confidence: '최대 비중 확신도', min_weight: '최소 종목 비중', max_weight: '최대 종목 비중',
+    stop_loss_pct: '손절선', take_profit_pct: '익절선', max_hold_days: '최대 보유일', regime_cap: '국면별 비중 상한', max_vol20: '후보 변동성 상한', spike_ret5: '5일 급등 감점 기준', spike_penalty: '5일 급등 감점 폭',
+    no_rebuy_same_day: '당일 재매수 금지', add_on: '추가 매수', probe: '소액 매수', partial_sell: '분할 매도', trade_from: '매매 시작 시각', no_stop: '손절 없음', weight_cap: '비중 상한', high_vol: '고변동 종목 규칙', kosdaq_all: '코스닥 전체 고변동 처리' };
+  const KR_RX = new RegExp('\\b(?:(?:decision|screen|regime_cap|inverse|index|high_vol)\\.)?(' + Object.keys(KR_KEYS).join('|') + ')\\b', 'g');
+  const plainKr = t => String(t == null ? '' : t).replace(/\s*\(?changes=\[\]\)?/g, '').replace(KR_RX, (m, k) => KR_KEYS[k]);
   function review() {
     const el = $('ch-review'); el.innerHTML = ''; el.classList.remove('empty');
     tuningLog(el);
@@ -2022,7 +2027,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     D.reviews.forEach(r => {
       const it = document.createElement('div'); it.style.cssText = 'display:grid;grid-template-columns:56px 1fr auto;gap:10px;align-items:start;font-size:12px;line-height:1.5';
       const a = document.createElement('span'); a.style.color = C.muted; a.textContent = r.week + (r.mid ? ' 중간' : '');
-      const b = document.createElement('span'); b.style.color = C.body; b.textContent = r.suggestion;
+      const b = document.createElement('span'); b.style.color = C.body; b.textContent = plainKr(r.suggestion);
       const c = document.createElement('span'); c.className = 'chip'; c.style.cssText = 'padding:2px 8px;font-size:11px;' + (r.status === '반영' ? '' : 'border-color:#da291c;color:#ff5a4a'); c.textContent = r.status;
       it.append(a, b, c); wrap.appendChild(it);
     });
