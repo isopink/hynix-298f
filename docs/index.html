@@ -2126,7 +2126,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     // 경로 = 출발-도착
     const LINKS = ('kbal-snap snap-rpc rpc-sbs sbs-dash nav-cron cron-kxt cron-flw cron-kxd kxt-dash kxd-dash flw-dash snap-lsnap lsnap-mon mon-exitr exitr-run sched-run sched-snap sched-mon sched-close lock-run krank-intr krxl-krx krx-ind ind-prep newsapi-news news-prep prep-screen screen-brief intr-brief run-prep run-intr brief-cl run-cl cl-reg reg-cl cl-bull bull-web bull-bear bear-web bear-cl cl-boost boost-cl cl-mcp mcp-plan params-plan norebuy-plan etf-plan probe-plan partial-plan plan-mcp mcp-hook limits-hook hook-block block-jrn hook-broker rate-broker mode-broker broker-korder kprice-broker mcp-jrn jrn-logger dbf-logger logger-eqf logger-hdf logger-trf logger-stf eqf-pub hdf-pub trf-pub stf-pub close-logger pub-gh gh-pg pg-dash lap-gh gh-sync sync-run cl-tune tunerules-tune tune-params tune-chg chg-gh cl-rev rev-drafts drafts-pub params-pub' +
       ' bull-ofact bear-ofact ofact-ohyp ofact-oprem cl-oprem mcp-otrace otrace-oprem jrn-oeval ohyp-oeval oeval-ocase ocase-olesson olesson-opol opol-tune olesson-brief').split(' ');
-    let N, E, EDGE, dots, mesh, far = null, mid = null, wave = null, waveAt = 2500, H = 620, ys = 1, scale = 1, phone = null, lw = 1, cssW = 1000, ready = false, dprCap = 3, cost = 0;
+    let N, E, EDGE, dots, mesh, far = null, mid = null, wave = null, waveAt = 2500, H = 620, ys = 1, scale = 1, phone = null, lw = 1, zs = 1, cssW = 1000, ready = false, dprCap = 3, cost = 0;
     let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647, r2 = () => (rnd() + rnd()) - 1;
     // 선의 네 점은 매 프레임 지금 위치로 계산 (지점이 천천히 떠다니므로)
     const geo = s => {
@@ -2212,6 +2212,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       const r = cv.getBoundingClientRect(); if (r.width < 1) return;
       const ph = r.width < 560, dpr = Math.min(dprCap, devicePixelRatio || 1);   // 화면 픽셀 그대로 선명하게 (최대 3배, 느린 기기는 자동으로 낮춤)
       const h = Math.max(300, Math.min(2600, Math.round(W * r.height / r.width)));   // 상자 비율대로 세로 길이 (1000 기준)
+      zs = ph ? 1 : Math.max(.35, Math.min(1, .95 * W / r.width));   // 11-10 S.Lee: PC 는 뉴런 몸통 · 빛 번짐 · 움직이는 데이터 점도 화면 폭에 맞춰 작게 (폰은 그대로)
       lw = ph ? 1.6 : Math.max(.3, Math.min(1, .8 * W / r.width));   // 11-10 S.Lee: PC 는 화면이 넓을수록 배율이 커져 선이 굵어 보여서, 화면 픽셀 기준 굵기를 폰과 비슷하게 (폰은 그대로)
       if (ph !== phone || Math.abs(h - H) > 8) { phone = ph; H = h; ys = H / 620; build(); }
       const cw = Math.round(r.width * dpr), ch = Math.round(cw * H / W);
@@ -2239,7 +2240,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     // ---- 그리기 ----
     let last = performance.now(), clock = 0, visible = true, nextSpark = 0;
     const waiters = new Set(), bursts = [];
-    const stamp = (x, y, im, size, alpha) => { ctx.globalAlpha = alpha; ctx.drawImage(im, x - size / 2, y - size / 2, size, size); };
+    const stamp = (x, y, im, size, alpha) => { size *= zs; ctx.globalAlpha = alpha; ctx.drawImage(im, x - size / 2, y - size / 2, size, size); };
     function draw(dt) {
       if (!ready) { fit(); if (!ready) return; }
       const sec = dt / 1000;
@@ -2261,7 +2262,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
         const p = bursts[i]; p.t += dt / p.life; if (p.t < 0) continue; if (p.t >= 1) { if (p.to) { p.to.fl = clock; p.to.fg = !!p.g; if (p.hop > 0 && p.to.out && p.to.out.length && bursts.length < 420) for (let k = rnd() < .38 ? 2 : 1; k--;) { const m = p.to.out[Math.floor(rnd() * p.to.out.length)]; bursts.push({ s: m, t: 0, life: 420 + rnd() * 520, size: 7, g: p.g, to: m.b.dot ? m.b : null, hop: p.hop - 1 }); } } bursts.splice(i, 1); continue; }   // 닿은 뉴런이 다시 옆 뉴런으로 쏨 (연쇄)
         const [x, y] = at(p.s, p.t), [tx, ty] = at(p.s, Math.max(0, p.t - .05));
         ctx.globalAlpha = p.c ? .25 : .55; ctx.strokeStyle = p.c ? 'rgb(205,205,210)' : p.g ? 'rgb(110,230,170)' : 'rgb(255,120,104)'; ctx.lineWidth = 1.2 * lw; ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(x, y); ctx.stroke();
-        stamp(x, y, SP[p.c || (p.g ? 'g' : 'r')], p.size, p.c ? .5 : .95);
+        stamp(x, y, SP[p.c || (p.g ? 'g' : 'r')], p.size * (phone ? 1 : .8), p.c ? .5 : .95);   // PC 는 데이터 점을 한 번 더 작게
       }
       dots.forEach(d => {   // 갈라진 데이터가 닿은 작은 뉴런: 한 번 번쩍이고 가라앉음
         if (d.fl == null) return; const k = Math.exp(-(clock - d.fl) / 520); if (k < .05) { d.fl = null; return; }
