@@ -2163,15 +2163,15 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       E.forEach(e => { e.strands = Array.from({ length: 2 }, () => ({ a: e.a, b: e.b, k1: e.bow + r2() * 4, k2: -e.bow * .55 + r2() * 4, w: .8 + rnd() * .6 })); });
       Object.values(N).forEach(n => {
         n.den = [];
-        for (let i = 0, c = 6 + n.deg; i < c; i++) { let ang; do { ang = rnd() * Math.PI * 2; } while (ang > .6 && ang < 2.55); branch(0, 0, ang, 20 + n.deg * 1.5 + rnd() * 20, Math.min(phone ? 5 : 6, 3 + Math.ceil(n.deg / 2)), n.den, Math.min(2, .9 + n.deg * .14)); }
+        for (let i = 0, c = 6 + n.deg; i < c; i++) { let ang; do { ang = rnd() * Math.PI * 2; } while (ang > .6 && ang < 2.55); branch(0, 0, ang, 20 + n.deg * 1.5 + rnd() * 20, Math.min(5, 3 + Math.ceil(n.deg / 2)), n.den, Math.min(2, .9 + n.deg * .14)); }
       });
       dots = [];
       let guard = 0;
-      while (dots.length < (phone ? 240 : 140) && guard++ < 20000) {   // 빈 자리와 모서리까지 작은 뉴런으로 채움 (11-06 90·60 → 150·100 → 11-10 240·140, 더 촘촘하게)
+      while (dots.length < (phone ? 240 : 100) && guard++ < 20000) {   // 빈 자리와 모서리까지 작은 뉴런으로 채움 (11-06 90·60 → 150·100 → 11-10 240·140, 더 촘촘하게)
         const x = -20 + rnd() * (W + 40), y = -20 + rnd() * (H + 40);
         if (Object.values(N).every(n => Math.hypot(n.x - x, n.y - y) > 30) && dots.every(d => Math.hypot(d.x - x, d.y - y) > 19)) { const d = { x, y, x0: x, y0: y, den: [], amp: 18, dot: 1, out: [] }; drift(d); dots.push(d); }
       }
-      dots.forEach((d, j) => { const sm = d.sm = j >= (phone ? 150 : 100); for (let i = 0; i < (sm ? 5 : 6); i++) branch(0, 0, rnd() * Math.PI * 2, sm ? 9 + rnd() * 10 : 16 + rnd() * 16, sm ? 4 : 5, d.den, sm ? .8 : .9); });   // 11-10 늘린 뉴런은 가지를 짧게 (크기가 섞여 깊이감 · 가지 그림은 한 장(mid)에 모아 같이 떠다님 → 늘어도 가볍게)
+      dots.forEach((d, j) => { const sm = d.sm = j >= (phone ? 150 : 70); for (let i = 0; i < (sm ? 5 : 6); i++) branch(0, 0, rnd() * Math.PI * 2, sm ? 9 + rnd() * 10 : 16 + rnd() * 16, sm ? 4 : 5, d.den, sm ? .8 : .9); });   // 11-10 늘린 뉴런은 가지를 짧게 (크기가 섞여 깊이감 · 가지 그림은 한 장(mid)에 모아 같이 떠다님 → 늘어도 가볍게)
       Object.values(N).forEach(n => { n.nb = new Set(); n.near = new Set(); });
       E.forEach(e => { e.a.nb.add(e.b); e.b.nb.add(e.a); });
       mesh = [];
@@ -2216,7 +2216,8 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       const r = cv.getBoundingClientRect(); if (r.width < 1) return;
       const ph = r.width < 560, dpr = Math.min(dprCap, devicePixelRatio || 1);   // 화면 픽셀 그대로 선명하게 (최대 3배, 느린 기기는 자동으로 낮춤)
       const h = Math.max(300, Math.min(2600, Math.round(W * r.height / r.width)));   // 상자 비율대로 세로 길이 (1000 기준)
-      if (ph !== phone || Math.abs(h - H) > 8) { phone = ph; lw = ph ? 1.6 : 1; H = h; ys = H / 620; build(); }
+      lw = ph ? 1.6 : Math.max(.3, Math.min(1, .8 * W / r.width));   // 11-10 S.Lee: PC 는 화면이 넓을수록 배율이 커져 선이 굵어 보여서, 화면 픽셀 기준 굵기를 폰과 비슷하게 (폰은 그대로)
+      if (ph !== phone || Math.abs(h - H) > 8) { phone = ph; H = h; ys = H / 620; build(); }
       const cw = Math.round(r.width * dpr), ch = Math.round(cw * H / W);
       if (cw === cv.width && ch === cv.height && ready) return;
       cv.width = cw; cv.height = ch; scale = cw / W; cssW = r.width;
@@ -2228,7 +2229,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
         dots.forEach(d => { if (!d.sm) return; d.den.forEach(b => { g.strokeStyle = `rgba(230,228,228,${Math.min(.24, (.04 + .11 * b.w) * .6)})`; g.lineWidth = b.w * lw; g.beginPath(); g.moveTo(d.x0 + b.x, d.y0 + b.y); g.quadraticCurveTo(d.x0 + b.cx, d.y0 + b.cy, d.x0 + b.ex, d.y0 + b.ey); g.stroke(); }); }); }
       // 11-10 S.Lee: 더 촘촘해 보이게 뒤쪽에 먼 층을 한 장 깔아 둠 (작고 흐린 뉴런 · 가는 선, 한 번만 그려 두고 매 프레임 살짝 밀어 찍음)
       { const g = far.getContext('2d'); g.setTransform(scale, 0, 0, scale, 0, 0); g.lineCap = 'round'; let sd = 11; const r = () => (sd = (sd * 16807) % 2147483647) / 2147483647;
-        const P = Array.from({ length: phone ? 320 : 200 }, () => [r() * W, r() * H]);
+        const P = Array.from({ length: phone ? 320 : 130 }, () => [r() * W, r() * H]);
         g.strokeStyle = 'rgba(230,228,228,.055)'; g.lineWidth = .6 * lw; g.beginPath();
         P.forEach(a => { P.filter(b => b !== a).sort((b, c) => Math.hypot(b[0] - a[0], b[1] - a[1]) - Math.hypot(c[0] - a[0], c[1] - a[1])).slice(0, 2).forEach(b => { const mx = (a[0] + b[0]) / 2 + (r() - .5) * 24, my = (a[1] + b[1]) / 2 + (r() - .5) * 24; g.moveTo(a[0], a[1]); g.quadraticCurveTo(mx, my, b[0], b[1]); }); });
         g.stroke(); g.strokeStyle = 'rgba(230,228,228,.08)'; g.beginPath();
