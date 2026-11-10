@@ -1,19 +1,18 @@
 {
-  "created": "2026-11-10 08:31",
-  "asof": "2026-11-09",
-  "universe": 77,
+  "created": "2026-11-11 08:31",
+  "asof": "2026-11-10",
+  "universe": 75,
   "source": "krx",
   "market": {
     "source": "KOSPI",
-    "close": 5019,
-    "ma20": 5642,
-    "ma60": 6419,
-    "ret5": -0.1434,
-    "ret20": -0.2139,
-    "rsi14": 30.3,
+    "close": 5239,
+    "ma20": 5603,
+    "ma60": 6400,
+    "ret5": -0.0725,
+    "ret20": -0.1319,
+    "rsi14": 36.8,
     "rule_hint": "하락",
     "closes": [
-      6358.95,
       6598.26,
       6296.38,
       6258.77,
@@ -77,619 +76,265 @@
       5683.8,
       5383.8,
       5059.69,
-      5018.85
+      5018.85,
+      5239.13
     ]
   },
-  "intraday": {
-    "time": "15:15",
-    "pool": 445,
-    "analyzed_new": 5,
-    "passed": 22,
-    "kept_prep": false
-  },
+  "intraday": null,
   "candidates": [
-    {
-      "code": "015760",
-      "name": "한국전력",
-      "close": 30000,
-      "ret5": 0.0221,
-      "ret20": 0.0545,
-      "rsi14": 52.3,
-      "vol20": 0.401,
-      "foreign_net": -37698150775,
-      "inst_net": 99683469350,
-      "score": 1.0,
-      "news": [
-        {
-          "date": "11-10",
-          "title": "한국전력 장중 31,250원 터치…2.59% 상승",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "한국전력기술, 베트남 북부 500MW 해상풍력 공동개발협약 체결",
-          "risk": false
-        }
-      ],
-      "price": 30550,
-      "chg": 0.0217,
-      "activity": 1.62,
-      "foreign_today": 0,
-      "inst_today": 5712850000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "030200",
-      "name": "KT",
-      "close": 52800,
-      "ret5": 0.1282,
-      "ret20": 0.0645,
-      "rsi14": 64.7,
-      "vol20": 0.34,
-      "foreign_net": -7527384600,
-      "inst_net": 47458324425,
-      "score": 0.765,
-      "news": [
-        {
-          "date": "11-10",
-          "title": "기업 수주 20% 넘게 늘었지만 KT 3분기 이익 '뒷걸음'",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "[맞수 탐구] 통신3사 3분기 성적 … SKT·LGU+ 기저효과로 영업익 급증",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "리그 유일 '무연패' 삼성, 이번에도 위기 넘겼다…11점 뒤집고 KT에 역전...",
-          "risk": false
-        }
-      ],
-      "foreign_today": 5544000000,
-      "inst_today": 0,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "271560",
-      "name": "오리온",
-      "close": 117100,
-      "ret5": 0.0104,
-      "ret20": 0.111,
-      "rsi14": 57.4,
-      "vol20": 0.232,
-      "foreign_net": -18778364950,
-      "inst_net": 25113216300,
-      "score": 0.671,
-      "news": [
-        {
-          "date": "11-10",
-          "title": "“베트남 생산능력 1조 원으로”…오리온, 중동·아프리카 공략 거점으...",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "오리온, 베트남서 1조 생산…중동·阿 공략",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "초코파이로 번 돈 엉뚱한 곳에?…흔들리는 오리온 3세 '승계 명분' [재계...",
-          "risk": false
-        }
-      ],
-      "foreign_today": 2459100000,
-      "inst_today": 0,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "006360",
-      "name": "GS건설",
-      "close": 30050,
-      "ret5": 0.0416,
-      "ret20": 0.0017,
-      "rsi14": 50.0,
-      "vol20": 0.864,
-      "foreign_net": -17756228825,
-      "inst_net": 32921916375,
-      "score": 0.612,
-      "news": [
-        {
-          "date": "11-10",
-          "title": "GS건설, 레미콘 공장 전수 검증…\"동절기 콘크리트 품질 확보\"",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "GS건설, 동절기 건설현장 레미콘 공장 대상 '사전 성능 검증시험' 실시",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "기준 못 맞추면 납품 제한…GS건설, 겨울철 콘크리트 품질 확보",
-          "risk": false
-        }
-      ],
-      "foreign_today": 0,
-      "inst_today": 3485800000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "175330",
-      "name": "JB금융지주",
-      "close": 26550,
-      "ret5": 0.0371,
-      "ret20": -0.0432,
-      "rsi14": 47.7,
-      "vol20": 0.41,
-      "foreign_net": -10024081475,
-      "inst_net": 11905700725,
-      "score": 0.6,
-      "news": [],
-      "foreign_today": 0,
-      "inst_today": 1513350000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "326030",
-      "name": "SK바이오팜",
-      "close": 87200,
-      "ret5": 0.1223,
-      "ret20": 0.2316,
-      "rsi14": 65.5,
-      "vol20": 0.553,
-      "foreign_net": -21680191950,
-      "inst_net": 66517718150,
-      "score": 0.576,
-      "news": [
-        {
-          "date": "11-10",
-          "title": "SK바이오팜, 美 ‘링스’ 입주기업 31곳 선정…K-바이오 현지 진출 지원",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "한올·SK바이오팜·올릭스까지… 연말 K바이오 '임상 성적표'에 쏠린 눈",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "SK바이오팜 세노바메이트 쟁탈전… 中 복제약도 가세",
-          "risk": false
-        }
-      ],
-      "foreign_today": 1482400000,
-      "inst_today": 0,
-      "exchange": "KOSPI"
-    },
     {
       "code": "028050",
       "name": "삼성E&A",
-      "close": 60500,
-      "ret5": -0.0457,
-      "ret20": 0.3195,
-      "rsi14": 57.7,
-      "vol20": 0.94,
-      "foreign_net": -90215064750,
-      "inst_net": 71337297050,
-      "score": 0.553,
+      "close": 63900,
+      "ret5": 0.0224,
+      "ret20": 0.4137,
+      "rsi14": 62.5,
+      "vol20": 0.943,
+      "foreign_net": -95493916550,
+      "inst_net": 70134948600,
+      "score": 0.806,
       "news": [
         {
-          "date": "11-09",
-          "title": "삼성E&A, 10일 싱가포르·홍콩서 NDR",
+          "date": "11-11",
+          "title": "'일감 부자' 삼성E&A, 주주 지갑도 두둑해질까[클릭 e종목]",
           "risk": false
         },
         {
-          "date": "11-09",
-          "title": "반도체 특수에 삼성물산·삼성E&A·SK에코 '쾌재'",
+          "date": "11-10",
+          "title": "[단독] \"우리도 보너스 주식으로 받자\"...삼성E&A 성과급 주식 보상 도입",
           "risk": false
         },
         {
-          "date": "11-09",
-          "title": "삼성E&A 6만1400원…대형 프로젝트 원가 관리 속 1.49% 상승",
+          "date": "11-10",
+          "title": "삼성E&A, 6.11% 상승…해외 플랜트 수주와 원가 관리에 시선",
           "risk": false
         }
       ],
-      "price": 64600,
-      "chg": 0.066,
-      "activity": 0.6,
-      "foreign_today": 0,
-      "inst_today": 5168000000,
       "exchange": "KOSPI"
     },
     {
-      "code": "112610",
-      "name": "씨에스윈드",
-      "close": 47650,
-      "ret5": 0.1524,
-      "ret20": -0.1368,
-      "rsi14": 52.8,
-      "vol20": 0.846,
-      "foreign_net": -30362102875,
-      "inst_net": 32840193100,
-      "score": 0.553,
+      "code": "003490",
+      "name": "대한항공",
+      "close": 32600,
+      "ret5": 0.1222,
+      "ret20": 0.0671,
+      "rsi14": 67.1,
+      "vol20": 0.72,
+      "foreign_net": 90926066100,
+      "inst_net": 76210824425,
+      "score": 0.806,
       "news": [
         {
-          "date": "11-09",
-          "title": "신재생에너지는 '미국 블루웨이브 쇼크' 무풍지대, '풍력' 씨에스윈드·...",
+          "date": "11-11",
+          "title": "[전날 애프터마켓] 대한항공우·메타랩스 '上' 유지…삼전·SK하닉 상승",
           "risk": false
         },
         {
-          "date": "11-09",
-          "title": "[종목이 보영] 씨에스윈드, 정책 훈풍에 본업도 회복",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "\"씨에스윈드, 美 법인 생산성 개선\"",
+          "date": "11-11",
+          "title": "남양유업 백미당, 대한항공 기내식 입성…한앤코 '코로나 우군' 인연 재...",
           "risk": false
         }
       ],
-      "foreign_today": 2001300000,
-      "inst_today": 1286550000,
       "exchange": "KOSPI"
     },
     {
-      "code": "086280",
-      "name": "현대글로비스",
-      "close": 190100,
-      "ret5": -0.0612,
-      "ret20": 0.048,
-      "rsi14": 48.9,
-      "vol20": 0.601,
-      "foreign_net": -11565905200,
-      "inst_net": 23164820850,
-      "score": 0.518,
+      "code": "068270",
+      "name": "셀트리온",
+      "close": 204500,
+      "ret5": 0.0735,
+      "ret20": 0.1495,
+      "rsi14": 60.3,
+      "vol20": 0.443,
+      "foreign_net": -54627844350,
+      "inst_net": 391319751200,
+      "score": 0.722,
       "news": [
         {
-          "date": "11-10",
-          "title": "현대글로비스·HMM, 美 항만료 추가 유예 확정…해운비 부담 변수 완화",
+          "date": "11-11",
+          "title": "[제약사 리포트] 셀트리온제약, 외형·질 동시 성장…공장 가동률 상승",
           "risk": false
         },
         {
           "date": "11-10",
-          "title": "[단독] 현대글로비스, 美 탬파항 물류기지 66% 확장…필라델피아 이어 ...",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "한화證 “현대글로비스, 해운·해외물류 호조에 실적 성장 전망… 목표...",
+          "title": "셀트리온제약, 3분기 매출 1619억원·영업이익 239억원…분기 최대 실적",
           "risk": false
         }
       ],
-      "foreign_today": 0,
-      "inst_today": 3041600000,
       "exchange": "KOSPI"
     },
     {
-      "code": "161390",
-      "name": "한국타이어앤테크놀로지",
-      "close": 61100,
-      "ret5": 0.0608,
-      "ret20": -0.0097,
-      "rsi14": 52.4,
-      "vol20": 0.502,
-      "foreign_net": -10862318450,
-      "inst_net": 22690494600,
-      "score": 0.506,
-      "news": [],
-      "foreign_today": 0,
-      "inst_today": 2260700000,
+      "code": "207940",
+      "name": "삼성바이오로직스",
+      "close": 1474000,
+      "ret5": 0.0272,
+      "ret20": 0.2243,
+      "rsi14": 57.2,
+      "vol20": 0.549,
+      "foreign_net": -88810670500,
+      "inst_net": 154474862000,
+      "score": 0.722,
+      "news": [
+        {
+          "date": "11-11",
+          "title": "[사설] 삼성바이오로직스 노사갈등, 200일의 교훈과 과제",
+          "risk": false
+        }
+      ],
       "exchange": "KOSPI"
     },
     {
-      "code": "347850",
-      "name": "디앤디파마텍",
-      "close": 37250,
-      "ret5": -0.097,
-      "ret20": -0.0687,
-      "rsi14": 40.0,
-      "vol20": 0.867,
-      "foreign_net": 434469800,
-      "inst_net": 4990999975,
-      "score": 0.482,
+      "code": "181710",
+      "name": "NHN",
+      "close": 77400,
+      "ret5": 0.6108,
+      "ret20": 0.4828,
+      "rsi14": 75.8,
+      "vol20": 1.331,
+      "foreign_net": -20780511850,
+      "inst_net": 25862523350,
+      "score": 1.0,
       "news": [
         {
-          "date": "11-10",
-          "title": "디앤디파마텍 MASH 신약, 美 간학회 핵심 연구로 선정",
+          "date": "11-11",
+          "title": "교보증권 \"NHN, 3분기 영업익 두 배 증가…AI 데이터센터 확장에 목표가...",
           "risk": false
         },
         {
-          "date": "11-10",
-          "title": "디앤디파마텍 '자보페그두타이드', 미국간학회 주요 임상 연구 선정",
+          "date": "11-11",
+          "title": "NH證 \"NHN, 100MW AI 데이터센터 확장 기대…목표가↑\"",
           "risk": false
         },
         {
-          "date": "11-10",
-          "title": "디앤디파마텍 '자보페그두타이드', AASLD 핵심 연구 선정",
+          "date": "11-11",
+          "title": "NHN링크, 뮤지컬 '건전지 엄마ⅹ벡셀' 협업…공연 초대권 증정",
           "risk": false
         }
       ],
-      "price": 40400,
-      "chg": 0.0646,
-      "activity": 0.96,
-      "foreign_today": 0,
-      "inst_today": 565600000,
-      "exchange": "KOSDAQ"
-    },
-    {
-      "code": "012330",
-      "name": "현대모비스",
-      "close": 331500,
-      "ret5": -0.0542,
-      "ret20": -0.0582,
-      "rsi14": 40.5,
-      "vol20": 0.683,
-      "foreign_net": -73538377500,
-      "inst_net": 104888122250,
-      "score": 0.4,
-      "news": [
-        {
-          "date": "11-10",
-          "title": "현대모비스 상승 흐름, 고저 차 16,000원",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "프로농구 오늘(10일) 경기 일정…울산 현대모비스VS 고양 소노, 중계 채...",
-          "risk": false
-        }
-      ],
-      "price": 351500,
-      "chg": 0.0587,
-      "activity": 0.67,
-      "foreign_today": 0,
-      "inst_today": 2109000000,
       "exchange": "KOSPI"
-    },
-    {
-      "code": "008930",
-      "name": "한미사이언스",
-      "close": 58100,
-      "ret5": 0.3295,
-      "ret20": 0.1392,
-      "rsi14": 68.8,
-      "vol20": 0.784,
-      "foreign_net": -7680339725,
-      "inst_net": 27347572175,
-      "score": 0.365,
-      "news": [
-        {
-          "date": "11-10",
-          "title": "[더벨][한미 오너가 분쟁] 한미사이언스 지분전쟁 '초박빙' 0.27%p에 뒤집...",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "iM증권, 한미사이언스 특허·기여수익 확대 전망",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "한미사이언스, 신약 상업화·기술수출 성과에 성장세 가속 전망...주가 ...",
-          "risk": false
-        }
-      ],
-      "foreign_today": 755300000,
-      "inst_today": 348600000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "323410",
-      "name": "카카오뱅크",
-      "close": 20400,
-      "ret5": 0.0308,
-      "ret20": 0.0313,
-      "rsi14": 53.9,
-      "vol20": 0.253,
-      "foreign_net": 1897865370,
-      "inst_net": 14561074190,
-      "score": 0.353,
-      "news": [
-        {
-          "date": "11-10",
-          "title": "카카오뱅크, '고향사랑기부제' 서비스 출시",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "답례품 고르고 기부금 납부…카카오뱅크, 고향사랑기부 연계",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "카카오뱅크, 신용카드업도 저울질…인수로 간다면 '수신 71조'가 무기",
-          "risk": false
-        }
-      ],
-      "foreign_today": 306000000,
-      "inst_today": 204000000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "008830",
-      "name": "대동기어",
-      "close": 6150,
-      "ret5": 0.1389,
-      "ret20": 0.0771,
-      "rsi14": 53.7,
-      "vol20": 1.048,
-      "foreign_net": -5714115110,
-      "inst_net": -188314985,
-      "score": 0.976,
-      "news": [
-        {
-          "date": "11-10",
-          "title": "대동기어 주가, 급등세... 무슨 회사길래?",
-          "risk": false
-        }
-      ],
-      "price": 7200,
-      "chg": 0.1303,
-      "activity": 3.87,
-      "foreign_today": 1353600000,
-      "inst_today": 0,
-      "exchange": "KOSDAQ"
     },
     {
       "code": "328130",
       "name": "루닛",
-      "close": 16290,
-      "ret5": 0.0181,
-      "ret20": 0.4796,
-      "rsi14": 67.0,
-      "vol20": 1.381,
-      "foreign_net": -8424528360,
-      "inst_net": 20664819130,
-      "score": 0.776,
+      "close": 16780,
+      "ret5": 0.1025,
+      "ret20": 0.4617,
+      "rsi14": 68.8,
+      "vol20": 1.379,
+      "foreign_net": -5180236030,
+      "inst_net": 20001022040,
+      "score": 0.972,
       "news": [
         {
-          "date": "11-09",
-          "title": "[속보] 루닛 VI 발동, 주가 9%대 급등…장중 1만7000원선 돌파도",
+          "date": "11-11",
+          "title": "루닛, 카타르·UAE 이어 사우디에도 AI 영상분석 솔루션 공급",
           "risk": false
         },
         {
-          "date": "11-09",
-          "title": "루닛 주가, 11월 9일 장중 16,860원 9.13% 상승",
+          "date": "11-11",
+          "title": "루닛, 사우디 국가방위부에 흉부·유방 AI 솔루션 공급",
           "risk": false
         },
         {
-          "date": "11-09",
-          "title": "루닛, 서밋 협업 기대 속 수익성 시험대…연말 손익분기 가능성은",
+          "date": "11-10",
+          "title": "루닛, 사우디 국가방위부 의료 시스템에 AI 영상분석 솔루션 공급…중동...",
           "risk": false
         }
       ],
-      "price": 16810,
-      "chg": 0.0396,
-      "activity": 1.16,
-      "foreign_today": 0,
-      "inst_today": 1916340000,
       "exchange": "KOSDAQ"
     },
     {
-      "code": "010060",
-      "name": "OCI홀딩스",
-      "close": 191300,
-      "ret5": 0.029,
-      "ret20": -0.146,
-      "rsi14": 46.2,
-      "vol20": 1.173,
-      "foreign_net": -82191579550,
-      "inst_net": 84640960650,
-      "score": 0.635,
+      "code": "053800",
+      "name": "안랩",
+      "close": 114300,
+      "ret5": 0.0035,
+      "ret20": 0.3048,
+      "rsi14": 61.8,
+      "vol20": 1.546,
+      "foreign_net": -653991300,
+      "inst_net": 11670121700,
+      "score": 0.778,
       "news": [
         {
           "date": "11-10",
-          "title": "OCI홀딩스, 0.15% 상승…태양광 폴리실리콘과 지주사 할인에 시선",
+          "title": "109,100원 기록한 안랩, 거래대금 43,839백만원",
+          "risk": false
+        }
+      ],
+      "exchange": "KOSDAQ"
+    },
+    {
+      "code": "180640",
+      "name": "한진칼",
+      "close": 236500,
+      "ret5": 0.3499,
+      "ret20": 0.8405,
+      "rsi14": 88.0,
+      "vol20": 1.11,
+      "foreign_net": -13686139650,
+      "inst_net": 8989462900,
+      "score": 0.75,
+      "news": [
+        {
+          "date": "11-11",
+          "title": "[증시키워드] 최재주주 이슈 지속 한진칼 관심↑…반도체 반등",
+          "risk": false
+        },
+        {
+          "date": "11-11",
+          "title": "[Invest]최대주주는 호반, 경영권은 조원태…한진칼 지분전쟁 '장기전' ...",
           "risk": false
         },
         {
           "date": "11-10",
-          "title": "한화큐셀·OCI홀딩스, 美 태양광 관세 확정…현지 셀 생산이 수혜 가른...",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "OCI홀딩스 주가, 11월 9일 애프터마켓 191,100원 4.40% 하락",
+          "title": "열흘새 두 배 뛴 한진칼 전망은 [한경 프리미엄9 TODAY]",
           "risk": false
         }
       ],
-      "price": 197200,
-      "chg": 0.0061,
-      "activity": 1.18,
-      "foreign_today": 3944000000,
-      "inst_today": 0,
       "exchange": "KOSPI"
     },
     {
-      "code": "425420",
-      "name": "티에프이",
-      "close": 67600,
-      "ret5": -0.1746,
-      "ret20": 0.0886,
-      "rsi14": 48.9,
-      "vol20": 1.508,
-      "foreign_net": 10600396200,
-      "inst_net": -3906304850,
-      "score": 0.612,
-      "news": [],
-      "price": 73500,
-      "chg": 0.0714,
-      "activity": 0.8,
-      "foreign_today": 0,
-      "inst_today": 882000000,
-      "exchange": "KOSDAQ"
-    },
-    {
-      "code": "263860",
-      "name": "지니언스",
-      "close": 23900,
-      "ret5": -0.1261,
-      "ret20": 0.0839,
-      "rsi14": 53.2,
-      "vol20": 1.398,
-      "foreign_net": -4112853625,
-      "inst_net": -1722545450,
-      "score": 0.588,
-      "news": [],
-      "price": 24950,
-      "chg": 0.0396,
-      "activity": 1.18,
-      "foreign_today": 0,
-      "inst_today": 149700000,
+      "code": "105740",
+      "name": "디케이락",
+      "close": 13510,
+      "ret5": 0.0922,
+      "ret20": 0.1667,
+      "rsi14": 61.4,
+      "vol20": 1.387,
+      "foreign_net": 3467768930,
+      "inst_net": -1439650,
+      "score": 0.667,
+      "news": [
+        {
+          "date": "11-10",
+          "title": "디케이락 24.44% 급등…계장용 피팅·밸브 수출 재점검",
+          "risk": false
+        },
+        {
+          "date": "11-10",
+          "title": "AI 전력 수요에 원전주 들썩…디케이락·두산에너빌리티에 탑승할까",
+          "risk": false
+        },
+        {
+          "date": "11-10",
+          "title": "[인터뷰] 디케이락, '88조' 중동 재건의 '숨은 진주'…\"카타르·UAE와 함...",
+          "risk": false
+        }
+      ],
       "exchange": "KOSDAQ"
     },
     {
       "code": "114800",
       "name": "KODEX 인버스",
-      "close": 1352,
-      "ret5": 0.1746,
-      "ret20": 0.2577,
-      "rsi14": 69.2,
-      "vol20": 0.629,
+      "close": 1290,
+      "ret5": 0.0795,
+      "ret20": 0.1286,
+      "rsi14": 60.9,
+      "vol20": 0.631,
       "foreign_net": null,
       "inst_net": null,
       "score": null,
       "news": [],
       "exchange": "ETF"
-    },
-    {
-      "code": "069500",
-      "name": "KODEX 200",
-      "close": 78490,
-      "ret5": -0.1555,
-      "ret20": -0.2275,
-      "rsi14": 30.6,
-      "vol20": 0.636,
-      "foreign_net": null,
-      "inst_net": null,
-      "score": null,
-      "news": [],
-      "exchange": "ETF"
-    },
-    {
-      "code": "491000",
-      "name": "리브스메드",
-      "close": 36300,
-      "ret5": -0.1578,
-      "ret20": 0.0583,
-      "rsi14": 45.9,
-      "vol20": 1.552,
-      "foreign_net": -3917410300,
-      "inst_net": -5412170050,
-      "score": 0,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "[코스닥의 재발견] 리브스메드, 스타크로 내년 반등 노린다",
-          "risk": false
-        }
-      ],
-      "price": 33350,
-      "chg": -0.0986,
-      "foreign_today": 0,
-      "inst_today": 0,
-      "exchange": "KOSDAQ"
     }
   ]
 }
