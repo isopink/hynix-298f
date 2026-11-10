@@ -162,14 +162,14 @@
       "tokens_k": 13278
     },
     "live": {
-      "fills": 27,
+      "fills": 28,
       "buys": 8,
-      "sells": 19,
+      "sells": 20,
       "watch": 462,
-      "runs": 31,
+      "runs": 32,
       "failures": 2,
       "avg_min": 6.3,
-      "tokens_k": 2466
+      "tokens_k": 2506
     }
   },
   "holdings": [
