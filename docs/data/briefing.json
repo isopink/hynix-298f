@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "10:00",
-    "pool": 324,
+    "time": "10:15",
+    "pool": 379,
     "analyzed_new": 30,
-    "passed": 7,
+    "passed": 9,
     "kept_prep": false
   },
   "candidates": [
@@ -98,7 +98,7 @@
       "vol20": 0.447,
       "foreign_net": -17944203050,
       "inst_net": 55497333350,
-      "score": 0.333,
+      "score": 0.71,
       "news": [
         {
           "date": "11-10",
@@ -116,12 +116,172 @@
           "risk": false
         }
       ],
-      "price": 81850,
-      "chg": 0.0575,
-      "activity": 3.48,
-      "foreign_today": 491100000,
-      "inst_today": 0,
+      "price": 81900,
+      "chg": 0.0581,
+      "activity": 3.1,
+      "foreign_today": 2538900000,
+      "inst_today": 1801800000,
       "exchange": "KOSPI"
+    },
+    {
+      "code": "006360",
+      "name": "GS건설",
+      "close": 30050,
+      "ret5": 0.0416,
+      "ret20": 0.0017,
+      "rsi14": 50.0,
+      "vol20": 0.864,
+      "foreign_net": -17756228825,
+      "inst_net": 32921916375,
+      "score": 0.71,
+      "news": [
+        {
+          "date": "11-10",
+          "title": "로보톰, GS건설과 협력해 가변형 주거 솔루션 '무빙월'에 로보틱스 기술...",
+          "risk": false
+        },
+        {
+          "date": "11-10",
+          "title": "[개장 전 주요 공시] 삼성화재·GS건설·더블유게임즈·DL·피노 등",
+          "risk": false
+        },
+        {
+          "date": "11-10",
+          "title": "[전일 주요공시] 삼성물산ㆍGS건설ㆍHD현대중공업ㆍ두산 등",
+          "risk": false
+        }
+      ],
+      "price": 31300,
+      "chg": 0.033,
+      "activity": 3.96,
+      "foreign_today": 1032900000,
+      "inst_today": 626000000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "112610",
+      "name": "씨에스윈드",
+      "close": 47650,
+      "ret5": 0.1524,
+      "ret20": -0.1368,
+      "rsi14": 52.8,
+      "vol20": 0.846,
+      "foreign_net": -30362102875,
+      "inst_net": 32840193100,
+      "score": 0.419,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "신재생에너지는 '미국 블루웨이브 쇼크' 무풍지대, '풍력' 씨에스윈드·...",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "[종목이 보영] 씨에스윈드, 정책 훈풍에 본업도 회복",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "\"씨에스윈드, 美 법인 생산성 개선\"",
+          "risk": false
+        }
+      ],
+      "price": 48550,
+      "chg": -0.0021,
+      "activity": 2.62,
+      "foreign_today": 825350000,
+      "inst_today": 1213750000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "316140",
+      "name": "우리금융지주",
+      "close": 31450,
+      "ret5": 0.0311,
+      "ret20": -0.0218,
+      "rsi14": 48.3,
+      "vol20": 0.333,
+      "foreign_net": -86710371150,
+      "inst_net": 113686106975,
+      "score": 0.161,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "하나증권 \"은행주 중장기 투자 유효, 최선호주 KB금융지주 우리금융지주...",
+          "risk": false
+        }
+      ],
+      "price": 31300,
+      "chg": 0.0129,
+      "activity": 1.38,
+      "foreign_today": 0,
+      "inst_today": 2191000000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "443670",
+      "name": "에스피소프트",
+      "close": 5370,
+      "ret5": 0.0762,
+      "ret20": 0.2191,
+      "rsi14": 58.9,
+      "vol20": 1.586,
+      "foreign_net": -523993734,
+      "inst_net": 12021555,
+      "score": 1.0,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "에스피소프트 21.18% 급등…클라우드·DaaS 성장성 부각",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "딥페이크 범죄 막는 AI 보안株 휘파람…에스피소프트·파수AI 노려라",
+          "risk": false
+        }
+      ],
+      "price": 5870,
+      "chg": 0.0972,
+      "activity": 20.61,
+      "foreign_today": 898110000,
+      "inst_today": 0,
+      "exchange": "KOSDAQ"
+    },
+    {
+      "code": "328130",
+      "name": "루닛",
+      "close": 16290,
+      "ret5": 0.0181,
+      "ret20": 0.4796,
+      "rsi14": 67.0,
+      "vol20": 1.381,
+      "foreign_net": -8424528360,
+      "inst_net": 20664819130,
+      "score": 0.839,
+      "news": [
+        {
+          "date": "11-09",
+          "title": "[속보] 루닛 VI 발동, 주가 9%대 급등…장중 1만7000원선 돌파도",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "루닛 주가, 11월 9일 장중 16,860원 9.13% 상승",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "루닛, 서밋 협업 기대 속 수익성 시험대…연말 손익분기 가능성은",
+          "risk": false
+        }
+      ],
+      "price": 16620,
+      "chg": 0.0278,
+      "activity": 3.47,
+      "foreign_today": 1994400000,
+      "inst_today": 382260000,
+      "exchange": "KOSDAQ"
     },
     {
       "code": "008830",
@@ -133,7 +293,7 @@
       "vol20": 1.048,
       "foreign_net": -5714115110,
       "inst_net": -188314985,
-      "score": 1.0,
+      "score": 0.677,
       "news": [
         {
           "date": "11-10",
@@ -143,79 +303,10 @@
       ],
       "price": 6900,
       "chg": 0.0832,
-      "activity": 11.04,
-      "foreign_today": 600300000,
+      "activity": 9.39,
+      "foreign_today": 717600000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
-    },
-    {
-      "code": "263860",
-      "name": "지니언스",
-      "close": 23900,
-      "ret5": -0.1261,
-      "ret20": 0.0839,
-      "rsi14": 53.2,
-      "vol20": 1.398,
-      "foreign_net": -4112853625,
-      "inst_net": -1722545450,
-      "score": 0.667,
-      "news": [],
-      "price": 25350,
-      "chg": 0.0563,
-      "activity": 4.45,
-      "foreign_today": 329550000,
-      "inst_today": 0,
-      "exchange": "KOSDAQ"
-    },
-    {
-      "code": "207940",
-      "name": "삼성바이오로직스",
-      "close": 1517000,
-      "ret5": 0.0586,
-      "ret20": 0.2684,
-      "rsi14": 63.7,
-      "vol20": 0.529,
-      "foreign_net": -96300565000,
-      "inst_net": 188766220000,
-      "score": 0.88,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "[CEO 레이더] 삼성바이오로직스_존 림 대표이사 사장, 인수자금 412억 부...",
-          "risk": false
-        }
-      ],
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "028050",
-      "name": "삼성E&A",
-      "close": 60500,
-      "ret5": -0.0457,
-      "ret20": 0.3195,
-      "rsi14": 57.7,
-      "vol20": 0.94,
-      "foreign_net": -90215064750,
-      "inst_net": 71337297050,
-      "score": 0.68,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "삼성E&A, 10일 싱가포르·홍콩서 NDR",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "반도체 특수에 삼성물산·삼성E&A·SK에코 '쾌재'",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "삼성E&A 6만1400원…대형 프로젝트 원가 관리 속 1.49% 상승",
-          "risk": false
-        }
-      ],
-      "exchange": "KOSPI"
     },
     {
       "code": "114800",
