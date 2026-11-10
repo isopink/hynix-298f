@@ -225,10 +225,9 @@ details.log[open] > summary::after { content: "−"; }
 /* 11-10 포트폴리오 공통 양식 */
 .pf-one { margin-top: 8px; }
 .pane .sion-kpi { display: none; }   /* 11-10 S.Lee: 요약 숫자 4개 없앰 */
-.tr-box > summary { cursor: pointer; list-style: none; }   /* 11-10 S.Lee: 최근 체결 접기 (기본 접힘) */
+.tr-box > summary { cursor: default; pointer-events: none; list-style: none; }   /* 11-10 S.Lee: 최근 체결 · 종목별 표는 폰 · PC 모두 접지 않고 늘 펼침 */
 .tr-box > summary::-webkit-details-marker { display: none; }
-.tr-box > summary .eyebrow::after { content: "  +"; color: var(--muted); font-weight: 400; }
-.tr-box[open] > summary .eyebrow::after { content: "  −"; }
+.tr-box > summary .eyebrow::after { content: none !important; }
 .tr-box:not([open]) > summary { margin-bottom: 0; }
 /* 11-10 S.Lee: PC 는 한눈에 보도록 접는 칸을 모두 펼치고 + − 표시와 클릭을 없앰 */
 @media (min-width: 641px) {
@@ -286,6 +285,7 @@ details.log summary:focus-visible { outline: 2px solid #f6e500; outline-offset: 
 table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 960px; }
 th { text-align: left; font-size: 11px; font-weight: 600; color: var(--muted); padding: 8px 12px 8px 0; border-bottom: 1px solid var(--line); white-space: nowrap; }
 td { padding: 10px 12px 10px 0; border-bottom: 1px solid #222; vertical-align: top; color: var(--body); line-height: 1.5; }
+.pf-tbl-wrap > summary { pointer-events: none; cursor: default; } .pf-tbl-wrap > summary .eyebrow::after { content: none !important; }   /* 11-10 S.Lee: 늘 펼쳐 둠 (+ − 없음) */
 .pf-tbl-wrap { margin-top: 14px; } .pf-tbl-wrap .pf-tbl { max-width: 720px; margin: 0 auto; }
 .pf-tbl { width: 100%; min-width: 0; border-collapse: collapse; font-size: 13px; }
 .pf-tbl th { font-size: 11px; font-weight: 400; color: var(--muted); padding: 0 4px 8px; text-align: center; border-bottom: 1px solid rgba(255,255,255,.1); }
@@ -471,8 +471,8 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
       <div class="dec-list" id="dec-list"></div>
       <button type="button" class="dec-more" id="dec-more" hidden aria-controls="dec-list"></button>
       <!-- 11-10 S.Lee: 최근 체결은 Live Decision 카드 안 (고른 엔진만) -->
-      <details class="kx-flow tr-box pane" data-eng="sigma"><summary class="hd"><h3 class="eyebrow">최근 체결</h3><span class="sub">실제 계좌</span></summary><div class="sion-tbl tr-tbl" id="sig-trades"></div></details>
-      <details class="kx-flow tr-box pane" data-eng="sion" hidden><summary class="hd"><h3 class="eyebrow">최근 체결</h3><span class="sub">가상 체결</span></summary><div class="sion-tbl tr-tbl" id="sion-trades"></div></details>
+      <details class="kx-flow tr-box pane" data-eng="sigma" open><summary class="hd"><h3 class="eyebrow">최근 체결</h3><span class="sub">실제 계좌</span></summary><div class="sion-tbl tr-tbl" id="sig-trades"></div></details>
+      <details class="kx-flow tr-box pane" data-eng="sion" hidden open><summary class="hd"><h3 class="eyebrow">최근 체결</h3><span class="sub">가상 체결</span></summary><div class="sion-tbl tr-tbl" id="sion-trades"></div></details>
     </section>
 
 
@@ -1832,8 +1832,8 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const nm = (p, i) => `<span class="nmi" style="min-width:calc(${nmW.toFixed(2)}em + 14px)">${sw(p, i)}${esc(p.name)}</span>`;
     const rows = ord.map(([p, ci], i) => `<tr><td class="nm">${nm(p, ci)}</td><td>${(p.v / tot * 100).toFixed(1)}%</td><td class="${tone2(p.pnl)}">${p.pnl != null ? pct(p.pnl) : '—'}</td>${i ? '' : tv}</tr>`).join('');
     const cashR = cashP ? `<tr class="cash"><td class="nm">${nm(cashP, parts.indexOf(cashP))}</td><td>${(cashP.v / tot * 100).toFixed(1)}%</td><td></td><td></td></tr>` : '';
-    const box = document.createElement('details'); box.className = 'pf-tbl-wrap tr-box'; box.open = PC_OPEN || !!PF_OPEN[el.id];   // 11-10 S.Lee: Table + 로 펼침 (기본 접힘, 다시 그려도 상태 유지)
-    box.addEventListener('toggle', () => { PF_OPEN[el.id] = box.open; });
+    const box = document.createElement('details'); box.className = 'pf-tbl-wrap tr-box'; box.open = true;   // 11-10 S.Lee: 폰 · PC 모두 접지 않고 늘 펼침
+    box.addEventListener('toggle', () => { if (!box.open) box.open = true; });    // 11-10 S.Lee: Table + 로 펼침 (기본 접힘, 다시 그려도 상태 유지)
     box.innerHTML = `<summary class="hd"><h3 class="eyebrow">Table</h3></summary><table class="pf-tbl"><thead><tr><th>종목명</th><th>비중</th><th>수익률</th><th>합산 수익률</th></tr></thead><tbody>${rows}${cashR}</tbody></table>`;
     el.appendChild(box);
   }
@@ -2359,6 +2359,8 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     document.querySelectorAll('details').forEach(keep);
     new MutationObserver(ms => ms.forEach(m => m.addedNodes.forEach(n => { if (n.nodeType === 1) (n.matches('details') ? [n] : [...n.querySelectorAll('details')]).forEach(keep); }))).observe(document.body, { childList: true, subtree: true });
   }
+  // 11-10 S.Lee: 최근 체결 · 종목별 표는 폰 · PC 모두 늘 펼침
+  document.querySelectorAll('details.tr-box').forEach(d => { d.open = true; d.addEventListener('toggle', () => { if (!d.open) d.open = true; }); });
   // 커버는 폰 · PC 모두 (11-10 S.Lee: 예전엔 폰에서만)
   const cover = $('cover');
   const engine = cover ? liveStatus() : null;
