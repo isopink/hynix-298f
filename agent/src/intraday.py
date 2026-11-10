@@ -155,7 +155,7 @@ def screen(rows, p, r, frac, regime=None):
 def ensure_inverse(b, p, held):
     """08:30 준비에 시장 ETF(인버스·지수) 후보가 없으면(설정을 장중에 켠 날) 여기서 한 번 만들어 후보에 붙임."""
     have = b.get("candidates_prep", b.get("candidates", []))
-    kinds = tuple(k for k in ("inverse", "index") if (p.get(k) or {}).get("enabled") and not any(x.get(k) for x in have))
+    kinds = tuple(k for k in ("inverse", "index") if (p.get(k) or {}).get("enabled") and not (p.get(k) or {}).get("buy_banned") and not any(x.get(k) for x in have))
     if not kinds:
         return
     try:

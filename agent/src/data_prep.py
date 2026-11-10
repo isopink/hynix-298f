@@ -314,7 +314,7 @@ def inverse_rows(p, asof, login, held, kinds=("inverse", "index")):
     out = []
     for kind in kinds:
         cfg = p.get(kind) or {}
-        if not cfg.get("enabled"):
+        if not cfg.get("enabled") or cfg.get("buy_banned"):   # 11-11 매수 금지면 새 후보로 넣지 않음
             continue
         for code, nm in cfg.get("codes", {}).items():
             if code in held:

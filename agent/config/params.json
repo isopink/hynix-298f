@@ -58,7 +58,7 @@
 
   "inverse": {
     "_note": "인버스 ETF (11-04, 대회 운영진 허용 확인). 매일 후보에 따로 넣고, 오늘 국면(set_regime)이 regimes 중 하나일 때만 살 수 있음(코드·Hook 이 강제). 주식 비중 상한과 별도로 weight_cap 까지. 국면이 바뀌면 매도 판단. 11-04 오후: 짧게 치고 빠지기 — 하루 max_buys_per_day 번만 매수, 수수료(costs.fee_rate)·세금(sell_tax_rate, ETF 는 매도 세금 없음 — 11-04 키움 수익률 +1.51% 가 세금 0 계산과 일치)을 뺀 순익이 take_profit_net_pct 를 넘으면 익절 (익절가 = 평단 × 약 1.022). 보유 중인 인버스도 평단 기준으로 지금 규칙을 적용, max_hold_days 일 지나면 매도. 손절은 decision.stop_loss_pct 그대로. KOSPI 1분봉 시뮬레이션(11-02~04 하락 국면 15회)에서 폭을 1% 안쪽으로 좁히면 왕복 비용 약 0.9% 때문에 모든 조합이 손해",
-    "enabled": false,
+    "enabled": false, "buy_banned": true,
     "codes": {"114800": "KODEX 인버스"},
     "regimes": ["상승", "횡보", "하락"],
     "_debate_note": "11-06 S.Lee: 국면 제한 없이 매수 측 ⇄ 매도 측 토론과 확신도 기준으로 결정. 매수·판단 매도는 trade_from(10:00) 이후 회차만 (장 초반 투매·급반등 피함). 손절 stop_loss_pct −3% (짧게 치고 빠지는 매매), 익절 순익 +1.5%·최대 2일 그대로",
@@ -77,7 +77,7 @@
 
   "index": {
     "_note": "지수추종 ETF (11-04, 인버스와 짝). 매일 후보에 따로 넣고, 오늘 국면이 regimes 중 하나일 때만 살 수 있음(코드·Hook 이 강제). 인버스와 달리 주식 비중 상한·종목 한도 안에서 삼. 11-05 S.Lee: 종목당 크기 상한 weight_cap 20% (일반 종목 10% 대신, 확신도에 따라 5~20%). 매도 규칙은 인버스와 같음: 하루 max_buys_per_day 번만 매수, 수수료 뺀 순익 take_profit_net_pct 에 익절(ETF 는 매도 세금 없음), max_hold_days 일 지나면 매도, 손절은 decision.stop_loss_pct",
-    "enabled": false,
+    "enabled": false, "buy_banned": true,
     "weight_cap": 0.20,
     "codes": {"069500": "KODEX 200"},
     "regimes": ["상승", "횡보", "하락"],

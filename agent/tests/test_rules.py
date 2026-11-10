@@ -19,9 +19,9 @@ import risk  # noqa: E402
 import sizing  # noqa: E402
 
 P, R = C.params(), C.risk_limits()
-BAN = {k: P[k]['enabled'] for k in ('inverse', 'index')}   # 11-11 실제 설정은 매수 금지, 기존 ETF 규칙 테스트는 켜서 확인
+BAN = {k: P[k]['enabled'] or P[k].get('buy_banned') for k in ('inverse', 'index')}   # 11-11 실제 설정은 매수 금지, 기존 ETF 규칙 테스트는 켜서 확인
 for k in BAN:
-    P[k]['enabled'] = True
+    P[k]['enabled'], P[k]['buy_banned'] = True, False
 P["competition"]["start"] = C.today().isoformat()   # 1주차
 P["week_factor"]["1"] = 1.0                         # 계산을 단순하게 하려고 1.0 으로
 P["decision"]["buy_min_confidence"] = 0.60          # 기준값은 자동 조정으로 바뀌므로 테스트에선 고정
@@ -784,7 +784,8 @@ def test_index_debate_after_1500_no_stop():
     import monitor
     q = C.params()
     q["competition"]["start"], q["week_factor"]["1"] = C.today().isoformat(), 1.0
-    q["index"]["enabled"] = q["inverse"]["enabled"] = True   # 11-11 실제 설정은 매수 금지, 규칙만 확인
+    q["index"]["enabled"] = q["inverse"]["enabled"] = True
+    q["index"]["buy_banned"] = q["inverse"]["buy_banned"] = False   # 11-11 실제 설정은 매수 금지, 규칙만 확인
     ix, real, old_pos, real_p = "069500", C.now, C.POSITIONS, C.params
     try:
         C.POSITIONS = os.path.join(tmp, "positions.json")
@@ -815,7 +816,8 @@ def test_inverse_debate_after_1000_stop3():
     """11-06 S.Lee: 인버스는 국면 제한 없이 토론으로, 매수·판단 매도는 10:00 이후만, 손절 −3% (실제 설정)."""
     q = C.params()
     q["competition"]["start"], q["week_factor"]["1"] = C.today().isoformat(), 1.0
-    q["index"]["enabled"] = q["inverse"]["enabled"] = True   # 11-11 실제 설정은 매수 금지, 규칙만 확인
+    q["index"]["enabled"] = q["inverse"]["enabled"] = True
+    q["index"]["buy_banned"] = q["inverse"]["buy_banned"] = False   # 11-11 실제 설정은 매수 금지, 규칙만 확인
     iv, real = "114800", C.now
     try:
         open(C.JOURNAL, "w").close()
@@ -914,8 +916,8 @@ def test_etf_buy_banned_stocks_only():
     import copy
     q = copy.deepcopy(P)
     for k, on in BAN.items():
-        assert on is False, f"실제 params.{k}.enabled 는 꺼져 있어야 함"
-        q[k]["enabled"] = False
+        assert on, f"실제 params.{k} 는 매수 금지여야 함"
+        q[k]["enabled"], q[k]["buy_banned"] = True, True   # 보유분 규칙은 살리고 매수만 막는 방식
     for code in ("114800", "069500"):
         got = [x for x, _ in risk.check({"code": code, "side": "매수", "qty": 1, "confidence": 0.9}, acc(), 10_000, q, R)]
         assert any("매수 금지" in x for x in got), (code, got)

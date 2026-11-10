@@ -72,7 +72,7 @@ def check(order, account, price, p=None, r=None):
             bad.append(("일일 손실 한도", f"오늘 {dp:.1%} ≤ {r['daily_loss_limit']:.0%}, 신규 매수 중단"))
         for k, nm in (("inverse", "인버스"), ("index", "지수추종")):   # 11-11 S.Lee: 인버스·KODEX 200 매수 금지, 개별주만
             c = p.get(k) or {}
-            if not c.get("enabled") and code in c.get("codes", {}):
+            if (c.get("buy_banned") or not c.get("enabled")) and code in c.get("codes", {}):
                 bad.append((f"{nm} 매수 금지", f"{c['codes'][code]} 는 매수하지 않음 (개별주만)"))
         cap, regime = sizing.equity_cap(p, r, account)
         etf, label = C.market_etf(code, p)
