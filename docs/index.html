@@ -397,6 +397,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
 <!-- 첫 화면 커버 (11-05): 뉴런 망이 자동으로 돌고 가운데 제목. 아무 곳이나 터치하면 사라지며 대시보드 -->
 <div class="cover" id="cover" role="button" tabindex="0" aria-label="The Sigma Engine. 터치하면 대시보드로 들어갑니다">
   <canvas id="ch-live" class="live" aria-hidden="true"></canvas>
+  <div class="cover-text"><h1 class="cover-title">The Sigma Engine</h1><p class="cover-sub">Built to think</p><p class="cover-sub">Wired to act</p></div>
 </div>
 <div class="wrap">
 
@@ -624,8 +625,12 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
 [data-theme=volt] .grid > .card + .card { }
 [data-theme=volt] .foot { border-top: 1px dashed rgba(79,93,117,.4); padding-top: 24px; }
 [data-theme=volt] .cover-title { font-family: Inter, "Pretendard Variable", sans-serif; font-weight: 400; letter-spacing: -0.4px; font-size: clamp(20px, 5vw, 34px); color: #fff; text-shadow: 0 0 24px rgba(0,0,0,.9); }
-[data-theme=volt] .cover-text { padding: 0 24px; }   /* 11-10 S.Lee: 커버 제목 작게 · 정가운데 (예전 아래 여백 14vh) */
-[data-theme=volt] .cover::after { background: radial-gradient(ellipse 34% 22% at 50% 50%, rgba(16,16,16,.6), rgba(16,16,16,0)), radial-gradient(ellipse at 50% 50%, rgba(16,16,16,0) 30%, rgba(16,16,16,.55) 100%); }
+[data-theme=volt] .cover-text { padding: 0 24px; gap: 10px; }
+[data-theme=volt] .cover .live { opacity: .5; }   /* 11-10 S.Lee: 글씨가 보이게 뒤쪽 신경망을 연하게 */
+.cover-sub { margin: 0; font-family: Inter, "Pretendard Variable", sans-serif; font-size: clamp(13px, 3.6vw, 17px); font-weight: 400; letter-spacing: 3px; text-transform: uppercase; color: #d8d8d8; text-shadow: 0 0 14px rgba(16,16,16,1), 0 0 30px rgba(16,16,16,.95); }
+.cover-sub:last-child { color: #00d992; }
+[data-theme=volt] .cover-title { margin-bottom: 8px; text-shadow: 0 0 18px rgba(16,16,16,1), 0 0 40px rgba(16,16,16,.95); }   /* 11-10 S.Lee: 커버 제목 작게 · 정가운데 (예전 아래 여백 14vh) */
+[data-theme=volt] .cover::after { z-index: 0; background: radial-gradient(ellipse 62% 26% at 50% 50%, rgba(16,16,16,.82), rgba(16,16,16,0)), radial-gradient(ellipse at 50% 50%, rgba(16,16,16,0) 30%, rgba(16,16,16,.55) 100%); }
 [data-theme=volt] svg [tabindex]:focus-visible, [data-theme=volt] button:focus-visible, [data-theme=volt] summary:focus-visible { outline-color: #2fd6a1; }
 `;
   document.head.appendChild(st);
