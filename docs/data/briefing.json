@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "14:15",
-    "pool": 443,
-    "analyzed_new": 7,
-    "passed": 21,
+    "time": "14:30",
+    "pool": 445,
+    "analyzed_new": 27,
+    "passed": 20,
     "kept_prep": false
   },
   "candidates": [
@@ -100,46 +100,11 @@
       "inst_net": 99683469350,
       "score": 1.0,
       "news": [],
-      "price": 30600,
-      "chg": 0.0234,
-      "activity": 1.73,
+      "price": 30700,
+      "chg": 0.0268,
+      "activity": 1.71,
       "foreign_today": 0,
-      "inst_today": 5202000000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "006360",
-      "name": "GS건설",
-      "close": 30050,
-      "ret5": 0.0416,
-      "ret20": 0.0017,
-      "rsi14": 50.0,
-      "vol20": 0.864,
-      "foreign_net": -17756228825,
-      "inst_net": 32921916375,
-      "score": 0.951,
-      "news": [
-        {
-          "date": "11-10",
-          "title": "GS건설, 동절기 콘크리트 품질관리 강화…레미콘 공장부터 사전 검증",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "GS건설, 겨울철 콘크리트 품질관리 강화…레미콘 공장 전수검증",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "GS건설, 레미콘 공장 전수 검증…\"겨울철 콘크리트 품질 확보\"",
-          "risk": false
-        }
-      ],
-      "price": 31850,
-      "chg": 0.0512,
-      "activity": 1.61,
-      "foreign_today": 0,
-      "inst_today": 3185000000,
+      "inst_today": 5740900000,
       "exchange": "KOSPI"
     },
     {
@@ -152,25 +117,25 @@
       "vol20": 0.34,
       "foreign_net": -7527384600,
       "inst_net": 47458324425,
-      "score": 0.732,
+      "score": 0.775,
       "news": [
         {
           "date": "11-10",
-          "title": "KT 박윤영호, 통신 3사 중 홀로 실적 뒷걸음질…본업 경쟁력 '경고등'",
+          "title": "KT, 3분기 영업익 전년비 6.1% 감소…\"고객 보상 영향\"",
           "risk": false
         },
         {
           "date": "11-10",
-          "title": "류지현호, 3·4호 코치 영입은 'KT산'... '한화 출신' 김강 타격코치-안...",
+          "title": "'KS 우승' 삼성, '시즌 1위' KT보다 많은 PS 배당금 받을 듯…최대 50억원",
           "risk": false
         },
         {
           "date": "11-10",
-          "title": "완벽 정규시즌, 허무 가을야구... '최지만 가세' KT의 2027년은?",
+          "title": "KT, 통신사업 부진에 3분기 영업익 6.1% 감소",
           "risk": false
         }
       ],
-      "foreign_today": 4435200000,
+      "foreign_today": 5544000000,
       "inst_today": 0,
       "exchange": "KOSPI"
     },
@@ -184,7 +149,7 @@
       "vol20": 0.232,
       "foreign_net": -18778364950,
       "inst_net": 25113216300,
-      "score": 0.634,
+      "score": 0.675,
       "news": [
         {
           "date": "11-10",
@@ -202,56 +167,40 @@
           "risk": false
         }
       ],
-      "foreign_today": 1873600000,
+      "foreign_today": 2459100000,
       "inst_today": 0,
       "exchange": "KOSPI"
     },
     {
-      "code": "326030",
-      "name": "SK바이오팜",
-      "close": 87200,
-      "ret5": 0.1223,
-      "ret20": 0.2316,
-      "rsi14": 65.5,
-      "vol20": 0.553,
-      "foreign_net": -21680191950,
-      "inst_net": 66517718150,
-      "score": 0.622,
+      "code": "006360",
+      "name": "GS건설",
+      "close": 30050,
+      "ret5": 0.0416,
+      "ret20": 0.0017,
+      "rsi14": 50.0,
+      "vol20": 0.864,
+      "foreign_net": -17756228825,
+      "inst_net": 32921916375,
+      "score": 0.613,
       "news": [
         {
           "date": "11-10",
-          "title": "SK바이오팜 세노바메이트 쟁탈전… 中 복제약도 가세",
+          "title": "GS건설 해외채권 디폴트 맞나…우리은행 3000만달러 보증 대응",
           "risk": false
         },
         {
           "date": "11-10",
-          "title": "한림대, SK바이오팜과 교원 창업 기업 등 미국 진출 지원",
+          "title": "GS건설, 동절기 콘크리트 품질관리 강화…레미콘 공장 전수 검증",
           "risk": false
         },
         {
           "date": "11-10",
-          "title": "SK바이오팜, 상생플랫폼 미국 링스 입주사 31곳 선정",
+          "title": "GS건설, 겨울철 콘크리트 품질관리 강화…레미콘 공장 사전 검증",
           "risk": false
         }
       ],
-      "foreign_today": 1395200000,
-      "inst_today": 0,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "161390",
-      "name": "한국타이어앤테크놀로지",
-      "close": 61100,
-      "ret5": 0.0608,
-      "ret20": -0.0097,
-      "rsi14": 52.4,
-      "vol20": 0.502,
-      "foreign_net": -10862318450,
-      "inst_net": 22690494600,
-      "score": 0.549,
-      "news": [],
       "foreign_today": 0,
-      "inst_today": 2321800000,
+      "inst_today": 3485800000,
       "exchange": "KOSPI"
     },
     {
@@ -264,29 +213,10 @@
       "vol20": 0.41,
       "foreign_net": -10024081475,
       "inst_net": 11905700725,
-      "score": 0.537,
+      "score": 0.588,
       "news": [],
       "foreign_today": 0,
-      "inst_today": 1115100000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "316140",
-      "name": "우리금융지주",
-      "close": 31450,
-      "ret5": 0.0311,
-      "ret20": -0.0218,
-      "rsi14": 48.3,
-      "vol20": 0.333,
-      "foreign_net": -86710371150,
-      "inst_net": 113686106975,
-      "score": 0.512,
-      "news": [],
-      "price": 31050,
-      "chg": 0.0049,
-      "activity": 0.72,
-      "foreign_today": 0,
-      "inst_today": 3601800000,
+      "inst_today": 1513350000,
       "exchange": "KOSPI"
     },
     {
@@ -299,7 +229,7 @@
       "vol20": 0.94,
       "foreign_net": -90215064750,
       "inst_net": 71337297050,
-      "score": 0.488,
+      "score": 0.575,
       "news": [
         {
           "date": "11-09",
@@ -321,7 +251,39 @@
       "chg": 0.0594,
       "activity": 0.59,
       "foreign_today": 0,
-      "inst_today": 4044600000,
+      "inst_today": 5136000000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "326030",
+      "name": "SK바이오팜",
+      "close": 87200,
+      "ret5": 0.1223,
+      "ret20": 0.2316,
+      "rsi14": 65.5,
+      "vol20": 0.553,
+      "foreign_net": -21680191950,
+      "inst_net": 66517718150,
+      "score": 0.575,
+      "news": [
+        {
+          "date": "11-10",
+          "title": "SK바이오팜, 美 ‘링스’ 입주기업 31곳 선정…K-바이오 현지 진출 지원",
+          "risk": false
+        },
+        {
+          "date": "11-10",
+          "title": "한올·SK바이오팜·올릭스까지… 연말 K바이오 '임상 성적표'에 쏠린 눈",
+          "risk": false
+        },
+        {
+          "date": "11-10",
+          "title": "SK바이오팜 세노바메이트 쟁탈전… 中 복제약도 가세",
+          "risk": false
+        }
+      ],
+      "foreign_today": 1482400000,
+      "inst_today": 0,
       "exchange": "KOSPI"
     },
     {
@@ -334,7 +296,7 @@
       "vol20": 0.846,
       "foreign_net": -30362102875,
       "inst_net": 32840193100,
-      "score": 0.451,
+      "score": 0.55,
       "news": [
         {
           "date": "11-09",
@@ -352,33 +314,24 @@
           "risk": false
         }
       ],
-      "foreign_today": 1667750000,
-      "inst_today": 953000000,
+      "foreign_today": 2001300000,
+      "inst_today": 1286550000,
       "exchange": "KOSPI"
     },
     {
-      "code": "012330",
-      "name": "현대모비스",
-      "close": 331500,
-      "ret5": -0.0542,
-      "ret20": -0.0582,
-      "rsi14": 40.5,
-      "vol20": 0.683,
-      "foreign_net": -73538377500,
-      "inst_net": 104888122250,
-      "score": 0.439,
-      "news": [
-        {
-          "date": "11-10",
-          "title": "[JB프리뷰] ‘외국선수 1명’ 균형 맞춰진 현대모비스-소노의 외나무다...",
-          "risk": false
-        }
-      ],
-      "price": 351000,
-      "chg": 0.0572,
-      "activity": 0.67,
+      "code": "161390",
+      "name": "한국타이어앤테크놀로지",
+      "close": 61100,
+      "ret5": 0.0608,
+      "ret20": -0.0097,
+      "rsi14": 52.4,
+      "vol20": 0.502,
+      "foreign_net": -10862318450,
+      "inst_net": 22690494600,
+      "score": 0.512,
+      "news": [],
       "foreign_today": 0,
-      "inst_today": 3159000000,
+      "inst_today": 2260700000,
       "exchange": "KOSPI"
     },
     {
@@ -391,7 +344,7 @@
       "vol20": 0.601,
       "foreign_net": -11565905200,
       "inst_net": 23164820850,
-      "score": 0.427,
+      "score": 0.5,
       "news": [
         {
           "date": "11-10",
@@ -410,7 +363,32 @@
         }
       ],
       "foreign_today": 0,
-      "inst_today": 2091100000,
+      "inst_today": 3041600000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "012330",
+      "name": "현대모비스",
+      "close": 331500,
+      "ret5": -0.0542,
+      "ret20": -0.0582,
+      "rsi14": 40.5,
+      "vol20": 0.683,
+      "foreign_net": -73538377500,
+      "inst_net": 104888122250,
+      "score": 0.438,
+      "news": [
+        {
+          "date": "11-10",
+          "title": "[JB프리뷰] ‘외국선수 1명’ 균형 맞춰진 현대모비스-소노의 외나무다...",
+          "risk": false
+        }
+      ],
+      "price": 352000,
+      "chg": 0.0602,
+      "activity": 0.66,
+      "foreign_today": 0,
+      "inst_today": 2112000000,
       "exchange": "KOSPI"
     },
     {
@@ -423,7 +401,7 @@
       "vol20": 0.784,
       "foreign_net": -7680339725,
       "inst_net": 27347572175,
-      "score": 0.39,
+      "score": 0.362,
       "news": [
         {
           "date": "11-10",
@@ -442,7 +420,7 @@
         }
       ],
       "foreign_today": 755300000,
-      "inst_today": 232400000,
+      "inst_today": 348600000,
       "exchange": "KOSPI"
     },
     {
@@ -455,7 +433,7 @@
       "vol20": 0.253,
       "foreign_net": 1897865370,
       "inst_net": 14561074190,
-      "score": 0.232,
+      "score": 0.338,
       "news": [
         {
           "date": "11-10",
@@ -473,8 +451,8 @@
           "risk": false
         }
       ],
-      "foreign_today": 0,
-      "inst_today": 142800000,
+      "foreign_today": 306000000,
+      "inst_today": 204000000,
       "exchange": "KOSPI"
     },
     {
@@ -487,7 +465,7 @@
       "vol20": 1.048,
       "foreign_net": -5714115110,
       "inst_net": -188314985,
-      "score": 0.963,
+      "score": 0.975,
       "news": [
         {
           "date": "11-10",
@@ -495,10 +473,10 @@
           "risk": false
         }
       ],
-      "price": 6880,
-      "chg": 0.0801,
-      "activity": 2.86,
-      "foreign_today": 1162720000,
+      "price": 7250,
+      "chg": 0.1381,
+      "activity": 3.25,
+      "foreign_today": 1363000000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -512,7 +490,7 @@
       "vol20": 1.381,
       "foreign_net": -8424528360,
       "inst_net": 20664819130,
-      "score": 0.756,
+      "score": 0.788,
       "news": [
         {
           "date": "11-09",
@@ -530,11 +508,30 @@
           "risk": false
         }
       ],
-      "price": 16950,
-      "chg": 0.0482,
-      "activity": 1.29,
+      "price": 16930,
+      "chg": 0.047,
+      "activity": 1.25,
       "foreign_today": 0,
-      "inst_today": 1372950000,
+      "inst_today": 1930020000,
+      "exchange": "KOSDAQ"
+    },
+    {
+      "code": "425420",
+      "name": "티에프이",
+      "close": 67600,
+      "ret5": -0.1746,
+      "ret20": 0.0886,
+      "rsi14": 48.9,
+      "vol20": 1.508,
+      "foreign_net": 10600396200,
+      "inst_net": -3906304850,
+      "score": 0.613,
+      "news": [],
+      "price": 74100,
+      "chg": 0.0802,
+      "activity": 0.84,
+      "foreign_today": 0,
+      "inst_today": 889200000,
       "exchange": "KOSDAQ"
     },
     {
@@ -547,7 +544,7 @@
       "vol20": 1.312,
       "foreign_net": -343188300,
       "inst_net": 1370113450,
-      "score": 0.598,
+      "score": 0.6,
       "news": [
         {
           "date": "11-09",
@@ -565,66 +562,31 @@
           "risk": false
         }
       ],
-      "price": 28600,
-      "chg": 0.0515,
-      "activity": 1.23,
+      "price": 28650,
+      "chg": 0.0533,
+      "activity": 1.19,
       "foreign_today": 0,
-      "inst_today": 1544400000,
+      "inst_today": 1575750000,
       "exchange": "KOSDAQ"
     },
     {
-      "code": "425420",
-      "name": "티에프이",
-      "close": 67600,
-      "ret5": -0.1746,
-      "ret20": 0.0886,
-      "rsi14": 48.9,
-      "vol20": 1.508,
-      "foreign_net": 10600396200,
-      "inst_net": -3906304850,
-      "score": 0.549,
+      "code": "263860",
+      "name": "지니언스",
+      "close": 23900,
+      "ret5": -0.1261,
+      "ret20": 0.0839,
+      "rsi14": 53.2,
+      "vol20": 1.398,
+      "foreign_net": -4112853625,
+      "inst_net": -1722545450,
+      "score": 0.6,
       "news": [],
-      "price": 73600,
-      "chg": 0.0729,
-      "activity": 0.85,
+      "price": 24950,
+      "chg": 0.0396,
+      "activity": 1.27,
       "foreign_today": 0,
-      "inst_today": 588800000,
+      "inst_today": 149700000,
       "exchange": "KOSDAQ"
-    },
-    {
-      "code": "010060",
-      "name": "OCI홀딩스",
-      "close": 191300,
-      "ret5": 0.029,
-      "ret20": -0.146,
-      "rsi14": 46.2,
-      "vol20": 1.173,
-      "foreign_net": -82191579550,
-      "inst_net": 84640960650,
-      "score": 0.524,
-      "news": [
-        {
-          "date": "11-10",
-          "title": "한화큐셀·OCI홀딩스, 美 태양광 관세 확정…현지 셀 생산이 수혜 가른...",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "美 태양광 셀 공장 두 번 미룬 OCI홀딩스···재검토 앞당기나",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "OCI홀딩스 주가, 11월 9일 애프터마켓 191,100원 4.40% 하락",
-          "risk": false
-        }
-      ],
-      "price": 195600,
-      "chg": -0.002,
-      "activity": 1.15,
-      "foreign_today": 2934000000,
-      "inst_today": 0,
-      "exchange": "KOSPI"
     },
     {
       "code": "114800",
