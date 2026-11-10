@@ -81,9 +81,9 @@
     ]
   },
   "intraday": {
-    "time": "12:30",
-    "pool": 420,
-    "analyzed_new": 16,
+    "time": "12:45",
+    "pool": 418,
+    "analyzed_new": 3,
     "passed": 21,
     "kept_prep": false
   },
@@ -98,29 +98,29 @@
       "vol20": 0.864,
       "foreign_net": -17756228825,
       "inst_net": 32921916375,
-      "score": 0.791,
+      "score": 0.769,
       "news": [
+        {
+          "date": "11-10",
+          "title": "GS건설, 겨울철 내한 콘크리트 납품 전 검증",
+          "risk": false
+        },
+        {
+          "date": "11-10",
+          "title": "겨울철 건설 안전 '내한 콘크리트' 혁신, GS건설의 품질 관리 전략",
+          "risk": false
+        },
         {
           "date": "11-10",
           "title": "GS건설, 레미콘 공장 '전수 검증'...콘크리트 품질 확보",
           "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "GS건설, 겨울철 콘크리트 납품 전 검증…품질관리 강화",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "GS건설, '겨울철 내한 콘크리트 품질' 정조준…전 레미콘 공장 성능검증...",
-          "risk": false
         }
       ],
-      "price": 32000,
-      "chg": 0.0561,
-      "activity": 2.09,
+      "price": 31600,
+      "chg": 0.0429,
+      "activity": 1.99,
       "foreign_today": 0,
-      "inst_today": 672000000,
+      "inst_today": 663600000,
       "exchange": "KOSPI"
     },
     {
@@ -135,11 +135,11 @@
       "inst_net": 99683469350,
       "score": 0.714,
       "news": [],
-      "price": 30150,
-      "chg": 0.0084,
-      "activity": 1.99,
+      "price": 30200,
+      "chg": 0.01,
+      "activity": 1.95,
       "foreign_today": 0,
-      "inst_today": 1206000000,
+      "inst_today": 1208000000,
       "exchange": "KOSPI"
     },
     {
@@ -156,17 +156,17 @@
       "news": [
         {
           "date": "11-10",
+          "title": "美 AI DC 투자 지형 변화…SKT·KT, 글로벌 빅테크 투자 유치 기대 고조",
+          "risk": false
+        },
+        {
+          "date": "11-10",
+          "title": "[특징주] KT, 실적 발표 뒤 장중 1.3% 하락",
+          "risk": false
+        },
+        {
+          "date": "11-10",
           "title": "KT, 3분기 영업이익 5,053억원…AI 데이터센터 1GW 확대 추진",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "KT, 3분기 영업익 6% 뒷걸음… AI·데이터센터 사업으로 돌파구 찾는다",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "KT, 3분기 매출 6조9975억·영업익 5053억…핵심 계열사 성장세 지속",
           "risk": false
         }
       ],
@@ -184,7 +184,7 @@
       "vol20": 0.683,
       "foreign_net": -73538377500,
       "inst_net": 104888122250,
-      "score": 0.659,
+      "score": 0.648,
       "news": [
         {
           "date": "11-10",
@@ -192,11 +192,11 @@
           "risk": false
         }
       ],
-      "price": 348750,
-      "chg": 0.0505,
-      "activity": 0.78,
-      "foreign_today": 3138750000,
-      "inst_today": 3836250000,
+      "price": 347000,
+      "chg": 0.0452,
+      "activity": 0.75,
+      "foreign_today": 3123000000,
+      "inst_today": 3817000000,
       "exchange": "KOSPI"
     },
     {
@@ -209,13 +209,13 @@
       "vol20": 0.333,
       "foreign_net": -86710371150,
       "inst_net": 113686106975,
-      "score": 0.56,
+      "score": 0.571,
       "news": [],
-      "price": 31150,
-      "chg": 0.0081,
-      "activity": 0.81,
+      "price": 31100,
+      "chg": 0.0065,
+      "activity": 0.79,
       "foreign_today": 0,
-      "inst_today": 2647750000,
+      "inst_today": 2643500000,
       "exchange": "KOSPI"
     },
     {
@@ -228,7 +228,7 @@
       "vol20": 0.427,
       "foreign_net": -74613443700,
       "inst_net": 403177326200,
-      "score": 0.56,
+      "score": 0.571,
       "news": [
         {
           "date": "11-10",
@@ -361,11 +361,11 @@
           "risk": false
         }
       ],
-      "price": 63800,
-      "chg": 0.0528,
-      "activity": 0.64,
+      "price": 63700,
+      "chg": 0.0512,
+      "activity": 0.61,
       "foreign_today": 0,
-      "inst_today": 701800000,
+      "inst_today": 700700000,
       "exchange": "KOSPI"
     },
     {
@@ -378,21 +378,21 @@
       "vol20": 0.405,
       "foreign_net": -54692635835,
       "inst_net": 85968537160,
-      "score": 0.363,
+      "score": 0.385,
       "news": [
         {
           "date": "11-10",
-          "title": "통신 상장기업 2026년 11월 브랜드평판... KT, SK텔레콤, LG유플러스 順",
+          "title": "LG유플러스, GS네오텍과 단말·클라우드 잇는 'E2E 보안' 구축",
           "risk": false
         },
         {
           "date": "11-10",
-          "title": "LG유플러스·GS네오텍, '엔드투엔드 보안' 위해 결집...클라우드·네트워...",
+          "title": "LG유플러스, GS네오텍과 보안사업 협력…클라우드까지 통합 보호",
           "risk": false
         },
         {
           "date": "11-10",
-          "title": "LG유플러스-GS네오텍, E2E 보안 강화…단말부터 클라우드까지",
+          "title": "차량 SW 보안, 실제 적용까지 검증…LG유플러스, 통신사 첫 ‘ML3’ 인증",
           "risk": false
         }
       ],
@@ -462,17 +462,17 @@
       "news": [
         {
           "date": "11-10",
+          "title": "카카오뱅크, 앱에서 '고향사랑기부' 가능해진다…답례품 조회·납부 연...",
+          "risk": false
+        },
+        {
+          "date": "11-10",
           "title": "카카오뱅크, ‘고향사랑기부제’ 출시…“특산품 받고 연말정산 챙기세...",
           "risk": false
         },
         {
           "date": "11-10",
           "title": "카카오뱅크, 고향사랑기부제 출시…세액공제·답례품 혜택 한 번에",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "카카오뱅크, 세액공제·답례품 혜택 '고향사랑기부제' 출시",
           "risk": false
         }
       ],
@@ -498,10 +498,10 @@
           "risk": false
         }
       ],
-      "price": 6870,
-      "chg": 0.0785,
-      "activity": 3.98,
-      "foreign_today": 1106070000,
+      "price": 6830,
+      "chg": 0.0722,
+      "activity": 3.72,
+      "foreign_today": 1099630000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -533,11 +533,11 @@
           "risk": false
         }
       ],
-      "price": 16710,
-      "chg": 0.0334,
-      "activity": 1.65,
-      "foreign_today": 350910000,
-      "inst_today": 818790000,
+      "price": 16640,
+      "chg": 0.0291,
+      "activity": 1.56,
+      "foreign_today": 349440000,
+      "inst_today": 815360000,
       "exchange": "KOSDAQ"
     },
     {
@@ -563,10 +563,10 @@
           "risk": false
         }
       ],
-      "price": 5790,
-      "chg": 0.0822,
-      "activity": 9.56,
-      "foreign_today": 98430000,
+      "price": 5770,
+      "chg": 0.0785,
+      "activity": 8.94,
+      "foreign_today": 98090000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -598,11 +598,11 @@
           "risk": false
         }
       ],
-      "price": 28950,
-      "chg": 0.0643,
-      "activity": 1.62,
+      "price": 28650,
+      "chg": 0.0533,
+      "activity": 1.54,
       "foreign_today": 0,
-      "inst_today": 955350000,
+      "inst_today": 945450000,
       "exchange": "KOSDAQ"
     },
     {
@@ -615,13 +615,13 @@
       "vol20": 1.508,
       "foreign_net": 10600396200,
       "inst_net": -3906304850,
-      "score": 0.593,
+      "score": 0.56,
       "news": [],
-      "price": 74100,
-      "chg": 0.0802,
-      "activity": 1.1,
+      "price": 73000,
+      "chg": 0.0641,
+      "activity": 1.04,
       "foreign_today": 0,
-      "inst_today": 222300000,
+      "inst_today": 219000000,
       "exchange": "KOSDAQ"
     },
     {
