@@ -19,7 +19,8 @@ import risk  # noqa: E402
 import sizing  # noqa: E402
 
 P, R = C.params(), C.risk_limits()
-BAN = {k: P[k]['enabled'] or P[k].get('buy_banned') for k in ('inverse', 'index')}   # 11-11 실제 설정은 매수 금지, 기존 ETF 규칙 테스트는 켜서 확인
+P_REAL = C.params()
+BAN = {k: P[k]['enabled'] or P[k].get('buy_banned') for k in ('inverse', 'index')}   # 11-11 인버스는 다시 허용, KODEX 200 만 금지   # 11-11 실제 설정은 매수 금지, 기존 ETF 규칙 테스트는 켜서 확인
 for k in BAN:
     P[k]['enabled'], P[k]['buy_banned'] = True, False
 P["competition"]["start"] = C.today().isoformat()   # 1주차
@@ -915,8 +916,9 @@ def test_etf_buy_banned_stocks_only():
     """11-11 S.Lee: 인버스·KODEX 200 매수 금지 (실제 설정이 꺼져 있으면 Hook 이 막음), 개별주는 통과."""
     import copy
     q = copy.deepcopy(P)
-    for k, on in BAN.items():
-        assert on, f"실제 params.{k} 는 매수 금지여야 함"
+    assert P_REAL["index"].get("buy_banned") or not P_REAL["index"]["enabled"], "실제 params.index 는 매수 금지여야 함"
+    assert P_REAL["inverse"]["enabled"] and not P_REAL["inverse"].get("buy_banned"), "인버스는 매수 허용"
+    for k in BAN:
         q[k]["enabled"], q[k]["buy_banned"] = True, True   # 보유분 규칙은 살리고 매수만 막는 방식
     for code in ("114800", "069500"):
         got = [x for x, _ in risk.check({"code": code, "side": "매수", "qty": 1, "confidence": 0.9}, acc(), 10_000, q, R)]
