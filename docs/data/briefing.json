@@ -81,8 +81,8 @@
     ]
   },
   "intraday": {
-    "time": "12:00",
-    "pool": 419,
+    "time": "12:15",
+    "pool": 418,
     "analyzed_new": 30,
     "passed": 21,
     "kept_prep": false
@@ -102,23 +102,23 @@
       "news": [
         {
           "date": "11-10",
+          "title": "GS건설, 레미콘 공장 '전수 검증'...콘크리트 품질 확보",
+          "risk": false
+        },
+        {
+          "date": "11-10",
+          "title": "GS건설, 겨울철 콘크리트 납품 전 검증…품질관리 강화",
+          "risk": false
+        },
+        {
+          "date": "11-10",
           "title": "GS건설, '겨울철 내한 콘크리트 품질' 정조준…전 레미콘 공장 성능검증...",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "GS건설, 내한 콘크리트 공장 전수 검증",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "GS건설, 동절기 콘크리트 품질관리 강화…레미콘 공장 사전 검증",
           "risk": false
         }
       ],
       "price": 31950,
       "chg": 0.0545,
-      "activity": 2.31,
+      "activity": 2.2,
       "foreign_today": 0,
       "inst_today": 670950000,
       "exchange": "KOSPI"
@@ -135,36 +135,11 @@
       "inst_net": 99683469350,
       "score": 0.714,
       "news": [],
-      "price": 30100,
-      "chg": 0.0067,
-      "activity": 1.89,
+      "price": 30150,
+      "chg": 0.0084,
+      "activity": 1.98,
       "foreign_today": 0,
-      "inst_today": 1204000000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "012330",
-      "name": "현대모비스",
-      "close": 331500,
-      "ret5": -0.0542,
-      "ret20": -0.0582,
-      "rsi14": 40.5,
-      "vol20": 0.683,
-      "foreign_net": -73538377500,
-      "inst_net": 104888122250,
-      "score": 0.692,
-      "news": [
-        {
-          "date": "11-10",
-          "title": "[JB프리뷰] ‘외국선수 1명’ 균형 맞춰진 현대모비스-소노의 외나무다...",
-          "risk": false
-        }
-      ],
-      "price": 352000,
-      "chg": 0.0602,
-      "activity": 0.87,
-      "foreign_today": 3168000000,
-      "inst_today": 3872000000,
+      "inst_today": 1206000000,
       "exchange": "KOSPI"
     },
     {
@@ -181,17 +156,17 @@
       "news": [
         {
           "date": "11-10",
+          "title": "KT, 3분기 매출 6조9975억·영업익 5053억…핵심 계열사 성장세 지속",
+          "risk": false
+        },
+        {
+          "date": "11-10",
           "title": "KT, 통신 본업 회복 추진…AI·데이터센터 성장 기반 확대",
           "risk": false
         },
         {
           "date": "11-10",
           "title": "KT만 웃지 못한 3분기…통신 3사 엇갈린 성적표",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "KT, 3분기 영업이익 5053억원…전년比 6.1% 감소",
           "risk": false
         }
       ],
@@ -200,22 +175,28 @@
       "exchange": "KOSPI"
     },
     {
-      "code": "316140",
-      "name": "우리금융지주",
-      "close": 31450,
-      "ret5": 0.0311,
-      "ret20": -0.0218,
-      "rsi14": 48.3,
-      "vol20": 0.333,
-      "foreign_net": -86710371150,
-      "inst_net": 113686106975,
-      "score": 0.56,
-      "news": [],
-      "price": 31150,
-      "chg": 0.0081,
-      "activity": 0.89,
-      "foreign_today": 0,
-      "inst_today": 2647750000,
+      "code": "012330",
+      "name": "현대모비스",
+      "close": 331500,
+      "ret5": -0.0542,
+      "ret20": -0.0582,
+      "rsi14": 40.5,
+      "vol20": 0.683,
+      "foreign_net": -73538377500,
+      "inst_net": 104888122250,
+      "score": 0.659,
+      "news": [
+        {
+          "date": "11-10",
+          "title": "[JB프리뷰] ‘외국선수 1명’ 균형 맞춰진 현대모비스-소노의 외나무다...",
+          "risk": false
+        }
+      ],
+      "price": 350500,
+      "chg": 0.0557,
+      "activity": 0.82,
+      "foreign_today": 3154500000,
+      "inst_today": 3855500000,
       "exchange": "KOSPI"
     },
     {
@@ -228,7 +209,7 @@
       "vol20": 0.427,
       "foreign_net": -74613443700,
       "inst_net": 403177326200,
-      "score": 0.56,
+      "score": 0.593,
       "news": [
         {
           "date": "11-10",
@@ -246,11 +227,30 @@
           "risk": false
         }
       ],
-      "price": 207500,
-      "chg": -0.0119,
-      "activity": 0.98,
-      "foreign_today": 1867500000,
+      "price": 208000,
+      "chg": -0.0095,
+      "activity": 1.0,
+      "foreign_today": 1872000000,
       "inst_today": 0,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "316140",
+      "name": "우리금융지주",
+      "close": 31450,
+      "ret5": 0.0311,
+      "ret20": -0.0218,
+      "rsi14": 48.3,
+      "vol20": 0.333,
+      "foreign_net": -86710371150,
+      "inst_net": 113686106975,
+      "score": 0.56,
+      "news": [],
+      "price": 31100,
+      "chg": 0.0065,
+      "activity": 0.85,
+      "foreign_today": 0,
+      "inst_today": 2643500000,
       "exchange": "KOSPI"
     },
     {
@@ -286,6 +286,22 @@
       "exchange": "KOSPI"
     },
     {
+      "code": "161390",
+      "name": "한국타이어앤테크놀로지",
+      "close": 61100,
+      "ret5": 0.0608,
+      "ret20": -0.0097,
+      "rsi14": 52.4,
+      "vol20": 0.502,
+      "foreign_net": -10862318450,
+      "inst_net": 22690494600,
+      "score": 0.462,
+      "news": [],
+      "foreign_today": 0,
+      "inst_today": 1038700000,
+      "exchange": "KOSPI"
+    },
+    {
       "code": "008930",
       "name": "한미사이언스",
       "close": 58100,
@@ -318,22 +334,6 @@
       "exchange": "KOSPI"
     },
     {
-      "code": "161390",
-      "name": "한국타이어앤테크놀로지",
-      "close": 61100,
-      "ret5": 0.0608,
-      "ret20": -0.0097,
-      "rsi14": 52.4,
-      "vol20": 0.502,
-      "foreign_net": -10862318450,
-      "inst_net": 22690494600,
-      "score": 0.451,
-      "news": [],
-      "foreign_today": 0,
-      "inst_today": 1038700000,
-      "exchange": "KOSPI"
-    },
-    {
       "code": "028050",
       "name": "삼성E&A",
       "close": 60500,
@@ -361,11 +361,11 @@
           "risk": false
         }
       ],
-      "price": 63700,
-      "chg": 0.0512,
-      "activity": 0.7,
+      "price": 63900,
+      "chg": 0.0545,
+      "activity": 0.67,
       "foreign_today": 0,
-      "inst_today": 700700000,
+      "inst_today": 702900000,
       "exchange": "KOSPI"
     },
     {
@@ -410,7 +410,7 @@
       "vol20": 0.601,
       "foreign_net": -11565905200,
       "inst_net": 23164820850,
-      "score": 0.352,
+      "score": 0.363,
       "news": [
         {
           "date": "11-10",
@@ -430,6 +430,22 @@
       ],
       "foreign_today": 0,
       "inst_today": 570300000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "175330",
+      "name": "JB금융지주",
+      "close": 26550,
+      "ret5": 0.0371,
+      "ret20": -0.0432,
+      "rsi14": 47.7,
+      "vol20": 0.41,
+      "foreign_net": -10024081475,
+      "inst_net": 11905700725,
+      "score": 0.242,
+      "news": [],
+      "foreign_today": 0,
+      "inst_today": 53100000,
       "exchange": "KOSPI"
     },
     {
@@ -465,22 +481,6 @@
       "exchange": "KOSPI"
     },
     {
-      "code": "175330",
-      "name": "JB금융지주",
-      "close": 26550,
-      "ret5": 0.0371,
-      "ret20": -0.0432,
-      "rsi14": 47.7,
-      "vol20": 0.41,
-      "foreign_net": -10024081475,
-      "inst_net": 11905700725,
-      "score": 0.231,
-      "news": [],
-      "foreign_today": 0,
-      "inst_today": 53100000,
-      "exchange": "KOSPI"
-    },
-    {
       "code": "008830",
       "name": "대동기어",
       "close": 6150,
@@ -498,10 +498,10 @@
           "risk": false
         }
       ],
-      "price": 6890,
-      "chg": 0.0816,
-      "activity": 4.56,
-      "foreign_today": 1109290000,
+      "price": 6880,
+      "chg": 0.0801,
+      "activity": 4.25,
+      "foreign_today": 1107680000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -533,11 +533,11 @@
           "risk": false
         }
       ],
-      "price": 16810,
-      "chg": 0.0396,
-      "activity": 1.88,
-      "foreign_today": 353010000,
-      "inst_today": 823690000,
+      "price": 16800,
+      "chg": 0.039,
+      "activity": 1.76,
+      "foreign_today": 352800000,
+      "inst_today": 823200000,
       "exchange": "KOSDAQ"
     },
     {
@@ -563,10 +563,10 @@
           "risk": false
         }
       ],
-      "price": 5810,
-      "chg": 0.086,
-      "activity": 10.8,
-      "foreign_today": 98770000,
+      "price": 5860,
+      "chg": 0.0953,
+      "activity": 10.28,
+      "foreign_today": 99620000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -600,7 +600,7 @@
       ],
       "price": 29150,
       "chg": 0.0717,
-      "activity": 1.83,
+      "activity": 1.71,
       "foreign_today": 0,
       "inst_today": 961950000,
       "exchange": "KOSDAQ"
@@ -615,13 +615,13 @@
       "vol20": 1.508,
       "foreign_net": 10600396200,
       "inst_net": -3906304850,
-      "score": 0.593,
+      "score": 0.582,
       "news": [],
-      "price": 74800,
-      "chg": 0.0904,
-      "activity": 1.25,
+      "price": 74400,
+      "chg": 0.0845,
+      "activity": 1.17,
       "foreign_today": 0,
-      "inst_today": 224400000,
+      "inst_today": 223200000,
       "exchange": "KOSDAQ"
     },
     {
