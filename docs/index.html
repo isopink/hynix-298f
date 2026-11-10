@@ -21,6 +21,10 @@
 <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png?v=2">
 <link rel="apple-touch-icon" href="apple-touch-icon.png?v=2">
 <meta name="theme-color" content="#101010">
+<script>/* 11-10 S.Lee: 처음에 예전 화면이 잠깐 보이던 것 막기. VOLT 가 켜질 때까지 어두운 빈 화면, 늦어도 3초 뒤엔 보임 */
+if (!/(^|[?&])theme=classic\b/.test(location.search)) { var h = document.documentElement; h.dataset.theme = 'volt'; h.style.background = '#101010'; h.classList.add('volt-wait'); setTimeout(function () { h.classList.remove('volt-wait'); }, 3000); }
+</script>
+<style>html.volt-wait body { visibility: hidden; }</style>
 <meta name="twitter:title" content="The Sigma Engine">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&display=swap">
@@ -634,6 +638,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
 [data-theme=volt] svg [tabindex]:focus-visible, [data-theme=volt] button:focus-visible, [data-theme=volt] summary:focus-visible { outline-color: #2fd6a1; }
 `;
   document.head.appendChild(st);
+  document.documentElement.classList.remove('volt-wait'); document.documentElement.style.background = '';
   // 7) 화면 글자를 영어로 (11-10 S.Lee: 시안은 영어). 종목명 · 에이전트 판단 근거(데이터)는 원문 그대로
   const EN = {
     '모니터링': 'Monitor', '에이전트': 'Agent', '온톨로지': 'Ontology', '포트폴리오': 'Portfolio', '총자산': 'Total assets', '주식 비중': 'Equity weight', '보유': 'HOLD', '오늘 체결': 'Fills today',
