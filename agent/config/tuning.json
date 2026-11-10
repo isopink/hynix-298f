@@ -7,8 +7,8 @@
 
   "_keys_note": "min~max = 허용 범위, step = 한 번에 바꿀 수 있는 최대 폭",
   "keys": {
-    "decision.buy_min_confidence":  { "label": "매수 확신도 기준",   "min": 0.50, "max": 0.75, "step": 0.05 },
-    "decision.sell_min_confidence": { "label": "매도 확신도 기준",   "min": 0.50, "max": 0.75, "step": 0.05 },
+    "decision.buy_min_confidence":  { "label": "매수 확신도 기준",   "min": 0.50, "max": 0.75, "step": 0.01 },
+    "decision.sell_min_confidence": { "label": "매도 확신도 기준",   "min": 0.50, "max": 0.75, "step": 0.01 },
     "decision.full_size_confidence": { "label": "최대 비중 확신도",  "min": 0.70, "max": 0.90, "step": 0.05 },
     "decision.min_weight":          { "label": "최소 종목 비중",     "min": 0.05, "max": 0.15, "step": 0.025 },
     "decision.max_weight":          { "label": "최대 종목 비중",     "min": 0.05, "max": 0.20, "step": 0.025 },
