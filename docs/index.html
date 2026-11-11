@@ -1624,7 +1624,9 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       else {
         const late = st.next_run && Date.now() - Date.parse(st.next_run.replace(' ', 'T') + ':00+09:00') > 30 * 60e3;
         const rest = /쉼|양보/.test(st.note || '');   // 11-09 그림자가 실제 매매에 한도를 양보하며 쉰 회차는 실패가 아님
-        a = st.last_ok === false && !rest ? ['Off', 'bad', '마지막 판단 실패' + (st.note ? ' · ' + st.note : '')]
+        const tuneFail = st.last_ok === false && /기준값 조정/.test(st.note || '');   // 11-11 장 마감 뒤 기준값 조정 실패는 판단 실패가 아님 (다음 판단은 그대로 돎)
+        a = tuneFail ? ['On', 'ok', '마지막 판단 정상 · 기준값 조정 기록 없음']
+          : st.last_ok === false && !rest ? ['Off', 'bad', '마지막 판단 실패' + (st.note ? ' · ' + st.note : '')]
           : late || rest ? (soft ? ['Off', '', rest ? '실제 매매에 사용 한도를 양보하며 쉬는 중' : '판단 쉬는 중 · 마지막 ' + st.last_run] : ['Off', 'bad', '예정된 판단이 30분 넘게 지연'])
           : st.sync && st.sync.ok === false ? ['On', 'bad', '코드 동기화 멈춤 · ' + (st.sync.error || '')]   // 판단은 돌지만 새 수정이 반영 안 됨
           : ['On', 'ok', '마지막 판단 ' + st.last_run];
@@ -1634,12 +1636,12 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       const stuck = a[1] === 'bad' && !/지연/.test(a[2]);
       // 11-10 S.Lee: 장 밖엔 무조건 회색. 마지막 실패는 툴팁에만
       if (!opsOpen()) return ['Off', '', stuck ? '장 마감 · ' + a[2] : '장 마감 · 다음 판단 평일 09:30'];
-      // 판단 실행 중 (시간으로 추정): 판단 회차(15분마다) 시작 뒤 6분 안이고 그 회차 결과가 아직 안 올라왔으면.
+      // 판단 실행 중 (시간으로 추정): 판단 회차(15분마다) 시작 뒤 15분 안이고 그 회차 결과가 아직 안 올라왔으면.
       // 실행은 보통 3~4분, 끝나면 status.json 의 last_run 이 그 회차 시각으로 바뀜
       const k = new Date(Date.now() + 9 * 3600e3 - off * 60e3), m = k.getUTCHours() * 60 + k.getUTCMinutes();
       const IV = 15, slot = Math.floor(m / IV) * IV, hm = String(Math.floor(slot / 60)).padStart(2, '0') + ':' + String(slot % 60).padStart(2, '0');
       const today = k.toISOString().slice(0, 10), done = st && st.last_run && st.last_run >= today + ' ' + hm;
-      if (window.TRADE_TIMES.includes(hm) && m - slot < 6 && !done) a = ['On', 'ok run', `${hm} 매매 회차 실행 중 (보통 3~4분)`];   // 글자 없이 점만 깜빡임
+      if (window.TRADE_TIMES.includes(hm) && m - slot < 15 && !done) a = ['On', 'ok run', `${hm} 매매 회차 실행 중 (보통 8~14분)`];   // 11-11 실행이 8~14분 걸려 6분 뒤 '실패'로 보이던 것 고침   // 글자 없이 점만 깜빡임
       return a;
     };
     const agent = judge(st, 0, '첫 판단 대기 · 평일 09:30부터 15분마다');
