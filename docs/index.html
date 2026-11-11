@@ -1001,6 +1001,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   });
 
   // ---------- 실시간: live/snapshot.py 가 Supabase 에 올린 잔고 스냅샷을 30초마다 확인 ----------
+  let HB_AT = null, HB_OK = false;   // 11-11 데스크톱 연결 신호 (HB_OK = heartbeat 표를 읽을 수 있음)
   let BASE = null, LIVE_AT = null, PRE = false, STATUS = {}, DECISION = {}, BRIEF = {}, TUNING = [];
   const CFG = window.DASH_CONFIG || {};
   const kstDate = iso => new Date(Date.parse(iso) + 9 * 3600e3).toISOString().slice(0, 10);
@@ -1063,7 +1064,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const h = { apikey: key, Authorization: 'Bearer ' + key };
     try {
       const json = n => fetch('data/' + n + '.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null).catch(() => null);
-      const [, snaps, latest, st, dc, bf, tick, shl] = await Promise.all([
+      const [, snaps, latest, st, dc, bf, tick, shl, hb] = await Promise.all([
         loadKD(),
         // 오늘 스냅샷만 (하루 최대 약 430개). 대회 시작부터 다 받으면 서버가 1,000개에서 잘라 오래된 것만 와서 11-05 10:28에 멈췄음.
         // 지난 날은 에이전트가 마감(15:45) 때 쓴 equity.json 을 씀
@@ -1072,9 +1073,13 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
         json('status'), json('decision'), json('briefing'),   // 에이전트가 실행할 때마다 push 하므로 페이지를 열어 둔 채로도 갱신
         fetch(`${url}/rest/v1/kospi_ticks?select=ts,price&order=ts.desc&limit=1`, { headers: h }).then(r => r.ok ? r.json() : []).catch(() => []),
         // 11-09 온톨로지 그림자 운영의 1분 자산·상태 (supabase/shadow.sql). 표가 없으면 빈 목록
-        fetch(`${url}/rest/v1/shadow_snapshots?select=ts,total,cash,status,holdings&order=ts.desc&limit=1`, { headers: h }).then(r => r.ok ? r.json() : []).catch(() => [])
+        fetch(`${url}/rest/v1/shadow_snapshots?select=ts,total,cash,status,holdings&order=ts.desc&limit=1`, { headers: h }).then(r => r.ok ? r.json() : []).catch(() => []),
+        // 11-11 S.Lee: 데스크톱 연결 신호 (supabase/heartbeat.sql, sync 가 1분마다). 표가 없으면 null → 잔고 스냅샷으로 판단
+        fetch(`${url}/rest/v1/heartbeat?select=ts,info&host=eq.desktop&limit=1`, { headers: h }).then(r => r.ok ? r.json() : null).catch(() => null)
       ]);
       SHADOW_LIVE = shl && shl[0] || SHADOW_LIVE;
+      if (Array.isArray(hb)) { HB_AT = hb[0] ? hb[0].ts : null; HB_OK = true; }
+      if (!snaps.length) { try { agentStatus(); } catch (e) { /* 아직 그리기 전 */ } }   // 밤에도 서버 점은 30초마다 갱신
       if (st && !Array.isArray(st)) STATUS = st;
       if (dc && !Array.isArray(dc)) DECISION = dc;
       if (bf && !Array.isArray(bf)) BRIEF = bf;
@@ -1619,8 +1624,13 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       : age <= 12 ? ['On', 'ok run', `마지막 잔고 조회 ${Math.max(0, Math.round(age))}분 전`]
       : ['Off', 'bad', LIVE_AT ? `잔고 조회가 ${Math.round(age)}분째 없음` : '잔고 조회 기록 없음'];
     // 11-11 S.Lee: 서버 = 데스크톱이 원격으로 연결돼 있는지. 1분마다 올리는 잔고 스냅샷이 3분 넘게 끊기면 연결이 끊긴 것 (키움 · 인터넷 · PC)
-    const srv = !opsOpen() ? ['Off', '', '장 마감 · 평일 08:30~15:35 연결 확인']
-      : age <= 3 ? ['On', 'ok', `데스크톱 연결됨 · 마지막 수신 ${age < 1 ? Math.max(0, Math.round(age * 60)) + '초' : Math.round(age) + '분'} 전`]
+    // 11-11 S.Lee: 연결돼 있으면 초록 깜빡임, 끊기면 빨강 (장 밖에도). heartbeat 표가 있으면 그 신호, 없으면 장중 잔고 스냅샷으로
+    const ago = a => a < 1 ? Math.max(0, Math.round(a * 60)) + '초' : Math.round(a) + '분';
+    const hbAge = HB_AT ? (Date.now() - Date.parse(HB_AT)) / 60e3 : Infinity;
+    const srv = HB_OK ? (hbAge <= 3 ? ['On', 'ok run', `데스크톱 연결됨 · 마지막 신호 ${ago(hbAge)} 전`]
+        : ['Off', 'bad', HB_AT ? `데스크톱 신호가 ${hbAge < 120 ? Math.round(hbAge) + '분' : Math.round(hbAge / 60) + '시간'}째 없음 · PC 전원, 절전, 인터넷 확인` : '데스크톱 신호 기록 없음'])
+      : !opsOpen() ? ['Off', '', '장 마감 · 평일 08:30~15:35 연결 확인']
+      : age <= 3 ? ['On', 'ok run', `데스크톱 연결됨 · 마지막 수신 ${ago(age)} 전`]
       : ['Off', 'bad', LIVE_AT ? `데스크톱 신호가 ${Math.round(age)}분째 없음 · PC 전원, 인터넷, 키움 연결 확인` : '데스크톱 신호 기록 없음'];
     const judge = (st, off, first, soft) => {   // 정기 판단 상태 (에이전트 · 온톨로지 같은 규칙). off = 회차 시각이 몇 분 늦은지. soft = 지연·쉼을 빨강 대신 회색 (온톨로지)
       let a;
@@ -1819,10 +1829,11 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   function donut() {
     const parts = D.hold.map(h => ({ name: h.name, v: h.value, pnl: h.pnl })).sort((a, b) => b.v - a.v).concat([{ name: '현금', v: D.cash }]);
     const cost = h => h.avg_price * h.qty, sc = d3.sum(D.hold, cost), tv = sc ? d3.sum(D.hold, h => cost(h) * h.pnl) / sc : null;   // 매입금액 가중 합계 손익
-    drawDonut($('ch-donut'), parts, D.cap, ['#da291c', '#ff7a6e', '#bdbdbd', '#7a7a7a', '#4a4a4a', '#3a3a3a'], C.red, { v: tv });
+    drawDonut($('ch-donut'), parts, D.cap || REG_CAP[D.last && D.last.regime] || null, ['#da291c', '#ff7a6e', '#bdbdbd', '#7a7a7a', '#4a4a4a', '#3a3a3a'], C.red, { v: tv });
   }
   // 11-09 Sigma · SiON 포트폴리오 공용 도넛. parts = [{name, v, pnl?}] (마지막이 현금), cap = 국면 상한(없으면 호 없음)
   const PF_OPEN = {}, PC_OPEN = !matchMedia('(max-width: 640px)').matches;   // 11-10 S.Lee: PC 는 접는 칸 없이 다 펼침
+  const REG_CAP = { '상승': .9, '횡보': .7, '하락': .6 };   // agent/config/params.json regime_cap 과 같게
   function drawDonut(el, parts, cap, shades, capColor, center) {   // 11-10 S.Lee: 가운데 = 주식 비중 / 국면 상한, 종목은 도넛 아래 표 (종목명 · 비중 · 수익률 · 합산 수익률)
     const ring = el.clientWidth < 520 ? 210 : 240;
     const { svg, W, H } = svgIn(el, ring);
@@ -1892,7 +1903,8 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const sw = v => (v > 0 ? '+' : v < 0 ? '−' : '') + won(Math.abs(Math.round(v))) + '원';
     // 11-09 S.Lee: SiON 포트폴리오 (도넛 · 보유 손익) 를 Sigma 와 따로
     const sp = hs.map(h => ({ name: h.name, v: h.value || h.price * h.qty, pnl: h.pnl_pct == null ? null : fee(+h.pnl_pct) })).sort((a, b) => b.v - a.v).concat([{ name: '현금', v: Math.max(0, cash) }]);
-    const sReg = st.decision && st.decision.regime, sCap = D && D.cap && (!sReg || sReg === (D.last && D.last.regime)) ? D.cap : null;   // 국면이 Sigma 와 같으면 같은 상한 호
+    const sDec = (st.decision && st.decision.regime ? st.decision : null) || (SHADOW && SHADOW.decision) || {}, sReg = sDec.regime;
+    const sCap = +sDec.cap || REG_CAP[sReg] || (D && D.cap) || null;   // 11-11 S.Lee: SiON 자기 국면의 상한 (예전엔 Sigma 와 국면이 다르면 호를 안 그렸음)
     const sr = hs.filter(h => h.pnl_pct != null).map(h => { const avg = h.avg_price || h.price / (1 + +h.pnl_pct); return { name: h.name, v: fee(+h.pnl_pct), avg, price: h.price, qty: h.qty }; });
     const sCost = d3.sum(sr, r => r.avg * r.qty), sTot = sCost ? d3.sum(sr, r => r.avg * r.qty * r.v) / sCost : 0;
     drawDonut($('ch-sion-donut'), sp, sCap, ['#da291c', '#ff7a6e', '#bdbdbd', '#7a7a7a', '#4a4a4a', '#3a3a3a'], C.red, { v: sr.length ? sTot : null });   // 11-10 Sigma 와 같은 양식 (가운데 합계 손익)

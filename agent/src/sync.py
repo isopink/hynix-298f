@@ -298,6 +298,43 @@ def catch_up(now=None):
     return start_task("Hynix298-decide")
 
 
+_HB = {"env": None, "fail": 0}
+
+
+def heartbeat():
+    """11-11 S.Lee: 대시보드 'Server' 점. 데스크톱이 켜져 있으면 1분마다 Supabase heartbeat 표에 신호 (supabase/heartbeat.sql).
+    live/.env 의 SUPABASE_URL · SUPABASE_ANON_KEY · SNAPSHOT_SECRET 을 씀. 실패해도 동기화는 계속."""
+    import socket
+    import urllib.request
+    if _HB["env"] is None:
+        env = {}
+        try:
+            with open(os.path.join(C.ROOT, "live", ".env"), encoding="utf-8") as f:
+                for line in f:
+                    line = line.split("#", 1)[0].strip()
+                    if "=" in line:
+                        k, v = line.split("=", 1)
+                        env[k.strip()] = v.strip().strip('"').strip("'")
+        except OSError:
+            pass
+        _HB["env"] = env
+    env = _HB["env"]
+    url, key, secret = env.get("SUPABASE_URL"), env.get("SUPABASE_ANON_KEY"), env.get("SNAPSHOT_SECRET")
+    if not (url and key and secret):
+        return
+    body = json.dumps({"p_secret": secret, "p_host": "desktop",
+                       "p_info": {"pc": socket.gethostname()[:30], "sync": (rev("HEAD") or "")[:7]}}).encode()
+    req = urllib.request.Request(url.rstrip("/") + "/rest/v1/rpc/push_heartbeat", data=body, method="POST",
+                                 headers={"apikey": key, "Authorization": "Bearer " + key, "Content-Type": "application/json"})
+    try:
+        urllib.request.urlopen(req, timeout=8).read()
+        _HB["fail"] = 0
+    except Exception as e:  # noqa: BLE001
+        _HB["fail"] += 1
+        if _HB["fail"] in (1, 30):   # 같은 실패를 매분 찍지 않음
+            log(f"  ! 연결 신호 실패: {type(e).__name__}: {str(e)[:120]}")
+
+
 def loop():
     keep = single_instance()
     if not keep:
@@ -305,6 +342,10 @@ def loop():
         return 0
     log(f"코드 동기화 시작 · {INTERVAL}초 간격 · {C.ROOT}")
     while True:
+        try:
+            heartbeat()
+        except Exception:  # noqa: BLE001
+            pass
         try:
             if once():
                 log("sync.py 가 바뀌어 새 코드로 다시 시작")
