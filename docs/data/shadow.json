@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-10 16:59",
+  "updated": "2026-11-11 08:37",
   "start": "2026-11-09",
   "base": 48960657,
   "daily": [
@@ -10,6 +10,10 @@
     {
       "date": "2026-11-10",
       "total": 49371922
+    },
+    {
+      "date": "2026-11-11",
+      "total": 49329022
     }
   ],
   "series": [
@@ -242,12 +246,17 @@
       "time": "2026-11-10 16:59",
       "shadow": 0.0084,
       "live": 0.00702
+    },
+    {
+      "time": "2026-11-11 08:37",
+      "shadow": 0.00752,
+      "live": 0.00702
     }
   ],
   "now": {
-    "shadow": 0.0084,
+    "shadow": 0.00752,
     "live": 0.00702,
-    "shadow_total": 49371922,
+    "shadow_total": 49329022,
     "live_total": 49304330
   },
   "stats": {
@@ -262,14 +271,14 @@
       "tokens_k": 15284
     },
     "live": {
-      "fills": 29,
-      "buys": 8,
-      "sells": 21,
-      "watch": 806,
-      "runs": 49,
+      "fills": 31,
+      "buys": 9,
+      "sells": 22,
+      "watch": 811,
+      "runs": 50,
       "failures": 2,
       "avg_min": 6.0,
-      "tokens_k": 3907
+      "tokens_k": 3931
     }
   },
   "holdings": [
@@ -277,15 +286,15 @@
       "code": "006360",
       "name": "GS건설",
       "qty": 125,
-      "value": 3981250,
-      "pnl_pct": 0.0225
+      "value": 3962500,
+      "pnl_pct": 0.0177
     },
     {
       "code": "028050",
       "name": "삼성E&A",
       "qty": 59,
-      "value": 3799600,
-      "pnl_pct": 0.0575
+      "value": 3770100,
+      "pnl_pct": 0.0493
     },
     {
       "code": "018260",
@@ -298,8 +307,8 @@
       "code": "035720",
       "name": "카카오",
       "qty": 103,
-      "value": 3285700,
-      "pnl_pct": -0.02
+      "value": 3301150,
+      "pnl_pct": -0.0154
     },
     {
       "code": "069500",
@@ -312,31 +321,31 @@
       "code": "012330",
       "name": "현대모비스",
       "qty": 6,
-      "value": 2103000,
-      "pnl_pct": -0.0099
+      "value": 2088000,
+      "pnl_pct": -0.0169
     },
     {
       "code": "017670",
       "name": "SK텔레콤",
       "qty": 24,
-      "value": 1958400,
-      "pnl_pct": 0.0475
+      "value": 1956000,
+      "pnl_pct": 0.0462
     },
     {
       "code": "128940",
       "name": "한미약품",
       "qty": 4,
-      "value": 1938000,
-      "pnl_pct": 0.0168
+      "value": 1934000,
+      "pnl_pct": 0.0147
     }
   ],
   "status": {
-    "last_run": "2026-11-10 15:15",
-    "last_ok": true,
+    "last_run": "2026-11-10 16:51",
+    "last_ok": false,
     "next_run": "2026-11-11 09:30",
-    "runs_today": 24,
-    "failures_today": 1,
-    "note": "하락 / 매수 0건 / 매도 2건 / 관망 15건"
+    "runs_today": 0,
+    "failures_today": 0,
+    "note": "기록 없음: 기준값 조정 / 반영 0건 / 거절 0건"
   },
   "decision": {
     "time": "2026-11-10 15:23",
