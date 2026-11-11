@@ -275,6 +275,9 @@ details.log[open] > summary::after { content: "−"; }
 .cal .cell .v.up { color: var(--red-hi); } .cal .cell .v.down { color: var(--blue); }
 .cal .cell.today { border-color: rgba(255,90,74,.7) !important; }
 .cal .cell.has { cursor: default; }
+.cal .cell .note { position: absolute; left: 0; right: 0; bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: #c9c9c9; }   /* 11-12 S.Lee 운영 사고 표시 (빨강은 점만) */
+.cal .cell .note .dot { width: 6px; height: 6px; }
+.cal .cell.incident { border-color: rgba(255,90,74,.45) !important; }
 @media (max-width: 640px) { .cal { grid-template-columns: 30px repeat(5, minmax(0, 1fr)); gap: 4px; } .cal .cell { min-height: 60px; padding: 6px; } .cal .cell .v { font-size: 12px; } .cal-sub { display: none; } }
 .fb-body { padding: 4px 20px 18px; }
 .more-body { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 0 16px 16px; }
@@ -1056,7 +1059,12 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
         FILL.set(d, s ? { date: d, total: +s.total, kospi: s.kospi != null ? +s.kospi : null, regime: null, cap: null } : null);   // 스냅샷도 없으면(휴장) 비움
       } catch (e) { /* 다음 회차에 다시 */ }
     }
-    return [...FILL.values()].filter(Boolean);
+    const rows = [...FILL.values()].filter(Boolean);
+    for (const r of rows) {   // 11-12 마감 기록이 없는 날은 국면 · 상한을 그 전 마감 기록에서 이어받음 (도넛 상한 호)
+      const prev = (BASE.equity || []).filter(x => x.date < r.date && x.regime).pop();
+      if (prev && r.regime == null) { r.regime = prev.regime; r.cap = prev.cap; }
+    }
+    return rows;
   }
   async function pollLive() {
     const url = (CFG.supabaseUrl || '').replace(/\/$/, ''), key = CFG.supabaseAnonKey || '';
@@ -1079,11 +1087,17 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       ]);
       SHADOW_LIVE = shl && shl[0] || SHADOW_LIVE;
       if (Array.isArray(hb)) { HB_AT = hb[0] ? hb[0].ts : null; HB_OK = true; }
-      if (!snaps.length) { try { agentStatus(); } catch (e) { /* 아직 그리기 전 */ } }   // 밤에도 서버 점은 30초마다 갱신
       if (st && !Array.isArray(st)) STATUS = st;
       if (dc && !Array.isArray(dc)) DECISION = dc;
       if (bf && !Array.isArray(bf)) BRIEF = bf;
-      if (!snaps.length) return;
+      if (!snaps.length) {   // 오늘 스냅샷이 없어도(밤 · 장 전 · PC 꺼짐) 마감 기록이 빠진 지난 거래일은 그날 마지막 스냅샷으로 채움
+        // 11-12: 11-11 마감 기록이 없어 차트가 11/10 에서 멈추고 SiON 요약(11-11 값)과 숫자가 달랐던 것
+        const filled = await fillMissingDays(url, h, since, today), have = new Set((BASE.equity || []).map(r => r.date));
+        const add = filled.filter(r => r.date < today && !have.has(r.date));
+        if (add.length && D) { D = derive({ ...BASE, equity: (BASE.equity || []).concat(add).sort((a, b) => a.date < b.date ? -1 : 1) }); fillText(); drawAll(); }
+        else { try { agentStatus(); } catch (e) { /* 아직 그리기 전 */ } }   // 밤에도 서버 점은 30초마다 갱신
+        return;
+      }
       const holdings = [];
       for (const acc of new Set(latest.map(x => x.account))) { const s = latest.find(x => x.account === acc); if (s) holdings.push(...(s.holdings || [])); }
       LIVE_AT = snaps[snaps.length - 1].ts; PRE = false;
@@ -1799,6 +1813,8 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
 
 
   // ---------- 수익률 캘린더: 대회 20거래일을 주(행) × 요일(열)로 ----------
+  // 11-12 S.Lee: 캘린더에 남기는 운영 사고 (날짜 → [짧은 표시, 툴팁 설명])
+  const CAL_NOTE = { '2026-11-11': ['System Error', 'Desktop ran out of memory at 10:07. No decisions or orders after 09:51, and the PC was off from about 14:30. Mid-week review and tuning ran at night.'] };
   function calendar() {
     const el = $('ch-cal'); el.innerHTML = '';
     const byDate = new Map(PRE ? [] : D.eq.map((r, i) => [r.date, { day: i ? r.day : r.total / INIT - 1, kday: r.kday }]));
@@ -1813,13 +1829,15 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
         const c = add('cell' + (key === today ? ' today' : '') + (v ? ' has' : ''));
         const top = document.createElement('div'); top.className = 'top'; c.appendChild(top);
         const dl = document.createElement('span'); dl.textContent = md(dt); top.appendChild(dl);
-        if (!v) continue;
+        const note = CAL_NOTE[key];
+        if (note) { c.classList.add('incident'); const nb = document.createElement('span'); nb.className = 'note'; nb.innerHTML = '<i class="dot bad"></i>' + esc(note[0]); c.appendChild(nb); }
+        if (!v) { if (note) tipTarget(c, `<div class="t">${md(dt)} ${esc(note[0])}</div><div>${esc(note[1])}</div>`); continue; }
         // 반투명 유리: 수익률이 클수록 진하게 (빨강 = 수익, 파랑 = 손실), 숫자도 같은 색
         const a = .08 + .22 * Math.min(1, Math.abs(v.day) / mx), rgb = v.day >= 0 ? '255,90,74' : '74,163,212';
         c.style.background = `linear-gradient(135deg, rgba(${rgb},${(a + .06).toFixed(3)}), rgba(${rgb},${(a * .35).toFixed(3)}))`;
         c.style.borderColor = `rgba(${rgb},${(.2 + a).toFixed(3)})`;
         const vl = document.createElement('span'); vl.className = 'v ' + (v.day >= 0 ? 'up' : 'down'); vl.textContent = pct(v.day); c.appendChild(vl);
-        tipTarget(c, `<div class="t">${md(dt)}</div>${row('Sigma Engine', pct(v.day), v.day >= 0 ? 'up' : 'down')}${row(BMN(), pct(v.kday))}${row('초과', pct(v.day - v.kday), v.day - v.kday >= 0 ? 'up' : 'down')}`);
+        tipTarget(c, `<div class="t">${md(dt)}${note ? ' ' + esc(note[0]) : ''}</div>${row('Sigma Engine', pct(v.day), v.day >= 0 ? 'up' : 'down')}${row(BMN(), pct(v.kday))}${row('초과', pct(v.day - v.kday), v.day - v.kday >= 0 ? 'up' : 'down')}${note ? `<div class="muted" style="margin-top:6px;max-width:240px">${esc(note[1])}</div>` : ''}`);
       }
     }
   }
