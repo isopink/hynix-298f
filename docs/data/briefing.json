@@ -81,40 +81,35 @@
     ]
   },
   "intraday": {
-    "time": "09:30",
-    "pool": 338,
+    "time": "09:45",
+    "pool": 341,
     "analyzed_new": 30,
     "passed": 6,
     "kept_prep": false
   },
   "candidates": [
     {
-      "code": "068270",
-      "name": "셀트리온",
-      "close": 204500,
-      "ret5": 0.0735,
-      "ret20": 0.1495,
-      "rsi14": 60.3,
-      "vol20": 0.443,
-      "foreign_net": -54627844350,
-      "inst_net": 391319751200,
-      "score": 0.813,
+      "code": "015760",
+      "name": "한국전력",
+      "close": 30550,
+      "ret5": 0.0516,
+      "ret20": 0.0516,
+      "rsi14": 55.6,
+      "vol20": 0.399,
+      "foreign_net": -39599998600,
+      "inst_net": 103337767475,
+      "score": 1.0,
       "news": [
         {
           "date": "11-11",
-          "title": "[제약사 리포트] 셀트리온제약, 외형·질 동시 성장…공장 가동률 상승",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "셀트리온제약, 3분기 매출 1619억원·영업이익 239억원…분기 최대 실적",
+          "title": "‘우스만 33점’ 한국전력, 삼성화재 3-1 제압⋯2연승 질주",
           "risk": false
         }
       ],
-      "price": 211000,
-      "chg": 0.0394,
-      "activity": 2.4,
-      "foreign_today": 1266000000,
+      "price": 31600,
+      "chg": 0.0327,
+      "activity": 3.79,
+      "foreign_today": 474000000,
       "inst_today": 0,
       "exchange": "KOSPI"
     },
@@ -128,7 +123,7 @@
       "vol20": 0.943,
       "foreign_net": -95493916550,
       "inst_net": 70134948600,
-      "score": 0.375,
+      "score": 0.4,
       "news": [
         {
           "date": "11-11",
@@ -146,29 +141,10 @@
           "risk": false
         }
       ],
-      "price": 66300,
-      "chg": 0.0263,
-      "activity": 2.24,
-      "foreign_today": 861900000,
-      "inst_today": 0,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "003010",
-      "name": "혜인",
-      "close": 9490,
-      "ret5": 0.2721,
-      "ret20": 0.2947,
-      "rsi14": 56.5,
-      "vol20": 1.796,
-      "foreign_net": -4796776105,
-      "inst_net": 800752785,
-      "score": 1.0,
-      "news": [],
-      "price": 9690,
-      "chg": 0.02,
-      "activity": 6.49,
-      "foreign_today": 542640000,
+      "price": 66000,
+      "chg": 0.0217,
+      "activity": 1.83,
+      "foreign_today": 858000000,
       "inst_today": 0,
       "exchange": "KOSPI"
     },
@@ -182,7 +158,7 @@
       "vol20": 1.641,
       "foreign_net": 144173177,
       "inst_net": 32893415,
-      "score": 1.0,
+      "score": 0.933,
       "news": [
         {
           "date": "11-10",
@@ -193,17 +169,12 @@
           "date": "11-09",
           "title": "에스피소프트 21.18% 급등…클라우드·DaaS 성장성 부각",
           "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "딥페이크 범죄 막는 AI 보안株 휘파람…에스피소프트·파수AI 노려라",
-          "risk": false
         }
       ],
-      "price": 5960,
-      "chg": 0.0051,
-      "activity": 9.79,
-      "foreign_today": 154960000,
+      "price": 6000,
+      "chg": 0.0118,
+      "activity": 7.04,
+      "foreign_today": 156000000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -217,7 +188,7 @@
       "vol20": 1.12,
       "foreign_net": -2467438185,
       "inst_net": 54948720,
-      "score": 0.562,
+      "score": 0.467,
       "news": [
         {
           "date": "11-09",
@@ -225,12 +196,37 @@
           "risk": false
         }
       ],
-      "price": 15120,
-      "chg": -0.0085,
-      "activity": 2.85,
-      "foreign_today": 120960000,
+      "price": 15260,
+      "chg": 0.0007,
+      "activity": 2.27,
+      "foreign_today": 122080000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
+    },
+    {
+      "code": "003490",
+      "name": "대한항공",
+      "close": 32600,
+      "ret5": 0.1222,
+      "ret20": 0.0671,
+      "rsi14": 67.1,
+      "vol20": 0.72,
+      "foreign_net": 90926066100,
+      "inst_net": 76210824425,
+      "score": 0.806,
+      "news": [
+        {
+          "date": "11-11",
+          "title": "[전날 애프터마켓] 대한항공우·메타랩스 '上' 유지…삼전·SK하닉 상승",
+          "risk": false
+        },
+        {
+          "date": "11-11",
+          "title": "남양유업 백미당, 대한항공 기내식 입성…한앤코 '코로나 우군' 인연 재...",
+          "risk": false
+        }
+      ],
+      "exchange": "KOSPI"
     },
     {
       "code": "114800",
