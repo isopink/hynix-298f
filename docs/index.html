@@ -417,7 +417,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
   <header class="top">
     <div class="brand">
       <div>
-        <h1>Sigma Engine <span class="tagline st-top" id="st-top" aria-label="실행 상태"></span></h1>   <!-- 11-10 S.Lee: 목표 문구 자리에 상태 3개 (모니터링 · 에이전트 · 온톨로지) -->
+        <h1>Sigma Engine <span class="tagline st-top" id="st-top" aria-label="실행 상태"></span></h1>   <!-- 11-10 S.Lee: 목표 문구 자리에 상태 4개 (서버 · 모니터링 · 에이전트 · 온톨로지) -->
         <div class="chips sched" id="sched" aria-label="실시간 KOSPI와 평일 정기 매매 시각"><span class="chip kx-chip m-hide" id="kx-chip" hidden></span></div>   <!-- 11-10 S.Lee: 맨 앞 KOSPI 칩 (폰은 이것만) -->
       </div>
     </div>
@@ -651,7 +651,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
   document.documentElement.classList.remove('volt-wait'); document.documentElement.style.background = '';
   // 7) 화면 글자를 영어로 (11-10 S.Lee: 시안은 영어). 종목명 · 에이전트 판단 근거(데이터)는 원문 그대로
   const EN = {
-    '모니터링': 'Monitor', '에이전트': 'Agent', '온톨로지': 'Ontology', '포트폴리오': 'Portfolio', '총자산': 'Total assets', '주식 비중': 'Equity weight', '보유': 'HOLD', '오늘 체결': 'Fills today',
+    '서버': 'Server', '모니터링': 'Monitor', '에이전트': 'Agent', '온톨로지': 'Ontology', '포트폴리오': 'Portfolio', '총자산': 'Total assets', '주식 비중': 'Equity weight', '보유': 'HOLD', '오늘 체결': 'Fills today',
     '종목명': 'Stock', '비중': 'Weight', '수익률': 'Return', '합산 수익률': 'Total return', '현금': 'Cash', '국면': 'Regime', '하락': 'Bear', '상승': 'Bull', '횡보': 'Sideways',
     '주식 비중 상한': 'Equity cap', '장중 수급': 'Intraday flow', '관망': 'WAIT', '매수': 'BUY', '매도': 'SELL', '최근 체결': 'Recent fills', '실제 계좌': 'Live account', '가상 체결': 'Virtual fills',
     '시각': 'Time', '구분': 'Side', '종목': 'Stock', '수량': 'Qty', '가격': 'Price', '실시간 KOSPI': 'Live KOSPI', '거래량': 'Volume', '투자자별 순매수': 'Net buying by investor',
@@ -1618,6 +1618,10 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const watch = !opsOpen() ? ['Off', '', '장 마감 · 평일 08:30~15:35 동작']
       : age <= 12 ? ['On', 'ok run', `마지막 잔고 조회 ${Math.max(0, Math.round(age))}분 전`]
       : ['Off', 'bad', LIVE_AT ? `잔고 조회가 ${Math.round(age)}분째 없음` : '잔고 조회 기록 없음'];
+    // 11-11 S.Lee: 서버 = 데스크톱이 원격으로 연결돼 있는지. 1분마다 올리는 잔고 스냅샷이 3분 넘게 끊기면 연결이 끊긴 것 (키움 · 인터넷 · PC)
+    const srv = !opsOpen() ? ['Off', '', '장 마감 · 평일 08:30~15:35 연결 확인']
+      : age <= 3 ? ['On', 'ok', `데스크톱 연결됨 · 마지막 수신 ${age < 1 ? Math.max(0, Math.round(age * 60)) + '초' : Math.round(age) + '분'} 전`]
+      : ['Off', 'bad', LIVE_AT ? `데스크톱 신호가 ${Math.round(age)}분째 없음 · PC 전원, 인터넷, 키움 연결 확인` : '데스크톱 신호 기록 없음'];
     const judge = (st, off, first, soft) => {   // 정기 판단 상태 (에이전트 · 온톨로지 같은 규칙). off = 회차 시각이 몇 분 늦은지. soft = 지연·쉼을 빨강 대신 회색 (온톨로지)
       let a;
       if (!st || !st.last_run) a = ['On', 'ok', first];   // 아직 실행 전이어도 스케줄은 켜져 있음
@@ -1652,10 +1656,10 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const rank = a => a[1].includes('bad') ? 3 : a[1].includes('run') ? 2 : a[1] ? 1 : 0;
     const one = (list) => { const w = list.reduce((p, q) => rank(q[0]) > rank(p[0]) ? q : p);
       return `<span class="who solo" tabindex="0" title="${esc(list.map(([a, n]) => n + ' · ' + a[2]).join('\n'))}" aria-label="${esc(list.map(([a, n]) => n + ' ' + a[0]).join(', '))}"><i class="dot ${w[0][1]}"></i></span>`; };
-    el.innerHTML = one([[watch, '모니터링'], [agent, '에이전트']]);
+    el.innerHTML = one([[srv, '서버'], [watch, '모니터링'], [agent, '에이전트']]);
     $('st-sion').innerHTML = onto ? one([[onto, '온톨로지']]) : '';
     // 11-10 S.Lee: 머리글 목표 문구 자리에 세 개 나란히
-    $('st-top').innerHTML = `<span>${pill(watch, '모니터링')}</span><span>${pill(agent, '에이전트')}</span>` + (onto ? `<span>${pill(onto, '온톨로지')}</span>` : '');
+    $('st-top').innerHTML = `<span>${pill(srv, '서버')}</span><span>${pill(watch, '모니터링')}</span><span>${pill(agent, '에이전트')}</span>` + (onto ? `<span>${pill(onto, '온톨로지')}</span>` : '');
   }
 
   // ---------- 실시간 판단: docs/data/decision.json (가장 최근 정기 판단 1회분) ----------
