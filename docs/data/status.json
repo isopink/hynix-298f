@@ -1,10 +1,10 @@
 {
-  "last_run": "2026-11-11 23:31",
+  "last_run": "2026-11-11 23:56",
   "last_ok": true,
   "next_run": "2026-11-12 09:30",
-  "runs_today": 3,
+  "runs_today": 4,
   "failures_today": 0,
-  "note": "2주차 중간 회고를 제출했습니다. 초안은 `reports/drafts/week2-mid.md`에 저장됐습니다.",
+  "note": "기준값 조정 / 반영 0건 / 거절 0건",
   "sync": {
     "ok": true,
     "error": null,
