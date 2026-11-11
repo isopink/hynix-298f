@@ -1,19 +1,18 @@
 {
-  "created": "2026-11-11 08:31",
-  "asof": "2026-11-10",
-  "universe": 75,
+  "created": "2026-11-12 08:31",
+  "asof": "2026-11-11",
+  "universe": 74,
   "source": "krx",
   "market": {
     "source": "KOSPI",
-    "close": 5239,
-    "ma20": 5603,
-    "ma60": 6400,
-    "ret5": -0.0725,
-    "ret20": -0.1319,
-    "rsi14": 36.8,
-    "rule_hint": "하락",
+    "close": 5375,
+    "ma20": 5571,
+    "ma60": 6380,
+    "ret5": -0.0543,
+    "ret20": -0.1054,
+    "rsi14": 40.6,
+    "rule_hint": "횡보",
     "closes": [
-      6598.26,
       6296.38,
       6258.77,
       6299.66,
@@ -77,165 +76,195 @@
       5383.8,
       5059.69,
       5018.85,
-      5239.13
+      5239.13,
+      5375.36
     ]
   },
-  "intraday": {
-    "time": "09:45",
-    "pool": 341,
-    "analyzed_new": 30,
-    "passed": 6,
-    "kept_prep": false
-  },
+  "intraday": null,
   "candidates": [
     {
-      "code": "015760",
-      "name": "한국전력",
-      "close": 30550,
-      "ret5": 0.0516,
-      "ret20": 0.0516,
-      "rsi14": 55.6,
-      "vol20": 0.399,
-      "foreign_net": -39599998600,
-      "inst_net": 103337767475,
+      "code": "028050",
+      "name": "삼성E&A",
+      "close": 66600,
+      "ret5": -0.0045,
+      "ret20": 0.4767,
+      "rsi14": 65.8,
+      "vol20": 0.943,
+      "foreign_net": -99237911500,
+      "inst_net": 63810101050,
+      "score": 0.857,
+      "news": [
+        {
+          "date": "11-12",
+          "title": "삼성E&A, 중동 최고 권위 'MEED 프로젝트상' 15년 연속 수상",
+          "risk": false
+        },
+        {
+          "date": "11-11",
+          "title": "삼성E&A, 'MEED 프로젝트상' 수상",
+          "risk": false
+        },
+        {
+          "date": "11-11",
+          "title": "삼성E&A, 사우디 자푸라 프로젝트로 'MEED상' 수상",
+          "risk": false
+        }
+      ],
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "181710",
+      "name": "NHN",
+      "close": 80300,
+      "ret5": 0.6388,
+      "ret20": 0.468,
+      "rsi14": 77.3,
+      "vol20": 1.329,
+      "foreign_net": -8259678425,
+      "inst_net": 19637664900,
       "score": 1.0,
       "news": [
         {
           "date": "11-11",
-          "title": "‘우스만 33점’ 한국전력, 삼성화재 3-1 제압⋯2연승 질주",
+          "title": "NHN, 주가급등으로 투자경고종목 지정…추가 상승 시 거래정지 가능성",
+          "risk": true
+        },
+        {
+          "date": "11-12",
+          "title": "최대 분기 실적에 ESG 평가도 'A'…NHN, '두 마리 토끼' 잡았다",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "[더벨][IR Briefing] '최대 실적' NHN, 미래 성장축 클라우드·스테이블코...",
           "risk": false
         }
       ],
-      "price": 31600,
-      "chg": 0.0327,
-      "activity": 3.79,
-      "foreign_today": 474000000,
-      "inst_today": 0,
       "exchange": "KOSPI"
     },
     {
-      "code": "028050",
-      "name": "삼성E&A",
-      "close": 63900,
-      "ret5": 0.0224,
-      "ret20": 0.4137,
-      "rsi14": 62.5,
-      "vol20": 0.943,
-      "foreign_net": -95493916550,
-      "inst_net": 70134948600,
-      "score": 0.4,
+      "code": "053800",
+      "name": "안랩",
+      "close": 116600,
+      "ret5": 0.159,
+      "ret20": 0.319,
+      "rsi14": 62.8,
+      "vol20": 1.545,
+      "foreign_net": 3873692500,
+      "inst_net": 15311697450,
+      "score": 0.857,
       "news": [
         {
           "date": "11-11",
-          "title": "'일감 부자' 삼성E&A, 주주 지갑도 두둑해질까[클릭 e종목]",
+          "title": "[시큐리티 포커스] 안랩 디지털포렌식 챌린지 2026 우수상 수상·KT텔레...",
           "risk": false
         },
         {
-          "date": "11-10",
-          "title": "[단독] \"우리도 보너스 주식으로 받자\"...삼성E&A 성과급 주식 보상 도입",
+          "date": "11-11",
+          "title": "금융보안원 해킹에 사이버보안株 강세…안랩 8.78% 상승",
           "risk": false
         },
         {
-          "date": "11-10",
-          "title": "삼성E&A, 6.11% 상승…해외 플랜트 수주와 원가 관리에 시선",
+          "date": "11-11",
+          "title": "안랩, 디지털 포렌식 챌린지서 '문제풀이 분야' 우수상 수상",
           "risk": false
         }
       ],
-      "price": 66000,
-      "chg": 0.0217,
-      "activity": 1.83,
-      "foreign_today": 858000000,
-      "inst_today": 0,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "443670",
-      "name": "에스피소프트",
-      "close": 6110,
-      "ret5": 0.3112,
-      "ret20": 0.4078,
-      "rsi14": 64.7,
-      "vol20": 1.641,
-      "foreign_net": 144173177,
-      "inst_net": 32893415,
-      "score": 0.933,
-      "news": [
-        {
-          "date": "11-10",
-          "title": "에스피소프트 주가, 급등세... 무슨 회사길래?",
-          "risk": false
-        },
-        {
-          "date": "11-09",
-          "title": "에스피소프트 21.18% 급등…클라우드·DaaS 성장성 부각",
-          "risk": false
-        }
-      ],
-      "price": 6000,
-      "chg": 0.0118,
-      "activity": 7.04,
-      "foreign_today": 156000000,
-      "inst_today": 0,
       "exchange": "KOSDAQ"
     },
     {
-      "code": "389260",
-      "name": "대명에너지",
-      "close": 15130,
-      "ret5": 0.3717,
-      "ret20": 0.2341,
-      "rsi14": 68.4,
-      "vol20": 1.12,
-      "foreign_net": -2467438185,
-      "inst_net": 54948720,
-      "score": 0.467,
-      "news": [
-        {
-          "date": "11-09",
-          "title": "미국 민주당 압승 '블루 쓰나미'…한화솔루션·SK이터닉스·대명에너지...",
-          "risk": false
-        }
-      ],
-      "price": 15260,
-      "chg": 0.0007,
-      "activity": 2.27,
-      "foreign_today": 122080000,
-      "inst_today": 0,
-      "exchange": "KOSDAQ"
-    },
-    {
-      "code": "003490",
-      "name": "대한항공",
-      "close": 32600,
-      "ret5": 0.1222,
-      "ret20": 0.0671,
-      "rsi14": 67.1,
-      "vol20": 0.72,
-      "foreign_net": 90926066100,
-      "inst_net": 76210824425,
-      "score": 0.806,
+      "code": "030530",
+      "name": "원익홀딩스",
+      "close": 31550,
+      "ret5": 0.0447,
+      "ret20": 0.301,
+      "rsi14": 59.1,
+      "vol20": 1.356,
+      "foreign_net": 5570899200,
+      "inst_net": 6019145725,
+      "score": 0.714,
       "news": [
         {
           "date": "11-11",
-          "title": "[전날 애프터마켓] 대한항공우·메타랩스 '上' 유지…삼전·SK하닉 상승",
+          "title": "원익홀딩스 6.37% 올라 3만900원…거래대금 1031억원",
           "risk": false
         },
         {
           "date": "11-11",
-          "title": "남양유업 백미당, 대한항공 기내식 입성…한앤코 '코로나 우군' 인연 재...",
+          "title": "원익홀딩스 주가, 11월 11일 장중 31,500원 8.43% 상승",
+          "risk": false
+        },
+        {
+          "date": "11-11",
+          "title": "원익홀딩스, 국민성장펀드 투자계약 확정…원익로보틱스 IPO 실패 시 매...",
+          "risk": false
+        }
+      ],
+      "exchange": "KOSDAQ"
+    },
+    {
+      "code": "010060",
+      "name": "OCI홀딩스",
+      "close": 208500,
+      "ret5": 0.0024,
+      "ret20": -0.0392,
+      "rsi14": 52.8,
+      "vol20": 1.198,
+      "foreign_net": -24553905400,
+      "inst_net": 58934696650,
+      "score": 0.5,
+      "news": [
+        {
+          "date": "11-11",
+          "title": "美 '블루웨이브' 올라탄 OCI홀딩스…'비중국 웨이퍼'로 수익성 날개",
+          "risk": false
+        },
+        {
+          "date": "11-10",
+          "title": "OCI홀딩스, 0.15% 상승…태양광 폴리실리콘과 지주사 할인에 시선",
+          "risk": false
+        },
+        {
+          "date": "11-10",
+          "title": "한화큐셀·OCI홀딩스, 美 태양광 관세 확정…현지 셀 생산이 수혜 가른...",
           "risk": false
         }
       ],
       "exchange": "KOSPI"
+    },
+    {
+      "code": "263860",
+      "name": "지니언스",
+      "close": 25800,
+      "ret5": 0.0098,
+      "ret20": 0.1169,
+      "rsi14": 57.6,
+      "vol20": 1.417,
+      "foreign_net": -14485577525,
+      "inst_net": 2513735425,
+      "score": 0.357,
+      "news": [
+        {
+          "date": "11-12",
+          "title": "지니언스, 3분기 누적 영업익 274%↑…AI 해킹 위협 속 역대급 결실",
+          "risk": false
+        },
+        {
+          "date": "11-11",
+          "title": "지니언스 주가, 급등세... 이유는?",
+          "risk": false
+        }
+      ],
+      "exchange": "KOSDAQ"
     },
     {
       "code": "114800",
       "name": "KODEX 인버스",
-      "close": 1290,
-      "ret5": 0.0795,
-      "ret20": 0.1286,
-      "rsi14": 60.9,
-      "vol20": 0.631,
+      "close": 1251,
+      "ret5": 0.0504,
+      "ret20": 0.0888,
+      "rsi14": 56.4,
+      "vol20": 0.645,
       "foreign_net": null,
       "inst_net": null,
       "score": null,
