@@ -1,17 +1,17 @@
 {
-  "last_run": "2026-11-12 10:31",
+  "last_run": "2026-11-12 10:45",
   "last_ok": true,
-  "next_run": "2026-11-12 10:45",
-  "runs_today": 3,
+  "next_run": "2026-11-12 11:00",
+  "runs_today": 4,
   "failures_today": 1,
   "note": "횡보 / 매수 0건 / 매도 0건 / 관망 6건",
   "sync": {
     "ok": true,
     "error": null,
-    "head": "d3949f8",
-    "checked_at": "2026-11-12 10:17",
+    "head": "fca454d",
+    "checked_at": "2026-11-12 10:46",
     "rejected": null,
-    "applied_at": "2026-11-12 09:56",
+    "applied_at": "2026-11-12 10:34",
     "catch_up": "2026-11-11 14:15 c358325",
     "decide_schedule": "09:30|15|0005:46",
     "review_mid": "WED,FRI 15:50"
