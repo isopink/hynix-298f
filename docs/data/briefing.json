@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "12:00",
+    "time": "12:15",
     "pool": 419,
     "analyzed_new": 30,
-    "passed": 9,
+    "passed": 8,
     "kept_prep": false
   },
   "candidates": [
@@ -98,7 +98,7 @@
       "vol20": 0.896,
       "foreign_net": -23932404925,
       "inst_net": 30374499875,
-      "score": 0.657,
+      "score": 0.667,
       "news": [
         {
           "date": "11-12",
@@ -121,41 +121,6 @@
       "exchange": "KOSPI"
     },
     {
-      "code": "086790",
-      "name": "하나금융지주",
-      "close": 119200,
-      "ret5": 0.0,
-      "ret20": -0.0238,
-      "rsi14": 45.0,
-      "vol20": 0.298,
-      "foreign_net": -26572972700,
-      "inst_net": 44333314550,
-      "score": 0.543,
-      "news": [
-        {
-          "date": "11-12",
-          "title": "[브랜드평판] 금융지주 CEO 11월 빅데이터…1위 하나금융지주 함영주·2...",
-          "risk": false
-        },
-        {
-          "date": "11-12",
-          "title": "하나금융지주 함영주, 금융지주 CEO 브랜드평판 2026년 11월...1위",
-          "risk": false
-        },
-        {
-          "date": "11-12",
-          "title": "함영주 하나금융지주, 11월 금융지주 CEO 브랜드평판 1위…황병우 아이...",
-          "risk": false
-        }
-      ],
-      "price": 119200,
-      "chg": -0.0075,
-      "activity": 0.75,
-      "foreign_today": 0,
-      "inst_today": 953600000,
-      "exchange": "KOSPI"
-    },
-    {
       "code": "028050",
       "name": "삼성E&A",
       "close": 66600,
@@ -165,7 +130,7 @@
       "vol20": 0.943,
       "foreign_net": -99237911500,
       "inst_net": 63810101050,
-      "score": 0.543,
+      "score": 0.6,
       "news": [
         {
           "date": "11-12",
@@ -183,10 +148,10 @@
           "risk": false
         }
       ],
-      "price": 66400,
-      "chg": 0.0,
-      "activity": 0.68,
-      "foreign_today": 597600000,
+      "price": 66300,
+      "chg": -0.0015,
+      "activity": 0.65,
+      "foreign_today": 596700000,
       "inst_today": 0,
       "exchange": "KOSPI"
     },
@@ -200,21 +165,21 @@
       "vol20": 0.626,
       "foreign_net": 529623225,
       "inst_net": 6313382475,
-      "score": 0.514,
+      "score": 0.5,
       "news": [
         {
           "date": "11-12",
-          "title": "현대제철, 불·지진에 강한 H형강 국내 첫 KS 인증",
+          "title": "현대제철 H형강, KS인증 국내 첫 획득",
           "risk": false
         },
         {
           "date": "11-12",
-          "title": "현대제철 인천공장, 국내 최초 내화·내진 H형강 'SHN355FR' KS 인증 취득",
+          "title": "현대제철, 내화·내진 강재 KS 인증 획득",
           "risk": false
         },
         {
           "date": "11-12",
-          "title": "현대제철, 화재·지진에 강한 'H형강' KS 인증 획득…국내 첫 사례",
+          "title": "국내 첫 ‘불·지진 동시 방어’ H형강…현대제철, KS 인증 확보",
           "risk": false
         }
       ],
@@ -232,7 +197,7 @@
       "vol20": 0.603,
       "foreign_net": -10864777200,
       "inst_net": 24251702400,
-      "score": 0.514,
+      "score": 0.5,
       "news": [
         {
           "date": "11-11",
@@ -267,11 +232,11 @@
           "risk": false
         }
       ],
-      "price": 76600,
-      "chg": 0.0132,
-      "activity": 2.29,
+      "price": 76100,
+      "chg": 0.0066,
+      "activity": 2.18,
       "foreign_today": 0,
-      "inst_today": 536200000,
+      "inst_today": 532700000,
       "exchange": "KOSDAQ"
     },
     {
@@ -284,7 +249,7 @@
       "vol20": 1.017,
       "foreign_net": -9297158850,
       "inst_net": 17172372000,
-      "score": 0.629,
+      "score": 0.667,
       "news": [
         {
           "date": "11-12",
@@ -316,7 +281,7 @@
       "vol20": 1.794,
       "foreign_net": -4376505570,
       "inst_net": 1010439810,
-      "score": 0.286,
+      "score": 0.267,
       "news": [],
       "foreign_today": 233520000,
       "inst_today": 0,
