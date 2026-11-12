@@ -175,6 +175,7 @@ reports/    보고서 PDF, drafts/ = 주간 회고 에이전트가 쓴 초안
 - [x] 11-12 SiON 멈춤 대책: ① SiON 브랜치가 실행 시작 때 50MB 넘는 `runs.jsonl` 을 요약본으로 줄이고 읽을 때도 한 줄씩 요약 (11-11 이전 1.9GB → logger MemoryError), 회차 상세는 `runs/<id>.coverage.json.gz` ② 데스크톱 `sync.py` 의 `shadow_heal` 이 1분마다 SiON 을 살펴 놓친 작업을 한 번씩 다시 띄움 (오늘 준비 없음 → prep · 감시 꺼짐 → monitor · 매매 회차 놓침 → decide · 15:55 뒤 마감 없음 → close · 17:00 뒤 조정 없음 → tune). 데스크톱이 꺼졌다 켜져도 SiON 이 따라잡음
 - [x] 11-12 10:01 사고: SiON python 하나가 가상 메모리 110GB (예전 코드가 1.9GB `runs.jsonl` 을 통째로 읽음) → PC 메모리 바닥, Sigma 의 sync · 잔고 수집 · 감시가 같이 죽음 (Windows 이벤트 Resource-Exhaustion-Detector 2004). 대책: SiON `run.py` 가 시작할 때 Windows Job Object 로 프로세스마다 메모리 상한 8GB (`C.limit_memory`, `SHADOW_MEM_GB`), 넘으면 SiON 만 MemoryError
 - [x] 11-12 S.Lee: SiON 은 Sigma 판단이 끝나길(실제 `work/run.lock` 이 사라질 때까지, 최대 8분) 기다렸다 Claude 를 띄움 (`shadow.wait_real_idle`, decide · view · review · tune. 손절·익절 exit 은 안 기다림). 09:3x 두 엔진이 같은 Max 구독으로 동시에 Claude 를 시작해 둘 다 0토큰으로 실패한 일
+- [x] 11-12 S.Lee: **SiON 운영 멈춤** (토큰 약 3.5배 · 11-12 메모리 사고로 Sigma 까지 멈춤 · 온톨로지 학습 기록이 거의 안 쌓임). 스위치 하나: `agent/config/params.json` `sion.enabled=false` → sync `shadow_heal` · snapshot `push_shadow` · logger `shadow.json` 갱신이 멈춤. 대시보드는 `docs/config.js` `sion: false` → SiON 선 · 요약 · 탭 · Ontology 점 안 보임. 데스크톱 작업 `Hynix298S-*` 는 사용 안 함으로. 브랜치 `shadow/ontology` · Supabase 기록은 남겨 둠, 대회 뒤 다시 켤 수 있음. 2주차 보고서에 기록
 - [ ] 대회 후 README 결과·회고 섹션 채우기
 
 ## 커밋

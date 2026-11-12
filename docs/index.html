@@ -1177,7 +1177,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
         json('status'), json('decision'), json('briefing'),   // 에이전트가 실행할 때마다 push 하므로 페이지를 열어 둔 채로도 갱신
         fetch(`${url}/rest/v1/kospi_ticks?select=ts,price&order=ts.desc&limit=1`, { headers: h }).then(r => r.ok ? r.json() : []).catch(() => []),
         // 11-09 온톨로지 그림자 운영의 1분 자산·상태 (supabase/shadow.sql). 표가 없으면 빈 목록
-        fetch(`${url}/rest/v1/shadow_snapshots?select=ts,total,cash,status,holdings&order=ts.desc&limit=1`, { headers: h }).then(r => r.ok ? r.json() : []).catch(() => []),
+        (CFG.sion === false ? Promise.resolve([]) : fetch(`${url}/rest/v1/shadow_snapshots?select=ts,total,cash,status,holdings&order=ts.desc&limit=1`, { headers: h }).then(r => r.ok ? r.json() : []).catch(() => [])),   // 11-12 S.Lee: SiON 멈춤이면 안 받음
         // 11-11 S.Lee: 데스크톱 연결 신호 (supabase/heartbeat.sql, sync 가 1분마다). 표가 없으면 null → 잔고 스냅샷으로 판단
         fetch(`${url}/rest/v1/heartbeat?select=ts,info&host=eq.desktop&limit=1`, { headers: h }).then(r => r.ok ? r.json() : null).catch(() => null)
       ]);
@@ -1510,7 +1510,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   // 11-09 S.Lee: 장중에도 겹쳐 보이게 1분마다 다시 받음 (그림자 기록이 바뀌었을 때만 다시 그림). 오늘 점 = 그림자의 가장 최근 회차 자산
   const loadShadow = () => fetch('data/shadow.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null).catch(() => null)
     .then(v => { if (v && SHADOW && v.updated === SHADOW.updated) return; SHADOW = v || SHADOW; if (D && SHADOW) { hero(); agentStatus(); sionCard(); setEng(ENG, true); } });
-  loadShadow(); setInterval(() => { if (!document.hidden) loadShadow(); }, 60000);
+  if ((window.DASH_CONFIG || {}).sion !== false) loadShadow(), setInterval(() => { if (!document.hidden) loadShadow(); }, 60000);
 
   // ---------- 리스크 한도: agent/config/risk_limits.json 과 같은 값 (대회 내내 고정, 바뀌면 여기도 고칠 것) ----------
   const RL = { daily: -0.03, total: -0.10, minCash: 0.10, maxPos: 20, maxW: 0.20 };

@@ -243,6 +243,12 @@ def shadow_trades(journal, n=30):
 def push_shadow(env, snap):
     """11-09 온톨로지 그림자 운영의 1분 자산·상태·최근 판단을 같이 올림 (supabase/shadow.sql). 그림자가 없으면 건너뜀.
     실패해도 실제 잔고 업로드에는 영향 없음."""
+    try:   # 11-12 S.Lee: SiON 멈춤 (agent/config/params.json sion.enabled)
+        with open(os.path.join(os.path.dirname(HERE), "agent", "config", "params.json"), encoding="utf-8") as f:
+            if not (json.load(f).get("sion") or {}).get("enabled", True):
+                return
+    except Exception:  # noqa: BLE001
+        pass
     try:
         x = shadow_now(snap)
     except Exception as e:  # noqa: BLE001

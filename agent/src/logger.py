@@ -265,6 +265,8 @@ def equity_close():
 
 def shadow_dir():
     """11-08 그림자 운영 폴더 (온톨로지 버전 · 가상 계좌). SHADOW_DIR 이 없으면 저장소 옆 hynix-shadow."""
+    if not (C.params().get("sion") or {}).get("enabled", True):   # 11-12 S.Lee: SiON 멈춤 → shadow.json 갱신 안 함
+        return None
     d = os.environ.get("SHADOW_DIR") or os.path.join(os.path.dirname(C.ROOT), "hynix-shadow")
     return d if os.path.isfile(os.path.join(d, "agent", "work", "shadow_equity.jsonl")) else None
 

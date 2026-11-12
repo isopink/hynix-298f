@@ -220,6 +220,8 @@ def task_running(task):
 
 
 def shadow_heal(now=None):
+    if not (C.params().get("sion") or {}).get("enabled", True):   # 11-12 S.Lee: SiON 멈춤
+        return None
     d = shadow_root()
     n = now or C.now()
     if not d or n.weekday() >= 5:
