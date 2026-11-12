@@ -81,46 +81,36 @@
     ]
   },
   "intraday": {
-    "time": "14:30",
-    "pool": 466,
-    "analyzed_new": 30,
-    "passed": 9,
+    "time": "14:45",
+    "pool": 467,
+    "analyzed_new": 17,
+    "passed": 11,
     "kept_prep": false
   },
   "candidates": [
     {
-      "code": "028050",
-      "name": "삼성E&A",
-      "close": 66600,
-      "ret5": -0.0045,
-      "ret20": 0.4767,
-      "rsi14": 65.8,
-      "vol20": 0.943,
-      "foreign_net": -99237911500,
-      "inst_net": 63810101050,
-      "score": 1.0,
+      "code": "015760",
+      "name": "한국전력",
+      "close": 30650,
+      "ret5": 0.0016,
+      "ret20": 0.0515,
+      "rsi14": 56.1,
+      "vol20": 0.399,
+      "foreign_net": -41601197875,
+      "inst_net": 78634696350,
+      "score": 0.892,
       "news": [
         {
           "date": "11-12",
-          "title": "삼성E&A, 중동 최고 권위 'MEED 프로젝트상' 15년 연속 수상",
-          "risk": false
-        },
-        {
-          "date": "11-11",
-          "title": "삼성E&A, 'MEED 프로젝트상' 수상",
-          "risk": false
-        },
-        {
-          "date": "11-11",
-          "title": "삼성E&A, 사우디 자푸라 프로젝트로 'MEED상' 수상",
+          "title": "한국전력 '빅스포 2026' 폐막…25억원 규모 수출계약·MOU",
           "risk": false
         }
       ],
-      "price": 65700,
-      "chg": -0.0105,
-      "activity": 0.53,
-      "foreign_today": 2102400000,
-      "inst_today": 2036700000,
+      "price": 30600,
+      "chg": 0.0049,
+      "activity": 1.2,
+      "foreign_today": 4100400000,
+      "inst_today": 1713600000,
       "exchange": "KOSPI"
     },
     {
@@ -133,7 +123,7 @@
       "vol20": 0.603,
       "foreign_net": -10864777200,
       "inst_net": 24251702400,
-      "score": 0.957,
+      "score": 0.676,
       "news": [
         {
           "date": "11-12",
@@ -156,6 +146,41 @@
       "exchange": "KOSPI"
     },
     {
+      "code": "028050",
+      "name": "삼성E&A",
+      "close": 66600,
+      "ret5": -0.0045,
+      "ret20": 0.4767,
+      "rsi14": 65.8,
+      "vol20": 0.943,
+      "foreign_net": -99237911500,
+      "inst_net": 63810101050,
+      "score": 0.649,
+      "news": [
+        {
+          "date": "11-12",
+          "title": "삼성E&A, 중동 최고 권위 'MEED 프로젝트상' 15년 연속 수상",
+          "risk": false
+        },
+        {
+          "date": "11-11",
+          "title": "삼성E&A, 'MEED 프로젝트상' 수상",
+          "risk": false
+        },
+        {
+          "date": "11-11",
+          "title": "삼성E&A, 사우디 자푸라 프로젝트로 'MEED상' 수상",
+          "risk": false
+        }
+      ],
+      "price": 65800,
+      "chg": -0.009,
+      "activity": 0.52,
+      "foreign_today": 2105600000,
+      "inst_today": 2039800000,
+      "exchange": "KOSPI"
+    },
+    {
       "code": "006360",
       "name": "GS건설",
       "close": 30450,
@@ -165,21 +190,21 @@
       "vol20": 0.896,
       "foreign_net": -23932404925,
       "inst_net": 30374499875,
-      "score": 0.783,
+      "score": 0.568,
       "news": [
         {
           "date": "11-12",
-          "title": "GS건설 아파트 관리시스템 침해…과기정통부 직권조사",
+          "title": "GS건설, 골조 유지형 리모델링 사업 '비욘드 어디션' 추진",
           "risk": false
         },
         {
           "date": "11-12",
-          "title": "역성장 늪에 빠진 GS건설, '신속형 리모델링'으로 벗어나나",
+          "title": "'순살 보안시스템' GS건설 커뮤니티 해킹에 정부 첫 직권조사",
           "risk": false
         },
         {
           "date": "11-12",
-          "title": "대동로보틱스-GS건설, 운반로봇 실증 통해 건설 로봇 사업화 가능성 확...",
+          "title": "GS건설, '비욘드 어디션' 출시…재건축 대안 리모델링 시장 공략",
           "risk": false
         }
       ],
@@ -197,7 +222,7 @@
       "vol20": 0.857,
       "foreign_net": -2466358425,
       "inst_net": 30374988275,
-      "score": 0.739,
+      "score": 0.486,
       "news": [
         {
           "date": "11-11",
@@ -229,7 +254,7 @@
       "vol20": 0.449,
       "foreign_net": 2732710725,
       "inst_net": 2918265150,
-      "score": 0.478,
+      "score": 0.324,
       "news": [
         {
           "date": "11-12",
@@ -252,6 +277,41 @@
       "exchange": "KOSDAQ"
     },
     {
+      "code": "180640",
+      "name": "한진칼",
+      "close": 196200,
+      "ret5": 0.0447,
+      "ret20": 0.5784,
+      "rsi14": 64.2,
+      "vol20": 1.308,
+      "foreign_net": -13402949900,
+      "inst_net": 6083970050,
+      "score": 1.0,
+      "news": [
+        {
+          "date": "11-12",
+          "title": "한진칼 경영권 ‘분수령’ 델타항공 대한항공 JV가 조원태 지지 담보할...",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "한진칼 이어 한진도 흔드나 … 장금상선, 지분 늘리는 까닭은",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "[속보] 한진칼우 정적 VI 세 차례 발동…3600원 하락, 장중 급등락에 변...",
+          "risk": false
+        }
+      ],
+      "price": 207000,
+      "chg": 0.0147,
+      "activity": 1.98,
+      "foreign_today": 1863000000,
+      "inst_today": 1242000000,
+      "exchange": "KOSPI"
+    },
+    {
       "code": "009420",
       "name": "한올바이오파마",
       "close": 49650,
@@ -261,7 +321,7 @@
       "vol20": 1.017,
       "foreign_net": -9297158850,
       "inst_net": 17172372000,
-      "score": 0.913,
+      "score": 0.649,
       "news": [
         {
           "date": "11-12",
@@ -293,7 +353,7 @@
       "vol20": 1.794,
       "foreign_net": -4376505570,
       "inst_net": 1010439810,
-      "score": 0.609,
+      "score": 0.351,
       "news": [],
       "foreign_today": 496230000,
       "inst_today": 0,
