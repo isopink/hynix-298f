@@ -81,9 +81,9 @@
     ]
   },
   "intraday": {
-    "time": "14:15",
-    "pool": 464,
-    "analyzed_new": 20,
+    "time": "14:30",
+    "pool": 466,
+    "analyzed_new": 30,
     "passed": 9,
     "kept_prep": false
   },
@@ -119,40 +119,8 @@
       "price": 65700,
       "chg": -0.0105,
       "activity": 0.53,
-      "foreign_today": 1248300000,
-      "inst_today": 1511100000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "006360",
-      "name": "GS건설",
-      "close": 30450,
-      "ret5": 0.0518,
-      "ret20": 0.0218,
-      "rsi14": 50.9,
-      "vol20": 0.896,
-      "foreign_net": -23932404925,
-      "inst_net": 30374499875,
-      "score": 0.815,
-      "news": [
-        {
-          "date": "11-12",
-          "title": "대동로보틱스-GS건설, 운반로봇 실증 통해 건설 로봇 사업화 가능성 확...",
-          "risk": false
-        },
-        {
-          "date": "11-12",
-          "title": "GS건설, 철거·증축 없는 아파트 리모델링 추진…내년 첫 협약 목표",
-          "risk": false
-        },
-        {
-          "date": "11-12",
-          "title": "GS건설, 재건축 어려운 아파트에 새 대안…철거·증축 없는 리모델링 선...",
-          "risk": false
-        }
-      ],
-      "foreign_today": 974400000,
-      "inst_today": 1644300000,
+      "foreign_today": 2102400000,
+      "inst_today": 2036700000,
       "exchange": "KOSPI"
     },
     {
@@ -165,8 +133,13 @@
       "vol20": 0.603,
       "foreign_net": -10864777200,
       "inst_net": 24251702400,
-      "score": 0.815,
+      "score": 0.957,
       "news": [
+        {
+          "date": "11-12",
+          "title": "고삐 죄는 현대글로비스, '中 운항 협력·9조 투자' 승부수 띄운다",
+          "risk": false
+        },
         {
           "date": "11-11",
           "title": "美 국적선 ‘3% 의무 선적’⋯ HMM·현대글로비스, 타격받나",
@@ -179,7 +152,39 @@
         }
       ],
       "foreign_today": 0,
-      "inst_today": 2205500000,
+      "inst_today": 3007500000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "006360",
+      "name": "GS건설",
+      "close": 30450,
+      "ret5": 0.0518,
+      "ret20": 0.0218,
+      "rsi14": 50.9,
+      "vol20": 0.896,
+      "foreign_net": -23932404925,
+      "inst_net": 30374499875,
+      "score": 0.783,
+      "news": [
+        {
+          "date": "11-12",
+          "title": "GS건설 아파트 관리시스템 침해…과기정통부 직권조사",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "역성장 늪에 빠진 GS건설, '신속형 리모델링'으로 벗어나나",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "대동로보틱스-GS건설, 운반로봇 실증 통해 건설 로봇 사업화 가능성 확...",
+          "risk": false
+        }
+      ],
+      "foreign_today": 730800000,
+      "inst_today": 1705200000,
       "exchange": "KOSPI"
     },
     {
@@ -192,7 +197,7 @@
       "vol20": 0.857,
       "foreign_net": -2466358425,
       "inst_net": 30374988275,
-      "score": 0.63,
+      "score": 0.739,
       "news": [
         {
           "date": "11-11",
@@ -210,7 +215,7 @@
           "risk": false
         }
       ],
-      "foreign_today": 294900000,
+      "foreign_today": 688100000,
       "inst_today": 0,
       "exchange": "KOSPI"
     },
@@ -224,8 +229,13 @@
       "vol20": 0.449,
       "foreign_net": 2732710725,
       "inst_net": 2918265150,
-      "score": 0.481,
+      "score": 0.478,
       "news": [
+        {
+          "date": "11-12",
+          "title": "동국제약, 감기 증상별 의약품 성분과 복용 시 주의사항 소개",
+          "risk": false
+        },
         {
           "date": "11-12",
           "title": "[카드] 겨울 앞두고 감기약 수요↑…동국제약, 성분별 복용법 안내",
@@ -235,45 +245,10 @@
           "date": "11-12",
           "title": "일교차 커진 환절기, 감기 환자 늘었다…동국제약, 증상별 감기약 선택...",
           "risk": false
-        },
-        {
-          "date": "11-12",
-          "title": "동국제약, 겨울철 감기 증상에 따른 올바른 감기약 선택 제안",
-          "risk": false
         }
       ],
       "foreign_today": 0,
-      "inst_today": 77100000,
-      "exchange": "KOSDAQ"
-    },
-    {
-      "code": "425420",
-      "name": "티에프이",
-      "close": 81200,
-      "ret5": -0.0122,
-      "ret20": 0.3739,
-      "rsi14": 59.1,
-      "vol20": 1.54,
-      "foreign_net": -1641700700,
-      "inst_net": 3941389950,
-      "score": 0.889,
-      "news": [
-        {
-          "date": "11-12",
-          "title": "[모닝 리포트] \"티에프이, 소캠2 매출 확대에 실적 성장 지속\"",
-          "risk": false
-        },
-        {
-          "date": "11-12",
-          "title": "티에프이, 글로벌 빅테크 '1차 벤더' 전격 입성…소캠·디램 호조에 '영...",
-          "risk": false
-        }
-      ],
-      "price": 82400,
-      "chg": 0.0497,
-      "activity": 1.13,
-      "foreign_today": 0,
-      "inst_today": 82400000,
+      "inst_today": 179900000,
       "exchange": "KOSDAQ"
     },
     {
@@ -286,7 +261,7 @@
       "vol20": 1.017,
       "foreign_net": -9297158850,
       "inst_net": 17172372000,
-      "score": 0.852,
+      "score": 0.913,
       "news": [
         {
           "date": "11-12",
@@ -305,7 +280,7 @@
         }
       ],
       "foreign_today": 0,
-      "inst_today": 3723750000,
+      "inst_today": 4716750000,
       "exchange": "KOSPI"
     },
     {
@@ -318,9 +293,9 @@
       "vol20": 1.794,
       "foreign_net": -4376505570,
       "inst_net": 1010439810,
-      "score": 0.593,
+      "score": 0.609,
       "news": [],
-      "foreign_today": 252980000,
+      "foreign_today": 496230000,
       "inst_today": 0,
       "exchange": "KOSPI"
     },
@@ -332,6 +307,20 @@
       "ret20": 0.0888,
       "rsi14": 56.4,
       "vol20": 0.645,
+      "foreign_net": null,
+      "inst_net": null,
+      "score": null,
+      "news": [],
+      "exchange": "ETF"
+    },
+    {
+      "code": "069500",
+      "name": "KODEX 200",
+      "close": 84540,
+      "ret5": -0.0577,
+      "ret20": -0.1083,
+      "rsi14": 40.8,
+      "vol20": 0.651,
       "foreign_net": null,
       "inst_net": null,
       "score": null,
