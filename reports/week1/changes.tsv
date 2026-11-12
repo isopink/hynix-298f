@@ -206,3 +206,4 @@ a0c3881	전략	소액 분할 매도 금지: 판단 매도 절반 금액이 총�
 bd2ba18	운영	SiON(온톨로지 그림자) 운영 멈춤: params sion.enabled=false 로 sync 재시작 · 그림자 업로드 · shadow.json 갱신 중지, 대시보드 config.js sion=false 로 숨김. 토큰 약 3.5배 · 11-12 메모리 사고 · 학습 기록 부족
 a6b0712	운영	기준값 조정(tune) · 주간 회고(review) 실행만 Claude effort max (params.effort, --effort max, 예산 $20 · 40분). 15분 판단 · 손절 실행은 high
 972fa17	전략	에이전트 분리 (position · research · executor · scorer · tuner · writer 추가) · 토론 라우팅(달라진 후보만 토론) · 근거 숫자 대조(verify_claims) · 역할별 모델 · effort (총괄 · research xhigh, regime Sonnet, executor Haiku, 조정 max)
+bc73c9d	전략	KODEX 200 매수 다시 허용 (index.enabled=true, buy_banned=false). 15:00 · 15:15 회차만 · 하루 1번 · 손절가 없음 · 순익 +2% 익절 · 최대 3거래일 · 급락일 예외 매수는 계속 끔
