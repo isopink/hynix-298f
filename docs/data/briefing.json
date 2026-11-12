@@ -81,8 +81,8 @@
     ]
   },
   "intraday": {
-    "time": "12:30",
-    "pool": 419,
+    "time": "12:45",
+    "pool": 420,
     "analyzed_new": 30,
     "passed": 8,
     "kept_prep": false
@@ -148,10 +148,10 @@
           "risk": false
         }
       ],
-      "price": 66100,
-      "chg": -0.0045,
-      "activity": 0.63,
-      "foreign_today": 594900000,
+      "price": 65800,
+      "chg": -0.009,
+      "activity": 0.62,
+      "foreign_today": 592200000,
       "inst_today": 0,
       "exchange": "KOSPI"
     },
@@ -169,17 +169,17 @@
       "news": [
         {
           "date": "11-12",
-          "title": "현대제철 H형강, KS인증 국내 첫 획득",
+          "title": "현대제철, 내화·내진 H형강으로 시공 효율 높인다",
           "risk": false
         },
         {
           "date": "11-12",
-          "title": "현대제철, 내화·내진 강재 KS 인증 획득",
+          "title": "현대제철 ‘화재·지진’ 견디는 HD형강 국내 첫 인증",
           "risk": false
         },
         {
           "date": "11-12",
-          "title": "국내 첫 ‘불·지진 동시 방어’ H형강…현대제철, KS 인증 확보",
+          "title": "현대제철, 화재·지진 동시 대응 H형강 국내 첫 KS 인증 획득",
           "risk": false
         }
       ],
@@ -232,11 +232,11 @@
           "risk": false
         }
       ],
-      "price": 75800,
-      "chg": 0.0026,
-      "activity": 2.1,
+      "price": 75700,
+      "chg": 0.0013,
+      "activity": 2.02,
       "foreign_today": 0,
-      "inst_today": 530600000,
+      "inst_today": 529900000,
       "exchange": "KOSDAQ"
     },
     {
