@@ -457,7 +457,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
   <header class="top">
     <div class="brand">
       <div>
-        <h1>Sigma Engine <span class="tagline st-top" id="st-top" aria-label="실행 상태"></span></h1>   <!-- 11-10 S.Lee: 목표 문구 자리에 상태 4개 (서버 · 모니터링 · 에이전트 · 온톨로지) -->
+        <h1 class="h1-bare"><span class="sr-only">Sigma Engine</span><span class="tagline st-top" id="st-top" aria-label="실행 상태"></span></h1>   <!-- 11-12 S.Lee: 화면의 최상단 제목 없앰 (읽기 프로그램용 이름만 남김) -->   <!-- 11-10 S.Lee: 목표 문구 자리에 상태 4개 (서버 · 모니터링 · 에이전트 · 온톨로지) -->
         <div class="chips sched" id="sched" aria-label="실시간 KOSPI와 평일 정기 매매 시각"><span class="chip kx-chip m-hide" id="kx-chip" hidden></span></div>   <!-- 11-10 S.Lee: 맨 앞 KOSPI 칩 (폰은 이것만) -->
       </div>
     </div>
@@ -844,6 +844,8 @@ svg [opacity]:not([opacity="0"]) { opacity: 1 !important; } svg [fill-opacity] {
   const serif = document.createElement('style'); serif.id = 'serif';
   serif.textContent = `[data-theme=volt] body, [data-theme=volt] body *, [data-theme=volt] svg text, [data-theme=volt] button, [data-theme=volt] input { font-family: "Noto Serif KR", serif !important; }
 [data-theme=volt] body { font-variant-numeric: tabular-nums; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+[data-theme=volt] .top h1.h1-bare { font-size: inherit; line-height: 1; margin: 0; } [data-theme=volt] .top h1.h1-bare .tagline { margin: 0; }
 /* 11-12 S.Lee: 머리글 상태 점 — 작동 = 초록, 꺼짐 = 회색 (오류 = 빨강 그대로). 화면에서 초록은 여기만 */
 [data-theme=volt] .dot.ok { background: #34c759 !important; } [data-theme=volt] .dot:not(.ok):not(.bad) { background: #5a5a5a !important; }`;
   document.head.appendChild(serif);
