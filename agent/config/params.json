@@ -1,4 +1,5 @@
 {
+  "effort": { "_note": "11-12 S.Lee: 실행 종류별 Claude effort (run.py 가 --effort 로 넘김). 적지 않은 종류(decide · exit)는 .claude/settings.json 의 high. max 실행은 예산 한도 $20 · 시간 40분", "tune": "max", "review": "max" },
   "sion": { "_note": "11-12 S.Lee: SiON(온톨로지 그림자) 운영 멈춤. false 면 sync 가 SiON 작업을 다시 띄우지 않고, snapshot 이 그림자 계좌를 올리지 않고, logger 가 shadow.json 을 갱신하지 않음. 대시보드는 docs/config.js 의 sion 으로 따로 끔", "enabled": false },
   "_note": "판단 기준값. 평일 장 마감 뒤 조정 실행(run.py tune)이 config/tuning.json 규칙 안에서 자동으로 바꾸고 커밋함. 변경 이력은 docs/data/tuning.json.",
 

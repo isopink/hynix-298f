@@ -118,6 +118,10 @@ def claude(kind, prompt, dry=False):
            "--mcp-config", mcp_config(), "--strict-mcp-config",
            "--allowedTools", *TOOLS_ALLOW, "--disallowedTools", *TOOLS_DENY,
            "--max-budget-usd", os.environ.get("MAX_BUDGET_USD", "5")]
+    eff = (C.params().get("effort") or {}).get(kind)   # 11-12 S.Lee: 실행 종류별 effort (기준값 조정 · 회고 = max). 없으면 settings.json 의 high
+    if eff:
+        cmd += ["--effort", eff]
+        cmd[cmd.index("--max-budget-usd") + 1] = os.environ.get("MAX_BUDGET_USD_" + kind.upper(), "20")   # max 는 토큰이 많아 예산 한도를 넉넉히
     if dry:
         log("DRY: " + " ".join(cmd[:4]) + " ...")
         return True
@@ -128,7 +132,7 @@ def claude(kind, prompt, dry=False):
         p = subprocess.Popen(cmd, cwd=HERE, env=env, stdin=subprocess.DEVNULL, stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE, encoding="utf-8", errors="replace")
         try:
-            out, err = p.communicate(timeout=25 * 60)
+            out, err = p.communicate(timeout=(40 if eff else 25) * 60)   # max 실행은 40분까지 (16:00 조정이 회고를 최대 40분 기다림)
         except subprocess.TimeoutExpired:
             # 자식(MCP 서버, 서브에이전트)까지 통째로 종료. 안 그러면 파이프가 안 닫혀 계속 기다림
             subprocess.run(["taskkill", "/PID", str(p.pid), "/T", "/F"], capture_output=True)

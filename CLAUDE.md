@@ -52,7 +52,7 @@ reports/    보고서 PDF, drafts/ = 주간 회고 에이전트가 쓴 초안
 
 ### 실행 PC와 수정 (11-02 결정)
 
-11-04 저녁: 데스크톱 Claude Code 로그인을 S.Lee Max 구독(2sm9908@gmail.com)으로 바꾸고 기본 모델을 **Opus 5.5 · effort high**로 저장 (`/model`). 에이전트 실행(`claude -p`)은 이 기본값을 씀. 1주차 보고서에 기록. **11-10: `agent/.claude/settings.json` 에 `"model": "claude-opus-5-5"`, `"effortLevel": "high"` 고정** (데스크톱 `/model` 설정과 상관없이 Sigma·SiON·서브에이전트 모두 Opus 5.5 high, SiON 브랜치에도 같이).
+11-04 저녁: 데스크톱 Claude Code 로그인을 S.Lee Max 구독(2sm9908@gmail.com)으로 바꾸고 기본 모델을 **Opus 5.5 · effort high**로 저장 (`/model`). 에이전트 실행(`claude -p`)은 이 기본값을 씀. 1주차 보고서에 기록. **11-12 S.Lee: 기준값 조정(tune) · 회고(review)만 effort max** (`params.effort`, `run.py` 가 `--effort max` · 예산 $20 · 시간 40분). 15분 판단 · 손절 실행은 high 그대로. **11-10: `agent/.claude/settings.json` 에 `"model": "claude-opus-5-5"`, `"effortLevel": "high"` 고정** (데스크톱 `/model` 설정과 상관없이 Sigma·SiON·서브에이전트 모두 Opus 5.5 high, SiON 브랜치에도 같이).
 
 에이전트는 계속 켜두는 데스크톱에서 돌고, 노트북은 수정 전용. 노트북에서 push → 데스크톱 `sync`(로그온부터 상시)가 1분 안에 검사·반영, 장중이면 감시·잔고 루프 재시작. 옮기는 순서는 `agent/MOVE_PC.md`.
 
