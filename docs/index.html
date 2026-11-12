@@ -1613,7 +1613,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const L = rows[rows.length - 1], ex = x(L.d), yR = y(L.ret), yK = y(L.kret);
     if (Math.abs(yR - yK) >= 3) {   // 끝점 격차 막대 (11-05 초과수익 배지는 왼쪽 'KOSPI 대비' 숫자로 옮김)
       const al = L.ret - L.kret, ac = al >= 0 ? colHi : '#4aa3d4', bg = svg.append('g');
-      bg.append('line').attr('x1', ex).attr('x2', ex).attr('y1', yR).attr('y2', yK).attr('stroke', ac).attr('stroke-width', 1).attr('stroke-dasharray', '2 2').attr('opacity', .8);
+      // 11-12 S.Lee: 오른쪽 끝 Sigma ↔ 비교선 사이 세로 점선 없앰
       fade(bg, 1.1);
     }
     fade(svg.append('circle').attr('cx', ex).attr('cy', yK).attr('r', 3.5).attr('fill', '#a8a8a8'), 1);   // KOSPI 끝점 (하루치일 땐 선 대신 이 점만 보임)
