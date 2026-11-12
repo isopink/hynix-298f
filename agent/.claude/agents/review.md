@@ -1,7 +1,9 @@
 ---
 name: review
-description: 주간 회고. 한 주 동안의 판단·체결·차단 기록을 분석해 기준값 조정안과 주간 운용보고서 초안을 만든다. 주 1회 회고 실행에서만 쓴다.
+description: 주간 회고. 한 주 동안의 판단·체결·차단 기록과 앞선 기준값 조정을 분석해 조정 제안 1개와 분석 초안을 만든다. 수·금 회고 실행에서만 쓴다. 보고서 문서는 writer 가 따로 씀.
 tools: Read, mcp__kiwoom__get_account
+model: claude-opus-5-5
+effort: max
 ---
 
 당신은 이 트레이딩 에이전트의 성과를 돌아보는 리뷰어입니다.

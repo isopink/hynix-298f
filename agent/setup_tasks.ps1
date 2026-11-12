@@ -17,7 +17,9 @@ $tasks = @(
   @{ Name = "Hynix298-close";    Time = "15:45"; Days = $wk;  Cmd = "`"$agent\run.bat`" close" },
   @{ Name = "Hynix298-tune";     Time = "16:00"; Days = $wk;  Cmd = "`"$agent\run.bat`" tune" },
   # 11-06 S.Lee: 주간 회고 수·금 15:50 (토 10:00 에서 옮김). 16:00 기준값 조정이 회고를 기다렸다 그 제안을 바로 검토 → 목·월요일 장부터 반영
-  @{ Name = "Hynix298-review";   Time = "15:50"; Days = "WED,FRI"; Cmd = "`"$agent\run.bat`" review" }
+  @{ Name = "Hynix298-review";   Time = "15:50"; Days = "WED,FRI"; Cmd = "`"$agent\run.bat`" review" },
+  # 11-12 S.Lee: 주간 보고서 작성 (writer) 수·금 17:00, 매매 루프 밖
+  @{ Name = "Hynix298-report";   Time = "17:00"; Days = "WED,FRI"; Cmd = "`"$agent\run.bat`" report" }
 )
 
 # 예전 정기 판단 작업 (하루 3번) 정리

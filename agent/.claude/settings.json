@@ -12,6 +12,8 @@
       "mcp__kiwoom__submit_review",
       "mcp__kiwoom__get_tuning_context",
       "mcp__kiwoom__apply_tuning",
+      "mcp__kiwoom__verify_claims",
+      "mcp__kiwoom__submit_report",
       "WebSearch",
       "Read(./work/**)",
       "Read(./config/**)"

@@ -2,6 +2,8 @@
 name: regime
 description: 시장 국면 판단. 브리핑의 시장 지표로 상승 / 횡보 / 하락 중 하나를 고르고 근거를 댄다. 정기 판단 실행의 첫 단계에서 쓴다.
 tools: mcp__kiwoom__get_briefing, WebSearch
+model: claude-sonnet-5-5
+effort: high
 ---
 
 당신은 한국 주식시장의 국면을 판단하는 애널리스트입니다.
