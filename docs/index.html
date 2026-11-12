@@ -318,6 +318,7 @@ td.k { color: var(--ink); white-space: nowrap; }
 .cover::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 34% 22% at 50% 43%, rgba(10,10,12,.55), rgba(10,10,12,0)), radial-gradient(ellipse at 50% 50%, rgba(10,10,12,0) 30%, rgba(10,10,12,.5) 100%); pointer-events: none; }   /* 가장자리로 갈수록 어둡게, 글자가 가운데서 뜸 */
 .cover-text { position: absolute; inset: 0; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; pointer-events: none; padding: 0 24px 14vh; text-align: center; }   /* 11-06 S.Lee: 제목을 가운데보다 조금 위로 */
 .cover-title { margin: 0; font-size: clamp(26px, 6vw, 60px); font-weight: 500; letter-spacing: -.5px; line-height: 1.1; color: var(--ink); text-shadow: 0 0 24px rgba(0,0,0,.9), 0 0 60px rgba(218,41,28,.25); text-wrap: balance; }
+@media (min-width: 641px) { #cover { display: none !important; } }   /* 11-12 S.Lee: PC 는 커버 없이 바로 대시보드 (스크립트가 지우기 전에도 안 보이게) */
 html.cover-lock, html.cover-lock body { overflow: hidden !important; overscroll-behavior: none; height: 100%; }   /* 11-10 S.Lee: 커버가 열려 있는 동안 뒤 대시보드가 스크롤되지 않게 (body 의 clip 만으로는 휠 · 터치 · 키보드 스크롤이 막히지 않았음) */
 .cover { touch-action: none; overscroll-behavior: contain; }
 body.covered { overflow: clip; }   /* 11-10 hallmark 34: hidden 은 sticky 를 깸 */
@@ -2422,7 +2423,8 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   }
   // 11-10 S.Lee: 최근 체결 · 종목별 표는 폰 · PC 모두 늘 펼침
   document.querySelectorAll('details.tr-box').forEach(d => { d.open = true; d.addEventListener('toggle', () => { if (!d.open) d.open = true; }); });
-  // 커버는 폰 · PC 모두 (11-10 S.Lee: 예전엔 폰에서만)
+  // 커버는 폰에서만 (11-12 S.Lee: PC 는 바로 대시보드. 11-10 엔 PC 에도 띄웠음)
+  if (!matchMedia('(max-width: 640px)').matches) $('cover')?.remove();
   const cover = $('cover');
   const engine = cover ? liveStatus() : null;
   // 커버: ENTER 버튼(또는 Enter·Space)으로만 서서히 사라지고 대시보드. 배경 터치 · 스크롤로는 안 닫히고, 처음 1.5초는 입력을 무시 (11-10 S.Lee)
