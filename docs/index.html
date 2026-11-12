@@ -218,7 +218,7 @@ details.log[open] > summary::after { content: "−"; }
 .hero .eng .big { margin: 4px 0 2px; }
 .hero-kpi { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px 16px; margin-top: 22px; padding-top: 20px; border-top: 1px solid #2a2a2a; }   /* 11-12 S.Lee */
 .hero-kpi .hk { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
-.hero-kpi .k { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: #8c8c8c; white-space: nowrap; }
+.hero-kpi .k { font-size: 12px; letter-spacing: .4px; text-transform: uppercase; color: #8c8c8c; white-space: nowrap; }
 .hero-kpi .v { font-size: 18px; color: var(--ink); white-space: nowrap; font-variant-numeric: tabular-nums; }
 @media (max-width: 640px) { .hero .side.eng-sum:has(> .eng.sion[hidden]) { grid-template-columns: minmax(0, 1fr); }   /* SiON 이 없으면 Sigma 가 한 줄 전체 */
   [data-theme=volt] .hero .side.eng-sum:has(> .eng.sion[hidden]) .big { font-size: 40px !important; }
@@ -433,7 +433,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
 </style>
 </head>
 <body>
-<div id="boot" role="status" aria-live="polite" tabindex="-1"><b>Sigma Engine</b><span>Loading</span></div>
+<div id="boot" role="status" aria-live="polite" tabindex="-1"><b>Sigma Engine</b><span>불러오는 중</span></div>
 <script>
 /* 11-12 S.Lee: Loading 화면 — 다 그리기 전엔 스크롤 · 터치 · 키 모두 막고, 다 그리면(window.bootReady) 하이라이트 뒤 누르면 들어감. 12초 뒤엔 무조건 준비됨 */
 (function () {
@@ -446,7 +446,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
   window.bootReady = function () {
     if (ready || !on()) return; ready = true; b.classList.add('ready');
     b.setAttribute('role', 'button'); b.setAttribute('tabindex', '0'); b.setAttribute('aria-label', 'Sigma Engine 대시보드 열기');
-    b.querySelector('span').textContent = 'Enter';   // 11-12 S.Lee: 다 되면 문구를 Enter 로 try { b.focus({ preventScroll: true }); } catch (e) { /* 무시 */ }
+    b.querySelector('span').textContent = '들어가기';   // 11-12 S.Lee: 다 되면 문구를 Enter 로 try { b.focus({ preventScroll: true }); } catch (e) { /* 무시 */ }
   };
   b.addEventListener('click', enter);
   document.addEventListener('keydown', function (e) {
@@ -480,7 +480,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
       <div class="hero">
         <div class="side eng-sum">   <!-- 11-10 S.Lee 가독성 개편: 두 엔진 요약을 나란히 (Sigma 위 · SiON 아래, 폰은 좌우) -->
           <div class="eng" id="eng-sigma">
-            <div class="eng-h"><span class="eyebrow">Cumulative return</span><span class="st-line" id="st-line" hidden></span></div>
+            <div class="eng-h"><span class="eyebrow">누적 수익률</span><span class="st-line" id="st-line" hidden></span></div>
             <div id="realized"><div class="big won" id="pnl-won">—</div></div>
             <div class="hero-kpi" id="hero-kpi"></div>   <!-- 11-12 S.Lee: 왼쪽이 휑해서 핵심 숫자 6개 (KODEX 200 대비 · 오늘 · 손익 · 최대 낙폭 · 체결 · 회전율) -->
           </div>
@@ -524,7 +524,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
 
     <!-- 11-10 S.Lee: 포트폴리오 카드가 위, Live Decision 이 아래 -->
     <section class="card c12" id="dec-card">
-      <div class="hd"><h2 class="eyebrow" id="dec-title">Live Decision</h2><span class="sub" id="dec-asof"></span></div>
+      <div class="hd"><h2 class="eyebrow" id="dec-title">실시간 판단</h2><span class="sub" id="dec-asof"></span></div>
       <div class="dec-head m-hide" id="dec-head"></div>
       <div class="dec-trade" id="dec-trade" hidden></div>
       <div class="dec-colhead" id="dec-colhead" hidden></div>
@@ -543,7 +543,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
 
   <!-- 실시간 KOSPI: 접는 섹션 (11-05). 펼칠 때 다시 그림 -->
   <details class="log more m-hide" id="kx-box">   <!-- 11-10 S.Lee: 폰에선 숨김 (머리글 칩으로 대신) -->
-    <summary>Live KOSPI</summary>
+    <summary>실시간 KOSPI</summary>
     <div class="more-body">
       <div class="grid">
         <section class="card c12">
@@ -561,10 +561,10 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
   </details>
 
   <details class="log more m-hide">
-    <summary>Record</summary>
+    <summary>기록</summary>
     <div class="more-body">
       <div class="grid">
-        <section class="card c3 glow-red m-hide"><div class="hd"><h2 class="eyebrow">이번 주</h2><span class="sub">vs 지난 금요일</span></div><div class="val" id="k-week">—</div><div class="chart" id="sp-week"></div></section>
+        <section class="card c3 glow-red m-hide"><div class="hd"><h2 class="eyebrow">이번 주</h2><span class="sub">지난 금요일 대비</span></div><div class="val" id="k-week">—</div><div class="chart" id="sp-week"></div></section>
         <section class="card c3 glow-blue m-hide"><div class="hd"><h2 class="eyebrow">최대 낙폭</h2><span class="sub">고점 대비</span></div><div class="val" id="k-mdd">—</div><div class="chart" id="sp-dd"></div></section>
         <section class="card c3 m-hide"><div class="hd"><h2 class="eyebrow" id="bm-title">KOSPI</h2><span class="sub">11/2 시가 대비</span></div><div class="val" id="k-kospi">—</div><div class="chart" id="sp-kospi"></div></section>
         <section class="card c3 m-hide"><div class="hd"><h2 class="eyebrow">승률</h2><span class="sub" id="k-win-sub">—</span></div><div class="val" id="k-win">—</div><div class="chart" id="sp-win"></div></section>
@@ -586,7 +586,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
 
   <!-- 11-10 S.Lee: Agent Black Box 없앰 → Feedback Loop 만 따로 접는 칸으로 (확신도·토큰 차트·전체 판단 로그는 화면에서 뺌) -->
   <details class="log more" id="more">   <!-- 11-12 S.Lee: 폰에도 보임 (접힌 채로). 11-10 엔 폰에서 숨겼음 -->
-    <summary>Feedback Loop</summary>
+    <summary>자동 조정 기록</summary>
     <div class="more-body">
       <div id="ch-review" class="fb-body"></div>
       <div hidden><div class="chart" id="ch-scatter"></div><div class="chart" id="ch-tokens"></div><table><tbody id="log-body"></tbody></table></div>
@@ -674,6 +674,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
 /* 11-10 S.Lee: 메인은 Sigma Engine, SiON 은 테스트 → 강조를 Sigma 로 */
 [data-theme=volt] .eng#eng-sigma .eyebrow { color: #f2f2f2; }
 [data-theme=volt] .eng#eng-sigma .eyebrow::after { content: "LIVE"; margin-left: 8px; padding: 1px 7px; border-radius: 9999px; font-size: 10px; letter-spacing: 1.2px; color: #101010; background: #f2f2f2; vertical-align: 1px; }
+[data-theme=volt] .eyebrow, [data-theme=volt] .cal .note { letter-spacing: .6px !important; }   /* 11-12 S.Lee: 한글 라벨은 자간을 좁게 (영어 대문자용 2.2px 이면 글자가 흩어져 보임) */
 .eng-sum:has(> .eng.sion[hidden]) #eng-sigma .eyebrow::after { content: none !important; }   /* 11-12 S.Lee: 엔진이 하나면 이름표 대신 '누적 수익률', LIVE 태그 없음 */
 [data-theme=volt] .eng .eyebrow.on, [data-theme=volt] .eyebrow.on { color: #8b949e; }
 [data-theme=volt] .eng#eng-sion .eyebrow::after { content: "TEST"; margin-left: 8px; padding: 0 6px; border-radius: 9999px; font-size: 10px; letter-spacing: 1.2px; color: #8b949e; border: 1px solid #3d3a39; vertical-align: 1px; }
@@ -710,7 +711,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
     '종목명': 'Stock', '비중': 'Weight', '수익률': 'Return', '합산 수익률': 'Total return', '현금': 'Cash', '국면': 'Regime', '하락': 'Bear', '상승': 'Bull', '횡보': 'Sideways',
     '주식 비중 상한': 'Equity cap', '장중 수급': 'Intraday flow', '관망': 'WAIT', '매수': 'BUY', '매도': 'SELL', '최근 체결': 'Recent fills', '실제 계좌': 'Live account', '가상 체결': 'Virtual fills',
     '시각': 'Time', '구분': 'Side', '종목': 'Stock', '수량': 'Qty', '가격': 'Price', '실시간 KOSPI': 'Live KOSPI', '거래량': 'Volume', '투자자별 순매수': 'Net buying by investor',
-    '수급 데이터를 기다리는 중이에요.': 'Waiting for flow data.', 'KOSPI 데이터를 기다리는 중이에요.': 'Waiting for KOSPI data.', '이번 주': 'This week', 'vs 지난 금요일': 'vs last Friday',
+    '수급 데이터를 기다리는 중이에요.': 'Waiting for flow data.', 'KOSPI 데이터를 기다리는 중이에요.': 'Waiting for KOSPI data.', '이번 주': 'This week', '지난 금요일 대비': 'vs last Friday',
     '월': 'Mon', '화': 'Tue', '수': 'Wed', '목': 'Thu', '금': 'Fri', '최대 낙폭': 'Max drawdown', '고점 대비': 'from peak', '승률': 'Win rate', '● 청산  ○ 보유 중': '● closed  ○ open',
     '리스크 한도 사용률': 'Risk limit usage', '주문 직전 Hook이 강제, 100%면 차단': 'Enforced by the pre-order hook, blocked at 100%', '오늘 손실': 'Loss today', '누적 손실': 'Total loss',
     '현금 비중': 'Cash weight', '보유 종목 수': 'Positions', '일별 초과수익': 'Daily excess return', '수익률 캘린더': 'Return calendar', 'Sigma Engine 당일 등락': 'Sigma Engine daily change',
@@ -736,11 +737,11 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
   const PAREN = /\s*[(（][^()（）]*[)）]/g;
   const noParen = v => { let o = v, n; while ((n = o.replace(PAREN, '')) !== o) o = n; return o; };
   const tr0 = s => { const k = s.trim(); if (!k || !/[가-힣]/.test(k)) return s; if (EN[k]) return s.replace(k, EN[k]); for (const [re, to] of RX) if (re.test(k)) return s.replace(k, k.replace(re, to)); return s; };
-  const tr = s => noParen(tr0(s));
+  const tr = s => noParen(s);   // 11-12 S.Lee: 화면 글자를 다시 한글로 (영어 사전 EN · RX 는 남겨 두되 안 씀, 괄호 지우기만)
   const SKIP = 'script, style';   // 종목명 · 판단 근거는 사전에 없으니 그대로 남음
   const walk = root => { if (!root) return; if (root.nodeType === 3) { const p = root.parentElement; if (p && !p.closest(SKIP)) { const v = tr(root.nodeValue); if (v !== root.nodeValue) root.nodeValue = v; } return; }
     if (root.nodeType !== 1 || root.closest && root.closest(SKIP)) return; const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); let n; const a = []; while ((n = w.nextNode())) a.push(n); a.forEach(walk); };
-  document.documentElement.lang = 'en';
+  document.documentElement.lang = 'ko';
   new MutationObserver(ms => ms.forEach(m => m.type === 'characterData' ? walk(m.target) : m.addedNodes.forEach(walk))).observe(document.documentElement, { childList: true, subtree: true, characterData: true });
   document.addEventListener('DOMContentLoaded', () => walk(document.body));
   // 8) 11-10 S.Lee: 모션 묶음 (VoltAgent 색 안에서). 움직임 줄이기 설정이면 전부 끔
@@ -1043,7 +1044,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   // 시장 꼬리표 (KOSPI · KOSDAQ · ETF)
   let EXCH = {};   // 종목코드 → KOSPI · KOSDAQ · ETF 예비값 (docs/data/exchange.json). 에이전트 기록에 exchange 가 있으면 그게 우선
   fetch('data/exchange.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : {}).then(m => { EXCH = m || {}; if (D) { decisionCard(); limits(); } }).catch(() => {});   // 11-10 코스닥 비중 줄도 시장 목록이 온 뒤 다시
-  const exTag = x => x ? `<span class="ex">${x === 'KOSPI' ? 'Kospi' : x === 'KOSDAQ' ? 'Kosdaq' : esc(x)}</span>` : '';
+  const exTag = x => x ? `<span class="ex">${x === 'KOSPI' ? '코스피' : x === 'KOSDAQ' ? '코스닥' : esc(x)}</span>` : '';
   const volTag = v => v == null || isNaN(+v) ? '' : `<span class="vl${+v > 1 ? ' hi' : ''}">${+v > 1 ? '고변동' : '변동성'} ${Math.round(+v * 100)}%</span>`;
   const row = (a, b, cls) => `<div class="r"><span>${esc(a)}</span><span class="${cls || ''}">${esc(b)}</span></div>`;
 
@@ -1300,8 +1301,8 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     tipTarget($('realized'), rtip);
     { const e = D.eq, pv = e.length > 1 ? e[e.length - 2].total : INIT, today = D.last.total / pv - 1, tn = v => v > 0 ? 'up' : v < 0 ? 'down' : '';
       const pp = v => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v * 100).toFixed(2) + '%p';
-      const it = [['vs ' + BMN(), pp(D.alpha), tn(D.alpha)], ['Today', pct(today), tn(today)], ['P&L', signed(total), tn(total)],
-                  ['Max drawdown', pct(D.mdd), D.mdd < 0 ? 'down' : ''], ['Trades', D.trades.length + '', ''], ['Turnover', D.turnover.toFixed(2) + '×', '']];
+      const it = [[BMN() + ' 대비', pp(D.alpha), tn(D.alpha)], ['오늘', pct(today), tn(today)], ['손익', signed(total), tn(total)],
+                  ['최대 낙폭', pct(D.mdd), D.mdd < 0 ? 'down' : ''], ['체결', D.trades.length + '건', ''], ['회전율', D.turnover.toFixed(2) + '배', '']];
       $('hero-kpi').innerHTML = it.map(([k, v, c]) => `<div class="hk"><span class="k">${esc(k)}</span><span class="v ${c}">${esc(v)}</span></div>`).join(''); }
     $('k-week').textContent = pct(D.week); tone($('k-week'), D.week);
     $('k-mdd').textContent = pct(D.mdd); tone($('k-mdd'), D.mdd);
@@ -1844,11 +1845,11 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     // 11-10 S.Lee: SiON 탭에서는 Sigma 판단 · Sigma 시장 자료로 되돌아가지 않음
     const sA0 = SHADOW_LIVE && SHADOW_LIVE.status && SHADOW_LIVE.status.decision, sB0 = SHADOW && SHADOW.decision;
     if (ENG === 'sion' && ![sA0, sB0].some(x => x && x.time)) {
-      $('dec-title').textContent = 'Live Decision'; $('dec-trade').hidden = true; $('dec-colhead').hidden = true; $('dec-asof').textContent = ''; head.innerHTML = '';
+      $('dec-title').textContent = '실시간 판단'; $('dec-trade').hidden = true; $('dec-colhead').hidden = true; $('dec-asof').textContent = ''; head.innerHTML = '';
       return none(list, 'SiON 판단을 기다리는 중이에요.');
     }
     if (ENG !== 'sion' && (!dc.time || (BRIEF.created && BRIEF.created > dc.time))) return briefingCard();
-    $('dec-title').textContent = 'Live Decision';
+    $('dec-title').textContent = '실시간 판단';
     if (ENG !== 'sion') $('dec-asof').textContent = md(toD(dc.time)) + ' ' + dc.time.slice(11, 16);   // 이 판단을 한 시각 (11-05 다음 매매 시각 대신)
     const lt = dc.last_trade, tr = $('dec-trade');   // 오늘 마지막 매매 회차 결과: 샀다 / 팔았다 / 막혔다 / 관망
     tr.hidden = true;   // 11-09 S.Lee: 마지막 매매 회차 요약 띠 없앰 (아래 목록과 겹침)
@@ -1930,8 +1931,8 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
 
   // ---------- 수익률 캘린더: 대회 20거래일을 주(행) × 요일(열)로 ----------
   // 11-12 S.Lee: 캘린더에 남기는 운영 사고 (날짜 → [짧은 표시, 툴팁 설명])
-  const CAL_NOTE = { '2026-11-11': ['System Error', 'Desktop ran out of memory at 10:07. No decisions or orders after 09:51, and the PC was off from about 14:30. Mid-week review and tuning ran at night.'],
-    '2026-11-12': ['System Error', 'Both engines failed to start the 09:30 round at the same time. At 10:01 a SiON process used about 110 GB of memory and also stopped Sigma\'s balance sync and stop-loss monitor until it was restarted. Fixes: SiON memory cap 8 GB, SiON waits for Sigma before starting.'] };
+  const CAL_NOTE = { '2026-11-11': ['시스템 오류', '10:07 데스크톱 메모리 부족. 09:51 뒤로 판단 · 주문 없음, 14:30쯤부터 PC 꺼짐. 중간 회고 · 기준값 조정은 밤에 실행'],
+    '2026-11-12': ['시스템 오류', '09:30 두 엔진이 동시에 시작하다 둘 다 실패. 10:01 SiON 프로세스가 메모리 약 110GB 를 써서 Sigma 잔고 수집 · 손절 감시까지 멈춤. 대책: SiON 메모리 상한 8GB, Sigma 판단이 끝난 뒤 시작, 그 뒤 SiON 운영 멈춤'] };
   function calendar() {
     const el = $('ch-cal'); el.innerHTML = '';
     const byDate = new Map(PRE ? [] : D.eq.map((r, i) => [r.date, { day: i ? r.day : r.total / INIT - 1, kday: r.kday }]));
@@ -2012,7 +2013,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const cashR = cashP ? `<tr class="cash"><td class="nm">${nm(cashP, parts.indexOf(cashP))}</td><td>${(cashP.v / tot * 100).toFixed(1)}%</td><td></td><td></td></tr>` : '';
     const box = document.createElement('details'); box.className = 'pf-tbl-wrap tr-box'; box.open = true;   // 11-10 S.Lee: 폰 · PC 모두 접지 않고 늘 펼침
     box.addEventListener('toggle', () => { if (!box.open) box.open = true; });    // 11-10 S.Lee: Table + 로 펼침 (기본 접힘, 다시 그려도 상태 유지)
-    box.innerHTML = `<summary class="hd"><h3 class="eyebrow">Table</h3></summary><table class="pf-tbl"><thead><tr><th>종목명</th><th>비중</th><th>수익률</th><th>합산 수익률</th></tr></thead><tbody>${rows}${cashR}</tbody></table>`;
+    box.innerHTML = `<summary class="hd"><h3 class="eyebrow">종목</h3></summary><table class="pf-tbl"><thead><tr><th>종목명</th><th>비중</th><th>수익률</th><th>합산 수익률</th></tr></thead><tbody>${rows}${cashR}</tbody></table>`;
     el.appendChild(box);
   }
 
