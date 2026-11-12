@@ -50,6 +50,7 @@ header .meta { color: var(--sub); font-size: 13px; }
 #chart text { font-family: inherit; font-size: 12px; fill: var(--faint); }
 .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .grid2 .card { margin-bottom: 0; }
+.grid2 + footer, .grid2 { margin-bottom: 0; }
 table { width: 100%; border-collapse: collapse; }
 th { text-align: left; color: var(--sub); font-weight: 500; font-size: 13px; padding: 0 0 8px; }
 td { padding: 10px 0; border-top: 1px solid var(--line); font-size: 15px; }
@@ -74,6 +75,20 @@ tr.cash td { color: var(--sub); }
 .empty { color: var(--sub); font-size: 14px; padding: 8px 0; }
 footer { color: var(--faint); font-size: 12px; text-align: center; margin-top: 24px; }
 footer a { color: var(--sub); }
+/* PC 넓은 화면: 위 = 수익률 카드 | 추이 차트, 아래 = 보유 종목 | 최근 판단 | 최근 체결 세 칸 */
+.grid3 .trades { grid-column: 1 / -1; }
+@media (min-width: 1100px) {
+  .wrap { max-width: 1320px; padding: 28px 32px 48px; }
+  .top { display: grid; grid-template-columns: minmax(340px, 1fr) 2fr; gap: 12px; margin-bottom: 12px; }
+  .top .card { margin-bottom: 0; }
+  .hero { display: flex; flex-direction: column; }
+  .hero .big { font-size: 56px; }
+  .kpis { grid-template-columns: 1fr; margin-top: auto; padding-top: 18px; }
+  .kpi { display: flex; justify-content: space-between; align-items: baseline; }
+  .grid3 { grid-template-columns: 1fr 1.25fr 1fr; align-items: start; }
+  .grid3 .trades { grid-column: auto; }
+  .grid3 .trades td:first-child { white-space: nowrap; }
+}
 @media (max-width: 720px) {
   .grid2 { grid-template-columns: 1fr; }
   .hero .big { font-size: 38px; }
@@ -89,6 +104,7 @@ footer a { color: var(--sub); }
     <span class="pill off" id="health" tabindex="0"><i></i><span>확인 중</span></span>
   </header>
 
+  <div class="top">
   <section class="card hero" aria-labelledby="h-ret">
     <div class="label" id="h-ret">누적 수익률 <span style="color:var(--faint)">시작 5,000만 원</span></div>
     <div class="big num" id="ret">–</div>
@@ -105,13 +121,14 @@ footer a { color: var(--sub); }
     <div id="chart"></div>
     <div class="legend" id="legend"></div>
   </section>
+  </div>
 
   <div class="tabs" role="tablist" id="tabs">
     <button role="tab" aria-selected="true" data-eng="sigma">Sigma</button>
     <button role="tab" aria-selected="false" data-eng="sion">SiON 시험</button>
   </div>
 
-  <div class="grid2">
+  <div class="grid2 grid3">
     <section class="card" aria-labelledby="h-hold">
       <h2 id="h-hold">보유 종목 <small id="hold-n"></small></h2>
       <table><thead><tr><th>종목</th><th class="r">비중</th><th class="r">수익률</th></tr></thead><tbody id="hold"></tbody></table>
@@ -120,12 +137,11 @@ footer a { color: var(--sub); }
       <h2 id="h-dec">최근 판단 <small id="dec-t"></small></h2>
       <ul class="dec" id="dec"></ul>
     </section>
-  </div>
-
-  <section class="card" style="margin-top:12px" aria-labelledby="h-tr">
+  <section class="card trades" aria-labelledby="h-tr">
     <h2 id="h-tr">최근 체결</h2>
     <table><thead><tr><th>시각</th><th>종목</th><th class="r">구분</th><th class="r">금액</th></tr></thead><tbody id="trades"></tbody></table>
   </section>
+  </div>
 
   <footer>심플 시안, 수익은 빨강 손실은 파랑<br><a href="index.html">기존 화면 보기</a><br>Designed by S.Lee &amp; M.Park</footer>
 </div>
@@ -273,7 +289,7 @@ footer a { color: var(--sub); }
 
   function drawChart(eq, sion) {
     const el = $('chart'); el.innerHTML = '';
-    const W = el.clientWidth, Hh = W < 560 ? 220 : 280, m = { t: 10, r: 12, b: 26, l: 46 };
+    const W = el.clientWidth, Hh = W < 560 ? 220 : W > 700 ? 300 : 280, m = { t: 10, r: 12, b: 26, l: 46 };
     const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
     const svg = d3.select(el).append('svg').attr('viewBox', `0 0 ${W} ${Hh}`).attr('height', Hh).attr('role', 'img')
       .attr('aria-label', `누적 수익률 추이. Sigma ${pct(eq.length ? eq[eq.length - 1].ret : 0)}`);
