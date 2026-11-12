@@ -913,10 +913,10 @@ def test_inverse_min_weight_in_falling_market():
 
 
 def test_etf_buy_banned_stocks_only():
-    """11-11 S.Lee: 인버스·KODEX 200 매수 금지 (실제 설정이 꺼져 있으면 Hook 이 막음), 개별주는 통과."""
+    """11-11 S.Lee: ETF 를 매수 금지로 두면 Hook 이 막고 개별주는 통과 (설정을 바꿔 시험). 11-12 실제 설정은 인버스 · KODEX 200 모두 허용."""
     import copy
     q = copy.deepcopy(P)
-    assert P_REAL["index"].get("buy_banned") or not P_REAL["index"]["enabled"], "실제 params.index 는 매수 금지여야 함"
+    assert P_REAL["index"]["enabled"] and not P_REAL["index"].get("buy_banned"), "11-12 S.Lee: 실제 params.index(KODEX 200)는 다시 매수 허용"
     assert P_REAL["inverse"]["enabled"] and not P_REAL["inverse"].get("buy_banned"), "인버스는 매수 허용"
     for k in BAN:
         q[k]["enabled"], q[k]["buy_banned"] = True, True   # 보유분 규칙은 살리고 매수만 막는 방식
