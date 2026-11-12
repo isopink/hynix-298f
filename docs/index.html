@@ -436,7 +436,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
   window.bootReady = function () {
     if (ready || !on()) return; ready = true; b.classList.add('ready');
     b.setAttribute('role', 'button'); b.setAttribute('tabindex', '0'); b.setAttribute('aria-label', 'Sigma Engine 대시보드 열기');
-    b.querySelector('span').textContent = 'Loading'; try { b.focus({ preventScroll: true }); } catch (e) { /* 무시 */ }
+    b.querySelector('span').textContent = 'Enter';   // 11-12 S.Lee: 다 되면 문구를 Enter 로 try { b.focus({ preventScroll: true }); } catch (e) { /* 무시 */ }
   };
   b.addEventListener('click', enter);
   document.addEventListener('keydown', function (e) {
