@@ -81,8 +81,8 @@
     ]
   },
   "intraday": {
-    "time": "09:45",
-    "pool": 341,
+    "time": "10:30",
+    "pool": 394,
     "analyzed_new": 30,
     "passed": 6,
     "kept_prep": false
@@ -98,56 +98,72 @@
       "vol20": 0.896,
       "foreign_net": -23932404925,
       "inst_net": 30374499875,
-      "score": 0.786,
+      "score": 0.737,
       "news": [
         {
           "date": "11-12",
-          "title": "GS건설, '아르뮤제자이' 모델하우스 12일 개관",
+          "title": "[건설업계 동향] GS건설ㆍ남광토건ㆍLH (11.12)",
           "risk": false
         },
         {
           "date": "11-12",
-          "title": "GS건설, 증축 없는 신속형 리모델링 '비욘드 어디션' 추진",
+          "title": "GS건설, 레미콘 생산 단계부터 품질관리…동절기 콘크리트 안전성 높인...",
           "risk": false
         },
         {
           "date": "11-12",
-          "title": "GS건설, 철거·증축 없는 새 리모델링 사업 '비욘드 어디션' 공개",
+          "title": "GS건설, 동반성장지수 6년 연속 최우수…협력사 상생경영 결실",
           "risk": false
         }
       ],
-      "foreign_today": 609000000,
-      "inst_today": 0,
+      "foreign_today": 1370250000,
+      "inst_today": 365400000,
       "exchange": "KOSPI"
     },
     {
-      "code": "443670",
-      "name": "에스피소프트",
-      "close": 5880,
-      "ret5": 0.1136,
-      "ret20": 0.4255,
-      "rsi14": 61.8,
-      "vol20": 1.634,
-      "foreign_net": -258568331,
-      "inst_net": 32334450,
+      "code": "015760",
+      "name": "한국전력",
+      "close": 30650,
+      "ret5": 0.0016,
+      "ret20": 0.0515,
+      "rsi14": 56.1,
+      "vol20": 0.399,
+      "foreign_net": -41601197875,
+      "inst_net": 78634696350,
+      "score": 0.684,
+      "news": [],
+      "foreign_today": 1134050000,
+      "inst_today": 275850000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "263860",
+      "name": "지니언스",
+      "close": 25800,
+      "ret5": 0.0098,
+      "ret20": 0.1169,
+      "rsi14": 57.6,
+      "vol20": 1.417,
+      "foreign_net": -14485577525,
+      "inst_net": 2513735425,
       "score": 1.0,
       "news": [
         {
-          "date": "11-10",
-          "title": "에스피소프트 주가, 급등세... 무슨 회사길래?",
+          "date": "11-12",
+          "title": "지니언스, 3분기 누적 영업익 274%↑…AI 해킹 위협 속 역대급 결실",
           "risk": false
         },
         {
-          "date": "11-09",
-          "title": "에스피소프트 21.18% 급등…클라우드·DaaS 성장성 부각",
+          "date": "11-11",
+          "title": "지니언스 주가, 급등세... 이유는?",
           "risk": false
         }
       ],
-      "price": 6290,
-      "chg": 0.0734,
-      "activity": 18.06,
-      "foreign_today": 94350000,
-      "inst_today": 0,
+      "price": 29350,
+      "chg": 0.1332,
+      "activity": 17.93,
+      "foreign_today": 0,
+      "inst_today": 498950000,
       "exchange": "KOSDAQ"
     },
     {
@@ -160,7 +176,7 @@
       "vol20": 1.017,
       "foreign_net": -9297158850,
       "inst_net": 17172372000,
-      "score": 0.786,
+      "score": 0.737,
       "news": [
         {
           "date": "11-12",
@@ -178,8 +194,8 @@
           "risk": false
         }
       ],
-      "foreign_today": 248250000,
-      "inst_today": 0,
+      "foreign_today": 347550000,
+      "inst_today": 248250000,
       "exchange": "KOSPI"
     },
     {
@@ -192,40 +208,10 @@
       "vol20": 1.794,
       "foreign_net": -4376505570,
       "inst_net": 1010439810,
-      "score": 0.429,
+      "score": 0.263,
       "news": [],
-      "foreign_today": 87570000,
+      "foreign_today": 214060000,
       "inst_today": 0,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "028050",
-      "name": "삼성E&A",
-      "close": 66600,
-      "ret5": -0.0045,
-      "ret20": 0.4767,
-      "rsi14": 65.8,
-      "vol20": 0.943,
-      "foreign_net": -99237911500,
-      "inst_net": 63810101050,
-      "score": 0.857,
-      "news": [
-        {
-          "date": "11-12",
-          "title": "삼성E&A, 중동 최고 권위 'MEED 프로젝트상' 15년 연속 수상",
-          "risk": false
-        },
-        {
-          "date": "11-11",
-          "title": "삼성E&A, 'MEED 프로젝트상' 수상",
-          "risk": false
-        },
-        {
-          "date": "11-11",
-          "title": "삼성E&A, 사우디 자푸라 프로젝트로 'MEED상' 수상",
-          "risk": false
-        }
-      ],
       "exchange": "KOSPI"
     },
     {
