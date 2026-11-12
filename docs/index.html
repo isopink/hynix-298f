@@ -24,7 +24,11 @@
 <script>/* 11-10 S.Lee: 처음에 예전 화면이 잠깐 보이던 것 막기. VOLT 가 켜질 때까지 어두운 빈 화면, 늦어도 3초 뒤엔 보임 */
 if (!/(^|[?&])theme=classic\b/.test(location.search)) { var h = document.documentElement; h.dataset.theme = 'volt'; h.style.background = '#101010'; h.classList.add('volt-wait'); setTimeout(function () { h.classList.remove('volt-wait'); }, 3000); }
 </script>
-<style>html.volt-wait body { visibility: hidden; }</style>
+<style>html.volt-wait body > *:not(#boot) { visibility: hidden; }
+/* 11-12 S.Lee: 첫 화면 = Loading 글자만 (실시간 잔고까지 받아 대시보드를 다 그리면 사라짐, 움직임 없음) */
+#boot { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 14px; background: #101010; color: #f2f2f2; font: 400 13px Inter, "Pretendard Variable", system-ui, sans-serif; letter-spacing: 4px; text-transform: uppercase; }
+#boot b { font-weight: 400; font-size: clamp(20px, 5vw, 30px); letter-spacing: 1px; text-transform: none; }
+#boot span { color: #8b949e; }</style>
 <meta name="twitter:title" content="The Sigma Engine">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <!-- 11-12 로딩 줄이기: d3 를 HTML 을 읽는 동안 미리 받아 둠 (본문은 d3 · VOLT 가 켜질 때까지 숨김), 예전 화면 글꼴 Noto Serif KR 은 ?theme=classic 일 때만 -->
@@ -415,6 +419,8 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
 </style>
 </head>
 <body>
+<div id="boot" role="status" aria-live="polite"><b>Sigma Engine</b><span>Loading</span></div>
+<script>setTimeout(function () { var b = document.getElementById('boot'); if (b) b.remove(); }, 12000);   /* 무슨 일이 있어도 12초 뒤엔 대시보드 */</script>
 <!-- 첫 화면 커버 (11-05): 뉴런 망이 자동으로 돌고 가운데 제목. 11-10 S.Lee: 배경을 눌러도 스크롤해도 닫히지 않고, ENTER 버튼(1.5초 뒤 켜짐) 또는 Enter·Space 로만 대시보드 -->
 <div class="cover" id="cover" role="dialog" aria-label="SIGMA ENGINE">
   <canvas id="ch-live" class="live" aria-hidden="true"></canvas>
@@ -1011,9 +1017,10 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     // 첫 화면은 실시간 잔고(Supabase)를 받은 뒤 한 번에 그림. 예전엔 json(지난 마감 기록)으로 먼저 그렸다가 몇 초 뒤
     // 최신 값으로 바뀌어 숫자가 튀었음. 4초 안에 안 오면 json 으로 먼저 그리고, 늦게 오면 그때 갱신
     const live = CFG.supabaseUrl && CFG.supabaseAnonKey;
-    const first = live ? Promise.race([pollLive(), new Promise(r => setTimeout(r, 1500))]) : Promise.resolve();   // 11-12 4초 → 1.5초 (첫 화면이 늦게 뜨던 것)
+    const first = live ? Promise.race([pollLive(), new Promise(r => setTimeout(r, 4000))]) : Promise.resolve();   // 11-12 S.Lee: 기다리는 동안은 Loading 화면 (숫자가 한 번에 맞게 뜸)
     first.then(() => {
       if (!LIVE_AT) { fillText(); drawAll(); }   // 실시간 값이 왔으면 pollLive 가 이미 그렸음
+      $('boot')?.remove();   // 11-12 다 그린 뒤 Loading 화면을 걷음
       fillLog(); startKospi();
       if (document.fonts) document.fonts.ready.then(drawAll);   // 웹폰트 적용 후 글자 폭 다시 계산
       document.querySelectorAll('details.more').forEach(d => d.addEventListener('toggle', () => { if (d.open) drawAll(); }));
