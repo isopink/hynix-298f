@@ -287,6 +287,7 @@ def once():
         return False
     while run_busy():
         log("  판단·손절 실행 중이라 끝나길 기다림")
+        heartbeat()   # 11-12 기다리는 동안에도 연결 신호 (판단 중에 push 하면 최대 15분 신호가 끊겨 Server 가 빨강이던 것)
         time.sleep(20)
 
     # 지난 rebase 가 충돌난 채로 남은 파일이 있으면 autostash 가 안 돼 계속 실패함 (11-03 docs/index.html).
@@ -318,6 +319,7 @@ def once():
         if any(f.startswith(paths) for f in changed) and in_window(win):
             if name == "monitor":
                 while run_busy():   # 감시가 띄운 손절 실행이 끝난 뒤에 끔
+                    heartbeat()
                     time.sleep(20)
             restart(name, task, pattern)
     return SELF in changed
