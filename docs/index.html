@@ -26,7 +26,7 @@ if (!/(^|[?&])theme=classic\b/.test(location.search)) { var h = document.documen
 </script>
 <style>html.volt-wait body > *:not(#boot) { visibility: hidden; }
 /* 11-12 S.Lee: 첫 화면 = Loading 글자만 (실시간 잔고까지 받아 대시보드를 다 그리면 사라짐, 움직임 없음) */
-#boot { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 14px; background: #101010; color: #f2f2f2; font: 400 13px Inter, "Pretendard Variable", system-ui, sans-serif; letter-spacing: 4px; text-transform: uppercase; }
+#boot { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 14px; background: #101010; color: #f2f2f2; font: 400 13px "Noto Serif KR", serif; letter-spacing: 4px; text-transform: uppercase; }
 #boot b { font-weight: 400; font-size: clamp(20px, 5vw, 30px); letter-spacing: 1px; text-transform: none; }
 #boot span { color: #8b949e; padding: 6px 14px 6px 18px; border: 1px solid transparent; }
 /* 11-12 S.Lee: 다 그리면 LOADING 글자를 하이라이트(흰 바탕 · 검은 글자), 그때부터 누르면 대시보드. 그 전엔 눌러도 안 넘어감 */
@@ -39,7 +39,7 @@ html.boot-lock, html.boot-lock body { overflow: hidden !important; overscroll-be
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preload" as="script" href="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js">
-<script>if (/(^|[?&])theme=classic\b/.test(location.search)) document.write('<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&display=swap">');</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&display=swap">   <!-- 11-12 S.Lee: 영어 · 한글 모두 Noto Serif KR -->
 <style>
 /* Bento grid on near-black. Rosso Corsa = gains & the one hero line; blue = losses; everything else greyscale. Sharp corners, hairline borders. */
 :root {
@@ -625,8 +625,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
   const fix0 = el => { const s = el.getAttribute('style'), m = map(s); if (m !== s) el.setAttribute('style', m); };
   new MutationObserver(ms => ms.forEach(m => m.type === 'childList' ? m.addedNodes.forEach(fix) : fix0(m.target))).observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
   // 5) 글꼴: Inter + Pretendard (한글) + JetBrains Mono (숫자 · 코드)
-  for (const href of ['https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap',
-    'https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css']) {
+  for (const href of []) {   // 11-12 S.Lee: Inter · JetBrains Mono · Pretendard 안 씀 → 전부 Noto Serif KR (head 에서 받음)
     const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = href; document.head.appendChild(l);
   }
   // 6) VoltAgent 겉모습 (이 블록은 색 바꾸기 뒤에 붙여 그대로 씀)
@@ -841,6 +840,11 @@ html { scroll-behavior: auto !important; }
 svg [opacity]:not([opacity="0"]) { opacity: 1 !important; } svg [fill-opacity] { fill-opacity: 1 !important; } svg [stroke-opacity] { stroke-opacity: 1 !important; }
 [data-theme=volt] .card, [data-theme=volt] details.log, [data-theme=volt] .eng-tabs, [data-theme=volt] .chip { backdrop-filter: none !important; }`;
   document.head.appendChild(flat);
+  // 11-12 S.Lee: 글꼴은 영어 · 한글 · 숫자 모두 Noto Serif KR (숫자는 자릿수 맞춤만)
+  const serif = document.createElement('style'); serif.id = 'serif';
+  serif.textContent = `[data-theme=volt] body, [data-theme=volt] body *, [data-theme=volt] svg text, [data-theme=volt] button, [data-theme=volt] input { font-family: "Noto Serif KR", serif !important; }
+[data-theme=volt] body { font-variant-numeric: tabular-nums; }`;
+  document.head.appendChild(serif);
   // 마우스를 올렸을 때 바뀌는 규칙(:hover)은 지움
   const dropHover = () => { for (const sh of document.styleSheets) { let rs; try { rs = sh.cssRules; } catch (e) { continue; }
     const walk = list => { for (let i = list.length - 1; i >= 0; i--) { const r = list[i];
