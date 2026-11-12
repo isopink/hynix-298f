@@ -10,16 +10,16 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://isopink.github.io/hynix-298f/">
 <meta property="og:site_name" content="Sigma Engine">
-<meta property="og:image" content="https://isopink.github.io/hynix-298f/og.jpg?v=8">
+<meta property="og:image" content="https://isopink.github.io/hynix-298f/og.jpg?v=9">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="The Sigma Engine 신경망">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://isopink.github.io/hynix-298f/og.jpg?v=8">
-<link rel="icon" type="image/svg+xml" href="icon.svg?v=2">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=2">
-<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png?v=2">
-<link rel="apple-touch-icon" href="apple-touch-icon.png?v=2">
+<meta name="twitter:image" content="https://isopink.github.io/hynix-298f/og.jpg?v=9">
+<link rel="icon" type="image/svg+xml" href="icon.svg?v=3">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=3">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png?v=3">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=3">
 <meta name="theme-color" content="#101010">
 <script>/* 11-10 S.Lee: 처음에 예전 화면이 잠깐 보이던 것 막기. VOLT 가 켜질 때까지 어두운 빈 화면, 늦어도 3초 뒤엔 보임 */
 if (!/(^|[?&])theme=classic\b/.test(location.search)) { var h = document.documentElement; h.dataset.theme = 'volt'; h.style.background = '#101010'; h.classList.add('volt-wait'); setTimeout(function () { h.classList.remove('volt-wait'); }, 3000); }
@@ -318,7 +318,7 @@ td.k { color: var(--ink); white-space: nowrap; }
 .cover::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 34% 22% at 50% 43%, rgba(10,10,12,.55), rgba(10,10,12,0)), radial-gradient(ellipse at 50% 50%, rgba(10,10,12,0) 30%, rgba(10,10,12,.5) 100%); pointer-events: none; }   /* 가장자리로 갈수록 어둡게, 글자가 가운데서 뜸 */
 .cover-text { position: absolute; inset: 0; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; pointer-events: none; padding: 0 24px 14vh; text-align: center; }   /* 11-06 S.Lee: 제목을 가운데보다 조금 위로 */
 .cover-title { margin: 0; font-size: clamp(26px, 6vw, 60px); font-weight: 500; letter-spacing: -.5px; line-height: 1.1; color: var(--ink); text-shadow: 0 0 24px rgba(0,0,0,.9), 0 0 60px rgba(218,41,28,.25); text-wrap: balance; }
-@media (min-width: 641px) { #cover { display: none !important; } }   /* 11-12 S.Lee: PC 는 커버 없이 바로 대시보드 (스크립트가 지우기 전에도 안 보이게) */
+#cover { display: none !important; }   /* 11-12 S.Lee: 랜딩 커버 없앰, 폰 · PC 모두 (스크립트가 지우기 전에도 안 보이게) */
 html.cover-lock, html.cover-lock body { overflow: hidden !important; overscroll-behavior: none; height: 100%; }   /* 11-10 S.Lee: 커버가 열려 있는 동안 뒤 대시보드가 스크롤되지 않게 (body 의 clip 만으로는 휠 · 터치 · 키보드 스크롤이 막히지 않았음) */
 .cover { touch-action: none; overscroll-behavior: contain; }
 body.covered { overflow: clip; }   /* 11-10 hallmark 34: hidden 은 sticky 를 깸 */
@@ -565,7 +565,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
   const HEX = { '#da291c': '#f2f2f2', '#ff5a4a': '#d6d6d6', '#ff8a70': '#d6d6d6', '#ff4a36': '#f2f2f2', '#c41a0d': '#bdbdbd', '#a8160b': '#bdbdbd', '#ff6a55': '#d6d6d6', '#b01e0a': '#bdbdbd', '#ffd2cc': '#ffffff', '#ff7a6e': '#cfcfcf', '#e0b84a': '#d0d0d0',
     '#4aa3d4': '#4e94ff', '#7cc4ea': '#bdbdbd', '#9ad6f2': '#d0d0d0', '#1f6f9c': '#5a6068', '#3ecf8e': '#b4b4b4', '#c8f5dc': '#ffffff',
     '#141414': '#101010', '#1c1c1c': '#101010', '#232323': '#1a1a1a', '#2a2a2a': '#3d3a39', '#0d0d10': '#101010', '#0a0a0c': '#101010', '#f6e500': '#d6d6d6' };
-  const RGB = { '218,41,28': '242,242,242', '255,90,74': '255,90,101', '255,120,100': '242,242,242', '255,120,104': '214,214,214', '240,160,150': '150,235,205',
+  const RGB = { '218,41,28': '242,242,242', '255,90,74': '255,90,101', '255,120,100': '242,242,242', '255,120,104': '214,214,214',
     '74,163,212': '78,148,255', '120,190,230': '78,148,255', '62,207,142': '200,200,200', '70,210,135': '225,225,225', '110,230,170': '235,235,235' };
   const hexRe = new RegExp(Object.keys(HEX).join('|'), 'gi');
   const rgbRe = new RegExp('(' + Object.keys(RGB).map(k => k.replace(/,/g, ',\\s*')).join('|') + ')', 'g');
@@ -2266,13 +2266,13 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       g.fillStyle = gr; g.fillRect(0, 0, size, size); return c;
     }
     const SP = { r: sprite('255,90,74', 64), n: sprite('205,205,210', 64), w: sprite('235,235,238', 128, true),
-                 g: sprite('62,207,142', 64), gw: sprite('70,215,140', 128, true), rw: sprite('245,165,155', 128, true) };   // 11-08 rw: 나머지 뉴런 쉴 때 옅은 빨강   // 11-08 온톨로지: 빛나는 초록 · 쉬는 옅은 초록
+                 g: sprite('235,235,240', 64), gw: sprite('205,205,210', 128, true), rw: sprite('245,165,155', 128, true) };   // 11-08 rw: 나머지 뉴런 쉴 때 옅은 빨강   // 11-08 온톨로지: 빛나는 초록 · 쉬는 옅은 초록
     // 잔가지는 지점마다 그림 한 장으로 미리 그려 두고(화면 배율 기준), 매 프레임 지점을 따라 옮겨 찍음
     function bake(o, f) {
       const R = Math.max(4, ...o.den.map(b => Math.hypot(b.ex, b.ey))) + 3, px = Math.ceil(R * 2 * scale);
       const c = document.createElement('canvas'); c.width = c.height = px;
       const g = c.getContext('2d'); g.setTransform(scale, 0, 0, scale, R * scale, R * scale); g.lineCap = 'round';
-      o.den.forEach(b => { g.strokeStyle = o.ont ? `rgba(70,210,135,${Math.min(.6, (.16 + .26 * b.w) * f)})` : o.t ? `rgba(240,160,150,${Math.min(.34, (.07 + .15 * b.w) * f)})` : `rgba(230,228,228,${Math.min(.24, (.04 + .11 * b.w) * f)})`;   /* 큰 뉴런(o.t 있음)은 옅은 빨강, 작은 뉴런은 회색 */ g.lineWidth = b.w * lw; g.beginPath(); g.moveTo(b.x, b.y); g.quadraticCurveTo(b.cx, b.cy, b.ex, b.ey); g.stroke(); });
+      o.den.forEach(b => { g.strokeStyle = o.ont ? `rgba(225,225,230,${Math.min(.6, (.16 + .26 * b.w) * f)})` : o.t ? `rgba(240,160,150,${Math.min(.34, (.07 + .15 * b.w) * f)})` : `rgba(230,228,228,${Math.min(.24, (.04 + .11 * b.w) * f)})`;   /* 큰 뉴런(o.t 있음)은 옅은 빨강, 작은 뉴런은 회색 */ g.lineWidth = b.w * lw; g.beginPath(); g.moveTo(b.x, b.y); g.quadraticCurveTo(b.cx, b.cy, b.ex, b.ey); g.stroke(); });
       o.img = c; o.R = R;
     }
     function fit() {
@@ -2333,11 +2333,11 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       }
       dots.forEach(d => {   // 갈라진 데이터가 닿은 작은 뉴런: 한 번 번쩍이고 가라앉음
         if (d.fl == null) return; const k = Math.exp(-(clock - d.fl) / 520); if (k < .05) { d.fl = null; return; }
-        ctx.globalAlpha = 1; ctx.strokeStyle = d.fg ? `rgba(62,207,142,${.7 * k})` : `rgba(255,90,74,${.7 * k})`;
+        ctx.globalAlpha = 1; ctx.strokeStyle = d.fg ? `rgba(235,235,240,${.7 * k})` : `rgba(255,90,74,${.7 * k})`;
         ctx.lineWidth = .8 * lw; ctx.beginPath(); d.den.forEach(b => { ctx.moveTo(d.x + b.x, d.y + b.y); ctx.quadraticCurveTo(d.x + b.cx, d.y + b.cy, d.x + b.ex, d.y + b.ey); }); ctx.stroke();   // 11-10 한 뉴런의 가지는 한 번에 그림 (연쇄 발화로 여러 개가 같이 켜져도 가볍게)
         const sp = d.fg ? SP.g : SP.r; stamp(d.x, d.y, sp, 40 * (.8 + .4 * k), k); stamp(d.x, d.y, sp, 14, k);
       });
-      Object.values(N).forEach(n => { if (!(n.glow > .05)) return; ctx.globalAlpha = 1; ctx.strokeStyle = `rgba(${n.ont ? '62,207,142' : '255,90,74'},${Math.min(1, .8 * n.int * n.glow * pop(n))})`; n.den.forEach(b => { ctx.lineWidth = (b.w + .2) * lw; ctx.beginPath(); ctx.moveTo(n.x + b.x, n.y + b.y); ctx.quadraticCurveTo(n.x + b.cx, n.y + b.cy, n.x + b.ex, n.y + b.ey); ctx.stroke(); }); });
+      Object.values(N).forEach(n => { if (!(n.glow > .05)) return; ctx.globalAlpha = 1; ctx.strokeStyle = `rgba(${n.ont ? '235,235,240' : '255,90,74'},${Math.min(1, .8 * n.int * n.glow * pop(n))})`; n.den.forEach(b => { ctx.lineWidth = (b.w + .2) * lw; ctx.beginPath(); ctx.moveTo(n.x + b.x, n.y + b.y); ctx.quadraticCurveTo(n.x + b.cx, n.y + b.cy, n.x + b.ex, n.y + b.ey); ctx.stroke(); }); });
       if (dt && clock > nextSpark) {   // 11-10 S.Lee: 더 다이나믹하게 → 쉬는 동안에도 작은 뉴런들이 곳곳에서 연쇄로 발화 (0.25~0.6초마다 한 줄기, 3~5번 건너뜀)
         nextSpark = clock + 250 + rnd() * 350; bursts.push({ s: mesh[Math.floor(rnd() * mesh.length)], t: 0, life: 1600, size: 7, c: 'n' });
         const d = dots[Math.floor(rnd() * dots.length)], m = d.out[Math.floor(rnd() * d.out.length)]; if (m) { d.fl = clock; d.fg = false; bursts.push({ s: m, t: 0, life: 420 + rnd() * 520, size: 8, to: m.b.dot ? m.b : null, hop: 3 + Math.floor(rnd() * 3) }); }
@@ -2357,7 +2357,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
         const f = ln(n); ctx.globalAlpha = Math.min(1, n.glow * 1.4);
         ctx.font = `500 ${f}px ${FONT}`; ctx.lineWidth = 4; ctx.lineJoin = 'round'; ctx.strokeStyle = 'rgba(10,10,12,.94)';
         const y = n.y + n.size * .42 + f * .8;
-        ctx.strokeText(n.t, n.x, y); ctx.fillStyle = n.ont ? '#c8f5dc' : '#ffd2cc'; ctx.fillText(n.t, n.x, y);
+        ctx.strokeText(n.t, n.x, y); ctx.fillStyle = n.ont ? '#ffffff' : '#ffd2cc'; ctx.fillText(n.t, n.x, y);
       });
       ctx.globalAlpha = 1;
     }
@@ -2430,7 +2430,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   // 11-10 S.Lee: 최근 체결 · 종목별 표는 폰 · PC 모두 늘 펼침
   document.querySelectorAll('details.tr-box').forEach(d => { d.open = true; d.addEventListener('toggle', () => { if (!d.open) d.open = true; }); });
   // 커버는 폰에서만 (11-12 S.Lee: PC 는 바로 대시보드. 11-10 엔 PC 에도 띄웠음)
-  if (!matchMedia('(max-width: 640px)').matches) $('cover')?.remove();
+  $('cover')?.remove();   // 11-12 S.Lee: 랜딩 커버 없앰 (폰 · PC 모두 바로 대시보드). 커버 코드는 링크 미리보기 그림을 다시 만들 때만 씀
   const cover = $('cover');
   const engine = cover ? liveStatus() : null;
   // 커버: ENTER 버튼(또는 Enter·Space)으로만 서서히 사라지고 대시보드. 배경 터치 · 스크롤로는 안 닫히고, 처음 1.5초는 입력을 무시 (11-10 S.Lee)
