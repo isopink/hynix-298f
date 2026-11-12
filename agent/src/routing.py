@@ -79,6 +79,10 @@ def route(b, p=None, run=None, now=None):
     full = (not cfg["enabled"]) or not prev or bool(slot)
     why_full = ("라우팅 꺼짐" if not cfg["enabled"] else "오늘 첫 회차" if not prev else f"{slot} 회차는 전부 토론" if slot else "")
     cands, holds = b.get("candidates", []) or [], b.get("holdings", []) or []
+    acc = C.read_json(C.ACCOUNT, {}) or {}
+    if acc.get("holdings") is not None:   # 08:30 브리핑의 보유 목록은 오늘 판 종목도 남아 있어서 지금 계좌로 거름
+        now_held = {h["code"]: h.get("name", h["code"]) for h in acc["holdings"]}
+        holds = [x for x in holds if x["code"] in now_held] + [{"code": c, "name": n} for c, n in now_held.items() if c not in {x["code"] for x in holds}]
     snap = {x["code"]: _snap(x) for x in cands + holds}
     debate, reuse, hl = [], [], []
     prev_dec = last_decided(run) if prev else None
