@@ -80,8 +80,97 @@
       5375.36
     ]
   },
-  "intraday": null,
+  "intraday": {
+    "time": "09:30",
+    "pool": 340,
+    "analyzed_new": 30,
+    "passed": 6,
+    "kept_prep": false
+  },
   "candidates": [
+    {
+      "code": "006360",
+      "name": "GS건설",
+      "close": 30450,
+      "ret5": 0.0518,
+      "ret20": 0.0218,
+      "rsi14": 50.9,
+      "vol20": 0.896,
+      "foreign_net": -23932404925,
+      "inst_net": 30374499875,
+      "score": 0.769,
+      "news": [
+        {
+          "date": "11-12",
+          "title": "150억 무이자·300억 상생펀드…GS건설, 동반성장지수 6년째 ‘최우수’",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "[기업들] 한화큐셀 美 생산 모듈 신뢰성, GS건설 레미콘 공장 사전 검증...",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "GS건설, '동반성장지수' 6년 연속 최우수… 상생협력 노력 인정받아",
+          "risk": false
+        }
+      ],
+      "foreign_today": 609000000,
+      "inst_today": 0,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "030530",
+      "name": "원익홀딩스",
+      "close": 31550,
+      "ret5": 0.0447,
+      "ret20": 0.301,
+      "rsi14": 59.1,
+      "vol20": 1.356,
+      "foreign_net": 5570899200,
+      "inst_net": 6019145725,
+      "score": 1.0,
+      "news": [
+        {
+          "date": "11-11",
+          "title": "원익홀딩스 6.37% 올라 3만900원…거래대금 1031억원",
+          "risk": false
+        },
+        {
+          "date": "11-11",
+          "title": "원익홀딩스 주가, 11월 11일 장중 31,500원 8.43% 상승",
+          "risk": false
+        },
+        {
+          "date": "11-11",
+          "title": "원익홀딩스, 국민성장펀드 투자계약 확정…원익로보틱스 IPO 실패 시 매...",
+          "risk": false
+        }
+      ],
+      "price": 31050,
+      "chg": -0.0111,
+      "activity": 2.9,
+      "foreign_today": 652050000,
+      "inst_today": 0,
+      "exchange": "KOSDAQ"
+    },
+    {
+      "code": "003010",
+      "name": "혜인",
+      "close": 9730,
+      "ret5": 0.2702,
+      "ret20": 0.3365,
+      "rsi14": 57.7,
+      "vol20": 1.794,
+      "foreign_net": -4376505570,
+      "inst_net": 1010439810,
+      "score": 0.308,
+      "news": [],
+      "foreign_today": 87570000,
+      "inst_today": 0,
+      "exchange": "KOSPI"
+    },
     {
       "code": "028050",
       "name": "삼성E&A",
@@ -141,121 +230,6 @@
         }
       ],
       "exchange": "KOSPI"
-    },
-    {
-      "code": "053800",
-      "name": "안랩",
-      "close": 116600,
-      "ret5": 0.159,
-      "ret20": 0.319,
-      "rsi14": 62.8,
-      "vol20": 1.545,
-      "foreign_net": 3873692500,
-      "inst_net": 15311697450,
-      "score": 0.857,
-      "news": [
-        {
-          "date": "11-11",
-          "title": "[시큐리티 포커스] 안랩 디지털포렌식 챌린지 2026 우수상 수상·KT텔레...",
-          "risk": false
-        },
-        {
-          "date": "11-11",
-          "title": "금융보안원 해킹에 사이버보안株 강세…안랩 8.78% 상승",
-          "risk": false
-        },
-        {
-          "date": "11-11",
-          "title": "안랩, 디지털 포렌식 챌린지서 '문제풀이 분야' 우수상 수상",
-          "risk": false
-        }
-      ],
-      "exchange": "KOSDAQ"
-    },
-    {
-      "code": "030530",
-      "name": "원익홀딩스",
-      "close": 31550,
-      "ret5": 0.0447,
-      "ret20": 0.301,
-      "rsi14": 59.1,
-      "vol20": 1.356,
-      "foreign_net": 5570899200,
-      "inst_net": 6019145725,
-      "score": 0.714,
-      "news": [
-        {
-          "date": "11-11",
-          "title": "원익홀딩스 6.37% 올라 3만900원…거래대금 1031억원",
-          "risk": false
-        },
-        {
-          "date": "11-11",
-          "title": "원익홀딩스 주가, 11월 11일 장중 31,500원 8.43% 상승",
-          "risk": false
-        },
-        {
-          "date": "11-11",
-          "title": "원익홀딩스, 국민성장펀드 투자계약 확정…원익로보틱스 IPO 실패 시 매...",
-          "risk": false
-        }
-      ],
-      "exchange": "KOSDAQ"
-    },
-    {
-      "code": "010060",
-      "name": "OCI홀딩스",
-      "close": 208500,
-      "ret5": 0.0024,
-      "ret20": -0.0392,
-      "rsi14": 52.8,
-      "vol20": 1.198,
-      "foreign_net": -24553905400,
-      "inst_net": 58934696650,
-      "score": 0.5,
-      "news": [
-        {
-          "date": "11-11",
-          "title": "美 '블루웨이브' 올라탄 OCI홀딩스…'비중국 웨이퍼'로 수익성 날개",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "OCI홀딩스, 0.15% 상승…태양광 폴리실리콘과 지주사 할인에 시선",
-          "risk": false
-        },
-        {
-          "date": "11-10",
-          "title": "한화큐셀·OCI홀딩스, 美 태양광 관세 확정…현지 셀 생산이 수혜 가른...",
-          "risk": false
-        }
-      ],
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "263860",
-      "name": "지니언스",
-      "close": 25800,
-      "ret5": 0.0098,
-      "ret20": 0.1169,
-      "rsi14": 57.6,
-      "vol20": 1.417,
-      "foreign_net": -14485577525,
-      "inst_net": 2513735425,
-      "score": 0.357,
-      "news": [
-        {
-          "date": "11-12",
-          "title": "지니언스, 3분기 누적 영업익 274%↑…AI 해킹 위협 속 역대급 결실",
-          "risk": false
-        },
-        {
-          "date": "11-11",
-          "title": "지니언스 주가, 급등세... 이유는?",
-          "risk": false
-        }
-      ],
-      "exchange": "KOSDAQ"
     },
     {
       "code": "114800",

@@ -281,12 +281,12 @@
       "tokens_k": 15681
     },
     "live": {
-      "fills": 32,
-      "buys": 10,
-      "sells": 22,
+      "fills": 36,
+      "buys": 11,
+      "sells": 25,
       "watch": 816,
-      "runs": 51,
-      "failures": 2,
+      "runs": 52,
+      "failures": 3,
       "avg_min": 6.0,
       "tokens_k": 4003
     }
