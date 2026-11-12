@@ -140,9 +140,13 @@ def claude(kind, prompt, dry=False):
         rec.update(ok=p.returncode == 0 and not res.get("is_error") and did_work(kind, run_id),
                    tokens=sum(u.get(k, 0) for k in ("input_tokens", "output_tokens", "cache_creation_input_tokens")),
                    cost_usd=res.get("total_cost_usd"), note=summary_line(res.get("result")))
+        rec["rc"] = p.returncode   # 11-12 09:34 회차가 주문 4건 뒤 출력 · 오류 없이 끝나 원인을 못 찾음 → 종료 코드를 남김
         if not rec["ok"]:
             rec["note"] = ("기록 없음: " if p.returncode == 0 else "") + rec["note"]
-        C.write_json(os.path.join(C.WORK, "runs", run_id + ".json"), {"cmd_prompt": prompt, "result": res, "stderr": p.stderr[-2000:]})
+            if p.returncode != 0 and not (out or "").strip():
+                rec["note"] = f"종료 코드 {p.returncode} · 출력 없음" + (" · 판단은 기록됨" if did_work(kind, run_id) else "")
+        C.write_json(os.path.join(C.WORK, "runs", run_id + ".json"), {"cmd_prompt": prompt, "result": res, "returncode": p.returncode,
+                                                                      "stdout_tail": (out or "")[-2000:], "stderr": p.stderr[-2000:]})
     except subprocess.TimeoutExpired:
         rec["note"] = "시간 초과 (25분)"
     except Exception as e:  # noqa: BLE001
