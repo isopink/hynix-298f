@@ -81,7 +81,7 @@
     ]
   },
   "intraday": {
-    "time": "13:45",
+    "time": "14:00",
     "pool": 465,
     "analyzed_new": 30,
     "passed": 9,
@@ -98,7 +98,7 @@
       "vol20": 0.943,
       "foreign_net": -99237911500,
       "inst_net": 63810101050,
-      "score": 0.595,
+      "score": 1.0,
       "news": [
         {
           "date": "11-12",
@@ -116,11 +116,11 @@
           "risk": false
         }
       ],
-      "price": 66100,
-      "chg": -0.0045,
-      "activity": 0.55,
-      "foreign_today": 1255900000,
-      "inst_today": 1520300000,
+      "price": 65900,
+      "chg": -0.0075,
+      "activity": 0.54,
+      "foreign_today": 1252100000,
+      "inst_today": 1515700000,
       "exchange": "KOSPI"
     },
     {
@@ -133,21 +133,21 @@
       "vol20": 0.896,
       "foreign_net": -23932404925,
       "inst_net": 30374499875,
-      "score": 0.514,
+      "score": 0.815,
       "news": [
         {
           "date": "11-12",
-          "title": "[더벨][i-point] 대동로보틱스, GS건설과 운반로봇 실증",
+          "title": "GS건설, 재건축 어려운 아파트에 새 대안…철거·증축 없는 리모델링 선...",
           "risk": false
         },
         {
           "date": "11-12",
-          "title": "GS건설, 철거없는 리모델링 사업 ‘비욘드 어디션’ 출범",
+          "title": "재건축 어려운 서울 260여 단지 겨냥…GS건설, 신속형 리모델링 추진",
           "risk": false
         },
         {
           "date": "11-12",
-          "title": "GS건설 신속형 리모델링 사업 ‘BEYOND ADDITION’ 선보여",
+          "title": "대동로보틱스, 운반로봇 RT100 건설 현장 투입…GS건설과 협업",
           "risk": false
         }
       ],
@@ -165,7 +165,7 @@
       "vol20": 0.603,
       "foreign_net": -10864777200,
       "inst_net": 24251702400,
-      "score": 0.514,
+      "score": 0.815,
       "news": [
         {
           "date": "11-11",
@@ -183,6 +183,38 @@
       "exchange": "KOSPI"
     },
     {
+      "code": "112610",
+      "name": "씨에스윈드",
+      "close": 49150,
+      "ret5": 0.107,
+      "ret20": -0.0779,
+      "rsi14": 55.6,
+      "vol20": 0.857,
+      "foreign_net": -2466358425,
+      "inst_net": 30374988275,
+      "score": 0.63,
+      "news": [
+        {
+          "date": "11-11",
+          "title": "'美 블루 웨이브' 19% 뛰었다⋯씨에스윈드 쏠린 증권가 시선",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "신재생에너지는 '미국 블루웨이브 쇼크' 무풍지대, '풍력' 씨에스윈드·...",
+          "risk": false
+        },
+        {
+          "date": "11-09",
+          "title": "[종목이 보영] 씨에스윈드, 정책 훈풍에 본업도 회복",
+          "risk": false
+        }
+      ],
+      "foreign_today": 294900000,
+      "inst_today": 0,
+      "exchange": "KOSPI"
+    },
+    {
       "code": "086450",
       "name": "동국제약",
       "close": 25700,
@@ -192,7 +224,7 @@
       "vol20": 0.449,
       "foreign_net": 2732710725,
       "inst_net": 2918265150,
-      "score": 0.324,
+      "score": 0.481,
       "news": [
         {
           "date": "11-12",
@@ -215,28 +247,33 @@
       "exchange": "KOSDAQ"
     },
     {
-      "code": "121600",
-      "name": "나노신소재",
-      "close": 75700,
-      "ret5": 0.0441,
-      "ret20": 0.1978,
-      "rsi14": 64.0,
-      "vol20": 1.203,
-      "foreign_net": -3774314350,
-      "inst_net": 19891741250,
-      "score": 1.0,
+      "code": "425420",
+      "name": "티에프이",
+      "close": 81200,
+      "ret5": -0.0122,
+      "ret20": 0.3739,
+      "rsi14": 59.1,
+      "vol20": 1.54,
+      "foreign_net": -1641700700,
+      "inst_net": 3941389950,
+      "score": 0.926,
       "news": [
         {
-          "date": "11-11",
-          "title": "신재생에너지 관련주 희비…나노신소재 17% 급등, 한화솔루션 약세 '미...",
+          "date": "11-12",
+          "title": "[모닝 리포트] \"티에프이, 소캠2 매출 확대에 실적 성장 지속\"",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "티에프이, 글로벌 빅테크 '1차 벤더' 전격 입성…소캠·디램 호조에 '영...",
           "risk": false
         }
       ],
-      "price": 75800,
-      "chg": 0.0026,
-      "activity": 1.89,
+      "price": 83300,
+      "chg": 0.0611,
+      "activity": 1.14,
       "foreign_today": 0,
-      "inst_today": 3486800000,
+      "inst_today": 83300000,
       "exchange": "KOSDAQ"
     },
     {
@@ -249,7 +286,7 @@
       "vol20": 1.017,
       "foreign_net": -9297158850,
       "inst_net": 17172372000,
-      "score": 0.595,
+      "score": 0.852,
       "news": [
         {
           "date": "11-12",
@@ -272,36 +309,6 @@
       "exchange": "KOSPI"
     },
     {
-      "code": "425420",
-      "name": "티에프이",
-      "close": 81200,
-      "ret5": -0.0122,
-      "ret20": 0.3739,
-      "rsi14": 59.1,
-      "vol20": 1.54,
-      "foreign_net": -1641700700,
-      "inst_net": 3941389950,
-      "score": 0.595,
-      "news": [
-        {
-          "date": "11-12",
-          "title": "[모닝 리포트] \"티에프이, 소캠2 매출 확대에 실적 성장 지속\"",
-          "risk": false
-        },
-        {
-          "date": "11-12",
-          "title": "티에프이, 글로벌 빅테크 '1차 벤더' 전격 입성…소캠·디램 호조에 '영...",
-          "risk": false
-        }
-      ],
-      "price": 84400,
-      "chg": 0.0752,
-      "activity": 1.15,
-      "foreign_today": 0,
-      "inst_today": 84400000,
-      "exchange": "KOSDAQ"
-    },
-    {
       "code": "003010",
       "name": "혜인",
       "close": 9730,
@@ -311,7 +318,7 @@
       "vol20": 1.794,
       "foreign_net": -4376505570,
       "inst_net": 1010439810,
-      "score": 0.297,
+      "score": 0.556,
       "news": [],
       "foreign_today": 252980000,
       "inst_today": 0,
