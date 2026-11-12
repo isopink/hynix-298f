@@ -843,7 +843,9 @@ svg [opacity]:not([opacity="0"]) { opacity: 1 !important; } svg [fill-opacity] {
   // 11-12 S.Lee: 글꼴은 영어 · 한글 · 숫자 모두 Noto Serif KR (숫자는 자릿수 맞춤만)
   const serif = document.createElement('style'); serif.id = 'serif';
   serif.textContent = `[data-theme=volt] body, [data-theme=volt] body *, [data-theme=volt] svg text, [data-theme=volt] button, [data-theme=volt] input { font-family: "Noto Serif KR", serif !important; }
-[data-theme=volt] body { font-variant-numeric: tabular-nums; }`;
+[data-theme=volt] body { font-variant-numeric: tabular-nums; }
+/* 11-12 S.Lee: 머리글 상태 점 — 작동 = 초록, 꺼짐 = 회색 (오류 = 빨강 그대로). 화면에서 초록은 여기만 */
+[data-theme=volt] .dot.ok { background: #34c759 !important; } [data-theme=volt] .dot:not(.ok):not(.bad) { background: #5a5a5a !important; }`;
   document.head.appendChild(serif);
   // 마우스를 올렸을 때 바뀌는 규칙(:hover)은 지움
   const dropHover = () => { for (const sh of document.styleSheets) { let rs; try { rs = sh.cssRules; } catch (e) { continue; }
