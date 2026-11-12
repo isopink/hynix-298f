@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "11:15",
+    "time": "11:30",
     "pool": 419,
     "analyzed_new": 30,
-    "passed": 7,
+    "passed": 9,
     "kept_prep": false
   },
   "candidates": [
@@ -98,26 +98,61 @@
       "vol20": 0.896,
       "foreign_net": -23932404925,
       "inst_net": 30374499875,
-      "score": 0.654,
+      "score": 0.657,
       "news": [
         {
           "date": "11-12",
-          "title": "GS건설, 증축·철거 없이 신축급으로…리모델링 新사업 본격화",
+          "title": "GS건설, 철거·증축 없는 신개념 리모델링 사업 추진…\"자이(Xi)로 탈바...",
           "risk": false
         },
         {
           "date": "11-12",
-          "title": "GS건설 '아르뮤제자이', 중앙역 더블역세권…23일부터 청약",
+          "title": "GS건설, 신속 리모델링 '비욘드 어디션' 선보여… 공사기간 1년 6개월",
           "risk": false
         },
         {
           "date": "11-12",
-          "title": "GS건설, 안산 '아르뮤제 자이' 견본주택 개관…24일 1순위 청약",
+          "title": "GS건설, 안산 상록구 '아르뮤제자이' 견본주택 12일 오픈",
           "risk": false
         }
       ],
       "foreign_today": 1035300000,
       "inst_today": 1157100000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "086790",
+      "name": "하나금융지주",
+      "close": 119200,
+      "ret5": 0.0,
+      "ret20": -0.0238,
+      "rsi14": 45.0,
+      "vol20": 0.298,
+      "foreign_net": -26572972700,
+      "inst_net": 44333314550,
+      "score": 0.543,
+      "news": [
+        {
+          "date": "11-12",
+          "title": "[브랜드평판] 금융지주 CEO 11월 빅데이터…1위 하나금융지주 함영주·2...",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "하나금융지주 함영주, 금융지주 CEO 브랜드평판 2026년 11월...1위",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "함영주 하나금융지주, 11월 금융지주 CEO 브랜드평판 1위…황병우 아이...",
+          "risk": false
+        }
+      ],
+      "price": 119400,
+      "chg": -0.0058,
+      "activity": 0.82,
+      "foreign_today": 0,
+      "inst_today": 955200000,
       "exchange": "KOSPI"
     },
     {
@@ -130,7 +165,7 @@
       "vol20": 0.943,
       "foreign_net": -99237911500,
       "inst_net": 63810101050,
-      "score": 0.577,
+      "score": 0.543,
       "news": [
         {
           "date": "11-12",
@@ -148,10 +183,10 @@
           "risk": false
         }
       ],
-      "price": 66700,
-      "chg": 0.0045,
-      "activity": 0.81,
-      "foreign_today": 600300000,
+      "price": 66400,
+      "chg": 0.0,
+      "activity": 0.76,
+      "foreign_today": 597600000,
       "inst_today": 0,
       "exchange": "KOSPI"
     },
@@ -165,26 +200,53 @@
       "vol20": 0.626,
       "foreign_net": 529623225,
       "inst_net": 6313382475,
-      "score": 0.462,
+      "score": 0.514,
       "news": [
         {
           "date": "11-12",
+          "title": "현대제철, 화재·지진에 강한 'H형강' KS 인증 획득…국내 첫 사례",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "현대제철, 화재·지진에 대비한 건축용 H형강 국내 첫 KS 인증",
+          "risk": false
+        },
+        {
+          "date": "11-12",
           "title": "현대제철, 국내 최초 복합성능 '내화내진 H형강' KS 인증",
-          "risk": false
-        },
-        {
-          "date": "11-12",
-          "title": "현대제철, 내화·내진 H형강 국내 첫 KS 인증…600℃에도 강도 67% 유지",
-          "risk": false
-        },
-        {
-          "date": "11-12",
-          "title": "현대제철, 국내 최초 내화내진 H형강 KS 인증 취득",
           "risk": false
         }
       ],
       "foreign_today": 318450000,
       "inst_today": 28950000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "086280",
+      "name": "현대글로비스",
+      "close": 200500,
+      "ret5": -0.0099,
+      "ret20": 0.0867,
+      "rsi14": 56.5,
+      "vol20": 0.603,
+      "foreign_net": -10864777200,
+      "inst_net": 24251702400,
+      "score": 0.514,
+      "news": [
+        {
+          "date": "11-11",
+          "title": "美 국적선 ‘3% 의무 선적’⋯ HMM·현대글로비스, 타격받나",
+          "risk": false
+        },
+        {
+          "date": "11-11",
+          "title": "[단독] 현대글로비스, 美 탬파베이항 '축구장 18개 규모' 부지 추가 확보...",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 601500000,
       "exchange": "KOSPI"
     },
     {
@@ -205,11 +267,11 @@
           "risk": false
         }
       ],
-      "price": 77600,
-      "chg": 0.0265,
-      "activity": 2.55,
+      "price": 76900,
+      "chg": 0.0172,
+      "activity": 2.51,
       "foreign_today": 0,
-      "inst_today": 543200000,
+      "inst_today": 538300000,
       "exchange": "KOSDAQ"
     },
     {
@@ -222,7 +284,7 @@
       "vol20": 1.017,
       "foreign_net": -9297158850,
       "inst_net": 17172372000,
-      "score": 0.615,
+      "score": 0.629,
       "news": [
         {
           "date": "11-12",
@@ -254,7 +316,7 @@
       "vol20": 1.794,
       "foreign_net": -4376505570,
       "inst_net": 1010439810,
-      "score": 0.269,
+      "score": 0.286,
       "news": [],
       "foreign_today": 233520000,
       "inst_today": 0,
