@@ -216,6 +216,13 @@ details.log[open] > summary::after { content: "−"; }
 .eng .st-line { position: static; flex-direction: row; gap: 4px 12px; }
 .eng .st-line > span + span::before { content: none; }
 .hero .eng .big { margin: 4px 0 2px; }
+.hero-kpi { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px 16px; margin-top: 22px; padding-top: 20px; border-top: 1px solid #2a2a2a; }   /* 11-12 S.Lee */
+.hero-kpi .hk { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.hero-kpi .k { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: #8c8c8c; white-space: nowrap; }
+.hero-kpi .v { font-size: 18px; color: var(--ink); white-space: nowrap; font-variant-numeric: tabular-nums; }
+@media (max-width: 640px) { .hero .side.eng-sum:has(> .eng.sion[hidden]) { grid-template-columns: minmax(0, 1fr); }   /* SiON 이 없으면 Sigma 가 한 줄 전체 */
+  [data-theme=volt] .hero .side.eng-sum:has(> .eng.sion[hidden]) .big { font-size: 40px !important; }
+  .hero-kpi { gap: 14px 10px; margin-top: 14px; padding-top: 14px; text-align: center; } .hero-kpi .hk { align-items: center; } .hero-kpi .v { font-size: 15px; } .hero-kpi .k { font-size: 10px; letter-spacing: .8px; } }
 /* 11-10 S.Lee: SiON 숫자도 Sigma 와 같은 크기 (예전 작게) */
 .eng-tabs { display: flex; gap: 6px; padding: 4px; border-radius: 12px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.07); width: max-content; max-width: 100%; }
 .eng-tabs[hidden], .pane[hidden] { display: none; }
@@ -302,6 +309,8 @@ th { text-align: left; font-size: 11px; font-weight: 600; color: var(--muted); p
 td { padding: 10px 12px 10px 0; border-bottom: 1px solid #222; vertical-align: top; color: var(--body); line-height: 1.5; }
 .pf-tbl-wrap > summary { pointer-events: none; cursor: default; } .pf-tbl-wrap > summary .eyebrow::after { content: none !important; }   /* 11-10 S.Lee: 늘 펼쳐 둠 (+ − 없음) */
 .pf-tbl-wrap { margin-top: 14px; } .pf-tbl-wrap .pf-tbl { max-width: 720px; margin: 0 auto; }
+.chart.pf-split { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 0 40px; }   /* 11-12 S.Lee: PC 는 도넛 왼쪽 · 종목 표 오른쪽 */
+.chart.pf-split > svg { justify-self: center; } .chart.pf-split > .pf-tbl-wrap { margin-top: 0; min-width: 0; }
 .pf-tbl { width: 100%; min-width: 0; border-collapse: collapse; font-size: 13px; }
 .pf-tbl th { font-size: 11px; font-weight: 400; color: var(--muted); padding: 0 4px 8px; text-align: center; border-bottom: 1px solid rgba(255,255,255,.1); }
 .pf-tbl td { text-align: center; padding: 7px 4px; color: var(--ink); border-bottom: 1px solid rgba(255,255,255,.05); font-variant-numeric: tabular-nums; }
@@ -472,6 +481,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
           <div class="eng" id="eng-sigma">
             <div class="eng-h"><span class="eyebrow">Sigma Engine</span><span class="st-line" id="st-line" hidden></span></div>
             <div id="realized"><div class="big won" id="pnl-won">—</div></div>
+            <div class="hero-kpi" id="hero-kpi"></div>   <!-- 11-12 S.Lee: 왼쪽이 휑해서 핵심 숫자 6개 (KODEX 200 대비 · 오늘 · 손익 · 최대 낙폭 · 체결 · 회전율) -->
           </div>
           <div class="eng sion" id="eng-sion" hidden>
             <div class="eng-h"><span class="eyebrow on">SiON Engine</span><span class="st-line" id="st-sion" hidden></span></div>
@@ -1286,6 +1296,11 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     $('pnl-won').classList.toggle('neg', total < 0); document.querySelector('.hero-card').classList.toggle('neg', total < 0);   // 손실은 파랑 (국내 증시 관례)
     const rtip = `<div class="t">수익률 ${pct(D.ret)} · 손익 ${signed(total)}</div><p class="tp">대회 게시판 기준 (키움 모의 잔고 ${won(Math.round(D.last.kiwoom || D.last.total))}원 + 누적 매매대금의 0.1% 수수료 차이)</p>`;   // 11-10 S.Lee: 실현 · 미실현을 나누지 않고 손익 하나로
     tipTarget($('realized'), rtip);
+    { const e = D.eq, pv = e.length > 1 ? e[e.length - 2].total : INIT, today = D.last.total / pv - 1, tn = v => v > 0 ? 'up' : v < 0 ? 'down' : '';
+      const pp = v => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v * 100).toFixed(2) + '%p';
+      const it = [['vs ' + BMN(), pp(D.alpha), tn(D.alpha)], ['Today', pct(today), tn(today)], ['P&L', signed(total), tn(total)],
+                  ['Max drawdown', pct(D.mdd), D.mdd < 0 ? 'down' : ''], ['Trades', D.trades.length + '', ''], ['Turnover', D.turnover.toFixed(2) + '×', '']];
+      $('hero-kpi').innerHTML = it.map(([k, v, c]) => `<div class="hk"><span class="k">${esc(k)}</span><span class="v ${c}">${esc(v)}</span></div>`).join(''); }
     $('k-week').textContent = pct(D.week); tone($('k-week'), D.week);
     $('k-mdd').textContent = pct(D.mdd); tone($('k-mdd'), D.mdd);
     $('k-kospi').textContent = pct(D.kret); tone($('k-kospi'), D.kret);
@@ -1955,7 +1970,10 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   const REG_CAP = { '상승': .9, '횡보': .7, '하락': .6 };   // agent/config/params.json regime_cap 과 같게
   function drawDonut(el, parts, cap, shades, capColor, center) {   // 11-10 S.Lee: 가운데 = 주식 비중 / 국면 상한, 종목은 도넛 아래 표 (종목명 · 비중 · 수익률 · 합산 수익률)
     const ring = el.clientWidth < 520 ? 210 : 240;
-    const { svg, W, H } = svgIn(el, ring);
+    const split = el.clientWidth >= 760;   // 11-12 S.Lee: PC 는 도넛 왼쪽 · 표 오른쪽
+    let { svg, W, H } = svgIn(el, ring);
+    el.classList.toggle('pf-split', split);
+    if (split) { W = H + 80; svg.attr('viewBox', `0 0 ${W} ${H}`).attr('width', W); }
     const tot = d3.sum(parts, p => p.v), stock = d3.sum(parts.filter(p => p.name !== '현금'), p => p.v);
     const color = (p, i) => p.name === '현금' ? '#262626' :   // 11-12 투명도 없앰 (예전 rgba(255,255,255,.08))
       shades[i] || ['#5e5e5e', '#525252', '#464646'][i % 3];   // 7번째부터는 회색
@@ -1974,13 +1992,13 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       for (let k = 0; k < 9; k++) sw.append('path').attr('d', d3.arc()({ innerRadius: R * .66, outerRadius: R + 16, startAngle: -(k + 1) * .1, endAngle: -k * .1 })).attr('fill', '#f2f2f2').attr('opacity', .2 * (1 - k / 9));
       sw.append('line').attr('y1', -R * .66).attr('y2', -(R + 16)).attr('stroke', '#f2f2f2').attr('stroke-width', 1).attr('opacity', .7);
     }
-    g.append('text').attr('text-anchor', 'middle').attr('dy', W >= 520 ? '-.1em' : '.35em').attr('font-size', 24).attr('font-weight', 500).attr('fill', C.ink).text((stock / tot * 100).toFixed(1) + '%');
+    g.append('text').attr('text-anchor', 'middle').attr('dy', split || W >= 520 ? '-.1em' : '.35em').attr('font-size', 24).attr('font-weight', 500).attr('fill', C.ink).text((stock / tot * 100).toFixed(1) + '%');
     if (cap) {   // 11-10 S.Lee: 국면 상한 호를 궤도·레이더 빛 위에 다시 그려 폰에서도 또렷하게 (예전엔 레이더 빛에 묻힘)
-      const capA = Math.min(1, cap) * 2 * Math.PI, cw = W < 520 ? 3 : 2;
+      const capA = Math.min(1, cap) * 2 * Math.PI, cw = W < 520 && !split ? 3 : 2;
       g.append('path').attr('d', d3.arc()({ innerRadius: R + 5, outerRadius: R + 5 + cw, startAngle: 0, endAngle: capA })).attr('fill', capColor);
       g.append('line').attr('x1', (R + 2) * Math.sin(capA)).attr('y1', -(R + 2) * Math.cos(capA)).attr('x2', (R + 12) * Math.sin(capA)).attr('y2', -(R + 12) * Math.cos(capA)).attr('stroke', capColor).attr('stroke-width', cw);
     }
-    if (W >= 520) g.append('text').attr('text-anchor', 'middle').attr('dy', '1.4em').attr('font-size', 11).attr('fill', C.muted).text(cap ? '주식 / 상한 ' + (cap * 100).toFixed(1) + '%' : '주식 비중');   // 11-10 S.Lee: 폰에선 넘쳐서 숫자만
+    if (split || W >= 520) g.append('text').attr('text-anchor', 'middle').attr('dy', '1.4em').attr('font-size', 11).attr('fill', C.muted).text(cap ? '주식 / 상한 ' + (cap * 100).toFixed(1) + '%' : '주식 비중');   // 11-10 S.Lee: 폰에선 넘쳐서 숫자만
     const tone2 = v => v == null ? '' : v >= 0 ? 'up' : 'down';
     const st = parts.filter(p => p.name !== '현금'), cashP = parts.find(p => p.name === '현금');
     const sw = (p, i) => `<i class="sw" style="background:${color(p, i)}${p.name === '현금' ? ';border:1px solid #555' : ''}"></i>`;
