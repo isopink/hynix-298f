@@ -753,10 +753,11 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
 [data-theme=volt] .top h1 .tagline { display: block; margin: 8px 0 0; }
 [data-theme=volt] .top h1 .st-top { display: flex; justify-content: center; }
 [data-theme=volt] .top .chips { justify-content: center; }
-@media (min-width: 641px) {   /* 11-12 S.Lee: PC 는 상태 점 · KOSPI 칩을 맨 위 카드 안 한 줄로 */
-  [data-theme=volt] .hero-card > header.top { flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px 22px; padding: 0 0 14px; margin: -4px 0 16px; border-bottom: 1px solid #2a2a2a; }
-  [data-theme=volt] .hero-card > header.top .brand > div { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 22px; }
-  [data-theme=volt] .hero-card > header.top .sched { margin-top: 0; }
+@media (min-width: 641px) {   /* 11-12 S.Lee: PC 는 상태 점 · KOSPI 칩을 차트 바로 위 한 줄로 (구분선 없음) */
+  [data-theme=volt] .hero-chart > header.top { flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px 22px; padding: 0; margin: 0; border: 0; }
+  [data-theme=volt] .hero-chart > header.top .brand > div { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 22px; }
+  [data-theme=volt] .hero-chart > header.top .sched { margin-top: 0; }
+  [data-theme=volt] .hero-chart:has(> header.top) { padding-top: 0; }
 }
 /* ---- 대시보드: 깊은 우주 + 전술 격자 ---- */
 #fx-space { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
@@ -2548,9 +2549,9 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
 })();
 </script>
 <script>
-// 11-12 S.Lee: PC(641px 이상)는 머리글(상태 점 · KOSPI 칩)을 맨 위 카드 안으로, 폰은 원래 자리
+// 11-12 S.Lee: PC(641px 이상)는 머리글(상태 점 · KOSPI 칩)을 맨 위 카드의 차트 위로, 폰은 원래 자리
 (() => {
-  const hd = document.querySelector('header.top'), card = document.querySelector('.hero-card'), grid = document.querySelector('.grid');
+  const hd = document.querySelector('header.top'), card = document.querySelector('.hero-card .hero-chart'), grid = document.querySelector('.grid');
   if (!hd || !card || !grid) return;
   const mq = matchMedia('(min-width: 641px)');
   const place = () => { if (mq.matches) { if (hd.parentNode !== card) card.prepend(hd); } else if (hd.parentNode === card) grid.before(hd); };
