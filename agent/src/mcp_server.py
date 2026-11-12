@@ -328,26 +328,30 @@ def _nums(text):
 
 @mcp.tool()
 @quiet
-def verify_claims(items: list[dict]) -> dict:
+def verify_claims(items: list[dict], facts: str = "") -> dict:
     """근거 문장의 숫자 대조 (11-12). items = [{"code": "005930", "text": "bull · bear · 보유 관리 근거 문장"}].
-    문장 속 %·억·원·배 숫자를 브리핑 · 계좌 · 직전 판단에 나온 숫자와 비교해, 어디에도 없는 숫자를 돌려줌 (반올림 차이는 허용).
+    facts = research 사실 표 원문 (있으면 넘김, 거기 나온 숫자도 확인된 것으로 봄).
+    문장 속 %·억·원·배 숫자를 브리핑 · 계좌 · 직전 판단 · 사실 표에 나온 숫자와 비교해, 어디에도 없는 숫자를 돌려줌 (반올림 차이는 허용).
     돌려받은 숫자는 확인 안 된 근거로 보고 확신도에 쓰지 않음. 날짜(11-12)·시각·회차는 검사하지 않음."""
-    base = get_briefing() + "\n" + str(get_account())
-    ref = {}
-    for v, u, _ in _nums(base):
-        ref.setdefault(u, []).append(v)
-        if u == "원" and abs(v) >= 1e7:   # 원 단위 수급을 억으로도
-            ref.setdefault("억", []).append(v / 1e8)
-    pct = ref.get("%", []) + ref.get("%p", [])
+    base = get_briefing() + "\n" + str(get_account()) + "\n" + str(facts or "")
+    allv = [abs(v) for v, _, _ in _nums(base)]
+    won = allv + [abs(v) for v, u, _ in _nums(base) if u == "억"]                  # 원: 단위 없이 적힌 가격 · 이평선도 같이 (예: ma5 220300)
+    eok = [abs(v) for v, u, _ in _nums(base) if u == "억"] + [x / 1e8 for x in allv if x >= 1e7]   # 억: 원 단위 수급을 억으로
+    pct = [abs(v) for v, u, _ in _nums(base) if u in ("%", "%p")] + [x * 100 for x in allv if x <= 3]  # %: 0.0518 같은 비율도
     out = []
     for it in items or []:
         bad = []
         for v, u, raw in _nums(str(it.get("text", ""))):
-            if not u or u == "배" and v < 1.5:
+            v = abs(v)
+            if not u or u == "배":
                 continue
-            pool = pct if u in ("%", "%p") else ref.get(u, [])
-            tol = 0.15 if u in ("%", "%p") else max(1.0, abs(v) * 0.02)
-            if not any(abs(abs(v) - abs(x)) <= tol for x in pool):
+            if u == "원":
+                ok = any(abs(v - x) <= max(1.0, v * 0.003) for x in won) or v < 100
+            elif u == "억":
+                ok = any(abs(v - x) <= max(1.0, v * 0.03) for x in eok)
+            else:
+                ok = any(abs(v - x) <= 0.15 for x in pct)
+            if not ok:
                 bad.append(raw)
         if bad:
             out.append({"code": it.get("code"), "unverified": bad[:8]})
