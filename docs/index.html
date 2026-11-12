@@ -775,7 +775,16 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
 }
 `;
   document.head.appendChild(fxCss);
-  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches, phone = matchMedia('(max-width: 640px)').matches;
+  // 11-12 S.Lee: 애니메이션 전부 없앰 (판 열림 · 숫자 해독 · 우주 배경 · 격자 · 오로라 · 스캐너 · 레이더 · 궤도 · 윗변 신호 · 선 그리기 · 끝점 맥박).
+  //   상태 점 깜빡임(실행 중 · 오류)만 신호라서 남김
+  const still = document.createElement('style'); still.id = 'no-motion';
+  still.textContent = `*:not(.dot), *::before, *::after { animation: none !important; transition: none !important; }
+html { scroll-behavior: auto !important; }
+.draw { stroke-dasharray: none !important; stroke-dashoffset: 0 !important; } .h-in { opacity: 1 !important; } .h-pulse { display: none !important; }
+.fx-orbit, #fx-space, #fx-grid { display: none !important; }
+[data-theme=volt] #ch-hero::after, [data-theme=volt] .card::after { display: none !important; }`;
+  document.head.appendChild(still);
+  const calm = true, phone = matchMedia('(max-width: 640px)').matches;
   const coverEl = document.getElementById('cover');
   // 깊은 우주: 별 3겹(스크롤 시차 · 깜빡임) + 가끔 지나가는 초록 신호 줄기, 그 위에 천천히 흐르는 전술 격자
   const space = () => {
@@ -834,8 +843,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
     document.querySelectorAll('.wrap .card, .wrap details.log, .wrap .eng-tabs').forEach((c, i) => c.style.setProperty('--i', Math.min(i, 9)));
     if (!calm) { document.documentElement.style.setProperty('--fx0', base + 'ms'); document.documentElement.classList.add('fx-go'); setTimeout(() => document.documentElement.classList.remove('fx-go'), base + 2600); }
     let tries = 0; const wait = setInterval(() => { const a = document.getElementById('pnl-won'); if ((a && /\d/.test(a.textContent)) || ++tries > 60) { clearInterval(wait); setTimeout(() => { decode(a); decode(document.getElementById('s-pnl-won')); }, 120); } }, 100);
-    space();
-  };
+  };   // 11-12 우주 배경 space() 는 안 띄움
   if (coverEl) new MutationObserver(() => { if (coverEl.classList.contains('out')) go(350); }).observe(coverEl, { attributes: true, attributeFilter: ['class'] });
   else go(60);
   // 11-10 S.Lee: 엔진 탭을 바꿀 때는 애니메이션 없이 바로 바뀜
@@ -1824,7 +1832,8 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
 
   // ---------- 수익률 캘린더: 대회 20거래일을 주(행) × 요일(열)로 ----------
   // 11-12 S.Lee: 캘린더에 남기는 운영 사고 (날짜 → [짧은 표시, 툴팁 설명])
-  const CAL_NOTE = { '2026-11-11': ['System Error', 'Desktop ran out of memory at 10:07. No decisions or orders after 09:51, and the PC was off from about 14:30. Mid-week review and tuning ran at night.'] };
+  const CAL_NOTE = { '2026-11-11': ['System Error', 'Desktop ran out of memory at 10:07. No decisions or orders after 09:51, and the PC was off from about 14:30. Mid-week review and tuning ran at night.'],
+    '2026-11-12': ['System Error', 'Both engines failed to start the 09:30 round at the same time. At 10:01 a SiON process used about 110 GB of memory and also stopped Sigma\'s balance sync and stop-loss monitor until it was restarted. Fixes: SiON memory cap 8 GB, SiON waits for Sigma before starting.'] };
   function calendar() {
     const el = $('ch-cal'); el.innerHTML = '';
     const byDate = new Map(PRE ? [] : D.eq.map((r, i) => [r.date, { day: i ? r.day : r.total / INIT - 1, kday: r.kday }]));
