@@ -81,43 +81,13 @@
     ]
   },
   "intraday": {
-    "time": "15:00",
-    "pool": 466,
+    "time": "15:15",
+    "pool": 467,
     "analyzed_new": 8,
-    "passed": 10,
+    "passed": 11,
     "kept_prep": false
   },
   "candidates": [
-    {
-      "code": "015760",
-      "name": "한국전력",
-      "close": 30650,
-      "ret5": 0.0016,
-      "ret20": 0.0515,
-      "rsi14": 56.1,
-      "vol20": 0.399,
-      "foreign_net": -41601197875,
-      "inst_net": 78634696350,
-      "score": 1.0,
-      "news": [
-        {
-          "date": "11-12",
-          "title": "한국전력 '빅스포 2026' 성료...25억원 규모 수출계약·MOU",
-          "risk": false
-        },
-        {
-          "date": "11-12",
-          "title": "한국전력 '빅스포 2026' 폐막…25억원 규모 수출계약·MOU",
-          "risk": false
-        }
-      ],
-      "price": 30900,
-      "chg": 0.0148,
-      "activity": 1.26,
-      "foreign_today": 4140600000,
-      "inst_today": 1730400000,
-      "exchange": "KOSPI"
-    },
     {
       "code": "028050",
       "name": "삼성E&A",
@@ -128,7 +98,7 @@
       "vol20": 0.943,
       "foreign_net": -99237911500,
       "inst_net": 63810101050,
-      "score": 0.75,
+      "score": 1.0,
       "news": [
         {
           "date": "11-12",
@@ -146,11 +116,11 @@
           "risk": false
         }
       ],
-      "price": 65700,
-      "chg": -0.0105,
+      "price": 66000,
+      "chg": -0.006,
       "activity": 0.52,
-      "foreign_today": 2102400000,
-      "inst_today": 2036700000,
+      "foreign_today": 2112000000,
+      "inst_today": 2046000000,
       "exchange": "KOSPI"
     },
     {
@@ -163,7 +133,7 @@
       "vol20": 0.603,
       "foreign_net": -10864777200,
       "inst_net": 24251702400,
-      "score": 0.719,
+      "score": 0.957,
       "news": [
         {
           "date": "11-12",
@@ -195,21 +165,21 @@
       "vol20": 0.896,
       "foreign_net": -23932404925,
       "inst_net": 30374499875,
-      "score": 0.562,
+      "score": 0.783,
       "news": [
         {
           "date": "11-12",
-          "title": "GS건설, '아르뮤제자이' 견본주택 12일 오픈",
+          "title": "단지가 곧 미술관...안산 3년 만의 대단지 GS건설 '아르뮤제자이'[부테크...",
           "risk": false
         },
         {
           "date": "11-12",
-          "title": "GS건설, 골조 유지형 리모델링 사업 '비욘드 어디션' 추진",
+          "title": "GS건설, 철거·증축 없는 리모델링 도입…서울 260여 단지 공략",
           "risk": false
         },
         {
           "date": "11-12",
-          "title": "'순살 보안시스템' GS건설 커뮤니티 해킹에 정부 첫 직권조사",
+          "title": "GS건설 아파트 해킹에 정부 직권조사…'조사 거부' 공방",
           "risk": false
         }
       ],
@@ -227,7 +197,7 @@
       "vol20": 0.857,
       "foreign_net": -2466358425,
       "inst_net": 30374988275,
-      "score": 0.562,
+      "score": 0.739,
       "news": [
         {
           "date": "11-11",
@@ -259,8 +229,13 @@
       "vol20": 0.449,
       "foreign_net": 2732710725,
       "inst_net": 2918265150,
-      "score": 0.375,
+      "score": 0.478,
       "news": [
+        {
+          "date": "11-12",
+          "title": "[주목 e-수출] 글로벌 H&B 도약 '동국제약'…\"센텔리안24 앞세워 사업 대...",
+          "risk": false
+        },
         {
           "date": "11-12",
           "title": "동국제약, 감기 증상별 의약품 성분과 복용 시 주의사항 소개",
@@ -269,11 +244,6 @@
         {
           "date": "11-12",
           "title": "[카드] 겨울 앞두고 감기약 수요↑…동국제약, 성분별 복용법 안내",
-          "risk": false
-        },
-        {
-          "date": "11-12",
-          "title": "일교차 커진 환절기, 감기 환자 늘었다…동국제약, 증상별 감기약 선택...",
           "risk": false
         }
       ],
@@ -291,7 +261,7 @@
       "vol20": 1.017,
       "foreign_net": -9297158850,
       "inst_net": 17172372000,
-      "score": 0.719,
+      "score": 0.913,
       "news": [
         {
           "date": "11-12",
@@ -323,7 +293,7 @@
       "vol20": 1.794,
       "foreign_net": -4376505570,
       "inst_net": 1010439810,
-      "score": 0.438,
+      "score": 0.609,
       "news": [],
       "foreign_today": 496230000,
       "inst_today": 0,
@@ -356,6 +326,64 @@
       "score": null,
       "news": [],
       "exchange": "ETF"
+    },
+    {
+      "code": "257720",
+      "name": "실리콘투",
+      "close": 27350,
+      "ret5": -0.0162,
+      "ret20": -0.1426,
+      "rsi14": 35.6,
+      "vol20": 0.678,
+      "foreign_net": -12281082125,
+      "inst_net": 11066082000,
+      "score": 0,
+      "news": [
+        {
+          "date": "11-12",
+          "title": "실리콘투, K-뷰티 타고 매출 7분기 연속 최대…순이익은 85%↓",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "실리콘투, 환율 부담에도 성장성 대비 저평가 분석…코스맥스, 내년 분...",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "키움증권, 실리콘투 목표가 4만7천원으로 하향...원화 강세에 수익성 부...",
+          "risk": false
+        }
+      ],
+      "price": 24850,
+      "chg": -0.0693,
+      "foreign_today": 0,
+      "inst_today": 0,
+      "exchange": "KOSDAQ"
+    },
+    {
+      "code": "035420",
+      "name": "NAVER",
+      "close": 195500,
+      "ret5": 0.136,
+      "ret20": 0.0861,
+      "rsi14": 59.7,
+      "vol20": 0.502,
+      "foreign_net": 159050713300,
+      "inst_net": 215536542350,
+      "score": 0,
+      "news": [
+        {
+          "date": "11-12",
+          "title": "거래대금 227,298백만원 NAVER, 하락 마감 전 흐름",
+          "risk": false
+        }
+      ],
+      "price": 182100,
+      "chg": -0.0628,
+      "foreign_today": 0,
+      "inst_today": 0,
+      "exchange": "KOSPI"
     }
   ]
 }
