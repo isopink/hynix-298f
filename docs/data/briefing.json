@@ -81,13 +81,32 @@
     ]
   },
   "intraday": {
-    "time": "11:30",
+    "time": "11:45",
     "pool": 419,
     "analyzed_new": 30,
-    "passed": 9,
+    "passed": 10,
     "kept_prep": false
   },
   "candidates": [
+    {
+      "code": "015760",
+      "name": "한국전력",
+      "close": 30650,
+      "ret5": 0.0016,
+      "ret20": 0.0515,
+      "rsi14": 56.1,
+      "vol20": 0.399,
+      "foreign_net": -41601197875,
+      "inst_net": 78634696350,
+      "score": 0.868,
+      "news": [],
+      "price": 30600,
+      "chg": 0.0049,
+      "activity": 1.44,
+      "foreign_today": 2264400000,
+      "inst_today": 428400000,
+      "exchange": "KOSPI"
+    },
     {
       "code": "006360",
       "name": "GS건설",
@@ -98,61 +117,26 @@
       "vol20": 0.896,
       "foreign_net": -23932404925,
       "inst_net": 30374499875,
-      "score": 0.657,
+      "score": 0.684,
       "news": [
         {
           "date": "11-12",
-          "title": "GS건설, 철거·증축 없는 신개념 리모델링 사업 추진…\"자이(Xi)로 탈바...",
+          "title": "건설현장 누빈 로봇…대동로보틱스·GS건설 운반로봇 실증 완료",
           "risk": false
         },
         {
           "date": "11-12",
-          "title": "GS건설, 신속 리모델링 '비욘드 어디션' 선보여… 공사기간 1년 6개월",
+          "title": "GS건설, 철거 없는 신속형 리모델링 사업 진출…안산 '아르뮤제자이' 분...",
           "risk": false
         },
         {
           "date": "11-12",
-          "title": "GS건설, 안산 상록구 '아르뮤제자이' 견본주택 12일 오픈",
+          "title": "\"허물지 않고 구축 →신축으로\"… GS건설, 리모델링 사업 본격화",
           "risk": false
         }
       ],
       "foreign_today": 1035300000,
       "inst_today": 1157100000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "086790",
-      "name": "하나금융지주",
-      "close": 119200,
-      "ret5": 0.0,
-      "ret20": -0.0238,
-      "rsi14": 45.0,
-      "vol20": 0.298,
-      "foreign_net": -26572972700,
-      "inst_net": 44333314550,
-      "score": 0.543,
-      "news": [
-        {
-          "date": "11-12",
-          "title": "[브랜드평판] 금융지주 CEO 11월 빅데이터…1위 하나금융지주 함영주·2...",
-          "risk": false
-        },
-        {
-          "date": "11-12",
-          "title": "하나금융지주 함영주, 금융지주 CEO 브랜드평판 2026년 11월...1위",
-          "risk": false
-        },
-        {
-          "date": "11-12",
-          "title": "함영주 하나금융지주, 11월 금융지주 CEO 브랜드평판 1위…황병우 아이...",
-          "risk": false
-        }
-      ],
-      "price": 119400,
-      "chg": -0.0058,
-      "activity": 0.82,
-      "foreign_today": 0,
-      "inst_today": 955200000,
       "exchange": "KOSPI"
     },
     {
@@ -165,7 +149,7 @@
       "vol20": 0.943,
       "foreign_net": -99237911500,
       "inst_net": 63810101050,
-      "score": 0.543,
+      "score": 0.526,
       "news": [
         {
           "date": "11-12",
@@ -183,43 +167,46 @@
           "risk": false
         }
       ],
-      "price": 66400,
-      "chg": 0.0,
-      "activity": 0.76,
-      "foreign_today": 597600000,
+      "price": 66300,
+      "chg": -0.0015,
+      "activity": 0.72,
+      "foreign_today": 596700000,
       "inst_today": 0,
       "exchange": "KOSPI"
     },
     {
-      "code": "004020",
-      "name": "현대제철",
-      "close": 28950,
-      "ret5": -0.0086,
-      "ret20": 0.023,
-      "rsi14": 52.5,
-      "vol20": 0.626,
-      "foreign_net": 529623225,
-      "inst_net": 6313382475,
-      "score": 0.514,
+      "code": "086790",
+      "name": "하나금융지주",
+      "close": 119200,
+      "ret5": 0.0,
+      "ret20": -0.0238,
+      "rsi14": 45.0,
+      "vol20": 0.298,
+      "foreign_net": -26572972700,
+      "inst_net": 44333314550,
+      "score": 0.5,
       "news": [
         {
           "date": "11-12",
-          "title": "현대제철, 화재·지진에 강한 'H형강' KS 인증 획득…국내 첫 사례",
+          "title": "[브랜드평판] 금융지주 CEO 11월 빅데이터…1위 하나금융지주 함영주·2...",
           "risk": false
         },
         {
           "date": "11-12",
-          "title": "현대제철, 화재·지진에 대비한 건축용 H형강 국내 첫 KS 인증",
+          "title": "하나금융지주 함영주, 금융지주 CEO 브랜드평판 2026년 11월...1위",
           "risk": false
         },
         {
           "date": "11-12",
-          "title": "현대제철, 국내 최초 복합성능 '내화내진 H형강' KS 인증",
+          "title": "함영주 하나금융지주, 11월 금융지주 CEO 브랜드평판 1위…황병우 아이...",
           "risk": false
         }
       ],
-      "foreign_today": 318450000,
-      "inst_today": 28950000,
+      "price": 119600,
+      "chg": -0.0042,
+      "activity": 0.78,
+      "foreign_today": 0,
+      "inst_today": 956800000,
       "exchange": "KOSPI"
     },
     {
@@ -232,7 +219,7 @@
       "vol20": 0.603,
       "foreign_net": -10864777200,
       "inst_net": 24251702400,
-      "score": 0.514,
+      "score": 0.5,
       "news": [
         {
           "date": "11-11",
@@ -247,6 +234,38 @@
       ],
       "foreign_today": 0,
       "inst_today": 601500000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "004020",
+      "name": "현대제철",
+      "close": 28950,
+      "ret5": -0.0086,
+      "ret20": 0.023,
+      "rsi14": 52.5,
+      "vol20": 0.626,
+      "foreign_net": 529623225,
+      "inst_net": 6313382475,
+      "score": 0.474,
+      "news": [
+        {
+          "date": "11-12",
+          "title": "현대제철 인천공장, 국내 최초 내화·내진 H형강 'SHN355FR' KS 인증 취득",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "현대제철, 화재·지진에 강한 'H형강' KS 인증 획득…국내 첫 사례",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "현대제철, 화재·지진에 대비한 건축용 H형강 국내 첫 KS 인증",
+          "risk": false
+        }
+      ],
+      "foreign_today": 318450000,
+      "inst_today": 28950000,
       "exchange": "KOSPI"
     },
     {
@@ -267,11 +286,11 @@
           "risk": false
         }
       ],
-      "price": 76900,
-      "chg": 0.0172,
-      "activity": 2.51,
+      "price": 76400,
+      "chg": 0.0106,
+      "activity": 2.37,
       "foreign_today": 0,
-      "inst_today": 538300000,
+      "inst_today": 534800000,
       "exchange": "KOSDAQ"
     },
     {
@@ -284,7 +303,7 @@
       "vol20": 1.017,
       "foreign_net": -9297158850,
       "inst_net": 17172372000,
-      "score": 0.629,
+      "score": 0.632,
       "news": [
         {
           "date": "11-12",
@@ -316,7 +335,7 @@
       "vol20": 1.794,
       "foreign_net": -4376505570,
       "inst_net": 1010439810,
-      "score": 0.286,
+      "score": 0.263,
       "news": [],
       "foreign_today": 233520000,
       "inst_today": 0,
