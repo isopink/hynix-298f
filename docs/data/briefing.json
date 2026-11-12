@@ -81,9 +81,9 @@
     ]
   },
   "intraday": {
-    "time": "14:00",
-    "pool": 465,
-    "analyzed_new": 30,
+    "time": "14:15",
+    "pool": 464,
+    "analyzed_new": 20,
     "passed": 9,
     "kept_prep": false
   },
@@ -116,11 +116,11 @@
           "risk": false
         }
       ],
-      "price": 65900,
-      "chg": -0.0075,
-      "activity": 0.54,
-      "foreign_today": 1252100000,
-      "inst_today": 1515700000,
+      "price": 65700,
+      "chg": -0.0105,
+      "activity": 0.53,
+      "foreign_today": 1248300000,
+      "inst_today": 1511100000,
       "exchange": "KOSPI"
     },
     {
@@ -137,17 +137,17 @@
       "news": [
         {
           "date": "11-12",
+          "title": "대동로보틱스-GS건설, 운반로봇 실증 통해 건설 로봇 사업화 가능성 확...",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "GS건설, 철거·증축 없는 아파트 리모델링 추진…내년 첫 협약 목표",
+          "risk": false
+        },
+        {
+          "date": "11-12",
           "title": "GS건설, 재건축 어려운 아파트에 새 대안…철거·증축 없는 리모델링 선...",
-          "risk": false
-        },
-        {
-          "date": "11-12",
-          "title": "재건축 어려운 서울 260여 단지 겨냥…GS건설, 신속형 리모델링 추진",
-          "risk": false
-        },
-        {
-          "date": "11-12",
-          "title": "대동로보틱스, 운반로봇 RT100 건설 현장 투입…GS건설과 협업",
           "risk": false
         }
       ],
@@ -228,17 +228,17 @@
       "news": [
         {
           "date": "11-12",
+          "title": "[카드] 겨울 앞두고 감기약 수요↑…동국제약, 성분별 복용법 안내",
+          "risk": false
+        },
+        {
+          "date": "11-12",
           "title": "일교차 커진 환절기, 감기 환자 늘었다…동국제약, 증상별 감기약 선택...",
           "risk": false
         },
         {
           "date": "11-12",
           "title": "동국제약, 겨울철 감기 증상에 따른 올바른 감기약 선택 제안",
-          "risk": false
-        },
-        {
-          "date": "11-12",
-          "title": "'환절기 감기 콜드펜? 콜드프로펜?'…동국제약, 증상별 맞춤 감기약 제...",
           "risk": false
         }
       ],
@@ -256,7 +256,7 @@
       "vol20": 1.54,
       "foreign_net": -1641700700,
       "inst_net": 3941389950,
-      "score": 0.926,
+      "score": 0.889,
       "news": [
         {
           "date": "11-12",
@@ -269,11 +269,11 @@
           "risk": false
         }
       ],
-      "price": 83300,
-      "chg": 0.0611,
-      "activity": 1.14,
+      "price": 82400,
+      "chg": 0.0497,
+      "activity": 1.13,
       "foreign_today": 0,
-      "inst_today": 83300000,
+      "inst_today": 82400000,
       "exchange": "KOSDAQ"
     },
     {
@@ -318,7 +318,7 @@
       "vol20": 1.794,
       "foreign_net": -4376505570,
       "inst_net": 1010439810,
-      "score": 0.556,
+      "score": 0.593,
       "news": [],
       "foreign_today": 252980000,
       "inst_today": 0,
