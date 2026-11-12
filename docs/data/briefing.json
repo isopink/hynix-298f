@@ -81,8 +81,8 @@
     ]
   },
   "intraday": {
-    "time": "10:45",
-    "pool": 395,
+    "time": "11:00",
+    "pool": 394,
     "analyzed_new": 30,
     "passed": 6,
     "kept_prep": false
@@ -98,21 +98,21 @@
       "vol20": 0.896,
       "foreign_net": -23932404925,
       "inst_net": 30374499875,
-      "score": 0.923,
+      "score": 1.0,
       "news": [
         {
           "date": "11-12",
-          "title": "GS건설, 동반성장지수 6년 연속 '최우수' 등급 획득",
+          "title": "GS건설, '아르뮤제자이' 견본주택 개관…아파트 984가구 분양",
           "risk": false
         },
         {
           "date": "11-12",
-          "title": "GS건설, 아파트 리모델링 '비욘드 어디션' 출시…서울 260여 단지 공략",
+          "title": "대동로보틱스, GS건설과 운반로봇 실증 완료… RaaS 사업화 검토",
           "risk": false
         },
         {
           "date": "11-12",
-          "title": "GS건설, 새로운 리모델링 사업 'BEYOND ADDITION' 공개·'아르뮤제자이' ...",
+          "title": "GS건설, 철거·증축 없는 리모델링 추진…3년 내 준공 목표",
           "risk": false
         }
       ],
@@ -121,19 +121,35 @@
       "exchange": "KOSPI"
     },
     {
-      "code": "015760",
-      "name": "한국전력",
-      "close": 30650,
-      "ret5": 0.0016,
-      "ret20": 0.0515,
-      "rsi14": 56.1,
-      "vol20": 0.399,
-      "foreign_net": -41601197875,
-      "inst_net": 78634696350,
-      "score": 0.846,
-      "news": [],
-      "foreign_today": 1134050000,
-      "inst_today": 275850000,
+      "code": "004020",
+      "name": "현대제철",
+      "close": 28950,
+      "ret5": -0.0086,
+      "ret20": 0.023,
+      "rsi14": 52.5,
+      "vol20": 0.626,
+      "foreign_net": 529623225,
+      "inst_net": 6313382475,
+      "score": 0.615,
+      "news": [
+        {
+          "date": "11-12",
+          "title": "현대제철, 내화·내진성 강화한 H형강 KS 인증",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "현대제철, 화재·지진 견디는 'H형강' 국내 첫 KS 인증",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "현대제철, 지진·화재 모두 견디는 H형강 개발 … 국내 첫 KS 인증",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 28950000,
       "exchange": "KOSPI"
     },
     {
@@ -178,7 +194,7 @@
       "vol20": 1.794,
       "foreign_net": -4376505570,
       "inst_net": 1010439810,
-      "score": 0.462,
+      "score": 0.615,
       "news": [],
       "foreign_today": 214060000,
       "inst_today": 0,
