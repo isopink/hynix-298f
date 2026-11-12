@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "13:30",
+    "time": "13:45",
     "pool": 465,
     "analyzed_new": 30,
-    "passed": 8,
+    "passed": 9,
     "kept_prep": false
   },
   "candidates": [
@@ -98,7 +98,7 @@
       "vol20": 0.943,
       "foreign_net": -99237911500,
       "inst_net": 63810101050,
-      "score": 0.531,
+      "score": 0.595,
       "news": [
         {
           "date": "11-12",
@@ -118,7 +118,7 @@
       ],
       "price": 66100,
       "chg": -0.0045,
-      "activity": 0.57,
+      "activity": 0.55,
       "foreign_today": 1255900000,
       "inst_today": 1520300000,
       "exchange": "KOSPI"
@@ -133,21 +133,21 @@
       "vol20": 0.896,
       "foreign_net": -23932404925,
       "inst_net": 30374499875,
-      "score": 0.5,
+      "score": 0.514,
       "news": [
         {
           "date": "11-12",
-          "title": "GS건설, 안산 아르뮤제자이 분양..전용 84㎡ 추첨 60%",
+          "title": "[더벨][i-point] 대동로보틱스, GS건설과 운반로봇 실증",
           "risk": false
         },
         {
           "date": "11-12",
-          "title": "GS건설, 안산 옛 홈플러스 부지에 1354가구 ‘아르뮤제자이’ 공급",
+          "title": "GS건설, 철거없는 리모델링 사업 ‘비욘드 어디션’ 출범",
           "risk": false
         },
         {
           "date": "11-12",
-          "title": "GS건설, 무증축 리모델링 사업 추진...내년 첫 협약 목표",
+          "title": "GS건설 신속형 리모델링 사업 ‘BEYOND ADDITION’ 선보여",
           "risk": false
         }
       ],
@@ -165,7 +165,7 @@
       "vol20": 0.603,
       "foreign_net": -10864777200,
       "inst_net": 24251702400,
-      "score": 0.469,
+      "score": 0.514,
       "news": [
         {
           "date": "11-11",
@@ -181,6 +181,38 @@
       "foreign_today": 0,
       "inst_today": 2205500000,
       "exchange": "KOSPI"
+    },
+    {
+      "code": "086450",
+      "name": "동국제약",
+      "close": 25700,
+      "ret5": 0.049,
+      "ret20": 0.0511,
+      "rsi14": 63.0,
+      "vol20": 0.449,
+      "foreign_net": 2732710725,
+      "inst_net": 2918265150,
+      "score": 0.324,
+      "news": [
+        {
+          "date": "11-12",
+          "title": "일교차 커진 환절기, 감기 환자 늘었다…동국제약, 증상별 감기약 선택...",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "동국제약, 겨울철 감기 증상에 따른 올바른 감기약 선택 제안",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "'환절기 감기 콜드펜? 콜드프로펜?'…동국제약, 증상별 맞춤 감기약 제...",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 77100000,
+      "exchange": "KOSDAQ"
     },
     {
       "code": "121600",
@@ -200,11 +232,11 @@
           "risk": false
         }
       ],
-      "price": 75900,
-      "chg": 0.004,
-      "activity": 1.9,
+      "price": 75800,
+      "chg": 0.0026,
+      "activity": 1.89,
       "foreign_today": 0,
-      "inst_today": 3491400000,
+      "inst_today": 3486800000,
       "exchange": "KOSDAQ"
     },
     {
@@ -217,7 +249,7 @@
       "vol20": 1.017,
       "foreign_net": -9297158850,
       "inst_net": 17172372000,
-      "score": 0.594,
+      "score": 0.595,
       "news": [
         {
           "date": "11-12",
@@ -249,7 +281,7 @@
       "vol20": 1.54,
       "foreign_net": -1641700700,
       "inst_net": 3941389950,
-      "score": 0.594,
+      "score": 0.595,
       "news": [
         {
           "date": "11-12",
@@ -262,11 +294,11 @@
           "risk": false
         }
       ],
-      "price": 84700,
-      "chg": 0.079,
-      "activity": 1.2,
+      "price": 84400,
+      "chg": 0.0752,
+      "activity": 1.15,
       "foreign_today": 0,
-      "inst_today": 84700000,
+      "inst_today": 84400000,
       "exchange": "KOSDAQ"
     },
     {
@@ -279,7 +311,7 @@
       "vol20": 1.794,
       "foreign_net": -4376505570,
       "inst_net": 1010439810,
-      "score": 0.25,
+      "score": 0.297,
       "news": [],
       "foreign_today": 252980000,
       "inst_today": 0,
