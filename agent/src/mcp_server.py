@@ -10,6 +10,8 @@
   submit_review   주간 회고 결과 (조정 제안 + 보고서 초안)
   get_tuning_context  기준값 조정용 성과 요약 + 조정 가능한 값·범위 (평일 조정 실행)
   apply_tuning    기준값 조정 제안 → 서버가 규칙(config/tuning.json)으로 검사해 통과분만 params.json 에 반영
+  verify_claims   매수 측 · 매도 측 · 보유 관리 근거 문장의 숫자가 브리핑 · 계좌에 있는지 대조 (11-12)
+  submit_report   보고서 작성 에이전트의 주간 보고서 초안 저장 (11-12)
 
 stdout 은 MCP 통신용이라, pykrx 등이 찍는 메시지는 전부 stderr 로 돌립니다.
 """
@@ -26,6 +28,7 @@ with contextlib.redirect_stdout(sys.stderr):
     import broker as B
     import data_prep
     import risk
+    import routing
     import sizing
     import tuning
     from mcp.server.fastmcp import FastMCP
@@ -139,7 +142,13 @@ def get_briefing() -> str:
     ls = (C.read_json(tuning.LESSONS, {}) or {}).get("lessons") or []
     if ls:   # 11-06 S.Lee: 지난 판단 채점에서 나온 교훈 (맞은 판단 유지 · 틀린 판단 조정)
         ctx += ["", "## 지난 판단 점검에서 배운 점 (기준값 조정 실행이 결과로 채점해 남김, 확신도에 반영할 것)"] + [f"- {x}" for x in ls]
-    return data_prep.to_text(b) + "\n".join(ctx) + intraday(b, r) + C.prior_judgments()
+    rt = ""
+    if os.environ.get("RUN_MODE", "decide") in ("decide", "view"):   # 11-12 S.Lee: 달라진 종목만 토론으로
+        try:
+            rt = routing.to_text(routing.route(b, p))
+        except Exception as e:  # noqa: BLE001  라우팅이 깨지면 전부 토론 (예전 흐름)
+            rt = f"\n\n## 토론 라우팅\n- 계산 실패 ({str(e)[:80]}) → 후보 전부 토론"
+    return data_prep.to_text(b) + "\n".join(ctx) + intraday(b, r) + C.prior_judgments() + rt
 
 
 def intraday(b, r):
@@ -299,6 +308,65 @@ def apply_tuning(changes: list[dict], summary: str, lessons: list[str] = None) -
         C.write_json(tuning.LESSONS, {"time": C.stamp(), "lessons": [str(x)[:200] for x in lessons][:6]})
         C.journal("lessons", lessons=[str(x)[:200] for x in lessons][:6])
     return tuning.apply(changes, summary)
+
+
+
+
+_NUM = __import__("re").compile(r"([+\-−]?\d[\d,]*(?:\.\d+)?)\s*(%p|%|억|원|배)?")
+
+
+def _nums(text):
+    out = []
+    for m in _NUM.finditer(text or ""):
+        try:
+            v = float(m.group(1).replace(",", "").replace("−", "-"))
+        except ValueError:
+            continue
+        out.append((v, m.group(2) or "", m.group(0).strip()))
+    return out
+
+
+@mcp.tool()
+@quiet
+def verify_claims(items: list[dict]) -> dict:
+    """근거 문장의 숫자 대조 (11-12). items = [{"code": "005930", "text": "bull · bear · 보유 관리 근거 문장"}].
+    문장 속 %·억·원·배 숫자를 브리핑 · 계좌 · 직전 판단에 나온 숫자와 비교해, 어디에도 없는 숫자를 돌려줌 (반올림 차이는 허용).
+    돌려받은 숫자는 확인 안 된 근거로 보고 확신도에 쓰지 않음. 날짜(11-12)·시각·회차는 검사하지 않음."""
+    base = get_briefing() + "\n" + str(get_account())
+    ref = {}
+    for v, u, _ in _nums(base):
+        ref.setdefault(u, []).append(v)
+        if u == "원" and abs(v) >= 1e7:   # 원 단위 수급을 억으로도
+            ref.setdefault("억", []).append(v / 1e8)
+    pct = ref.get("%", []) + ref.get("%p", [])
+    out = []
+    for it in items or []:
+        bad = []
+        for v, u, raw in _nums(str(it.get("text", ""))):
+            if not u or u == "배" and v < 1.5:
+                continue
+            pool = pct if u in ("%", "%p") else ref.get(u, [])
+            tol = 0.15 if u in ("%", "%p") else max(1.0, abs(v) * 0.02)
+            if not any(abs(abs(v) - abs(x)) <= tol for x in pool):
+                bad.append(raw)
+        if bad:
+            out.append({"code": it.get("code"), "unverified": bad[:8]})
+    C.journal("verify", checked=len(items or []), flagged=len(out), detail=out[:20])
+    return {"ok": True, "checked": len(items or []), "flagged": out}
+
+
+@mcp.tool()
+@quiet
+def submit_report(week: int, report_markdown: str) -> dict:
+    """보고서 작성 에이전트의 주간 운용보고서 초안 저장 (수 · 금 17:00 실행). 회고 분석 초안(week{n}.md)은 그대로 두고
+    reports/drafts/week{n}[-mid].report.md 로 따로 씀."""
+    mid = C.now().weekday() == 2
+    path = os.path.join(C.ROOT, "reports", "drafts", f"week{week}{'-mid' if mid else ''}.report.md")
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(report_markdown)
+    C.journal("report", week=week, draft=os.path.relpath(path, C.ROOT), mid=mid)
+    return {"ok": True, "draft": path}
 
 
 if __name__ == "__main__":

@@ -56,6 +56,26 @@ reports/    보고서 PDF, drafts/ = 주간 회고 에이전트가 쓴 초안
 
 에이전트는 계속 켜두는 데스크톱에서 돌고, 노트북은 수정 전용. 노트북에서 push → 데스크톱 `sync`(로그온부터 상시)가 1분 안에 검사·반영, 장중이면 감시·잔고 루프 재시작. 옮기는 순서는 `agent/MOVE_PC.md`.
 
+### 에이전트 구조 (11-12 S.Lee 분리, `agent/CLAUDE.md` A · D · E, `params.agents.split` 로 되돌릴 수 있음)
+
+| 단계 | 에이전트 | 하는 일 | 모델 · effort |
+|---|---|---|---|
+| 15분 판단 | 총괄 | 최종 확신도 · 행동, 지휘 | Opus 5.5 xhigh (`params.effort.decide`) |
+| 15분 판단 | regime | 국면 | Sonnet 5.5 high |
+| 15분 판단 | position (새) | 보유 종목 매도 · 보유 · 추가 매수 확신도 (오른 종목 일찍 팔지 않기) | Opus 5.5 high |
+| 15분 판단 | research (새) | 토론 대상 종목의 사실 표, 검색 6번 · 8분 상한 | Opus 5.5 xhigh |
+| 15분 판단 | bull · bear | 같은 사실 표로 후보만 토론 (직접 검색 안 함) | Opus 5.5 high |
+| 15분 판단 | executor (새) | 결정 목록대로 매도 → 매수 → 기록 | Haiku 5.5 medium |
+| 손절 · 익절 | 총괄 | 조건 확인 후 직접 주문 (속도 때문에 executor 안 씀) | Opus 5.5 high |
+| 16:00 조정 | scorer (새) → tuner (새) | 채점 → 기준값 0~2개 · 교훈 `apply_tuning` | Opus 5.5 max (실행 60분) |
+| 수 · 금 15:50 | review | 분석 · 조정 제안 | Opus 5.5 max |
+| 수 · 금 17:00 | writer (새) | 주간 보고서 초안 `reports/drafts/week{n}[-mid].report.md` (작업 `Hynix298-report`, sync 가 등록) | Sonnet 5.5 medium |
+
+- 순서: regime · position · research 동시 → bull → bear → `verify_claims`(근거 숫자를 브리핑과 대조, 코드) → 총괄 → executor
+- **라우팅** (`src/routing.py`, `params.routing`): 직전 회차 대비 가격 ±1.5% · 외국인/기관 순매수 방향 바뀜(5억 이상) · 새 뉴스 · 새 후보만 research · 토론, 나머지 후보는 직전 판단 이어 쓰기. 그날 첫 회차 · 09:30 · 15:00 · 15:15 는 전부 토론. 이어 쓴 종목은 마지막으로 토론한 때의 값과 비교
+- 11-12 13:4x 에 main 에 합쳐 바로 다음 매매 회차부터 적용 (S.Lee, mock 시험 없이). 문제가 생기면 `params.agents.split=false` 한 줄로 예전 흐름(A-0 · D-0)
+- 2주차 보고서에 기록
+
 ### 에이전트 설계 (사전 계획서 기준)
 
 "에이전트는 제안하고, 규칙이 결정한다"

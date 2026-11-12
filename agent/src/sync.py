@@ -186,6 +186,20 @@ def ensure_review_mid():
     log("주간 회고 작업을 수·금 15:50 으로 등록" if r.returncode == 0 else f"  ! 중간 회고 작업 등록 실패 (setup_tasks.ps1 을 다시 실행할 것): {(r.stderr or r.stdout).strip()[:200]}")
 
 
+def ensure_report():
+    """11-12 S.Lee: 주간 보고서 작성(writer, Sonnet medium) 수 · 금 17:00. 매매 루프 밖, 기준값 조정이 끝나길 기다렸다 그 결과까지 담음."""
+    if os.name != "nt" or state().get("report_task") == "WED,FRI 17:00":
+        return
+    bat = os.path.join(C.AGENT, "run.bat")
+    r = subprocess.run(["schtasks", "/Create", "/TN", "Hynix298-report", "/TR", f'"{bat}" report', "/SC", "WEEKLY", "/D", "WED,FRI", "/ST", "17:00", "/F"],
+                       capture_output=True, text=True, encoding="mbcs", errors="replace", input="", timeout=60)
+    if r.returncode == 0:
+        save(report_task="WED,FRI 17:00")
+        log("주간 보고서 작업을 수 · 금 17:00 으로 등록")
+    else:
+        log(f"  ! 주간 보고서 작업 등록 실패 (setup_tasks.ps1 을 다시 실행할 것): {(r.stderr or r.stdout).strip()[:200]}")
+
+
 _last_heal = {}
 
 
@@ -415,6 +429,7 @@ def loop():
             heal()
             ensure_schedule()
             ensure_review_mid()
+            ensure_report()
             catch_up()
             shadow_heal()   # 11-12 SiON 놓친 작업 따라잡기
         except Exception as e:  # noqa: BLE001

@@ -31,15 +31,17 @@ LOCK = os.path.join(C.WORK, "run.lock")
 TOOLS_ALLOW = ["mcp__kiwoom__get_briefing", "mcp__kiwoom__get_account", "mcp__kiwoom__set_regime",
                "mcp__kiwoom__plan_order", "mcp__kiwoom__place_order", "mcp__kiwoom__record_decision",
                "mcp__kiwoom__submit_review", "mcp__kiwoom__get_tuning_context", "mcp__kiwoom__apply_tuning",
+               "mcp__kiwoom__verify_claims", "mcp__kiwoom__submit_report",
                "Agent", "Task", "WebSearch", "Read"]
 TOOLS_DENY = ["Bash", "PowerShell", "Edit", "Write", "NotebookEdit", "WebFetch"]
 
 PROMPTS = {
-    "decide": "정기 판단 실행입니다 ({time}). CLAUDE.md 의 'A. 정기 판단' 순서대로 진행하세요.",
+    "decide": "정기 판단 실행입니다 ({time}). CLAUDE.md 의 '{sec_a}' 순서대로 진행하세요.",
     "view": "판단 갱신 실행입니다 ({time}). 이번 회차는 매매하지 않습니다 (다음 매매 {next_trade}). CLAUDE.md 의 'A-2. 판단 갱신' 순서대로 진행하세요.",
     "exit": "손절·익절 실행입니다 ({time}). 대상 종목: {codes}. 감시 사유: {why}. CLAUDE.md 의 'B. 손절·익절 실행' 순서대로 진행하세요.",
     "review": "주간 회고 실행입니다 ({time}). 대회 {week}주차, 기간 {period}. CLAUDE.md 의 'C. 주간 회고' 순서대로 진행하세요.",
-    "tune": "기준값 조정 실행입니다 ({time}). 대회 {week}주차. CLAUDE.md 의 'D. 기준값 조정' 순서대로 진행하세요.",
+    "tune": "기준값 조정 실행입니다 ({time}). 대회 {week}주차. CLAUDE.md 의 '{sec_d}' 순서대로 진행하세요.",
+    "report": "주간 보고서 작성 실행입니다 ({time}). 대회 {week}주차, 기간 {period}. CLAUDE.md 의 'E. 주간 보고서' 순서대로 진행하세요.",
 }
 
 
@@ -88,7 +90,7 @@ def mcp_config():
 
 
 # 실행이 정말 일을 했는지: 에이전트가 끝까지 갔다면 이 종류의 기록이 하나 이상 남아 있어야 함
-EXPECT = {"decide": {"regime"}, "view": {"regime"}, "exit": {"fill", "decision", "block"}, "review": {"review"}, "tune": {"tune"}}
+EXPECT = {"decide": {"regime"}, "view": {"regime"}, "exit": {"fill", "decision", "block"}, "review": {"review"}, "tune": {"tune"}, "report": {"report"}}
 
 
 def did_work(kind, run_id):
@@ -132,7 +134,7 @@ def claude(kind, prompt, dry=False):
         p = subprocess.Popen(cmd, cwd=HERE, env=env, stdin=subprocess.DEVNULL, stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE, encoding="utf-8", errors="replace")
         try:
-            out, err = p.communicate(timeout=(40 if eff else 25) * 60)   # max 실행은 40분까지 (16:00 조정이 회고를 최대 40분 기다림)
+            out, err = p.communicate(timeout=({"tune": 60, "review": 40, "report": 30}.get(kind, 25)) * 60)   # 11-12 조정은 채점 · 튜닝 둘 다 max 라 60분, 회고 40분 (16:00 조정이 회고를 최대 40분 기다림)
         except subprocess.TimeoutExpired:
             # 자식(MCP 서버, 서브에이전트)까지 통째로 종료. 안 그러면 파이프가 안 닫혀 계속 기다림
             subprocess.run(["taskkill", "/PID", str(p.pid), "/T", "/F"], capture_output=True)
@@ -211,6 +213,9 @@ def main():
         return
     if kind not in PROMPTS:
         sys.exit(f"알 수 없는 실행: {kind}\n{__doc__}")
+    if kind == "report" and C.now().weekday() not in (2, 4):
+        log("주간 보고서는 수 · 금에만 실행함")
+        return
     if kind == "tune":
         import tuning
         if not tuning.allowed_today():
@@ -222,6 +227,12 @@ def main():
     if not got and kind == "tune":   # 11-06 S.Lee: 수요일은 15:50 중간 회고가 끝나길 기다렸다가 그 제안까지 보고 조정 (목요일 장부터 반영)
         log("앞 실행(중간 회고 등)이 진행 중이라 기준값 조정을 최대 40분 기다림")
         for _ in range(40 * 4):
+            time.sleep(15)
+            if (got := acquire()):
+                break
+    if not got and kind == "report":   # 11-12 수 · 금 17:00: 기준값 조정이 끝나길 기다렸다가 그 결과까지 담음
+        log("앞 실행(기준값 조정 등)이 진행 중이라 보고서를 최대 90분 기다림")
+        for _ in range(90 * 4):
             time.sleep(15)
             if (got := acquire()):
                 break
@@ -250,7 +261,9 @@ def main():
             else:
                 kind = "view"
         start = p["competition"]["start"]
-        prompt = PROMPTS[kind].format(time=C.stamp(), codes=a.codes, why=a.why, next_trade=C.next_trade_time() or "내일",
+        split = (p.get("agents") or {}).get("split", False)   # 11-12 S.Lee: 에이전트 분리 흐름 (false 면 예전 A-0 · D-0)
+        prompt = PROMPTS[kind].format(sec_a="A. 정기 판단" if split else "A-0. 예전 정기 판단", sec_d="D. 기준값 조정" if split else "D-0. 예전 기준값 조정",
+                                      time=C.stamp(), codes=a.codes, why=a.why, next_trade=C.next_trade_time() or "내일",
                                       week=C.competition_week(p=p),
                                       period=("이번 주 월~수 (수요일 중간 회고)" if C.now().weekday() == 2 else f"{start} 이후 이번 주 (금요일 주간 회고)"))   # 11-06 S.Lee: 수·금 두 번
         claude(kind, prompt, dry)

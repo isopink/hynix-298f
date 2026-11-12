@@ -1,5 +1,7 @@
 {
-  "effort": { "_note": "11-12 S.Lee: 실행 종류별 Claude effort (run.py 가 --effort 로 넘김). 적지 않은 종류(decide · exit)는 .claude/settings.json 의 high. max 실행은 예산 한도 $20 · 시간 40분", "tune": "max", "review": "max" },
+  "routing": { "_note": "11-12 S.Lee: 토론 라우팅 (src/routing.py). 직전 회차 대비 가격 ±price_move · 외국인/기관 순매수 방향 바뀜(flow_flip_min 원 이상) · 새 뉴스 · 새 후보만 근거 수집 · 토론, 나머지는 직전 판단 이어 쓰기. full_slots 회차와 그날 첫 회차는 전부 토론. enabled=false 면 예전처럼 전부 토론", "enabled": true, "price_move": 0.015, "flow_flip_min": 500000000, "full_slots": ["09:30", "15:00", "15:15"] },
+  "agents": { "_note": "11-12 S.Lee: 에이전트 분리 흐름 (CLAUDE.md A · D · E). false 면 예전 흐름 (A-0: 총괄이 bull · bear 만 부르고 직접 주문)", "split": true },
+  "effort": { "_note": "11-12 S.Lee: 실행 종류별 Claude effort (run.py 가 --effort 로 넘김). 적지 않은 종류(exit 손절 · 익절)는 .claude/settings.json 의 high. 11-12: 총괄 판단 xhigh, 보고서 medium. 서브에이전트는 각자 파일의 effort. 이 표에 있는 실행은 예산 한도 $20, 시간 조정 60분 · 회고 40분 · 보고서 30분 · 판단 25분", "decide": "xhigh", "view": "xhigh", "tune": "max", "review": "max", "report": "medium" },
   "sion": { "_note": "11-12 S.Lee: SiON(온톨로지 그림자) 운영 멈춤. false 면 sync 가 SiON 작업을 다시 띄우지 않고, snapshot 이 그림자 계좌를 올리지 않고, logger 가 shadow.json 을 갱신하지 않음. 대시보드는 docs/config.js 의 sion 으로 따로 끔", "enabled": false },
   "_note": "판단 기준값. 평일 장 마감 뒤 조정 실행(run.py tune)이 config/tuning.json 규칙 안에서 자동으로 바꾸고 커밋함. 변경 이력은 docs/data/tuning.json.",
 
