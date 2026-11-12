@@ -8,10 +8,12 @@ The trading agent. **The agent proposes, the rules decide**: Claude Code reads t
 |---|---|---|
 | 08:30 | `prep` — account + data prep → `work/briefing.json` | no |
 | 08:30–15:20 | `monitor` — every 5 min, checks stop / take-profit / max holding days; launches an `exit` run when hit | only when triggered |
-| 09:30–15:15, every 15 min | `decide` — intraday re-screen → regime → bull ⇄ bear debate → lead agent decides → orders in every slot since 11-05 (`params.schedule.trade_times` lists all 24); a stock sold today is not bought back the same day | yes |
+| 09:30–15:15, every 15 min | `decide` — intraday re-screen → routing (only changed candidates) → regime ∥ position ∥ research → bull ⇄ bear on one fact sheet → claim check → lead agent decides → executor places orders, every slot since 11-05 (`params.schedule.trade_times` lists all 24); a stock sold today is not bought back the same day | yes |
 | 15:45 | `close` — record today's equity, publish to dashboard | no |
 | 16:00 | `tune` — agent proposes 0–2 threshold changes; `src/tuning.py` applies only those inside `config/tuning.json` and commits | yes |
-| Sat 10:00 | `review` — weekly review + report draft | yes |
+| Wed · Fri 15:50 | `review` — weekly review + suggestion | yes |
+| weekdays 16:00 | `tune` — scorer → tuner | yes |
+| Wed · Fri 17:00 | `report` — weekly report draft (writer) | yes |
 | always (from logon) | `sync` — every minute, pulls pushed code, checks it, restarts `monitor` / the balance loop if their code changed | no |
 
 Register them with `setup_tasks.ps1` (Windows Task Scheduler). The agent runs on an always-on PC and is edited from a laptop; see [MOVE_PC.md](MOVE_PC.md) (Korean) for moving it between machines.
@@ -20,9 +22,9 @@ Register them with `setup_tasks.ps1` (Windows Task Scheduler). The agent runs on
 
 ```
 agent/
-├── CLAUDE.md                 # Lead agent instructions (decide / exit / review runs)
+├── CLAUDE.md                 # Lead agent instructions (decide / exit / review / tune / report runs)
 ├── .claude/
-│   ├── agents/               # Sub-agents: regime, bull, bear, review
+│   ├── agents/               # Sub-agents: regime, position, research, bull, bear, executor, scorer, tuner, review, writer
 │   ├── hooks/risk_check.py   # PreToolUse hook on mcp__kiwoom__place_order
 │   └── settings.json         # Hook registration, tool permissions (no Bash / Edit / Write)
 ├── .mcp.json                 # kiwoom MCP server

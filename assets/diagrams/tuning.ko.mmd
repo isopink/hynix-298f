@@ -1,13 +1,17 @@
 flowchart TB
-    J[("매매·판단 기록")] --> T["평일 16:00<br/>조정 에이전트"]
-    T -->|"0–2개 제안 + 근거"| C{"tuning.py<br/>허용 키? 범위? 변경 폭? 쿨다운?"}
+    J[("판단 · 체결 기록")] --> SC["평일 16:00 · 채점<br/>판단마다 그 뒤 결과로 채점<br/>Opus · max"]
+    SC --> TU["자동 튜닝<br/>기준값 0~2개 + 교훈 2~5줄<br/>Opus · max"]
+    TU --> C{{"tuning.py<br/>허용된 값? 범위 안? 폭? 쿨다운?"}}
     C -- 통과 --> P["params.json<br/>자동 커밋"]
     C -- 거절 --> J
+    TU --> LS["교훈 → 다음 브리핑"]
     P --> D["다음 날 판단"]
-    J --> W["토요일 10:00<br/>주간 회고"] --> R["보고서 초안<br/>+ 조정 제안"]
-    classDef agent fill:#2a1a1a,stroke:#da291c,color:#f3f3f3
-    classDef hook fill:#3a1512,stroke:#ff5a4a,stroke-width:2px,color:#ffffff
-    classDef ok fill:#14262f,stroke:#4aa3d4,color:#f3f3f3
-    class T,W agent
+    LS --> D
+    J --> W["수 · 금 15:50 · 회고<br/>분석 + 제안 1개 · Opus · max"]
+    W --> TU
+    classDef agent fill:#1c1416,stroke:#ff5a65,color:#f2f2f2
+    classDef hook fill:#2a1416,stroke:#ff7a82,stroke-width:2px,color:#ffffff
+    classDef ok fill:#121a26,stroke:#4e94ff,color:#f2f2f2
+    class SC,TU,W agent
     class C hook
-    class P ok
+    class P,LS ok

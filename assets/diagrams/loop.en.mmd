@@ -1,16 +1,17 @@
 flowchart TB
     subgraph DATA["① Data · Python"]
         D1["08:30 prep<br/>KRX prices · 5-day flows<br/>Naver news"]
-        D2["Before every decision<br/>Kiwoom intraday ranks<br/>trading value · foreign · institution"]
+        D2["Before every decision<br/>Kiwoom intraday ranks · live RSI<br/>routing: what changed"]
     end
-    subgraph AGENT["② Decide · Claude Code"]
-        A1["Regime → exposure cap"]
-        A2["Bull ⇄ Bear debate"]
+    subgraph AGENT["② Decide · Claude Code sub-agents"]
+        A1["Regime · Position · Research<br/>in parallel"]
+        A2["Bull ⇄ Bear<br/>on one shared fact sheet"]
         A3["Lead agent<br/>conviction 0–1"]
-        A1 --> A2 --> A3
+        A4["Executor"]
+        A1 --> A2 --> A3 --> A4
     end
     subgraph RULES["③ Rules · code"]
-        R1["Conviction adjustments<br/>RSI · falling market"]
+        R1["Claim check · conviction adjustments<br/>RSI · falling market"]
         R2["Sizing<br/>qty · stop · target"]
         R3{{"Risk Hook"}}
         R1 --> R2 --> R3
@@ -19,14 +20,16 @@ flowchart TB
     LOG[("journal.jsonl")]
     WEB["Dashboard"]
 
-    DATA --> AGENT --> RULES
+    DATA --> AGENT
+    A3 -.-> R1
+    A4 --> R3
     R3 -- pass --> K
     R3 -- block --> LOG
     K --> LOG --> WEB
-    LOG -. "daily tuning 16:00<br/>weekly review Sat" .-> AGENT
-    classDef agent fill:#2a1a1a,stroke:#da291c,color:#f3f3f3
-    classDef hook fill:#3a1512,stroke:#ff5a4a,stroke-width:2px,color:#ffffff
-    classDef ok fill:#14262f,stroke:#4aa3d4,color:#f3f3f3
-    class A1,A2,A3 agent
+    LOG -. "16:00 scorer → tuner<br/>Wed · Fri review → writer" .-> AGENT
+    classDef agent fill:#1c1416,stroke:#ff5a65,color:#f2f2f2
+    classDef hook fill:#2a1416,stroke:#ff7a82,stroke-width:2px,color:#ffffff
+    classDef ok fill:#121a26,stroke:#4e94ff,color:#f2f2f2
+    class A1,A2,A3,A4 agent
     class R3 hook
     class K ok
