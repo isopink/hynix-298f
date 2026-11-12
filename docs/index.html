@@ -27,7 +27,11 @@ if (!/(^|[?&])theme=classic\b/.test(location.search)) { var h = document.documen
 <style>html.volt-wait body { visibility: hidden; }</style>
 <meta name="twitter:title" content="The Sigma Engine">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&display=swap">
+<!-- 11-12 로딩 줄이기: d3 를 HTML 을 읽는 동안 미리 받아 둠 (본문은 d3 · VOLT 가 켜질 때까지 숨김), 예전 화면 글꼴 Noto Serif KR 은 ?theme=classic 일 때만 -->
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preload" as="script" href="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js">
+<script>if (/(^|[?&])theme=classic\b/.test(location.search)) document.write('<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&display=swap">');</script>
 <style>
 /* Bento grid on near-black. Rosso Corsa = gains & the one hero line; blue = losses; everything else greyscale. Sharp corners, hairline borders. */
 :root {
@@ -992,7 +996,8 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   try { SAMPLE = JSON.parse(document.getElementById('sample-data').textContent); } catch (e) {}
   Promise.all(['equity', 'holdings', 'trades', 'risk', 'system', 'reviews', 'status', 'decision', 'briefing', 'tuning', 'kodex200'].map(n =>
     fetch('data/' + n + '.json', { cache: 'no-store' }).then(r => { if (!r.ok) throw 0; return r.json(); }).catch(() => SAMPLE[n] || [])
-  ).concat(Promise.resolve().then(loadKD))).then(([equity, holdings, trades, risk, system, reviews, status, decision, briefing, tuning, kodex200]) => {
+  // 11-12 KOSPI 일봉 예비값(Supabase)은 기다리지 않고 뒤에서 받음 — 비교 기준이 KODEX 200 이라 첫 화면에 필요 없음
+  ).concat(Promise.resolve().then(() => { loadKD(); }))).then(([equity, holdings, trades, risk, system, reviews, status, decision, briefing, tuning, kodex200]) => {
     TUNING = Array.isArray(tuning) ? tuning : [];
     BM = kodex200 && kodex200.days ? kodex200 : null;   // 11-11 S.Lee: 비교 기준 KODEX 200 (없으면 예전처럼 KOSPI)
     STATUS = Array.isArray(status) ? {} : status || {};
@@ -1006,7 +1011,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     // 첫 화면은 실시간 잔고(Supabase)를 받은 뒤 한 번에 그림. 예전엔 json(지난 마감 기록)으로 먼저 그렸다가 몇 초 뒤
     // 최신 값으로 바뀌어 숫자가 튀었음. 4초 안에 안 오면 json 으로 먼저 그리고, 늦게 오면 그때 갱신
     const live = CFG.supabaseUrl && CFG.supabaseAnonKey;
-    const first = live ? Promise.race([pollLive(), new Promise(r => setTimeout(r, 4000))]) : Promise.resolve();
+    const first = live ? Promise.race([pollLive(), new Promise(r => setTimeout(r, 1500))]) : Promise.resolve();   // 11-12 4초 → 1.5초 (첫 화면이 늦게 뜨던 것)
     first.then(() => {
       if (!LIVE_AT) { fillText(); drawAll(); }   // 실시간 값이 왔으면 pollLive 가 이미 그렸음
       fillLog(); startKospi();
@@ -1065,15 +1070,15 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const have = new Set((BASE.equity || []).map(r => r.date));
     const days = d3.utcDays(toD(since), toD(today)).filter(d => d.getUTCDay() % 6 !== 0).map(d => d.toISOString().slice(0, 10))
       .filter(d => !have.has(d) && !FILL.has(d));
-    for (const d of days) {
+    await Promise.all(days.map(async d => {   // 11-12 빠진 날들을 한 번에 (예전엔 하나씩 차례로)
       const next = d3.utcDay.offset(toD(d), 1).toISOString().slice(0, 10);
       try {
         const r = await fetch(`${url}/rest/v1/snapshots?select=ts,total,kospi&ts=gte.${d}T00:00:00%2B09:00&ts=lt.${next}T00:00:00%2B09:00&order=ts.desc&limit=1`, { headers: h });
-        if (!r.ok) continue;   // 실패하면 다음 회차에 다시
+        if (!r.ok) return;   // 실패하면 다음 회차에 다시
         const s = (await r.json())[0];
         FILL.set(d, s ? { date: d, total: +s.total, kospi: s.kospi != null ? +s.kospi : null, regime: null, cap: null } : null);   // 스냅샷도 없으면(휴장) 비움
       } catch (e) { /* 다음 회차에 다시 */ }
-    }
+    }));
     const rows = [...FILL.values()].filter(Boolean);
     for (const r of rows) {   // 11-12 마감 기록이 없는 날은 국면 · 상한을 그 전 마감 기록에서 이어받음 (도넛 상한 호)
       const prev = (BASE.equity || []).filter(x => x.date < r.date && x.regime).pop();
