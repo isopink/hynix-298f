@@ -479,7 +479,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
       <div class="hero">
         <div class="side eng-sum">   <!-- 11-10 S.Lee 가독성 개편: 두 엔진 요약을 나란히 (Sigma 위 · SiON 아래, 폰은 좌우) -->
           <div class="eng" id="eng-sigma">
-            <div class="eng-h"><span class="eyebrow">Sigma Engine</span><span class="st-line" id="st-line" hidden></span></div>
+            <div class="eng-h"><span class="eyebrow">Cumulative return</span><span class="st-line" id="st-line" hidden></span></div>
             <div id="realized"><div class="big won" id="pnl-won">—</div></div>
             <div class="hero-kpi" id="hero-kpi"></div>   <!-- 11-12 S.Lee: 왼쪽이 휑해서 핵심 숫자 6개 (KODEX 200 대비 · 오늘 · 손익 · 최대 낙폭 · 체결 · 회전율) -->
           </div>
@@ -673,6 +673,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
 /* 11-10 S.Lee: 메인은 Sigma Engine, SiON 은 테스트 → 강조를 Sigma 로 */
 [data-theme=volt] .eng#eng-sigma .eyebrow { color: #f2f2f2; }
 [data-theme=volt] .eng#eng-sigma .eyebrow::after { content: "LIVE"; margin-left: 8px; padding: 1px 7px; border-radius: 9999px; font-size: 10px; letter-spacing: 1.2px; color: #101010; background: #f2f2f2; vertical-align: 1px; }
+.eng-sum:has(> .eng.sion[hidden]) #eng-sigma .eyebrow::after { content: none !important; }   /* 11-12 S.Lee: 엔진이 하나면 이름표 대신 '누적 수익률', LIVE 태그 없음 */
 [data-theme=volt] .eng .eyebrow.on, [data-theme=volt] .eyebrow.on { color: #8b949e; }
 [data-theme=volt] .eng#eng-sion .eyebrow::after { content: "TEST"; margin-left: 8px; padding: 0 6px; border-radius: 9999px; font-size: 10px; letter-spacing: 1.2px; color: #8b949e; border: 1px solid #3d3a39; vertical-align: 1px; }
 [data-theme=volt] .eng#eng-sion .big { opacity: .6; }
