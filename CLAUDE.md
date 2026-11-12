@@ -143,7 +143,7 @@ reports/    보고서 PDF, drafts/ = 주간 회고 에이전트가 쓴 초안
 - 11-12 S.Lee: 최상단 제목 'Sigma Engine' 글자 없앰 (h1 은 읽기 프로그램용 `sr-only` 로만), 머리글엔 상태 점 줄 · KOSPI 칩만
 - 11-12 S.Lee: 누적 수익률 차트 오른쪽 끝의 Sigma ↔ KODEX 200 세로 점선 없앰
 - 11-12 S.Lee: PC(641px 이상)는 머리글(상태 점 넷 · KOSPI 칩)을 맨 위 카드의 누적 수익률 차트 바로 위 한 줄로 옮김 (구분선 없음, `</body>` 앞 스크립트가 `header.top` 을 `.hero-chart` 맨 앞으로 옮김). 폰은 그대로
-- 11-12 S.Lee: PC 포트폴리오 카드는 도넛 왼쪽 · 종목 표 오른쪽 (`drawDonut` 이 칸 폭 760px 이상이면 `pf-split`, 도넛 그림 폭을 줄여 두 칸 그리드). 폰은 위아래 그대로
+- 11-12 S.Lee: PC 포트폴리오 카드는 도넛 왼쪽 · 종목 표 오른쪽 (`drawDonut` 이 칸 폭 760px 이상이면 `pf-split`, 도넛 그림 폭을 줄여 두 칸 그리드, 'Table' 이름표 없이 표를 도넛 높이 가운데에). 폰은 위아래 그대로. 표는 폰 · PC 모두 비중 높은 순 (예전 수익률 순)
 - 11-12 S.Lee: 맨 위 카드 왼쪽(폰은 큰 숫자 아래)에 핵심 숫자 6개 `#hero-kpi` (vs KODEX 200 %p · Today · P&L 원 · Max drawdown · Trades · Turnover ×, 3열). SiON 을 숨기면 폰에서 Sigma 요약이 한 줄 전체 · 큰 숫자 40px
 - 11-12 S.Lee: 큰 수익률 숫자 위 라벨 'Sigma Engine' + LIVE → 'Cumulative return' (SiON 을 숨긴 동안 LIVE 태그 없음)
 - 수정 후 데스크톱(1280)·모바일(400) 둘 다 가로 스크롤 없는지 확인

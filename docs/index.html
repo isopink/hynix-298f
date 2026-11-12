@@ -310,7 +310,8 @@ td { padding: 10px 12px 10px 0; border-bottom: 1px solid #222; vertical-align: t
 .pf-tbl-wrap > summary { pointer-events: none; cursor: default; } .pf-tbl-wrap > summary .eyebrow::after { content: none !important; }   /* 11-10 S.Lee: 늘 펼쳐 둠 (+ − 없음) */
 .pf-tbl-wrap { margin-top: 14px; } .pf-tbl-wrap .pf-tbl { max-width: 720px; margin: 0 auto; }
 .chart.pf-split { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 0 40px; }   /* 11-12 S.Lee: PC 는 도넛 왼쪽 · 종목 표 오른쪽 */
-.chart.pf-split > svg { justify-self: center; } .chart.pf-split > .pf-tbl-wrap { margin-top: 0; min-width: 0; }
+.chart.pf-split > svg { justify-self: center; } .chart.pf-split > .pf-tbl-wrap { margin-top: 0; min-width: 0; align-self: center; }
+.chart.pf-split > .pf-tbl-wrap > summary { display: none; }   /* 11-12 S.Lee: PC 는 'Table' 이름표 없앰, 표를 도넛 가운데 높이에 맞춤 */
 .pf-tbl { width: 100%; min-width: 0; border-collapse: collapse; font-size: 13px; }
 .pf-tbl th { font-size: 11px; font-weight: 400; color: var(--muted); padding: 0 4px 8px; text-align: center; border-bottom: 1px solid rgba(255,255,255,.1); }
 .pf-tbl td { text-align: center; padding: 7px 4px; color: var(--ink); border-bottom: 1px solid rgba(255,255,255,.05); font-variant-numeric: tabular-nums; }
@@ -2004,7 +2005,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const st = parts.filter(p => p.name !== '현금'), cashP = parts.find(p => p.name === '현금');
     const sw = (p, i) => `<i class="sw" style="background:${color(p, i)}${p.name === '현금' ? ';border:1px solid #555' : ''}"></i>`;
     const tv = center && center.v != null ? `<td class="sum ${tone2(center.v)}" rowspan="${st.length}">${pct(center.v)}</td>` : `<td rowspan="${st.length}"></td>`;
-    const ord = st.map((p, i) => [p, i]).sort((a, b) => (b[0].pnl ?? -Infinity) - (a[0].pnl ?? -Infinity));   // 11-10 S.Lee: 수익률 높은 순 (색은 도넛 조각 그대로)
+    const ord = st.map((p, i) => [p, i]).sort((a, b) => b[0].v - a[0].v);   // 11-12 S.Lee: 비중 높은 순 (예전 수익률 순, 색은 도넛 조각 그대로)
     const nmW = Math.max(...parts.map(p => [...p.name].reduce((a, ch) => a + (ch.charCodeAt(0) > 0x2e7f ? .94 : .62), 0)));   // 11-10 S.Lee: 종목명 칸만 색 상자 왼쪽 끝을 맞춤 (가장 긴 이름 폭의 상자를 가운데 두고 그 안에서 왼쪽 정렬)
     const nm = (p, i) => `<span class="nmi" style="min-width:calc(${nmW.toFixed(2)}em + 14px)">${sw(p, i)}${esc(p.name)}</span>`;
     const rows = ord.map(([p, ci], i) => `<tr><td class="nm">${nm(p, ci)}</td><td>${(p.v / tot * 100).toFixed(1)}%</td><td class="${tone2(p.pnl)}">${p.pnl != null ? pct(p.pnl) : '—'}</td>${i ? '' : tv}</tr>`).join('');
