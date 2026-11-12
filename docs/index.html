@@ -1646,14 +1646,17 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       : !opsOpen() ? ['Off', '', '장 마감 · 평일 08:30~15:35 연결 확인']
       : age <= 3 ? ['On', 'ok run', `데스크톱 연결됨 · 마지막 수신 ${ago(age)} 전`]
       : ['Off', 'bad', LIVE_AT ? `데스크톱 신호가 ${Math.round(age)}분째 없음 · PC 전원, 인터넷, 키움 연결 확인` : '데스크톱 신호 기록 없음'];
-    const judge = (st, off, first, soft) => {   // 정기 판단 상태 (에이전트 · 온톨로지 같은 규칙). off = 회차 시각이 몇 분 늦은지. soft = 지연·쉼을 빨강 대신 회색 (온톨로지)
+    const judge = (st, off, first, soft, decAt) => {   // 11-12 decAt = 가장 최근 판단 기록 시각   // 정기 판단 상태 (에이전트 · 온톨로지 같은 규칙). off = 회차 시각이 몇 분 늦은지. soft = 지연·쉼을 빨강 대신 회색 (온톨로지)
       let a;
       if (!st || !st.last_run) a = ['On', 'ok', first];   // 아직 실행 전이어도 스케줄은 켜져 있음
       else {
         const late = st.next_run && Date.now() - Date.parse(st.next_run.replace(' ', 'T') + ':00+09:00') > 30 * 60e3;
         const rest = /쉼|양보/.test(st.note || '');   // 11-09 그림자가 실제 매매에 한도를 양보하며 쉰 회차는 실패가 아님
         const tuneFail = st.last_ok === false && /기준값 조정/.test(st.note || '');   // 11-11 장 마감 뒤 기준값 조정 실패는 판단 실패가 아님 (다음 판단은 그대로 돎)
-        a = tuneFail ? ['On', 'ok', '마지막 판단 정상 · 기준값 조정 기록 없음']
+        // 11-12 판단 · 주문은 기록됐는데 실행이 끝에서 오류로 끝난 회차 (예: 09:30 회차 4건 체결 뒤 종료 오류) → 실패로 보지 않음, 툴팁에만
+        const doneAnyway = st.last_ok === false && decAt && String(decAt).slice(0, 16) >= String(st.last_run).slice(0, 16);
+        a = doneAnyway ? ['On', 'ok', `${st.last_run} 판단 · 주문 기록됨 · 실행 종료 때 오류`]
+          : tuneFail ? ['On', 'ok', '마지막 판단 정상 · 기준값 조정 기록 없음']
           : st.last_ok === false && !rest ? ['Off', 'bad', '마지막 판단 실패' + (st.note ? ' · ' + st.note : '')]
           : late || rest ? (soft ? ['Off', '', rest ? '실제 매매에 사용 한도를 양보하며 쉬는 중' : '판단 쉬는 중 · 마지막 ' + st.last_run] : ['Off', 'bad', '예정된 판단이 30분 넘게 지연'])
           : st.sync && st.sync.ok === false ? ['On', 'bad', '코드 동기화 멈춤 · ' + (st.sync.error || '')]   // 판단은 돌지만 새 수정이 반영 안 됨
@@ -1672,10 +1675,10 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       if (window.TRADE_TIMES.includes(hm) && m - slot < 15 && !done) a = ['On', 'ok run', `${hm} 매매 회차 실행 중 (보통 8~14분)`];   // 11-11 실행이 8~14분 걸려 6분 뒤 '실패'로 보이던 것 고침   // 글자 없이 점만 깜빡임
       return a;
     };
-    const agent = judge(st, 0, '첫 판단 대기 · 평일 09:30부터 15분마다');
+    const agent = judge(st, 0, '첫 판단 대기 · 평일 09:30부터 15분마다', false, DECISION && DECISION.time);
     // 11-09 온톨로지 그림자 운영: Supabase 1분 기록의 상태(없으면 shadow.json) · 실제와 같이 :30 에 켜져 순위를 받자마자 판단. 그림자가 아예 없으면 표시 안 함
     const sst = (SHADOW_LIVE && SHADOW_LIVE.status && SHADOW_LIVE.status.last_run !== undefined) ? SHADOW_LIVE.status : SHADOW && SHADOW.status;
-    const onto = (SHADOW || SHADOW_LIVE) ? judge(sst, 0, '첫 판단 대기 · 평일 09:30부터 15분마다', true) : null;
+    const onto = (SHADOW || SHADOW_LIVE) ? judge(sst, 0, '첫 판단 대기 · 평일 09:30부터 15분마다', true, (sst && sst.decision && sst.decision.time) || (SHADOW && SHADOW.decision && SHADOW.decision.time)) : null;
     // 11-10 S.Lee: 글자 없이 엔진 이름 옆 점 하나 (Sigma = 잔고 조회 · 판단 중 나쁜 쪽). 상세는 마우스 오버·탭
     const rank = a => a[1].includes('bad') ? 3 : a[1].includes('run') ? 2 : a[1] ? 1 : 0;
     const one = (list) => { const w = list.reduce((p, q) => rank(q[0]) > rank(p[0]) ? q : p);
