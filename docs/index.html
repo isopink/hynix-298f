@@ -820,6 +820,34 @@ html { scroll-behavior: auto !important; }
 .fx-orbit, #fx-space, #fx-grid { display: none !important; }
 [data-theme=volt] #ch-hero::after, [data-theme=volt] .card::after { display: none !important; }`;
   document.head.appendChild(still);
+  // 11-12 S.Lee: 평면 화면 — 판 모양(모서리 따기) · 경고 줄무늬 · 윗변 빛 · 유리 질감 · 빛 번짐 · 배경 오로라 · 마우스 반응 없앰, 레이아웃은 그대로
+  const flat = document.createElement('style'); flat.id = 'flat';
+  flat.textContent = `[data-theme=volt] body { background: #101010 !important; }
+[data-theme=volt] body::before, [data-theme=volt] body::after { display: none !important; }
+[data-theme=volt] .wrap .card, [data-theme=volt] .wrap details.log, [data-theme=volt] .wrap .card.hero-card, [data-theme=volt] .card.glow-red, [data-theme=volt] .card.glow-blue {
+  clip-path: none !important; background: #161616 !important; background-image: none !important; border: 1px solid #2a2a2a !important; border-radius: 8px !important;
+  box-shadow: none !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+[data-theme=volt] .card::before, [data-theme=volt] .card::after, [data-theme=volt] details.log::before, [data-theme=volt] details.log::after { display: none !important; }
+[data-theme=volt] *, [data-theme=volt] *::before, [data-theme=volt] *::after { text-shadow: none !important; filter: none !important; }
+[data-theme=volt] :not(svg, svg *), [data-theme=volt] :not(svg, svg *)::before { clip-path: none !important; }
+[data-theme=volt] .chip, [data-theme=volt] .tag, [data-theme=volt] .eng-tabs, [data-theme=volt] .eng-tabs button { box-shadow: none !important; background-image: none !important; }
+#tip { display: none !important; }
+.chart svg, #ch-hero svg, .cal .cell { pointer-events: none; cursor: default !important; }
+[data-theme=volt] .eyebrow::before, [data-theme=volt] .card-h::before { box-shadow: none !important; }
+/* 11-12 S.Lee: 투명도 없앰 — 차트 영역 채움 · 흐린 숫자 · 점 빛 번짐 · 반투명 막대 */
+#ch-hero path[clip-path], svg path[fill^="url"] { display: none !important; }
+[data-theme=volt] .eng#eng-sion .big { opacity: 1 !important; }
+[data-theme=volt] .dot { box-shadow: none !important; }
+svg [opacity]:not([opacity="0"]) { opacity: 1 !important; } svg [fill-opacity] { fill-opacity: 1 !important; } svg [stroke-opacity] { stroke-opacity: 1 !important; }
+[data-theme=volt] .card, [data-theme=volt] details.log, [data-theme=volt] .eng-tabs, [data-theme=volt] .chip { backdrop-filter: none !important; }`;
+  document.head.appendChild(flat);
+  // 마우스를 올렸을 때 바뀌는 규칙(:hover)은 지움
+  const dropHover = () => { for (const sh of document.styleSheets) { let rs; try { rs = sh.cssRules; } catch (e) { continue; }
+    const walk = list => { for (let i = list.length - 1; i >= 0; i--) { const r = list[i];
+      if (r.cssRules && !r.selectorText) walk(r.cssRules);
+      else if (r.selectorText && /:hover/.test(r.selectorText)) { const keep = r.selectorText.split(',').filter(x => !/:hover/.test(x)); if (keep.length) r.selectorText = keep.join(','); else (r.parentRule || r.parentStyleSheet).deleteRule(i); } } };
+    walk(rs); } };
+  dropHover(); addEventListener('load', dropHover);
   const calm = true, phone = matchMedia('(max-width: 640px)').matches;
   const coverEl = document.getElementById('cover');
   // 깊은 우주: 별 3겹(스크롤 시차 · 깜빡임) + 가끔 지나가는 초록 신호 줄기, 그 위에 천천히 흐르는 전술 격자
@@ -894,6 +922,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   const C = { red: '#da291c', redHi: '#ff5a4a', blue: '#4aa3d4', grey: '#585858', muted: '#8c8c8c', grid: 'rgba(255,255,255,.06)', ink: '#f5f5f5', body: '#a0a0a0' };
   // 11-12 S.Lee: 수익 · 손실 색은 한국식 (빨강 = 수익 · 매수, 파랑 = 손실 · 매도). VoltAgent 화면에서도 초록은 Sigma · 상태 표시에만
   Object.assign(C, window.VOLT ? { up: '#ff5a65', upHi: '#ff7a82', down: '#4e94ff' } : { up: C.red, upHi: C.redHi, down: C.blue });
+  if (window.VOLT) Object.assign(GR, { red: '#ff5a65', blue: '#4e94ff', grey: '#3a3a3a', redH: '#ff5a65', blueH: '#4e94ff', ring: '#262626' });   // 11-12 S.Lee: 그라데이션 · 투명도 없이 단색
   const INIT = 50000000, END = '2026-11-27', START = '2026-11-02';
   const T0 = START;
   const won = d3.format(',');
@@ -906,6 +935,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
 
   const tip = $('tip');
   function showTip(ev, html) {
+    return;   // 11-12 S.Lee: 말풍선 없앰
     tip.innerHTML = html; tip.hidden = false;
     const w = tip.offsetWidth, h = tip.offsetHeight, vw = document.documentElement.clientWidth;
     let x = ev.pageX + 14, y = ev.pageY - h - 12;
@@ -925,6 +955,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   // SVG 막대·점·도넛: 포인터 + Tab 으로 하나씩. 키보드로 연 말풍선만 blur 에 닫음 (터치 말풍선은 고정)
   const plain = html => html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
   function tipMark(sel, htmlOf) {
+    return;   // 11-12 S.Lee: 말풍선 · 마우스 반응 없앰 (평면 화면)
     sel.attr('tabindex', 0).attr('role', 'button').attr('aria-label', d => plain(htmlOf(d)))
       .on('pointermove pointerdown', (ev, d) => showTip(ev, htmlOf(d))).on('pointerleave', hideTip)
       .on('focus', function (ev, d) { if (this.matches(':focus-visible')) { this._kb = true; showTip(kbAt(this), htmlOf(d)); } })
@@ -937,6 +968,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   // 연속 차트: Tab 으로 들어가 ← → 로 시점 이동 (Home·End 처음·끝, Esc 닫기). pick 은 표시선을 옮기고 말풍선 내용을 돌려줌
   const AXIS = {};   // 다시 그려도 보던 시점 유지
   function tipAxis(sel, rows, pick, clear, anchor, label) {
+    return;   // 11-12 S.Lee: 차트 시점 이동 · 말풍선 없앰
     const node = sel.node(); let i = Math.min(AXIS[label] ?? rows.length - 1, rows.length - 1), on = false;
     const go = j => {
       i = AXIS[label] = Math.max(0, Math.min(rows.length - 1, j));
@@ -968,16 +1000,13 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     OPEN[on ? 'add' : 'delete'](el._key); el.classList.toggle('open', on); el.setAttribute('aria-expanded', on);
   }
   function tipTarget(el, html, key) {
+    if (key == null) return;   // 11-12 S.Lee: 말풍선 없앰. 폰 판단 행 펼치기(key 있음)만 남김
     el._tip = html; el._key = key;
     if (inlineRow(el)) toggleRow(el, OPEN.has(key));
     if (el._tipOn) return;   // 다시 그릴 때 내용만 바꿈
     el._tipOn = true; el.tabIndex = 0; el.setAttribute('role', 'button'); el.setAttribute('aria-describedby', 'tip');
-    const act = ev => inlineRow(el) ? toggleRow(el) : showTip(ev, el._tip);
-    el.addEventListener('mousemove', ev => { if (!inlineRow(el)) showTip(ev, el._tip); });
-    el.addEventListener('mouseleave', hideTip);
+    const act = () => { if (inlineRow(el)) toggleRow(el); };   // 11-12 PC 는 말풍선 없음
     el.addEventListener('click', act);
-    el.addEventListener('focus', () => { if (!inlineRow(el) && el.matches(':focus-visible')) showTip(kbAt(el), el._tip); });
-    el.addEventListener('blur', () => { if (!inlineRow(el)) tip.hidden = true; });
     el.addEventListener('keydown', ev => {
       if (ev.key === 'Escape') tip.hidden = true;
       else if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); act(kbAt(el)); }
@@ -1890,9 +1919,10 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
         if (note) { c.classList.add('incident'); const nb = document.createElement('span'); nb.className = 'note'; nb.innerHTML = '<i class="dot bad"></i>' + esc(note[0]); c.appendChild(nb); }
         if (!v) { if (note) tipTarget(c, `<div class="t">${md(dt)} ${esc(note[0])}</div><div>${esc(note[1])}</div>`); continue; }
         // 반투명 유리: 수익률이 클수록 진하게 (빨강 = 수익, 파랑 = 손실), 숫자도 같은 색
-        const a = .08 + .22 * Math.min(1, Math.abs(v.day) / mx), rgb = v.day >= 0 ? '255,90,74' : '74,163,212';
-        c.style.background = `linear-gradient(135deg, rgba(${rgb},${(a + .06).toFixed(3)}), rgba(${rgb},${(a * .35).toFixed(3)}))`;
-        c.style.borderColor = `rgba(${rgb},${(.2 + a).toFixed(3)})`;
+        const a = .08 + .22 * Math.min(1, Math.abs(v.day) / mx), rgb = v.day >= 0 ? (window.VOLT ? '255,90,101' : '255,90,74') : (window.VOLT ? '78,148,255' : '74,163,212');
+        // 11-12 S.Lee: 투명 그라데이션 대신 바탕(#161616)에 섞은 단색 (평면)
+        const mix = (k) => 'rgb(' + rgb.split(',').map((v, j) => Math.round([22, 22, 22][j] + (+v - 22) * k)).join(',') + ')';
+        c.style.background = mix(a * .9); c.style.borderColor = mix(Math.min(1, .35 + a));
         const vl = document.createElement('span'); vl.className = 'v ' + (v.day >= 0 ? 'up' : 'down'); vl.textContent = pct(v.day); c.appendChild(vl);
         tipTarget(c, `<div class="t">${md(dt)}${note ? ' ' + esc(note[0]) : ''}</div>${row('Sigma Engine', pct(v.day), v.day >= 0 ? 'up' : 'down')}${row(BMN(), pct(v.kday))}${row('초과', pct(v.day - v.kday), v.day - v.kday >= 0 ? 'up' : 'down')}${note ? `<div class="muted" style="margin-top:6px;max-width:240px">${esc(note[1])}</div>` : ''}`);
       }
@@ -1913,7 +1943,8 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const ring = el.clientWidth < 520 ? 210 : 240;
     const { svg, W, H } = svgIn(el, ring);
     const tot = d3.sum(parts, p => p.v), stock = d3.sum(parts.filter(p => p.name !== '현금'), p => p.v);
-    const color = (p, i) => p.name === '현금' ? 'rgba(255,255,255,.08)' : shades[i] || ['#5e5e5e', '#525252', '#464646'][i % 3];   // 7번째부터는 회색
+    const color = (p, i) => p.name === '현금' ? '#262626' :   // 11-12 투명도 없앰 (예전 rgba(255,255,255,.08))
+      shades[i] || ['#5e5e5e', '#525252', '#464646'][i % 3];   // 7번째부터는 회색
     const R = Math.min(W, H) / 2 - (window.VOLT ? 24 : 14), cx = W / 2, cy = H / 2;   // VoltAgent: 바깥 궤도 자리
     const g = svg.append('g').attr('transform', `translate(${cx},${cy})`);
     const pie = d3.pie().sort(null).value(p => p.v).padAngle(.012);
