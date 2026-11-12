@@ -63,17 +63,17 @@ Stop-loss, take-profit and max holding days are checked every minute by a watche
 | Agent | Job | When | Model · effort |
 |---|---|---|---|
 | Lead | Combines everything into a final conviction and action; directs the others | every run | Opus 5.5 · xhigh |
-| Regime | Index trend (5/20-day MAs) and volatility → bull / sideways / bear | 15-min decision | Sonnet 5.5 · high |
-| Position | Sell / hold / add conviction for holdings; don't dump winners too early | 15-min decision | Opus 5.5 · high |
+| Regime | Index trend (5/20-day MAs) and volatility → bull / sideways / bear | 15-min decision | Opus 5.5 · high |
+| Position | Sell / hold / add conviction for holdings; don't dump winners too early | 15-min decision | Opus 5.5 · xhigh |
 | Research | Fact sheet for the stocks under debate: news, filings, sector, overseas (no opinions; 6 searches, 8 min cap) | 15-min decision | Opus 5.5 · xhigh |
-| Bull / Bear | Argue for and against each candidate from the same fact sheet | 15-min decision | Opus 5.5 · high |
+| Bull / Bear | Argue for and against each candidate from the same fact sheet | 15-min decision | Opus 5.5 · high / xhigh |
 | Executor | Works through the decision list: sells, then buys, then records | 15-min decision | Haiku 5.5 |
 | Scorer | Grades each past decision by what happened next, groups the causes | weekdays 16:00 | Opus 5.5 · max |
 | Tuner | Submits 0–2 threshold changes and 2–5 lessons | weekdays 16:00 | Opus 5.5 · max |
 | Review | Weekly analysis, one suggestion | Wed · Fri 15:50 | Opus 5.5 · max |
 | Writer | Weekly report draft (outside the trading loop) | Wed · Fri 17:00 | Sonnet 5.5 · medium |
 
-Regime, Position and Research run in parallel. Models are routed by role: the agents that produce conviction run on Opus, while the simple regime call and the mechanical order work run on lighter models.
+Regime, Position and Research run in parallel. Models are routed by role: everything that shapes conviction runs on Opus (the most consequential calls at xhigh), and the mechanical order work runs on Haiku.
 
 ### What code does
 

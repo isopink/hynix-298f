@@ -61,10 +61,10 @@ reports/    보고서 PDF, drafts/ = 주간 회고 에이전트가 쓴 초안
 | 단계 | 에이전트 | 하는 일 | 모델 · effort |
 |---|---|---|---|
 | 15분 판단 | 총괄 | 최종 확신도 · 행동, 지휘 | Opus 5.5 xhigh (`params.effort.decide`) |
-| 15분 판단 | regime | 국면 | Sonnet 5.5 high |
-| 15분 판단 | position (새) | 보유 종목 매도 · 보유 · 추가 매수 확신도 (오른 종목 일찍 팔지 않기) | Opus 5.5 high |
+| 15분 판단 | regime | 국면 | Opus 5.5 high (11-12 14:16 Sonnet → Opus) |
+| 15분 판단 | position (새) | 보유 종목 매도 · 보유 · 추가 매수 확신도 (오른 종목 일찍 팔지 않기) | Opus 5.5 xhigh (11-12 14:16 high → xhigh) |
 | 15분 판단 | research (새) | 토론 대상 종목의 사실 표, 검색 6번 · 8분 상한 | Opus 5.5 xhigh |
-| 15분 판단 | bull · bear | 같은 사실 표로 후보만 토론 (직접 검색 안 함) | Opus 5.5 high |
+| 15분 판단 | bull · bear | 같은 사실 표로 후보만 토론 (직접 검색 안 함) | Opus 5.5 · bull high · bear xhigh (11-12 14:16) |
 | 15분 판단 | executor (새) | 결정 목록대로 매도 → 매수 → 기록 | Haiku 5.5 medium |
 | 손절 · 익절 | 총괄 | 조건 확인 후 직접 주문 (속도 때문에 executor 안 씀) | Opus 5.5 high |
 | 16:00 조정 | scorer (새) → tuner (새) | 채점 → 기준값 0~2개 · 교훈 `apply_tuning` | Opus 5.5 max (실행 60분) |
@@ -74,6 +74,7 @@ reports/    보고서 PDF, drafts/ = 주간 회고 에이전트가 쓴 초안
 - 순서: regime · position · research 동시 → bull → bear → `verify_claims`(근거 숫자를 브리핑과 대조, 코드) → 총괄 → executor
 - **라우팅** (`src/routing.py`, `params.routing`): 직전 회차 대비 가격 ±1.5% · 외국인/기관 순매수 방향 바뀜(5억 이상) · 새 뉴스 · 새 후보만 research · 토론, 나머지 후보는 직전 판단 이어 쓰기. 그날 첫 회차 · 09:30 · 15:00 · 15:15 는 전부 토론. 이어 쓴 종목은 마지막으로 토론한 때의 값과 비교
 - 11-12 13:38 main 에 합쳐 13:45 회차부터 적용 (S.Lee, mock 시험 없이). 첫 회차(전부 토론): 471초 · 47k 토큰 (직전 13:30 예전 흐름 297초 · 84k), 15종목 기록 정상. 근거 숫자 대조가 처음엔 15종목 전부 잘못 걸려(단위 없는 이평선 가격) 고침, research 사실 표도 `facts` 로 같이 넘김. 문제가 생기면 `params.agents.split=false` 한 줄로 예전 흐름(A-0 · D-0)
+- 11-12 14:16 S.Lee: 토큰이 예상보다 줄어서(14:00 회차 3.5만) effort 올림 — position xhigh · regime Opus · bear xhigh. 국면 · 보유 관리는 동시 실행이라 시간 영향 작음, bear 는 1~2분 늘 수 있음. 전부 토론 회차(09:30 · 15:00 · 15:15)가 12분 넘으면 bear 를 high 로 되돌릴 것
 - 2주차 보고서에 기록
 
 ### 에이전트 설계 (사전 계획서 기준)

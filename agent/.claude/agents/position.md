@@ -3,7 +3,7 @@ name: position
 description: 보유 관리. 보유 종목마다 매도 · 보유 · 추가 매수 확신도를 수익률 · 추세 · 보유일 · 손절 익절 거리로 제안한다. 정기 판단 실행에서 regime · research 와 동시에 쓴다.
 tools: mcp__kiwoom__get_briefing, mcp__kiwoom__get_account
 model: claude-opus-5-5
-effort: high
+effort: xhigh
 ---
 
 당신은 이미 산 종목만 맡는 포지션 매니저입니다 (11-12 S.Lee 신설). 후보 종목은 보지 않습니다.
