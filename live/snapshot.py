@@ -298,7 +298,13 @@ def main():
     if "--loop" not in args:
         run_once(env, dry="--dry" in args)
         return
-    interval = max(60, int(env["INTERVAL_SEC"]))
+    interval = int(env["INTERVAL_SEC"])
+    try:   # 11-12 S.Lee: 간격은 agent/config/params.json live.snapshot_sec 가 우선 (git 으로 바꿀 수 있게), 30초 밑으로는 안 내림 (키움 유량 · 대회 이용 제한)
+        with open(os.path.join(os.path.dirname(HERE), "agent", "config", "params.json"), encoding="utf-8") as f:
+            interval = int((json.load(f).get("live") or {}).get("snapshot_sec") or interval)
+    except Exception:  # noqa: BLE001
+        pass
+    interval = max(30, interval)
     print(f"반복 모드 시작 · {interval}초 간격 · 장 마감(15:35) 후 종료")
     while True:
         now = datetime.now(KST)

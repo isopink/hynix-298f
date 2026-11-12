@@ -140,6 +140,7 @@ reports/    보고서 PDF, drafts/ = 주간 회고 에이전트가 쓴 초안
 - 탭 아이콘(11-10 S.Lee, 11-12 색 변경): 어두운 바탕에 흰 시그마(Σ) 모양 신경망(모서리 네 점 + 가운데 빨간 점이 선으로 이어짐, 초록 없음). 원본 `docs/icon.svg`, PNG 는 `favicon-32.png` · `apple-touch-icon.png` · `icon-512.png` (예전: 빨강 298)
 - 하단: `Designed by S.Lee & M.Park` 한 줄 (11-04 GitHub 로고 링크 뺌)
 - 응원하기 버튼 없음 (11-06 S.Lee). 11-10 상단 응원 띠도 없앰 → 응원 게시판은 화면에서 열 곳 없음 (글은 Supabase comments 에 남음)
+- **11-12 S.Lee: 대회 게시판 기준 보정 없앰** (`OFFICIAL_ADJ = 0`, 화면 수익률 = 키움 모의 잔고 그대로). 아래는 예전 기록
 - 11-10 대회 게시판 기준 손익: 키움 모의 잔고 + 그날까지 누적 매매대금 × 0.1% (`OFFICIAL_ADJ`, 키움 모의 수수료가 대회 집계보다 약 0.1%p 큼. 11-05·06·09 차이로 맞춤, 11-09 −1,377,750 vs 게시판 −1,380,902). SiON 도 같은 방식 (`sionAdj`)
 - 11-11 S.Lee: 수익률 비교 기준을 KOSPI → **KODEX 200** 으로 (`docs/data/kodex200.json` = 일봉 시가·종가, 시작은 11-02 시가 89,280. 마감 때 `run.py close` 가 `src/benchmark.py` 로 갱신, 장중 오늘 값은 KOSPI 1분봉 등락 × 전일 종가로 추정). 차트·범례·툴팁·이긴 날·일별 초과수익 카드가 대상. 헤더 KOSPI 칩과 Live KOSPI 카드는 시장 지표라 그대로
 - 누적 수익률 차트 가로축: 11/2 가 맨 왼쪽, 최신 기록일이 맨 오른쪽 (11-06 S.Lee, 날이 늘면 칸이 좁아짐). 남은 기간 흐림·D-n·11/27 깃발은 없음. 커버 제목은 정가운데, 크기 clamp(20px, 5vw, 34px) (11-10 S.Lee, VoltAgent 화면. 예전: 조금 위 · clamp(26px, 6vw, 60px))
@@ -169,6 +170,7 @@ reports/    보고서 PDF, drafts/ = 주간 회고 에이전트가 쓴 초안
 - 11-12 S.Lee: 맨 위 카드 왼쪽(폰은 큰 숫자 아래)에 핵심 숫자 6개 `#hero-kpi` (vs KODEX 200 %p · Today · P&L 원 · Max drawdown · Trades · Turnover ×, 3열). SiON 을 숨기면 폰에서 Sigma 요약이 한 줄 전체 · 큰 숫자 40px
 - 11-12 S.Lee: 큰 수익률 숫자 위 라벨 'Sigma Engine' + LIVE → 'Cumulative return' (SiON 을 숨긴 동안 LIVE 태그 없음)
 - 11-12 S.Lee: 기록의 이번 주 · 최대 낙폭 · KODEX 200 · 승률 카드는 그림 없이 숫자만 (`#sp-week` · `#sp-dd` · `#sp-kospi` · `#sp-win` 숨김)
+- 11-12 S.Lee: 실시간 갱신 빠르게 — 대시보드 실시간 잔고 · 상태 30초 → 10초, KOSPI · 수급 차트 1분 → 20초. 데스크톱 잔고 업로드 1분 → 30초 (`params.live.snapshot_sec`, 30초 밑으로는 안 내림: 키움 유량 · 대회 이용 제한). KOSPI · 수급 Supabase 수집 1분 → 20초 (`supabase/realtime.sql` 의 `market_tick`, SQL Editor 에서 한 번 실행해야 함)
 - 수정 후 데스크톱(1280)·모바일(400) 둘 다 가로 스크롤 없는지 확인
 
 ## 보안 (반드시 지킬 것)

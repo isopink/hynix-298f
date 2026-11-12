@@ -1230,13 +1230,13 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   function startLive(polled) {
     if (!CFG.supabaseUrl || !CFG.supabaseAnonKey) return;
     if (!polled) pollLive();   // 첫 화면에서 이미 한 번 받았으면 바로 다시 받지 않음
-    setInterval(() => { if (!document.hidden) pollLive(); }, 30000);
+    setInterval(() => { if (!document.hidden) pollLive(); }, 10000);   // 11-12 S.Lee: 30초 → 10초
     document.addEventListener('visibilitychange', () => { if (!document.hidden) pollLive(); });   // 휴대폰에서 다른 앱 갔다 오면 바로 갱신
   }
 
   // 11-10 S.Lee: 대회 게시판 기준으로 맞춤. 키움 모의 잔고는 매매마다 수수료를 대회 집계보다 약 0.1%p 더 떼어
   // (11-05 +0.09%p · 11-06 +0.16%p · 11-09 +0.21%p 차이가 누적 매매대금의 약 0.1%와 일치) → 그날까지의 누적 매매대금 × 0.1% 를 더해 보여줌
-  const OFFICIAL_ADJ = 0.001;
+  const OFFICIAL_ADJ = 0;   // 11-12 S.Lee: 대회 게시판 기준 보정(누적 매매대금 × 0.1%) 없앰 → 키움 모의 잔고 그대로 (예전 0.001)
   const adjUpTo = (trades, date) => OFFICIAL_ADJ * d3.sum(trades.filter(t => String(t.time).slice(0, 10) <= date), t => +t.amount || (+t.qty * +t.price) || 0);
   function derive(d) {   // 비교선(kospi · kret · kday 이름은 그대로) 값은 KODEX 200 일봉 (BM), BM 이 없으면 KOSPI
     // KOSPI: 기록값 → 없으면 kospi_daily 종가 → 그래도 없으면 전날 값
@@ -1372,7 +1372,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       return none($('ch-kx'), 'KOSPI 데이터 저장소가 연결되지 않았어요.');
     }
     pollKospi(); pollFlow();
-    setInterval(() => { if (!document.hidden && marketOpen()) { pollKospi(); pollFlow(); } }, 60000);
+    setInterval(() => { if (!document.hidden && marketOpen()) { pollKospi(); pollFlow(); } }, 20000);   // 11-12 S.Lee: 1분 → 20초 (Supabase 수집도 20초)
   }
 
   // ---------- 투자자별 순매수: supabase/flow.sql 이 1분마다 채우는 investor_flow (억 원, 장 시작부터 누적) ----------
