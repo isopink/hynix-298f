@@ -81,7 +81,7 @@
     ]
   },
   "intraday": {
-    "time": "12:15",
+    "time": "12:30",
     "pool": 419,
     "analyzed_new": 30,
     "passed": 8,
@@ -102,17 +102,17 @@
       "news": [
         {
           "date": "11-12",
+          "title": "GS건설, 안산 중대형 ‘아르뮤제자이’ 분양 돌입",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "GS건설, 허물지 않고 새 단지로…‘BEYOND ADDITION’ 사업 추진",
+          "risk": false
+        },
+        {
+          "date": "11-12",
           "title": "GS건설, 안산 '아르뮤제자이' 견본주택 개관…중대형 984가구 공급",
-          "risk": false
-        },
-        {
-          "date": "11-12",
-          "title": "[굿모닝! 12일 건설업계 소식] 현대건설·GS건설·현대엔지니어링·DL이...",
-          "risk": false
-        },
-        {
-          "date": "11-12",
-          "title": "GS건설, 리모델링 사업 본격화…철거 최소화 '비욘드 어디션' 출범",
           "risk": false
         }
       ],
@@ -148,10 +148,10 @@
           "risk": false
         }
       ],
-      "price": 66300,
-      "chg": -0.0015,
-      "activity": 0.65,
-      "foreign_today": 596700000,
+      "price": 66100,
+      "chg": -0.0045,
+      "activity": 0.63,
+      "foreign_today": 594900000,
       "inst_today": 0,
       "exchange": "KOSPI"
     },
@@ -232,11 +232,11 @@
           "risk": false
         }
       ],
-      "price": 76100,
-      "chg": 0.0066,
-      "activity": 2.18,
+      "price": 75800,
+      "chg": 0.0026,
+      "activity": 2.1,
       "foreign_today": 0,
-      "inst_today": 532700000,
+      "inst_today": 530600000,
       "exchange": "KOSDAQ"
     },
     {
