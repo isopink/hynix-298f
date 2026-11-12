@@ -8,10 +8,10 @@
   "sync": {
     "ok": true,
     "error": null,
-    "head": "6b21630",
-    "checked_at": "2026-11-12 15:22",
+    "head": "d59abc2",
+    "checked_at": "2026-11-12 15:44",
     "rejected": null,
-    "applied_at": "2026-11-12 14:38",
+    "applied_at": "2026-11-12 15:41",
     "catch_up": "2026-11-11 14:15 c358325",
     "decide_schedule": "09:30|15|0005:46",
     "review_mid": "WED,FRI 15:50",
