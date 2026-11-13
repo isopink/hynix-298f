@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "14:19",
-    "pool": 302,
-    "analyzed_new": 3,
-    "passed": 13,
+    "time": "14:20",
+    "pool": 422,
+    "analyzed_new": 27,
+    "passed": 14,
     "kept_prep": false
   },
   "candidates": [
@@ -98,7 +98,7 @@
       "vol20": 0.884,
       "foreign_net": -81770056900,
       "inst_net": 59675563500,
-      "score": 0.644,
+      "score": 0.635,
       "news": [
         {
           "date": "11-12",
@@ -110,7 +110,7 @@
       "chg": 0.0379,
       "activity": 1.02,
       "foreign_today": 0,
-      "inst_today": 4452500000,
+      "inst_today": 4247000000,
       "exchange": "KOSPI"
     },
     {
@@ -123,16 +123,16 @@
       "vol20": 0.441,
       "foreign_net": -12870138600,
       "inst_net": -12774455600,
-      "score": 0.622,
+      "score": 0.635,
       "news": [
         {
           "date": "11-13",
-          "title": "카카오뱅크 'mini 내맘대로 저금', 30만 좌 넘겼다",
+          "title": "카카오워크 개인정보 유출…업무 메일·첨부파일도 포함",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "“축구화 사야 됨·포카 교환 자금”…카카오뱅크 mini 저금 30만좌 돌파",
+          "title": "카카오뱅크 'mini 내맘대로 저금', 30만 좌 넘겼다",
           "risk": false
         },
         {
@@ -141,11 +141,27 @@
           "risk": false
         }
       ],
-      "price": 31900,
-      "chg": 0.0063,
+      "price": 31950,
+      "chg": 0.0079,
       "activity": 0.97,
       "foreign_today": 0,
-      "inst_today": 1595000000,
+      "inst_today": 1725300000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "316140",
+      "name": "우리금융지주",
+      "close": 31750,
+      "ret5": -0.0124,
+      "ret20": 0.0111,
+      "rsi14": 50.8,
+      "vol20": 0.327,
+      "foreign_net": -29095907075,
+      "inst_net": 37693300675,
+      "score": 0.615,
+      "news": [],
+      "foreign_today": 539750000,
+      "inst_today": 3968750000,
       "exchange": "KOSPI"
     },
     {
@@ -158,7 +174,7 @@
       "vol20": 0.538,
       "foreign_net": -14472598100,
       "inst_net": 18845759500,
-      "score": 0.6,
+      "score": 0.558,
       "news": [
         {
           "date": "11-13",
@@ -177,23 +193,39 @@
         }
       ],
       "foreign_today": 0,
-      "inst_today": 704000000,
+      "inst_today": 880000000,
       "exchange": "KOSPI"
     },
     {
-      "code": "316140",
-      "name": "우리금융지주",
-      "close": 31750,
-      "ret5": -0.0124,
-      "ret20": 0.0111,
-      "rsi14": 50.8,
-      "vol20": 0.327,
-      "foreign_net": -29095907075,
-      "inst_net": 37693300675,
-      "score": 0.556,
-      "news": [],
-      "foreign_today": 0,
-      "inst_today": 3333750000,
+      "code": "004020",
+      "name": "현대제철",
+      "close": 28700,
+      "ret5": -0.0103,
+      "ret20": 0.0649,
+      "rsi14": 51.1,
+      "vol20": 0.6,
+      "foreign_net": 1608696075,
+      "inst_net": 2739770850,
+      "score": 0.519,
+      "news": [
+        {
+          "date": "11-13",
+          "title": "현대제철, 내화·내진 H형강 국내 첫 KS 인증…화재·지진 대응 성능 확...",
+          "risk": false
+        },
+        {
+          "date": "11-13",
+          "title": "사진 한 장에 담긴 이웃의 마음... 현대제철, 19년 나눔의 기록 펼치다",
+          "risk": false
+        },
+        {
+          "date": "11-13",
+          "title": "AI데이터센터로 뜬댔는데…현대제철 봉형강 판매 5년째 하락세",
+          "risk": false
+        }
+      ],
+      "foreign_today": 545300000,
+      "inst_today": 0,
       "exchange": "KOSPI"
     },
     {
@@ -206,7 +238,7 @@
       "vol20": 0.748,
       "foreign_net": -34774154200,
       "inst_net": 28642292800,
-      "score": 0.444,
+      "score": 0.462,
       "news": [
         {
           "date": "11-12",
@@ -225,7 +257,7 @@
         }
       ],
       "foreign_today": 0,
-      "inst_today": 547200000,
+      "inst_today": 820800000,
       "exchange": "KOSPI"
     },
     {
@@ -238,8 +270,13 @@
       "vol20": 0.469,
       "foreign_net": 994866350,
       "inst_net": 3654508325,
-      "score": 0.311,
+      "score": 0.25,
       "news": [
+        {
+          "date": "11-13",
+          "title": "동국제약 센텔리안24, '컬리뷰티페스타 2026'서 단독 부스 꾸리고 소비자...",
+          "risk": false
+        },
         {
           "date": "11-13",
           "title": "동국제약 센텔리안24, 뷰티 행사서 피부 진단·제품 체험 공간 운영",
@@ -249,15 +286,10 @@
           "date": "11-13",
           "title": "동국제약 센텔리안24, 컬리뷰티페스타 참가...맞춤형 제품 추천",
           "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "[동국제약=종합] 감기약 선택법 안내 ··· 카리토포텐 새 광고 론칭",
-          "risk": false
         }
       ],
       "foreign_today": 0,
-      "inst_today": 247500000,
+      "inst_today": 222750000,
       "exchange": "KOSDAQ"
     },
     {
@@ -288,11 +320,11 @@
           "risk": false
         }
       ],
-      "price": 38400,
-      "chg": 0.0186,
+      "price": 38350,
+      "chg": 0.0172,
       "activity": 1.06,
-      "foreign_today": 0,
-      "inst_today": 1881600000,
+      "foreign_today": 1879150000,
+      "inst_today": 2147600000,
       "exchange": "KOSDAQ"
     },
     {
@@ -305,7 +337,7 @@
       "vol20": 1.453,
       "foreign_net": -6514931100,
       "inst_net": 8639681450,
-      "score": 0.822,
+      "score": 0.923,
       "news": [
         {
           "date": "11-13",
@@ -323,11 +355,11 @@
           "risk": false
         }
       ],
-      "price": 90600,
-      "chg": 0.0747,
-      "activity": 1.01,
+      "price": 90500,
+      "chg": 0.0735,
+      "activity": 1.02,
       "foreign_today": 0,
-      "inst_today": 724800000,
+      "inst_today": 995500000,
       "exchange": "KOSDAQ"
     },
     {
@@ -340,7 +372,7 @@
       "vol20": 1.202,
       "foreign_net": -219934325,
       "inst_net": 6802284425,
-      "score": 0.733,
+      "score": 0.712,
       "news": [],
       "foreign_today": 0,
       "inst_today": 754000000,
@@ -356,7 +388,7 @@
       "vol20": 1.006,
       "foreign_net": -12666495850,
       "inst_net": 23546180550,
-      "score": 0.578,
+      "score": 0.596,
       "news": [
         {
           "date": "11-12",
@@ -365,42 +397,42 @@
         }
       ],
       "foreign_today": 0,
-      "inst_today": 921600000,
+      "inst_today": 1177600000,
       "exchange": "KOSPI"
     },
     {
-      "code": "263860",
-      "name": "지니언스",
-      "close": 33300,
-      "ret5": 0.4323,
-      "ret20": 0.5895,
-      "rsi14": 70.4,
-      "vol20": 1.681,
-      "foreign_net": -16169810550,
-      "inst_net": 4107522025,
-      "score": 0.533,
+      "code": "451760",
+      "name": "컨텍",
+      "close": 12370,
+      "ret5": 0.3593,
+      "ret20": 0.9984,
+      "rsi14": 66.1,
+      "vol20": 2.006,
+      "foreign_net": -513491960,
+      "inst_net": -109460540,
+      "score": 0.558,
       "news": [
         {
           "date": "11-13",
-          "title": "유안타증권 “지니언스, 금융권 보안투자 확대 수혜…3분기 영업익 253%...",
+          "title": "컨텍, 15일간 주가 97.6% 급등에 소수계좌 매수 관여로 투자주의종목 지...",
           "risk": false
         },
         {
           "date": "11-12",
-          "title": "지니언스 3분기 영업익 37억7774만원…전년 동기 대비 253% 증가",
+          "title": "코난테크놀로지·컨텍 급등…코스닥 상승률 상위권",
           "risk": false
         },
         {
           "date": "11-12",
-          "title": "지니언스, 누적 영업익 3배 넘게 늘었다…NAC·EDR로 ‘폭풍성장’",
+          "title": "컨텍, 15일간 주가 97.6% 급등…소수계좌 매수 관여로 투자주의종목 지...",
           "risk": false
         }
       ],
-      "price": 34050,
-      "chg": 0.0861,
-      "activity": 4.83,
-      "foreign_today": 0,
-      "inst_today": 204300000,
+      "price": 11370,
+      "chg": -0.0808,
+      "activity": 1.67,
+      "foreign_today": 409320000,
+      "inst_today": 0,
       "exchange": "KOSDAQ"
     },
     {
