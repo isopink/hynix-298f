@@ -81,7 +81,7 @@
     ]
   },
   "intraday": {
-    "time": "14:05",
+    "time": "14:06",
     "pool": 416,
     "analyzed_new": 4,
     "passed": 14,
@@ -141,11 +141,11 @@
           "risk": false
         }
       ],
-      "price": 32050,
-      "chg": 0.011,
+      "price": 32100,
+      "chg": 0.0126,
       "activity": 0.99,
       "foreign_today": 0,
-      "inst_today": 1602500000,
+      "inst_today": 1605000000,
       "exchange": "KOSPI"
     },
     {
@@ -274,12 +274,12 @@
       "news": [
         {
           "date": "11-13",
-          "title": "[동국제약=종합] 감기약 선택법 안내 ··· 카리토포텐 새 광고 론칭",
+          "title": "동국제약 센텔리안24, 컬리뷰티페스타 참가...맞춤형 제품 추천",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "동국제약 센텔리안24, 컬리뷰티페스타 참가...맞춤형 제품 추천",
+          "title": "[동국제약=종합] 감기약 선택법 안내 ··· 카리토포텐 새 광고 론칭",
           "risk": false
         },
         {
@@ -322,7 +322,7 @@
       ],
       "price": 38600,
       "chg": 0.0239,
-      "activity": 1.09,
+      "activity": 1.08,
       "foreign_today": 2045800000,
       "inst_today": 1891400000,
       "exchange": "KOSDAQ"
@@ -390,11 +390,11 @@
           "risk": false
         }
       ],
-      "price": 90400,
-      "chg": 0.0724,
+      "price": 90500,
+      "chg": 0.0735,
       "activity": 1.0,
       "foreign_today": 0,
-      "inst_today": 723200000,
+      "inst_today": 724000000,
       "exchange": "KOSDAQ"
     },
     {
@@ -441,10 +441,10 @@
           "risk": false
         }
       ],
-      "price": 11540,
-      "chg": -0.0671,
-      "activity": 1.75,
-      "foreign_today": 334660000,
+      "price": 11550,
+      "chg": -0.0663,
+      "activity": 1.74,
+      "foreign_today": 334950000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
