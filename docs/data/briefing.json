@@ -81,48 +81,13 @@
     ]
   },
   "intraday": {
-    "time": "13:00",
-    "pool": 406,
-    "analyzed_new": 3,
-    "passed": 15,
+    "time": "13:15",
+    "pool": 417,
+    "analyzed_new": 30,
+    "passed": 14,
     "kept_prep": false
   },
   "candidates": [
-    {
-      "code": "006360",
-      "name": "GS건설",
-      "close": 29950,
-      "ret5": 0.0527,
-      "ret20": 0.0891,
-      "rsi14": 49.3,
-      "vol20": 0.849,
-      "foreign_net": -21006250725,
-      "inst_net": 28484664400,
-      "score": 1.0,
-      "news": [
-        {
-          "date": "11-13",
-          "title": "GS건설, 자회사 대출 1125억 상환…'배임' 뒤집은 크로스디폴트",
-          "risk": true
-        },
-        {
-          "date": "11-13",
-          "title": "GS건설 자이, 대한민국 조경·색채대상 4개 본상",
-          "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "GS건설 자이, '대한민국 조경대상'·'색채대상'서 연속 수상",
-          "risk": false
-        }
-      ],
-      "price": 31500,
-      "chg": 0.043,
-      "activity": 1.52,
-      "foreign_today": 3465000000,
-      "inst_today": 945000000,
-      "exchange": "KOSPI"
-    },
     {
       "code": "028050",
       "name": "삼성E&A",
@@ -133,7 +98,7 @@
       "vol20": 0.884,
       "foreign_net": -81770056900,
       "inst_net": 59675563500,
-      "score": 0.768,
+      "score": 0.638,
       "news": [
         {
           "date": "11-12",
@@ -141,27 +106,11 @@
           "risk": false
         }
       ],
-      "price": 69100,
-      "chg": 0.047,
-      "activity": 1.15,
-      "foreign_today": 3040400000,
-      "inst_today": 1727500000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "316140",
-      "name": "우리금융지주",
-      "close": 31750,
-      "ret5": -0.0124,
-      "ret20": 0.0111,
-      "rsi14": 50.8,
-      "vol20": 0.327,
-      "foreign_net": -29095907075,
-      "inst_net": 37693300675,
-      "score": 0.536,
-      "news": [],
-      "foreign_today": 1873250000,
-      "inst_today": 1524000000,
+      "price": 68900,
+      "chg": 0.0439,
+      "activity": 1.13,
+      "foreign_today": 0,
+      "inst_today": 4478500000,
       "exchange": "KOSPI"
     },
     {
@@ -174,29 +123,77 @@
       "vol20": 0.441,
       "foreign_net": -12870138600,
       "inst_net": -12774455600,
-      "score": 0.522,
+      "score": 0.638,
       "news": [
         {
           "date": "11-13",
-          "title": "카카오게임즈, '도깨비의 세계' 출시 이후 높은 매출 유지 이유는",
+          "title": "11월 13일 카카오뱅크 AI 이모지 퀴즈, 낮 12시 정답 ‘감상문’",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "빈칸 세 글자…카카오페이 퀴즈타임 정답 바로 공개 (11월 13일)",
+          "title": "카카오워크 보안 뚫렸다…이름·연락처에 업무용 이메일까지 유출",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "카카오 기업용 메신저 뚫렸다⋯개인정보·메일·첨부파일 유출",
+          "title": "카카오워크 개인정보 유출 사고 발생…메일·첨부파일 본문까지 털렸다",
           "risk": false
         }
       ],
-      "price": 32200,
-      "chg": 0.0158,
-      "activity": 1.1,
+      "price": 32150,
+      "chg": 0.0142,
+      "activity": 1.07,
       "foreign_today": 0,
-      "inst_today": 644000000,
+      "inst_today": 1607500000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "316140",
+      "name": "우리금융지주",
+      "close": 31750,
+      "ret5": -0.0124,
+      "ret20": 0.0111,
+      "rsi14": 50.8,
+      "vol20": 0.327,
+      "foreign_net": -29095907075,
+      "inst_net": 37693300675,
+      "score": 0.603,
+      "news": [],
+      "foreign_today": 730250000,
+      "inst_today": 3333750000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "326030",
+      "name": "SK바이오팜",
+      "close": 88000,
+      "ret5": -0.0351,
+      "ret20": 0.2791,
+      "rsi14": 66.6,
+      "vol20": 0.538,
+      "foreign_net": -14472598100,
+      "inst_net": 18845759500,
+      "score": 0.603,
+      "news": [
+        {
+          "date": "11-13",
+          "title": "SK바이오팜, '세노바메이트'로 일본 뇌전증 시장 공략...동북아 3국 진출...",
+          "risk": false
+        },
+        {
+          "date": "11-13",
+          "title": "SK바이오팜 세노바메이트, 일본 출시",
+          "risk": false
+        },
+        {
+          "date": "11-13",
+          "title": "SK바이오팜, 뇌전증 신약 '세노바메이트' 일본 판매 시작",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 704000000,
       "exchange": "KOSPI"
     },
     {
@@ -209,7 +206,7 @@
       "vol20": 0.6,
       "foreign_net": 1608696075,
       "inst_net": 2739770850,
-      "score": 0.522,
+      "score": 0.552,
       "news": [
         {
           "date": "11-13",
@@ -228,72 +225,8 @@
         }
       ],
       "foreign_today": 487900000,
-      "inst_today": 86100000,
+      "inst_today": 0,
       "exchange": "KOSPI"
-    },
-    {
-      "code": "326030",
-      "name": "SK바이오팜",
-      "close": 88000,
-      "ret5": -0.0351,
-      "ret20": 0.2791,
-      "rsi14": 66.6,
-      "vol20": 0.538,
-      "foreign_net": -14472598100,
-      "inst_net": 18845759500,
-      "score": 0.522,
-      "news": [
-        {
-          "date": "11-13",
-          "title": "SK바이오팜, 뇌전증 신약 '세노바메이트' 일본 판매 시작",
-          "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "SK바이오팜, 뇌전증 신약 ‘세노바메이트’ 일본 판매 개시…미국부터...",
-          "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "SK바이오팜, 뇌전증 치료제 ‘세노바메이트’ 일본 출시…韓中日 출시",
-          "risk": false
-        }
-      ],
-      "foreign_today": 0,
-      "inst_today": 352000000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "086450",
-      "name": "동국제약",
-      "close": 24750,
-      "ret5": 0.0102,
-      "ret20": 0.0227,
-      "rsi14": 56.2,
-      "vol20": 0.469,
-      "foreign_net": 994866350,
-      "inst_net": 3654508325,
-      "score": 0.464,
-      "news": [
-        {
-          "date": "11-13",
-          "title": "동국제약 센텔리안24, '컬리뷰티페스타 2026' 참가… DDP서 체험형 단독...",
-          "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "[포토뉴스] 동국제약 센텔리안24, '컬리뷰티페스타' 참가",
-          "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "동국제약 센텔리안24, DDP '컬리뷰티페스타 2026'서 고객 접점 넓힌다",
-          "risk": false
-        }
-      ],
-      "foreign_today": 0,
-      "inst_today": 297000000,
-      "exchange": "KOSDAQ"
     },
     {
       "code": "267270",
@@ -305,7 +238,7 @@
       "vol20": 0.748,
       "foreign_net": -34774154200,
       "inst_net": 28642292800,
-      "score": 0.42,
+      "score": 0.431,
       "news": [
         {
           "date": "11-12",
@@ -324,8 +257,40 @@
         }
       ],
       "foreign_today": 0,
-      "inst_today": 364800000,
+      "inst_today": 547200000,
       "exchange": "KOSPI"
+    },
+    {
+      "code": "086450",
+      "name": "동국제약",
+      "close": 24750,
+      "ret5": 0.0102,
+      "ret20": 0.0227,
+      "rsi14": 56.2,
+      "vol20": 0.469,
+      "foreign_net": 994866350,
+      "inst_net": 3654508325,
+      "score": 0.31,
+      "news": [
+        {
+          "date": "11-13",
+          "title": "동국제약 센텔리안24, '컬리뷰티페스타 2026' 참가… DDP서 체험형 단독...",
+          "risk": false
+        },
+        {
+          "date": "11-13",
+          "title": "[포토뉴스] 동국제약 센텔리안24, '컬리뷰티페스타' 참가",
+          "risk": false
+        },
+        {
+          "date": "11-13",
+          "title": "동국제약 센텔리안24, DDP '컬리뷰티페스타 2026'서 고객 접점 넓힌다",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 247500000,
+      "exchange": "KOSDAQ"
     },
     {
       "code": "119850",
@@ -337,7 +302,7 @@
       "vol20": 1.077,
       "foreign_net": -21815654925,
       "inst_net": 16843266050,
-      "score": 0.899,
+      "score": 1.0,
       "news": [
         {
           "date": "11-13",
@@ -355,11 +320,11 @@
           "risk": false
         }
       ],
-      "price": 38600,
-      "chg": 0.0239,
-      "activity": 1.22,
-      "foreign_today": 1582600000,
-      "inst_today": 1080800000,
+      "price": 38700,
+      "chg": 0.0265,
+      "activity": 1.2,
+      "foreign_today": 2051100000,
+      "inst_today": 1896300000,
       "exchange": "KOSDAQ"
     },
     {
@@ -372,7 +337,7 @@
       "vol20": 1.403,
       "foreign_net": -3279761625,
       "inst_net": 10286837400,
-      "score": 0.884,
+      "score": 0.948,
       "news": [
         {
           "date": "11-13",
@@ -390,12 +355,47 @@
           "risk": false
         }
       ],
-      "price": 70300,
-      "chg": 0.0248,
-      "activity": 2.53,
-      "foreign_today": 0,
-      "inst_today": 1616900000,
+      "price": 70100,
+      "chg": 0.0219,
+      "activity": 2.43,
+      "foreign_today": 701000000,
+      "inst_today": 1612300000,
       "exchange": "KOSPI"
+    },
+    {
+      "code": "425420",
+      "name": "티에프이",
+      "close": 83400,
+      "ret5": 0.2,
+      "ret20": 0.5977,
+      "rsi14": 60.5,
+      "vol20": 1.453,
+      "foreign_net": -6514931100,
+      "inst_net": 8639681450,
+      "score": 0.81,
+      "news": [
+        {
+          "date": "11-13",
+          "title": "티에프이, 글로벌 빅테크 고객사 '1차 벤더 등록' 완료",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "티에프이 장중 7%대 상승…하나증권 목표가 11만원",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "[모닝 리포트] \"티에프이, 소캠2 매출 확대에 실적 성장 지속\"",
+          "risk": false
+        }
+      ],
+      "price": 90300,
+      "chg": 0.0712,
+      "activity": 1.11,
+      "foreign_today": 0,
+      "inst_today": 722400000,
+      "exchange": "KOSDAQ"
     },
     {
       "code": "468530",
@@ -407,45 +407,10 @@
       "vol20": 1.202,
       "foreign_net": -219934325,
       "inst_net": 6802284425,
-      "score": 0.696,
+      "score": 0.707,
       "news": [],
       "foreign_today": 0,
-      "inst_today": 812000000,
-      "exchange": "KOSDAQ"
-    },
-    {
-      "code": "263860",
-      "name": "지니언스",
-      "close": 33300,
-      "ret5": 0.4323,
-      "ret20": 0.5895,
-      "rsi14": 70.4,
-      "vol20": 1.681,
-      "foreign_net": -16169810550,
-      "inst_net": 4107522025,
-      "score": 0.58,
-      "news": [
-        {
-          "date": "11-13",
-          "title": "유안타증권 “지니언스, 금융권 보안투자 확대 수혜…3분기 영업익 253%...",
-          "risk": false
-        },
-        {
-          "date": "11-12",
-          "title": "지니언스 3분기 영업익 37억7774만원…전년 동기 대비 253% 증가",
-          "risk": false
-        },
-        {
-          "date": "11-12",
-          "title": "지니언스, 누적 영업익 3배 넘게 늘었다…NAC·EDR로 ‘폭풍성장’",
-          "risk": false
-        }
-      ],
-      "price": 33600,
-      "chg": 0.0718,
-      "activity": 5.75,
-      "foreign_today": 0,
-      "inst_today": 235200000,
+      "inst_today": 754000000,
       "exchange": "KOSDAQ"
     },
     {
@@ -458,7 +423,7 @@
       "vol20": 2.006,
       "foreign_net": -513491960,
       "inst_net": -109460540,
-      "score": 0.551,
+      "score": 0.603,
       "news": [
         {
           "date": "11-13",
@@ -476,10 +441,10 @@
           "risk": false
         }
       ],
-      "price": 11640,
-      "chg": -0.059,
-      "activity": 2.1,
-      "foreign_today": 174600000,
+      "price": 11650,
+      "chg": -0.0582,
+      "activity": 2.01,
+      "foreign_today": 337850000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
