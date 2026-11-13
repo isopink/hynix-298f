@@ -120,7 +120,7 @@ assets/     README 그림 · diagrams/*.mmd
 ## 남은 일
 
 - [ ] 장중 push 때 sync 가 monitor 를 실제로 재시작하는지 확인. 문제없으면 노트북 `C:\dev\uostock-ai-trader` 삭제
-- [ ] Supabase SQL Editor 에서 `supabase/realtime.sql` 실행 (KOSPI · 수급 20초 수집)
+- [x] Supabase SQL Editor 에서 `supabase/realtime.sql` 실행 (KOSPI · 수급 20초 수집, 11-12)
 - [ ] 대회 후 README 결과 · 회고 섹션 채우기
 
 ## 커밋
