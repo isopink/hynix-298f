@@ -81,9 +81,9 @@
     ]
   },
   "intraday": {
-    "time": "14:20",
+    "time": "14:21",
     "pool": 422,
-    "analyzed_new": 27,
+    "analyzed_new": 4,
     "passed": 14,
     "kept_prep": false
   },
@@ -98,7 +98,7 @@
       "vol20": 0.884,
       "foreign_net": -81770056900,
       "inst_net": 59675563500,
-      "score": 0.635,
+      "score": 0.654,
       "news": [
         {
           "date": "11-12",
@@ -137,15 +137,15 @@
         },
         {
           "date": "11-13",
-          "title": "카카오워크 해킹 공격에 일부 이용자 개인정보 유출",
+          "title": "“축구화 사야 됨·포카 교환 자금”…카카오뱅크 mini 저금 30만좌 돌파",
           "risk": false
         }
       ],
-      "price": 31950,
-      "chg": 0.0079,
+      "price": 32000,
+      "chg": 0.0095,
       "activity": 0.97,
       "foreign_today": 0,
-      "inst_today": 1725300000,
+      "inst_today": 1728000000,
       "exchange": "KOSPI"
     },
     {
@@ -337,7 +337,7 @@
       "vol20": 1.453,
       "foreign_net": -6514931100,
       "inst_net": 8639681450,
-      "score": 0.923,
+      "score": 0.904,
       "news": [
         {
           "date": "11-13",
@@ -355,11 +355,11 @@
           "risk": false
         }
       ],
-      "price": 90500,
-      "chg": 0.0735,
-      "activity": 1.02,
+      "price": 90600,
+      "chg": 0.0747,
+      "activity": 1.01,
       "foreign_today": 0,
-      "inst_today": 995500000,
+      "inst_today": 996600000,
       "exchange": "KOSDAQ"
     },
     {
@@ -428,10 +428,10 @@
           "risk": false
         }
       ],
-      "price": 11370,
-      "chg": -0.0808,
+      "price": 11330,
+      "chg": -0.0841,
       "activity": 1.67,
-      "foreign_today": 409320000,
+      "foreign_today": 407880000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
