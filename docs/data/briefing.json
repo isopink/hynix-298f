@@ -81,13 +81,29 @@
     ]
   },
   "intraday": {
-    "time": "14:30",
+    "time": "14:45",
     "pool": 422,
     "analyzed_new": 4,
     "passed": 14,
     "kept_prep": false
   },
   "candidates": [
+    {
+      "code": "316140",
+      "name": "우리금융지주",
+      "close": 31750,
+      "ret5": -0.0124,
+      "ret20": 0.0111,
+      "rsi14": 50.8,
+      "vol20": 0.327,
+      "foreign_net": -29095907075,
+      "inst_net": 37693300675,
+      "score": 0.66,
+      "news": [],
+      "foreign_today": 539750000,
+      "inst_today": 3968750000,
+      "exchange": "KOSPI"
+    },
     {
       "code": "028050",
       "name": "삼성E&A",
@@ -98,7 +114,7 @@
       "vol20": 0.884,
       "foreign_net": -81770056900,
       "inst_net": 59675563500,
-      "score": 0.647,
+      "score": 0.66,
       "news": [
         {
           "date": "11-12",
@@ -106,11 +122,11 @@
           "risk": false
         }
       ],
-      "price": 68400,
-      "chg": 0.0364,
-      "activity": 1.0,
+      "price": 68700,
+      "chg": 0.0409,
+      "activity": 0.99,
       "foreign_today": 0,
-      "inst_today": 4240800000,
+      "inst_today": 4259400000,
       "exchange": "KOSPI"
     },
     {
@@ -123,51 +139,24 @@
       "vol20": 0.441,
       "foreign_net": -12870138600,
       "inst_net": -12774455600,
-      "score": 0.647,
+      "score": 0.66,
       "news": [
         {
           "date": "11-13",
-          "title": "카카오워크 해킹 공격… 일부 이용자 개인정보 유출",
+          "title": "카카오워크 외부 해킹으로 개인정보 유출...이름·연락처·이메일 등 피...",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "구글, 한국 정밀지도 반출 보안 조건 충족…네이버·카카오와 지도 경쟁...",
-          "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "구글 지도 한국 진출 ‘마지막 관문’ 넘어…네이버·카카오와 경쟁 본...",
+          "title": "업무용 이메일·첨부파일까지… 카카오워크 해킹에 5천명 정보 유출",
           "risk": false
         }
       ],
       "price": 31950,
       "chg": 0.0079,
-      "activity": 0.96,
+      "activity": 0.95,
       "foreign_today": 0,
       "inst_today": 1725300000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "316140",
-      "name": "우리금융지주",
-      "close": 31750,
-      "ret5": -0.0124,
-      "ret20": 0.0111,
-      "rsi14": 50.8,
-      "vol20": 0.327,
-      "foreign_net": -29095907075,
-      "inst_net": 37693300675,
-      "score": 0.627,
-      "news": [
-        {
-          "date": "11-13",
-          "title": "\"자본비율 획기적 개선 通(통)했다\"… 우리금융지주, 정진완 우리은행장...",
-          "risk": false
-        }
-      ],
-      "foreign_today": 539750000,
-      "inst_today": 3968750000,
       "exchange": "KOSPI"
     },
     {
@@ -180,8 +169,13 @@
       "vol20": 0.538,
       "foreign_net": -14472598100,
       "inst_net": 18845759500,
-      "score": 0.569,
+      "score": 0.58,
       "news": [
+        {
+          "date": "11-13",
+          "title": "SK바이오팜 세노바메이트, 일본 판매 시작…한·중·일 시장 진출 완료",
+          "risk": false
+        },
         {
           "date": "11-13",
           "title": "SK바이오팜 세노바메이트, 일본 판매 개시…동북아 3국 상업화",
@@ -190,11 +184,6 @@
         {
           "date": "11-13",
           "title": "[포토뉴스] SK바이오팜, '세노바메이트' 중국 이어 日 출시",
-          "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "SK바이오팜, '세노바메이트' 일본 출시…\"한·중·일 시장 진출 완료\"",
           "risk": false
         }
       ],
@@ -212,7 +201,7 @@
       "vol20": 0.6,
       "foreign_net": 1608696075,
       "inst_net": 2739770850,
-      "score": 0.549,
+      "score": 0.56,
       "news": [
         {
           "date": "11-13",
@@ -244,7 +233,7 @@
       "vol20": 0.748,
       "foreign_net": -34774154200,
       "inst_net": 28642292800,
-      "score": 0.471,
+      "score": 0.48,
       "news": [
         {
           "date": "11-12",
@@ -276,8 +265,13 @@
       "vol20": 0.469,
       "foreign_net": 994866350,
       "inst_net": 3654508325,
-      "score": 0.255,
+      "score": 0.26,
       "news": [
+        {
+          "date": "11-13",
+          "title": "동국제약 센텔리안24, 컬리뷰티페스타 참가...피부 진단·제품 체험 운영",
+          "risk": false
+        },
         {
           "date": "11-13",
           "title": "동국제약 센텔리안24, '컬리뷰티페스타 2026'서 단독 부스 꾸리고 소비자...",
@@ -286,11 +280,6 @@
         {
           "date": "11-13",
           "title": "동국제약 센텔리안24, 뷰티 행사서 피부 진단·제품 체험 공간 운영",
-          "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "동국제약 센텔리안24, 컬리뷰티페스타 참가...맞춤형 제품 추천",
           "risk": false
         }
       ],
@@ -326,11 +315,11 @@
           "risk": false
         }
       ],
-      "price": 38250,
-      "chg": 0.0146,
+      "price": 38050,
+      "chg": 0.0093,
       "activity": 1.05,
-      "foreign_today": 1874250000,
-      "inst_today": 2142000000,
+      "foreign_today": 1864450000,
+      "inst_today": 2130800000,
       "exchange": "KOSDAQ"
     },
     {
@@ -343,7 +332,7 @@
       "vol20": 1.453,
       "foreign_net": -6514931100,
       "inst_net": 8639681450,
-      "score": 0.941,
+      "score": 0.96,
       "news": [
         {
           "date": "11-13",
@@ -361,11 +350,11 @@
           "risk": false
         }
       ],
-      "price": 90200,
-      "chg": 0.07,
-      "activity": 1.0,
+      "price": 91000,
+      "chg": 0.0795,
+      "activity": 0.99,
       "foreign_today": 0,
-      "inst_today": 992200000,
+      "inst_today": 1001000000,
       "exchange": "KOSDAQ"
     },
     {
@@ -378,7 +367,7 @@
       "vol20": 1.202,
       "foreign_net": -219934325,
       "inst_net": 6802284425,
-      "score": 0.725,
+      "score": 0.74,
       "news": [],
       "foreign_today": 0,
       "inst_today": 754000000,
@@ -394,7 +383,7 @@
       "vol20": 1.006,
       "foreign_net": -12666495850,
       "inst_net": 23546180550,
-      "score": 0.608,
+      "score": 0.62,
       "news": [
         {
           "date": "11-12",
@@ -416,7 +405,7 @@
       "vol20": 2.006,
       "foreign_net": -513491960,
       "inst_net": -109460540,
-      "score": 0.569,
+      "score": 0.58,
       "news": [
         {
           "date": "11-13",
@@ -434,10 +423,10 @@
           "risk": false
         }
       ],
-      "price": 11340,
-      "chg": -0.0833,
-      "activity": 1.63,
-      "foreign_today": 408240000,
+      "price": 11350,
+      "chg": -0.0825,
+      "activity": 1.57,
+      "foreign_today": 408600000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
