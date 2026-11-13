@@ -81,7 +81,7 @@
     ]
   },
   "intraday": {
-    "time": "14:02",
+    "time": "14:03",
     "pool": 416,
     "analyzed_new": 4,
     "passed": 14,
@@ -107,12 +107,12 @@
         },
         {
           "date": "11-13",
-          "title": "카카오 업무용 메신저 해킹…이름·연락처 유출",
+          "title": "[카드] 카카오뱅크 'mini 내맘대로 저금' 누적 30만좌 돌파",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "[카드] 카카오뱅크 'mini 내맘대로 저금' 누적 30만좌 돌파",
+          "title": "카카오 업무용 메신저 해킹…이름·연락처 유출",
           "risk": false
         }
       ],
@@ -141,11 +141,11 @@
           "risk": false
         }
       ],
-      "price": 68400,
-      "chg": 0.0364,
+      "price": 68600,
+      "chg": 0.0394,
       "activity": 1.05,
       "foreign_today": 0,
-      "inst_today": 4446000000,
+      "inst_today": 4459000000,
       "exchange": "KOSPI"
     },
     {
@@ -320,11 +320,11 @@
           "risk": false
         }
       ],
-      "price": 38500,
-      "chg": 0.0212,
+      "price": 38600,
+      "chg": 0.0239,
       "activity": 1.09,
-      "foreign_today": 2040500000,
-      "inst_today": 1886500000,
+      "foreign_today": 2045800000,
+      "inst_today": 1891400000,
       "exchange": "KOSDAQ"
     },
     {
@@ -337,7 +337,7 @@
       "vol20": 1.403,
       "foreign_net": -3279761625,
       "inst_net": 10286837400,
-      "score": 0.931,
+      "score": 0.914,
       "news": [
         {
           "date": "11-13",
@@ -355,11 +355,11 @@
           "risk": false
         }
       ],
-      "price": 69200,
-      "chg": 0.0087,
+      "price": 69100,
+      "chg": 0.0073,
       "activity": 2.18,
-      "foreign_today": 692000000,
-      "inst_today": 1591600000,
+      "foreign_today": 691000000,
+      "inst_today": 1589300000,
       "exchange": "KOSPI"
     },
     {
@@ -390,11 +390,11 @@
           "risk": false
         }
       ],
-      "price": 89600,
-      "chg": 0.0629,
+      "price": 90100,
+      "chg": 0.0688,
       "activity": 1.0,
       "foreign_today": 0,
-      "inst_today": 716800000,
+      "inst_today": 720800000,
       "exchange": "KOSDAQ"
     },
     {
@@ -423,7 +423,7 @@
       "vol20": 2.006,
       "foreign_net": -513491960,
       "inst_net": -109460540,
-      "score": 0.603,
+      "score": 0.621,
       "news": [
         {
           "date": "11-13",
@@ -441,10 +441,10 @@
           "risk": false
         }
       ],
-      "price": 11520,
-      "chg": -0.0687,
-      "activity": 1.75,
-      "foreign_today": 334080000,
+      "price": 11650,
+      "chg": -0.0582,
+      "activity": 1.77,
+      "foreign_today": 337850000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
