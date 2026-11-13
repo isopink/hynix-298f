@@ -150,4 +150,4 @@ Sigma Six 자동매매 AI의 **운용 규칙 변경 이력**입니다 (대시보
 | 11:38 | 기본 설계 | 매수·매도 확신도 기준, 확신도에 따른 포지션 크기, 리스크 한도(일일 −3%, 누적 −10%, 최소 현금 10%, 종목당 20%)를 초기값으로 설정 | 대회 전 기본 운용 규칙 확정 |
 
 ---
-변경 단위 원문 기록: [reports/week1/changes.tsv](reports/week1/changes.tsv)
+변경 단위 원문 기록: [reports/changes.tsv](reports/changes.tsv)

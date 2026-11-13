@@ -1,10 +1,10 @@
 <div align="center">
 
-# UOStock AI Trader
+# Sigma Engine
 
 **Claude Code agents argue. Code decides.**
 
-Team *Hynix 298F* · 2026 Navist UOStock AI Auto-Trading Mock Investment Competition (University of Seoul)
+Team *Hynix 298F* · 2026 Navist AI Auto-Trading Competition (University of Seoul)
 
 [**Live Dashboard →**](https://isopink.github.io/hynix-298f/) · [한국어](README.ko.md)
 
@@ -24,7 +24,7 @@ Team *Hynix 298F* · 2026 Navist UOStock AI Auto-Trading Mock Investment Competi
 
 | | |
 |---|---|
-| **Competition** | Korean equities mock trading, Nov 2 – 27, 2026 · one team account · ₩50M |
+| **Competition** | Korean equities, Nov 2 – 27, 2026 · one team account · ₩50M |
 | **Rule** | The AI must make every decision and place every order itself. No manual orders, no human approval of orders |
 | **Approach** | Ten role-specific Claude agents gather facts, debate and score conviction. Python sizes the order, a Hook can veto it |
 | **Benchmark** | KODEX 200 (vs. the Nov 2 open) |
@@ -185,8 +185,8 @@ hynix-298f/
 │   ├── index.html          # Single file
 │   ├── config.js           # Supabase URL + public anon key
 │   └── data/               # JSON the agent publishes after each run
-├── live/snapshot.py        # Kiwoom balance + KOSPI → Supabase, every minute
-├── supabase/               # schema.sql · kospi.sql · flow.sql · heartbeat.sql · shadow.sql
+├── live/snapshot.py        # Kiwoom balance + KOSPI → Supabase, every 30 s
+├── supabase/               # schema.sql · kospi.sql · flow.sql · heartbeat.sql · realtime.sql
 ├── reports/                # Plan, weekly and final reports
 └── assets/                 # README images
 ```
@@ -241,5 +241,5 @@ From Nov 9 to 12 an ontology-based variant ([sigma-six-ontology](https://github.
 ---
 
 <div align="center">
-<sub>Designed by S.Lee &amp; M.Park · Built for a mock-trading competition. Not investment advice.</sub>
+<sub>Designed by S.Lee &amp; M.Park · Built for a trading competition. Not investment advice.</sub>
 </div>

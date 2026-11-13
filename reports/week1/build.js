@@ -16,7 +16,7 @@ const RUNS = /^Agent (decide|view|prep|close|tune|exit|review) 20/;   // 에이�
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
 // ---------- 변경 로그 ----------
-const rows = fs.readFileSync(path.join(HERE, 'changes.tsv'), 'utf8').split('\n')
+const rows = fs.readFileSync(path.join(HERE, '..', 'changes.tsv'), 'utf8').split('\n')
   .filter(l => l.trim() && !l.startsWith('#')).map(l => { const [h, cat, text] = l.split('\t'); return { h, cat, text }; });
 const byHash = new Map(rows.map(r => [r.h, r]));
 const SKIP = new Set(['대시보드']);   // 보고서엔 전략·운영·문서만 (대시보드 변경은 changes.tsv 에만 남김)

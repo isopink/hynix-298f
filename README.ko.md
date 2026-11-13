@@ -1,10 +1,10 @@
 <div align="center">
 
-# UOStock AI Trader
+# Sigma Engine
 
 **Claude Code 에이전트가 토론하고, 코드가 결정한다**
 
-2026 나비스트 UOStock AI 자동매매 모의주식투자대회 · 팀 「하이닉스 298층 주민」
+2026 나비스트 AI 자동매매 대회 · 팀 「하이닉스 298층 주민」
 
 [**Live Dashboard →**](https://isopink.github.io/hynix-298f/) · [English](README.md)
 
@@ -24,7 +24,7 @@
 
 | | |
 |---|---|
-| **대회** | 국내 주식 모의투자, 2026.11.02 – 11.27 · 팀 계좌 1개 · 5,000만 원 |
+| **대회** | 국내 주식, 2026.11.02 – 11.27 · 팀 계좌 1개 · 5,000만 원 |
 | **규칙** | 판단과 주문은 AI가 직접. 사람의 수동 주문·주문 승인 금지 |
 | **접근** | 역할을 나눈 Claude 에이전트 10개가 사실을 모으고 토론해 확신도만 매김. 수량은 Python이 계산하고, Hook이 주문을 막을 수 있음 |
 | **비교 기준** | KODEX 200 (11/2 시가 대비) |
@@ -185,8 +185,8 @@ hynix-298f/
 │   ├── index.html          # 단일 파일
 │   ├── config.js           # Supabase 주소 + 공개 anon 키
 │   └── data/               # 실행마다 에이전트가 쓰는 JSON
-├── live/snapshot.py        # 키움 잔고 + KOSPI → Supabase, 1분마다
-├── supabase/               # schema.sql · kospi.sql · flow.sql · heartbeat.sql · shadow.sql
+├── live/snapshot.py        # 키움 잔고 + KOSPI → Supabase, 30초마다
+├── supabase/               # schema.sql · kospi.sql · flow.sql · heartbeat.sql · realtime.sql
 ├── reports/                # 계획서, 주간·최종 보고서
 └── assets/                 # README 이미지
 ```
@@ -241,5 +241,5 @@ cd agent
 ---
 
 <div align="center">
-<sub>Designed by S.Lee &amp; M.Park · 모의투자 대회용으로 만든 프로젝트입니다. 투자 권유가 아닙니다.</sub>
+<sub>Designed by S.Lee &amp; M.Park · 매매 대회용으로 만든 프로젝트입니다. 투자 권유가 아닙니다.</sub>
 </div>

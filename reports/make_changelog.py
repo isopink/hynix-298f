@@ -1,5 +1,5 @@
 """전략 변경 로그 → 저장소 맨 위 CHANGELOG.md (팀 공유용).
-reports/week1/changes.tsv 의 '전략' 줄만, git 커밋 시각(KST)으로 날짜별 정리. 최신이 위.
+reports/changes.tsv 의 '전략' 줄만, git 커밋 시각(KST)으로 날짜별 정리. 최신이 위.
 쉬운 설명은 reports/changelog_plain.tsv (해시 → 분야 · 무엇을 · 왜), 맨 위 "지금 전략 한눈에"는 params.json 에서 계산.
 실행: python reports/make_changelog.py
 """
@@ -9,7 +9,7 @@ import subprocess
 from collections import defaultdict
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-TSV = os.path.join(ROOT, "reports", "week1", "changes.tsv")
+TSV = os.path.join(ROOT, "reports", "changes.tsv")
 OUT = os.path.join(ROOT, "CHANGELOG.md")
 WD = "월화수목금토일"
 
@@ -81,7 +81,7 @@ for d in sorted(by_day, reverse=True):
         area, what, why = PLAIN.get(h, ("", text, ""))
         out.append(f"| {t} | {area} | {what.replace('|', '/')} | {why.replace('|', '/')} |")
     out.append("")
-out += ["---", "변경 단위 원문 기록: [reports/week1/changes.tsv](reports/week1/changes.tsv)", ""]
+out += ["---", "변경 단위 원문 기록: [reports/changes.tsv](reports/changes.tsv)", ""]
 open(OUT, "w", encoding="utf-8").write("\n".join(out))
 miss = [h for _, _, h, _ in rows if h not in PLAIN]
 print(f"CHANGELOG.md: 전략 변경 {len(rows)}건, {len(by_day)}일" + (f" · 쉬운 설명 없음 {len(miss)}건: {' '.join(miss)}" if miss else ""))
