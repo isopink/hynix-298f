@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "12:30",
-    "pool": 405,
-    "analyzed_new": 11,
-    "passed": 16,
+    "time": "12:45",
+    "pool": 406,
+    "analyzed_new": 4,
+    "passed": 15,
     "kept_prep": false
   },
   "candidates": [
@@ -98,7 +98,7 @@
       "vol20": 0.849,
       "foreign_net": -21006250725,
       "inst_net": 28484664400,
-      "score": 0.936,
+      "score": 0.932,
       "news": [
         {
           "date": "11-13",
@@ -118,44 +118,9 @@
       ],
       "price": 31500,
       "chg": 0.043,
-      "activity": 1.63,
+      "activity": 1.57,
       "foreign_today": 3465000000,
       "inst_today": 945000000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "128940",
-      "name": "한미약품",
-      "close": 454000,
-      "ret5": -0.0237,
-      "ret20": 0.1963,
-      "rsi14": 53.8,
-      "vol20": 0.648,
-      "foreign_net": -32976039750,
-      "inst_net": 74711352000,
-      "score": 0.885,
-      "news": [
-        {
-          "date": "11-13",
-          "title": "제약사 드러내지 않은 뷰티 브랜드… 유한양행과 한미약품의 변신",
-          "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "한미약품 '에페' 우려에 시총 감소, 증권사 \"주가 하락 과도\"",
-          "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "'에페' 출시하자마자 日 마운자로 암초 만난 한미약품... 주가 장중 10% ...",
-          "risk": false
-        }
-      ],
-      "price": 476500,
-      "chg": 0.0074,
-      "activity": 1.38,
-      "foreign_today": 0,
-      "inst_today": 3812000000,
       "exchange": "KOSPI"
     },
     {
@@ -168,7 +133,7 @@
       "vol20": 0.884,
       "foreign_net": -81770056900,
       "inst_net": 59675563500,
-      "score": 0.731,
+      "score": 0.73,
       "news": [
         {
           "date": "11-12",
@@ -176,11 +141,11 @@
           "risk": false
         }
       ],
-      "price": 69600,
-      "chg": 0.0545,
-      "activity": 1.21,
-      "foreign_today": 3062400000,
-      "inst_today": 1740000000,
+      "price": 69400,
+      "chg": 0.0515,
+      "activity": 1.19,
+      "foreign_today": 3053600000,
+      "inst_today": 1735000000,
       "exchange": "KOSPI"
     },
     {
@@ -193,7 +158,7 @@
       "vol20": 0.327,
       "foreign_net": -29095907075,
       "inst_net": 37693300675,
-      "score": 0.474,
+      "score": 0.5,
       "news": [],
       "foreign_today": 1873250000,
       "inst_today": 1524000000,
@@ -209,7 +174,7 @@
       "vol20": 0.538,
       "foreign_net": -14472598100,
       "inst_net": 18845759500,
-      "score": 0.474,
+      "score": 0.5,
       "news": [
         {
           "date": "11-13",
@@ -241,7 +206,7 @@
       "vol20": 0.6,
       "foreign_net": 1608696075,
       "inst_net": 2739770850,
-      "score": 0.462,
+      "score": 0.486,
       "news": [
         {
           "date": "11-13",
@@ -273,29 +238,29 @@
       "vol20": 0.441,
       "foreign_net": -12870138600,
       "inst_net": -12774455600,
-      "score": 0.436,
+      "score": 0.473,
       "news": [
         {
           "date": "11-13",
-          "title": "카카오엔터테인먼트 웹툰 ‘기프트’, 김우빈 주연 tvN 드라마로 제작",
+          "title": "카카오뱅크 'mini 내맘대로 저금', 청소년 고객 30만 계좌 돌파",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "카카오뱅크 청소년 저금 서비스 30만 좌 돌파..‘용돈 모으기’도 취향...",
+          "title": "카카오엔터프라이즈, 업무용 카카오워크서 정보 유출…메일·첨부파일 ...",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "카카오워크, 외부 공격에 보안망 뚫려…개인정보 '유출'",
+          "title": "카카오워크, 해킹으로 개인정보 유출…비밀번호 변경·사칭 주의",
           "risk": false
         }
       ],
-      "price": 32350,
-      "chg": 0.0205,
-      "activity": 1.18,
+      "price": 32300,
+      "chg": 0.0189,
+      "activity": 1.14,
       "foreign_today": 0,
-      "inst_today": 647000000,
+      "inst_today": 646000000,
       "exchange": "KOSPI"
     },
     {
@@ -308,7 +273,7 @@
       "vol20": 0.469,
       "foreign_net": 994866350,
       "inst_net": 3654508325,
-      "score": 0.41,
+      "score": 0.432,
       "news": [
         {
           "date": "11-13",
@@ -340,7 +305,7 @@
       "vol20": 0.748,
       "foreign_net": -34774154200,
       "inst_net": 28642292800,
-      "score": 0.372,
+      "score": 0.392,
       "news": [
         {
           "date": "11-12",
@@ -390,47 +355,12 @@
           "risk": false
         }
       ],
-      "price": 15360,
-      "chg": 0.1195,
-      "activity": 2.28,
-      "foreign_today": 3194880000,
-      "inst_today": 2872320000,
+      "price": 15370,
+      "chg": 0.1203,
+      "activity": 2.18,
+      "foreign_today": 3196960000,
+      "inst_today": 2874190000,
       "exchange": "KOSDAQ"
-    },
-    {
-      "code": "181710",
-      "name": "NHN",
-      "close": 68600,
-      "ret5": 0.3425,
-      "ret20": 0.3803,
-      "rsi14": 60.9,
-      "vol20": 1.403,
-      "foreign_net": -3279761625,
-      "inst_net": 10286837400,
-      "score": 0.846,
-      "news": [
-        {
-          "date": "11-13",
-          "title": "NHN, AI 클라우드 매출 75% 급증… GPU 공급 확대 속도",
-          "risk": false
-        },
-        {
-          "date": "11-12",
-          "title": "NHN클라우드, '노티피케이션' AWS 마켓플레이스 등록",
-          "risk": false
-        },
-        {
-          "date": "11-12",
-          "title": "상명대-NHN클라우드, 바이오헬스 클라우드 인재 양성 MOU 체결",
-          "risk": false
-        }
-      ],
-      "price": 70400,
-      "chg": 0.0262,
-      "activity": 2.81,
-      "foreign_today": 0,
-      "inst_today": 1619200000,
-      "exchange": "KOSPI"
     },
     {
       "code": "119850",
@@ -442,7 +372,7 @@
       "vol20": 1.077,
       "foreign_net": -21815654925,
       "inst_net": 16843266050,
-      "score": 0.833,
+      "score": 0.851,
       "news": [
         {
           "date": "11-13",
@@ -460,12 +390,47 @@
           "risk": false
         }
       ],
-      "price": 39300,
-      "chg": 0.0424,
-      "activity": 1.35,
-      "foreign_today": 1611300000,
-      "inst_today": 1100400000,
+      "price": 39200,
+      "chg": 0.0398,
+      "activity": 1.28,
+      "foreign_today": 1607200000,
+      "inst_today": 1097600000,
       "exchange": "KOSDAQ"
+    },
+    {
+      "code": "181710",
+      "name": "NHN",
+      "close": 68600,
+      "ret5": 0.3425,
+      "ret20": 0.3803,
+      "rsi14": 60.9,
+      "vol20": 1.403,
+      "foreign_net": -3279761625,
+      "inst_net": 10286837400,
+      "score": 0.851,
+      "news": [
+        {
+          "date": "11-13",
+          "title": "NHN, AI 클라우드 매출 75% 급증… GPU 공급 확대 속도",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "NHN클라우드, '노티피케이션' AWS 마켓플레이스 등록",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "상명대-NHN클라우드, 바이오헬스 클라우드 인재 양성 MOU 체결",
+          "risk": false
+        }
+      ],
+      "price": 70700,
+      "chg": 0.0306,
+      "activity": 2.68,
+      "foreign_today": 0,
+      "inst_today": 1626100000,
+      "exchange": "KOSPI"
     },
     {
       "code": "468530",
@@ -477,45 +442,45 @@
       "vol20": 1.202,
       "foreign_net": -219934325,
       "inst_net": 6802284425,
-      "score": 0.628,
+      "score": 0.662,
       "news": [],
       "foreign_today": 0,
       "inst_today": 812000000,
       "exchange": "KOSDAQ"
     },
     {
-      "code": "451760",
-      "name": "컨텍",
-      "close": 12370,
-      "ret5": 0.3593,
-      "ret20": 0.9984,
-      "rsi14": 66.1,
-      "vol20": 2.006,
-      "foreign_net": -513491960,
-      "inst_net": -109460540,
-      "score": 0.577,
+      "code": "263860",
+      "name": "지니언스",
+      "close": 33300,
+      "ret5": 0.4323,
+      "ret20": 0.5895,
+      "rsi14": 70.4,
+      "vol20": 1.681,
+      "foreign_net": -16169810550,
+      "inst_net": 4107522025,
+      "score": 0.568,
       "news": [
         {
           "date": "11-13",
-          "title": "컨텍, 15일간 주가 97.6% 급등에 소수계좌 매수 관여로 투자주의종목 지...",
+          "title": "유안타증권 “지니언스, 금융권 보안투자 확대 수혜…3분기 영업익 253%...",
           "risk": false
         },
         {
           "date": "11-12",
-          "title": "코난테크놀로지·컨텍 급등…코스닥 상승률 상위권",
+          "title": "지니언스 3분기 영업익 37억7774만원…전년 동기 대비 253% 증가",
           "risk": false
         },
         {
           "date": "11-12",
-          "title": "컨텍, 15일간 주가 97.6% 급등…소수계좌 매수 관여로 투자주의종목 지...",
+          "title": "지니언스, 누적 영업익 3배 넘게 늘었다…NAC·EDR로 ‘폭풍성장’",
           "risk": false
         }
       ],
-      "price": 12000,
-      "chg": -0.0299,
-      "activity": 2.3,
-      "foreign_today": 180000000,
-      "inst_today": 0,
+      "price": 33150,
+      "chg": 0.0574,
+      "activity": 5.93,
+      "foreign_today": 0,
+      "inst_today": 232050000,
       "exchange": "KOSDAQ"
     },
     {
