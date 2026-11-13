@@ -81,7 +81,7 @@
     ]
   },
   "intraday": {
-    "time": "13:46",
+    "time": "13:47",
     "pool": 416,
     "analyzed_new": 4,
     "passed": 15,
@@ -116,11 +116,11 @@
           "risk": false
         }
       ],
-      "price": 31650,
-      "chg": 0.048,
+      "price": 31600,
+      "chg": 0.0464,
       "activity": 1.38,
-      "foreign_today": 2658600000,
-      "inst_today": 2785200000,
+      "foreign_today": 2654400000,
+      "inst_today": 2780800000,
       "exchange": "KOSPI"
     },
     {
@@ -133,7 +133,7 @@
       "vol20": 0.884,
       "foreign_net": -81770056900,
       "inst_net": 59675563500,
-      "score": 0.623,
+      "score": 0.603,
       "news": [
         {
           "date": "11-12",
@@ -141,11 +141,11 @@
           "risk": false
         }
       ],
-      "price": 68800,
-      "chg": 0.0424,
-      "activity": 1.09,
+      "price": 68600,
+      "chg": 0.0394,
+      "activity": 1.08,
       "foreign_today": 0,
-      "inst_today": 4472000000,
+      "inst_today": 4459000000,
       "exchange": "KOSPI"
     },
     {
@@ -158,7 +158,7 @@
       "vol20": 0.441,
       "foreign_net": -12870138600,
       "inst_net": -12774455600,
-      "score": 0.607,
+      "score": 0.587,
       "news": [
         {
           "date": "11-13",
@@ -176,11 +176,11 @@
           "risk": false
         }
       ],
-      "price": 32050,
-      "chg": 0.011,
-      "activity": 1.02,
+      "price": 32100,
+      "chg": 0.0126,
+      "activity": 1.01,
       "foreign_today": 0,
-      "inst_today": 1602500000,
+      "inst_today": 1605000000,
       "exchange": "KOSPI"
     },
     {
@@ -193,7 +193,7 @@
       "vol20": 0.327,
       "foreign_net": -29095907075,
       "inst_net": 37693300675,
-      "score": 0.574,
+      "score": 0.556,
       "news": [],
       "foreign_today": 730250000,
       "inst_today": 3333750000,
@@ -209,7 +209,7 @@
       "vol20": 0.538,
       "foreign_net": -14472598100,
       "inst_net": 18845759500,
-      "score": 0.574,
+      "score": 0.556,
       "news": [
         {
           "date": "11-13",
@@ -241,7 +241,7 @@
       "vol20": 0.6,
       "foreign_net": 1608696075,
       "inst_net": 2739770850,
-      "score": 0.525,
+      "score": 0.508,
       "news": [
         {
           "date": "11-13",
@@ -273,7 +273,7 @@
       "vol20": 0.748,
       "foreign_net": -34774154200,
       "inst_net": 28642292800,
-      "score": 0.41,
+      "score": 0.397,
       "news": [
         {
           "date": "11-12",
@@ -305,16 +305,16 @@
       "vol20": 0.469,
       "foreign_net": 994866350,
       "inst_net": 3654508325,
-      "score": 0.295,
+      "score": 0.286,
       "news": [
         {
           "date": "11-13",
-          "title": "[동국제약=종합] 감기약 선택법 안내 ··· 카리토포텐 새 광고 론칭",
+          "title": "동국제약 센텔리안24, 컬리뷰티페스타 참가...맞춤형 제품 추천",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "동국제약 센텔리안24, 컬리뷰티페스타 참가...맞춤형 제품 추천",
+          "title": "[동국제약=종합] 감기약 선택법 안내 ··· 카리토포텐 새 광고 론칭",
           "risk": false
         },
         {
@@ -337,7 +337,7 @@
       "vol20": 1.077,
       "foreign_net": -21815654925,
       "inst_net": 16843266050,
-      "score": 0.951,
+      "score": 0.952,
       "news": [
         {
           "date": "11-13",
@@ -355,12 +355,47 @@
           "risk": false
         }
       ],
-      "price": 38650,
-      "chg": 0.0252,
-      "activity": 1.13,
-      "foreign_today": 2048450000,
-      "inst_today": 1893850000,
+      "price": 38550,
+      "chg": 0.0225,
+      "activity": 1.12,
+      "foreign_today": 2043150000,
+      "inst_today": 1888950000,
       "exchange": "KOSDAQ"
+    },
+    {
+      "code": "181710",
+      "name": "NHN",
+      "close": 68600,
+      "ret5": 0.3425,
+      "ret20": 0.3803,
+      "rsi14": 60.9,
+      "vol20": 1.403,
+      "foreign_net": -3279761625,
+      "inst_net": 10286837400,
+      "score": 0.889,
+      "news": [
+        {
+          "date": "11-13",
+          "title": "NHN, AI 클라우드 매출 75% 급증… GPU 공급 확대 속도",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "NHN클라우드, '노티피케이션' AWS 마켓플레이스 등록",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "상명대-NHN클라우드, 바이오헬스 클라우드 인재 양성 MOU 체결",
+          "risk": false
+        }
+      ],
+      "price": 69100,
+      "chg": 0.0073,
+      "activity": 2.26,
+      "foreign_today": 691000000,
+      "inst_today": 1589300000,
+      "exchange": "KOSPI"
     },
     {
       "code": "425420",
@@ -372,7 +407,7 @@
       "vol20": 1.453,
       "foreign_net": -6514931100,
       "inst_net": 8639681450,
-      "score": 0.803,
+      "score": 0.778,
       "news": [
         {
           "date": "11-13",
@@ -390,11 +425,11 @@
           "risk": false
         }
       ],
-      "price": 91100,
-      "chg": 0.0807,
+      "price": 91000,
+      "chg": 0.0795,
       "activity": 1.05,
       "foreign_today": 0,
-      "inst_today": 728800000,
+      "inst_today": 728000000,
       "exchange": "KOSDAQ"
     },
     {
@@ -407,7 +442,7 @@
       "vol20": 1.202,
       "foreign_net": -219934325,
       "inst_net": 6802284425,
-      "score": 0.689,
+      "score": 0.667,
       "news": [],
       "foreign_today": 0,
       "inst_today": 754000000,
@@ -423,7 +458,7 @@
       "vol20": 2.006,
       "foreign_net": -513491960,
       "inst_net": -109460540,
-      "score": 0.623,
+      "score": 0.587,
       "news": [
         {
           "date": "11-13",
@@ -441,34 +476,12 @@
           "risk": false
         }
       ],
-      "price": 11620,
-      "chg": -0.0606,
-      "activity": 1.85,
-      "foreign_today": 336980000,
+      "price": 11600,
+      "chg": -0.0622,
+      "activity": 1.84,
+      "foreign_today": 336400000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
-    },
-    {
-      "code": "009420",
-      "name": "한올바이오파마",
-      "close": 51200,
-      "ret5": 0.2946,
-      "ret20": 0.2673,
-      "rsi14": 67.3,
-      "vol20": 1.006,
-      "foreign_net": -12666495850,
-      "inst_net": 23546180550,
-      "score": 0.557,
-      "news": [
-        {
-          "date": "11-12",
-          "title": "한올바이오파마 아이메로프루바트, 4개 적응증에 집중",
-          "risk": false
-        }
-      ],
-      "foreign_today": 0,
-      "inst_today": 921600000,
-      "exchange": "KOSPI"
     },
     {
       "code": "114800",
