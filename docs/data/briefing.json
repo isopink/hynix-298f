@@ -81,7 +81,7 @@
     ]
   },
   "intraday": {
-    "time": "13:58",
+    "time": "13:59",
     "pool": 416,
     "analyzed_new": 4,
     "passed": 14,
@@ -106,11 +106,11 @@
           "risk": false
         }
       ],
-      "price": 68300,
-      "chg": 0.0348,
+      "price": 68400,
+      "chg": 0.0364,
       "activity": 1.05,
       "foreign_today": 0,
-      "inst_today": 4439500000,
+      "inst_today": 4446000000,
       "exchange": "KOSPI"
     },
     {
@@ -127,12 +127,12 @@
       "news": [
         {
           "date": "11-13",
-          "title": "카카오 업무용 메신저 해킹…이름·연락처 유출",
+          "title": "[카드] 카카오뱅크 'mini 내맘대로 저금' 누적 30만좌 돌파",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "[카드] 카카오뱅크 'mini 내맘대로 저금' 누적 30만좌 돌파",
+          "title": "카카오 업무용 메신저 해킹…이름·연락처 유출",
           "risk": false
         },
         {
@@ -141,11 +141,11 @@
           "risk": false
         }
       ],
-      "price": 32050,
-      "chg": 0.011,
+      "price": 32000,
+      "chg": 0.0095,
       "activity": 1.0,
       "foreign_today": 0,
-      "inst_today": 1602500000,
+      "inst_today": 1600000000,
       "exchange": "KOSPI"
     },
     {
@@ -274,12 +274,12 @@
       "news": [
         {
           "date": "11-13",
-          "title": "동국제약 센텔리안24, 컬리뷰티페스타 참가...맞춤형 제품 추천",
+          "title": "[동국제약=종합] 감기약 선택법 안내 ··· 카리토포텐 새 광고 론칭",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "[동국제약=종합] 감기약 선택법 안내 ··· 카리토포텐 새 광고 론칭",
+          "title": "동국제약 센텔리안24, 컬리뷰티페스타 참가...맞춤형 제품 추천",
           "risk": false
         },
         {
@@ -320,11 +320,11 @@
           "risk": false
         }
       ],
-      "price": 38600,
-      "chg": 0.0239,
+      "price": 38550,
+      "chg": 0.0225,
       "activity": 1.1,
-      "foreign_today": 2045800000,
-      "inst_today": 1891400000,
+      "foreign_today": 2043150000,
+      "inst_today": 1888950000,
       "exchange": "KOSDAQ"
     },
     {
@@ -357,7 +357,7 @@
       ],
       "price": 69500,
       "chg": 0.0131,
-      "activity": 2.21,
+      "activity": 2.2,
       "foreign_today": 695000000,
       "inst_today": 1598500000,
       "exchange": "KOSPI"
@@ -390,11 +390,11 @@
           "risk": false
         }
       ],
-      "price": 90200,
-      "chg": 0.07,
+      "price": 90100,
+      "chg": 0.0688,
       "activity": 1.01,
       "foreign_today": 0,
-      "inst_today": 721600000,
+      "inst_today": 720800000,
       "exchange": "KOSDAQ"
     },
     {
@@ -441,10 +441,10 @@
           "risk": false
         }
       ],
-      "price": 11580,
-      "chg": -0.0639,
+      "price": 11600,
+      "chg": -0.0622,
       "activity": 1.78,
-      "foreign_today": 335820000,
+      "foreign_today": 336400000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
