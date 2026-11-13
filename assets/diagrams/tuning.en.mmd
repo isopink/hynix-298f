@@ -1,13 +1,13 @@
 flowchart TB
-    J[("Decision & trade log")] --> SC["16:00 weekdays · Scorer<br/>grades each decision by what happened next<br/>Opus · max"]
-    SC --> TU["Tuner<br/>0–2 threshold changes + 2–5 lessons<br/>Opus · max"]
+    J[("Decision & trade log")] --> SC["16:00 weekdays · Scorer<br/>grades each decision by what happened next"]
+    SC --> TU["Tuner<br/>0–2 threshold changes + 2–5 lessons"]
     TU --> C{{"tuning.py<br/>allowed key? in range?<br/>step size? cooldown?"}}
     C -- pass --> P["params.json<br/>auto-commit"]
     C -- reject --> J
     TU --> LS["Lessons → next briefing"]
     P --> D["Next day's decisions"]
     LS --> D
-    J --> W["Wed · Fri 15:50 · Review<br/>analysis + 1 suggestion · Opus · max"]
+    J --> W["Wed · Fri 15:50 · Review<br/>analysis + 1 suggestion"]
     W --> TU
     classDef agent fill:#1c1416,stroke:#ff5a65,color:#f2f2f2
     classDef hook fill:#2a1416,stroke:#ff7a82,stroke-width:2px,color:#ffffff

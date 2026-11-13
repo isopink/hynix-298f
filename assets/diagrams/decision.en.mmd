@@ -1,17 +1,17 @@
 flowchart TB
     S["Scheduled run · every 15 min, 09:30 – 15:15"] --> P["Intraday re-screen · code<br/>Kiwoom ranks → candidates, live RSI"]
     P --> RT["Routing · code<br/>only candidates that changed since the last run<br/>(price ±1.5%, flow flip, new news) go to debate"]
-    RT --> G["Regime<br/>Sonnet · high"]
-    RT --> PO["Position manager<br/>holdings: sell / hold / add<br/>Opus · high"]
-    RT --> RS["Research<br/>fact sheet: news, filings, sector, overseas<br/>Opus · xhigh"]
-    RS --> B["Bull<br/>case for, from the fact sheet<br/>Opus · high"]
-    B --> R["Bear<br/>case against + rebuttal, same facts<br/>Opus · high"]
+    RT --> G["Regime<br/>market regime → exposure cap"]
+    RT --> PO["Position manager<br/>holdings: sell / hold / add"]
+    RT --> RS["Research<br/>fact sheet: news, filings, sector, overseas"]
+    RS --> B["Bull<br/>case for, from the fact sheet"]
+    B --> R["Bear<br/>case against + rebuttal, same facts"]
     G --> V
     PO --> V
     R --> V["Claim check · code<br/>every number must exist in the briefing"]
-    V --> L["Lead agent<br/>final conviction and action<br/>Opus · xhigh"]
+    V --> L["Lead agent<br/>final conviction and action"]
     L --> C["Code adjusts conviction<br/>bear market · RSI → sizing"]
-    C --> E["Executor<br/>sells first, then buys, then records<br/>Haiku"]
+    C --> E["Executor<br/>sells first, then buys, then records"]
     E --> H{{"Risk Hook<br/>before every order"}}
     H -- pass --> O["Kiwoom order"]
     H -- violation --> X["Blocked + logged"]

@@ -42,18 +42,17 @@ Every 15 minutes (09:30 – 15:15, 24 runs a day) the agent re-screens candidate
 
 <p align="center"><img src="assets/diagrams/decision.en.png" alt="One decision run" width="520"></p>
 
-| Agent | Job | Model |
-|---|---|---|
-| Lead | Final conviction and action, directs the rest | Opus 5.5 · xhigh |
-| Regime | Market regime (bull / sideways / bear) → stock-exposure cap | Opus 5.5 |
-| Position | Sell / hold / add for current holdings | Opus 5.5 |
-| Research | Fact sheet for the stocks under debate (news, filings, sector) | Opus 5.5 |
-| Bull / Bear | Argue for and against from the same fact sheet | Opus 5.5 |
-| Executor | Places the orders: sells first, then buys | Haiku 5.5 |
+| Agent | Job |
+|---|---|
+| Lead | Final conviction and action, directs the rest |
+| Regime | Market regime (bull / sideways / bear) → stock-exposure cap |
+| Position | Sell / hold / add for current holdings |
+| Research | Fact sheet for the stocks under debate (news, filings, sector) |
+| Bull / Bear | Argue for and against from the same fact sheet |
+| Executor | Places the orders: sells first, then buys |
 
 - **Routing.** Only candidates that changed since the last run (price ±1.5%, flow flipped, new news) are debated again; the rest carry their previous call forward.
 - **Claim check.** Bull and Bear never search on their own. Code checks every number they cite against the briefing and the fact sheet.
-- **Model per role.** Opus for anything that shapes conviction, Haiku for mechanical order work.
 
 ### Guardrails
 
