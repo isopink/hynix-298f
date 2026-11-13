@@ -81,7 +81,7 @@
     ]
   },
   "intraday": {
-    "time": "14:11",
+    "time": "14:12",
     "pool": 416,
     "analyzed_new": 4,
     "passed": 14,
@@ -98,7 +98,7 @@
       "vol20": 0.884,
       "foreign_net": -81770056900,
       "inst_net": 59675563500,
-      "score": 0.638,
+      "score": 0.661,
       "news": [
         {
           "date": "11-12",
@@ -123,7 +123,7 @@
       "vol20": 0.441,
       "foreign_net": -12870138600,
       "inst_net": -12774455600,
-      "score": 0.638,
+      "score": 0.661,
       "news": [
         {
           "date": "11-13",
@@ -158,7 +158,7 @@
       "vol20": 0.327,
       "foreign_net": -29095907075,
       "inst_net": 37693300675,
-      "score": 0.603,
+      "score": 0.625,
       "news": [],
       "foreign_today": 730250000,
       "inst_today": 3333750000,
@@ -174,7 +174,7 @@
       "vol20": 0.538,
       "foreign_net": -14472598100,
       "inst_net": 18845759500,
-      "score": 0.569,
+      "score": 0.607,
       "news": [
         {
           "date": "11-13",
@@ -206,7 +206,7 @@
       "vol20": 0.6,
       "foreign_net": 1608696075,
       "inst_net": 2739770850,
-      "score": 0.552,
+      "score": 0.571,
       "news": [
         {
           "date": "11-13",
@@ -238,7 +238,7 @@
       "vol20": 0.748,
       "foreign_net": -34774154200,
       "inst_net": 28642292800,
-      "score": 0.431,
+      "score": 0.446,
       "news": [
         {
           "date": "11-12",
@@ -270,7 +270,7 @@
       "vol20": 0.469,
       "foreign_net": 994866350,
       "inst_net": 3654508325,
-      "score": 0.31,
+      "score": 0.321,
       "news": [
         {
           "date": "11-13",
@@ -320,47 +320,12 @@
           "risk": false
         }
       ],
-      "price": 38450,
-      "chg": 0.0199,
+      "price": 38650,
+      "chg": 0.0252,
       "activity": 1.08,
-      "foreign_today": 2037850000,
-      "inst_today": 1884050000,
+      "foreign_today": 2048450000,
+      "inst_today": 1893850000,
       "exchange": "KOSDAQ"
-    },
-    {
-      "code": "181710",
-      "name": "NHN",
-      "close": 68600,
-      "ret5": 0.3425,
-      "ret20": 0.3803,
-      "rsi14": 60.9,
-      "vol20": 1.403,
-      "foreign_net": -3279761625,
-      "inst_net": 10286837400,
-      "score": 0.914,
-      "news": [
-        {
-          "date": "11-13",
-          "title": "NHN, AI 클라우드 매출 75% 급증… GPU 공급 확대 속도",
-          "risk": false
-        },
-        {
-          "date": "11-12",
-          "title": "NHN클라우드, '노티피케이션' AWS 마켓플레이스 등록",
-          "risk": false
-        },
-        {
-          "date": "11-12",
-          "title": "상명대-NHN클라우드, 바이오헬스 클라우드 인재 양성 MOU 체결",
-          "risk": false
-        }
-      ],
-      "price": 69000,
-      "chg": 0.0058,
-      "activity": 2.14,
-      "foreign_today": 690000000,
-      "inst_today": 1587000000,
-      "exchange": "KOSPI"
     },
     {
       "code": "425420",
@@ -372,7 +337,7 @@
       "vol20": 1.453,
       "foreign_net": -6514931100,
       "inst_net": 8639681450,
-      "score": 0.879,
+      "score": 0.875,
       "news": [
         {
           "date": "11-13",
@@ -390,11 +355,11 @@
           "risk": false
         }
       ],
-      "price": 91300,
-      "chg": 0.083,
+      "price": 91200,
+      "chg": 0.0819,
       "activity": 1.0,
       "foreign_today": 0,
-      "inst_today": 730400000,
+      "inst_today": 729600000,
       "exchange": "KOSDAQ"
     },
     {
@@ -407,7 +372,7 @@
       "vol20": 1.202,
       "foreign_net": -219934325,
       "inst_net": 6802284425,
-      "score": 0.707,
+      "score": 0.732,
       "news": [],
       "foreign_today": 0,
       "inst_today": 754000000,
@@ -423,7 +388,7 @@
       "vol20": 2.006,
       "foreign_net": -513491960,
       "inst_net": -109460540,
-      "score": 0.586,
+      "score": 0.625,
       "news": [
         {
           "date": "11-13",
@@ -441,12 +406,34 @@
           "risk": false
         }
       ],
-      "price": 11520,
-      "chg": -0.0687,
-      "activity": 1.72,
-      "foreign_today": 334080000,
+      "price": 11490,
+      "chg": -0.0711,
+      "activity": 1.71,
+      "foreign_today": 333210000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
+    },
+    {
+      "code": "009420",
+      "name": "한올바이오파마",
+      "close": 51200,
+      "ret5": 0.2946,
+      "ret20": 0.2673,
+      "rsi14": 67.3,
+      "vol20": 1.006,
+      "foreign_net": -12666495850,
+      "inst_net": 23546180550,
+      "score": 0.607,
+      "news": [
+        {
+          "date": "11-12",
+          "title": "한올바이오파마 아이메로프루바트, 4개 적응증에 집중",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 921600000,
+      "exchange": "KOSPI"
     },
     {
       "code": "114800",
