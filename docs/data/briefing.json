@@ -81,9 +81,9 @@
     ]
   },
   "intraday": {
-    "time": "12:45",
+    "time": "13:00",
     "pool": 406,
-    "analyzed_new": 4,
+    "analyzed_new": 3,
     "passed": 15,
     "kept_prep": false
   },
@@ -98,7 +98,7 @@
       "vol20": 0.849,
       "foreign_net": -21006250725,
       "inst_net": 28484664400,
-      "score": 0.932,
+      "score": 1.0,
       "news": [
         {
           "date": "11-13",
@@ -118,7 +118,7 @@
       ],
       "price": 31500,
       "chg": 0.043,
-      "activity": 1.57,
+      "activity": 1.52,
       "foreign_today": 3465000000,
       "inst_today": 945000000,
       "exchange": "KOSPI"
@@ -133,7 +133,7 @@
       "vol20": 0.884,
       "foreign_net": -81770056900,
       "inst_net": 59675563500,
-      "score": 0.73,
+      "score": 0.768,
       "news": [
         {
           "date": "11-12",
@@ -141,11 +141,11 @@
           "risk": false
         }
       ],
-      "price": 69400,
-      "chg": 0.0515,
-      "activity": 1.19,
-      "foreign_today": 3053600000,
-      "inst_today": 1735000000,
+      "price": 69100,
+      "chg": 0.047,
+      "activity": 1.15,
+      "foreign_today": 3040400000,
+      "inst_today": 1727500000,
       "exchange": "KOSPI"
     },
     {
@@ -158,42 +158,45 @@
       "vol20": 0.327,
       "foreign_net": -29095907075,
       "inst_net": 37693300675,
-      "score": 0.5,
+      "score": 0.536,
       "news": [],
       "foreign_today": 1873250000,
       "inst_today": 1524000000,
       "exchange": "KOSPI"
     },
     {
-      "code": "326030",
-      "name": "SK바이오팜",
-      "close": 88000,
-      "ret5": -0.0351,
-      "ret20": 0.2791,
-      "rsi14": 66.6,
-      "vol20": 0.538,
-      "foreign_net": -14472598100,
-      "inst_net": 18845759500,
-      "score": 0.5,
+      "code": "035720",
+      "name": "카카오",
+      "close": 31850,
+      "ret5": -0.017,
+      "ret20": 0.0324,
+      "rsi14": 52.7,
+      "vol20": 0.441,
+      "foreign_net": -12870138600,
+      "inst_net": -12774455600,
+      "score": 0.522,
       "news": [
         {
           "date": "11-13",
-          "title": "SK바이오팜, 뇌전증 신약 '세노바메이트' 일본 판매 시작",
+          "title": "카카오게임즈, '도깨비의 세계' 출시 이후 높은 매출 유지 이유는",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "SK바이오팜, 뇌전증 신약 ‘세노바메이트’ 일본 판매 개시…미국부터...",
+          "title": "빈칸 세 글자…카카오페이 퀴즈타임 정답 바로 공개 (11월 13일)",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "SK바이오팜, 뇌전증 치료제 ‘세노바메이트’ 일본 출시…韓中日 출시",
+          "title": "카카오 기업용 메신저 뚫렸다⋯개인정보·메일·첨부파일 유출",
           "risk": false
         }
       ],
+      "price": 32200,
+      "chg": 0.0158,
+      "activity": 1.1,
       "foreign_today": 0,
-      "inst_today": 352000000,
+      "inst_today": 644000000,
       "exchange": "KOSPI"
     },
     {
@@ -206,7 +209,7 @@
       "vol20": 0.6,
       "foreign_net": 1608696075,
       "inst_net": 2739770850,
-      "score": 0.486,
+      "score": 0.522,
       "news": [
         {
           "date": "11-13",
@@ -229,38 +232,35 @@
       "exchange": "KOSPI"
     },
     {
-      "code": "035720",
-      "name": "카카오",
-      "close": 31850,
-      "ret5": -0.017,
-      "ret20": 0.0324,
-      "rsi14": 52.7,
-      "vol20": 0.441,
-      "foreign_net": -12870138600,
-      "inst_net": -12774455600,
-      "score": 0.473,
+      "code": "326030",
+      "name": "SK바이오팜",
+      "close": 88000,
+      "ret5": -0.0351,
+      "ret20": 0.2791,
+      "rsi14": 66.6,
+      "vol20": 0.538,
+      "foreign_net": -14472598100,
+      "inst_net": 18845759500,
+      "score": 0.522,
       "news": [
         {
           "date": "11-13",
-          "title": "카카오뱅크 'mini 내맘대로 저금', 청소년 고객 30만 계좌 돌파",
+          "title": "SK바이오팜, 뇌전증 신약 '세노바메이트' 일본 판매 시작",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "카카오엔터프라이즈, 업무용 카카오워크서 정보 유출…메일·첨부파일 ...",
+          "title": "SK바이오팜, 뇌전증 신약 ‘세노바메이트’ 일본 판매 개시…미국부터...",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "카카오워크, 해킹으로 개인정보 유출…비밀번호 변경·사칭 주의",
+          "title": "SK바이오팜, 뇌전증 치료제 ‘세노바메이트’ 일본 출시…韓中日 출시",
           "risk": false
         }
       ],
-      "price": 32300,
-      "chg": 0.0189,
-      "activity": 1.14,
       "foreign_today": 0,
-      "inst_today": 646000000,
+      "inst_today": 352000000,
       "exchange": "KOSPI"
     },
     {
@@ -273,7 +273,7 @@
       "vol20": 0.469,
       "foreign_net": 994866350,
       "inst_net": 3654508325,
-      "score": 0.432,
+      "score": 0.464,
       "news": [
         {
           "date": "11-13",
@@ -305,7 +305,7 @@
       "vol20": 0.748,
       "foreign_net": -34774154200,
       "inst_net": 28642292800,
-      "score": 0.392,
+      "score": 0.42,
       "news": [
         {
           "date": "11-12",
@@ -328,41 +328,6 @@
       "exchange": "KOSPI"
     },
     {
-      "code": "328130",
-      "name": "루닛",
-      "close": 14080,
-      "ret5": -0.0428,
-      "ret20": 0.3122,
-      "rsi14": 52.2,
-      "vol20": 1.481,
-      "foreign_net": -4715159145,
-      "inst_net": 5727640,
-      "score": 1.0,
-      "news": [
-        {
-          "date": "11-13",
-          "title": "[특징주] 삼성전자·루닛, 외국인·기관 동반 순매수 상위권…한국전력...",
-          "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "[특징주] 루닛, 외형 성장·비용 효율화 동시 달성에 이틀 연속 하락 딛...",
-          "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "루닛 주가, 급등세... 이유는?",
-          "risk": false
-        }
-      ],
-      "price": 15370,
-      "chg": 0.1203,
-      "activity": 2.18,
-      "foreign_today": 3196960000,
-      "inst_today": 2874190000,
-      "exchange": "KOSDAQ"
-    },
-    {
       "code": "119850",
       "name": "지엔씨에너지",
       "close": 37800,
@@ -372,7 +337,7 @@
       "vol20": 1.077,
       "foreign_net": -21815654925,
       "inst_net": 16843266050,
-      "score": 0.851,
+      "score": 0.899,
       "news": [
         {
           "date": "11-13",
@@ -390,11 +355,11 @@
           "risk": false
         }
       ],
-      "price": 39200,
-      "chg": 0.0398,
-      "activity": 1.28,
-      "foreign_today": 1607200000,
-      "inst_today": 1097600000,
+      "price": 38600,
+      "chg": 0.0239,
+      "activity": 1.22,
+      "foreign_today": 1582600000,
+      "inst_today": 1080800000,
       "exchange": "KOSDAQ"
     },
     {
@@ -407,7 +372,7 @@
       "vol20": 1.403,
       "foreign_net": -3279761625,
       "inst_net": 10286837400,
-      "score": 0.851,
+      "score": 0.884,
       "news": [
         {
           "date": "11-13",
@@ -425,11 +390,11 @@
           "risk": false
         }
       ],
-      "price": 70700,
-      "chg": 0.0306,
-      "activity": 2.68,
+      "price": 70300,
+      "chg": 0.0248,
+      "activity": 2.53,
       "foreign_today": 0,
-      "inst_today": 1626100000,
+      "inst_today": 1616900000,
       "exchange": "KOSPI"
     },
     {
@@ -442,7 +407,7 @@
       "vol20": 1.202,
       "foreign_net": -219934325,
       "inst_net": 6802284425,
-      "score": 0.662,
+      "score": 0.696,
       "news": [],
       "foreign_today": 0,
       "inst_today": 812000000,
@@ -458,7 +423,7 @@
       "vol20": 1.681,
       "foreign_net": -16169810550,
       "inst_net": 4107522025,
-      "score": 0.568,
+      "score": 0.58,
       "news": [
         {
           "date": "11-13",
@@ -476,11 +441,46 @@
           "risk": false
         }
       ],
-      "price": 33150,
-      "chg": 0.0574,
-      "activity": 5.93,
+      "price": 33600,
+      "chg": 0.0718,
+      "activity": 5.75,
       "foreign_today": 0,
-      "inst_today": 232050000,
+      "inst_today": 235200000,
+      "exchange": "KOSDAQ"
+    },
+    {
+      "code": "451760",
+      "name": "컨텍",
+      "close": 12370,
+      "ret5": 0.3593,
+      "ret20": 0.9984,
+      "rsi14": 66.1,
+      "vol20": 2.006,
+      "foreign_net": -513491960,
+      "inst_net": -109460540,
+      "score": 0.551,
+      "news": [
+        {
+          "date": "11-13",
+          "title": "컨텍, 15일간 주가 97.6% 급등에 소수계좌 매수 관여로 투자주의종목 지...",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "코난테크놀로지·컨텍 급등…코스닥 상승률 상위권",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "컨텍, 15일간 주가 97.6% 급등…소수계좌 매수 관여로 투자주의종목 지...",
+          "risk": false
+        }
+      ],
+      "price": 11640,
+      "chg": -0.059,
+      "activity": 2.1,
+      "foreign_today": 174600000,
+      "inst_today": 0,
       "exchange": "KOSDAQ"
     },
     {
