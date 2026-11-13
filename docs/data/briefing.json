@@ -81,29 +81,45 @@
     ]
   },
   "intraday": {
-    "time": "09:30",
+    "time": "09:45",
     "pool": 326,
     "analyzed_new": 30,
-    "passed": 7,
+    "passed": 8,
     "kept_prep": false
   },
   "candidates": [
     {
-      "code": "012330",
-      "name": "현대모비스",
-      "close": 353500,
-      "ret5": -0.0275,
-      "ret20": 0.068,
-      "rsi14": 48.7,
-      "vol20": 0.635,
-      "foreign_net": 7859108250,
-      "inst_net": 9377315500,
-      "score": 0.44,
-      "news": [],
-      "price": 362000,
-      "chg": 0.0284,
-      "activity": 1.82,
-      "foreign_today": 1086000000,
+      "code": "064400",
+      "name": "LG씨엔에스",
+      "close": 74800,
+      "ret5": 0.0275,
+      "ret20": 0.2202,
+      "rsi14": 51.6,
+      "vol20": 0.772,
+      "foreign_net": 5844377400,
+      "inst_net": 39799611350,
+      "score": 0.655,
+      "news": [
+        {
+          "date": "11-11",
+          "title": "LG씨엔에스 주가, 11월 11일 애프터마켓 79,000원 1.37% 하락",
+          "risk": false
+        },
+        {
+          "date": "11-11",
+          "title": "LG씨엔에스 7만8400원으로 2.12% 하락",
+          "risk": false
+        },
+        {
+          "date": "11-10",
+          "title": "LG씨엔에스 주가, 11월 10일 장중 79,700원 3.10% 상승",
+          "risk": false
+        }
+      ],
+      "price": 81300,
+      "chg": 0.0782,
+      "activity": 6.3,
+      "foreign_today": 1869900000,
       "inst_today": 0,
       "exchange": "KOSPI"
     },
@@ -117,7 +133,7 @@
       "vol20": 0.884,
       "foreign_net": -81770056900,
       "inst_net": 59675563500,
-      "score": 0.4,
+      "score": 0.276,
       "news": [
         {
           "date": "11-12",
@@ -125,10 +141,10 @@
           "risk": false
         }
       ],
-      "price": 67800,
-      "chg": 0.0273,
-      "activity": 2.12,
-      "foreign_today": 1084800000,
+      "price": 67600,
+      "chg": 0.0242,
+      "activity": 1.68,
+      "foreign_today": 1081600000,
       "inst_today": 0,
       "exchange": "KOSPI"
     },
@@ -160,10 +176,45 @@
           "risk": false
         }
       ],
-      "price": 11130,
-      "chg": 0.0681,
-      "activity": 11.11,
-      "foreign_today": 812490000,
+      "price": 11100,
+      "chg": 0.0653,
+      "activity": 10.96,
+      "foreign_today": 810300000,
+      "inst_today": 0,
+      "exchange": "KOSDAQ"
+    },
+    {
+      "code": "451760",
+      "name": "컨텍",
+      "close": 12370,
+      "ret5": 0.3593,
+      "ret20": 0.9984,
+      "rsi14": 66.1,
+      "vol20": 2.006,
+      "foreign_net": -513491960,
+      "inst_net": -109460540,
+      "score": 0.621,
+      "news": [
+        {
+          "date": "11-13",
+          "title": "컨텍, 15일간 주가 97.6% 급등에 소수계좌 매수 관여로 투자주의종목 지...",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "코난테크놀로지·컨텍 급등…코스닥 상승률 상위권",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "컨텍, 15일간 주가 97.6% 급등…소수계좌 매수 관여로 투자주의종목 지...",
+          "risk": false
+        }
+      ],
+      "price": 12470,
+      "chg": 0.0081,
+      "activity": 7.8,
+      "foreign_today": 261870000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -177,7 +228,7 @@
       "vol20": 1.063,
       "foreign_net": 219067700,
       "inst_net": -7303960,
-      "score": 0.72,
+      "score": 0.552,
       "news": [
         {
           "date": "11-10",
@@ -190,10 +241,10 @@
           "risk": false
         }
       ],
-      "price": 9600,
-      "chg": 0.0278,
-      "activity": 3.16,
-      "foreign_today": 153600000,
+      "price": 9660,
+      "chg": 0.0343,
+      "activity": 2.36,
+      "foreign_today": 154560000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -207,7 +258,7 @@
       "vol20": 1.614,
       "foreign_net": -1004722235,
       "inst_net": 22570010,
-      "score": 0.44,
+      "score": 0.31,
       "news": [
         {
           "date": "11-12",
@@ -225,10 +276,10 @@
           "risk": false
         }
       ],
-      "price": 5770,
-      "chg": 0.0267,
-      "activity": 1.95,
-      "foreign_today": 248110000,
+      "price": 5830,
+      "chg": 0.0374,
+      "activity": 1.52,
+      "foreign_today": 250690000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
