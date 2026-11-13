@@ -81,7 +81,7 @@
     ]
   },
   "intraday": {
-    "time": "14:22",
+    "time": "14:23",
     "pool": 422,
     "analyzed_new": 4,
     "passed": 14,
@@ -137,7 +137,7 @@
         },
         {
           "date": "11-13",
-          "title": "“축구화 사야 됨·포카 교환 자금”…카카오뱅크 mini 저금 30만좌 돌파",
+          "title": "카카오워크 해킹 공격에 일부 이용자 개인정보 유출",
           "risk": false
         }
       ],
@@ -361,11 +361,11 @@
           "risk": false
         }
       ],
-      "price": 90400,
-      "chg": 0.0724,
+      "price": 90200,
+      "chg": 0.07,
       "activity": 1.01,
       "foreign_today": 0,
-      "inst_today": 994400000,
+      "inst_today": 992200000,
       "exchange": "KOSDAQ"
     },
     {
@@ -434,10 +434,10 @@
           "risk": false
         }
       ],
-      "price": 11400,
-      "chg": -0.0784,
+      "price": 11380,
+      "chg": -0.08,
       "activity": 1.67,
-      "foreign_today": 410400000,
+      "foreign_today": 409680000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
