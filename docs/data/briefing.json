@@ -81,7 +81,7 @@
     ]
   },
   "intraday": {
-    "time": "14:23",
+    "time": "14:24",
     "pool": 422,
     "analyzed_new": 4,
     "passed": 14,
@@ -106,11 +106,11 @@
           "risk": false
         }
       ],
-      "price": 68300,
-      "chg": 0.0348,
+      "price": 68400,
+      "chg": 0.0364,
       "activity": 1.01,
       "foreign_today": 0,
-      "inst_today": 4234600000,
+      "inst_today": 4240800000,
       "exchange": "KOSPI"
     },
     {
@@ -127,17 +127,17 @@
       "news": [
         {
           "date": "11-13",
+          "title": "카카오게임즈, '패스 오브 엑자일' 신규 리그 14일 적용",
+          "risk": false
+        },
+        {
+          "date": "11-13",
+          "title": "국내 고정밀 지도 구글에 뚤렸다…네이버·카카오 경쟁 밀리나",
+          "risk": false
+        },
+        {
+          "date": "11-13",
           "title": "카카오워크 개인정보 유출…업무 메일·첨부파일도 포함",
-          "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "카카오뱅크 'mini 내맘대로 저금', 30만 좌 넘겼다",
-          "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "카카오워크 해킹 공격에 일부 이용자 개인정보 유출",
           "risk": false
         }
       ],
@@ -290,7 +290,7 @@
         },
         {
           "date": "11-13",
-          "title": "[동국제약=종합] 감기약 선택법 안내 ··· 카리토포텐 새 광고 론칭",
+          "title": "동국제약 센텔리안24, 컬리뷰티페스타 참가...맞춤형 제품 추천",
           "risk": false
         }
       ],
@@ -326,11 +326,11 @@
           "risk": false
         }
       ],
-      "price": 38350,
-      "chg": 0.0172,
+      "price": 38400,
+      "chg": 0.0186,
       "activity": 1.05,
-      "foreign_today": 1879150000,
-      "inst_today": 2147600000,
+      "foreign_today": 1881600000,
+      "inst_today": 2150400000,
       "exchange": "KOSDAQ"
     },
     {
@@ -434,10 +434,10 @@
           "risk": false
         }
       ],
-      "price": 11380,
-      "chg": -0.08,
-      "activity": 1.67,
-      "foreign_today": 409680000,
+      "price": 11390,
+      "chg": -0.0792,
+      "activity": 1.66,
+      "foreign_today": 410040000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
