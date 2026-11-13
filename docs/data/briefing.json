@@ -81,8 +81,8 @@
     ]
   },
   "intraday": {
-    "time": "10:00",
-    "pool": 376,
+    "time": "10:15",
+    "pool": 373,
     "analyzed_new": 30,
     "passed": 12,
     "kept_prep": false
@@ -98,7 +98,7 @@
       "vol20": 0.849,
       "foreign_net": -21006250725,
       "inst_net": 28484664400,
-      "score": 0.878,
+      "score": 0.886,
       "news": [
         {
           "date": "11-13",
@@ -116,11 +116,11 @@
           "risk": false
         }
       ],
-      "price": 31850,
-      "chg": 0.0546,
-      "activity": 3.28,
-      "foreign_today": 1592500000,
-      "inst_today": 732550000,
+      "price": 32100,
+      "chg": 0.0629,
+      "activity": 2.88,
+      "foreign_today": 1605000000,
+      "inst_today": 738300000,
       "exchange": "KOSPI"
     },
     {
@@ -133,7 +133,7 @@
       "vol20": 0.648,
       "foreign_net": -32976039750,
       "inst_net": 74711352000,
-      "score": 0.756,
+      "score": 0.727,
       "news": [
         {
           "date": "11-13",
@@ -151,11 +151,49 @@
           "risk": false
         }
       ],
-      "price": 488000,
-      "chg": 0.0317,
-      "activity": 3.1,
+      "price": 485000,
+      "chg": 0.0254,
+      "activity": 2.66,
       "foreign_today": 0,
-      "inst_today": 2440000000,
+      "inst_today": 2425000000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "086790",
+      "name": "하나금융지주",
+      "close": 120800,
+      "ret5": -0.0098,
+      "ret20": -0.0258,
+      "rsi14": 48.7,
+      "vol20": 0.297,
+      "foreign_net": 8508386050,
+      "inst_net": 5345568200,
+      "score": 0.5,
+      "news": [],
+      "price": 124500,
+      "chg": 0.0332,
+      "activity": 1.62,
+      "foreign_today": 1618500000,
+      "inst_today": 747000000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "316140",
+      "name": "우리금융지주",
+      "close": 31750,
+      "ret5": -0.0124,
+      "ret20": 0.0111,
+      "rsi14": 50.8,
+      "vol20": 0.327,
+      "foreign_net": -29095907075,
+      "inst_net": 37693300675,
+      "score": 0.386,
+      "news": [],
+      "price": 32600,
+      "chg": 0.0333,
+      "activity": 1.19,
+      "foreign_today": 521600000,
+      "inst_today": 586800000,
       "exchange": "KOSPI"
     },
     {
@@ -168,7 +206,7 @@
       "vol20": 0.884,
       "foreign_net": -81770056900,
       "inst_net": 59675563500,
-      "score": 0.439,
+      "score": 0.386,
       "news": [
         {
           "date": "11-12",
@@ -176,11 +214,11 @@
           "risk": false
         }
       ],
-      "price": 67500,
-      "chg": 0.0227,
-      "activity": 1.35,
+      "price": 68400,
+      "chg": 0.0364,
+      "activity": 1.52,
       "foreign_today": 0,
-      "inst_today": 1012500000,
+      "inst_today": 1026000000,
       "exchange": "KOSPI"
     },
     {
@@ -193,7 +231,7 @@
       "vol20": 0.469,
       "foreign_net": 994866350,
       "inst_net": 3654508325,
-      "score": 0.341,
+      "score": 0.205,
       "news": [
         {
           "date": "11-13",
@@ -216,22 +254,6 @@
       "exchange": "KOSDAQ"
     },
     {
-      "code": "316140",
-      "name": "우리금융지주",
-      "close": 31750,
-      "ret5": -0.0124,
-      "ret20": 0.0111,
-      "rsi14": 50.8,
-      "vol20": 0.327,
-      "foreign_net": -29095907075,
-      "inst_net": 37693300675,
-      "score": 0.317,
-      "news": [],
-      "foreign_today": 508000000,
-      "inst_today": 571500000,
-      "exchange": "KOSPI"
-    },
-    {
       "code": "328130",
       "name": "루닛",
       "close": 14080,
@@ -245,6 +267,11 @@
       "news": [
         {
           "date": "11-13",
+          "title": "루닛, 3분기 EBITDA 손실 77% 줄였다…14분기 만에 최저",
+          "risk": false
+        },
+        {
+          "date": "11-13",
           "title": "루닛, 3분기 실적 발표에 장 초반 11%대 ‘강세’ [Why 바이오]",
           "risk": false
         },
@@ -252,18 +279,13 @@
           "date": "11-13",
           "title": "[속보] 루닛 VI 발동 주가 급등 10%대 강세…이틀 연속 하락 후 반등",
           "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "의료AI 실적 개선 기대…루닛·씨어스·뷰노 등 건강관리기술株 '훨훨'",
-          "risk": false
         }
       ],
-      "price": 15600,
-      "chg": 0.137,
-      "activity": 4.06,
-      "foreign_today": 2652000000,
-      "inst_today": 826800000,
+      "price": 15760,
+      "chg": 0.1487,
+      "activity": 4.0,
+      "foreign_today": 2679200000,
+      "inst_today": 835280000,
       "exchange": "KOSDAQ"
     },
     {
@@ -276,7 +298,7 @@
       "vol20": 1.403,
       "foreign_net": -3279761625,
       "inst_net": 10286837400,
-      "score": 0.878,
+      "score": 0.818,
       "news": [
         {
           "date": "11-13",
@@ -294,11 +316,11 @@
           "risk": false
         }
       ],
-      "price": 72800,
-      "chg": 0.0612,
-      "activity": 6.12,
+      "price": 72300,
+      "chg": 0.0539,
+      "activity": 5.96,
       "foreign_today": 0,
-      "inst_today": 1601600000,
+      "inst_today": 1590600000,
       "exchange": "KOSPI"
     },
     {
@@ -311,7 +333,7 @@
       "vol20": 1.077,
       "foreign_net": -21815654925,
       "inst_net": 16843266050,
-      "score": 0.659,
+      "score": 0.727,
       "news": [
         {
           "date": "11-13",
@@ -329,11 +351,11 @@
           "risk": false
         }
       ],
-      "price": 40150,
-      "chg": 0.065,
-      "activity": 3.09,
-      "foreign_today": 682550000,
-      "inst_today": 722700000,
+      "price": 40450,
+      "chg": 0.0729,
+      "activity": 2.67,
+      "foreign_today": 687650000,
+      "inst_today": 728100000,
       "exchange": "KOSDAQ"
     },
     {
@@ -346,7 +368,7 @@
       "vol20": 1.614,
       "foreign_net": -1004722235,
       "inst_net": 22570010,
-      "score": 0.488,
+      "score": 0.386,
       "news": [
         {
           "date": "11-12",
@@ -364,47 +386,12 @@
           "risk": false
         }
       ],
-      "price": 5710,
-      "chg": 0.016,
-      "activity": 1.21,
-      "foreign_today": 336890000,
+      "price": 5770,
+      "chg": 0.0267,
+      "activity": 1.1,
+      "foreign_today": 340430000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
-    },
-    {
-      "code": "007810",
-      "name": "코리아써키트",
-      "close": 87300,
-      "ret5": 0.3108,
-      "ret20": 0.4013,
-      "rsi14": 60.8,
-      "vol20": 1.57,
-      "foreign_net": 5912084100,
-      "inst_net": 31880326850,
-      "score": 0.463,
-      "news": [
-        {
-          "date": "11-12",
-          "title": "코리아써키트 11일 25.58% 상승…반도체주 강세",
-          "risk": false
-        },
-        {
-          "date": "11-12",
-          "title": "코리아써키트 주가, 11월 12일 장중 89,900원 4.05% 상승",
-          "risk": false
-        },
-        {
-          "date": "11-11",
-          "title": "[오늘의 특징주] 한진칼·코리아써키트·루닛",
-          "risk": false
-        }
-      ],
-      "price": 92800,
-      "chg": 0.0474,
-      "activity": 5.78,
-      "foreign_today": 0,
-      "inst_today": 278400000,
-      "exchange": "KOSPI"
     },
     {
       "code": "114800",
