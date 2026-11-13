@@ -394,7 +394,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
   <header class="top">
     <div class="brand">
       <div>
-        <h1 class="h1-bare"><span class="sr-only">Sigma Engine</span><span class="tagline st-top" id="st-top" aria-label="실행 상태"></span></h1>   <!-- 11-12 S.Lee: 화면의 최상단 제목 없앰 (읽기 프로그램용 이름만 남김) -->   <!-- 11-10 S.Lee: 목표 문구 자리에 상태 4개 (서버 · 모니터링 · 에이전트 · 온톨로지) -->
+        <h1 class="h1-bare"><span class="sr-only">Sigma Engine</span><span class="tagline st-top" id="st-top" aria-label="실행 상태"></span></h1>   <!-- 11-12 S.Lee: 화면의 최상단 제목 없앰 (읽기 프로그램용 이름만 남김) -->   <!-- 11-10 S.Lee: 목표 문구 자리에 상태 점 (서버 · 모니터링 · 에이전트) -->
         <div class="chips sched" id="sched" aria-label="실시간 KOSPI와 평일 정기 매매 시각"><span class="chip kx-chip m-hide" id="kx-chip" hidden></span></div>   <!-- 11-10 S.Lee: 맨 앞 KOSPI 칩 (폰은 이것만) -->
       </div>
     </div>
@@ -419,7 +419,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
     </section>
 
     <!-- 포트폴리오: 접지 않고 늘 펼쳐 둠 (11-05) -->
-    <!-- 11-10 S.Lee: 두 엔진 포트폴리오를 같은 양식으로 (요약 숫자 4개 · 비중 도넛 | 보유 손익 · 최근 체결) -->
+    <!-- 포트폴리오: 비중 도넛 + 종목 표 -->
     <section class="card c12 pane" data-eng="sigma">
       <div class="hd"><h2 class="eyebrow">포트폴리오</h2><span class="sub" id="sig-sub"></span></div>
       <div class="pf-one">   <!-- 11-10 S.Lee: 보유 손익 막대 없앰 → 종목별 손익은 범례 옆, 합계 손익은 도넛 가운데 -->
@@ -573,7 +573,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
 [data-theme=volt] .hero .big, [data-theme=volt] .hero .big.neg { background: none !important; -webkit-background-clip: border-box; background-clip: border-box; filter: none !important; color: #ff5a65; font-weight: 400; letter-spacing: -0.65px; }
 [data-theme=volt] .hero .big.neg { color: #4e94ff; }   /* 11-12 S.Lee: 수익 빨강 · 손실 파랑 */
 [data-theme=volt] .eyebrow { text-transform: uppercase; letter-spacing: 2.2px; font-weight: 600; font-size: 12px; color: #8b949e; }
-/* 11-10 S.Lee: 메인은 Sigma Engine, SiON 은 테스트 → 강조를 Sigma 로 */
+/* 11-10 S.Lee: Sigma Engine 강조 */
 [data-theme=volt] .eng#eng-sigma .eyebrow { color: #f2f2f2; }
 [data-theme=volt] .eyebrow, [data-theme=volt] .cal .note { letter-spacing: .6px !important; }   /* 11-12 S.Lee: 한글 라벨은 자간을 좁게 (영어 대문자용 2.2px 이면 글자가 흩어져 보임) */
 [data-theme=volt] .eng .eyebrow.on, [data-theme=volt] .eyebrow.on { color: #8b949e; }
@@ -659,7 +659,7 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
     background: linear-gradient(90deg, transparent, rgba(242,242,242,.95) 50%, transparent) no-repeat; background-size: 140px 1px; background-position: -140px 0;
     animation: fx-edge 9s linear infinite; animation-delay: calc(var(--i, 0) * -1.7s); }   /* 판 윗변을 지나가는 신호 */
   @keyframes fx-edge { 0% { background-position: -140px 0; } 45%, 100% { background-position: calc(100% + 140px) 0; } }
-  /* 격납고 문처럼 가운데서 위아래로 열림 (처음 한 번 · 엔진 탭을 바꿀 때) */
+  /* 격납고 문처럼 가운데서 위아래로 열림 (처음 한 번) */
   .fx-go .wrap .card, .fx-go .wrap details.log { animation: fx-door .62s cubic-bezier(.2, .9, .25, 1) both; animation-delay: calc(var(--fx0, 0ms) + var(--i, 0) * 80ms); }
   @keyframes fx-door { 0% { opacity: 0; filter: brightness(2.4); clip-path: polygon(14px 50%, 100% 50%, 100% 50%, calc(100% - 14px) 50%, 0 50%, 0 50%); } 22% { opacity: 1; }
     100% { opacity: 1; filter: brightness(1); clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px); } }
@@ -1459,7 +1459,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   const FOLD_N = 5;
   let decOpen = false;
   try { decOpen = localStorage.getItem('decOpen') === '1'; } catch (e) { /* 저장소 막힌 브라우저는 늘 접힌 채로 시작 */ }
-  function foldDec() {   // 11-09 2열(Sigma · SiON)이면 칸마다 위 5종목
+  function foldDec() {   // 위 5종목만 보이고 나머지는 접음
     const list = $('dec-list'), btn = $('dec-more'), panes = list.querySelectorAll('.dec-pane');
     const groups = panes.length ? [...panes].map(p => [...p.children].filter(e => e.classList.contains('dec-row'))) : [[...list.children].filter(e => e.classList.contains('dec-row'))];
     let extra = 0, n = 0;
@@ -1492,19 +1492,18 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       : !opsOpen() ? ['Off', '', '장 마감 · 평일 08:30~15:35 연결 확인']
       : age <= 3 ? ['On', 'ok run', `데스크톱 연결됨 · 마지막 수신 ${ago(age)} 전`]
       : ['Off', 'bad', LIVE_AT ? `데스크톱 신호가 ${Math.round(age)}분째 없음 · PC 전원, 인터넷, 키움 연결 확인` : '데스크톱 신호 기록 없음'];
-    const judge = (st, off, first, soft, decAt) => {   // 11-12 decAt = 가장 최근 판단 기록 시각   // 정기 판단 상태. off = 회차 시각이 몇 분 늦은지. soft = 지연·쉼을 빨강 대신 회색
+    const judge = (st, off, first, decAt) => {   // 11-12 decAt = 가장 최근 판단 기록 시각   // 정기 판단 상태. off = 회차 시각이 몇 분 늦은지
       let a;
       if (!st || !st.last_run) a = ['On', 'ok', first];   // 아직 실행 전이어도 스케줄은 켜져 있음
       else {
         const late = st.next_run && Date.now() - Date.parse(st.next_run.replace(' ', 'T') + ':00+09:00') > 30 * 60e3;
-        const rest = /쉼|양보/.test(st.note || '');   // 11-09 그림자가 실제 매매에 한도를 양보하며 쉰 회차는 실패가 아님
         const tuneFail = st.last_ok === false && /기준값 조정/.test(st.note || '');   // 11-11 장 마감 뒤 기준값 조정 실패는 판단 실패가 아님 (다음 판단은 그대로 돎)
         // 11-12 판단 · 주문은 기록됐는데 실행이 끝에서 오류로 끝난 회차 (예: 09:30 회차 4건 체결 뒤 종료 오류) → 실패로 보지 않음, 툴팁에만
         const doneAnyway = st.last_ok === false && decAt && String(decAt).slice(0, 16) >= String(st.last_run).slice(0, 16);
         a = doneAnyway ? ['On', 'ok', `${st.last_run} 판단 · 주문 기록됨 · 실행 종료 때 오류`]
           : tuneFail ? ['On', 'ok', '마지막 판단 정상 · 기준값 조정 기록 없음']
-          : st.last_ok === false && !rest ? ['Off', 'bad', '마지막 판단 실패' + (st.note ? ' · ' + st.note : '')]
-          : late || rest ? (soft ? ['Off', '', rest ? '실제 매매에 사용 한도를 양보하며 쉬는 중' : '판단 쉬는 중 · 마지막 ' + st.last_run] : ['Off', 'bad', '예정된 판단이 30분 넘게 지연'])
+          : st.last_ok === false ? ['Off', 'bad', '마지막 판단 실패' + (st.note ? ' · ' + st.note : '')]
+          : late ? ['Off', 'bad', '예정된 판단이 30분 넘게 지연']
           : st.sync && st.sync.ok === false ? ['On', 'bad', '코드 동기화 멈춤 · ' + (st.sync.error || '')]   // 판단은 돌지만 새 수정이 반영 안 됨
           : ['On', 'ok', '마지막 판단 ' + st.last_run];
       }
@@ -1521,7 +1520,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       if (window.TRADE_TIMES.includes(hm) && m - slot < 15 && !done) a = ['On', 'ok run', `${hm} 매매 회차 실행 중 (보통 8~14분)`];   // 11-11 실행이 8~14분 걸려 6분 뒤 '실패'로 보이던 것 고침   // 글자 없이 점만 깜빡임
       return a;
     };
-    const agent = judge(st, 0, '첫 판단 대기 · 평일 09:30부터 15분마다', false, DECISION && DECISION.time);
+    const agent = judge(st, 0, '첫 판단 대기 · 평일 09:30부터 15분마다', DECISION && DECISION.time);
     // 11-10 S.Lee: 글자 없이 엔진 이름 옆 점 하나 (Sigma = 잔고 조회 · 판단 중 나쁜 쪽). 상세는 마우스 오버·탭
     const rank = a => a[1].includes('bad') ? 3 : a[1].includes('run') ? 2 : a[1] ? 1 : 0;
     const one = (list) => { const w = list.reduce((p, q) => rank(q[0]) > rank(p[0]) ? q : p);
@@ -1630,7 +1629,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   // ---------- 수익률 캘린더: 대회 20거래일을 주(행) × 요일(열)로 ----------
   // 11-12 S.Lee: 캘린더에 남기는 운영 사고 (날짜 → [짧은 표시, 툴팁 설명])
   const CAL_NOTE = { '2026-11-11': ['시스템 오류', '10:07 데스크톱 메모리 부족. 09:51 뒤로 판단 · 주문 없음, 14:30쯤부터 PC 꺼짐. 중간 회고 · 기준값 조정은 밤에 실행'],
-    '2026-11-12': ['시스템 오류', '09:30 두 엔진이 동시에 시작하다 둘 다 실패. 10:01 SiON 프로세스가 메모리 약 110GB 를 써서 Sigma 잔고 수집 · 손절 감시까지 멈춤. 대책: SiON 메모리 상한 8GB, Sigma 판단이 끝난 뒤 시작, 그 뒤 SiON 운영 멈춤'] };
+    '2026-11-12': ['시스템 오류', '09:30 판단 실행 실패. 10:01 PC 메모리 부족으로 잔고 수집 · 손절 감시까지 멈춤'] };
   function calendar() {
     const el = $('ch-cal'); el.innerHTML = '';
     const byDate = new Map(PRE ? [] : D.eq.map((r, i) => [r.date, { day: i ? r.day : r.total / INIT - 1, kday: r.kday }]));
@@ -1666,7 +1665,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const cost = h => h.avg_price * h.qty, sc = d3.sum(D.hold, cost), tv = sc ? d3.sum(D.hold, h => cost(h) * h.pnl) / sc : null;   // 매입금액 가중 합계 손익
     drawDonut($('ch-donut'), parts, D.cap || REG_CAP[D.last && D.last.regime] || null, ['#da291c', '#ff7a6e', '#bdbdbd', '#7a7a7a', '#4a4a4a', '#3a3a3a'], C.red, { v: tv });
   }
-  // 11-09 Sigma · SiON 포트폴리오 공용 도넛. parts = [{name, v, pnl?}] (마지막이 현금), cap = 국면 상한(없으면 호 없음)
+  // 포트폴리오 도넛. parts = [{name, v, pnl?}] (마지막이 현금), cap = 국면 상한(없으면 호 없음)
   const PF_OPEN = {}, PC_OPEN = !matchMedia('(max-width: 640px)').matches;   // 11-10 S.Lee: PC 는 접는 칸 없이 다 펼침
   const REG_CAP = { '상승': .9, '횡보': .7, '하락': .6 };   // agent/config/params.json regime_cap 과 같게
   function drawDonut(el, parts, cap, shades, capColor, center) {   // 11-10 S.Lee: 가운데 = 주식 비중 / 국면 상한, 종목은 도넛 아래 표 (종목명 · 비중 · 수익률 · 합산 수익률)

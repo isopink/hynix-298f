@@ -203,9 +203,7 @@ a3bfc5b	전략	코스닥 확대 (박문화 안): 장중 순위 코스피·코스
 675bb49	전략	기준값 자동 조정 지침: 근거가 약하면 0.01~0.02씩 조금만, 숫자가 뚜렷할 때만 최대 폭(step)까지
 13e685a	전략	KODEX 200 매수 금지 (index buy_banned, 후보 제외 + Hook 차단, 보유분은 기존 규칙으로 처분). 인버스는 허용 유지
 a0c3881	전략	소액 분할 매도 금지: 판단 매도 절반 금액이 총자산 1%(partial_sell.min_amount_pct) 미만이면 보유. 확신도 0.65 이상 전량·손절·익절·보유일 매도는 그대로
-bd2ba18	운영	SiON(온톨로지 그림자) 운영 멈춤: params sion.enabled=false 로 sync 재시작 · 그림자 업로드 · shadow.json 갱신 중지, 대시보드 config.js sion=false 로 숨김. 토큰 약 3.5배 · 11-12 메모리 사고 · 학습 기록 부족
 a6b0712	운영	기준값 조정(tune) · 주간 회고(review) 실행만 Claude effort max (params.effort, --effort max, 예산 $20 · 40분). 15분 판단 · 손절 실행은 high
 972fa17	전략	에이전트 분리 (position · research · executor · scorer · tuner · writer 추가) · 토론 라우팅(달라진 후보만 토론) · 근거 숫자 대조(verify_claims) · 역할별 모델 · effort (총괄 · research xhigh, regime Sonnet, executor Haiku, 조정 max)
 bc73c9d	전략	KODEX 200 매수 다시 허용 (index.enabled=true, buy_banned=false). 15:00 · 15:15 회차만 · 하루 1번 · 손절가 없음 · 순익 +2% 익절 · 최대 3거래일 · 급락일 예외 매수는 계속 끔
 6b8300b	운영	서브에이전트 effort 올림: position high→xhigh, regime Sonnet→Opus high, bear high→xhigh (14:00 회차 토큰 3.5만으로 여유)
-7310346	운영	SiON(온톨로지 그림자 엔진) 코드 제거: sync · snapshot · logger · shadow.sql · 대시보드 SiON 표시. 11-12 운영 멈춤 결정의 마무리
