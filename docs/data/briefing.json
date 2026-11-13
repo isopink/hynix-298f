@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "11:30",
+    "time": "11:45",
     "pool": 408,
     "analyzed_new": 30,
-    "passed": 14,
+    "passed": 16,
     "kept_prep": false
   },
   "candidates": [
@@ -98,27 +98,27 @@
       "vol20": 0.849,
       "foreign_net": -21006250725,
       "inst_net": 28484664400,
-      "score": 0.921,
+      "score": 0.934,
       "news": [
         {
           "date": "11-13",
+          "title": "[산업 HOT 뉴스] \"증축·철거 없이 새 아파트로\"…GS건설, 신속형 리모델...",
+          "risk": false
+        },
+        {
+          "date": "11-13",
+          "title": "GS건설, 에너지머티리얼즈 채무 1126억원 대위변제",
+          "risk": false
+        },
+        {
+          "date": "11-13",
           "title": "GS건설 자이, 대한민국 조경·색채대상서 4개 작품 수상",
-          "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "GS건설 자이 디자인 어워드 4관왕",
-          "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "GS건설, 대한민국 조경·색채대상서 4개 작품 수상",
           "risk": false
         }
       ],
       "price": 31850,
       "chg": 0.0546,
-      "activity": 2.07,
+      "activity": 1.92,
       "foreign_today": 3503500000,
       "inst_today": 955500000,
       "exchange": "KOSPI"
@@ -133,7 +133,7 @@
       "vol20": 0.648,
       "foreign_net": -32976039750,
       "inst_net": 74711352000,
-      "score": 0.81,
+      "score": 0.855,
       "news": [
         {
           "date": "11-13",
@@ -151,11 +151,11 @@
           "risk": false
         }
       ],
-      "price": 479000,
-      "chg": 0.0127,
-      "activity": 1.71,
+      "price": 478000,
+      "chg": 0.0106,
+      "activity": 1.61,
       "foreign_today": 0,
-      "inst_today": 3832000000,
+      "inst_today": 3824000000,
       "exchange": "KOSPI"
     },
     {
@@ -168,7 +168,7 @@
       "vol20": 0.884,
       "foreign_net": -81770056900,
       "inst_net": 59675563500,
-      "score": 0.571,
+      "score": 0.632,
       "news": [
         {
           "date": "11-12",
@@ -176,46 +176,11 @@
           "risk": false
         }
       ],
-      "price": 69100,
-      "chg": 0.047,
-      "activity": 1.36,
-      "foreign_today": 3040400000,
-      "inst_today": 1727500000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "035720",
-      "name": "카카오",
-      "close": 31850,
-      "ret5": -0.017,
-      "ret20": 0.0324,
-      "rsi14": 52.7,
-      "vol20": 0.441,
-      "foreign_net": -12870138600,
-      "inst_net": -12774455600,
-      "score": 0.397,
-      "news": [
-        {
-          "date": "11-13",
-          "title": "업무메신저 '카카오워크' 해킹에 개인정보 유출…이름·연락처 등 노출",
-          "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "카카오 업무용 메신저도 뚫렸다…개인정보·메일·첨부파일 유출",
-          "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "카카오 기업용 메신저 '카카오워크' 해킹...이름·연락처·이메일 첨부파...",
-          "risk": false
-        }
-      ],
-      "price": 32350,
-      "chg": 0.0205,
-      "activity": 1.19,
-      "foreign_today": 0,
-      "inst_today": 647000000,
+      "price": 69000,
+      "chg": 0.0455,
+      "activity": 1.29,
+      "foreign_today": 3036000000,
+      "inst_today": 1725000000,
       "exchange": "KOSPI"
     },
     {
@@ -228,10 +193,45 @@
       "vol20": 0.327,
       "foreign_net": -29095907075,
       "inst_net": 37693300675,
-      "score": 0.365,
+      "score": 0.421,
       "news": [],
       "foreign_today": 1873250000,
       "inst_today": 1524000000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "035720",
+      "name": "카카오",
+      "close": 31850,
+      "ret5": -0.017,
+      "ret20": 0.0324,
+      "rsi14": 52.7,
+      "vol20": 0.441,
+      "foreign_net": -12870138600,
+      "inst_net": -12774455600,
+      "score": 0.408,
+      "news": [
+        {
+          "date": "11-13",
+          "title": "카카오 기업용 메신저 ‘카카오워크’ 해킹…메일 내용·첨부파일도 유...",
+          "risk": false
+        },
+        {
+          "date": "11-13",
+          "title": "업무용 메신저 '카카오워크' 해킹···이메일·첨부파일까지 유출",
+          "risk": false
+        },
+        {
+          "date": "11-13",
+          "title": "업무메신저 '카카오워크' 해킹에 개인정보 유출…이름·연락처 등 노출",
+          "risk": false
+        }
+      ],
+      "price": 32400,
+      "chg": 0.0221,
+      "activity": 1.12,
+      "foreign_today": 0,
+      "inst_today": 648000000,
       "exchange": "KOSPI"
     },
     {
@@ -244,7 +244,7 @@
       "vol20": 0.6,
       "foreign_net": 1608696075,
       "inst_net": 2739770850,
-      "score": 0.365,
+      "score": 0.408,
       "news": [
         {
           "date": "11-13",
@@ -267,6 +267,38 @@
       "exchange": "KOSPI"
     },
     {
+      "code": "326030",
+      "name": "SK바이오팜",
+      "close": 88000,
+      "ret5": -0.0351,
+      "ret20": 0.2791,
+      "rsi14": 66.6,
+      "vol20": 0.538,
+      "foreign_net": -14472598100,
+      "inst_net": 18845759500,
+      "score": 0.408,
+      "news": [
+        {
+          "date": "11-13",
+          "title": "SK바이오팜, 뇌전증 신약 '세노바메이트' 일본 판매 시작",
+          "risk": false
+        },
+        {
+          "date": "11-13",
+          "title": "SK바이오팜, 뇌전증 신약 ‘세노바메이트’ 일본 판매 개시…미국부터...",
+          "risk": false
+        },
+        {
+          "date": "11-13",
+          "title": "SK바이오팜, 뇌전증 치료제 ‘세노바메이트’ 일본 출시…韓中日 출시",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 352000000,
+      "exchange": "KOSPI"
+    },
+    {
       "code": "086450",
       "name": "동국제약",
       "close": 24750,
@@ -276,27 +308,59 @@
       "vol20": 0.469,
       "foreign_net": 994866350,
       "inst_net": 3654508325,
-      "score": 0.286,
+      "score": 0.342,
       "news": [
         {
           "date": "11-13",
+          "title": "동국제약 센텔리안24, '컬리뷰티페스타 2026' 참가… DDP서 체험형 단독...",
+          "risk": false
+        },
+        {
+          "date": "11-13",
+          "title": "[포토뉴스] 동국제약 센텔리안24, '컬리뷰티페스타' 참가",
+          "risk": false
+        },
+        {
+          "date": "11-13",
           "title": "동국제약 센텔리안24, DDP '컬리뷰티페스타 2026'서 고객 접점 넓힌다",
-          "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "동국제약 센텔리안24, '컬리뷰티페스타'서 소비자 체험 프로그램 운영",
-          "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "동국제약 센텔리안24, '컬리뷰티페스타 2026' 참가",
           "risk": false
         }
       ],
       "foreign_today": 0,
       "inst_today": 297000000,
       "exchange": "KOSDAQ"
+    },
+    {
+      "code": "267270",
+      "name": "HD건설기계",
+      "close": 91200,
+      "ret5": 0.0922,
+      "ret20": -0.0044,
+      "rsi14": 47.0,
+      "vol20": 0.748,
+      "foreign_net": -34774154200,
+      "inst_net": 28642292800,
+      "score": 0.329,
+      "news": [
+        {
+          "date": "11-12",
+          "title": "[1분영상] HD건설기계, 에티오피아 6·25 전사자 '추모의 벽' 건립…참전...",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "HD건설기계, 에티오피아에 6·25 참전 전사자 '추모의 벽' 건립",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "HD건설기계, 에티오피아 ‘6·25 전사자 추모의 벽’ 제막",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 364800000,
+      "exchange": "KOSPI"
     },
     {
       "code": "328130",
@@ -326,11 +390,46 @@
           "risk": false
         }
       ],
-      "price": 15500,
-      "chg": 0.1297,
-      "activity": 3.03,
-      "foreign_today": 3224000000,
-      "inst_today": 2898500000,
+      "price": 15480,
+      "chg": 0.1283,
+      "activity": 2.8,
+      "foreign_today": 3219840000,
+      "inst_today": 2894760000,
+      "exchange": "KOSDAQ"
+    },
+    {
+      "code": "119850",
+      "name": "지엔씨에너지",
+      "close": 37800,
+      "ret5": 0.1943,
+      "ret20": -0.022,
+      "rsi14": 47.4,
+      "vol20": 1.077,
+      "foreign_net": -21815654925,
+      "inst_net": 16843266050,
+      "score": 0.829,
+      "news": [
+        {
+          "date": "11-13",
+          "title": "지엔씨에너지, AI 데이터센터 투자 확대 '핵심기업'…'연 매출 3.7배 규모...",
+          "risk": false
+        },
+        {
+          "date": "11-13",
+          "title": "NH투자증권 \"지엔씨에너지, 수주잔고 7264억…4분기 최대 실적 기대\"",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "지엔씨에너지, 데이터센터 '착공 전 발주' 짚은 리포트에도 3%대 약세…...",
+          "risk": false
+        }
+      ],
+      "price": 39700,
+      "chg": 0.0531,
+      "activity": 1.57,
+      "foreign_today": 1627700000,
+      "inst_today": 1111600000,
       "exchange": "KOSDAQ"
     },
     {
@@ -343,7 +442,7 @@
       "vol20": 1.403,
       "foreign_net": -3279761625,
       "inst_net": 10286837400,
-      "score": 0.81,
+      "score": 0.829,
       "news": [
         {
           "date": "11-13",
@@ -363,44 +462,25 @@
       ],
       "price": 72500,
       "chg": 0.0569,
-      "activity": 3.72,
+      "activity": 3.43,
       "foreign_today": 0,
       "inst_today": 1667500000,
       "exchange": "KOSPI"
     },
     {
-      "code": "119850",
-      "name": "지엔씨에너지",
-      "close": 37800,
-      "ret5": 0.1943,
-      "ret20": -0.022,
-      "rsi14": 47.4,
-      "vol20": 1.077,
-      "foreign_net": -21815654925,
-      "inst_net": 16843266050,
-      "score": 0.794,
-      "news": [
-        {
-          "date": "11-13",
-          "title": "지엔씨에너지, AI 데이터센터 투자 확대 '핵심기업'…'연 매출 3.7배 규모...",
-          "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "NH투자증권 \"지엔씨에너지, 수주잔고 7264억…4분기 최대 실적 기대\"",
-          "risk": false
-        },
-        {
-          "date": "11-12",
-          "title": "지엔씨에너지, 데이터센터 '착공 전 발주' 짚은 리포트에도 3%대 약세…...",
-          "risk": false
-        }
-      ],
-      "price": 39750,
-      "chg": 0.0544,
-      "activity": 1.69,
-      "foreign_today": 1629750000,
-      "inst_today": 1113000000,
+      "code": "468530",
+      "name": "프로티나",
+      "close": 58000,
+      "ret5": 0.0902,
+      "ret20": 0.7059,
+      "rsi14": 61.9,
+      "vol20": 1.202,
+      "foreign_net": -219934325,
+      "inst_net": 6802284425,
+      "score": 0.579,
+      "news": [],
+      "foreign_today": 0,
+      "inst_today": 812000000,
       "exchange": "KOSDAQ"
     },
     {
@@ -413,7 +493,7 @@
       "vol20": 1.681,
       "foreign_net": -16169810550,
       "inst_net": 4107522025,
-      "score": 0.54,
+      "score": 0.553,
       "news": [
         {
           "date": "11-13",
@@ -431,27 +511,11 @@
           "risk": false
         }
       ],
-      "price": 35000,
-      "chg": 0.1164,
-      "activity": 8.21,
+      "price": 34100,
+      "chg": 0.0877,
+      "activity": 7.49,
       "foreign_today": 0,
-      "inst_today": 245000000,
-      "exchange": "KOSDAQ"
-    },
-    {
-      "code": "468530",
-      "name": "프로티나",
-      "close": 58000,
-      "ret5": 0.0902,
-      "ret20": 0.7059,
-      "rsi14": 61.9,
-      "vol20": 1.202,
-      "foreign_net": -219934325,
-      "inst_net": 6802284425,
-      "score": 0.54,
-      "news": [],
-      "foreign_today": 0,
-      "inst_today": 812000000,
+      "inst_today": 238700000,
       "exchange": "KOSDAQ"
     },
     {
