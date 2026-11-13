@@ -81,38 +81,13 @@
     ]
   },
   "intraday": {
-    "time": "14:25",
+    "time": "14:27",
     "pool": 422,
     "analyzed_new": 4,
     "passed": 14,
     "kept_prep": false
   },
   "candidates": [
-    {
-      "code": "028050",
-      "name": "삼성E&A",
-      "close": 65700,
-      "ret5": 0.0139,
-      "ret20": 0.5737,
-      "rsi14": 63.8,
-      "vol20": 0.884,
-      "foreign_net": -81770056900,
-      "inst_net": 59675563500,
-      "score": 0.635,
-      "news": [
-        {
-          "date": "11-12",
-          "title": "삼성E&A, 모듈화 시공 기술로 중동 프로젝트상 수상",
-          "risk": false
-        }
-      ],
-      "price": 68500,
-      "chg": 0.0379,
-      "activity": 1.01,
-      "foreign_today": 0,
-      "inst_today": 4247000000,
-      "exchange": "KOSPI"
-    },
     {
       "code": "035720",
       "name": "카카오",
@@ -127,12 +102,12 @@
       "news": [
         {
           "date": "11-13",
-          "title": "구글 지도 한국 진출 ‘마지막 관문’ 넘어…네이버·카카오와 경쟁 본...",
+          "title": "구글, 한국 정밀지도 반출 보안 조건 충족…네이버·카카오와 지도 경쟁...",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "카카오게임즈, '패스 오브 엑자일' 신규 리그 14일 적용",
+          "title": "구글 지도 한국 진출 ‘마지막 관문’ 넘어…네이버·카카오와 경쟁 본...",
           "risk": false
         },
         {
@@ -141,11 +116,11 @@
           "risk": false
         }
       ],
-      "price": 31950,
-      "chg": 0.0079,
+      "price": 31900,
+      "chg": 0.0063,
       "activity": 0.96,
       "foreign_today": 0,
-      "inst_today": 1725300000,
+      "inst_today": 1722600000,
       "exchange": "KOSPI"
     },
     {
@@ -168,6 +143,31 @@
       ],
       "foreign_today": 539750000,
       "inst_today": 3968750000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "028050",
+      "name": "삼성E&A",
+      "close": 65700,
+      "ret5": 0.0139,
+      "ret20": 0.5737,
+      "rsi14": 63.8,
+      "vol20": 0.884,
+      "foreign_net": -81770056900,
+      "inst_net": 59675563500,
+      "score": 0.615,
+      "news": [
+        {
+          "date": "11-12",
+          "title": "삼성E&A, 모듈화 시공 기술로 중동 프로젝트상 수상",
+          "risk": false
+        }
+      ],
+      "price": 68400,
+      "chg": 0.0364,
+      "activity": 1.0,
+      "foreign_today": 0,
+      "inst_today": 4240800000,
       "exchange": "KOSPI"
     },
     {
@@ -326,11 +326,11 @@
           "risk": false
         }
       ],
-      "price": 38450,
-      "chg": 0.0199,
-      "activity": 1.05,
-      "foreign_today": 1884050000,
-      "inst_today": 2153200000,
+      "price": 38350,
+      "chg": 0.0172,
+      "activity": 1.04,
+      "foreign_today": 1879150000,
+      "inst_today": 2147600000,
       "exchange": "KOSDAQ"
     },
     {
@@ -343,7 +343,7 @@
       "vol20": 1.453,
       "foreign_net": -6514931100,
       "inst_net": 8639681450,
-      "score": 0.923,
+      "score": 0.942,
       "news": [
         {
           "date": "11-13",
@@ -361,11 +361,11 @@
           "risk": false
         }
       ],
-      "price": 90100,
-      "chg": 0.0688,
+      "price": 90700,
+      "chg": 0.0759,
       "activity": 1.01,
       "foreign_today": 0,
-      "inst_today": 991100000,
+      "inst_today": 997700000,
       "exchange": "KOSDAQ"
     },
     {
@@ -434,10 +434,10 @@
           "risk": false
         }
       ],
-      "price": 11420,
-      "chg": -0.0768,
-      "activity": 1.66,
-      "foreign_today": 411120000,
+      "price": 11390,
+      "chg": -0.0792,
+      "activity": 1.65,
+      "foreign_today": 410040000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
