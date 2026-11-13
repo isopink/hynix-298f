@@ -121,8 +121,9 @@ def reviews(rows):
     old = {key(x): x for x in (C.read_json(os.path.join(C.DOCS_DATA, "reviews.json"), []) or [])}
     times = {key(r): r["time"] for r in rows if r["kind"] == "review"}
     for w, x in res.items():
-        # 회고 뒤 조정 실행에서 값이 하나라도 바뀌었으면 반영. 사람이 "반영"으로 바꿔 둔 상태도 유지
-        if any(r["kind"] == "tune" and r["time"] > times[w] and r.get("applied") for r in rows) or \
+        # 회고 뒤 기준값 조정이 한 번이라도 돌았으면 반영 (그 조정이 제안을 검토함. 11-13: '유지' 제안은 값이 안 바뀌어
+        # 영원히 '검토 중'으로 남던 것). 사람이 "반영"으로 바꿔 둔 상태도 유지
+        if any(r["kind"] == "tune" and r["time"] > times[w] for r in rows) or \
                 (w in old and old[w].get("status") == "반영"):
             x["status"] = "반영"
     return [res[w] for w in sorted(res, key=lambda k: (k[0], not k[1]))]   # 같은 주는 수요일 중간 회고가 먼저
