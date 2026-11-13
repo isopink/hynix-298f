@@ -81,7 +81,7 @@
     ]
   },
   "intraday": {
-    "time": "14:27",
+    "time": "14:28",
     "pool": 422,
     "analyzed_new": 4,
     "passed": 14,
@@ -102,12 +102,12 @@
       "news": [
         {
           "date": "11-13",
-          "title": "구글, 한국 정밀지도 반출 보안 조건 충족…네이버·카카오와 지도 경쟁...",
+          "title": "구글 지도 한국 진출 ‘마지막 관문’ 넘어…네이버·카카오와 경쟁 본...",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "구글 지도 한국 진출 ‘마지막 관문’ 넘어…네이버·카카오와 경쟁 본...",
+          "title": "구글, 한국 정밀지도 반출 보안 조건 충족…네이버·카카오와 지도 경쟁...",
           "risk": false
         },
         {
@@ -116,11 +116,11 @@
           "risk": false
         }
       ],
-      "price": 31900,
-      "chg": 0.0063,
+      "price": 32000,
+      "chg": 0.0095,
       "activity": 0.96,
       "foreign_today": 0,
-      "inst_today": 1722600000,
+      "inst_today": 1728000000,
       "exchange": "KOSPI"
     },
     {
@@ -163,11 +163,11 @@
           "risk": false
         }
       ],
-      "price": 68400,
-      "chg": 0.0364,
+      "price": 68500,
+      "chg": 0.0379,
       "activity": 1.0,
       "foreign_today": 0,
-      "inst_today": 4240800000,
+      "inst_today": 4247000000,
       "exchange": "KOSPI"
     },
     {
@@ -290,7 +290,7 @@
         },
         {
           "date": "11-13",
-          "title": "동국제약 센텔리안24, 컬리뷰티페스타 참가...맞춤형 제품 추천",
+          "title": "[동국제약=종합] 감기약 선택법 안내 ··· 카리토포텐 새 광고 론칭",
           "risk": false
         }
       ],
@@ -361,11 +361,11 @@
           "risk": false
         }
       ],
-      "price": 90700,
-      "chg": 0.0759,
+      "price": 90400,
+      "chg": 0.0724,
       "activity": 1.01,
       "foreign_today": 0,
-      "inst_today": 997700000,
+      "inst_today": 994400000,
       "exchange": "KOSDAQ"
     },
     {
@@ -436,7 +436,7 @@
       ],
       "price": 11390,
       "chg": -0.0792,
-      "activity": 1.65,
+      "activity": 1.64,
       "foreign_today": 410040000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
