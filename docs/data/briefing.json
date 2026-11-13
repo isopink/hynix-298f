@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "15:00",
+    "time": "15:15",
     "pool": 421,
-    "analyzed_new": 3,
-    "passed": 13,
+    "analyzed_new": 4,
+    "passed": 14,
     "kept_prep": false
   },
   "candidates": [
@@ -98,7 +98,7 @@
       "vol20": 0.327,
       "foreign_net": -29095907075,
       "inst_net": 37693300675,
-      "score": 0.698,
+      "score": 0.732,
       "news": [],
       "foreign_today": 539750000,
       "inst_today": 3968750000,
@@ -114,7 +114,7 @@
       "vol20": 0.884,
       "foreign_net": -81770056900,
       "inst_net": 59675563500,
-      "score": 0.651,
+      "score": 0.732,
       "news": [
         {
           "date": "11-12",
@@ -122,11 +122,11 @@
           "risk": false
         }
       ],
-      "price": 68700,
-      "chg": 0.0409,
-      "activity": 0.97,
+      "price": 69000,
+      "chg": 0.0455,
+      "activity": 0.96,
       "foreign_today": 0,
-      "inst_today": 4259400000,
+      "inst_today": 4278000000,
       "exchange": "KOSPI"
     },
     {
@@ -139,8 +139,13 @@
       "vol20": 0.6,
       "foreign_net": 1608696075,
       "inst_net": 2739770850,
-      "score": 0.581,
+      "score": 0.61,
       "news": [
+        {
+          "date": "11-13",
+          "title": "포스코, GS그룹과 AI 데이터센터 사업 협력…현대제철, 내화·내진 H형강...",
+          "risk": false
+        },
         {
           "date": "11-13",
           "title": "현대제철, 내화·내진 H형강 국내 첫 KS 인증…화재·지진 대응 성능 확...",
@@ -149,11 +154,6 @@
         {
           "date": "11-13",
           "title": "사진 한 장에 담긴 이웃의 마음... 현대제철, 19년 나눔의 기록 펼치다",
-          "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "AI데이터센터로 뜬댔는데…현대제철 봉형강 판매 5년째 하락세",
           "risk": false
         }
       ],
@@ -171,7 +171,7 @@
       "vol20": 0.538,
       "foreign_net": -14472598100,
       "inst_net": 18845759500,
-      "score": 0.581,
+      "score": 0.61,
       "news": [
         {
           "date": "11-13",
@@ -203,7 +203,7 @@
       "vol20": 0.748,
       "foreign_net": -34774154200,
       "inst_net": 28642292800,
-      "score": 0.512,
+      "score": 0.537,
       "news": [
         {
           "date": "11-12",
@@ -235,7 +235,7 @@
       "vol20": 0.469,
       "foreign_net": 994866350,
       "inst_net": 3654508325,
-      "score": 0.302,
+      "score": 0.317,
       "news": [
         {
           "date": "11-13",
@@ -285,11 +285,11 @@
           "risk": false
         }
       ],
-      "price": 90800,
-      "chg": 0.0771,
-      "activity": 0.98,
+      "price": 90200,
+      "chg": 0.07,
+      "activity": 0.95,
       "foreign_today": 0,
-      "inst_today": 998800000,
+      "inst_today": 992200000,
       "exchange": "KOSDAQ"
     },
     {
@@ -302,7 +302,7 @@
       "vol20": 1.202,
       "foreign_net": -219934325,
       "inst_net": 6802284425,
-      "score": 0.767,
+      "score": 0.805,
       "news": [],
       "foreign_today": 0,
       "inst_today": 754000000,
@@ -318,7 +318,7 @@
       "vol20": 1.006,
       "foreign_net": -12666495850,
       "inst_net": 23546180550,
-      "score": 0.674,
+      "score": 0.707,
       "news": [
         {
           "date": "11-12",
@@ -340,7 +340,7 @@
       "vol20": 2.006,
       "foreign_net": -513491960,
       "inst_net": -109460540,
-      "score": 0.581,
+      "score": 0.61,
       "news": [
         {
           "date": "11-13",
@@ -358,10 +358,10 @@
           "risk": false
         }
       ],
-      "price": 11420,
-      "chg": -0.0768,
-      "activity": 1.53,
-      "foreign_today": 411120000,
+      "price": 11280,
+      "chg": -0.0881,
+      "activity": 1.47,
+      "foreign_today": 406080000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
@@ -375,7 +375,7 @@
       "vol20": 1.681,
       "foreign_net": -16169810550,
       "inst_net": 4107522025,
-      "score": 0.558,
+      "score": 0.585,
       "news": [
         {
           "date": "11-13",
@@ -393,11 +393,11 @@
           "risk": false
         }
       ],
-      "price": 34450,
-      "chg": 0.0989,
-      "activity": 4.47,
+      "price": 34550,
+      "chg": 0.1021,
+      "activity": 4.38,
       "foreign_today": 0,
-      "inst_today": 206700000,
+      "inst_today": 207300000,
       "exchange": "KOSDAQ"
     },
     {
@@ -443,6 +443,35 @@
         }
       ],
       "exchange": "ETF"
+    },
+    {
+      "code": "035420",
+      "name": "NAVER",
+      "close": 180900,
+      "ret5": -0.0163,
+      "ret20": 0.0554,
+      "rsi14": 47.6,
+      "vol20": 0.546,
+      "foreign_net": 76831028650,
+      "inst_net": 89266470200,
+      "score": 0,
+      "news": [
+        {
+          "date": "11-13",
+          "title": "NAVER, 고저차 7,700원…다음 변수는 AI 팩토리와 이익 부담",
+          "risk": false
+        },
+        {
+          "date": "11-13",
+          "title": "상위 1%, 이틀 연속 NAVER 사들여 [주식 초고수는 지금]",
+          "risk": false
+        }
+      ],
+      "price": 172000,
+      "chg": -0.0539,
+      "foreign_today": 5848000000,
+      "inst_today": 0,
+      "exchange": "KOSPI"
     }
   ]
 }
