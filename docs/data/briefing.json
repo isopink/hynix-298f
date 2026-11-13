@@ -81,7 +81,7 @@
     ]
   },
   "intraday": {
-    "time": "13:47",
+    "time": "13:48",
     "pool": 416,
     "analyzed_new": 4,
     "passed": 15,
@@ -118,7 +118,7 @@
       ],
       "price": 31600,
       "chg": 0.0464,
-      "activity": 1.38,
+      "activity": 1.37,
       "foreign_today": 2654400000,
       "inst_today": 2780800000,
       "exchange": "KOSPI"
@@ -162,6 +162,11 @@
       "news": [
         {
           "date": "11-13",
+          "title": "카카오워크도 해킹…메일 본문·첨부파일 원본도 유출",
+          "risk": false
+        },
+        {
+          "date": "11-13",
           "title": "카카오워크, 해킹 공격에 개인정보 유출…이름·연락처·이메일 노출",
           "risk": false
         },
@@ -169,34 +174,13 @@
           "date": "11-13",
           "title": "구글 지도 한국서 달라진다…네이버·카카오 '긴장'",
           "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "카카오 '기업용 메신저'도 뚫렸다…이름·연락처 등 노출",
-          "risk": false
         }
       ],
-      "price": 32100,
-      "chg": 0.0126,
-      "activity": 1.01,
+      "price": 32050,
+      "chg": 0.011,
+      "activity": 1.02,
       "foreign_today": 0,
-      "inst_today": 1605000000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "316140",
-      "name": "우리금융지주",
-      "close": 31750,
-      "ret5": -0.0124,
-      "ret20": 0.0111,
-      "rsi14": 50.8,
-      "vol20": 0.327,
-      "foreign_net": -29095907075,
-      "inst_net": 37693300675,
-      "score": 0.556,
-      "news": [],
-      "foreign_today": 730250000,
-      "inst_today": 3333750000,
+      "inst_today": 1602500000,
       "exchange": "KOSPI"
     },
     {
@@ -209,7 +193,7 @@
       "vol20": 0.538,
       "foreign_net": -14472598100,
       "inst_net": 18845759500,
-      "score": 0.556,
+      "score": 0.571,
       "news": [
         {
           "date": "11-13",
@@ -229,6 +213,22 @@
       ],
       "foreign_today": 0,
       "inst_today": 704000000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "316140",
+      "name": "우리금융지주",
+      "close": 31750,
+      "ret5": -0.0124,
+      "ret20": 0.0111,
+      "rsi14": 50.8,
+      "vol20": 0.327,
+      "foreign_net": -29095907075,
+      "inst_net": 37693300675,
+      "score": 0.556,
+      "news": [],
+      "foreign_today": 730250000,
+      "inst_today": 3333750000,
       "exchange": "KOSPI"
     },
     {
@@ -355,11 +355,11 @@
           "risk": false
         }
       ],
-      "price": 38550,
-      "chg": 0.0225,
+      "price": 38450,
+      "chg": 0.0199,
       "activity": 1.12,
-      "foreign_today": 2043150000,
-      "inst_today": 1888950000,
+      "foreign_today": 2037850000,
+      "inst_today": 1884050000,
       "exchange": "KOSDAQ"
     },
     {
@@ -390,11 +390,11 @@
           "risk": false
         }
       ],
-      "price": 69100,
-      "chg": 0.0073,
+      "price": 69200,
+      "chg": 0.0087,
       "activity": 2.26,
-      "foreign_today": 691000000,
-      "inst_today": 1589300000,
+      "foreign_today": 692000000,
+      "inst_today": 1591600000,
       "exchange": "KOSPI"
     },
     {
@@ -407,7 +407,7 @@
       "vol20": 1.453,
       "foreign_net": -6514931100,
       "inst_net": 8639681450,
-      "score": 0.778,
+      "score": 0.762,
       "news": [
         {
           "date": "11-13",
@@ -425,11 +425,11 @@
           "risk": false
         }
       ],
-      "price": 91000,
-      "chg": 0.0795,
-      "activity": 1.05,
+      "price": 90700,
+      "chg": 0.0759,
+      "activity": 1.04,
       "foreign_today": 0,
-      "inst_today": 728000000,
+      "inst_today": 725600000,
       "exchange": "KOSDAQ"
     },
     {
@@ -478,7 +478,7 @@
       ],
       "price": 11600,
       "chg": -0.0622,
-      "activity": 1.84,
+      "activity": 1.83,
       "foreign_today": 336400000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
