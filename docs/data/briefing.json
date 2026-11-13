@@ -81,7 +81,7 @@
     ]
   },
   "intraday": {
-    "time": "13:44",
+    "time": "13:45",
     "pool": 416,
     "analyzed_new": 4,
     "passed": 15,
@@ -133,7 +133,7 @@
       "vol20": 0.884,
       "foreign_net": -81770056900,
       "inst_net": 59675563500,
-      "score": 0.603,
+      "score": 0.623,
       "news": [
         {
           "date": "11-12",
@@ -158,8 +158,13 @@
       "vol20": 0.441,
       "foreign_net": -12870138600,
       "inst_net": -12774455600,
-      "score": 0.587,
+      "score": 0.607,
       "news": [
+        {
+          "date": "11-13",
+          "title": "카카오워크, 해킹 공격에 개인정보 유출…이름·연락처·이메일 노출",
+          "risk": false
+        },
         {
           "date": "11-13",
           "title": "구글 지도 한국서 달라진다…네이버·카카오 '긴장'",
@@ -188,7 +193,7 @@
       "vol20": 0.538,
       "foreign_net": -14472598100,
       "inst_net": 18845759500,
-      "score": 0.571,
+      "score": 0.59,
       "news": [
         {
           "date": "11-13",
@@ -220,7 +225,7 @@
       "vol20": 0.327,
       "foreign_net": -29095907075,
       "inst_net": 37693300675,
-      "score": 0.556,
+      "score": 0.574,
       "news": [],
       "foreign_today": 730250000,
       "inst_today": 3333750000,
@@ -236,7 +241,7 @@
       "vol20": 0.6,
       "foreign_net": 1608696075,
       "inst_net": 2739770850,
-      "score": 0.508,
+      "score": 0.525,
       "news": [
         {
           "date": "11-13",
@@ -268,7 +273,7 @@
       "vol20": 0.748,
       "foreign_net": -34774154200,
       "inst_net": 28642292800,
-      "score": 0.397,
+      "score": 0.41,
       "news": [
         {
           "date": "11-12",
@@ -300,16 +305,16 @@
       "vol20": 0.469,
       "foreign_net": 994866350,
       "inst_net": 3654508325,
-      "score": 0.286,
+      "score": 0.295,
       "news": [
         {
           "date": "11-13",
-          "title": "[동국제약=종합] 감기약 선택법 안내 ··· 카리토포텐 새 광고 론칭",
+          "title": "동국제약 센텔리안24, 컬리뷰티페스타 참가...맞춤형 제품 추천",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "동국제약 센텔리안24, 컬리뷰티페스타 참가...맞춤형 제품 추천",
+          "title": "[동국제약=종합] 감기약 선택법 안내 ··· 카리토포텐 새 광고 론칭",
           "risk": false
         },
         {
@@ -332,7 +337,7 @@
       "vol20": 1.077,
       "foreign_net": -21815654925,
       "inst_net": 16843266050,
-      "score": 0.952,
+      "score": 0.951,
       "news": [
         {
           "date": "11-13",
@@ -350,47 +355,12 @@
           "risk": false
         }
       ],
-      "price": 38600,
-      "chg": 0.0239,
+      "price": 38550,
+      "chg": 0.0225,
       "activity": 1.13,
-      "foreign_today": 2045800000,
-      "inst_today": 1891400000,
+      "foreign_today": 2043150000,
+      "inst_today": 1888950000,
       "exchange": "KOSDAQ"
-    },
-    {
-      "code": "181710",
-      "name": "NHN",
-      "close": 68600,
-      "ret5": 0.3425,
-      "ret20": 0.3803,
-      "rsi14": 60.9,
-      "vol20": 1.403,
-      "foreign_net": -3279761625,
-      "inst_net": 10286837400,
-      "score": 0.873,
-      "news": [
-        {
-          "date": "11-13",
-          "title": "NHN, AI 클라우드 매출 75% 급증… GPU 공급 확대 속도",
-          "risk": false
-        },
-        {
-          "date": "11-12",
-          "title": "NHN클라우드, '노티피케이션' AWS 마켓플레이스 등록",
-          "risk": false
-        },
-        {
-          "date": "11-12",
-          "title": "상명대-NHN클라우드, 바이오헬스 클라우드 인재 양성 MOU 체결",
-          "risk": false
-        }
-      ],
-      "price": 69000,
-      "chg": 0.0058,
-      "activity": 2.26,
-      "foreign_today": 690000000,
-      "inst_today": 1587000000,
-      "exchange": "KOSPI"
     },
     {
       "code": "425420",
@@ -402,7 +372,7 @@
       "vol20": 1.453,
       "foreign_net": -6514931100,
       "inst_net": 8639681450,
-      "score": 0.762,
+      "score": 0.787,
       "news": [
         {
           "date": "11-13",
@@ -420,11 +390,11 @@
           "risk": false
         }
       ],
-      "price": 90800,
-      "chg": 0.0771,
-      "activity": 1.05,
+      "price": 90600,
+      "chg": 0.0747,
+      "activity": 1.04,
       "foreign_today": 0,
-      "inst_today": 726400000,
+      "inst_today": 724800000,
       "exchange": "KOSDAQ"
     },
     {
@@ -437,7 +407,7 @@
       "vol20": 1.202,
       "foreign_net": -219934325,
       "inst_net": 6802284425,
-      "score": 0.667,
+      "score": 0.689,
       "news": [],
       "foreign_today": 0,
       "inst_today": 754000000,
@@ -453,7 +423,7 @@
       "vol20": 2.006,
       "foreign_net": -513491960,
       "inst_net": -109460540,
-      "score": 0.603,
+      "score": 0.623,
       "news": [
         {
           "date": "11-13",
@@ -471,12 +441,34 @@
           "risk": false
         }
       ],
-      "price": 11650,
-      "chg": -0.0582,
+      "price": 11640,
+      "chg": -0.059,
       "activity": 1.86,
-      "foreign_today": 337850000,
+      "foreign_today": 337560000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
+    },
+    {
+      "code": "009420",
+      "name": "한올바이오파마",
+      "close": 51200,
+      "ret5": 0.2946,
+      "ret20": 0.2673,
+      "rsi14": 67.3,
+      "vol20": 1.006,
+      "foreign_net": -12666495850,
+      "inst_net": 23546180550,
+      "score": 0.557,
+      "news": [
+        {
+          "date": "11-12",
+          "title": "한올바이오파마 아이메로프루바트, 4개 적응증에 집중",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 921600000,
+      "exchange": "KOSPI"
     },
     {
       "code": "114800",
