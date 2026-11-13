@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "11:15",
-    "pool": 405,
+    "time": "11:30",
+    "pool": 408,
     "analyzed_new": 30,
-    "passed": 13,
+    "passed": 14,
     "kept_prep": false
   },
   "candidates": [
@@ -98,29 +98,29 @@
       "vol20": 0.849,
       "foreign_net": -21006250725,
       "inst_net": 28484664400,
-      "score": 0.914,
+      "score": 0.921,
       "news": [
         {
           "date": "11-13",
-          "title": "3분기 영업익 955억인데 1,125억 대위변제···허윤홍, GS건설 '군살 빼...",
+          "title": "GS건설 자이, 대한민국 조경·색채대상서 4개 작품 수상",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "GS건설 자이, 조경·색채대상 4개 작품 수상…공간디자인 경쟁력 인정",
+          "title": "GS건설 자이 디자인 어워드 4관왕",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "[굿모닝! 13일 건설업계 소식] GS건설·롯데건설·금호건설·반도건설·...",
+          "title": "GS건설, 대한민국 조경·색채대상서 4개 작품 수상",
           "risk": false
         }
       ],
-      "price": 31900,
-      "chg": 0.0563,
-      "activity": 2.2,
-      "foreign_today": 3509000000,
-      "inst_today": 957000000,
+      "price": 31850,
+      "chg": 0.0546,
+      "activity": 2.07,
+      "foreign_today": 3503500000,
+      "inst_today": 955500000,
       "exchange": "KOSPI"
     },
     {
@@ -133,8 +133,13 @@
       "vol20": 0.648,
       "foreign_net": -32976039750,
       "inst_net": 74711352000,
-      "score": 0.776,
+      "score": 0.81,
       "news": [
+        {
+          "date": "11-13",
+          "title": "'에페' 출시하자마자 日 마운자로 암초 만난 한미약품... 주가 장중 10% ...",
+          "risk": false
+        },
         {
           "date": "11-13",
           "title": "한미약품, 실적 꺾이고 ESG 제자리···지배구조 C등급",
@@ -144,18 +149,13 @@
           "date": "11-13",
           "title": "“한미약품, ‘日 마운자로’ 우려에 10% 하락…내년 신약 가치 6조 가능...",
           "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "[모닝 리포트] \"한미약품, 에페 우려에 주가 하락 과도…글로벌 신약 주...",
-          "risk": false
         }
       ],
-      "price": 479500,
-      "chg": 0.0137,
-      "activity": 1.8,
+      "price": 479000,
+      "chg": 0.0127,
+      "activity": 1.71,
       "foreign_today": 0,
-      "inst_today": 3836000000,
+      "inst_today": 3832000000,
       "exchange": "KOSPI"
     },
     {
@@ -168,7 +168,7 @@
       "vol20": 0.884,
       "foreign_net": -81770056900,
       "inst_net": 59675563500,
-      "score": 0.552,
+      "score": 0.571,
       "news": [
         {
           "date": "11-12",
@@ -176,11 +176,11 @@
           "risk": false
         }
       ],
-      "price": 68900,
-      "chg": 0.0439,
-      "activity": 1.43,
-      "foreign_today": 3031600000,
-      "inst_today": 1722500000,
+      "price": 69100,
+      "chg": 0.047,
+      "activity": 1.36,
+      "foreign_today": 3040400000,
+      "inst_today": 1727500000,
       "exchange": "KOSPI"
     },
     {
@@ -193,29 +193,29 @@
       "vol20": 0.441,
       "foreign_net": -12870138600,
       "inst_net": -12774455600,
-      "score": 0.345,
+      "score": 0.397,
       "news": [
         {
           "date": "11-13",
-          "title": "철통 보안 장담하던 카카오워크 해킹…첨부파일까지 뚫렸다",
+          "title": "업무메신저 '카카오워크' 해킹에 개인정보 유출…이름·연락처 등 노출",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "카카오뱅크, 청소년 저금 서비스 'mini 내맘대로 저금' 30만좌 돌파",
+          "title": "카카오 업무용 메신저도 뚫렸다…개인정보·메일·첨부파일 유출",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "카카오워크서 개인정보 유출…이메일 본문·첨부파일 원본도 포함",
+          "title": "카카오 기업용 메신저 '카카오워크' 해킹...이름·연락처·이메일 첨부파...",
           "risk": false
         }
       ],
-      "price": 32450,
-      "chg": 0.0237,
-      "activity": 1.22,
+      "price": 32350,
+      "chg": 0.0205,
+      "activity": 1.19,
       "foreign_today": 0,
-      "inst_today": 649000000,
+      "inst_today": 647000000,
       "exchange": "KOSPI"
     },
     {
@@ -228,10 +228,42 @@
       "vol20": 0.327,
       "foreign_net": -29095907075,
       "inst_net": 37693300675,
-      "score": 0.328,
+      "score": 0.365,
       "news": [],
       "foreign_today": 1873250000,
       "inst_today": 1524000000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "004020",
+      "name": "현대제철",
+      "close": 28700,
+      "ret5": -0.0103,
+      "ret20": 0.0649,
+      "rsi14": 51.1,
+      "vol20": 0.6,
+      "foreign_net": 1608696075,
+      "inst_net": 2739770850,
+      "score": 0.365,
+      "news": [
+        {
+          "date": "11-13",
+          "title": "현대제철, 내화·내진 H형강 국내 첫 KS 인증…화재·지진 대응 성능 확...",
+          "risk": false
+        },
+        {
+          "date": "11-13",
+          "title": "사진 한 장에 담긴 이웃의 마음... 현대제철, 19년 나눔의 기록 펼치다",
+          "risk": false
+        },
+        {
+          "date": "11-13",
+          "title": "AI데이터센터로 뜬댔는데…현대제철 봉형강 판매 5년째 하락세",
+          "risk": false
+        }
+      ],
+      "foreign_today": 487900000,
+      "inst_today": 86100000,
       "exchange": "KOSPI"
     },
     {
@@ -244,7 +276,7 @@
       "vol20": 0.469,
       "foreign_net": 994866350,
       "inst_net": 3654508325,
-      "score": 0.276,
+      "score": 0.286,
       "news": [
         {
           "date": "11-13",
@@ -294,11 +326,11 @@
           "risk": false
         }
       ],
-      "price": 15540,
-      "chg": 0.1327,
-      "activity": 3.24,
-      "foreign_today": 3232320000,
-      "inst_today": 2905980000,
+      "price": 15500,
+      "chg": 0.1297,
+      "activity": 3.03,
+      "foreign_today": 3224000000,
+      "inst_today": 2898500000,
       "exchange": "KOSDAQ"
     },
     {
@@ -329,11 +361,11 @@
           "risk": false
         }
       ],
-      "price": 72200,
-      "chg": 0.0525,
-      "activity": 3.95,
+      "price": 72500,
+      "chg": 0.0569,
+      "activity": 3.72,
       "foreign_today": 0,
-      "inst_today": 1660600000,
+      "inst_today": 1667500000,
       "exchange": "KOSPI"
     },
     {
@@ -346,7 +378,7 @@
       "vol20": 1.077,
       "foreign_net": -21815654925,
       "inst_net": 16843266050,
-      "score": 0.793,
+      "score": 0.794,
       "news": [
         {
           "date": "11-13",
@@ -364,30 +396,11 @@
           "risk": false
         }
       ],
-      "price": 40000,
-      "chg": 0.061,
-      "activity": 1.8,
-      "foreign_today": 1640000000,
-      "inst_today": 1120000000,
-      "exchange": "KOSDAQ"
-    },
-    {
-      "code": "468530",
-      "name": "프로티나",
-      "close": 58000,
-      "ret5": 0.0902,
-      "ret20": 0.7059,
-      "rsi14": 61.9,
-      "vol20": 1.202,
-      "foreign_net": -219934325,
-      "inst_net": 6802284425,
-      "score": 0.672,
-      "news": [],
-      "price": 59600,
-      "chg": 0.0329,
-      "activity": 1.43,
-      "foreign_today": 0,
-      "inst_today": 834400000,
+      "price": 39750,
+      "chg": 0.0544,
+      "activity": 1.69,
+      "foreign_today": 1629750000,
+      "inst_today": 1113000000,
       "exchange": "KOSDAQ"
     },
     {
@@ -400,7 +413,7 @@
       "vol20": 1.681,
       "foreign_net": -16169810550,
       "inst_net": 4107522025,
-      "score": 0.552,
+      "score": 0.54,
       "news": [
         {
           "date": "11-13",
@@ -418,11 +431,27 @@
           "risk": false
         }
       ],
-      "price": 35150,
-      "chg": 0.1212,
-      "activity": 9.06,
+      "price": 35000,
+      "chg": 0.1164,
+      "activity": 8.21,
       "foreign_today": 0,
-      "inst_today": 246050000,
+      "inst_today": 245000000,
+      "exchange": "KOSDAQ"
+    },
+    {
+      "code": "468530",
+      "name": "프로티나",
+      "close": 58000,
+      "ret5": 0.0902,
+      "ret20": 0.7059,
+      "rsi14": 61.9,
+      "vol20": 1.202,
+      "foreign_net": -219934325,
+      "inst_net": 6802284425,
+      "score": 0.54,
+      "news": [],
+      "foreign_today": 0,
+      "inst_today": 812000000,
       "exchange": "KOSDAQ"
     },
     {
