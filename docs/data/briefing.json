@@ -81,7 +81,7 @@
     ]
   },
   "intraday": {
-    "time": "13:45",
+    "time": "13:46",
     "pool": 416,
     "analyzed_new": 4,
     "passed": 15,
@@ -118,7 +118,7 @@
       ],
       "price": 31650,
       "chg": 0.048,
-      "activity": 1.39,
+      "activity": 1.38,
       "foreign_today": 2658600000,
       "inst_today": 2785200000,
       "exchange": "KOSPI"
@@ -141,11 +141,11 @@
           "risk": false
         }
       ],
-      "price": 68700,
-      "chg": 0.0409,
+      "price": 68800,
+      "chg": 0.0424,
       "activity": 1.09,
       "foreign_today": 0,
-      "inst_today": 4465500000,
+      "inst_today": 4472000000,
       "exchange": "KOSPI"
     },
     {
@@ -184,6 +184,22 @@
       "exchange": "KOSPI"
     },
     {
+      "code": "316140",
+      "name": "우리금융지주",
+      "close": 31750,
+      "ret5": -0.0124,
+      "ret20": 0.0111,
+      "rsi14": 50.8,
+      "vol20": 0.327,
+      "foreign_net": -29095907075,
+      "inst_net": 37693300675,
+      "score": 0.574,
+      "news": [],
+      "foreign_today": 730250000,
+      "inst_today": 3333750000,
+      "exchange": "KOSPI"
+    },
+    {
       "code": "326030",
       "name": "SK바이오팜",
       "close": 88000,
@@ -193,7 +209,7 @@
       "vol20": 0.538,
       "foreign_net": -14472598100,
       "inst_net": 18845759500,
-      "score": 0.59,
+      "score": 0.574,
       "news": [
         {
           "date": "11-13",
@@ -213,22 +229,6 @@
       ],
       "foreign_today": 0,
       "inst_today": 704000000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "316140",
-      "name": "우리금융지주",
-      "close": 31750,
-      "ret5": -0.0124,
-      "ret20": 0.0111,
-      "rsi14": 50.8,
-      "vol20": 0.327,
-      "foreign_net": -29095907075,
-      "inst_net": 37693300675,
-      "score": 0.574,
-      "news": [],
-      "foreign_today": 730250000,
-      "inst_today": 3333750000,
       "exchange": "KOSPI"
     },
     {
@@ -309,12 +309,12 @@
       "news": [
         {
           "date": "11-13",
-          "title": "동국제약 센텔리안24, 컬리뷰티페스타 참가...맞춤형 제품 추천",
+          "title": "[동국제약=종합] 감기약 선택법 안내 ··· 카리토포텐 새 광고 론칭",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "[동국제약=종합] 감기약 선택법 안내 ··· 카리토포텐 새 광고 론칭",
+          "title": "동국제약 센텔리안24, 컬리뷰티페스타 참가...맞춤형 제품 추천",
           "risk": false
         },
         {
@@ -355,11 +355,11 @@
           "risk": false
         }
       ],
-      "price": 38550,
-      "chg": 0.0225,
+      "price": 38650,
+      "chg": 0.0252,
       "activity": 1.13,
-      "foreign_today": 2043150000,
-      "inst_today": 1888950000,
+      "foreign_today": 2048450000,
+      "inst_today": 1893850000,
       "exchange": "KOSDAQ"
     },
     {
@@ -372,7 +372,7 @@
       "vol20": 1.453,
       "foreign_net": -6514931100,
       "inst_net": 8639681450,
-      "score": 0.787,
+      "score": 0.803,
       "news": [
         {
           "date": "11-13",
@@ -390,11 +390,11 @@
           "risk": false
         }
       ],
-      "price": 90600,
-      "chg": 0.0747,
-      "activity": 1.04,
+      "price": 91100,
+      "chg": 0.0807,
+      "activity": 1.05,
       "foreign_today": 0,
-      "inst_today": 724800000,
+      "inst_today": 728800000,
       "exchange": "KOSDAQ"
     },
     {
@@ -441,10 +441,10 @@
           "risk": false
         }
       ],
-      "price": 11640,
-      "chg": -0.059,
-      "activity": 1.86,
-      "foreign_today": 337560000,
+      "price": 11620,
+      "chg": -0.0606,
+      "activity": 1.85,
+      "foreign_today": 336980000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
