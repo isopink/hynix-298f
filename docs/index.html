@@ -1361,7 +1361,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
       g.append('stop').attr('offset', 0).attr('stop-color', c).attr('stop-opacity', a0); g.append('stop').attr('offset', 1).attr('stop-color', c).attr('stop-opacity', a1); return `url(#${id})`; };
     fade(svg.append('path').datum(rows).attr('clip-path', 'url(#cHeroUp)').attr('fill', grad('gHeroUp', '#ff4a36', .42, .04)).attr('d', gap), .5);   // 위로 갈수록 진하게
     fade(svg.append('path').datum(rows).attr('clip-path', 'url(#cHeroDn)').attr('fill', grad('gHeroDn', '#4aa3d4', .04, .42)).attr('d', gap), .5);   // 아래로 갈수록 진하게
-    const LS = window.VOLT ? { s: 2.4, o: 1.2, od: '5 4', k: 1.2, kd: '1 4', kc: '#8b949e', f: null } : { s: 0.6, o: 0.9, od: null, k: 0.6, kd: null, kc: '#a8a8a8', f: 'url(#fHeroGlow)' };   // 11-10 S.Lee: 선이 구분되게 (굵기 · 점선)
+    const LS = window.VOLT ? { s: 1.6, o: 1.2, od: '5 4', k: 1.2, kd: '1 4', kc: '#8b949e', f: null } : { s: 0.6, o: 0.9, od: null, k: 0.6, kd: null, kc: '#a8a8a8', f: 'url(#fHeroGlow)' };   // 11-10 S.Lee: 선이 구분되게 (굵기 · 점선), 11-13 Sigma 2.4 → 1.6
     const kp = svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', LS.kc).attr('stroke-width', LS.k).attr('stroke-dasharray', LS.kd).attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round').attr('filter', LS.f).attr('d', kLine);   // 11-05 1.75 → 0.6 (얇게)
     const p = svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', col).attr('stroke-width', LS.s).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round').attr('filter', LS.f).attr('d', d3.line().curve(cv).x(r => x(r.d)).y(r => y(r.ret)));   // 11-05 2.5 → 0.6
     if (fx) { if (!LS.kd) animate(kp); animate(p); }   // 점선은 그리기 효과가 점선을 덮어서 안 씀
