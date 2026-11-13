@@ -81,7 +81,7 @@
     ]
   },
   "intraday": {
-    "time": "14:28",
+    "time": "14:29",
     "pool": 422,
     "analyzed_new": 4,
     "passed": 14,
@@ -102,6 +102,11 @@
       "news": [
         {
           "date": "11-13",
+          "title": "카카오워크 해킹 공격… 일부 이용자 개인정보 유출",
+          "risk": false
+        },
+        {
+          "date": "11-13",
           "title": "구글 지도 한국 진출 ‘마지막 관문’ 넘어…네이버·카카오와 경쟁 본...",
           "risk": false
         },
@@ -109,18 +114,13 @@
           "date": "11-13",
           "title": "구글, 한국 정밀지도 반출 보안 조건 충족…네이버·카카오와 지도 경쟁...",
           "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "국내 고정밀 지도 구글에 뚤렸다…네이버·카카오 경쟁 밀리나",
-          "risk": false
         }
       ],
-      "price": 32000,
-      "chg": 0.0095,
+      "price": 31950,
+      "chg": 0.0079,
       "activity": 0.96,
       "foreign_today": 0,
-      "inst_today": 1728000000,
+      "inst_today": 1725300000,
       "exchange": "KOSPI"
     },
     {
@@ -290,7 +290,7 @@
         },
         {
           "date": "11-13",
-          "title": "[동국제약=종합] 감기약 선택법 안내 ··· 카리토포텐 새 광고 론칭",
+          "title": "동국제약 센텔리안24, 컬리뷰티페스타 참가...맞춤형 제품 추천",
           "risk": false
         }
       ],
@@ -326,11 +326,11 @@
           "risk": false
         }
       ],
-      "price": 38350,
-      "chg": 0.0172,
+      "price": 38450,
+      "chg": 0.0199,
       "activity": 1.04,
-      "foreign_today": 1879150000,
-      "inst_today": 2147600000,
+      "foreign_today": 1884050000,
+      "inst_today": 2153200000,
       "exchange": "KOSDAQ"
     },
     {
@@ -434,10 +434,10 @@
           "risk": false
         }
       ],
-      "price": 11390,
-      "chg": -0.0792,
+      "price": 11380,
+      "chg": -0.08,
       "activity": 1.64,
-      "foreign_today": 410040000,
+      "foreign_today": 409680000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
