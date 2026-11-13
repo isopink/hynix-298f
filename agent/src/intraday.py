@@ -41,7 +41,7 @@ def first_list(res, key):
 def fetch(brk, num):
     """키움 순위 API 6번 (코스피·코스닥 따로 3번씩, 11-09 박문화 코스닥 확대안) → {code: {name, market, price, chg, value, foreign_qty, inst_qty}}.
     전체 시장으로 받으면 금액 기준 순위를 코스피 대형주가 다 차지해 코스닥이 풀에 거의 못 들어옴. 순위(*_rank)는 시장 안 순위.
-    원문은 work/rank_raw/{tag}_{시장}.json 에 남김 (그림자 운영이 같은 원문을 재사용)."""
+    원문은 work/rank_raw/{tag}_{시장}.json 에 남김."""
     raw_dir = os.path.join(C.WORK, "rank_raw")
     os.makedirs(raw_dir, exist_ok=True)
     pool, sizes = {}, {}

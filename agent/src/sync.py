@@ -215,66 +215,6 @@ def heal():
         start_task(task)
 
 
-# ---------------- 그림자(SiON) 따라잡기 (11-12 S.Lee) ----------------
-# 데스크톱이 꺼졌다 켜지면 SiON 은 놓친 회차를 다시 돌리지 않았음 (11-11 11:15 뒤로 멈춤).
-# 이 sync 는 로그온부터 늘 도니까 여기서 SiON 작업(Hynix298S-*)을 살핌. 같은 일은 한 번만 시도.
-_shadow_tried = {}
-
-
-def shadow_root():
-    d = os.environ.get("SHADOW_DIR") or os.path.join(os.path.dirname(C.ROOT), "hynix-shadow")
-    return d if os.path.isfile(os.path.join(d, "agent", "run.py")) else None
-
-
-def task_running(task):
-    r = subprocess.run(["schtasks", "/Query", "/TN", task, "/FO", "CSV", "/NH"], capture_output=True, text=True,
-                       encoding="mbcs", errors="replace")
-    out = r.stdout or ""
-    return "Running" in out or "실행 중" in out
-
-
-def shadow_heal(now=None):
-    if not (C.params().get("sion") or {}).get("enabled", True):   # 11-12 S.Lee: SiON 멈춤
-        return None
-    d = shadow_root()
-    n = now or C.now()
-    if not d or n.weekday() >= 5:
-        return None
-    hm, today = n.strftime("%H:%M"), n.date().isoformat()
-    w = os.path.join(d, "agent", "work")
-
-    def kick(task, key, why):
-        name = "Hynix298S-" + task
-        if _shadow_tried.get(name) == key or task_running(name):
-            return None
-        _shadow_tried[name] = key
-        log(f"SiON {why} → {name} 시작")
-        return name if start_task(name) else None
-
-    s = C.params()["schedule"]
-    if "08:40" <= hm < s.get("monitor_end", "15:20"):
-        b = C.read_json(os.path.join(w, "briefing.json"), {}) or {}
-        if str(b.get("created", ""))[:10] != today:
-            return kick("prep", today, "오늘 준비가 없음")
-        if not task_running("Hynix298S-monitor"):   # 10분에 한 번까지
-            r = kick("monitor", f"{today} {hm[:4]}", "감시가 꺼져 있음")
-            if r:
-                return r
-        rows = C.read_jsonl(os.path.join(w, "journal.jsonl"))
-        missed = C.missed_trade(n, None, rows)
-        if missed:
-            return kick("decide", f"{today} {missed}", f"{missed} 회차를 놓침")
-    elif "15:55" <= hm:
-        eq = C.read_json(os.path.join(d, "docs", "data", "equity.json"), []) or []
-        if not eq or eq[-1].get("date") != today:
-            return kick("close", today, "오늘 마감 기록이 없음")
-        if hm >= "17:00":
-            rows = C.read_jsonl(os.path.join(w, "journal.jsonl"))
-            if not any(r.get("kind") == "tune" and str(r.get("time", "")).startswith(today) for r in rows):
-                return kick("tune", today, "오늘 기준값 조정이 없음")
-    return None
-
-
 # ---------------- 한 회차 ----------------
 def once():
     if git("fetch", "-q", "origin").returncode != 0:
@@ -431,7 +371,6 @@ def loop():
             ensure_review_mid()
             ensure_report()
             catch_up()
-            shadow_heal()   # 11-12 SiON 놓친 작업 따라잡기
         except Exception as e:  # noqa: BLE001
             log(f"  ! 동기화 실패: {type(e).__name__}: {e}")
         time.sleep(INTERVAL)

@@ -263,87 +263,6 @@ def equity_close():
     out("equity", sorted(rows, key=lambda r: r["date"]))
 
 
-def shadow_dir():
-    """11-08 그림자 운영 폴더 (온톨로지 버전 · 가상 계좌). SHADOW_DIR 이 없으면 저장소 옆 hynix-shadow."""
-    if not (C.params().get("sion") or {}).get("enabled", True):   # 11-12 S.Lee: SiON 멈춤 → shadow.json 갱신 안 함
-        return None
-    d = os.environ.get("SHADOW_DIR") or os.path.join(os.path.dirname(C.ROOT), "hynix-shadow")
-    return d if os.path.isfile(os.path.join(d, "agent", "work", "shadow_equity.jsonl")) else None
-
-
-def _stats(rows, runs, start):
-    rows = [r for r in rows if r.get("time", "")[:10] >= start]
-    runs = [r for r in runs if r.get("time", "")[:10] >= start and r.get("kind") in ("decide", "view", "exit")]
-    fills = [r for r in rows if r["kind"] == "fill"]
-    sec = [r.get("sec", 0) or 0 for r in runs if r.get("kind") == "decide" and r.get("ok")]
-    return {"fills": len(fills), "buys": sum(r.get("side") == "매수" for r in fills), "sells": sum(r.get("side") == "매도" for r in fills),
-            "watch": sum(r["kind"] == "decision" and r.get("mode") == "decide" and r.get("action") == "관망" for r in rows),
-            "runs": len(runs), "failures": sum(not r.get("ok", True) for r in runs),
-            "avg_min": round(sum(sec) / len(sec) / 60, 1) if sec else None,
-            "tokens_k": round(sum(r.get("tokens", 0) or 0 for r in runs) / 1000)}
-
-
-def _shadow_runs(d, start):
-    """11-09 그림자 runs.jsonl 은 한 줄이 수십 MB(온톨로지 입력 기록)라 읽지 않음 → 그림자 docs/data/system.json(날짜별 실행·실패·토큰)으로 대신."""
-    out = []
-    for r in C.read_json(os.path.join(d, "docs", "data", "system.json"), []) or []:
-        if r.get("date", "") >= start:
-            out += [{"time": r["date"] + " 00:00", "kind": "decide", "ok": True}] * max(0, (r.get("runs") or 0) - (r.get("failures") or 0))
-            out += [{"time": r["date"] + " 00:00", "kind": "decide", "ok": False}] * (r.get("failures") or 0)
-            if out:
-                out[-1]["tokens"] = (r.get("tokens_k") or 0) * 1000
-    return out
-
-
-def _shadow_decision(d, start):
-    dc = C.read_json(os.path.join(d, "docs", "data", "decision.json"), {}) or {}
-    if not dc.get("time") or dc["time"][:10] < start:   # 그림자 시작 전 기록(저장소에 딸려 온 실제 판단)은 빼기
-        return None
-    keep = ("code", "name", "action", "qty", "confidence", "bull", "bear", "decision", "blocked")
-    last = {}   # 11-09 그림자 decision.json 은 근거를 '비공개'로 가림 → 그림자 journal 의 같은 회차 판단·체결 문장으로 채움
-    for r in C.read_jsonl(os.path.join(d, "agent", "work", "journal.jsonl")):
-        if r.get("kind") in ("decision", "fill") and r.get("code"):   # 가장 최근 회차 (decision.json 시각과 기록 시각이 몇 분 다름)
-            last[r["code"]] = r
-    for x in dc.get("items", []):
-        r = last.get(x.get("code"))
-        if r:
-            x.update({k: r[k] for k in ("bull", "bear", "decision") if r.get(k)})
-    return {"time": dc["time"], "regime": dc.get("regime"), "items": [{k: x.get(k) for k in keep if x.get(k) is not None} for x in dc.get("items", [])]}
-
-
-def shadow(rows):
-    """그림자 운영 비교 → docs/data/shadow.json. 그림자 폴더가 없으면 None (파일을 만들지 않음, 대시보드 카드도 숨음)."""
-    d = shadow_dir()
-    if not d:
-        return None
-    w = os.path.join(d, "agent", "work")
-    eq = C.read_jsonl(os.path.join(w, "shadow_equity.jsonl"))
-    if not eq:
-        return None
-    seed = C.read_json(os.path.join(w, "mock_account.json"), {}) or {}
-    start = (seed.get("seeded_at") or eq[0]["time"])[:10]
-    base = seed.get("seed_total") or eq[0].get("real_total") or eq[0].get("total")
-    last = eq[-1]
-    pick = eq[-400:]
-    ret = lambda v: round(v / base - 1, 5) if v and base else None   # noqa: E731
-    daily = {}
-    for e in eq:   # 날짜별 마지막 기록 = 그날 그림자 자산 (누적 수익률 차트 초록 선)
-        if e.get("total"):
-            daily[e["time"][:10]] = e["total"]
-    return {"updated": last["time"], "start": start, "base": base,
-            "daily": [{"date": d, "total": v} for d, v in sorted(daily.items())],
-            "series": [{"time": e["time"], "shadow": ret(e.get("total")), "live": ret(e.get("real_total"))} for e in pick],
-            "now": {"shadow": ret(last.get("total")), "live": ret(last.get("real_total")),
-                    "shadow_total": last.get("total"), "live_total": last.get("real_total")},
-            "stats": {"shadow": _stats(C.read_jsonl(os.path.join(w, "journal.jsonl")), _shadow_runs(d, start), start),
-                      "live": _stats(rows, C.read_jsonl(C.RUNS), start)},
-            "holdings": sorted(last.get("holdings", []), key=lambda h: -(h.get("value") or 0))[:8],
-            "status": {k: v for k, v in (C.read_json(os.path.join(d, "docs", "data", "status.json"), {}) or {}).items() if k != "sync"},   # 11-09 대시보드 '온톨로지' 상태바
-            "decision": _shadow_decision(d, start),   # 11-09 Live Decision 2열 (Sigma · SiON)
-            "trades": [{k: r.get(k) for k in ("time", "code", "name", "side", "qty", "price", "confidence", "decision")}   # 11-09 SiON 계좌 카드
-                       for r in C.read_jsonl(os.path.join(w, "journal.jsonl")) if r.get("kind") == "fill"][-30:][::-1]}
-
-
 def write_all(note=""):
     rows = C.read_jsonl(C.JOURNAL)
     nm = names()
@@ -357,8 +276,6 @@ def write_all(note=""):
     out("debates", debates(rows, nm))
     out("briefing", briefing())
     out("status", status(note))
-    if (sh := shadow(rows)) is not None:   # 11-08 온톨로지 그림자 운영 비교 (그림자 폴더가 있을 때만)
-        out("shadow", sh)
 
 
 if __name__ == "__main__":
