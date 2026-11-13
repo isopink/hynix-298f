@@ -81,7 +81,7 @@
     ]
   },
   "intraday": {
-    "time": "14:14",
+    "time": "14:15",
     "pool": 416,
     "analyzed_new": 4,
     "passed": 14,
@@ -127,25 +127,25 @@
       "news": [
         {
           "date": "11-13",
+          "title": "카카오워크 해킹 공격에 일부 이용자 개인정보 유출",
+          "risk": false
+        },
+        {
+          "date": "11-13",
+          "title": "“축구화 사야 됨·포카 교환 자금”…카카오뱅크 mini 저금 30만좌 돌파",
+          "risk": false
+        },
+        {
+          "date": "11-13",
           "title": "카카오게임즈 '패스 오브 엑자일', 신규 리그 14일 업데이트",
-          "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "11월 13일 카카오페이 퀴즈타임 정답…롱런 경품 빈칸은 ‘오픈핏’",
-          "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "카카오 업무용 메신저 '카카오워크' 외부 해킹, 이용자 개인정보 유출",
           "risk": false
         }
       ],
-      "price": 32050,
-      "chg": 0.011,
+      "price": 31900,
+      "chg": 0.0063,
       "activity": 0.98,
       "foreign_today": 0,
-      "inst_today": 1602500000,
+      "inst_today": 1595000000,
       "exchange": "KOSPI"
     },
     {
@@ -174,7 +174,7 @@
       "vol20": 0.538,
       "foreign_net": -14472598100,
       "inst_net": 18845759500,
-      "score": 0.596,
+      "score": 0.579,
       "news": [
         {
           "date": "11-13",
@@ -279,12 +279,12 @@
         },
         {
           "date": "11-13",
-          "title": "[동국제약=종합] 감기약 선택법 안내 ··· 카리토포텐 새 광고 론칭",
+          "title": "동국제약 센텔리안24, 컬리뷰티페스타 참가...맞춤형 제품 추천",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "동국제약 센텔리안24, 컬리뷰티페스타 참가...맞춤형 제품 추천",
+          "title": "[동국제약=종합] 감기약 선택법 안내 ··· 카리토포텐 새 광고 론칭",
           "risk": false
         }
       ],
@@ -320,11 +320,11 @@
           "risk": false
         }
       ],
-      "price": 38750,
-      "chg": 0.0279,
+      "price": 38700,
+      "chg": 0.0265,
       "activity": 1.08,
-      "foreign_today": 2053750000,
-      "inst_today": 1898750000,
+      "foreign_today": 2051100000,
+      "inst_today": 1896300000,
       "exchange": "KOSDAQ"
     },
     {
@@ -337,7 +337,7 @@
       "vol20": 1.453,
       "foreign_net": -6514931100,
       "inst_net": 8639681450,
-      "score": 0.86,
+      "score": 0.877,
       "news": [
         {
           "date": "11-13",
@@ -355,11 +355,11 @@
           "risk": false
         }
       ],
-      "price": 91200,
-      "chg": 0.0819,
+      "price": 91400,
+      "chg": 0.0842,
       "activity": 1.02,
       "foreign_today": 0,
-      "inst_today": 729600000,
+      "inst_today": 731200000,
       "exchange": "KOSDAQ"
     },
     {
@@ -406,10 +406,10 @@
           "risk": false
         }
       ],
-      "price": 11450,
-      "chg": -0.0744,
+      "price": 11460,
+      "chg": -0.0736,
       "activity": 1.7,
-      "foreign_today": 332050000,
+      "foreign_today": 332340000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
