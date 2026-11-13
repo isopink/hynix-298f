@@ -81,8 +81,8 @@
     ]
   },
   "intraday": {
-    "time": "11:00",
-    "pool": 374,
+    "time": "11:15",
+    "pool": 405,
     "analyzed_new": 30,
     "passed": 13,
     "kept_prep": false
@@ -98,29 +98,29 @@
       "vol20": 0.849,
       "foreign_net": -21006250725,
       "inst_net": 28484664400,
-      "score": 1.0,
+      "score": 0.914,
       "news": [
         {
           "date": "11-13",
-          "title": "GS건설 자이, 대한민국 조경·색채대상 수상…디자인 경쟁력 입증",
+          "title": "3분기 영업익 955억인데 1,125억 대위변제···허윤홍, GS건설 '군살 빼...",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "GS건설, '대한민국 조경·색채대상' 잇따라 수상",
+          "title": "GS건설 자이, 조경·색채대상 4개 작품 수상…공간디자인 경쟁력 인정",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "GS건설, 자회사 산은 빚 1125억 대위변제…외화채 위험 완화",
+          "title": "[굿모닝! 13일 건설업계 소식] GS건설·롯데건설·금호건설·반도건설·...",
           "risk": false
         }
       ],
-      "price": 32100,
-      "chg": 0.0629,
-      "activity": 2.39,
-      "foreign_today": 1605000000,
-      "inst_today": 738300000,
+      "price": 31900,
+      "chg": 0.0563,
+      "activity": 2.2,
+      "foreign_today": 3509000000,
+      "inst_today": 957000000,
       "exchange": "KOSPI"
     },
     {
@@ -133,7 +133,7 @@
       "vol20": 0.648,
       "foreign_net": -32976039750,
       "inst_net": 74711352000,
-      "score": 0.833,
+      "score": 0.776,
       "news": [
         {
           "date": "11-13",
@@ -151,11 +151,11 @@
           "risk": false
         }
       ],
-      "price": 483500,
-      "chg": 0.0222,
-      "activity": 1.93,
+      "price": 479500,
+      "chg": 0.0137,
+      "activity": 1.8,
       "foreign_today": 0,
-      "inst_today": 2417500000,
+      "inst_today": 3836000000,
       "exchange": "KOSPI"
     },
     {
@@ -168,7 +168,7 @@
       "vol20": 0.884,
       "foreign_net": -81770056900,
       "inst_net": 59675563500,
-      "score": 0.458,
+      "score": 0.552,
       "news": [
         {
           "date": "11-12",
@@ -176,11 +176,11 @@
           "risk": false
         }
       ],
-      "price": 69000,
-      "chg": 0.0455,
+      "price": 68900,
+      "chg": 0.0439,
       "activity": 1.43,
-      "foreign_today": 0,
-      "inst_today": 1035000000,
+      "foreign_today": 3031600000,
+      "inst_today": 1722500000,
       "exchange": "KOSPI"
     },
     {
@@ -193,29 +193,45 @@
       "vol20": 0.441,
       "foreign_net": -12870138600,
       "inst_net": -12774455600,
-      "score": 0.417,
+      "score": 0.345,
       "news": [
         {
           "date": "11-13",
-          "title": "카카오워크 외부 공격에 개인정보 유출…메일·첨부파일도 포함",
+          "title": "철통 보안 장담하던 카카오워크 해킹…첨부파일까지 뚫렸다",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "카카오 업무용 메신저 뚫렸다…이메일 본문·첨부파일도 유출",
+          "title": "카카오뱅크, 청소년 저금 서비스 'mini 내맘대로 저금' 30만좌 돌파",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "메일 본문·첨부파일 원본까지 노출…카카오 기업용 메신저서 정보 유출...",
+          "title": "카카오워크서 개인정보 유출…이메일 본문·첨부파일 원본도 포함",
           "risk": false
         }
       ],
-      "price": 32300,
-      "chg": 0.0189,
-      "activity": 1.26,
+      "price": 32450,
+      "chg": 0.0237,
+      "activity": 1.22,
       "foreign_today": 0,
-      "inst_today": 355300000,
+      "inst_today": 649000000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "316140",
+      "name": "우리금융지주",
+      "close": 31750,
+      "ret5": -0.0124,
+      "ret20": 0.0111,
+      "rsi14": 50.8,
+      "vol20": 0.327,
+      "foreign_net": -29095907075,
+      "inst_net": 37693300675,
+      "score": 0.328,
+      "news": [],
+      "foreign_today": 1873250000,
+      "inst_today": 1524000000,
       "exchange": "KOSPI"
     },
     {
@@ -228,8 +244,13 @@
       "vol20": 0.469,
       "foreign_net": 994866350,
       "inst_net": 3654508325,
-      "score": 0.333,
+      "score": 0.276,
       "news": [
+        {
+          "date": "11-13",
+          "title": "동국제약 센텔리안24, DDP '컬리뷰티페스타 2026'서 고객 접점 넓힌다",
+          "risk": false
+        },
         {
           "date": "11-13",
           "title": "동국제약 센텔리안24, '컬리뷰티페스타'서 소비자 체험 프로그램 운영",
@@ -239,32 +260,46 @@
           "date": "11-13",
           "title": "동국제약 센텔리안24, '컬리뷰티페스타 2026' 참가",
           "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "동국제약 센텔리안24, 컬리뷰티페스타 참가…체험 행사 운영",
-          "risk": false
         }
       ],
       "foreign_today": 0,
-      "inst_today": 222750000,
+      "inst_today": 297000000,
       "exchange": "KOSDAQ"
     },
     {
-      "code": "316140",
-      "name": "우리금융지주",
-      "close": 31750,
-      "ret5": -0.0124,
-      "ret20": 0.0111,
-      "rsi14": 50.8,
-      "vol20": 0.327,
-      "foreign_net": -29095907075,
-      "inst_net": 37693300675,
-      "score": 0.312,
-      "news": [],
-      "foreign_today": 508000000,
-      "inst_today": 571500000,
-      "exchange": "KOSPI"
+      "code": "328130",
+      "name": "루닛",
+      "close": 14080,
+      "ret5": -0.0428,
+      "ret20": 0.3122,
+      "rsi14": 52.2,
+      "vol20": 1.481,
+      "foreign_net": -4715159145,
+      "inst_net": 5727640,
+      "score": 1.0,
+      "news": [
+        {
+          "date": "11-13",
+          "title": "[특징주] 루닛, 외형 성장·비용 효율화 동시 달성에 이틀 연속 하락 딛...",
+          "risk": false
+        },
+        {
+          "date": "11-13",
+          "title": "루닛 주가, 급등세... 이유는?",
+          "risk": false
+        },
+        {
+          "date": "11-13",
+          "title": "루닛 주가, 11월 13일 장중 15,920원 16.03% 상승",
+          "risk": false
+        }
+      ],
+      "price": 15540,
+      "chg": 0.1327,
+      "activity": 3.24,
+      "foreign_today": 3232320000,
+      "inst_today": 2905980000,
+      "exchange": "KOSDAQ"
     },
     {
       "code": "181710",
@@ -276,7 +311,7 @@
       "vol20": 1.403,
       "foreign_net": -3279761625,
       "inst_net": 10286837400,
-      "score": 0.875,
+      "score": 0.81,
       "news": [
         {
           "date": "11-13",
@@ -294,11 +329,11 @@
           "risk": false
         }
       ],
-      "price": 71500,
-      "chg": 0.0423,
-      "activity": 4.32,
+      "price": 72200,
+      "chg": 0.0525,
+      "activity": 3.95,
       "foreign_today": 0,
-      "inst_today": 1573000000,
+      "inst_today": 1660600000,
       "exchange": "KOSPI"
     },
     {
@@ -311,7 +346,7 @@
       "vol20": 1.077,
       "foreign_net": -21815654925,
       "inst_net": 16843266050,
-      "score": 0.854,
+      "score": 0.793,
       "news": [
         {
           "date": "11-13",
@@ -329,46 +364,11 @@
           "risk": false
         }
       ],
-      "price": 40500,
-      "chg": 0.0743,
-      "activity": 1.96,
-      "foreign_today": 688500000,
-      "inst_today": 729000000,
-      "exchange": "KOSDAQ"
-    },
-    {
-      "code": "443670",
-      "name": "에스피소프트",
-      "close": 5650,
-      "ret5": 0.1277,
-      "ret20": 0.4752,
-      "rsi14": 58.9,
-      "vol20": 1.614,
-      "foreign_net": -1004722235,
-      "inst_net": 22570010,
-      "score": 0.542,
-      "news": [
-        {
-          "date": "11-12",
-          "title": "에스피소프트 주가, 11월 12일 애프터마켓 5,630원 3.92% 하락",
-          "risk": false
-        },
-        {
-          "date": "11-12",
-          "title": "에스피소프트 장중 3.9% 오른 6090원",
-          "risk": false
-        },
-        {
-          "date": "11-12",
-          "title": "AI가 키운 사이버 위협…지니언스·에스피소프트 매수 봇물",
-          "risk": false
-        }
-      ],
-      "price": 5780,
-      "chg": 0.0285,
-      "activity": 1.09,
-      "foreign_today": 341020000,
-      "inst_today": 0,
+      "price": 40000,
+      "chg": 0.061,
+      "activity": 1.8,
+      "foreign_today": 1640000000,
+      "inst_today": 1120000000,
       "exchange": "KOSDAQ"
     },
     {
@@ -381,44 +381,49 @@
       "vol20": 1.202,
       "foreign_net": -219934325,
       "inst_net": 6802284425,
-      "score": 0.542,
+      "score": 0.672,
       "news": [],
-      "price": 59900,
-      "chg": 0.0381,
-      "activity": 1.56,
+      "price": 59600,
+      "chg": 0.0329,
+      "activity": 1.43,
       "foreign_today": 0,
-      "inst_today": 59900000,
+      "inst_today": 834400000,
       "exchange": "KOSDAQ"
     },
     {
-      "code": "010060",
-      "name": "OCI홀딩스",
-      "close": 193800,
-      "ret5": -0.0615,
-      "ret20": 0.0672,
-      "rsi14": 47.3,
-      "vol20": 1.068,
-      "foreign_net": -16230861050,
-      "inst_net": 27029186000,
-      "score": 0.479,
+      "code": "263860",
+      "name": "지니언스",
+      "close": 33300,
+      "ret5": 0.4323,
+      "ret20": 0.5895,
+      "rsi14": 70.4,
+      "vol20": 1.681,
+      "foreign_net": -16169810550,
+      "inst_net": 4107522025,
+      "score": 0.552,
       "news": [
         {
-          "date": "11-12",
-          "title": "OCI홀딩스 주가, 11월 12일 애프터마켓 195,600원 5.73% 하락",
+          "date": "11-13",
+          "title": "유안타증권 “지니언스, 금융권 보안투자 확대 수혜…3분기 영업익 253%...",
           "risk": false
         },
         {
-          "date": "11-11",
-          "title": "美 '블루웨이브' 올라탄 OCI홀딩스…'비중국 웨이퍼'로 수익성 날개",
+          "date": "11-12",
+          "title": "지니언스 3분기 영업익 37억7774만원…전년 동기 대비 253% 증가",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "지니언스, 누적 영업익 3배 넘게 늘었다…NAC·EDR로 ‘폭풍성장’",
           "risk": false
         }
       ],
-      "price": 201500,
-      "chg": 0.0208,
-      "activity": 0.97,
-      "foreign_today": 2216500000,
-      "inst_today": 0,
-      "exchange": "KOSPI"
+      "price": 35150,
+      "chg": 0.1212,
+      "activity": 9.06,
+      "foreign_today": 0,
+      "inst_today": 246050000,
+      "exchange": "KOSDAQ"
     },
     {
       "code": "114800",
