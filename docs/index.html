@@ -172,6 +172,13 @@ details.log[open] > summary::after { content: "−"; }
 .dec-row .cf i b.hi { background: var(--red-hi); }
 .dec-row .why { min-width: 0; color: var(--body); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .dec-row .why em { font-style: normal; color: var(--red-hi); }
+@media (min-width: 641px) {   /* 11-13 S.Lee: PC 판단 행 — 누르면 판단 근거 전체 + 매수 측 · 매도 측 근거를 근거 칸 아래로 펼침 */
+  .dec-row[role="button"] { cursor: pointer; }
+  .dec-row.open .why { white-space: normal; overflow: visible; }
+  .dec-row .dec-detail { grid-column: 4 / -1; padding: 0 0 6px; font-size: 12px; line-height: 1.7; color: var(--body); white-space: normal; max-width: 960px; }
+  .dec-row .dec-detail .t, .dec-row .dec-detail .tp.dc { display: none; }
+  .dec-row .dec-detail .r { justify-content: flex-start; gap: 12px; }
+}
 /* 폰: 꼭 필요한 정보만 (11-03). 판단 행은 종목·확신도만, 탭하면 근거가 행 아래로 펼쳐짐 (11-05) */
 /* 폰은 홍보용 (11-03): 수익률·응원·매수매도 판단·보유 손익·KOSPI·캘린더만. 상세는 PC */
 .m-only { display: none; }
@@ -1022,7 +1029,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
   drawAll = keepFocus(drawAll); drawKospi = keepFocus(drawKospi); drawFlow = keepFocus(drawFlow);
   // key 가 있으면 폰에서는 말풍선 대신 행 아래로 펼침 (판단 행). 잔고가 갱신돼 다시 그려도 펼친 행은 유지
   const phone = window.matchMedia('(max-width: 640px)'), OPEN = new Set();
-  const inlineRow = el => el._key != null && phone.matches;
+  const inlineRow = el => el._key != null;   // 11-13 S.Lee: PC 도 판단 행을 누르면 아래로 펼침 (잘린 판단 근거 전체)
   function toggleRow(el, on = !el.querySelector('.dec-detail')) {
     const d = el.querySelector('.dec-detail'); if (d) d.remove();
     if (on) el.insertAdjacentHTML('beforeend', `<div class="dec-detail">${el._tip}</div>`);
@@ -1924,7 +1931,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
         + (lc ? row('오늘 외국인 · 기관', eok(lc.foreign_today) + ' · ' + eok(lc.inst_today))
           + (lc.activity != null ? row('거래 활발도', '평소의 ' + lc.activity.toFixed(1) + '배') : '') : '')
         + (d.bull ? `<p class="tp"><span class="up">매수 측</span> ${esc(d.bull)}</p>` : '') + (d.bear ? `<p class="tp"><span class="down">매도 측</span> ${esc(d.bear)}</p>` : '')
-        + `<p class="tp"><b>결정</b> ${esc(d.decision || '')}</p>` + (d.blocked ? `<p class="tp"><span class="up">Hook 차단</span> ${esc(d.blocked)}</p>` : '');
+        + `<p class="tp dc"><b>결정</b> ${esc(d.decision || '')}</p>` + (d.blocked ? `<p class="tp"><span class="up">Hook 차단</span> ${esc(d.blocked)}</p>` : '');
       tipTarget(el, html, d.code);
     });
     foldDec();

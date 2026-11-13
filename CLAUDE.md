@@ -171,6 +171,7 @@ reports/    보고서 PDF, drafts/ = 주간 회고 에이전트가 쓴 초안
 - 11-12 S.Lee: 큰 수익률 숫자 위 라벨 'Sigma Engine' + LIVE → 'Cumulative return' (SiON 을 숨긴 동안 LIVE 태그 없음)
 - 11-12 S.Lee: 기록의 이번 주 · 최대 낙폭 · KODEX 200 · 승률 카드는 그림 없이 숫자만 (`#sp-week` · `#sp-dd` · `#sp-kospi` · `#sp-win` 숨김)
 - 11-12 S.Lee: 실시간 갱신 빠르게 — 대시보드 실시간 잔고 · 상태 30초 → 10초, KOSPI · 수급 차트 1분 → 20초. 데스크톱 잔고 업로드 1분 → 30초 (`params.live.snapshot_sec`, 30초 밑으로는 안 내림: 키움 유량 · 대회 이용 제한). KOSPI · 수급 Supabase 수집 1분 → 20초 (`supabase/realtime.sql` 의 `market_tick`, SQL Editor 에서 한 번 실행해야 함)
+- 11-13 S.Lee: PC 실시간 판단 행도 누르면 펼침 (`inlineRow` 가 폰 · PC 모두) — 잘린 판단 근거가 전부 보이고, 그 아래 근거 칸에 오늘 수급 · 매수 측 · 매도 측 근거. 결정 문장은 근거 칸과 겹쳐 PC 펼침에선 숨김. Enter · Space 로도 펼침
 - 수정 후 데스크톱(1280)·모바일(400) 둘 다 가로 스크롤 없는지 확인
 
 ## 보안 (반드시 지킬 것)
