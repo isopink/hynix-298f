@@ -81,48 +81,13 @@
     ]
   },
   "intraday": {
-    "time": "14:03",
+    "time": "14:04",
     "pool": 416,
     "analyzed_new": 4,
     "passed": 14,
     "kept_prep": false
   },
   "candidates": [
-    {
-      "code": "035720",
-      "name": "카카오",
-      "close": 31850,
-      "ret5": -0.017,
-      "ret20": 0.0324,
-      "rsi14": 52.7,
-      "vol20": 0.441,
-      "foreign_net": -12870138600,
-      "inst_net": -12774455600,
-      "score": 0.655,
-      "news": [
-        {
-          "date": "11-13",
-          "title": "카카오워크 해킹으로 개인정보 유출...이름·연락처 등 피해 확산 우려",
-          "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "[카드] 카카오뱅크 'mini 내맘대로 저금' 누적 30만좌 돌파",
-          "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "카카오 업무용 메신저 해킹…이름·연락처 유출",
-          "risk": false
-        }
-      ],
-      "price": 32050,
-      "chg": 0.011,
-      "activity": 1.0,
-      "foreign_today": 0,
-      "inst_today": 1602500000,
-      "exchange": "KOSPI"
-    },
     {
       "code": "028050",
       "name": "삼성E&A",
@@ -146,6 +111,41 @@
       "activity": 1.05,
       "foreign_today": 0,
       "inst_today": 4459000000,
+      "exchange": "KOSPI"
+    },
+    {
+      "code": "035720",
+      "name": "카카오",
+      "close": 31850,
+      "ret5": -0.017,
+      "ret20": 0.0324,
+      "rsi14": 52.7,
+      "vol20": 0.441,
+      "foreign_net": -12870138600,
+      "inst_net": -12774455600,
+      "score": 0.638,
+      "news": [
+        {
+          "date": "11-13",
+          "title": "카카오워크 해킹당했다…일부 이용자 개인정보 유출",
+          "risk": false
+        },
+        {
+          "date": "11-13",
+          "title": "카카오워크 해킹으로 개인정보 유출...이름·연락처 등 피해 확산 우려",
+          "risk": false
+        },
+        {
+          "date": "11-13",
+          "title": "카카오 업무용 메신저 해킹…이름·연락처 유출",
+          "risk": false
+        }
+      ],
+      "price": 32050,
+      "chg": 0.011,
+      "activity": 0.99,
+      "foreign_today": 0,
+      "inst_today": 1602500000,
       "exchange": "KOSPI"
     },
     {
@@ -320,11 +320,11 @@
           "risk": false
         }
       ],
-      "price": 38600,
-      "chg": 0.0239,
+      "price": 38550,
+      "chg": 0.0225,
       "activity": 1.09,
-      "foreign_today": 2045800000,
-      "inst_today": 1891400000,
+      "foreign_today": 2043150000,
+      "inst_today": 1888950000,
       "exchange": "KOSDAQ"
     },
     {
@@ -337,7 +337,7 @@
       "vol20": 1.403,
       "foreign_net": -3279761625,
       "inst_net": 10286837400,
-      "score": 0.914,
+      "score": 0.931,
       "news": [
         {
           "date": "11-13",
@@ -357,7 +357,7 @@
       ],
       "price": 69100,
       "chg": 0.0073,
-      "activity": 2.18,
+      "activity": 2.17,
       "foreign_today": 691000000,
       "inst_today": 1589300000,
       "exchange": "KOSPI"
@@ -372,7 +372,7 @@
       "vol20": 1.453,
       "foreign_net": -6514931100,
       "inst_net": 8639681450,
-      "score": 0.793,
+      "score": 0.81,
       "news": [
         {
           "date": "11-13",
@@ -390,11 +390,11 @@
           "risk": false
         }
       ],
-      "price": 90100,
-      "chg": 0.0688,
-      "activity": 1.0,
+      "price": 90500,
+      "chg": 0.0735,
+      "activity": 1.01,
       "foreign_today": 0,
-      "inst_today": 720800000,
+      "inst_today": 724000000,
       "exchange": "KOSDAQ"
     },
     {
@@ -423,7 +423,7 @@
       "vol20": 2.006,
       "foreign_net": -513491960,
       "inst_net": -109460540,
-      "score": 0.621,
+      "score": 0.603,
       "news": [
         {
           "date": "11-13",
@@ -441,10 +441,10 @@
           "risk": false
         }
       ],
-      "price": 11650,
-      "chg": -0.0582,
-      "activity": 1.77,
-      "foreign_today": 337850000,
+      "price": 11600,
+      "chg": -0.0622,
+      "activity": 1.76,
+      "foreign_today": 336400000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
