@@ -81,8 +81,8 @@
     ]
   },
   "intraday": {
-    "time": "11:45",
-    "pool": 408,
+    "time": "12:00",
+    "pool": 407,
     "analyzed_new": 30,
     "passed": 16,
     "kept_prep": false
@@ -102,25 +102,25 @@
       "news": [
         {
           "date": "11-13",
+          "title": "GS건설 자이, 대한민국 조경·색채대상 4개 본상",
+          "risk": false
+        },
+        {
+          "date": "11-13",
+          "title": "GS건설 자이, '대한민국 조경대상'·'색채대상'서 연속 수상",
+          "risk": false
+        },
+        {
+          "date": "11-13",
           "title": "[산업 HOT 뉴스] \"증축·철거 없이 새 아파트로\"…GS건설, 신속형 리모델...",
-          "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "GS건설, 에너지머티리얼즈 채무 1126억원 대위변제",
-          "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "GS건설 자이, 대한민국 조경·색채대상서 4개 작품 수상",
           "risk": false
         }
       ],
-      "price": 31850,
-      "chg": 0.0546,
-      "activity": 1.92,
-      "foreign_today": 3503500000,
-      "inst_today": 955500000,
+      "price": 31600,
+      "chg": 0.0464,
+      "activity": 1.82,
+      "foreign_today": 3476000000,
+      "inst_today": 948000000,
       "exchange": "KOSPI"
     },
     {
@@ -151,11 +151,11 @@
           "risk": false
         }
       ],
-      "price": 478000,
-      "chg": 0.0106,
-      "activity": 1.61,
+      "price": 476500,
+      "chg": 0.0074,
+      "activity": 1.53,
       "foreign_today": 0,
-      "inst_today": 3824000000,
+      "inst_today": 3812000000,
       "exchange": "KOSPI"
     },
     {
@@ -176,11 +176,11 @@
           "risk": false
         }
       ],
-      "price": 69000,
-      "chg": 0.0455,
-      "activity": 1.29,
-      "foreign_today": 3036000000,
-      "inst_today": 1725000000,
+      "price": 69100,
+      "chg": 0.047,
+      "activity": 1.23,
+      "foreign_today": 3040400000,
+      "inst_today": 1727500000,
       "exchange": "KOSPI"
     },
     {
@@ -213,25 +213,25 @@
       "news": [
         {
           "date": "11-13",
-          "title": "카카오 기업용 메신저 ‘카카오워크’ 해킹…메일 내용·첨부파일도 유...",
+          "title": "카카오 기업용 메신저도 뚫렸다…업무 메일·첨부파일 유출",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "업무용 메신저 '카카오워크' 해킹···이메일·첨부파일까지 유출",
+          "title": "카카오워크 해킹 공격에 개인정보 유출…이름·연락처 등 포함",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "업무메신저 '카카오워크' 해킹에 개인정보 유출…이름·연락처 등 노출",
+          "title": "카카오내비, 홈·주행 화면 전면 개편···정체 원인부터 차로 변경 시...",
           "risk": false
         }
       ],
-      "price": 32400,
-      "chg": 0.0221,
-      "activity": 1.12,
+      "price": 32150,
+      "chg": 0.0142,
+      "activity": 1.22,
       "foreign_today": 0,
-      "inst_today": 648000000,
+      "inst_today": 643000000,
       "exchange": "KOSPI"
     },
     {
@@ -376,6 +376,11 @@
       "news": [
         {
           "date": "11-13",
+          "title": "[특징주] 삼성전자·루닛, 외국인·기관 동반 순매수 상위권…한국전력...",
+          "risk": false
+        },
+        {
+          "date": "11-13",
           "title": "[특징주] 루닛, 외형 성장·비용 효율화 동시 달성에 이틀 연속 하락 딛...",
           "risk": false
         },
@@ -383,18 +388,13 @@
           "date": "11-13",
           "title": "루닛 주가, 급등세... 이유는?",
           "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "루닛 주가, 11월 13일 장중 15,920원 16.03% 상승",
-          "risk": false
         }
       ],
-      "price": 15480,
-      "chg": 0.1283,
-      "activity": 2.8,
-      "foreign_today": 3219840000,
-      "inst_today": 2894760000,
+      "price": 15380,
+      "chg": 0.121,
+      "activity": 2.59,
+      "foreign_today": 3199040000,
+      "inst_today": 2876060000,
       "exchange": "KOSDAQ"
     },
     {
@@ -425,11 +425,11 @@
           "risk": false
         }
       ],
-      "price": 39700,
-      "chg": 0.0531,
-      "activity": 1.57,
-      "foreign_today": 1627700000,
-      "inst_today": 1111600000,
+      "price": 39550,
+      "chg": 0.0491,
+      "activity": 1.5,
+      "foreign_today": 1621550000,
+      "inst_today": 1107400000,
       "exchange": "KOSDAQ"
     },
     {
@@ -442,7 +442,7 @@
       "vol20": 1.403,
       "foreign_net": -3279761625,
       "inst_net": 10286837400,
-      "score": 0.829,
+      "score": 0.816,
       "news": [
         {
           "date": "11-13",
@@ -460,11 +460,11 @@
           "risk": false
         }
       ],
-      "price": 72500,
-      "chg": 0.0569,
-      "activity": 3.43,
+      "price": 71500,
+      "chg": 0.0423,
+      "activity": 3.18,
       "foreign_today": 0,
-      "inst_today": 1667500000,
+      "inst_today": 1644500000,
       "exchange": "KOSPI"
     },
     {
@@ -511,11 +511,11 @@
           "risk": false
         }
       ],
-      "price": 34100,
-      "chg": 0.0877,
-      "activity": 7.49,
+      "price": 33650,
+      "chg": 0.0734,
+      "activity": 7.1,
       "foreign_today": 0,
-      "inst_today": 238700000,
+      "inst_today": 235550000,
       "exchange": "KOSDAQ"
     },
     {
