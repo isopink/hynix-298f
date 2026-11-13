@@ -81,7 +81,7 @@
     ]
   },
   "intraday": {
-    "time": "13:34",
+    "time": "13:35",
     "pool": 416,
     "analyzed_new": 4,
     "passed": 14,
@@ -106,11 +106,11 @@
           "risk": false
         }
       ],
-      "price": 69000,
-      "chg": 0.0455,
+      "price": 68900,
+      "chg": 0.0439,
       "activity": 1.11,
       "foreign_today": 0,
-      "inst_today": 4485000000,
+      "inst_today": 4478500000,
       "exchange": "KOSPI"
     },
     {
@@ -132,12 +132,12 @@
         },
         {
           "date": "11-13",
-          "title": "11월 13일 카카오뱅크 AI 이모지 퀴즈, 낮 12시 정답 ‘감상문’",
+          "title": "카카오워크 보안 뚫렸다…이름·연락처에 업무용 이메일까지 유출",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "카카오워크 보안 뚫렸다…이름·연락처에 업무용 이메일까지 유출",
+          "title": "11월 13일 카카오뱅크 AI 이모지 퀴즈, 낮 12시 정답 ‘감상문’",
           "risk": false
         }
       ],
@@ -274,12 +274,12 @@
       "news": [
         {
           "date": "11-13",
-          "title": "동국제약 센텔리안24, 컬리뷰티페스타 참가...맞춤형 제품 추천",
+          "title": "[동국제약=종합] 감기약 선택법 안내 ··· 카리토포텐 새 광고 론칭",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "[동국제약=종합] 감기약 선택법 안내 ··· 카리토포텐 새 광고 론칭",
+          "title": "동국제약 센텔리안24, 컬리뷰티페스타 참가...맞춤형 제품 추천",
           "risk": false
         },
         {
@@ -320,11 +320,11 @@
           "risk": false
         }
       ],
-      "price": 38700,
-      "chg": 0.0265,
+      "price": 38650,
+      "chg": 0.0252,
       "activity": 1.15,
-      "foreign_today": 2051100000,
-      "inst_today": 1896300000,
+      "foreign_today": 2048450000,
+      "inst_today": 1893850000,
       "exchange": "KOSDAQ"
     },
     {
@@ -390,11 +390,11 @@
           "risk": false
         }
       ],
-      "price": 90600,
-      "chg": 0.0747,
+      "price": 90800,
+      "chg": 0.0771,
       "activity": 1.06,
       "foreign_today": 0,
-      "inst_today": 724800000,
+      "inst_today": 726400000,
       "exchange": "KOSDAQ"
     },
     {
@@ -441,10 +441,10 @@
           "risk": false
         }
       ],
-      "price": 11620,
-      "chg": -0.0606,
+      "price": 11640,
+      "chg": -0.059,
       "activity": 1.92,
-      "foreign_today": 336980000,
+      "foreign_today": 337560000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
