@@ -81,7 +81,7 @@
     ]
   },
   "intraday": {
-    "time": "13:48",
+    "time": "13:49",
     "pool": 416,
     "analyzed_new": 4,
     "passed": 15,
@@ -176,11 +176,11 @@
           "risk": false
         }
       ],
-      "price": 32050,
-      "chg": 0.011,
-      "activity": 1.02,
+      "price": 32000,
+      "chg": 0.0095,
+      "activity": 1.01,
       "foreign_today": 0,
-      "inst_today": 1602500000,
+      "inst_today": 1600000000,
       "exchange": "KOSPI"
     },
     {
@@ -357,7 +357,7 @@
       ],
       "price": 38450,
       "chg": 0.0199,
-      "activity": 1.12,
+      "activity": 1.11,
       "foreign_today": 2037850000,
       "inst_today": 1884050000,
       "exchange": "KOSDAQ"
@@ -390,11 +390,11 @@
           "risk": false
         }
       ],
-      "price": 69200,
-      "chg": 0.0087,
-      "activity": 2.26,
-      "foreign_today": 692000000,
-      "inst_today": 1591600000,
+      "price": 69000,
+      "chg": 0.0058,
+      "activity": 2.25,
+      "foreign_today": 690000000,
+      "inst_today": 1587000000,
       "exchange": "KOSPI"
     },
     {
@@ -425,11 +425,11 @@
           "risk": false
         }
       ],
-      "price": 90700,
-      "chg": 0.0759,
+      "price": 90500,
+      "chg": 0.0735,
       "activity": 1.04,
       "foreign_today": 0,
-      "inst_today": 725600000,
+      "inst_today": 724000000,
       "exchange": "KOSDAQ"
     },
     {
