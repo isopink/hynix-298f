@@ -768,9 +768,10 @@ button:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:foc
 [data-theme=volt] .top h1 .st-top { display: flex; justify-content: center; }
 [data-theme=volt] .top .chips { justify-content: center; }
 @media (min-width: 641px) {   /* 11-12 S.Lee: PC 는 상태 점 · KOSPI 칩을 차트 바로 위 한 줄로 (구분선 없음) */
-  [data-theme=volt] .hero-chart > header.top { flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px 22px; padding: 0; margin: 0; border: 0; }
-  [data-theme=volt] .hero-chart > header.top .brand > div { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 22px; }
+  [data-theme=volt] .hero-chart > header.top { flex-direction: row; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 10px 22px; padding: 0; margin: 0; border: 0; }
+  [data-theme=volt] .hero-chart > header.top .brand > div { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 10px 22px; }
   [data-theme=volt] .hero-chart > header.top .sched { margin-top: 0; }
+  [data-theme=volt] .hero-chart > header.top .brand { margin: 0; text-align: right; }
   [data-theme=volt] .hero-chart:has(> header.top) { padding-top: 0; }
 }
 /* ---- 대시보드: 깊은 우주 + 전술 격자 ---- */
