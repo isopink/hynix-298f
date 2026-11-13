@@ -81,7 +81,7 @@
     ]
   },
   "intraday": {
-    "time": "13:42",
+    "time": "13:43",
     "pool": 416,
     "analyzed_new": 4,
     "passed": 15,
@@ -107,12 +107,12 @@
         },
         {
           "date": "11-13",
-          "title": "GS건설, 차별화된 공간 디자인 경쟁력 입증",
+          "title": "GS건설, '2026 대한민국 조경대상' 영예",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "[건설업계 동향] GS건설ㆍ대우건설 (11.13)",
+          "title": "GS건설, 차별화된 공간 디자인 경쟁력 입증",
           "risk": false
         }
       ],
@@ -141,11 +141,11 @@
           "risk": false
         }
       ],
-      "price": 68500,
-      "chg": 0.0379,
+      "price": 68700,
+      "chg": 0.0409,
       "activity": 1.09,
       "foreign_today": 0,
-      "inst_today": 4452500000,
+      "inst_today": 4465500000,
       "exchange": "KOSPI"
     },
     {
@@ -167,20 +167,15 @@
         },
         {
           "date": "11-13",
-          "title": "카카오워크 보안 뚫렸다…이름·연락처에 업무용 이메일까지 유출",
-          "risk": false
-        },
-        {
-          "date": "11-13",
           "title": "11월 13일 카카오뱅크 AI 이모지 퀴즈, 낮 12시 정답 ‘감상문’",
           "risk": false
         }
       ],
-      "price": 32100,
-      "chg": 0.0126,
-      "activity": 1.03,
+      "price": 32050,
+      "chg": 0.011,
+      "activity": 1.02,
       "foreign_today": 0,
-      "inst_today": 1605000000,
+      "inst_today": 1602500000,
       "exchange": "KOSPI"
     },
     {
@@ -355,11 +350,11 @@
           "risk": false
         }
       ],
-      "price": 38450,
-      "chg": 0.0199,
+      "price": 38550,
+      "chg": 0.0225,
       "activity": 1.13,
-      "foreign_today": 2037850000,
-      "inst_today": 1884050000,
+      "foreign_today": 2043150000,
+      "inst_today": 1888950000,
       "exchange": "KOSDAQ"
     },
     {
@@ -390,11 +385,11 @@
           "risk": false
         }
       ],
-      "price": 69800,
-      "chg": 0.0175,
-      "activity": 2.26,
-      "foreign_today": 698000000,
-      "inst_today": 1605400000,
+      "price": 69400,
+      "chg": 0.0117,
+      "activity": 2.25,
+      "foreign_today": 694000000,
+      "inst_today": 1596200000,
       "exchange": "KOSPI"
     },
     {
@@ -425,11 +420,11 @@
           "risk": false
         }
       ],
-      "price": 90700,
-      "chg": 0.0759,
+      "price": 90900,
+      "chg": 0.0783,
       "activity": 1.05,
       "foreign_today": 0,
-      "inst_today": 725600000,
+      "inst_today": 727200000,
       "exchange": "KOSDAQ"
     },
     {
@@ -476,10 +471,10 @@
           "risk": false
         }
       ],
-      "price": 11610,
-      "chg": -0.0614,
+      "price": 11630,
+      "chg": -0.0598,
       "activity": 1.87,
-      "foreign_today": 336690000,
+      "foreign_today": 337270000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
