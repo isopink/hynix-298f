@@ -81,7 +81,7 @@
     ]
   },
   "intraday": {
-    "time": "14:21",
+    "time": "14:22",
     "pool": 422,
     "analyzed_new": 4,
     "passed": 14,
@@ -98,7 +98,7 @@
       "vol20": 0.884,
       "foreign_net": -81770056900,
       "inst_net": 59675563500,
-      "score": 0.654,
+      "score": 0.635,
       "news": [
         {
           "date": "11-12",
@@ -106,11 +106,11 @@
           "risk": false
         }
       ],
-      "price": 68500,
-      "chg": 0.0379,
-      "activity": 1.02,
+      "price": 68300,
+      "chg": 0.0348,
+      "activity": 1.01,
       "foreign_today": 0,
-      "inst_today": 4247000000,
+      "inst_today": 4234600000,
       "exchange": "KOSPI"
     },
     {
@@ -141,11 +141,11 @@
           "risk": false
         }
       ],
-      "price": 32000,
-      "chg": 0.0095,
+      "price": 31950,
+      "chg": 0.0079,
       "activity": 0.97,
       "foreign_today": 0,
-      "inst_today": 1728000000,
+      "inst_today": 1725300000,
       "exchange": "KOSPI"
     },
     {
@@ -159,7 +159,13 @@
       "foreign_net": -29095907075,
       "inst_net": 37693300675,
       "score": 0.615,
-      "news": [],
+      "news": [
+        {
+          "date": "11-13",
+          "title": "\"자본비율 획기적 개선 通(통)했다\"… 우리금융지주, 정진완 우리은행장...",
+          "risk": false
+        }
+      ],
       "foreign_today": 539750000,
       "inst_today": 3968750000,
       "exchange": "KOSPI"
@@ -178,17 +184,17 @@
       "news": [
         {
           "date": "11-13",
+          "title": "SK바이오팜 세노바메이트, 일본 판매 개시…동북아 3국 상업화",
+          "risk": false
+        },
+        {
+          "date": "11-13",
           "title": "[포토뉴스] SK바이오팜, '세노바메이트' 중국 이어 日 출시",
           "risk": false
         },
         {
           "date": "11-13",
           "title": "SK바이오팜, '세노바메이트' 일본 출시…\"한·중·일 시장 진출 완료\"",
-          "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "SK바이오팜, 뇌전증 신약 '세노바메이트' 日 출시…한·중·일 진출",
           "risk": false
         }
       ],
@@ -284,7 +290,7 @@
         },
         {
           "date": "11-13",
-          "title": "동국제약 센텔리안24, 컬리뷰티페스타 참가...맞춤형 제품 추천",
+          "title": "[동국제약=종합] 감기약 선택법 안내 ··· 카리토포텐 새 광고 론칭",
           "risk": false
         }
       ],
@@ -322,7 +328,7 @@
       ],
       "price": 38350,
       "chg": 0.0172,
-      "activity": 1.06,
+      "activity": 1.05,
       "foreign_today": 1879150000,
       "inst_today": 2147600000,
       "exchange": "KOSDAQ"
@@ -337,7 +343,7 @@
       "vol20": 1.453,
       "foreign_net": -6514931100,
       "inst_net": 8639681450,
-      "score": 0.904,
+      "score": 0.923,
       "news": [
         {
           "date": "11-13",
@@ -355,11 +361,11 @@
           "risk": false
         }
       ],
-      "price": 90600,
-      "chg": 0.0747,
+      "price": 90400,
+      "chg": 0.0724,
       "activity": 1.01,
       "foreign_today": 0,
-      "inst_today": 996600000,
+      "inst_today": 994400000,
       "exchange": "KOSDAQ"
     },
     {
@@ -428,10 +434,10 @@
           "risk": false
         }
       ],
-      "price": 11330,
-      "chg": -0.0841,
+      "price": 11400,
+      "chg": -0.0784,
       "activity": 1.67,
-      "foreign_today": 407880000,
+      "foreign_today": 410400000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
