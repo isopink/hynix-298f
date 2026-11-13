@@ -81,7 +81,7 @@
     ]
   },
   "intraday": {
-    "time": "13:37",
+    "time": "13:38",
     "pool": 416,
     "analyzed_new": 4,
     "passed": 15,
@@ -116,11 +116,11 @@
           "risk": false
         }
       ],
-      "price": 31750,
-      "chg": 0.0513,
+      "price": 31700,
+      "chg": 0.0497,
       "activity": 1.41,
-      "foreign_today": 2667000000,
-      "inst_today": 2794000000,
+      "foreign_today": 2662800000,
+      "inst_today": 2789600000,
       "exchange": "KOSPI"
     },
     {
@@ -141,11 +141,11 @@
           "risk": false
         }
       ],
-      "price": 69000,
-      "chg": 0.0455,
+      "price": 68900,
+      "chg": 0.0439,
       "activity": 1.1,
       "foreign_today": 0,
-      "inst_today": 4485000000,
+      "inst_today": 4478500000,
       "exchange": "KOSPI"
     },
     {
@@ -158,7 +158,7 @@
       "vol20": 0.441,
       "foreign_net": -12870138600,
       "inst_net": -12774455600,
-      "score": 0.578,
+      "score": 0.562,
       "news": [
         {
           "date": "11-13",
@@ -176,11 +176,11 @@
           "risk": false
         }
       ],
-      "price": 32100,
-      "chg": 0.0126,
+      "price": 32050,
+      "chg": 0.011,
       "activity": 1.03,
       "foreign_today": 0,
-      "inst_today": 1605000000,
+      "inst_today": 1602500000,
       "exchange": "KOSPI"
     },
     {
@@ -337,7 +337,7 @@
       "vol20": 1.077,
       "foreign_net": -21815654925,
       "inst_net": 16843266050,
-      "score": 0.938,
+      "score": 0.953,
       "news": [
         {
           "date": "11-13",
@@ -407,7 +407,7 @@
       "vol20": 1.453,
       "foreign_net": -6514931100,
       "inst_net": 8639681450,
-      "score": 0.781,
+      "score": 0.797,
       "news": [
         {
           "date": "11-13",
@@ -425,11 +425,11 @@
           "risk": false
         }
       ],
-      "price": 91300,
-      "chg": 0.083,
+      "price": 91500,
+      "chg": 0.0854,
       "activity": 1.07,
       "foreign_today": 0,
-      "inst_today": 730400000,
+      "inst_today": 732000000,
       "exchange": "KOSDAQ"
     },
     {
@@ -458,7 +458,7 @@
       "vol20": 2.006,
       "foreign_net": -513491960,
       "inst_net": -109460540,
-      "score": 0.578,
+      "score": 0.562,
       "news": [
         {
           "date": "11-13",
@@ -476,10 +476,10 @@
           "risk": false
         }
       ],
-      "price": 11630,
-      "chg": -0.0598,
-      "activity": 1.91,
-      "foreign_today": 337270000,
+      "price": 11620,
+      "chg": -0.0606,
+      "activity": 1.9,
+      "foreign_today": 336980000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
