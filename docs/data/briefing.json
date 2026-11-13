@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "10:30",
-    "pool": 375,
+    "time": "10:45",
+    "pool": 376,
     "analyzed_new": 30,
-    "passed": 11,
+    "passed": 12,
     "kept_prep": false
   },
   "candidates": [
@@ -102,25 +102,25 @@
       "news": [
         {
           "date": "11-13",
-          "title": "GS건설 자이, 대한민국 조경·색채대상서 4개 작품 수상",
+          "title": "자이, 조경·색채 분야 권위상 휩쓸어…GS건설 \"공간디자인 힘 입증\"",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "GS건설, 자회사 에너지머티리얼즈 채무·이자 대위변제",
+          "title": "GS건설, 대한민국 조경·색채대상서 4개 작품 수상",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "GS건설, 철거·증축 없는 신속형 아파트 리모델링 사업 추진",
+          "title": "GS건설 자이, '2026 대한민국 조경·색채대상' 수상",
           "risk": false
         }
       ],
-      "price": 32100,
-      "chg": 0.0629,
-      "activity": 2.64,
-      "foreign_today": 1605000000,
-      "inst_today": 738300000,
+      "price": 32150,
+      "chg": 0.0646,
+      "activity": 2.57,
+      "foreign_today": 1607500000,
+      "inst_today": 739450000,
       "exchange": "KOSPI"
     },
     {
@@ -133,7 +133,7 @@
       "vol20": 0.648,
       "foreign_net": -32976039750,
       "inst_net": 74711352000,
-      "score": 0.795,
+      "score": 0.814,
       "news": [
         {
           "date": "11-13",
@@ -151,11 +151,11 @@
           "risk": false
         }
       ],
-      "price": 486000,
-      "chg": 0.0275,
-      "activity": 2.34,
+      "price": 484000,
+      "chg": 0.0233,
+      "activity": 2.1,
       "foreign_today": 0,
-      "inst_today": 2430000000,
+      "inst_today": 2420000000,
       "exchange": "KOSPI"
     },
     {
@@ -168,11 +168,11 @@
       "vol20": 0.327,
       "foreign_net": -29095907075,
       "inst_net": 37693300675,
-      "score": 0.487,
+      "score": 0.419,
       "news": [],
       "price": 32650,
       "chg": 0.0349,
-      "activity": 1.18,
+      "activity": 1.08,
       "foreign_today": 522400000,
       "inst_today": 587700000,
       "exchange": "KOSPI"
@@ -187,7 +187,7 @@
       "vol20": 0.884,
       "foreign_net": -81770056900,
       "inst_net": 59675563500,
-      "score": 0.462,
+      "score": 0.419,
       "news": [
         {
           "date": "11-12",
@@ -197,7 +197,7 @@
       ],
       "price": 68600,
       "chg": 0.0394,
-      "activity": 1.59,
+      "activity": 1.48,
       "foreign_today": 0,
       "inst_today": 1029000000,
       "exchange": "KOSPI"
@@ -212,29 +212,29 @@
       "vol20": 0.441,
       "foreign_net": -12870138600,
       "inst_net": -12774455600,
-      "score": 0.359,
+      "score": 0.395,
       "news": [
         {
           "date": "11-13",
-          "title": "카카오 기업용 메신저도 당했다…카카오워크서 이메일·첨부파일 등 유...",
+          "title": "카카오워크도 뚫렸다…메신저 대화·첨부파일까지 유출",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "카카오뱅크 청소년 전용 'mini 내맘대로 저금' 30만좌 돌파",
+          "title": "메일 본문·첨부파일 원본까지 노출…카카오 기업용 메신저서 정보 유출...",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "[게시판] 카카오뱅크 \"청소년 전용 '미니 내맘대로 저금' 30만좌 넘어\"",
+          "title": "카카오워크 해킹… '종단간 암호화' 적용했지만 업무정보도 유출",
           "risk": false
         }
       ],
-      "price": 32250,
-      "chg": 0.0174,
-      "activity": 1.32,
+      "price": 32400,
+      "chg": 0.0221,
+      "activity": 1.33,
       "foreign_today": 0,
-      "inst_today": 354750000,
+      "inst_today": 356400000,
       "exchange": "KOSPI"
     },
     {
@@ -247,7 +247,7 @@
       "vol20": 0.469,
       "foreign_net": 994866350,
       "inst_net": 3654508325,
-      "score": 0.308,
+      "score": 0.302,
       "news": [
         {
           "date": "11-13",
@@ -256,12 +256,12 @@
         },
         {
           "date": "11-13",
-          "title": "동국제약 센텔리안24, 컬리뷰티페스타 참가",
+          "title": "동국제약 센텔리안24, 컬리뷰티페스타 참가…체험 행사 운영",
           "risk": false
         },
         {
           "date": "11-13",
-          "title": "동국제약 센텔리안24, ‘컬리뷰티페스타 2026’ 참가…DDP서 체험 부스 ...",
+          "title": "[N-제약Bio] 동국제약 센텔리안24, ‘컬리뷰티페스타 2026’ 참가 外",
           "risk": false
         }
       ],
@@ -279,7 +279,7 @@
       "vol20": 1.403,
       "foreign_net": -3279761625,
       "inst_net": 10286837400,
-      "score": 0.872,
+      "score": 0.884,
       "news": [
         {
           "date": "11-13",
@@ -297,11 +297,11 @@
           "risk": false
         }
       ],
-      "price": 71300,
-      "chg": 0.0394,
-      "activity": 5.36,
+      "price": 71700,
+      "chg": 0.0452,
+      "activity": 4.8,
       "foreign_today": 0,
-      "inst_today": 1568600000,
+      "inst_today": 1577400000,
       "exchange": "KOSPI"
     },
     {
@@ -314,7 +314,7 @@
       "vol20": 1.077,
       "foreign_net": -21815654925,
       "inst_net": 16843266050,
-      "score": 0.821,
+      "score": 0.837,
       "news": [
         {
           "date": "11-13",
@@ -332,11 +332,30 @@
           "risk": false
         }
       ],
-      "price": 40700,
-      "chg": 0.0796,
-      "activity": 2.47,
-      "foreign_today": 691900000,
-      "inst_today": 732600000,
+      "price": 40650,
+      "chg": 0.0782,
+      "activity": 2.18,
+      "foreign_today": 691050000,
+      "inst_today": 731700000,
+      "exchange": "KOSDAQ"
+    },
+    {
+      "code": "468530",
+      "name": "프로티나",
+      "close": 58000,
+      "ret5": 0.0902,
+      "ret20": 0.7059,
+      "rsi14": 61.9,
+      "vol20": 1.202,
+      "foreign_net": -219934325,
+      "inst_net": 6802284425,
+      "score": 0.558,
+      "news": [],
+      "price": 60300,
+      "chg": 0.0451,
+      "activity": 1.71,
+      "foreign_today": 0,
+      "inst_today": 60300000,
       "exchange": "KOSDAQ"
     },
     {
@@ -349,7 +368,7 @@
       "vol20": 1.614,
       "foreign_net": -1004722235,
       "inst_net": 22570010,
-      "score": 0.436,
+      "score": 0.535,
       "news": [
         {
           "date": "11-12",
@@ -367,7 +386,10 @@
           "risk": false
         }
       ],
-      "foreign_today": 333350000,
+      "price": 5830,
+      "chg": 0.0374,
+      "activity": 1.14,
+      "foreign_today": 343970000,
       "inst_today": 0,
       "exchange": "KOSDAQ"
     },
