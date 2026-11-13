@@ -81,10 +81,10 @@
     ]
   },
   "intraday": {
-    "time": "14:45",
-    "pool": 422,
-    "analyzed_new": 4,
-    "passed": 14,
+    "time": "15:00",
+    "pool": 421,
+    "analyzed_new": 3,
+    "passed": 13,
     "kept_prep": false
   },
   "candidates": [
@@ -98,7 +98,7 @@
       "vol20": 0.327,
       "foreign_net": -29095907075,
       "inst_net": 37693300675,
-      "score": 0.66,
+      "score": 0.698,
       "news": [],
       "foreign_today": 539750000,
       "inst_today": 3968750000,
@@ -114,7 +114,7 @@
       "vol20": 0.884,
       "foreign_net": -81770056900,
       "inst_net": 59675563500,
-      "score": 0.66,
+      "score": 0.651,
       "news": [
         {
           "date": "11-12",
@@ -124,71 +124,9 @@
       ],
       "price": 68700,
       "chg": 0.0409,
-      "activity": 0.99,
+      "activity": 0.97,
       "foreign_today": 0,
       "inst_today": 4259400000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "035720",
-      "name": "카카오",
-      "close": 31850,
-      "ret5": -0.017,
-      "ret20": 0.0324,
-      "rsi14": 52.7,
-      "vol20": 0.441,
-      "foreign_net": -12870138600,
-      "inst_net": -12774455600,
-      "score": 0.66,
-      "news": [
-        {
-          "date": "11-13",
-          "title": "카카오워크 외부 해킹으로 개인정보 유출...이름·연락처·이메일 등 피...",
-          "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "업무용 이메일·첨부파일까지… 카카오워크 해킹에 5천명 정보 유출",
-          "risk": false
-        }
-      ],
-      "price": 31950,
-      "chg": 0.0079,
-      "activity": 0.95,
-      "foreign_today": 0,
-      "inst_today": 1725300000,
-      "exchange": "KOSPI"
-    },
-    {
-      "code": "326030",
-      "name": "SK바이오팜",
-      "close": 88000,
-      "ret5": -0.0351,
-      "ret20": 0.2791,
-      "rsi14": 66.6,
-      "vol20": 0.538,
-      "foreign_net": -14472598100,
-      "inst_net": 18845759500,
-      "score": 0.58,
-      "news": [
-        {
-          "date": "11-13",
-          "title": "SK바이오팜 세노바메이트, 일본 판매 시작…한·중·일 시장 진출 완료",
-          "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "SK바이오팜 세노바메이트, 일본 판매 개시…동북아 3국 상업화",
-          "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "[포토뉴스] SK바이오팜, '세노바메이트' 중국 이어 日 출시",
-          "risk": false
-        }
-      ],
-      "foreign_today": 0,
-      "inst_today": 880000000,
       "exchange": "KOSPI"
     },
     {
@@ -201,7 +139,7 @@
       "vol20": 0.6,
       "foreign_net": 1608696075,
       "inst_net": 2739770850,
-      "score": 0.56,
+      "score": 0.581,
       "news": [
         {
           "date": "11-13",
@@ -224,6 +162,38 @@
       "exchange": "KOSPI"
     },
     {
+      "code": "326030",
+      "name": "SK바이오팜",
+      "close": 88000,
+      "ret5": -0.0351,
+      "ret20": 0.2791,
+      "rsi14": 66.6,
+      "vol20": 0.538,
+      "foreign_net": -14472598100,
+      "inst_net": 18845759500,
+      "score": 0.581,
+      "news": [
+        {
+          "date": "11-13",
+          "title": "SK바이오팜 세노바메이트, 일본 판매 시작…한·중·일 시장 진출 완료",
+          "risk": false
+        },
+        {
+          "date": "11-13",
+          "title": "SK바이오팜 세노바메이트, 일본 판매 개시…동북아 3국 상업화",
+          "risk": false
+        },
+        {
+          "date": "11-13",
+          "title": "[포토뉴스] SK바이오팜, '세노바메이트' 중국 이어 日 출시",
+          "risk": false
+        }
+      ],
+      "foreign_today": 0,
+      "inst_today": 880000000,
+      "exchange": "KOSPI"
+    },
+    {
       "code": "267270",
       "name": "HD건설기계",
       "close": 91200,
@@ -233,7 +203,7 @@
       "vol20": 0.748,
       "foreign_net": -34774154200,
       "inst_net": 28642292800,
-      "score": 0.48,
+      "score": 0.512,
       "news": [
         {
           "date": "11-12",
@@ -265,7 +235,7 @@
       "vol20": 0.469,
       "foreign_net": 994866350,
       "inst_net": 3654508325,
-      "score": 0.26,
+      "score": 0.302,
       "news": [
         {
           "date": "11-13",
@@ -288,41 +258,6 @@
       "exchange": "KOSDAQ"
     },
     {
-      "code": "119850",
-      "name": "지엔씨에너지",
-      "close": 37800,
-      "ret5": 0.1943,
-      "ret20": -0.022,
-      "rsi14": 47.4,
-      "vol20": 1.077,
-      "foreign_net": -21815654925,
-      "inst_net": 16843266050,
-      "score": 1.0,
-      "news": [
-        {
-          "date": "11-13",
-          "title": "지엔씨에너지, AI 데이터센터 투자 확대 '핵심기업'…'연 매출 3.7배 규모...",
-          "risk": false
-        },
-        {
-          "date": "11-13",
-          "title": "NH투자증권 \"지엔씨에너지, 수주잔고 7264억…4분기 최대 실적 기대\"",
-          "risk": false
-        },
-        {
-          "date": "11-12",
-          "title": "지엔씨에너지, 데이터센터 '착공 전 발주' 짚은 리포트에도 3%대 약세…...",
-          "risk": false
-        }
-      ],
-      "price": 38050,
-      "chg": 0.0093,
-      "activity": 1.05,
-      "foreign_today": 1864450000,
-      "inst_today": 2130800000,
-      "exchange": "KOSDAQ"
-    },
-    {
       "code": "425420",
       "name": "티에프이",
       "close": 83400,
@@ -332,7 +267,7 @@
       "vol20": 1.453,
       "foreign_net": -6514931100,
       "inst_net": 8639681450,
-      "score": 0.96,
+      "score": 1.0,
       "news": [
         {
           "date": "11-13",
@@ -350,11 +285,11 @@
           "risk": false
         }
       ],
-      "price": 91000,
-      "chg": 0.0795,
-      "activity": 0.99,
+      "price": 90800,
+      "chg": 0.0771,
+      "activity": 0.98,
       "foreign_today": 0,
-      "inst_today": 1001000000,
+      "inst_today": 998800000,
       "exchange": "KOSDAQ"
     },
     {
@@ -367,7 +302,7 @@
       "vol20": 1.202,
       "foreign_net": -219934325,
       "inst_net": 6802284425,
-      "score": 0.74,
+      "score": 0.767,
       "news": [],
       "foreign_today": 0,
       "inst_today": 754000000,
@@ -383,7 +318,7 @@
       "vol20": 1.006,
       "foreign_net": -12666495850,
       "inst_net": 23546180550,
-      "score": 0.62,
+      "score": 0.674,
       "news": [
         {
           "date": "11-12",
@@ -405,7 +340,7 @@
       "vol20": 2.006,
       "foreign_net": -513491960,
       "inst_net": -109460540,
-      "score": 0.58,
+      "score": 0.581,
       "news": [
         {
           "date": "11-13",
@@ -423,11 +358,46 @@
           "risk": false
         }
       ],
-      "price": 11350,
-      "chg": -0.0825,
-      "activity": 1.57,
-      "foreign_today": 408600000,
+      "price": 11420,
+      "chg": -0.0768,
+      "activity": 1.53,
+      "foreign_today": 411120000,
       "inst_today": 0,
+      "exchange": "KOSDAQ"
+    },
+    {
+      "code": "263860",
+      "name": "지니언스",
+      "close": 33300,
+      "ret5": 0.4323,
+      "ret20": 0.5895,
+      "rsi14": 70.4,
+      "vol20": 1.681,
+      "foreign_net": -16169810550,
+      "inst_net": 4107522025,
+      "score": 0.558,
+      "news": [
+        {
+          "date": "11-13",
+          "title": "유안타증권 “지니언스, 금융권 보안투자 확대 수혜…3분기 영업익 253%...",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "지니언스 3분기 영업익 37억7774만원…전년 동기 대비 253% 증가",
+          "risk": false
+        },
+        {
+          "date": "11-12",
+          "title": "지니언스, 누적 영업익 3배 넘게 늘었다…NAC·EDR로 ‘폭풍성장’",
+          "risk": false
+        }
+      ],
+      "price": 34450,
+      "chg": 0.0989,
+      "activity": 4.47,
+      "foreign_today": 0,
+      "inst_today": 206700000,
       "exchange": "KOSDAQ"
     },
     {
