@@ -208,3 +208,4 @@ a6b0712	운영	기준값 조정(tune) · 주간 회고(review) 실행만 Claude 
 bc73c9d	전략	KODEX 200 매수 다시 허용 (index.enabled=true, buy_banned=false). 15:00 · 15:15 회차만 · 하루 1번 · 손절가 없음 · 순익 +2% 익절 · 최대 3거래일 · 급락일 예외 매수는 계속 끔
 6b8300b	운영	서브에이전트 effort 올림: position high→xhigh, regime Sonnet→Opus high, bear high→xhigh (14:00 회차 토큰 3.5만으로 여유)
 bb7c923	운영	sync 를 평일 08:00~16:00 에만 돌림 (주말 · 장 마감 뒤 쉼, params.sync.window). 대시보드 서버 점은 그 밖이면 회색
+c543c59	운영	sync 종료 시각 16:00 → 18:00 (16:00 조정 · 수 · 금 회고 · 보고서 push 까지 반영)
