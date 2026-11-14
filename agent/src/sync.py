@@ -7,7 +7,7 @@
     3) rebase 로 반영 (에이전트가 아직 못 올린 docs/data 커밋은 위에 다시 얹고 push)
     4) 장중이면 바뀐 코드에 맞춰 장중 감시(monitor)·잔고 루프(snapshot)를 재시작
   장중에 monitor·snapshot 이 꺼져 있으면 다시 켬 (5분에 한 번까지)
-  11-14 S.Lee: 평일 params.sync.window (08:00~16:00) 밖에서는 아무것도 안 하고 쉼 (주말 · 장 마감 뒤)
+  11-14 S.Lee: 평일 params.sync.window (08:00~18:00) 밖에서는 아무것도 안 하고 쉼 (주말 · 장 마감 뒤)
 
 상태는 work/sync_state.json → logger 가 status.json 의 sync 로 내보내 대시보드에 표시.
 sync.py 자신이 바뀌면 종료 코드 10 으로 끝나고, run.py 가 새 코드로 다시 띄움.

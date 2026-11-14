@@ -915,9 +915,9 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const k = new Date(Date.now() + 9 * 3600e3), wd = k.getUTCDay(), hm = k.getUTCHours() * 100 + k.getUTCMinutes();
     return wd >= 1 && wd <= 5 && hm >= 830 && hm <= 1535;
   }
-  function syncOpen() {   // 11-14 데스크톱 sync 가 도는 시간 (params.sync.window 08:00~16:00, 시작 뒤 5분은 여유)
+  function syncOpen() {   // 11-14 데스크톱 sync 가 도는 시간 (params.sync.window 08:00~18:00, 시작 뒤 5분은 여유)
     const k = new Date(Date.now() + 9 * 3600e3), wd = k.getUTCDay(), hm = k.getUTCHours() * 100 + k.getUTCMinutes();
-    return wd >= 1 && wd <= 5 && hm >= 805 && hm < 1600;
+    return wd >= 1 && wd <= 5 && hm >= 805 && hm < 1800;
   }
   function marketOpen() {
     const k = new Date(Date.now() + 9 * 3600e3), wd = k.getUTCDay(), hm = k.getUTCHours() * 100 + k.getUTCMinutes();
@@ -1492,7 +1492,7 @@ window.TRADE_TIMES = ['09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:
     const ago = a => a < 1 ? Math.max(0, Math.round(a * 60)) + '초' : Math.round(a) + '분';
     const hbAge = HB_AT ? (Date.now() - Date.parse(HB_AT)) / 60e3 : Infinity;
     const srv = HB_OK ? (hbAge <= 3 ? ['On', 'ok run', `데스크톱 연결됨 · 마지막 신호 ${ago(hbAge)} 전`]
-        : !syncOpen() ? ['Off', '', '장 밖이라 데스크톱 동기화 쉼 · 평일 08:00~16:00']   // 11-14 S.Lee: 장 밖 · 주말엔 sync 가 쉼
+        : !syncOpen() ? ['Off', '', '장 밖이라 데스크톱 동기화 쉼 · 평일 08:00~18:00']   // 11-14 S.Lee: 장 밖 · 주말엔 sync 가 쉼
         : ['Off', 'bad', HB_AT ? `데스크톱 신호가 ${hbAge < 120 ? Math.round(hbAge) + '분' : Math.round(hbAge / 60) + '시간'}째 없음 · PC 전원, 절전, 인터넷 확인` : '데스크톱 신호 기록 없음'])
       : !opsOpen() ? ['Off', '', '장 마감 · 평일 08:30~15:35 연결 확인']
       : age <= 3 ? ['On', 'ok run', `데스크톱 연결됨 · 마지막 수신 ${ago(age)} 전`]
