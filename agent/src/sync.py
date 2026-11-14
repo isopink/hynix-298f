@@ -7,6 +7,7 @@
     3) rebase 로 반영 (에이전트가 아직 못 올린 docs/data 커밋은 위에 다시 얹고 push)
     4) 장중이면 바뀐 코드에 맞춰 장중 감시(monitor)·잔고 루프(snapshot)를 재시작
   장중에 monitor·snapshot 이 꺼져 있으면 다시 켬 (5분에 한 번까지)
+  11-14 S.Lee: 평일 params.sync.window (08:00~16:00) 밖에서는 아무것도 안 하고 쉼 (주말 · 장 마감 뒤)
 
 상태는 work/sync_state.json → logger 가 status.json 의 sync 로 내보내 대시보드에 표시.
 sync.py 자신이 바뀌면 종료 코드 10 으로 끝나고, run.py 가 새 코드로 다시 띄움.
@@ -351,13 +352,33 @@ def heartbeat():
             log(f"  ! 연결 신호 실패: {type(e).__name__}: {str(e)[:120]}")
 
 
+def active(now=None):
+    """sync 가 일하는 시간인지 (평일 params.sync.window). 설정이 없으면 늘 일함."""
+    win = (C.params().get("sync") or {}).get("window")
+    return True if not win else in_window(tuple(win), now)
+
+
 def loop():
     keep = single_instance()
     if not keep:
         log("이미 다른 sync 가 실행 중이라 종료")
         return 0
     log(f"코드 동기화 시작 · {INTERVAL}초 간격 · {C.ROOT}")
+    resting = False
     while True:
+        try:
+            on = active()
+        except Exception:  # noqa: BLE001  params 를 못 읽으면 그냥 일함
+            on = True
+        if not on:
+            if not resting:
+                log("장 밖이라 쉼 (평일 " + "~".join((C.params().get("sync") or {}).get("window", [])) + " 에만 동기화)")
+                resting = True
+            time.sleep(INTERVAL)
+            continue
+        if resting:
+            log("동기화 다시 시작")
+            resting = False
         try:
             heartbeat()
         except Exception:  # noqa: BLE001
